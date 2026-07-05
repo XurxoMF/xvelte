@@ -95,7 +95,7 @@ some components, you can also remove the dependencies that are no longer used.
 </Tooltip.Provider>
 ```
 
-5. Import components from `$lib/components/ui/...`:
+5. Import components from `$lib/components/ui/...` always with `import * as XXXX from` and use them with XXXX.Part:
 
 ```svelte
 <script lang="ts">
@@ -114,10 +114,6 @@ line-by-line mirror. The main changes are:
   been standardized across the components.
 - Several code issues and warnings have been fixed, especially around Tailwind
   CSS classes and generated component output.
-- Component-specific skeleton exports such as `Button.Skeleton`, `PSkeleton`,
-  `Input.Skeleton`, and similar variants were removed. The base `Skeleton`
-  component is still available, but skeleton layouts are meant to be composed
-  manually per screen.
 - The sidebar has been modified to fit inside any container. See the comments in
   the sidebar components for the exact changes: the wrapper uses `h-full`, and
   the desktop sidebar container no longer relies on viewport-fixed positioning.

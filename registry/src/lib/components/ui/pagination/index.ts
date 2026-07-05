@@ -1,0 +1,25 @@
+import Root, { type RootProps } from "./pagination-root.svelte";
+import Content, { type ContentProps } from "./pagination-content.svelte";
+import Item, { type ItemProps } from "./pagination-item.svelte";
+import Link, { type LinkProps } from "./pagination-link.svelte";
+import Ellipsis, { type EllipsisProps } from "./pagination-ellipsis.svelte";
+import Previous, { type PreviousProps } from "./pagination-previous.svelte";
+import Next, { type NextProps } from "./pagination-next.svelte";
+
+export {
+	Root,
+	Content,
+	Item,
+	Link,
+	Ellipsis,
+	Previous,
+	Next,
+	//
+	type RootProps,
+	type ContentProps,
+	type ItemProps,
+	type LinkProps,
+	type EllipsisProps,
+	type PreviousProps,
+	type NextProps
+};

@@ -1,11 +1,15 @@
 <script lang="ts" module>
-	export type PortalProps = DrawerPrimitive.PortalProps;
+	type PrimitivePortalProps = ComponentProps<InstanceType<typeof DrawerPrimitive.Portal>>;
+	export type PortalProps = PrimitivePortalProps & { children?: Snippet | undefined };
 </script>
 
 <script lang="ts">
+	import type { ComponentProps, Snippet } from "svelte";
 	import { Drawer as DrawerPrimitive } from "vaul-svelte";
 
-	let { ...restProps }: PortalProps = $props();
+	let { children, ...restProps }: PortalProps = $props();
 </script>
 
-<DrawerPrimitive.Portal {...restProps} />
+<DrawerPrimitive.Portal {...restProps}>
+	{@render children?.()}
+</DrawerPrimitive.Portal>

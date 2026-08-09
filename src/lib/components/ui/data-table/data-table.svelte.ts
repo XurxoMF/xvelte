@@ -1,4 +1,5 @@
-import { type RowData, type TableOptions, type TableOptionsResolved, type TableState, type Updater, createTable } from "@tanstack/table-core";
+import { constructTable, type RowData, type TableFeatures, type TableOptions } from "@tanstack/table-core";
+import { storeReactivityBindings } from "@tanstack/table-core/store-reactivity-bindings";
 
 /**
  * Creates a reactive TanStack table object for Svelte.
@@ -26,44 +27,36 @@ import { type RowData, type TableOptions, type TableOptionsResolved, type TableS
  * </table>
  * ```
  */
-export function createSvelteTable<TData extends RowData>(options: TableOptions<TData>) {
-	const resolvedOptions: TableOptionsResolved<TData> = mergeObjects(
-		{
-			state: {},
-			onStateChange() {},
-			renderFallbackValue: null,
-			mergeOptions: (defaultOptions: TableOptions<TData>, options: Partial<TableOptions<TData>>) => {
-				return mergeObjects(defaultOptions, options);
-			}
-		},
-		options
-	);
-
-	const table = createTable(resolvedOptions);
-	let state = $state<TableState>(table.initialState);
-
-	function updateOptions() {
-		table.setOptions(() => {
-			return mergeObjects(resolvedOptions, options, {
-				state: mergeObjects(state, options.state || {}),
-
-				onStateChange: (updater: Updater<TableState>) => {
-					if (updater instanceof Function) state = updater(state);
-					else state = mergeObjects(state, updater);
-
-					options.onStateChange?.(updater);
-				}
-			});
-		});
-	}
-
-	updateOptions();
+export function createSvelteTable<TFeatures extends TableFeatures, TData extends RowData>(options: TableOptions<TFeatures, TData>) {
+	const reactivity = storeReactivityBindings();
+	const resolveOptions = (): TableOptions<TFeatures, TData> => ({
+		...options,
+		features: {
+			...options.features,
+			coreReactivityFeature: reactivity
+		}
+	});
+	const table = constructTable(resolveOptions());
+	let revision = $state(0);
+	const subscription = table.store.subscribe(() => {
+		revision += 1;
+	});
+	const trackRevision = () => revision;
 
 	$effect.pre(() => {
-		updateOptions();
+		table.setOptions(() => resolveOptions());
 	});
 
-	return table;
+	$effect(() => {
+		return () => subscription.unsubscribe();
+	});
+
+	return new Proxy(table, {
+		get(target, property, receiver) {
+			trackRevision();
+			return Reflect.get(target, property, receiver);
+		}
+	});
 }
 
 type MaybeThunk<T extends object> = T | (() => T | null | undefined);

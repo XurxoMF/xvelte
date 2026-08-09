@@ -348,7 +348,7 @@
 	}
 </script>
 
-<div class={cn("flex w-[350px] flex-col gap-3 rounded-lg border bg-popover p-3 shadow-sm", className)} data-slot="color-picker">
+<div class={cn("flex w-87.5 flex-col gap-3 rounded-lg border bg-popover p-3 shadow-sm", className)} data-slot="color-picker">
 	<div
 		bind:this={sbRef}
 		class="relative h-56 w-full cursor-crosshair touch-none overflow-hidden rounded-md shadow-sm"
@@ -360,8 +360,8 @@
 		onmousedown={(e) => handleDragStart(e, handleSbChange)}
 		ontouchstart={(e) => handleDragStart(e, handleSbChange)}
 	>
-		<div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-white to-transparent"></div>
-		<div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+		<div class="pointer-events-none absolute inset-0 bg-linear-to-r from-white to-transparent"></div>
+		<div class="pointer-events-none absolute inset-0 bg-linear-to-t from-black to-transparent"></div>
 		<div
 			class="pointer-events-none absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow-sm ring-1 ring-black/20"
 			style:left={`${s}%`}
@@ -418,13 +418,13 @@
 			<Popover.Root bind:open={formatOpen}>
 				<Popover.Trigger>
 					{#snippet child({ props })}
-						<Button.Root {...props} variant="outline" class="h-9 max-w-[5rem] justify-between px-2 text-[10px]">
+						<Button.Root {...props} variant="outline" class="h-9 max-w-20 justify-between px-2 text-[10px]">
 							{activeFormat.toUpperCase()}
 							<ChevronDownIcon class="h-3 w-3 opacity-50" />
 						</Button.Root>
 					{/snippet}
 				</Popover.Trigger>
-				<Popover.Content class="w-[4.5rem] p-0" align="start">
+				<Popover.Content class="w-18 p-0" align="start">
 					<Command.Root>
 						<Command.List>
 							<Command.Group>
@@ -439,7 +439,7 @@
 				</Popover.Content>
 			</Popover.Root>
 		{:else}
-			<Button.Root variant="outline" class="h-9 max-w-[5rem] justify-between px-2 text-[10px]">
+			<Button.Root variant="outline" class="h-9 max-w-20 justify-between px-2 text-[10px]">
 				{activeFormat.toUpperCase()}
 			</Button.Root>
 		{/if}

@@ -1,5 +1,7 @@
 <script lang="ts" module>
-	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & { size?: "default" | "sm" | undefined };
+	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
+		size?: "default" | "sm" | undefined;
+	};
 </script>
 
 <script lang="ts">

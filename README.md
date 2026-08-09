@@ -4,10 +4,11 @@ A personal collection of Svelte/SvelteKit components based on
 [shadcn-svelte](https://www.shadcn-svelte.com/).
 
 This is not a full fork of shadcn-svelte. It does not include a CLI, install
-scripts, generated docs, or a component registry workflow. This repository is a
-set of already generated components that I have modified, improved, and adapted
-for my own use cases, published as-is so they can be reused easily across
-projects.
+scripts, or a component registry workflow. This repository is a SvelteKit app
+that contains a set of already generated components that I have modified,
+improved, and adapted for my own use cases. The app provides a development
+environment for previewing the components and running checks, while the source
+code remains available to copy into other projects.
 
 The philosophy is still the same as [shadcn](https://ui.shadcn.com/) and
 [shadcn-svelte](https://www.shadcn-svelte.com/): you copy the code into your
@@ -32,10 +33,10 @@ the main content, you need to add a ScrollableContainer inside the Sidebar.Inset
 
 ## Structure
 
-The reusable code lives in:
+The reusable code and the development app live in:
 
 ```txt
-registry/src
+src
 ├── lib
 │   ├── components/ui
 │   ├── hooks
@@ -43,11 +44,13 @@ registry/src
 │   └── utils.ts
 └── routes
     ├── +layout.svelte
+    ├── +page.svelte
     └── layout.css
 ```
 
-The usual workflow is to copy `registry/src` into your project's `src`
-directory, or copy only the components and files you need.
+Reusable components live in `src/lib`. The files under `src/routes` belong to
+the development and preview app, except for `layout.css`, which contains the
+global styles and design tokens intended to be copied into consuming projects.
 
 ## Requirements
 
@@ -56,7 +59,7 @@ directory, or copy only the components and files you need.
 - Tailwind CSS configured for Svelte
 - The dependencies used by the components you copy
 
-If you copy the whole registry, install these dependencies:
+If you copy the whole collection, install these dependencies:
 
 ```sh
 npm install bits-ui clsx tailwind-merge tailwind-variants @tabler/icons-svelte @internationalized/date @tanstack/table-core embla-carousel-svelte layerchart paneforge svelte-sonner vaul-svelte
@@ -69,8 +72,8 @@ some components, you can also remove the dependencies that are no longer used.
 
 ## Manual Installation
 
-1. Copy `registry/src/lib` into your project's `src/lib`.
-2. Copy `registry/src/routes/layout.css` wherever it makes sense for your app.
+1. Copy `src/lib` into your project's `src/lib`.
+2. Copy `src/routes/layout.css` wherever it makes sense for your app.
 3. Import that global CSS from your root layout:
 
 ```svelte
@@ -104,6 +107,24 @@ some components, you can also remove the dependencies that are no longer used.
 </script>
 
 <Button.Root>Save</Button.Root>
+```
+
+## Development
+
+Install the dependencies and start the SvelteKit development app:
+
+```sh
+bun install
+bun run dev
+```
+
+The repository also includes scripts for validating and formatting the source:
+
+```sh
+bun run check
+bun run lint
+bun run format
+bun run build
 ```
 
 ## Main differences with shadcn-svelte

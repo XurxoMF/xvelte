@@ -19,7 +19,9 @@ export type WithoutChildren<T> = T extends { children?: any | undefined } ? Omit
 
 export type WithoutChildrenOrChild<T> = WithoutChildren<WithoutChild<T>>;
 
-export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & { ref?: U | null | undefined };
+export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
+	ref?: U | null | undefined;
+};
 
 /**
  * Sleeps the app for the amount of ms passed.
@@ -95,7 +97,10 @@ export function cleanForPath(str: string): string {
  */
 export function formatTime(
 	ms: number,
-	options: { to?: "seconds" | "minutes" | "hours" | "days" | undefined; decimals?: number | undefined } = { to: "seconds", decimals: 0 }
+	options: {
+		to?: "seconds" | "minutes" | "hours" | "days" | undefined;
+		decimals?: number | undefined;
+	} = { to: "seconds", decimals: 0 }
 ): string {
 	const seconds = ms / 1000;
 	const minutes = seconds / 60;

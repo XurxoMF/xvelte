@@ -39,7 +39,7 @@
 	"dependencies": {
 		"@internationalized/date": "^3.12.3",
 		"@tabler/icons-svelte": "^3.46.0",
-		"@tanstack/table-core": "^9.1.2",
+		"@tanstack/svelte-table": "^9.1.2",
 		"bits-ui": "^2.18.1",
 		"clsx": "^2.1.1",
 		"embla-carousel-svelte": "^8.6.0",

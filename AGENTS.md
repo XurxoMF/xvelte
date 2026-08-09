@@ -54,7 +54,7 @@
 ## Dependency-specific rules
 
 - Implement against the stable versions declared in `package.json` and resolved in `bun.lock`; do not silently adopt prerelease APIs.
-- TanStack Table Core 9 uses explicit `features`, `constructTable`, feature-aware generics, and atom/store state. Keep its Svelte adapter logic in `data-table.svelte.ts`.
+- Use TanStack Table 9 through `@tanstack/svelte-table`: define explicit features in each implementation and import its adapter, render helpers, and types directly.
 - Vaul Svelte 0.3 uses `el` internally and legacy slots. Drawer wrappers expose the collection's `ref`/snippet API and translate it at the boundary.
 - Prefer the public API of dependencies. If a package lacks a public type, derive it from the exported component instead of importing private internals.
 - Do not add install scripts or an `install` runtime dependency.

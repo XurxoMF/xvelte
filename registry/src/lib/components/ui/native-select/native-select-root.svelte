@@ -7,7 +7,7 @@
 <script lang="ts">
 	import type { HTMLSelectAttributes } from "svelte/elements";
 
-	import IconSelector from "@tabler/icons-svelte/icons/selector";
+	import { SelectorIcon } from "$lib/icons";
 
 	import { cn, type WithElementRef } from "$lib/utils";
 
@@ -29,7 +29,7 @@
 	>
 		{@render children?.()}
 	</select>
-	<IconSelector
+	<SelectorIcon
 		class="pointer-events-none absolute top-1/2 right-2.5 size-4 -translate-y-1/2 text-muted-foreground select-none"
 		aria-hidden
 		data-slot="native-select-icon"

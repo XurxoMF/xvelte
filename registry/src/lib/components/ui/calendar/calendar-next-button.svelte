@@ -7,7 +7,7 @@
 <script lang="ts">
 	import { Calendar as CalendarPrimitive } from "bits-ui";
 
-	import ChevronRightIcon from "@tabler/icons-svelte/icons/chevron-right";
+	import { ChevronRightIcon } from "$lib/icons";
 
 	import { cn } from "$lib/utils";
 

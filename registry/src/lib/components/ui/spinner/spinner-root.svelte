@@ -5,7 +5,7 @@
 <script lang="ts">
 	import type { SVGAttributes } from "svelte/elements";
 
-	import IconLoader from "@tabler/icons-svelte/icons/loader";
+	import { LoaderIcon } from "$lib/icons";
 
 	import { cn } from "$lib/utils";
 
@@ -21,7 +21,7 @@
 	}: RootProps = $props();
 </script>
 
-<IconLoader
+<LoaderIcon
 	{role}
 	name={name === null ? undefined : name}
 	color={color === null ? undefined : color}

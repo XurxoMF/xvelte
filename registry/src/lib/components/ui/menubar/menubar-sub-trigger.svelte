@@ -7,7 +7,7 @@
 <script lang="ts">
 	import { Menubar as MenubarPrimitive } from "bits-ui";
 
-	import IconChevronRight from "@tabler/icons-svelte/icons/chevron-right";
+	import { ChevronRightIcon } from "$lib/icons";
 
 	import { cn, type WithoutChild } from "$lib/utils";
 
@@ -25,5 +25,5 @@
 	{...restProps}
 >
 	{@render children?.()}
-	<IconChevronRight class="cn-rtl-flip ml-auto size-4" />
+	<ChevronRightIcon class="cn-rtl-flip ml-auto size-4" />
 </MenubarPrimitive.SubTrigger>

@@ -9,7 +9,7 @@
 <script lang="ts">
 	import type { Snippet } from "svelte";
 
-	import IconSelector from "@tabler/icons-svelte/icons/selector";
+	import { SelectorIcon } from "$lib/icons";
 
 	import { cn } from "$lib/utils.js";
 
@@ -39,7 +39,7 @@
 		>
 			{@render children()}
 
-			<IconSelector class="pointer-events-none size-4 text-muted-foreground" />
+			<SelectorIcon class="pointer-events-none size-4 text-muted-foreground" />
 		</Button.Root>
 	{/snippet}
 </Popover.Trigger>

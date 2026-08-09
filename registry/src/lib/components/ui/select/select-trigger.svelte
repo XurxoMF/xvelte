@@ -7,7 +7,7 @@
 <script lang="ts">
 	import { Select as SelectPrimitive } from "bits-ui";
 
-	import IconSelector from "@tabler/icons-svelte/icons/selector";
+	import { SelectorIcon } from "$lib/icons";
 
 	import { cn, type WithoutChild } from "$lib/utils";
 
@@ -25,5 +25,5 @@
 	{...restProps}
 >
 	{@render children?.()}
-	<IconSelector class="pointer-events-none size-4 text-muted-foreground" />
+	<SelectorIcon class="pointer-events-none size-4 text-muted-foreground" />
 </SelectPrimitive.Trigger>

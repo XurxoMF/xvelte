@@ -5,7 +5,7 @@
 </script>
 
 <script lang="ts">
-	import IconLayoutSidebar from "@tabler/icons-svelte/icons/layout-sidebar";
+	import { SidebarIcon } from "$lib/icons";
 
 	import { cn } from "$lib/utils";
 
@@ -37,7 +37,7 @@
 				}}
 				{...restProps}
 			>
-				<IconLayoutSidebar />
+				<SidebarIcon />
 				<span class="sr-only">Toggle Sidebar</span>
 			</Button.Root>
 		{/snippet}

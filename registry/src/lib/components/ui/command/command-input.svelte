@@ -5,7 +5,7 @@
 <script lang="ts">
 	import { Command as CommandPrimitive } from "bits-ui";
 
-	import IconSearch from "@tabler/icons-svelte/icons/search";
+	import { SearchIcon } from "$lib/icons";
 
 	import { cn } from "$lib/utils";
 
@@ -24,7 +24,7 @@
 			bind:value
 		/>
 		<InputGroup.Addon>
-			<IconSearch class="size-4 shrink-0 opacity-50" />
+			<SearchIcon class="size-4 shrink-0 opacity-50" />
 		</InputGroup.Addon>
 	</InputGroup.Root>
 </div>

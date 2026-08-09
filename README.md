@@ -39,6 +39,7 @@ registry/src
 ├── lib
 │   ├── components/ui
 │   ├── hooks
+│   ├── icons.ts
 │   └── utils.ts
 └── routes
     ├── +layout.svelte
@@ -129,16 +130,21 @@ line-by-line mirror. The main changes are:
 
 ## Customization
 
-The main customization entry point is `layout.css`.
+The main visual customization entry points are `layout.css` and `lib/icons.ts`.
 
-It contains the CSS variables for colors, radius, fonts, dark mode, sidebar
+`layout.css` contains the CSS variables for colors, radius, fonts, dark mode, sidebar
 tokens, chart colors, and custom Tailwind variants. By changing those variables,
 you can adapt the collection to another product without editing every component.
+
+`lib/icons.ts` maps the library-independent icon names used by the components to
+`@tabler/icons-svelte`. Change only these exports to use a different icon
+package; the component directories can then be updated without overwriting your
+icon choices.
 
 You can also replace:
 
 - `@fontsource-variable/inter` with another font
-- `@tabler/icons-svelte` with your preferred icon package
+- The mappings in `lib/icons.ts` to use your preferred icon package
 - Any Tailwind class inside the components
 - The internal structure of any component
 - The wrappers around `bits-ui`, `vaul-svelte`, `paneforge`, and the other base libraries

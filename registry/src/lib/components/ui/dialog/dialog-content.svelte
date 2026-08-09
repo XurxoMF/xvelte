@@ -10,7 +10,7 @@
 	import { Dialog as DialogPrimitive } from "bits-ui";
 	import type { Snippet } from "svelte";
 
-	import IconX from "@tabler/icons-svelte/icons/x";
+	import { CloseIcon } from "$lib/icons";
 
 	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
 
@@ -37,7 +37,7 @@
 			<DialogPrimitive.Close data-slot="dialog-close">
 				{#snippet child({ props })}
 					<Button.Root variant="ghost" class="absolute top-2 right-2" size="icon-sm" {...props}>
-						<IconX />
+						<CloseIcon />
 						<span class="sr-only">Close</span>
 					</Button.Root>
 				{/snippet}

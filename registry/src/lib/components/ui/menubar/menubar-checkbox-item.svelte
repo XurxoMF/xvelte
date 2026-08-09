@@ -9,8 +9,7 @@
 	import { Menubar as MenubarPrimitive } from "bits-ui";
 	import type { Snippet } from "svelte";
 
-	import IconMinus from "@tabler/icons-svelte/icons/minus";
-	import IconCheck from "@tabler/icons-svelte/icons/check";
+	import { CheckIcon, MinusIcon } from "$lib/icons";
 
 	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
 
@@ -40,9 +39,9 @@
 	{#snippet children({ checked: checked, indeterminate: indeterminate })}
 		<span class="pointer-events-none absolute left-1.5 flex size-4 items-center justify-center [&_svg:not([class*='size-'])]:size-4">
 			{#if indeterminate}
-				<IconMinus />
+				<MinusIcon />
 			{:else if checked}
-				<IconCheck />
+				<CheckIcon />
 			{/if}
 		</span>
 		{@render childrenProp?.()}

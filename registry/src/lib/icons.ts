@@ -1,0 +1,17 @@
+export { default as AlertErrorIcon } from "@tabler/icons-svelte/icons/alert-octagon";
+export { default as AlertInfoIcon } from "@tabler/icons-svelte/icons/info-circle";
+export { default as AlertSuccessIcon } from "@tabler/icons-svelte/icons/circle-check";
+export { default as AlertWarningIcon } from "@tabler/icons-svelte/icons/alert-triangle";
+export { default as CheckIcon } from "@tabler/icons-svelte/icons/check";
+export { default as ChevronDownIcon } from "@tabler/icons-svelte/icons/chevron-down";
+export { default as ChevronLeftIcon } from "@tabler/icons-svelte/icons/chevron-left";
+export { default as ChevronRightIcon } from "@tabler/icons-svelte/icons/chevron-right";
+export { default as ChevronUpIcon } from "@tabler/icons-svelte/icons/chevron-up";
+export { default as CircleIcon } from "@tabler/icons-svelte/icons/circle";
+export { default as CloseIcon } from "@tabler/icons-svelte/icons/x";
+export { default as EllipsisIcon } from "@tabler/icons-svelte/icons/dots";
+export { default as LoaderIcon } from "@tabler/icons-svelte/icons/loader";
+export { default as MinusIcon } from "@tabler/icons-svelte/icons/minus";
+export { default as SearchIcon } from "@tabler/icons-svelte/icons/search";
+export { default as SelectorIcon } from "@tabler/icons-svelte/icons/selector";
+export { default as SidebarIcon } from "@tabler/icons-svelte/icons/layout-sidebar";

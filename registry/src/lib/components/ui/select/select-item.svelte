@@ -5,7 +5,7 @@
 <script lang="ts">
 	import { Select as SelectPrimitive } from "bits-ui";
 
-	import IconCheck from "@tabler/icons-svelte/icons/check";
+	import { CheckIcon } from "$lib/icons";
 
 	import { cn, type WithoutChild } from "$lib/utils";
 
@@ -25,7 +25,7 @@
 	{#snippet children({ selected, highlighted })}
 		<span class="absolute inset-e-2 flex size-3.5 items-center justify-center">
 			{#if selected}
-				<IconCheck class="cn-select-item-indicator-icon" />
+				<CheckIcon class="cn-select-item-indicator-icon" />
 			{/if}
 		</span>
 		{#if childrenProp}

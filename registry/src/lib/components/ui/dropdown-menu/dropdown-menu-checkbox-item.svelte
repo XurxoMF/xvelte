@@ -8,8 +8,7 @@
 	import type { Snippet } from "svelte";
 	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
 
-	import IconMinus from "@tabler/icons-svelte/icons/minus";
-	import IconCheck from "@tabler/icons-svelte/icons/check";
+	import { CheckIcon, MinusIcon } from "$lib/icons";
 
 	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
 
@@ -37,9 +36,9 @@
 	{#snippet children({ checked, indeterminate })}
 		<span class="pointer-events-none absolute right-2 flex items-center justify-center" data-slot="dropdown-menu-checkbox-item-indicator">
 			{#if indeterminate}
-				<IconMinus />
+				<MinusIcon />
 			{:else if checked}
-				<IconCheck />
+				<CheckIcon />
 			{/if}
 		</span>
 		{@render childrenProp?.()}

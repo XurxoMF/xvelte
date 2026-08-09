@@ -7,7 +7,7 @@
 <script lang="ts">
 	import { Menubar as MenubarPrimitive } from "bits-ui";
 
-	import IconCheck from "@tabler/icons-svelte/icons/check";
+	import { CheckIcon } from "$lib/icons";
 
 	import { cn, type WithoutChild } from "$lib/utils";
 
@@ -27,7 +27,7 @@
 	{#snippet children({ checked })}
 		<span class="pointer-events-none absolute left-1.5 flex size-4 items-center justify-center [&_svg:not([class*='size-'])]:size-4">
 			{#if checked}
-				<IconCheck />
+				<CheckIcon />
 			{/if}
 		</span>
 		{@render childrenProp?.({ checked })}

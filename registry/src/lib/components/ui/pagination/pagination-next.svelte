@@ -5,7 +5,7 @@
 <script lang="ts">
 	import { Pagination as PaginationPrimitive } from "bits-ui";
 
-	import IconChevronRight from "@tabler/icons-svelte/icons/chevron-right";
+	import { ChevronRightIcon } from "$lib/icons";
 
 	import { cn } from "$lib/utils";
 
@@ -21,5 +21,5 @@
 	{...restProps}
 >
 	<span class="cn-pagination-next-text sr-only">Next</span>
-	<IconChevronRight />
+	<ChevronRightIcon />
 </PaginationPrimitive.NextButton>

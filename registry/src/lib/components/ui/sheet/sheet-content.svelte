@@ -13,7 +13,7 @@
 	import { Dialog as SheetPrimitive } from "bits-ui";
 	import type { Snippet } from "svelte";
 
-	import IconX from "@tabler/icons-svelte/icons/x";
+	import { CloseIcon } from "$lib/icons";
 
 	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
 
@@ -50,7 +50,7 @@
 			<SheetPrimitive.Close data-slot="sheet-close">
 				{#snippet child({ props })}
 					<Button.Root variant="ghost" class="absolute top-3 right-3" size="icon-sm" {...props}>
-						<IconX />
+						<CloseIcon />
 						<span class="sr-only">Close</span>
 					</Button.Root>
 				{/snippet}

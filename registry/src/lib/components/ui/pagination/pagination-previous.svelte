@@ -5,7 +5,7 @@
 <script lang="ts">
 	import { Pagination as PaginationPrimitive } from "bits-ui";
 
-	import IconChevronLeft from "@tabler/icons-svelte/icons/chevron-left";
+	import { ChevronLeftIcon } from "$lib/icons";
 
 	import { cn } from "$lib/utils";
 
@@ -20,6 +20,6 @@
 	class={cn(Button.rootVariants({ variant: "ghost", size: "icon" }), className)}
 	{...restProps}
 >
-	<IconChevronLeft />
+	<ChevronLeftIcon />
 	<span class="cn-pagination-previous-text sr-only">Previous</span>
 </PaginationPrimitive.PrevButton>

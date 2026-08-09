@@ -5,7 +5,7 @@
 <script lang="ts">
 	import { Select as SelectPrimitive } from "bits-ui";
 
-	import IconChevronDown from "@tabler/icons-svelte/icons/chevron-down";
+	import { ChevronDownIcon } from "$lib/icons";
 
 	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
 
@@ -18,5 +18,5 @@
 	class={cn("bottom-0 z-10 flex w-full cursor-default items-center justify-center bg-popover py-1 [&_svg:not([class*='size-'])]:size-4", className)}
 	{...restProps}
 >
-	<IconChevronDown />
+	<ChevronDownIcon />
 </SelectPrimitive.ScrollDownButton>

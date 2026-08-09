@@ -9,7 +9,7 @@
 	import { ContextMenu as ContextMenuPrimitive } from "bits-ui";
 	import type { Snippet } from "svelte";
 
-	import IconCheck from "@tabler/icons-svelte/icons/check";
+	import { CheckIcon } from "$lib/icons";
 
 	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
 
@@ -39,7 +39,7 @@
 	{#snippet children({ checked })}
 		<span class="pointer-events-none absolute right-2">
 			{#if checked}
-				<IconCheck />
+				<CheckIcon />
 			{/if}
 		</span>
 		{@render childrenProp?.()}

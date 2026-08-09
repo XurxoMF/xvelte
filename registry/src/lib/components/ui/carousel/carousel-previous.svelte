@@ -5,7 +5,7 @@
 <script lang="ts">
 	import type { WithoutChildren } from "bits-ui";
 
-	import IconChevronLeft from "@tabler/icons-svelte/icons/chevron-left";
+	import { ChevronLeftIcon } from "$lib/icons";
 
 	import { cn } from "$lib/utils";
 
@@ -34,6 +34,6 @@
 	{...restProps}
 	bind:ref
 >
-	<IconChevronLeft />
+	<ChevronLeftIcon />
 	<span class="sr-only">Previous slide</span>
 </Button.Root>

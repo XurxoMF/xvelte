@@ -5,8 +5,7 @@
 <script lang="ts">
 	import { Checkbox as CheckboxPrimitive } from "bits-ui";
 
-	import IconCheck from "@tabler/icons-svelte/icons/check";
-	import IconMinus from "@tabler/icons-svelte/icons/minus";
+	import { CheckIcon, MinusIcon } from "$lib/icons";
 
 	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
 
@@ -27,9 +26,9 @@
 	{#snippet children({ checked, indeterminate })}
 		<div data-slot="checkbox-indicator" class="grid place-content-center text-current transition-none [&>svg]:size-3.5">
 			{#if checked}
-				<IconCheck />
+				<CheckIcon />
 			{:else if indeterminate}
-				<IconMinus />
+				<MinusIcon />
 			{/if}
 		</div>
 	{/snippet}

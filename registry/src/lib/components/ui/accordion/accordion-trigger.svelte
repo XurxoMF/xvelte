@@ -9,8 +9,7 @@
 
 	import { cn, type WithoutChild } from "$lib/utils";
 
-	import IconChevronDown from "@tabler/icons-svelte/icons/chevron-down";
-	import IconChevronUp from "@tabler/icons-svelte/icons/chevron-up";
+	import { ChevronDownIcon, ChevronUpIcon } from "$lib/icons";
 
 	let { ref = $bindable(null), class: className, level = 3, children, ...restProps }: TriggerProps = $props();
 </script>
@@ -27,12 +26,12 @@
 	>
 		{@render children?.()}
 
-		<IconChevronDown
+		<ChevronDownIcon
 			data-slot="accordion-trigger-icon"
 			class="cn-accordion-trigger-icon pointer-events-none shrink-0 group-aria-expanded/accordion-trigger:hidden"
 		/>
 
-		<IconChevronUp
+		<ChevronUpIcon
 			data-slot="accordion-trigger-icon"
 			class="cn-accordion-trigger-icon pointer-events-none hidden shrink-0 group-aria-expanded/accordion-trigger:inline"
 		/>

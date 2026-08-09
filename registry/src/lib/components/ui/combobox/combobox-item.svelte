@@ -9,7 +9,7 @@
 <script lang="ts">
 	import type { Snippet } from "svelte";
 
-	import IconCheck from "@tabler/icons-svelte/icons/check";
+	import { CheckIcon } from "$lib/icons";
 
 	import { cn } from "$lib/utils";
 
@@ -34,7 +34,7 @@
 
 	<span class="absolute inset-e-2 flex size-3.5 items-center justify-center">
 		{#if ctx.isSelected(value)}
-			<IconCheck class="cn-select-item-indicator-icon" />
+			<CheckIcon class="cn-select-item-indicator-icon" />
 		{/if}
 	</span>
 </Command.Item>

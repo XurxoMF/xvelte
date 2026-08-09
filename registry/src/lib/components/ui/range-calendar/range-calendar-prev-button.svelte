@@ -7,7 +7,7 @@
 <script lang="ts">
 	import { RangeCalendar as RangeCalendarPrimitive } from "bits-ui";
 
-	import ChevronLeftIcon from "@tabler/icons-svelte/icons/chevron-left";
+	import { ChevronLeftIcon } from "$lib/icons";
 
 	import { cn } from "$lib/utils";
 

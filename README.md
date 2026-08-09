@@ -24,7 +24,7 @@ that have not been documented or published yet.
 - [shadcn-svelte](https://github.com/huntabyte/shadcn-svelte) · [dabbd4c](https://github.com/huntabyte/shadcn-svelte/commit/dabbd4c00fbca1feef29a2a155b2eecf6bb4ea7a)
 - [svelte-audio-ui](https://github.com/ddtamn/svelte-audio-ui) · [e1c4ac8](https://github.com/ddtamn/svelte-audio-ui/commit/e1c4ac831e06b8bea1d23344baaa5f69cb91273d)
 - [more-shadcn-svelte](https://github.com/kevwpl/more-shadcn-svelte) · [0066781](https://github.com/kevwpl/more-shadcn-svelte/commit/00667812c6394c9c30847b4fcc0a95a5c6180fd0)
-- [shadcn-svelte-extras](https://github.com/ieedan/shadcn-svelte-extras) · WIP
+- [shadcn-svelte-extras](https://github.com/ieedan/shadcn-svelte-extras) · [019b6d5](https://github.com/ieedan/shadcn-svelte-extras/commit/019b6d570a62ac44f6dc502c4b5a5fb93814eef8)
 
 ## Intended Use
 

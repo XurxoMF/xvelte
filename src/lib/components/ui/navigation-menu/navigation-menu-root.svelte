@@ -7,9 +7,9 @@
 <script lang="ts">
 	import { NavigationMenu as NavigationMenuPrimitive } from "bits-ui";
 
-	import MenuViewport from "./navigation-menu-viewport.svelte";
-
 	import { cn } from "$lib/utils";
+
+	import * as NavigationMenu from ".";
 
 	let { ref = $bindable(null), class: className, viewport = true, children, ...restProps }: RootProps = $props();
 </script>
@@ -23,6 +23,6 @@
 >
 	{@render children?.()}
 	{#if viewport}
-		<MenuViewport />
+		<NavigationMenu.Viewport />
 	{/if}
 </NavigationMenuPrimitive.Root>

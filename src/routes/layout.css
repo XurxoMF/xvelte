@@ -195,7 +195,7 @@
 	}
 }
 
-@custom-variant data-topt {
+@custom-variant data-top {
 	&:where([data-position="top"]) {
 		@slot;
 	}

@@ -1,9 +1,9 @@
 <script lang="ts" module>
-	export type ErrorError = { message?: string | undefined };
+	export type Error = { message?: string | undefined };
 
 	export type ErrorProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
 		children?: Snippet | undefined;
-		errors?: ErrorError[] | undefined;
+		errors?: Error[] | undefined;
 	};
 </script>
 

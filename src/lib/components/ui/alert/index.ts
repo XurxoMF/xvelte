@@ -1,4 +1,4 @@
-import Root, { rootVariants, type RootVariants } from "./alert-root.svelte";
+import Root, { rootVariants, type RootProps, type RootVariants } from "./alert-root.svelte";
 import Description, { type DescriptionProps } from "./alert-description.svelte";
 import Title, { type TitleProps } from "./alert-title.svelte";
 import Action, { type ActionProps } from "./alert-action.svelte";
@@ -9,6 +9,7 @@ export {
 	Title,
 	Action,
 	//
+	type RootProps,
 	type RootVariants,
 	type DescriptionProps,
 	type TitleProps,

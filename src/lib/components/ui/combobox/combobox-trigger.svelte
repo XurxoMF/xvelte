@@ -11,7 +11,7 @@
 
 	import { SelectorIcon } from "$lib/icons";
 
-	import { cn } from "$lib/utils.js";
+	import { cn } from "$lib/utils";
 
 	import * as Popover from "$lib/components/ui/popover";
 	import * as Button from "$lib/components/ui/button";

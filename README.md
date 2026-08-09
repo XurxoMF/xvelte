@@ -19,6 +19,11 @@ Published releases are the stable source snapshots intended for use in other
 projects. The `main` branch is the development branch and may contain changes
 that have not been documented or published yet.
 
+## Up to date with
+
+- [shadcn-svelte](https://github.com/huntabyte/shadcn-svelte) · [dabbd4c](https://github.com/huntabyte/shadcn-svelte/commit/dabbd4c00fbca1feef29a2a155b2eecf6bb4ea7a)
+- [svelte-audio-ui](https://github.com/ddtamn/svelte-audio-ui) · [e1c4ac8](https://github.com/ddtamn/svelte-audio-ui/commit/e1c4ac831e06b8bea1d23344baaa5f69cb91273d)
+
 ## Intended Use
 
 This collection is mostly aimed at application interfaces rather than marketing

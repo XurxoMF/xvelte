@@ -27,7 +27,7 @@
 		variant?: MenuButtonVariants | undefined;
 		size?: MenuButtonSizes | undefined;
 		tooltipContent?: Snippet | string | undefined;
-		tooltipContentProps?: WithoutChildrenOrChild<Tooltip.RootProps> | undefined;
+		tooltipContentProps?: WithoutChildrenOrChild<Tooltip.ContentProps> | undefined;
 		child?: Snippet<[{ props: Record<string, unknown> }]> | undefined;
 	};
 </script>

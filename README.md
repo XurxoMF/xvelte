@@ -62,7 +62,7 @@ global styles and design tokens intended to be copied into consuming projects.
 If you copy the whole collection, install these dependencies:
 
 ```sh
-npm install bits-ui clsx tailwind-merge tailwind-variants @tabler/icons-svelte @internationalized/date @tanstack/table-core embla-carousel-svelte layerchart paneforge svelte-sonner vaul-svelte
+npm install bits-ui clsx tailwind-merge tailwind-variants @tabler/icons-svelte @internationalized/date @tanstack/table-core embla-carousel-svelte layerchart paneforge svelte-sonner vaul-svelte mode-watcher
 npm install -D tailwindcss tw-animate-css @fontsource-variable/inter
 ```
 

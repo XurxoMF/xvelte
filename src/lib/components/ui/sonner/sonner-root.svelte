@@ -3,30 +3,16 @@
 </script>
 
 <script lang="ts">
-	import { onMount } from "svelte";
 	import { Toaster as Sonner, type ToasterProps as SonnerProps } from "svelte-sonner";
+	import { mode } from "mode-watcher";
 
 	import { AlertErrorIcon, AlertInfoIcon, AlertSuccessIcon, AlertWarningIcon, LoaderIcon } from "$lib/icons";
 
-	let { theme: themeProp, ...restProps }: RootProps = $props();
-
-	let rootTheme = $state<"light" | "dark">("light");
-	const theme = $derived(themeProp ?? rootTheme);
-
-	onMount(() => {
-		const root = document.documentElement;
-		const updateTheme = () => (rootTheme = root.classList.contains("dark") ? "dark" : "light");
-		const observer = new MutationObserver(updateTheme);
-
-		updateTheme();
-		observer.observe(root, { attributes: true, attributeFilter: ["class"] });
-
-		return () => observer.disconnect();
-	});
+	let { ...restProps }: RootProps = $props();
 </script>
 
 <Sonner
-	{theme}
+	theme={mode.current}
 	class="toaster group"
 	style="--normal-bg: var(--color-popover); --normal-text: var(--color-popover-foreground); --normal-border: var(--color-border);"
 	{...restProps}

@@ -15,6 +15,10 @@ The philosophy is still the same as [shadcn](https://ui.shadcn.com/) and
 project, and then it belongs to you. You can change the styles, structure, icons,
 dependencies, and behavior without being locked into a package API.
 
+Published releases are the stable source snapshots intended for use in other
+projects. The `main` branch is the development branch and may contain changes
+that have not been documented or published yet.
+
 ## Intended Use
 
 This collection is mostly aimed at application interfaces rather than marketing
@@ -59,22 +63,31 @@ global styles and design tokens intended to be copied into consuming projects.
 - Tailwind CSS configured for Svelte
 - The dependencies used by the components you copy
 
-If you copy the whole collection, install these dependencies:
-
-```sh
-npm install bits-ui clsx tailwind-merge tailwind-variants @tabler/icons-svelte @internationalized/date @tanstack/svelte-table embla-carousel-svelte layerchart paneforge svelte-sonner vaul-svelte mode-watcher
-npm install -D tailwindcss tw-animate-css @fontsource-variable/inter
-```
-
 Depending on your project, Svelte, SvelteKit, and the Tailwind integration may
 already be installed. If you replace the font, swap the icon package, or remove
 some components, you can also remove the dependencies that are no longer used.
+Use the `package.json` and lockfile included in the selected release as the
+source of truth for compatible dependency versions.
 
-## Manual Installation
+## Installing a Release
 
-1. Copy `src/lib` into your project's `src/lib`.
-2. Copy `src/routes/layout.css` wherever it makes sense for your app.
-3. Import that global CSS from your root layout:
+Do not copy installation files directly from `main`. Start from a tagged
+snapshot so component code, dependencies, documentation, and migration notes
+all belong to the same published version.
+
+1. Open the [releases page](https://github.com/XurxoMF/xmfcn-svelte/releases) and choose the version you want to install.
+2. Download its automatically generated **Source code (`zip`)** or **Source code (`tar.gz`)** archive and extract it. Archives also follow these URL formats:
+
+```txt
+https://github.com/XurxoMF/xmfcn-svelte/archive/refs/tags/<version>.zip
+https://github.com/XurxoMF/xmfcn-svelte/archive/refs/tags/<version>.tar.gz
+```
+
+3. Use the extracted release directory as the source for the following steps.
+4. Copy `src/lib` into your project's `src/lib`.
+5. Copy `src/routes/layout.css` wherever it makes sense for your app.
+6. Install the dependencies required by the components you copied, using the release's `package.json` and lockfile as reference.
+7. Import the global CSS from your root layout:
 
 ```svelte
 <script lang="ts">
@@ -84,7 +97,7 @@ some components, you can also remove the dependencies that are no longer used.
 {@render children()}
 ```
 
-4. If you want app-wide tooltips to use the same delays and other properties, wrap your layout with the tooltip provider:
+8. If you want app-wide tooltips to use the same delays and other properties, wrap your layout with the tooltip provider:
 
 ```svelte
 <script lang="ts">
@@ -99,7 +112,7 @@ some components, you can also remove the dependencies that are no longer used.
 </Tooltip.Provider>
 ```
 
-5. Import components from `$lib/components/ui/...` always with `import * as XXXX from` and use them with XXXX.Part:
+9. Import components from `$lib/components/ui/...` always with `import * as XXXX from` and use them with `XXXX.Part`:
 
 ```svelte
 <script lang="ts">
@@ -111,7 +124,8 @@ some components, you can also remove the dependencies that are no longer used.
 
 ## Development
 
-Install the dependencies and start the SvelteKit development app:
+Clone `main` only when developing the collection itself or testing upcoming
+changes. Install the dependencies and start the SvelteKit development app:
 
 ```sh
 bun install
@@ -180,6 +194,7 @@ project, editing it is part of the workflow.
 ## Important Notes
 
 - There is no installation script or CLI.
+- Install reusable code from a release archive; `main` may contain unpublished changes.
 - This is not meant to replace the shadcn-svelte documentation.
 - Some components may be adapted to my own specific needs.
 - The global layout assumes a fixed-height app with internal scrolling.

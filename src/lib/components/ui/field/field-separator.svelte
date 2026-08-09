@@ -1,5 +1,12 @@
 <script lang="ts" module>
-	export type SeparatorProps = Separator.RootProps;
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import type { WithElementRef } from "$lib/utils";
+
+	export type SeparatorProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
+		orientation?: Separator.RootProps["orientation"];
+		decorative?: Separator.RootProps["decorative"];
+	};
 </script>
 
 <script lang="ts">
@@ -7,7 +14,7 @@
 
 	import * as Separator from "$lib/components/ui/separator";
 
-	let { ref = $bindable(null), class: className, ...restProps }: SeparatorProps = $props();
+	let { ref = $bindable(null), class: className, orientation, decorative, ...restProps }: SeparatorProps = $props();
 </script>
 
 <div
@@ -16,5 +23,5 @@
 	class={cn("relative -my-2 h-5 text-sm group-data-[variant=outline]/field-group:-mb-2", className)}
 	{...restProps}
 >
-	<Separator.Root class="absolute inset-0 top-1/2" />
+	<Separator.Root class="absolute inset-0 top-1/2" {orientation} {decorative} />
 </div>

@@ -21,6 +21,7 @@
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
 		"@tailwindcss/vite": "^4.3.0",
 		"@types/node": "^24",
+		"@types/qrcode-generator": "0.0.16",
 		"eslint": "^10.4.1",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.19.0",
@@ -37,6 +38,7 @@
 		"vite": "^8.0.16"
 	},
 	"dependencies": {
+		"@floating-ui/dom": "1.7.4",
 		"@internationalized/date": "^3.12.3",
 		"@tabler/icons-svelte": "^3.46.0",
 		"@tanstack/svelte-table": "^9.1.2",
@@ -46,6 +48,7 @@
 		"layerchart": "^2.1.0",
 		"mode-watcher": "^1.1.0",
 		"paneforge": "^1.0.2",
+		"qrcode-generator": "2.0.4",
 		"svelte-dnd-action": "^0.9.69",
 		"svelte-sonner": "^1.1.1",
 		"tailwind-merge": "^3.6.0",

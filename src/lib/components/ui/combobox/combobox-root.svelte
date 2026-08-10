@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type RootProps<T extends ComboboxType> = {
-		type?: T;
+		type?: T | undefined;
 		value?: ValueMap[T] | undefined;
 		onchange?: ((value: ValueMap[T]) => void) | undefined;
 		children: Snippet;

@@ -4,11 +4,14 @@
 	import type { EmojiPickerSkin, SelectedEmoji } from "./emoji-picker.svelte.js";
 
 	type RootPropsWithoutHTML = WithChildren<{
-		skin?: EmojiPickerSkin;
-		onSelect?: (emoji: SelectedEmoji) => void;
-		onSkinChange?: (skin: EmojiPickerSkin) => void;
+		skin?: EmojiPickerSkin | undefined;
+		onSelect?: ((emoji: SelectedEmoji) => void) | undefined;
+		onSkinChange?: ((skin: EmojiPickerSkin) => void) | undefined;
 	}> &
-		({ showRecents?: true; recentsKey: string; maxRecents?: number } | { showRecents?: false | never; recentsKey?: never; maxRecents?: never });
+		(
+			| { showRecents?: true | undefined; recentsKey: string; maxRecents?: number | undefined }
+			| { showRecents?: false | never | undefined; recentsKey?: never | undefined; maxRecents?: never | undefined }
+		);
 
 	export type RootProps = WithoutChild<Omit<CommandPrimitiveProps.RootProps, "filter" | "shouldFilter" | "columns" | "onValueChange">> &
 		RootPropsWithoutHTML;

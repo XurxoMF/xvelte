@@ -6,14 +6,14 @@
 	import type { FileRejectedReason } from "./file-drop-zone.svelte.js";
 
 	type RootPropsWithoutHTML = WithChildren<{
-		ref?: HTMLInputElement | null;
-		id?: string;
+		ref?: HTMLInputElement | null | undefined;
+		id?: string | undefined;
 		onUpload: (files: File[]) => Promise<void>;
-		maxFiles?: number;
-		fileCount?: number;
-		maxFileSize?: number;
-		onFileRejected?: (opts: { reason: FileRejectedReason; file: File }) => void;
-		accept?: string;
+		maxFiles?: number | undefined;
+		fileCount?: number | undefined;
+		maxFileSize?: number | undefined;
+		onFileRejected?: ((opts: { reason: FileRejectedReason; file: File }) => void) | undefined;
+		accept?: string | undefined;
 	}>;
 
 	export type RootProps = RootPropsWithoutHTML & Omit<HTMLInputAttributes, "multiple" | "files" | "id" | "class">;

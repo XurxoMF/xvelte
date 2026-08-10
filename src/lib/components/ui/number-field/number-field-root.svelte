@@ -4,11 +4,11 @@
 	import type { UseRampOptions } from "$lib/hooks/use-ramp.svelte";
 
 	export type RootProps = {
-		value?: number;
-		step?: number;
-		min?: number;
-		max?: number;
-		rampSettings?: Omit<UseRampOptions, "increment" | "canRamp">;
+		value?: number | undefined;
+		step?: number | undefined;
+		min?: number | undefined;
+		max?: number | undefined;
+		rampSettings?: Omit<UseRampOptions, "increment" | "canRamp"> | undefined;
 		children: Snippet;
 	};
 </script>

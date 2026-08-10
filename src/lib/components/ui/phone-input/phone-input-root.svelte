@@ -7,20 +7,20 @@
 	};
 
 	export type RootProps = {
-		ref?: HTMLInputElement | null;
-		country?: CountryCode | null;
-		defaultCountry?: CountryCode | null;
-		name?: string;
-		placeholder?: string;
-		disabled?: boolean;
-		readonly?: boolean;
-		required?: boolean;
-		class?: string;
-		value?: string;
-		valid?: boolean;
-		detailedValue?: Partial<DetailedValue> | null;
-		options?: TelInputOptions;
-		order?: (a: Country, b: Country) => number;
+		ref?: HTMLInputElement | null | undefined;
+		country?: CountryCode | null | undefined;
+		defaultCountry?: CountryCode | null | undefined;
+		name?: string | undefined;
+		placeholder?: string | undefined;
+		disabled?: boolean | undefined;
+		readonly?: boolean | undefined;
+		required?: boolean | undefined;
+		class?: string | undefined;
+		value?: string | undefined;
+		valid?: boolean | undefined;
+		detailedValue?: Partial<DetailedValue> | null | undefined;
+		options?: TelInputOptions | undefined;
+		order?: ((a: Country, b: Country) => number) | undefined;
 	};
 </script>
 

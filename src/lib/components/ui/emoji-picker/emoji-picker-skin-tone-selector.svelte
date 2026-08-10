@@ -4,7 +4,7 @@
 	import type { RootProps as ButtonRootProps } from "$lib/components/ui/button";
 
 	export type SkinToneSelectorProps = WithoutChildren<ButtonRootProps> & {
-		previewEmoji?: string;
+		previewEmoji?: string | undefined;
 	};
 </script>
 

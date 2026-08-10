@@ -2,7 +2,7 @@
 	import type { RootProps as ButtonProps } from "$lib/components/ui/button";
 
 	export type DecrementProps = Omit<ButtonProps, "disabled"> & {
-		disabled?: boolean;
+		disabled?: boolean | undefined;
 	};
 </script>
 

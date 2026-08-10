@@ -4,7 +4,7 @@
 	import type { WithElementRef } from "$lib/utils";
 
 	export type ItemProps = WithElementRef<Omit<HTMLAttributes<HTMLDivElement>, "id">, HTMLDivElement> & {
-		id?: string;
+		id?: string | undefined;
 	};
 </script>
 

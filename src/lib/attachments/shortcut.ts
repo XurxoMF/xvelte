@@ -9,21 +9,21 @@ export type Shortcut = {
 	/** Callback invoked with the matching keyboard event. */
 	action: (event: KeyboardEvent) => void | Promise<void>;
 	/** Keyboard event to listen for. @default "keydown" */
-	event?: ShortcutEvent;
+	event?: ShortcutEvent | undefined;
 	/** Whether Control must be pressed. */
-	ctrl?: boolean;
+	ctrl?: boolean | undefined;
 	/** Whether Shift must be pressed. */
-	shift?: boolean;
+	shift?: boolean | undefined;
 	/** Whether Alt must be pressed. */
-	alt?: boolean;
+	alt?: boolean | undefined;
 	/** Whether Meta must be pressed. */
-	meta?: boolean;
+	meta?: boolean | undefined;
 	/** Prevents the browser default when the shortcut matches. @default true */
-	preventDefault?: boolean;
+	preventDefault?: boolean | undefined;
 	/** Stops the matching event from propagating. @default false */
-	stopPropagation?: boolean;
+	stopPropagation?: boolean | undefined;
 	/** Optional predicate used to enable the shortcut conditionally. */
-	when?: (event: KeyboardEvent) => boolean;
+	when?: ((event: KeyboardEvent) => boolean) | undefined;
 };
 
 /**

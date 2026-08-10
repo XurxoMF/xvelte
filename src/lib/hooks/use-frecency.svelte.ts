@@ -10,7 +10,7 @@ export type FrecencyItem = {
 type PersistedStateOptions<T> = ConstructorParameters<typeof PersistedState<T>>[2];
 
 export type UseFrecencyOptions = PersistedStateOptions<FrecencyMap> & {
-	maxItems?: number;
+	maxItems?: number | undefined;
 };
 
 export type FrecencyMap = Record<string, FrecencyItem>;

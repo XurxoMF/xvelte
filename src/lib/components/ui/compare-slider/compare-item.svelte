@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
-	export type ItemProps = { target?: "first" | "second"; class?: string; children: Snippet };
+	export type ItemProps = { target?: "first" | "second" | undefined; class?: string | undefined; children: Snippet };
 </script>
 
 <script lang="ts">

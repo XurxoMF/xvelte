@@ -19,13 +19,13 @@
 	export type CodeVariant = VariantProps<typeof codeVariants>["variant"];
 
 	export type RootProps = WithChildren<{
-		ref?: HTMLDivElement | null;
-		variant?: CodeVariant;
-		lang?: SupportedLanguage;
+		ref?: HTMLDivElement | null | undefined;
+		variant?: CodeVariant | undefined;
+		lang?: SupportedLanguage | undefined;
 		code: string;
-		class?: string;
-		hideLines?: boolean;
-		highlight?: (number | [number, number])[];
+		class?: string | undefined;
+		hideLines?: boolean | undefined;
+		highlight?: (number | [number, number])[] | undefined;
 	}> &
 		WithoutChildren<HTMLAttributes<HTMLDivElement>>;
 </script>

@@ -5,9 +5,9 @@
 
 	export type FolderProps = WithChildren<{
 		name: string;
-		open?: boolean;
-		class?: string;
-		icon?: Snippet<[{ name: string; open: boolean }]>;
+		open?: boolean | undefined;
+		class?: string | undefined;
+		icon?: Snippet<[{ name: string; open: boolean }]> | undefined;
 	}>;
 </script>
 

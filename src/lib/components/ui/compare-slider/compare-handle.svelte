@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
-	export type HandleProps = { class?: string; children?: Snippet };
+	export type HandleProps = { class?: string | undefined; children?: Snippet | undefined };
 </script>
 
 <script lang="ts">

@@ -2,11 +2,11 @@
 	export type RootProps = {
 		src: string;
 		captions: string;
-		poster?: string;
-		class?: string;
-		autoplay?: boolean;
-		loop?: boolean;
-		muted?: boolean;
+		poster?: string | undefined;
+		class?: string | undefined;
+		autoplay?: boolean | undefined;
+		loop?: boolean | undefined;
+		muted?: boolean | undefined;
 	};
 </script>
 

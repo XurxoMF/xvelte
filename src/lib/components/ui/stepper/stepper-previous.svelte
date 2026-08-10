@@ -4,8 +4,8 @@
 	import type { RootProps as ButtonProps } from "$lib/components/ui/button";
 
 	export type PreviousProps = Omit<ButtonProps, "children"> & {
-		child?: Snippet<[{ props: Record<string, unknown> }]>;
-		children?: Snippet;
+		child?: Snippet<[{ props: Record<string, unknown> }]> | undefined;
+		children?: Snippet | undefined;
 	};
 </script>
 

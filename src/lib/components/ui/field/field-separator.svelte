@@ -4,8 +4,8 @@
 	import type { WithElementRef } from "$lib/utils";
 
 	export type SeparatorProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
-		orientation?: Separator.RootProps["orientation"];
-		decorative?: Separator.RootProps["decorative"];
+		orientation?: Separator.RootProps["orientation"] | undefined;
+		decorative?: Separator.RootProps["decorative"] | undefined;
 	};
 </script>
 

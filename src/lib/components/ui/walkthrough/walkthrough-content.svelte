@@ -16,10 +16,10 @@
 		padding = 0
 	}: {
 		targetId: string;
-		placement?: "top" | "bottom" | "left" | "right";
+		placement?: "top" | "bottom" | "left" | "right" | undefined;
 		onUpdateRect: (rect: { top: number; left: number; width: number; height: number }) => void;
-		contentSnippet?: Snippet<[WalkthroughContext]>;
-		padding?: number;
+		contentSnippet?: Snippet<[WalkthroughContext]> | undefined;
+		padding?: number | undefined;
 	} = $props();
 
 	const ctx = getWalkthroughContext();

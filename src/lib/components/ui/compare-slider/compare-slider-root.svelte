@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
 	export type Orientation = "horizontal" | "vertical";
-	export type RootProps = { value?: number; orientation?: Orientation; class?: string; children: Snippet };
+	export type RootProps = { value?: number | undefined; orientation?: Orientation | undefined; class?: string | undefined; children: Snippet };
 </script>
 
 <script lang="ts">

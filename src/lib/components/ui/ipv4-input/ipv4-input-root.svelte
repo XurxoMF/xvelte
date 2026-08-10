@@ -4,11 +4,11 @@
 	import type { WithElementRef } from "$lib/utils";
 
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
-		separator?: "." | " " | "_";
-		placeholder?: string;
-		value?: string | null;
-		valid?: boolean;
-		name?: string;
+		separator?: "." | " " | "_" | undefined;
+		placeholder?: string | undefined;
+		value?: string | null | undefined;
+		valid?: boolean | undefined;
+		name?: string | undefined;
 	};
 </script>
 

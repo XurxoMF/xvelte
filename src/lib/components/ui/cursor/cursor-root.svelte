@@ -4,9 +4,9 @@
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
 		x: number;
 		y: number;
-		color?: string;
-		name?: string;
-		message?: string;
+		color?: string | undefined;
+		name?: string | undefined;
+		message?: string | undefined;
 	};
 </script>
 

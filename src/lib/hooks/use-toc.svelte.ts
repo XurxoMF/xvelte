@@ -6,7 +6,7 @@ export type Heading = {
 	index: number;
 	ref: HTMLHeadingElement;
 	kind: HeadingKind;
-	id?: string;
+	id?: string | undefined;
 	level: number;
 	label: string;
 	active: boolean;
@@ -20,7 +20,7 @@ export const TOC_IGNORE_ATTRIBUTE = "data-toc-ignore";
 export class UseToc {
 	#ref = $state<HTMLElement>();
 	#toc = $state<Heading[]>([]);
-	#cleanup?: () => void;
+	#cleanup?: (() => void) | undefined;
 
 	/** Element whose descendant headings should populate the table of contents. */
 	set ref(ref: HTMLElement | undefined) {

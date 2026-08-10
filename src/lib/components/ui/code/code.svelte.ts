@@ -44,7 +44,7 @@ class CodeRootState {
 	 */
 	constructor(
 		readonly opts: CodeRootStateProps,
-		readonly overflow?: CodeOverflowState
+		readonly overflow?: CodeOverflowState | undefined
 	) {
 		highlighter.then((hl) => (this.highlighter = hl));
 	}

@@ -4,11 +4,11 @@
 	export type CountrySelectorProps = {
 		/** List of countries */
 		countries: Country[];
-		disabled?: boolean;
-		selected?: CountryCode | null;
-		onselect?: (val: CountryCode | null) => void;
+		disabled?: boolean | undefined;
+		selected?: CountryCode | null | undefined;
+		onselect?: ((val: CountryCode | null) => void) | undefined;
 		/** Comparator for country ordering; defaults to alphabetical country names. */
-		order?: (a: Country, b: Country) => number;
+		order?: ((a: Country, b: Country) => number) | undefined;
 	};
 </script>
 

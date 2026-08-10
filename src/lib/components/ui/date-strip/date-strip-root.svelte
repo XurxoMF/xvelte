@@ -2,11 +2,11 @@
 	import type { Snippet } from "svelte";
 	import type { DateValue } from "@internationalized/date";
 	export type RootProps = {
-		value?: DateValue;
-		class?: string;
-		daysToShow?: number;
-		isDateDisabled?: (date: DateValue) => boolean;
-		onDateChange?: (date: DateValue) => void;
+		value?: DateValue | undefined;
+		class?: string | undefined;
+		daysToShow?: number | undefined;
+		isDateDisabled?: ((date: DateValue) => boolean) | undefined;
+		onDateChange?: ((date: DateValue) => void) | undefined;
 		children: Snippet<[{ date: DateValue }]>;
 	};
 </script>

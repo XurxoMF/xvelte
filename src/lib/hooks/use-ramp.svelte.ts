@@ -5,22 +5,22 @@ export type UseRampOptions = {
 	 * The maximum amount of time it should take to increment the value by 1 in milliseconds
 	 * @default 200
 	 */
-	maxFrequency?: number;
+	maxFrequency?: number | undefined;
 	/**
 	 * The minimum amount of time it should take to increment the value by 1 in milliseconds
 	 * @default 25
 	 */
-	minFrequency?: number;
+	minFrequency?: number | undefined;
 	/**
 	 * The amount of time to wait in milliseconds before starting to ramp up.
 	 * @default 100
 	 */
-	startDelay?: number;
+	startDelay?: number | undefined;
 	/**
 	 * The amount of time it should take to ramp up to the minimum frequency
 	 * @default 2500
 	 */
-	rampUpTime?: number;
+	rampUpTime?: number | undefined;
 	/** Determines whether incrementing may continue. Returning false resets the ramp. */
 	canRamp: () => boolean;
 };

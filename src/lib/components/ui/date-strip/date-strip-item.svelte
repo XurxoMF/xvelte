@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	import type { DateValue } from "@internationalized/date";
-	export type ItemProps = { date: DateValue; class?: string };
+	export type ItemProps = { date: DateValue; class?: string | undefined };
 </script>
 
 <script lang="ts">

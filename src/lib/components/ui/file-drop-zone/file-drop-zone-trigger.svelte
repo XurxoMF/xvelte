@@ -3,7 +3,7 @@
 
 	import type { WithChildren } from "bits-ui";
 
-	export type TriggerProps = WithChildren<{ ref?: HTMLLabelElement | null }> & Omit<HTMLLabelAttributes, "for">;
+	export type TriggerProps = WithChildren<{ ref?: HTMLLabelElement | null | undefined }> & Omit<HTMLLabelAttributes, "for">;
 </script>
 
 <script lang="ts">

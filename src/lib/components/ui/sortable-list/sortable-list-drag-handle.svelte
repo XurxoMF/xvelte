@@ -3,9 +3,9 @@
 	import type { HTMLAttributes } from "svelte/elements";
 
 	export type DragHandleProps = Omit<HTMLAttributes<HTMLElement>, "children"> & {
-		ref?: HTMLElement | null;
-		child?: Snippet<[{ props: Record<string, unknown> }]>;
-		children?: Snippet;
+		ref?: HTMLElement | null | undefined;
+		child?: Snippet<[{ props: Record<string, unknown> }]> | undefined;
+		children?: Snippet | undefined;
 	};
 </script>
 

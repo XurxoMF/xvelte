@@ -4,9 +4,9 @@
 	import type { WithElementRef } from "$lib/utils";
 
 	export type SegmentProps = WithElementRef<HTMLInputAttributes, HTMLInputElement> & {
-		value?: number | string | null;
-		goNext?: () => void;
-		goPrevious?: () => void;
+		value?: number | string | null | undefined;
+		goNext?: (() => void) | undefined;
+		goPrevious?: (() => void) | undefined;
 	};
 </script>
 

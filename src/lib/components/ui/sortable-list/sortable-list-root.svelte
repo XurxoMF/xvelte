@@ -18,11 +18,11 @@
 	export type RootProps<Item extends SortableItem = SortableItem> = WithoutChildren<WithElementRef<HTMLAttributes<HTMLDivElement>>> & {
 		items: Item[];
 		item: Snippet<[Item, SortableRenderState]>;
-		disabled?: boolean;
-		onDragStart?: (item: Item, index: number) => void;
-		onConsider?: (items: Item[]) => void;
-		onDrop?: (items: Item[]) => void;
-		flipDuration?: number;
+		disabled?: boolean | undefined;
+		onDragStart?: ((item: Item, index: number) => void) | undefined;
+		onConsider?: ((items: Item[]) => void) | undefined;
+		onDrop?: ((items: Item[]) => void) | undefined;
+		flipDuration?: number | undefined;
 	};
 </script>
 

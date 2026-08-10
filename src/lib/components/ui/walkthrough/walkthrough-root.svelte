@@ -6,9 +6,9 @@
 	export type RootProps = {
 		steps: Step[];
 		open: boolean;
-		onComplete?: () => void;
-		children?: Snippet<[WalkthroughContext]>;
-		padding?: number;
+		onComplete?: (() => void) | undefined;
+		children?: Snippet<[WalkthroughContext]> | undefined;
+		padding?: number | undefined;
 	};
 </script>
 

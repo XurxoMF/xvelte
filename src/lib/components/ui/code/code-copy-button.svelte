@@ -6,8 +6,8 @@
 
 	export type CopyButtonProps = WithElementRef<HTMLButtonAttributes, HTMLButtonElement> &
 		Pick<ButtonProps, "size" | "variant"> & {
-			animationDuration?: number;
-			onCopy?: (status: "success" | "failure") => void;
+			animationDuration?: number | undefined;
+			onCopy?: ((status: "success" | "failure") => void) | undefined;
 		};
 </script>
 

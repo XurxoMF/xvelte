@@ -6,7 +6,7 @@
 
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLUListElement>, HTMLUListElement> & {
 		toc: Heading[];
-		isChild?: boolean;
+		isChild?: boolean | undefined;
 	};
 </script>
 

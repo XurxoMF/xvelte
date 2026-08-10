@@ -6,11 +6,11 @@
 
 	export type HoldDirection = "top" | "bottom" | "left" | "right";
 	export type RootProps = WithoutChildren<ButtonProps> & {
-		duration?: number;
-		onComplete?: () => void;
+		duration?: number | undefined;
+		onComplete?: (() => void) | undefined;
 		children: Snippet;
-		fillColor?: string;
-		from?: HoldDirection;
+		fillColor?: string | undefined;
+		from?: HoldDirection | undefined;
 	};
 </script>
 

@@ -25,9 +25,9 @@
 	export type RootVariants = VariantProps<typeof rootVariants>["variant"];
 	export type RootSizes = VariantProps<typeof rootVariants>["size"];
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLSpanElement>> & {
-		variant?: RootVariants;
-		size?: RootSizes;
-		pulse?: boolean;
+		variant?: RootVariants | undefined;
+		size?: RootSizes | undefined;
+		pulse?: boolean | undefined;
 	};
 </script>
 

@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
 	import type { WithElementRef } from "$lib/utils";
-	export type ValueProps = WithElementRef<HTMLAttributes<HTMLSpanElement>> & { format?: (value: number) => string };
+	export type ValueProps = WithElementRef<HTMLAttributes<HTMLSpanElement>> & { format?: ((value: number) => string) | undefined };
 </script>
 
 <script lang="ts">

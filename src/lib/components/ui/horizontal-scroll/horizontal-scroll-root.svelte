@@ -3,8 +3,8 @@
 
 	import type { WithElementRef } from "$lib/utils";
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
-		sensitivity?: number;
-		damping?: number;
+		sensitivity?: number | undefined;
+		damping?: number | undefined;
 	};
 </script>
 

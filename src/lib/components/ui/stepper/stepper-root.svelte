@@ -2,9 +2,9 @@
 	import type { Snippet } from "svelte";
 
 	export type RootProps = {
-		step?: number;
-		orientation?: "horizontal" | "vertical";
-		children?: Snippet;
+		step?: number | undefined;
+		orientation?: "horizontal" | "vertical" | undefined;
+		children?: Snippet | undefined;
 	};
 </script>
 

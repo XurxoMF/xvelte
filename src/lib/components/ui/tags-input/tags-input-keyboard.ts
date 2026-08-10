@@ -1,13 +1,13 @@
 type KeyboardState = {
 	inputValue: string;
 	values: string[];
-	tagIndex?: number;
-	suggestionIndex?: number;
+	tagIndex?: number | undefined;
+	suggestionIndex?: number | undefined;
 	suggestions: string[];
 	showSuggestions: boolean;
 	isComposing: boolean;
-	setTagIndex: (index?: number) => void;
-	setSuggestionIndex: (index?: number) => void;
+	setTagIndex: (index?: number | undefined) => void;
+	setSuggestionIndex: (index?: number | undefined) => void;
 	selectSuggestion: (value: string) => void;
 	deleteIndex: (index: number) => void;
 	enter: () => void;

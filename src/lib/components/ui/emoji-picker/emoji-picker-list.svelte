@@ -2,7 +2,7 @@
 	import type { Command as CommandPrimitiveProps, WithoutChild, WithoutChildren } from "bits-ui";
 
 	export type ListProps = WithoutChildren<WithoutChild<CommandPrimitiveProps.ListProps>> & {
-		emptyMessage?: string;
+		emptyMessage?: string | undefined;
 	};
 </script>
 

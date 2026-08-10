@@ -4,7 +4,7 @@
 	import type { WithChildren, WithoutChildren } from "bits-ui";
 
 	export type OverflowProps = WithChildren<{
-		collapsed?: boolean;
+		collapsed?: boolean | undefined;
 	}> &
 		WithoutChildren<HTMLAttributes<HTMLDivElement>>;
 </script>

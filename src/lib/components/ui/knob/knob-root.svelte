@@ -4,16 +4,16 @@
 	import type { WithElementRef } from "$lib/utils";
 
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
-		value?: number;
-		defaultValue?: number;
-		min?: number;
-		max?: number;
-		step?: number;
-		label?: string;
-		size?: number;
-		color?: string;
-		disabled?: boolean;
-		onValueChange?: (value: number) => void;
+		value?: number | undefined;
+		defaultValue?: number | undefined;
+		min?: number | undefined;
+		max?: number | undefined;
+		step?: number | undefined;
+		label?: string | undefined;
+		size?: number | undefined;
+		color?: string | undefined;
+		disabled?: boolean | undefined;
+		onValueChange?: ((value: number) => void) | undefined;
 	};
 </script>
 

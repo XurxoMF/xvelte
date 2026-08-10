@@ -4,7 +4,7 @@ export type Step = {
 	target: string;
 	title: string;
 	description: string;
-	position?: "top" | "bottom" | "left" | "right";
+	position?: "top" | "bottom" | "left" | "right" | undefined;
 };
 
 export type WalkthroughContext = {

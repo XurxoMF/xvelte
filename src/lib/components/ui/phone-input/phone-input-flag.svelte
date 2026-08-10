@@ -2,7 +2,7 @@
 	import type { Country } from "svelte-tel-input/types";
 
 	export type FlagProps = {
-		country?: Country | null;
+		country?: Country | null | undefined;
 	};
 </script>
 

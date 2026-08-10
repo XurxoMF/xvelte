@@ -1,11 +1,11 @@
 <script lang="ts" module>
 	export type ColorFormat = "hex" | "rgb" | "hsl" | "oklch";
 	export type RootProps = {
-		value?: string;
-		class?: string;
-		allowOpacity?: boolean;
-		defaultFormat?: ColorFormat;
-		formats?: ColorFormat[];
+		value?: string | undefined;
+		class?: string | undefined;
+		allowOpacity?: boolean | undefined;
+		defaultFormat?: ColorFormat | undefined;
+		formats?: ColorFormat[] | undefined;
 	};
 </script>
 

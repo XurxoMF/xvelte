@@ -9,7 +9,7 @@
 	export type FileProps = WithElementRef<WithoutChildren<HTMLButtonAttributes>, HTMLButtonElement> &
 		WithChildren<{
 			name: string;
-			icon?: Snippet<[{ name: string }]>;
+			icon?: Snippet<[{ name: string }]> | undefined;
 		}>;
 </script>
 

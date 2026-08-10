@@ -28,14 +28,14 @@
 	export type RootSizes = VariantProps<typeof rootVariants>["size"];
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
 		value: number;
-		min?: number;
-		max?: number;
-		step?: number;
-		sensitivity?: number;
-		defaultValue?: number;
-		onValueChange?: (v: number) => void;
-		variant?: RootVariants;
-		size?: RootSizes;
+		min?: number | undefined;
+		max?: number | undefined;
+		step?: number | undefined;
+		sensitivity?: number | undefined;
+		defaultValue?: number | undefined;
+		onValueChange?: ((v: number) => void) | undefined;
+		variant?: RootVariants | undefined;
+		size?: RootSizes | undefined;
 		children: Snippet;
 	};
 </script>

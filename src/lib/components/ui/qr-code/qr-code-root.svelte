@@ -3,14 +3,14 @@
 	export type ErrorCorrection = "L" | "M" | "Q" | "H";
 	export type RootProps = {
 		value: string;
-		size?: number;
-		color?: string;
-		backgroundColor?: string;
-		errorCorrection?: ErrorCorrection;
-		margin?: number;
-		class?: string;
-		logo?: string | Snippet;
-		logoSize?: number;
+		size?: number | undefined;
+		color?: string | undefined;
+		backgroundColor?: string | undefined;
+		errorCorrection?: ErrorCorrection | undefined;
+		margin?: number | undefined;
+		class?: string | undefined;
+		logo?: string | Snippet | undefined;
+		logoSize?: number | undefined;
 	};
 </script>
 

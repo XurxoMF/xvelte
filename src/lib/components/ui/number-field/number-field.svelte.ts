@@ -11,8 +11,8 @@ type NumberFieldRootProps = WritableBoxedValues<{
 }> &
 	ReadableBoxedValues<{
 		step: number;
-		min?: number;
-		max?: number;
+		min?: number | undefined;
+		max?: number | undefined;
 		rampSettings: Omit<UseRampOptions, "increment" | "canRamp">;
 	}>;
 

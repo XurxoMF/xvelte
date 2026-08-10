@@ -11,8 +11,8 @@
 
 ## Formatting and size
 
-- Use tabs, double quotes, no trailing commas, and a print width of 150; `.prettierrc` is authoritative.
-- Preserve the existing concise style and avoid comments that only restate the code.
+- Use tabs, double quotes, no trailing commas, and a 150-character print width; `.prettierrc` is authoritative. This is not a file-length limit: keep related logic together instead of splitting it artificially.
+- Keep code and markup readable with blank lines between dense sibling elements or distinct logical blocks, while preserving the existing concise style.
 - Run Prettier instead of manually reformatting generated or class-heavy markup.
 
 ## Imports
@@ -32,8 +32,22 @@
 - Name the main component `Root` in barrels and other parts by role (`Trigger`, `Content`, `Title`, etc.).
 - Forward native/primitive props with `...restProps`, merge classes with `cn()`, expose bindable DOM references as `ref`, and add a stable `data-slot`.
 - Base DOM props on `svelte/elements` types and `WithElementRef`; use `WithoutChild`, `WithoutChildren`, or `WithoutChildrenOrChild` when wrapping primitives.
+- Write `?: T | undefined` for every optional prop, field, and parameter instead of relying on the implicit `undefined` from `?:`.
 - Preserve accessibility roles, labels, keyboard behavior, focus handling, and primitive-provided attributes.
 - Keep public prop defaults in the destructuring declaration and avoid hidden application-specific behavior.
+
+## Context conventions
+
+- Use only Svelte's native `createContext`; do not use external context or reactive-box abstractions such as Runed `Context` or svelte-toolbelt `box`.
+- Name context modules `<component>-context.ts` or `<component>-context.svelte.ts`, and expose them consistently as `setXxxContext` and `getXxxContext`, never `createXxxContext`, `useXxx`, or shortened getters.
+- Bridge reactive values with accessor properties: use `get value()` for readable state and add `set value()` when descendants may update it. Do not represent reactive values as zero-argument callbacks; reserve functions for actual actions, event callbacks, or predicates.
+- Use `.svelte.ts` and state classes when a context owns runes, derived state, or meaningful behavior; use `.ts` with a type and plain object when it only shares data or configuration.
+- Add a context only for state genuinely shared by a root and its descendants. Keep its public input minimal, place reusable internal logic in its state class, and avoid making components repeat derived-state logic.
+
+## Documentation and readability
+
+- Document every function, method, class, and public type or interface with useful TSDoc, including each parameter and non-obvious return value; preserve or improve existing accurate comments.
+- Add short intent-focused comments around algorithms, browser APIs, non-obvious ordering/filtering, or complex markup, but do not merely restate the code.
 
 ## Styling
 

@@ -1,7 +1,17 @@
 import CopyButton, { type CopyButtonProps } from "./code-copy-button.svelte";
-import Overflow from "./code-overflow.svelte";
-import Root from "./code-root.svelte";
-import type { CodeOverflowProps, CodeRootProps } from "./types";
+import Root, { codeVariants, type CodeVariant, type RootProps } from "./code-root.svelte";
+import Overflow, { type OverflowProps } from "./code-overflow.svelte";
 
-export { Root, CopyButton, Overflow, type CodeRootProps as RootProps, type CopyButtonProps, type CodeOverflowProps as OverflowProps };
-export { codeVariants, type CodeVariant } from "./code-variants";
+export {
+	Root,
+	CopyButton,
+	Overflow,
+	//
+	type RootProps,
+	type CopyButtonProps,
+	type OverflowProps,
+	//
+	type CodeVariant,
+	//
+	codeVariants
+};

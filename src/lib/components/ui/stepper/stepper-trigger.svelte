@@ -1,12 +1,19 @@
+<script lang="ts" module>
+	import type { HTMLButtonAttributes } from "svelte/elements";
+
+	import type { WithElementRef } from "$lib/utils";
+
+	export type TriggerProps = WithElementRef<HTMLButtonAttributes, HTMLButtonElement>;
+</script>
+
 <script lang="ts">
 	import { box } from "svelte-toolbelt";
 
 	import { cn } from "$lib/utils";
 
 	import { useStepperItemTrigger } from "./stepper.svelte.js";
-	import type { StepperTriggerProps } from "./types";
 
-	let { ref = $bindable(null), disabled = false, onclick, onkeydown, class: className, children, ...restProps }: StepperTriggerProps = $props();
+	let { ref = $bindable(null), disabled = false, onclick, onkeydown, class: className, children, ...restProps }: TriggerProps = $props();
 
 	const triggerState = useStepperItemTrigger({
 		ref: box.with(() => ref),

@@ -4,7 +4,7 @@
 
 	import type { WithElementRef } from "$lib/utils";
 
-	import type { Point } from "./point-picker-types";
+	import type { Point } from "./point-picker-utils";
 
 	export type RootProps = Omit<WithElementRef<HTMLAttributes<HTMLDivElement>>, "children"> & {
 		value?: Point | undefined;

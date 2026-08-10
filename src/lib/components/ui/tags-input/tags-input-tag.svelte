@@ -1,14 +1,16 @@
-<script lang="ts">
-	import { CloseIcon } from "$lib/icons";
-
-	type Props = {
+<script lang="ts" module>
+	export type TagProps = {
 		value: string;
 		disabled: boolean | null;
 		active: boolean;
 		onDelete: (value: string) => void;
 	};
+</script>
 
-	let { value, disabled, onDelete, active }: Props = $props();
+<script lang="ts">
+	import { CloseIcon } from "$lib/icons";
+
+	let { value, disabled, onDelete, active }: TagProps = $props();
 </script>
 
 <div

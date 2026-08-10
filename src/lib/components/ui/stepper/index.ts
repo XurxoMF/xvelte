@@ -1,25 +1,13 @@
-import Description from "./stepper-description.svelte";
-import Indicator from "./stepper-indicator.svelte";
-import Item from "./stepper-item.svelte";
-import Nav from "./stepper-nav.svelte";
-import Next from "./stepper-next.svelte";
-import Previous from "./stepper-previous.svelte";
-import Root from "./stepper-root.svelte";
-import Separator from "./stepper-separator.svelte";
-import Title from "./stepper-title.svelte";
-import Trigger from "./stepper-trigger.svelte";
-import type {
-	StepperDescriptionProps,
-	StepperIndicatorProps,
-	StepperItemProps,
-	StepperNavProps,
-	StepperNextButtonProps,
-	StepperPreviousButtonProps,
-	StepperRootProps,
-	StepperSeparatorProps,
-	StepperTitleProps,
-	StepperTriggerProps
-} from "./types";
+import Root, { type RootProps } from "./stepper-root.svelte";
+import Nav, { type NavProps } from "./stepper-nav.svelte";
+import Item, { type ItemProps } from "./stepper-item.svelte";
+import Trigger, { type TriggerProps } from "./stepper-trigger.svelte";
+import Indicator, { type IndicatorProps } from "./stepper-indicator.svelte";
+import Separator, { type SeparatorProps } from "./stepper-separator.svelte";
+import Title, { type TitleProps } from "./stepper-title.svelte";
+import Description, { type DescriptionProps } from "./stepper-description.svelte";
+import Next, { type NextProps } from "./stepper-next.svelte";
+import Previous, { type PreviousProps } from "./stepper-previous.svelte";
 
 export {
 	Root,
@@ -32,14 +20,15 @@ export {
 	Description,
 	Next,
 	Previous,
-	type StepperRootProps as RootProps,
-	type StepperNavProps as NavProps,
-	type StepperItemProps as ItemProps,
-	type StepperTriggerProps as TriggerProps,
-	type StepperIndicatorProps as IndicatorProps,
-	type StepperSeparatorProps as SeparatorProps,
-	type StepperTitleProps as TitleProps,
-	type StepperDescriptionProps as DescriptionProps,
-	type StepperNextButtonProps as NextProps,
-	type StepperPreviousButtonProps as PreviousProps
+	//
+	type RootProps,
+	type NavProps,
+	type ItemProps,
+	type TriggerProps,
+	type IndicatorProps,
+	type SeparatorProps,
+	type TitleProps,
+	type DescriptionProps,
+	type NextProps,
+	type PreviousProps
 };

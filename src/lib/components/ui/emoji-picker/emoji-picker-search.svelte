@@ -1,13 +1,18 @@
+<script lang="ts" module>
+	import type { Command as CommandPrimitiveProps } from "bits-ui";
+
+	export type SearchProps = CommandPrimitiveProps.InputProps;
+</script>
+
 <script lang="ts">
-	import { box } from "svelte-toolbelt";
 	import { Command as CommandPrimitive } from "bits-ui";
+	import { box } from "svelte-toolbelt";
 
 	import { SearchIcon } from "$lib/icons";
 
 	import { useEmojiPickerInput } from "./emoji-picker.svelte.js";
-	import type { EmojiPickerSearchProps } from "./types";
 
-	let { value = $bindable(""), placeholder = "Search", ...rest }: EmojiPickerSearchProps = $props();
+	let { value = $bindable(""), placeholder = "Search", ...rest }: SearchProps = $props();
 
 	useEmojiPickerInput({
 		value: box.with(

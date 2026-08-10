@@ -1,12 +1,19 @@
+<script lang="ts" module>
+	import type { HTMLLabelAttributes } from "svelte/elements";
+
+	import type { WithChildren } from "bits-ui";
+
+	export type TriggerProps = WithChildren<{ ref?: HTMLLabelElement | null }> & Omit<HTMLLabelAttributes, "for">;
+</script>
+
 <script lang="ts">
-	import { cn } from "$lib/utils";
 	import { UploadIcon } from "$lib/icons";
+	import { cn } from "$lib/utils";
 
 	import { displaySize } from "./file-drop-zone-utils";
 	import { useFileDropZoneTrigger } from "./file-drop-zone.svelte.js";
-	import type { FileDropZoneTriggerProps } from "./types.js";
 
-	let { ref = $bindable(null), class: className, children, ...rest }: FileDropZoneTriggerProps = $props();
+	let { ref = $bindable(null), class: className, children, ...rest }: TriggerProps = $props();
 
 	const triggerState = useFileDropZoneTrigger();
 </script>

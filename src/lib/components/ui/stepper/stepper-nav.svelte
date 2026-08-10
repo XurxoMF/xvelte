@@ -1,12 +1,21 @@
+<script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import type { WithElementRef } from "$lib/utils";
+
+	export type NavProps = WithElementRef<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
+		orientation?: "horizontal" | "vertical";
+	};
+</script>
+
 <script lang="ts">
 	import { box } from "svelte-toolbelt";
 
 	import { cn } from "$lib/utils";
 
 	import { useStepperNav } from "./stepper.svelte.js";
-	import type { StepperNavProps } from "./types";
 
-	let { ref = $bindable(null), orientation = "horizontal", class: className, children, ...rest }: StepperNavProps = $props();
+	let { ref = $bindable(null), orientation = "horizontal", class: className, children, ...rest }: NavProps = $props();
 
 	const stepperNavState = useStepperNav({
 		orientation: box.with(() => orientation)

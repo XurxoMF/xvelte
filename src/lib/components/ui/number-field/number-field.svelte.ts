@@ -16,7 +16,7 @@ type NumberFieldRootProps = WritableBoxedValues<{
 		rampSettings: Omit<UseRampOptions, "increment" | "canRamp">;
 	}>;
 
-export class NumberFieldRootContext {
+class NumberFieldRootContext {
 	constructor(readonly opts: NumberFieldRootProps) {}
 
 	valid = $derived.by(() => {
@@ -28,7 +28,7 @@ export class NumberFieldRootContext {
 	});
 }
 
-export class NumberFieldInputContext {
+class NumberFieldInputContext {
 	constructor(readonly rootState: NumberFieldRootContext) {}
 
 	oninput: FormEventHandler<HTMLInputElement> = (e) => {
@@ -63,7 +63,7 @@ type NumberFieldButtonProps = {
 	disabled: boolean;
 }>;
 
-export class NumberFieldButton {
+class NumberFieldButton {
 	rampState: ReturnType<typeof useRamp>;
 	pointerTriggered = false;
 	constructor(

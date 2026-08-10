@@ -1,4 +1,4 @@
-type Options = {
+export type UseClipboardOptions = {
 	/** The time before the copied status is reset. */
 	delay: number;
 };
@@ -30,7 +30,7 @@ export class UseClipboard {
 	private delay: number;
 	private timeout: ReturnType<typeof setTimeout> | undefined = undefined;
 
-	constructor({ delay = 500 }: Partial<Options> = {}) {
+	constructor({ delay = 500 }: Partial<UseClipboardOptions> = {}) {
 		this.delay = delay;
 	}
 

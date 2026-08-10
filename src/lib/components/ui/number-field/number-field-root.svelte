@@ -1,7 +1,16 @@
 <script lang="ts" module>
-	import type { NumberFieldRootProps } from "./types";
+	import type { Snippet } from "svelte";
 
-	export type RootProps = NumberFieldRootProps;
+	import type { UseRampOptions } from "$lib/hooks/use-ramp.svelte";
+
+	export type RootProps = {
+		value?: number;
+		step?: number;
+		min?: number;
+		max?: number;
+		rampSettings?: Omit<UseRampOptions, "increment" | "canRamp">;
+		children: Snippet;
+	};
 </script>
 
 <script lang="ts">

@@ -1,9 +1,15 @@
+<script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import type { WithElementRef } from "$lib/utils";
+
+	export type IndicatorProps = WithElementRef<HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+</script>
+
 <script lang="ts">
 	import { cn } from "$lib/utils";
 
-	import type { StepperIndicatorProps } from "./types";
-
-	let { ref = $bindable(null), class: className, children, ...rest }: StepperIndicatorProps = $props();
+	let { ref = $bindable(null), class: className, children, ...rest }: IndicatorProps = $props();
 </script>
 
 <div

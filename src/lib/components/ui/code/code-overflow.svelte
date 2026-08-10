@@ -1,3 +1,14 @@
+<script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import type { WithChildren, WithoutChildren } from "bits-ui";
+
+	export type OverflowProps = WithChildren<{
+		collapsed?: boolean;
+	}> &
+		WithoutChildren<HTMLAttributes<HTMLDivElement>>;
+</script>
+
 <script lang="ts">
 	import { box } from "svelte-toolbelt";
 
@@ -5,9 +16,8 @@
 	import { Root as Button } from "$lib/components/ui/button";
 
 	import { useCodeOverflow } from "./code.svelte.js";
-	import type { CodeOverflowProps } from "./types";
 
-	let { collapsed = $bindable(true), class: className, children, ...props }: CodeOverflowProps = $props();
+	let { collapsed = $bindable(true), class: className, children, ...props }: OverflowProps = $props();
 
 	const state = useCodeOverflow({
 		collapsed: box.with(

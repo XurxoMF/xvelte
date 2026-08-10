@@ -1,4 +1,7 @@
-import type { Point } from "./point-picker-types";
+export type Point = {
+	x: number;
+	y: number;
+};
 
 export type RootEvent<T extends Event> = T & { currentTarget: HTMLDivElement };
 

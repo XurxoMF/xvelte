@@ -3,7 +3,7 @@ import type { HTMLAttributes } from "svelte/elements";
 import { Context } from "runed";
 import type { ReadableBoxedValues } from "svelte-toolbelt";
 
-import type { FileRejectedReason } from "./types";
+export type FileRejectedReason = "Maximum file size exceeded" | "File type not allowed" | "Maximum files uploaded";
 
 type FileDropZoneStateOptions = ReadableBoxedValues<{
 	id: string;

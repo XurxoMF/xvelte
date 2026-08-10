@@ -1,3 +1,11 @@
+<script lang="ts" module>
+	import type { RootProps as ButtonProps } from "$lib/components/ui/button";
+
+	export type IncrementProps = Omit<ButtonProps, "disabled"> & {
+		disabled?: boolean;
+	};
+</script>
+
 <script lang="ts">
 	import { onDestroy } from "svelte";
 
@@ -8,7 +16,6 @@
 	import { Root as Button } from "$lib/components/ui/button";
 
 	import { useNumberFieldButton } from "./number-field.svelte.js";
-	import type { NumberFieldButtonProps } from "./types.js";
 
 	let {
 		ref = $bindable(null),
@@ -24,7 +31,7 @@
 		onclick,
 		tabindex = -1,
 		...rest
-	}: NumberFieldButtonProps = $props();
+	}: IncrementProps = $props();
 
 	const buttonState = useNumberFieldButton({
 		direction: "up",

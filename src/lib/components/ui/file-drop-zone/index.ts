@@ -1,15 +1,25 @@
-import Root from "./file-drop-zone-root.svelte";
+import Root, { type RootProps } from "./file-drop-zone-root.svelte";
+import Trigger, { type TriggerProps } from "./file-drop-zone-trigger.svelte";
 import Textarea, { type TextareaProps } from "./file-drop-zone-textarea.svelte";
-import Trigger from "./file-drop-zone-trigger.svelte";
-import type { FileDropZoneRootProps, FileDropZoneTriggerProps, FileRejectedReason } from "./types";
+import type { FileRejectedReason } from "./file-drop-zone.svelte.js";
+import { ACCEPT_AUDIO, ACCEPT_IMAGE, ACCEPT_VIDEO, BYTE, GIGABYTE, KILOBYTE, MEGABYTE, displaySize } from "./file-drop-zone-utils";
 
 export {
 	Root,
 	Trigger,
 	Textarea,
-	type FileDropZoneRootProps as RootProps,
-	type FileDropZoneTriggerProps as TriggerProps,
+	//
+	type RootProps,
+	type TriggerProps,
 	type TextareaProps,
-	type FileRejectedReason
+	type FileRejectedReason,
+	//
+	ACCEPT_AUDIO,
+	ACCEPT_IMAGE,
+	ACCEPT_VIDEO,
+	BYTE,
+	KILOBYTE,
+	MEGABYTE,
+	GIGABYTE,
+	displaySize
 };
-export { ACCEPT_AUDIO, ACCEPT_IMAGE, ACCEPT_VIDEO, BYTE, GIGABYTE, KILOBYTE, MEGABYTE, displaySize } from "./file-drop-zone-utils";

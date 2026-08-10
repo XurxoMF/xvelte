@@ -1,3 +1,8 @@
 import Root, { type ColorFormat, type RootProps } from "./color-picker-root.svelte";
 
-export { Root, type ColorFormat, type RootProps };
+export {
+	Root,
+	//
+	type RootProps,
+	type ColorFormat
+};

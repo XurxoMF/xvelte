@@ -1,17 +1,17 @@
 import { PersistedState } from "runed";
 
-type FrecencyItem = {
+export type FrecencyItem = {
 	uses: number;
 	lastUsage: number;
 };
 
 type PersistedStateOptions<T> = ConstructorParameters<typeof PersistedState<T>>[2];
 
-type UseFrecencyOptions = PersistedStateOptions<FrecencyMap> & {
+export type UseFrecencyOptions = PersistedStateOptions<FrecencyMap> & {
 	maxItems?: number;
 };
 
-type FrecencyMap = Record<string, FrecencyItem | undefined>;
+export type FrecencyMap = Record<string, FrecencyItem | undefined>;
 
 export class UseFrecency {
 	#items: PersistedState<FrecencyMap>;

@@ -1,7 +1,33 @@
 <script lang="ts" module>
-	import type { CodeRootProps } from "./types";
+	import type { HTMLAttributes } from "svelte/elements";
 
-	export type RootProps = CodeRootProps;
+	import type { WithChildren, WithoutChildren } from "bits-ui";
+	import { type VariantProps, tv } from "tailwind-variants";
+
+	import type { SupportedLanguage } from "./shiki";
+
+	export const codeVariants = tv({
+		base: "not-prose relative h-full overflow-auto rounded-lg border",
+		variants: {
+			variant: {
+				default: "border-border bg-card",
+				secondary: "border-transparent bg-secondary/50"
+			}
+		}
+	});
+
+	export type CodeVariant = VariantProps<typeof codeVariants>["variant"];
+
+	export type RootProps = WithChildren<{
+		ref?: HTMLDivElement | null;
+		variant?: CodeVariant;
+		lang?: SupportedLanguage;
+		code: string;
+		class?: string;
+		hideLines?: boolean;
+		highlight?: (number | [number, number])[];
+	}> &
+		WithoutChildren<HTMLAttributes<HTMLDivElement>>;
 </script>
 
 <script lang="ts">
@@ -9,7 +35,6 @@
 
 	import { cn } from "$lib/utils";
 
-	import { codeVariants } from "./code-variants";
 	import { useCode } from "./code.svelte.js";
 
 	let {

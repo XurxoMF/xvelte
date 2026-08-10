@@ -1,16 +1,7 @@
-<script lang="ts">
+<script lang="ts" module>
 	import type { Country, CountryCode } from "svelte-tel-input/types";
 
-	import { CheckIcon, SelectorIcon } from "$lib/icons";
-	import { cn } from "$lib/utils";
-	import { Root as Button } from "$lib/components/ui/button";
-	import { Root as ScrollArea } from "$lib/components/ui/scroll-area";
-	import * as Command from "$lib/components/ui/command";
-	import * as Popover from "$lib/components/ui/popover";
-
-	import Flag from "./flag.svelte";
-
-	interface Props {
+	export type CountrySelectorProps = {
 		/** List of countries */
 		countries: Country[];
 		disabled?: boolean;
@@ -18,7 +9,18 @@
 		onselect?: (val: CountryCode | null) => void;
 		/** Default ordering is alphabetical by country name supply this function to customize the sorting behavior  */
 		order?: (a: Country, b: Country) => number;
-	}
+	};
+</script>
+
+<script lang="ts">
+	import { Root as Button } from "$lib/components/ui/button";
+	import * as Command from "$lib/components/ui/command";
+	import * as Popover from "$lib/components/ui/popover";
+	import { Root as ScrollArea } from "$lib/components/ui/scroll-area";
+	import { CheckIcon, SelectorIcon } from "$lib/icons";
+	import { cn } from "$lib/utils";
+
+	import Flag from "./phone-input-flag.svelte";
 
 	let {
 		countries,
@@ -28,7 +30,7 @@
 		order = (a, b) => {
 			return a.name.localeCompare(b.name);
 		}
-	}: Props = $props();
+	}: CountrySelectorProps = $props();
 
 	let selectedCountry = $derived(countries.find((a) => a.iso2 == selected));
 	let sortedCountries = $derived([...countries].sort(order));

@@ -30,7 +30,7 @@
 
 	import { cn } from "$lib/utils";
 
-	import CountrySelector from "./country-selector.svelte";
+	import CountrySelector from "./phone-input-country-selector.svelte";
 
 	let {
 		class: className = undefined,

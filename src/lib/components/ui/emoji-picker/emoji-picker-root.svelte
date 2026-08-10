@@ -1,12 +1,22 @@
 <script lang="ts" module>
-	import type { EmojiPickerRootProps } from "./types";
+	import type { Command as CommandPrimitiveProps, WithChildren, WithoutChild } from "bits-ui";
 
-	export type RootProps = EmojiPickerRootProps;
+	import type { EmojiPickerSkin, SelectedEmoji } from "./emoji-picker.svelte.js";
+
+	type RootPropsWithoutHTML = WithChildren<{
+		skin?: EmojiPickerSkin;
+		onSelect?: (emoji: SelectedEmoji) => void;
+		onSkinChange?: (skin: EmojiPickerSkin) => void;
+	}> &
+		({ showRecents?: true; recentsKey: string; maxRecents?: number } | { showRecents?: false | never; recentsKey?: never; maxRecents?: never });
+
+	export type RootProps = WithoutChild<Omit<CommandPrimitiveProps.RootProps, "filter" | "shouldFilter" | "columns" | "onValueChange">> &
+		RootPropsWithoutHTML;
 </script>
 
 <script lang="ts">
-	import { box } from "svelte-toolbelt";
 	import { Command as CommandPrimitive } from "bits-ui";
+	import { box } from "svelte-toolbelt";
 
 	import { cn } from "$lib/utils";
 

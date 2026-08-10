@@ -2,8 +2,8 @@ import { Context } from "runed";
 import type { HighlighterCore } from "shiki";
 import type { ReadableBoxedValues, WritableBoxedValues } from "svelte-toolbelt";
 
+import type { RootProps } from "./code-root.svelte";
 import { highlighter } from "./shiki";
-import type { CodeRootProps } from "./types";
 
 type CodeOverflowStateProps = WritableBoxedValues<{
 	collapsed: boolean;
@@ -25,9 +25,9 @@ class CodeOverflowState {
 
 type CodeRootStateProps = ReadableBoxedValues<{
 	code: string;
-	lang: NonNullable<CodeRootProps["lang"]>;
+	lang: NonNullable<RootProps["lang"]>;
 	hideLines: boolean;
-	highlight: CodeRootProps["highlight"];
+	highlight: RootProps["highlight"];
 }>;
 
 class CodeRootState {
@@ -77,7 +77,7 @@ class CodeRootState {
 	highlighted = $derived(this.highlight(this.code) ?? "");
 }
 
-function within(num: number, range: CodeRootProps["highlight"]) {
+function within(num: number, range: RootProps["highlight"]) {
 	if (!range) return false;
 
 	let within = false;

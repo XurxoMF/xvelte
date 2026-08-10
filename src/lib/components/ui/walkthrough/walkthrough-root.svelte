@@ -1,6 +1,8 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
+
 	import type { Step, WalkthroughContext } from "./walkthrough-context";
+
 	export type RootProps = {
 		steps: Step[];
 		open: boolean;
@@ -11,9 +13,9 @@
 </script>
 
 <script lang="ts">
+	import WalkthroughContent from "./walkthrough-content.svelte";
 	import { setWalkthroughContext } from "./walkthrough-context";
 	import WalkthroughSpotlight from "./walkthrough-spotlight.svelte";
-	import WalkthroughContent from "./walkthrough-content.svelte";
 
 	let { steps = [], open = $bindable(false), onComplete, children, padding }: RootProps = $props();
 

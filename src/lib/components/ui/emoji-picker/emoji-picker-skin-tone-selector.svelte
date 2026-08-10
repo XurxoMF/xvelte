@@ -1,3 +1,13 @@
+<script lang="ts" module>
+	import type { WithoutChildren } from "bits-ui";
+
+	import type { RootProps as ButtonRootProps } from "$lib/components/ui/button";
+
+	export type SkinToneSelectorProps = WithoutChildren<ButtonRootProps> & {
+		previewEmoji?: string;
+	};
+</script>
+
 <script lang="ts">
 	import { box } from "svelte-toolbelt";
 
@@ -5,9 +15,8 @@
 	import { Root as Button, type RootProps as ButtonProps } from "$lib/components/ui/button";
 
 	import { useEmojiPickerSkinToneSelector } from "./emoji-picker.svelte.js";
-	import type { EmojiPickerSkinProps } from "./types.js";
 
-	let { previewEmoji = "👋", variant = "outline", size = "icon", class: className, onclick, ...rest }: EmojiPickerSkinProps = $props();
+	let { previewEmoji = "👋", variant = "outline", size = "icon", class: className, onclick, ...rest }: SkinToneSelectorProps = $props();
 
 	const skinState = useEmojiPickerSkinToneSelector({
 		previewEmoji: box.with(() => previewEmoji)

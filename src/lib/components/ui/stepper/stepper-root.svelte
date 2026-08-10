@@ -1,7 +1,10 @@
 <script lang="ts" module>
-	import type { StepperRootProps } from "./types";
+	import type { Snippet } from "svelte";
 
-	export type RootProps = StepperRootProps;
+	export type RootProps = {
+		step?: number;
+		children?: Snippet;
+	};
 </script>
 
 <script lang="ts">

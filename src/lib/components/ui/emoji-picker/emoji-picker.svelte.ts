@@ -1,10 +1,16 @@
 import { Context, watch } from "runed";
-import data, { type EmojiMartData } from "@emoji-mart/data";
+import data, { type Emoji, type EmojiMartData } from "@emoji-mart/data";
 import type { ReadableBoxedValues, WritableBoxedValues } from "svelte-toolbelt";
 
 import { UseFrecency } from "$lib/hooks/use-frecency.svelte";
 
-import type { EmojiPickerSkin, SelectedEmoji } from "./types";
+export type SelectedEmoji = {
+	emoji: string;
+	data: Emoji;
+	skin: number;
+};
+
+export type EmojiPickerSkin = 0 | 1 | 2 | 3 | 4 | 5;
 
 const emojiData = data as EmojiMartData;
 

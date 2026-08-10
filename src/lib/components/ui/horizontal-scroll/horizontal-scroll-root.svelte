@@ -13,8 +13,6 @@
 
 	import { cn } from "$lib/utils";
 
-	import { setScrollContext } from "./horizontal-scroll-context";
-
 	let { ref = $bindable(null), class: className, sensitivity = 1.5, damping = 0.1, children, ...restProps }: RootProps = $props();
 
 	let targetScroll = 0;
@@ -66,31 +64,6 @@
 
 		targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
 	}
-
-	setScrollContext({
-		scrollLeft: () => {
-			if (!ref) return;
-			if (!isAnimating) {
-				currentScroll = ref.scrollLeft;
-				targetScroll = currentScroll;
-				isAnimating = true;
-				animationFrame = requestAnimationFrame(update);
-			}
-			targetScroll = Math.max(0, targetScroll - 300);
-		},
-		scrollRight: () => {
-			if (!ref) return;
-			const maxScroll = ref.scrollWidth - ref.clientWidth;
-			if (!isAnimating) {
-				currentScroll = ref.scrollLeft;
-				targetScroll = currentScroll;
-				isAnimating = true;
-				animationFrame = requestAnimationFrame(update);
-			}
-			targetScroll = Math.min(maxScroll, targetScroll + 300);
-		},
-		getElement: () => ref
-	});
 </script>
 
 <div

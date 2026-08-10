@@ -1,4 +1,4 @@
-export type KeyboardState = {
+type KeyboardState = {
 	inputValue: string;
 	values: string[];
 	tagIndex?: number;

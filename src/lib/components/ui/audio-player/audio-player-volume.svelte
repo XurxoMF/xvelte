@@ -1,6 +1,8 @@
 <script lang="ts" module>
 	import type { WithoutChildren } from "bits-ui";
+
 	import type { RootProps as ButtonProps } from "$lib/components/ui/button";
+
 	export type VolumeProps = WithoutChildren<ButtonProps>;
 </script>
 
@@ -9,6 +11,7 @@
 	import * as HoverCard from "$lib/components/ui/hover-card";
 	import { VolumeHighIcon, VolumeLowIcon, VolumeMutedIcon } from "$lib/icons";
 	import { cn } from "$lib/utils";
+
 	import { getAudioPlayerContext } from "./audio-player-context";
 
 	let { class: className, ...restProps }: VolumeProps = $props();

@@ -1,10 +1,22 @@
+<script lang="ts" module>
+	import type { Snippet } from "svelte";
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import type { WithoutChildren } from "bits-ui";
+
+	import type { SelectedEmoji } from "./emoji-picker.svelte.js";
+
+	export type FooterProps = WithoutChildren<HTMLAttributes<HTMLDivElement>> & {
+		children: Snippet<[{ active: SelectedEmoji | null }]>;
+	};
+</script>
+
 <script lang="ts">
 	import { cn } from "$lib/utils";
 
 	import { useEmojiPickerFooter } from "./emoji-picker.svelte.js";
-	import type { EmojiPickerFooterProps } from "./types";
 
-	let { class: className, children, ...rest }: EmojiPickerFooterProps = $props();
+	let { class: className, children, ...rest }: FooterProps = $props();
 
 	const footerState = useEmojiPickerFooter();
 </script>

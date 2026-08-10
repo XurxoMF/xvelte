@@ -1,11 +1,22 @@
+<script lang="ts" module>
+	import type { Snippet } from "svelte";
+
+	import type { WithChildren } from "bits-ui";
+
+	export type FolderProps = WithChildren<{
+		name: string;
+		open?: boolean;
+		class?: string;
+		icon?: Snippet<[{ name: string; open: boolean }]>;
+	}>;
+</script>
+
 <script lang="ts">
-	import { cn } from "$lib/utils";
-	import { FolderIcon, FolderOpenIcon } from "$lib/icons";
 	import * as Collapsible from "$lib/components/ui/collapsible";
+	import { FolderIcon, FolderOpenIcon } from "$lib/icons";
+	import { cn } from "$lib/utils";
 
-	import type { TreeViewFolderProps } from "./types";
-
-	let { name, open = $bindable(true), class: className, icon, children }: TreeViewFolderProps = $props();
+	let { name, open = $bindable(true), class: className, icon, children }: FolderProps = $props();
 </script>
 
 <Collapsible.Root bind:open>

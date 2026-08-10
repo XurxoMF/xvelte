@@ -1,12 +1,14 @@
-<script lang="ts">
-	type Props = {
+<script lang="ts" module>
+	export type SuggestionProps = {
 		id: string;
 		value: string;
 		active: boolean;
 		onSelect: (value: string) => void;
 	};
+</script>
 
-	let { id, value, active, onSelect }: Props = $props();
+<script lang="ts">
+	let { id, value, active, onSelect }: SuggestionProps = $props();
 </script>
 
 <button

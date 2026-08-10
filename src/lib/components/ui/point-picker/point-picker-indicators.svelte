@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from "svelte";
 
-	import type { Point } from "./point-picker-types";
+	import type { Point } from "./point-picker-utils";
 
 	type Props = {
 		value: Point;

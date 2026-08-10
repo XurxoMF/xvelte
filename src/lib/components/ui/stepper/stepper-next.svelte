@@ -1,12 +1,19 @@
+<script lang="ts" module>
+	import type { WithChild } from "svelte-toolbelt";
+
+	import type { RootProps as ButtonProps } from "$lib/components/ui/button";
+
+	export type NextProps = WithChild<Omit<ButtonProps, "children">>;
+</script>
+
 <script lang="ts">
 	import { box, mergeProps } from "svelte-toolbelt";
 
 	import { Root as Button } from "$lib/components/ui/button";
 
 	import { useStepperStepButton } from "./stepper.svelte.js";
-	import type { StepperNextButtonProps } from "./types";
 
-	let { disabled = false, child, children, variant = "default", size = "default", ...rest }: StepperNextButtonProps = $props();
+	let { disabled = false, child, children, variant = "default", size = "default", ...rest }: NextProps = $props();
 
 	const buttonState = useStepperStepButton({
 		type: box.with(() => "next"),

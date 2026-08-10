@@ -1,10 +1,17 @@
+<script lang="ts" module>
+	import type { HTMLInputAttributes } from "svelte/elements";
+
+	import type { WithElementRef } from "$lib/utils";
+
+	export type InputProps = WithElementRef<Omit<HTMLInputAttributes, "min" | "max" | "value" | "type">>;
+</script>
+
 <script lang="ts">
 	import { cn } from "$lib/utils";
 
 	import { useNumberFieldInput } from "./number-field.svelte.js";
-	import type { NumberFieldInputProps } from "./types.js";
 
-	let { ref = $bindable(null), class: className, ...rest }: NumberFieldInputProps = $props();
+	let { ref = $bindable(null), class: className, ...rest }: InputProps = $props();
 
 	const inputState = useNumberFieldInput();
 </script>

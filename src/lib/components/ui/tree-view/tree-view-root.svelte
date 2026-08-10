@@ -1,7 +1,9 @@
 <script lang="ts" module>
-	import type { TreeViewRootProps } from "./types";
+	import type { HTMLAttributes } from "svelte/elements";
 
-	export type RootProps = TreeViewRootProps;
+	import type { WithElementRef } from "$lib/utils";
+
+	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 </script>
 
 <script lang="ts">

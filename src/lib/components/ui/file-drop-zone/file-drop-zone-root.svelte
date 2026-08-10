@@ -1,7 +1,22 @@
 <script lang="ts" module>
-	import type { FileDropZoneRootProps } from "./types";
+	import type { HTMLInputAttributes } from "svelte/elements";
 
-	export type RootProps = FileDropZoneRootProps;
+	import type { WithChildren } from "bits-ui";
+
+	import type { FileRejectedReason } from "./file-drop-zone.svelte.js";
+
+	type RootPropsWithoutHTML = WithChildren<{
+		ref?: HTMLInputElement | null;
+		id?: string;
+		onUpload: (files: File[]) => Promise<void>;
+		maxFiles?: number;
+		fileCount?: number;
+		maxFileSize?: number;
+		onFileRejected?: (opts: { reason: FileRejectedReason; file: File }) => void;
+		accept?: string;
+	}>;
+
+	export type RootProps = RootPropsWithoutHTML & Omit<HTMLInputAttributes, "multiple" | "files" | "id" | "class">;
 </script>
 
 <script lang="ts">

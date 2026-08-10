@@ -1,10 +1,12 @@
 <script lang="ts">
+	import { arrow, autoUpdate, computePosition, flip, offset, shift, type Placement } from "@floating-ui/dom";
 	import { onDestroy, untrack, type Snippet } from "svelte";
-	import { computePosition, autoUpdate, offset, shift, arrow, flip, type Placement } from "@floating-ui/dom";
 	import { fade } from "svelte/transition";
-	import { getWalkthroughContext, type WalkthroughContext } from "./walkthrough-context";
+
 	import * as Button from "$lib/components/ui/button";
 	import { CloseIcon } from "$lib/icons";
+
+	import { getWalkthroughContext, type WalkthroughContext } from "./walkthrough-context";
 
 	let {
 		targetId,

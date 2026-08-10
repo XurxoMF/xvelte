@@ -1,10 +1,23 @@
+<script lang="ts" module>
+	import type { Snippet } from "svelte";
+	import type { HTMLButtonAttributes } from "svelte/elements";
+
+	import type { WithChildren, WithoutChildren } from "bits-ui";
+
+	import type { WithElementRef } from "$lib/utils";
+
+	export type FileProps = WithElementRef<WithoutChildren<HTMLButtonAttributes>, HTMLButtonElement> &
+		WithChildren<{
+			name: string;
+			icon?: Snippet<[{ name: string }]>;
+		}>;
+</script>
+
 <script lang="ts">
-	import { cn } from "$lib/utils";
 	import { FileIcon } from "$lib/icons";
+	import { cn } from "$lib/utils";
 
-	import type { TreeViewFileProps } from "./types";
-
-	let { ref = $bindable(null), name, icon, type = "button", class: className, ...restProps }: TreeViewFileProps = $props();
+	let { ref = $bindable(null), name, icon, type = "button", class: className, ...restProps }: FileProps = $props();
 </script>
 
 <button

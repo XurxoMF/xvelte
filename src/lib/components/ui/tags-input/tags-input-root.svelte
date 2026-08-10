@@ -1,7 +1,17 @@
 <script lang="ts" module>
-	import type { RootProps as TagsInputRootProps } from "./types";
+	import type { HTMLInputAttributes } from "svelte/elements";
 
-	export type RootProps = TagsInputRootProps;
+	export type RootProps = Omit<HTMLInputAttributes, "children" | "class" | "value"> & {
+		ref?: HTMLDivElement | null;
+		inputRef?: HTMLInputElement | null;
+		class?: string;
+		value?: string[];
+		validate?: (val: string, tags: string[]) => string | undefined;
+		onValueChange?: (value: string[]) => void;
+		suggestions?: string[];
+		filterSuggestions?: (inputValue: string, suggestions: string[]) => string[];
+		restrictToSuggestions?: boolean;
+	};
 </script>
 
 <script lang="ts">
@@ -9,10 +19,18 @@
 
 	import { cn } from "$lib/utils";
 
-	import { defaultFilter, defaultValidate } from "./tags-input-utils";
+	import * as TagsInput from ".";
 	import { handleKeydown } from "./tags-input-keyboard";
-	import TagsInputSuggestion from "./tags-input-suggestion.svelte";
-	import TagsInputTag from "./tags-input-tag.svelte";
+
+	const defaultValidate: NonNullable<RootProps["validate"]> = (value, tags) => {
+		const transformed = value.trim();
+		return transformed.length > 0 && !tags.includes(transformed) ? transformed : undefined;
+	};
+
+	const defaultFilter: NonNullable<RootProps["filterSuggestions"]> = (value, suggestions) => {
+		const search = value.toLowerCase();
+		return suggestions.filter((suggestion) => suggestion.toLowerCase().includes(search));
+	};
 
 	let {
 		value = $bindable([]),
@@ -166,7 +184,7 @@
 	aria-disabled={disabled}
 >
 	{#each value as tag, i (tag)}
-		<TagsInputTag value={tag} {disabled} onDelete={deleteValue} active={i === tagIndex} />
+		<TagsInput.Tag value={tag} {disabled} onDelete={deleteValue} active={i === tagIndex} />
 	{/each}
 	<input
 		bind:this={inputRef}
@@ -197,7 +215,7 @@
 			class="absolute top-full right-0 left-0 z-50 mt-1 max-h-50 overflow-y-auto rounded-md border bg-popover p-1 text-popover-foreground shadow-md"
 		>
 			{#each filteredSuggestions as suggestion, i (suggestion)}
-				<TagsInputSuggestion id="{listboxId}-{i}" value={suggestion} active={i === suggestionIndex} onSelect={selectSuggestion} />
+				<TagsInput.Suggestion id="{listboxId}-{i}" value={suggestion} active={i === suggestionIndex} onSelect={selectSuggestion} />
 			{/each}
 		</div>
 	{/if}

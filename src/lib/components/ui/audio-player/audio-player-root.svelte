@@ -8,6 +8,7 @@
 
 <script lang="ts">
 	import { cn } from "$lib/utils";
+
 	import { setAudioPlayerContext } from "./audio-player-context";
 
 	let { ref = $bindable(null), src, class: className, children, ...restProps }: RootProps = $props();

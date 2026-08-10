@@ -1,9 +1,8 @@
-import Decrement from "./number-field-decrement.svelte";
+import Root, { type RootProps } from "./number-field-root.svelte";
 import Group, { type GroupProps } from "./number-field-group.svelte";
-import Increment from "./number-field-increment.svelte";
-import Input from "./number-field-input.svelte";
-import Root from "./number-field-root.svelte";
-import type { NumberFieldButtonProps, NumberFieldInputProps, NumberFieldRootProps } from "./types";
+import Decrement, { type DecrementProps } from "./number-field-decrement.svelte";
+import Increment, { type IncrementProps } from "./number-field-increment.svelte";
+import Input, { type InputProps } from "./number-field-input.svelte";
 
 export {
 	Root,
@@ -11,9 +10,10 @@ export {
 	Decrement,
 	Increment,
 	Input,
-	type NumberFieldRootProps as RootProps,
+	//
+	type RootProps,
 	type GroupProps,
-	type NumberFieldButtonProps as DecrementProps,
-	type NumberFieldButtonProps as IncrementProps,
-	type NumberFieldInputProps as InputProps
+	type DecrementProps,
+	type IncrementProps,
+	type InputProps
 };

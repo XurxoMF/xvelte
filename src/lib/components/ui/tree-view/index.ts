@@ -1,6 +1,13 @@
-import File from "./tree-view-file.svelte";
-import Folder from "./tree-view-folder.svelte";
-import Root from "./tree-view-root.svelte";
-import type { TreeViewFileProps, TreeViewFolderProps, TreeViewRootProps } from "./types";
+import Root, { type RootProps } from "./tree-view-root.svelte";
+import File, { type FileProps } from "./tree-view-file.svelte";
+import Folder, { type FolderProps } from "./tree-view-folder.svelte";
 
-export { Root, File, Folder, type TreeViewRootProps as RootProps, type TreeViewFileProps as FileProps, type TreeViewFolderProps as FolderProps };
+export {
+	Root,
+	File,
+	Folder,
+	//
+	type RootProps,
+	type FileProps,
+	type FolderProps
+};

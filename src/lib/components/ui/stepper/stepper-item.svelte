@@ -1,12 +1,21 @@
+<script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import type { WithElementRef } from "$lib/utils";
+
+	export type ItemProps = WithElementRef<Omit<HTMLAttributes<HTMLDivElement>, "id">, HTMLDivElement> & {
+		id?: string;
+	};
+</script>
+
 <script lang="ts">
 	import { cn } from "$lib/utils";
 
 	import { useStepperItem } from "./stepper.svelte.js";
-	import type { StepperItemProps } from "./types";
 
 	const uid = $props.id();
 
-	let { ref = $bindable(null), id = uid, class: className, children, ...rest }: StepperItemProps = $props();
+	let { ref = $bindable(null), id = uid, class: className, children, ...rest }: ItemProps = $props();
 
 	const stepperItemState = useStepperItem({
 		get id() {

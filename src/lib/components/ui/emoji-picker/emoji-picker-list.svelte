@@ -1,17 +1,24 @@
-<script lang="ts">
-	import { Command as CommandPrimitive } from "bits-ui";
-	import data, { type EmojiMartData } from "@emoji-mart/data";
+<script lang="ts" module>
+	import type { Command as CommandPrimitiveProps, WithoutChild, WithoutChildren } from "bits-ui";
 
-	import { cn } from "$lib/utils";
+	export type ListProps = WithoutChildren<WithoutChild<CommandPrimitiveProps.ListProps>> & {
+		emptyMessage?: string;
+	};
+</script>
+
+<script lang="ts">
+	import data, { type EmojiMartData } from "@emoji-mart/data";
+	import { Command as CommandPrimitive } from "bits-ui";
+
 	import * as Command from "$lib/components/ui/command";
+	import { cn } from "$lib/utils";
 
 	import { makeValue, parseValue, useEmojiPickerList } from "./emoji-picker.svelte.js";
-	import * as casing from "./emoji-picker-utils";
-	import type { EmojiPickerListProps } from "./types";
 
-	let { ref = $bindable(null), emptyMessage = "No results.", class: className, ...rest }: EmojiPickerListProps = $props();
+	let { ref = $bindable(null), emptyMessage = "No results.", class: className, ...rest }: ListProps = $props();
 
 	const emojiData = data as EmojiMartData;
+	const formatCategory = (value: string) => (value.length === 0 ? value : `${value[0].toUpperCase()}${value.slice(1)}`);
 
 	const filter = (value: string, keywords: string[]) => {
 		if (!Array.isArray(keywords)) {
@@ -66,7 +73,7 @@
 		{#if emojis.length > 0}
 			<CommandPrimitive.Group>
 				<CommandPrimitive.GroupHeading class="px-2 py-1 text-xs text-muted-foreground">
-					{casing.camelToPascal(category.id)}
+					{formatCategory(category.id)}
 				</CommandPrimitive.GroupHeading>
 				<CommandPrimitive.GroupItems class="grid grid-cols-6 px-2">
 					{#each emojis as item (item)}

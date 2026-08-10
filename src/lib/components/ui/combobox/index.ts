@@ -11,7 +11,7 @@ import {
 	type ComboboxState,
 	type ComboboxType,
 	type ValueMap,
-	createComboboxContext,
+	setComboboxContext,
 	getComboboxContext
 } from "./combobox-context.svelte";
 
@@ -39,6 +39,6 @@ export {
 	type ComboboxType,
 	type ValueMap,
 	//
-	createComboboxContext,
+	setComboboxContext,
 	getComboboxContext
 };

@@ -1,32 +1,43 @@
 <script lang="ts" module>
-	import type { WithChild } from "svelte-toolbelt";
+	import type { Snippet } from "svelte";
 
 	import type { RootProps as ButtonProps } from "$lib/components/ui/button";
 
-	export type NextProps = WithChild<Omit<ButtonProps, "children">>;
+	export type NextProps = Omit<ButtonProps, "children"> & {
+		child?: Snippet<[{ props: Record<string, unknown> }]>;
+		children?: Snippet;
+	};
 </script>
 
 <script lang="ts">
-	import { box, mergeProps } from "svelte-toolbelt";
-
 	import { Root as Button } from "$lib/components/ui/button";
 
-	import { useStepperStepButton } from "./stepper.svelte.js";
+	import { getStepperContext } from "./stepper-context.svelte.js";
 
-	let { disabled = false, child, children, variant = "default", size = "default", ...restProps }: NextProps = $props();
+	let { disabled = false, onclick, child, children, variant = "default", size = "default", ...restProps }: NextProps = $props();
 
-	const buttonState = useStepperStepButton({
-		type: box.with(() => "next"),
-		disabled: box.with(() => disabled ?? false)
+	const stepper = getStepperContext();
+
+	/** Advances the stepper before forwarding the click event. */
+	function handleClick(event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement }) {
+		stepper.next();
+		onclick?.(event);
+	}
+
+	const buttonProps = $derived({
+		...restProps,
+		variant,
+		size,
+		disabled: Boolean(disabled) || !stepper.canIncrement,
+		onclick: handleClick,
+		"data-slot": "stepper-next"
 	});
-
-	const mergedProps = $derived(mergeProps(buttonState.props, restProps, { variant, size, "data-slot": "stepper-next" }));
 </script>
 
 {#if child}
-	{@render child({ props: mergedProps })}
+	{@render child({ props: buttonProps })}
 {:else}
-	<Button {...mergedProps}>
+	<Button {...buttonProps}>
 		{@render children?.()}
 	</Button>
 {/if}

@@ -12,7 +12,6 @@
 ## Formatting and size
 
 - Use tabs, double quotes, no trailing commas, and a print width of 150; `.prettierrc` is authoritative.
-- Treat 150 lines as the standard maximum per source file. Split distinct behavior, types, or helpers when a file grows beyond it.
 - Preserve the existing concise style and avoid comments that only restate the code.
 - Run Prettier instead of manually reformatting generated or class-heavy markup.
 

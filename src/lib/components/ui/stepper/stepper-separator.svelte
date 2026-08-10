@@ -9,26 +9,26 @@
 <script lang="ts">
 	import { cn } from "$lib/utils";
 
-	import { useStepperSeparator } from "./stepper.svelte.js";
+	import { getStepperItemContext } from "./stepper-context.svelte.js";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: SeparatorProps = $props();
 
-	const separatorState = useStepperSeparator();
+	const item = getStepperItemContext();
 </script>
 
 <div
 	bind:this={ref}
 	data-slot="stepper-separator"
+	data-state={item.state}
 	class={cn(
 		"absolute shrink-0 bg-muted transition-colors data-[state=completed]:bg-primary",
 		"group-data-[orientation=horizontal]/stepper-nav:top-[12px] group-data-[orientation=horizontal]/stepper-nav:h-1 group-data-[orientation=horizontal]/stepper-nav:w-full",
 		"group-data-[orientation=vertical]/stepper-nav:top-[28px] group-data-[orientation=vertical]/stepper-nav:left-[12px] group-data-[orientation=vertical]/stepper-nav:h-full group-data-[orientation=vertical]/stepper-nav:w-1",
 		{
-			hidden: separatorState.itemState.isLast
+			hidden: item.isLast
 		},
 		className
 	)}
-	{...separatorState.props}
 	{...restProps}
 >
 	{@render children?.()}

@@ -22,7 +22,7 @@
 		...restProps
 	}: ProviderProps = $props();
 
-	const sidebar = Sidebar.setSidebar({
+	const sidebar = Sidebar.setSidebarContext({
 		open: () => open,
 		setOpen: (value: boolean) => {
 			open = value;

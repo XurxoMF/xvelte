@@ -18,6 +18,6 @@ export function setChartContext(value: ChartContextValue) {
 }
 
 /** @returns The configuration from the nearest chart container. */
-export function useChart() {
+export function getChartContext() {
 	return getChartState();
 }

@@ -12,11 +12,11 @@
 
 	import * as Popover from "$lib/components/ui/popover";
 
-	import { createComboboxContext, type ComboboxType, type ValueMap } from "./combobox-context.svelte";
+	import { setComboboxContext, type ComboboxType, type ValueMap } from "./combobox-context.svelte";
 
 	let { type = "single" as T, value = $bindable(), onchange, children }: RootProps<T> = $props();
 
-	const ctx = createComboboxContext(
+	const ctx = setComboboxContext(
 		() => value as ValueMap[T],
 		(v) => {
 			value = v;

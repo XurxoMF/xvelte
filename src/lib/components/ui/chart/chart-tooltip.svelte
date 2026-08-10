@@ -56,7 +56,7 @@
 		...restProps
 	}: TooltipProps = $props();
 
-	const chart = Chart.useChart();
+	const chart = Chart.getChartContext();
 	const chartCtx = getChartContext();
 
 	// Item-based charts populate only the hovered series, so omit every undefined value.

@@ -9,20 +9,17 @@
 </script>
 
 <script lang="ts">
+	import { untrack } from "svelte";
+
 	import { cn } from "$lib/utils";
 
-	import { useStepperItem } from "./stepper.svelte.js";
+	import { setStepperItemContext } from "./stepper-context.svelte.js";
 
 	const uid = $props.id();
 
 	let { ref = $bindable(null), id = uid, class: className, children, ...restProps }: ItemProps = $props();
 
-	const stepperItemState = useStepperItem({
-		/** Current reactive identifier supplied to this step item. */
-		get id() {
-			return id;
-		}
-	});
+	const item = setStepperItemContext(untrack(() => id));
 </script>
 
 <div
@@ -31,11 +28,13 @@
 	class={cn(
 		"group/stepper-item relative flex",
 		{
-			"flex-1": !stepperItemState.isLast
+			"flex-1": !item.isLast
 		},
 		className
 	)}
-	{...stepperItemState.props}
+	id={item.id}
+	data-step={item.id}
+	data-state={item.state}
 	{...restProps}
 >
 	{@render children?.()}

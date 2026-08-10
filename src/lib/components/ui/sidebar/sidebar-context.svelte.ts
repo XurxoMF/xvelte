@@ -70,7 +70,7 @@ const [getSidebarState, setSidebarState] = createContext<SidebarState>();
  * @param props - Reactive desktop state getter and setter.
  * @returns The provided `SidebarState` instance.
  */
-export function setSidebar(props: SidebarStateProps): SidebarState {
+export function setSidebarContext(props: SidebarStateProps): SidebarState {
 	return setSidebarState(new SidebarState(props));
 }
 
@@ -79,6 +79,6 @@ export function setSidebar(props: SidebarStateProps): SidebarState {
  *
  * @returns The `SidebarState` instance.
  */
-export function useSidebar(): SidebarState {
+export function getSidebarContext(): SidebarState {
 	return getSidebarState();
 }

@@ -16,7 +16,7 @@
 
 	let { ref = $bindable(null), class: className, onclick, ...restProps }: TriggerProps = $props();
 
-	const sidebar = Sidebar.useSidebar();
+	const sidebar = Sidebar.getSidebarContext();
 </script>
 
 <Tooltip.Root>

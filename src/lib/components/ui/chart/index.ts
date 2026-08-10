@@ -1,7 +1,7 @@
 import Container, { type ContainerProps } from "./chart-container.svelte";
 import Tooltip, { type TooltipProps } from "./chart-tooltip.svelte";
 import Style, { type StyleProps } from "./chart-style.svelte";
-import { type ChartContextValue, setChartContext, useChart } from "./chart-context";
+import { type ChartContextValue, getChartContext, setChartContext } from "./chart-context";
 import { type ChartConfig, type ExtractSnippetParams, type TooltipPayload, getPayloadConfigFromPayload, THEMES } from "./chart-utils";
 
 export {
@@ -20,7 +20,7 @@ export {
 	//
 	getPayloadConfigFromPayload,
 	setChartContext,
-	useChart,
+	getChartContext,
 	//
 	THEMES
 };

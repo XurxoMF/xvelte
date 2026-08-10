@@ -7,32 +7,73 @@
 </script>
 
 <script lang="ts">
-	import { box } from "svelte-toolbelt";
-
 	import { cn } from "$lib/utils";
 
-	import { useStepperItemTrigger } from "./stepper.svelte.js";
+	import { getStepperContext, getStepperItemContext } from "./stepper-context.svelte.js";
 
 	let { ref = $bindable(null), disabled = false, onclick, onkeydown, class: className, children, ...restProps }: TriggerProps = $props();
 
-	const triggerState = useStepperItemTrigger({
-		ref: box.with(() => ref),
-		disabled: box.with(() => disabled ?? false),
-		onclick: box.with(() => onclick),
-		onkeydown: box.with(() => onkeydown)
+	const stepper = getStepperContext();
+	const item = getStepperItemContext();
+
+	$effect(() => {
+		item.trigger = ref;
+
+		return () => {
+			if (item.trigger === ref) item.trigger = null;
+		};
 	});
+
+	/** Selects this item before forwarding the click event. */
+	function handleClick(event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement }) {
+		stepper.select(item);
+		onclick?.(event);
+	}
+
+	/** Handles orientation-aware arrow navigation before forwarding the event. */
+	function handleKeydown(event: KeyboardEvent & { currentTarget: EventTarget & HTMLButtonElement }) {
+		if (disabled) return;
+
+		switch (event.key) {
+			case "ArrowRight":
+				if (stepper.orientation === "horizontal") stepper.navigate(1);
+				break;
+			case "ArrowLeft":
+				if (stepper.orientation === "horizontal") stepper.navigate(-1);
+				break;
+			case "ArrowDown":
+				if (stepper.orientation === "vertical") {
+					event.preventDefault();
+					stepper.navigate(1);
+				}
+				break;
+			case "ArrowUp":
+				if (stepper.orientation === "vertical") {
+					event.preventDefault();
+					stepper.navigate(-1);
+				}
+				break;
+		}
+
+		onkeydown?.(event);
+	}
 </script>
 
 <button
 	bind:this={ref}
 	data-slot="stepper-trigger"
+	id={`${item.id}-trigger`}
+	{disabled}
+	onclick={handleClick}
+	onkeydown={handleKeydown}
+	data-state={item.state}
+	aria-current={item.state === "active" ? "step" : undefined}
 	class={cn(
 		"group/stepper-trigger z-1 flex outline-none",
 		"group-data-[orientation=horizontal]/stepper-nav:flex-col",
 		"group-data-[orientation=vertical]/stepper-nav:flex-row group-data-[orientation=vertical]/stepper-nav:gap-4",
 		className
 	)}
-	{...triggerState.props}
 	{...restProps}
 >
 	{@render children?.()}

@@ -3,23 +3,21 @@
 
 	export type RootProps = {
 		step?: number;
+		orientation?: "horizontal" | "vertical";
 		children?: Snippet;
 	};
 </script>
 
 <script lang="ts">
-	import { box } from "svelte-toolbelt";
+	import { setStepperContext } from "./stepper-context.svelte.js";
 
-	import { useStepperRoot } from "./stepper.svelte.js";
+	let { step = $bindable(1), orientation = "horizontal", children }: RootProps = $props();
 
-	let { step = $bindable(1), children }: RootProps = $props();
-
-	useStepperRoot({
-		step: box.with(
-			() => step,
-			(v) => (step = v)
-		)
-	});
+	setStepperContext(
+		() => step,
+		(value) => (step = value),
+		() => orientation
+	);
 </script>
 
 {@render children?.()}

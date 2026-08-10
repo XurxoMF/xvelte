@@ -11,7 +11,7 @@
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: RailProps = $props();
 
-	const sidebar = Sidebar.useSidebar();
+	const sidebar = Sidebar.getSidebarContext();
 </script>
 
 <button

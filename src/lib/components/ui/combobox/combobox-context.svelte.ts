@@ -96,7 +96,7 @@ const [getComboboxState, setComboboxState] = createContext<ComboboxContextState>
  * @param setValue - Callback that updates the bound value.
  * @param type - Whether selection is single or multiple.
  */
-export function createComboboxContext<T extends ComboboxType>(
+export function setComboboxContext<T extends ComboboxType>(
 	getValue: () => ValueMap[T],
 	setValue: (v: ValueMap[T]) => void,
 	type: T

@@ -3,37 +3,32 @@
 
 	import type { WithElementRef } from "$lib/utils";
 
-	export type NavProps = WithElementRef<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
-		orientation?: "horizontal" | "vertical";
-	};
+	export type NavProps = WithElementRef<HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 </script>
 
 <script lang="ts">
-	import { box } from "svelte-toolbelt";
-
 	import { cn } from "$lib/utils";
 
-	import { useStepperNav } from "./stepper.svelte.js";
+	import { getStepperContext } from "./stepper-context.svelte.js";
 
-	let { ref = $bindable(null), orientation = "horizontal", class: className, children, ...restProps }: NavProps = $props();
+	let { ref = $bindable(null), class: className, children, ...restProps }: NavProps = $props();
 
-	const stepperNavState = useStepperNav({
-		orientation: box.with(() => orientation)
-	});
+	const stepper = getStepperContext();
 </script>
 
 <div
 	bind:this={ref}
 	data-slot="stepper-nav"
+	aria-orientation={stepper.orientation}
+	data-orientation={stepper.orientation}
 	class={cn(
 		"group/stepper-nav flex",
 		{
-			"flex-row justify-between": orientation === "horizontal",
-			"flex-col gap-2": orientation === "vertical"
+			"flex-row justify-between": stepper.orientation === "horizontal",
+			"flex-col gap-2": stepper.orientation === "vertical"
 		},
 		className
 	)}
-	{...stepperNavState.props}
 	{...restProps}
 >
 	{@render children?.()}

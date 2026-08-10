@@ -25,7 +25,7 @@
 		...restProps
 	}: RootProps = $props();
 
-	const sidebar = Sidebar.useSidebar();
+	const sidebar = Sidebar.getSidebarContext();
 </script>
 
 {#if collapsible === "none"}

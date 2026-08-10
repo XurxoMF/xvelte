@@ -57,7 +57,7 @@
 		...restProps
 	}: MenuButtonProps = $props();
 
-	const sidebar = Sidebar.useSidebar();
+	const sidebar = Sidebar.getSidebarContext();
 
 	const buttonProps = $derived({
 		class: cn(menuButtonVariants({ variant, size }), className),

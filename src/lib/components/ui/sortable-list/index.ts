@@ -1,4 +1,4 @@
-import Root, { type RootProps, type SortableItem } from "./sortable-list-root.svelte";
+import Root, { type RootProps, type SortableItem, type SortableRenderState } from "./sortable-list-root.svelte";
 import Item, { type ItemProps } from "./sortable-list-item.svelte";
 import DragHandle, { type DragHandleProps } from "./sortable-list-drag-handle.svelte";
 
@@ -10,5 +10,6 @@ export {
 	type RootProps,
 	type ItemProps,
 	type DragHandleProps,
-	type SortableItem
+	type SortableItem,
+	type SortableRenderState
 };

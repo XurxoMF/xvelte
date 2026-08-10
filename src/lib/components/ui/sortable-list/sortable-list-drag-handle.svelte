@@ -1,41 +1,52 @@
 <script lang="ts" module>
-	import type { HTMLButtonAttributes } from "svelte/elements";
+	import type { Snippet } from "svelte";
+	import type { HTMLAttributes } from "svelte/elements";
 
-	import type { RootSizes as ButtonSize, RootVariants as ButtonVariant } from "$lib/components/ui/button";
-	import type { WithElementRef } from "$lib/utils";
-
-	export type DragHandleProps = WithElementRef<HTMLButtonAttributes> & {
-		size?: ButtonSize;
-		variant?: ButtonVariant;
+	export type DragHandleProps = Omit<HTMLAttributes<HTMLElement>, "children"> & {
+		ref?: HTMLElement | null;
+		child?: Snippet<[{ props: Record<string, unknown> }]>;
+		children?: Snippet;
 	};
 </script>
 
 <script lang="ts">
+	import { createAttachmentKey } from "svelte/attachments";
 	import { dragHandle } from "svelte-dnd-action";
-
-	import { rootVariants as buttonVariants } from "$lib/components/ui/button";
-	import { DragHandleIcon } from "$lib/icons";
-	import { cn } from "$lib/utils";
 
 	let {
 		ref = $bindable(null),
 		class: className,
-		size = "icon-sm",
-		variant = "ghost",
-		type = "button",
+		child,
+		children,
 		"aria-label": ariaLabel = "Drag to reorder",
 		...restProps
 	}: DragHandleProps = $props();
+
+	const attachmentKey = createAttachmentKey();
+
+	function sortableDragHandle(node: HTMLElement) {
+		ref = node;
+		const action = dragHandle(node);
+
+		return () => {
+			action.destroy();
+			if (ref === node) ref = null;
+		};
+	}
+
+	const mergedProps = $derived({
+		...restProps,
+		class: className,
+		"aria-label": ariaLabel,
+		"data-slot": "sortable-list-drag-handle",
+		[attachmentKey]: sortableDragHandle
+	});
 </script>
 
-<button
-	bind:this={ref}
-	use:dragHandle
-	class={cn(buttonVariants({ size, variant }), "cursor-grab touch-none active:cursor-grabbing", className)}
-	aria-label={ariaLabel}
-	data-slot="sortable-list-drag-handle"
-	{type}
-	{...restProps}
->
-	<DragHandleIcon class="size-4" />
-</button>
+{#if child}
+	{@render child({ props: mergedProps })}
+{:else}
+	<div {...mergedProps}>
+		{@render children?.()}
+	</div>
+{/if}

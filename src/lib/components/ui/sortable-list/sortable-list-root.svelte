@@ -10,9 +10,17 @@
 		id: string | number;
 	};
 
+	export type SortableRenderState = {
+		index: number;
+		dragging: boolean;
+	};
+
 	export type RootProps<Item extends SortableItem = SortableItem> = WithoutChildren<WithElementRef<HTMLAttributes<HTMLDivElement>>> & {
 		items: Item[];
-		item: Snippet<[Item]>;
+		item: Snippet<[Item, SortableRenderState]>;
+		disabled?: boolean;
+		onDragStart?: (item: Item, index: number) => void;
+		onConsider?: (items: Item[]) => void;
 		onDrop?: (items: Item[]) => void;
 		flipDuration?: number;
 	};
@@ -20,16 +28,26 @@
 
 <script lang="ts" generics="Item extends SortableItem">
 	import { tick } from "svelte";
-	import { flip } from "svelte/animate";
+	import { SvelteSet } from "svelte/reactivity";
 
-	import { SHADOW_ITEM_MARKER_PROPERTY_NAME, dragHandleZone } from "svelte-dnd-action";
+	import { SHADOW_ITEM_MARKER_PROPERTY_NAME, SOURCES, TRIGGERS, dragHandleZone, type DndEvent } from "svelte-dnd-action";
 
-	import { cn } from "$lib/utils";
-
-	let { ref = $bindable(null), class: className, items, item, onDrop, flipDuration = 150, ...restProps }: RootProps<Item> = $props();
+	let {
+		ref = $bindable(null),
+		class: className,
+		items,
+		item,
+		disabled = false,
+		onDragStart,
+		onConsider,
+		onDrop,
+		flipDuration = 150,
+		...restProps
+	}: RootProps<Item> = $props();
 
 	let isDragging = $state(false);
 	let dndItems = $state<Item[]>([]);
+	let draggedItem = $state<Item>();
 
 	$effect(() => {
 		if (isDragging) return;
@@ -39,33 +57,74 @@
 		}
 	});
 
-	function handleConsider(e: CustomEvent<{ items: Item[] }>) {
-		isDragging = true;
-		dndItems = e.detail.items;
+	function isShadowItem(value: Item) {
+		return SHADOW_ITEM_MARKER_PROPERTY_NAME in value && value[SHADOW_ITEM_MARKER_PROPERTY_NAME] === true;
 	}
 
-	async function handleFinalize(e: CustomEvent<{ items: Item[] }>) {
-		const finalItems = e.detail.items.filter((item) => !(item as Item & Record<string, unknown>)[SHADOW_ITEM_MARKER_PROPERTY_NAME]);
+	function cleanItems(values: Item[]) {
+		const clean: Item[] = [];
+		const ids = new SvelteSet<string | number>();
+
+		for (const value of values) {
+			const candidate = isShadowItem(value) ? draggedItem : value;
+			if (!candidate || ids.has(candidate.id)) continue;
+			ids.add(candidate.id);
+			clean.push(candidate);
+		}
+
+		return clean;
+	}
+
+	function startDrag(event: CustomEvent<DndEvent<Item>>) {
+		const clean = cleanItems(dndItems);
+		const index = clean.findIndex((entry) => entry.id === event.detail.info.id);
+		draggedItem = clean[index];
+		if (draggedItem) onDragStart?.(draggedItem, index);
+	}
+
+	async function finishDrag(finalItems: Item[]) {
 		dndItems = finalItems;
 		onDrop?.(finalItems);
-
 		await tick();
 		isDragging = false;
+		draggedItem = undefined;
+	}
+
+	function handleConsider(event: CustomEvent<DndEvent<Item>>) {
+		if (event.detail.info.trigger === TRIGGERS.DRAG_STOPPED) {
+			void finishDrag(cleanItems(event.detail.items));
+			return;
+		}
+
+		if (event.detail.info.trigger === TRIGGERS.DRAG_STARTED) startDrag(event);
+		isDragging = true;
+		dndItems = event.detail.items;
+		onConsider?.(cleanItems(event.detail.items));
+	}
+
+	function handleFinalize(event: CustomEvent<DndEvent<Item>>) {
+		const clean = cleanItems(event.detail.items);
+		dndItems = event.detail.items;
+
+		if (event.detail.info.source === SOURCES.KEYBOARD) {
+			onConsider?.(clean);
+			return;
+		}
+
+		void finishDrag(clean);
 	}
 </script>
 
 <div
 	bind:this={ref}
-	use:dragHandleZone={{ items: dndItems, flipDurationMs: flipDuration, dropTargetStyle: {} }}
+	use:dragHandleZone={{ items: dndItems, flipDurationMs: flipDuration, dragDisabled: disabled, dropTargetStyle: {} }}
 	onconsider={handleConsider}
 	onfinalize={handleFinalize}
-	class={cn("flex flex-col gap-1", className)}
+	class={className}
 	data-slot="sortable-list"
 	{...restProps}
 >
-	{#each dndItems as entry (entry.id)}
-		<div animate:flip={{ duration: flipDuration }} data-slot="sortable-list-entry">
-			{@render item(entry)}
-		</div>
+	{#each dndItems as entry, index (entry.id)}
+		{@render item(entry, { index, dragging: isShadowItem(entry) || entry.id === draggedItem?.id })}
 	{/each}
 </div>

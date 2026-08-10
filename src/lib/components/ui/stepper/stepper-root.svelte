@@ -13,11 +13,17 @@
 
 	let { step = $bindable(1), orientation = "horizontal", children }: RootProps = $props();
 
-	setStepperContext(
-		() => step,
-		(value) => (step = value),
-		() => orientation
-	);
+	setStepperContext({
+		get step() {
+			return step;
+		},
+		set step(value) {
+			step = value;
+		},
+		get orientation() {
+			return orientation;
+		}
+	});
 </script>
 
 {@render children?.()}

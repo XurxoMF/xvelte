@@ -2,10 +2,10 @@ import { createContext } from "svelte";
 import type { DateValue } from "@internationalized/date";
 
 type DateStripContext = {
-	selectedValue: () => DateValue | undefined;
+	readonly selectedValue: DateValue | undefined;
 	onSelect: (date: DateValue) => void;
 	isDateDisabled: (date: DateValue) => boolean;
-	direction: () => "start" | "end";
+	readonly direction: "start" | "end";
 };
 
 const [getDateStripState, setDateStripState] = createContext<DateStripContext>();

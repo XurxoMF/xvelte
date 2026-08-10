@@ -16,14 +16,16 @@
 
 	let { type = "single" as T, value = $bindable(), onchange, children }: RootProps<T> = $props();
 
-	const ctx = setComboboxContext(
-		() => value as ValueMap[T],
-		(v) => {
-			value = v;
-			onchange?.(v);
+	const ctx = setComboboxContext({
+		get value() {
+			return value as ValueMap[T];
 		},
-		untrack(() => type)
-	);
+		set value(nextValue) {
+			value = nextValue;
+			onchange?.(nextValue);
+		},
+		type: untrack(() => type)
+	});
 </script>
 
 <Popover.Root bind:open={ctx.open}>

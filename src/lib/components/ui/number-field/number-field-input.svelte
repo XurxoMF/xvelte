@@ -9,19 +9,19 @@
 <script lang="ts">
 	import { cn } from "$lib/utils";
 
-	import { useNumberFieldInput } from "./number-field.svelte.js";
+	import { getNumberFieldContext } from "./number-field-context.svelte.js";
 
 	let { ref = $bindable(null), class: className, ...restProps }: InputProps = $props();
 
-	const inputState = useNumberFieldInput();
+	const numberField = getNumberFieldContext();
 </script>
 
 <input
 	class={cn("h-9 flex-1 rounded-md border border-border px-4 text-center outline-none aria-invalid:border-destructive", className)}
 	bind:this={ref}
 	data-slot="number-field-input"
-	bind:value={inputState.rootState.opts.value.current}
-	{...inputState.props}
+	bind:value={numberField.value}
+	{...numberField.inputProps}
 	{...restProps}
 />
 

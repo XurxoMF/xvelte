@@ -11,7 +11,7 @@
 	let { class: className, children }: HandleProps = $props();
 
 	const ctx = getCompareContext();
-	let isHorizontal = $derived(ctx.orientation() === "horizontal");
+	let isHorizontal = $derived(ctx.orientation === "horizontal");
 </script>
 
 <div

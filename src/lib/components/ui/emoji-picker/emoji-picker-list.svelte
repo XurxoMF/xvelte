@@ -13,7 +13,7 @@
 	import * as Command from "$lib/components/ui/command";
 	import { cn } from "$lib/utils";
 
-	import { makeValue, parseValue, useEmojiPickerList } from "./emoji-picker.svelte.js";
+	import { getEmojiPickerContext, makeValue, parseValue } from "./emoji-picker-context.svelte.js";
 
 	let { ref = $bindable(null), emptyMessage = "No results.", class: className, ...restProps }: ListProps = $props();
 
@@ -38,7 +38,7 @@
 		return false;
 	};
 
-	const pickerState = useEmojiPickerList();
+	const emojiPicker = getEmojiPickerContext();
 </script>
 
 <Command.List bind:ref data-slot="emoji-picker-list" class={cn("relative h-50", className)} {...restProps}>
@@ -46,13 +46,13 @@
 		{emptyMessage}
 	</Command.Empty>
 
-	{#if pickerState.showRecents}
-		{@const recents = pickerState.root.frecency?.items
+	{#if emojiPicker.showRecents}
+		{@const recents = emojiPicker.frecency?.items
 			.filter((item) => {
 				const { name } = parseValue(item);
-				return filter(pickerState.root.emojiPickerState.search, emojiData.emojis[name].keywords);
+				return filter(emojiPicker.search, emojiData.emojis[name].keywords);
 			})
-			.slice(0, pickerState.maxRecents)}
+			.slice(0, emojiPicker.maxRecents)}
 		{#if recents && recents.length > 0}
 			<CommandPrimitive.Group>
 				<CommandPrimitive.GroupHeading class="px-2 py-1 text-xs text-muted-foreground">Recents</CommandPrimitive.GroupHeading>
@@ -64,8 +64,8 @@
 							class="flex aspect-square size-9 place-items-center justify-center text-lg [&_svg]:hidden!"
 							value="{item}:recent"
 							onSelect={() => {
-								pickerState.select(item);
-								pickerState.root.frecency?.use(item);
+								emojiPicker.select(item);
+								emojiPicker.frecency?.use(item);
 							}}
 						>
 							{emoji}
@@ -77,7 +77,7 @@
 	{/if}
 
 	{#each emojiData.categories as category (category.id)}
-		{@const emojis = category.emojis.filter((item) => filter(pickerState.root.emojiPickerState.search, emojiData.emojis[item].keywords))}
+		{@const emojis = category.emojis.filter((item) => filter(emojiPicker.search, emojiData.emojis[item].keywords))}
 		{#if emojis.length > 0}
 			<CommandPrimitive.Group>
 				<CommandPrimitive.GroupHeading class="px-2 py-1 text-xs text-muted-foreground">
@@ -86,14 +86,14 @@
 				<CommandPrimitive.GroupItems class="grid grid-cols-6 px-2">
 					{#each emojis as item (item)}
 						{@const emoji = emojiData.emojis[item]}
-						{@const emojiSkin = emoji.skins.length > 1 ? pickerState.skinIndex : 0}
+						{@const emojiSkin = emoji.skins.length > 1 ? emojiPicker.options.skin : 0}
 						{@const key = makeValue(item, emojiSkin)}
 						<Command.Item
 							class="flex aspect-square size-9 place-items-center justify-center text-lg [&_svg]:hidden!"
 							value={item}
 							onSelect={() => {
-								pickerState.select(key);
-								pickerState.root.frecency?.use(key);
+								emojiPicker.select(key);
+								emojiPicker.frecency?.use(key);
 							}}
 						>
 							{emoji.skins[emojiSkin].native}

@@ -23,8 +23,10 @@
 	}: ProviderProps = $props();
 
 	const sidebar = Sidebar.setSidebarContext({
-		open: () => open,
-		setOpen: (value: boolean) => {
+		get open() {
+			return open;
+		},
+		set open(value: boolean) {
 			open = value;
 			onOpenChange(value);
 

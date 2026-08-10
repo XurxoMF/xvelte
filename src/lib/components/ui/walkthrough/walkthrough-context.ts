@@ -8,10 +8,10 @@ export type Step = {
 };
 
 export type WalkthroughContext = {
-	isOpen: () => boolean;
-	currentStepIndex: () => number;
-	currentStep: () => Step | undefined;
-	isLastStep: () => boolean;
+	readonly isOpen: boolean;
+	readonly currentStepIndex: number;
+	readonly currentStep: Step | undefined;
+	readonly isLastStep: boolean;
 	next: () => void;
 	prev: () => void;
 	close: () => void;

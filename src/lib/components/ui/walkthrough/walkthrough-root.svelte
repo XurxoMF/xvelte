@@ -36,6 +36,11 @@
 		if (currentStepIndex > 0) currentStepIndex--;
 	}
 
+	/** Closes the walkthrough without completing it. */
+	function close() {
+		open = false;
+	}
+
 	/** Closes the walkthrough, then resets progress after the exit transition. */
 	function finish() {
 		open = false;
@@ -46,13 +51,21 @@
 	}
 
 	setWalkthroughContext({
-		isOpen: () => open,
-		currentStepIndex: () => currentStepIndex,
-		currentStep: () => currentStep,
-		isLastStep: () => isLastStep,
+		get isOpen() {
+			return open;
+		},
+		get currentStepIndex() {
+			return currentStepIndex;
+		},
+		get currentStep() {
+			return currentStep;
+		},
+		get isLastStep() {
+			return isLastStep;
+		},
 		next,
 		prev,
-		close: () => (open = false)
+		close
 	});
 </script>
 

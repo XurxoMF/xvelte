@@ -16,9 +16,9 @@
 	const formatterMonth = new DateFormatter("en-US", { month: "short" });
 	const formatterDay = new DateFormatter("en-US", { day: "numeric" });
 
-	let isSelected = $derived(ctx.selectedValue()?.compare(date) === 0);
+	let isSelected = $derived(ctx.selectedValue?.compare(date) === 0);
 	let isDisabled = $derived(ctx.isDateDisabled(date));
-	let direction = $derived(ctx.direction());
+	let direction = $derived(ctx.direction);
 
 	/** Selects this date unless the root has marked it as disabled. */
 	function handleClick() {

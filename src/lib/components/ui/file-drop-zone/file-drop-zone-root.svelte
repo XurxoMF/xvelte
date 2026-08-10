@@ -3,7 +3,7 @@
 
 	import type { WithChildren } from "bits-ui";
 
-	import type { FileRejectedReason } from "./file-drop-zone.svelte.js";
+	import type { FileRejectedReason } from "./file-drop-zone-context.svelte.js";
 
 	type RootPropsWithoutHTML = WithChildren<{
 		ref?: HTMLInputElement | null | undefined;
@@ -20,9 +20,7 @@
 </script>
 
 <script lang="ts">
-	import { box } from "svelte-toolbelt";
-
-	import { useFileDropZone } from "./file-drop-zone.svelte.js";
+	import { setFileDropZoneContext } from "./file-drop-zone-context.svelte.js";
 
 	const uid = $props.id();
 	let {
@@ -39,18 +37,34 @@
 		...restProps
 	}: RootProps = $props();
 
-	const rootState = useFileDropZone({
-		id: box.with(() => id),
-		disabled: box.with(() => disabled ?? false),
-		onUpload: box.with(() => onUpload),
-		maxFiles: box.with(() => maxFiles),
-		fileCount: box.with(() => fileCount),
-		maxFileSize: box.with(() => maxFileSize),
-		onFileRejected: box.with(() => onFileRejected),
-		accept: box.with(() => accept)
+	const fileDropZone = setFileDropZoneContext({
+		get id() {
+			return id;
+		},
+		get disabled() {
+			return disabled ?? false;
+		},
+		get onUpload() {
+			return onUpload;
+		},
+		get maxFiles() {
+			return maxFiles;
+		},
+		get fileCount() {
+			return fileCount;
+		},
+		get maxFileSize() {
+			return maxFileSize;
+		},
+		get onFileRejected() {
+			return onFileRejected;
+		},
+		get accept() {
+			return accept;
+		}
 	});
 </script>
 
-<input bind:this={ref} data-slot="file-drop-zone" class="hidden" {...rootState.props} {...restProps} />
+<input bind:this={ref} data-slot="file-drop-zone" class="hidden" {...fileDropZone.props} {...restProps} />
 
 {@render children?.()}

@@ -11,7 +11,7 @@
 	let { ref = $bindable(null), class: className, format = (value: number) => value.toString(), ...restProps }: ValueProps = $props();
 
 	const ctx = getScrubbableContext();
-	let val = $derived(ctx.value());
+	let val = $derived(ctx.value);
 </script>
 
 <span bind:this={ref} class={cn("pointer-events-none tabular-nums transition-opacity", className)} data-slot="scrubbable-value" {...restProps}>

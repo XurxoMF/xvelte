@@ -1,8 +1,8 @@
 import { createContext } from "svelte";
 
 type ScrubbableContext = {
-	value: () => number;
-	isDragging: () => boolean;
+	readonly value: number;
+	readonly isDragging: boolean;
 };
 
 const [getScrubbableState, setScrubbableState] = createContext<ScrubbableContext>();
@@ -10,7 +10,7 @@ const [getScrubbableState, setScrubbableState] = createContext<ScrubbableContext
 /**
  * Provides the current value and dragging state to scrubbable parts.
  *
- * @param props - Reactive getters owned by the scrubbable root.
+ * @param props - Reactive values owned by the scrubbable root.
  */
 export function setScrubbableContext(props: ScrubbableContext) {
 	return setScrubbableState(props);

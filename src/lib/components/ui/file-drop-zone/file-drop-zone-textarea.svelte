@@ -7,23 +7,36 @@
 </script>
 
 <script lang="ts">
-	import { box, mergeProps } from "svelte-toolbelt";
-
-	import { useFileDropZoneTextarea } from "./file-drop-zone.svelte.js";
+	import { getFileDropZoneContext } from "./file-drop-zone-context.svelte.js";
 
 	let { onpaste, ondragover, ondrop, child, ...restProps }: TextareaProps = $props();
 
-	const fileDropZoneTextareaState = useFileDropZoneTextarea({
-		onpaste: box.with(() => onpaste),
-		ondragover: box.with(() => ondragover),
-		ondrop: box.with(() => ondrop)
-	});
+	const fileDropZone = getFileDropZoneContext();
 
-	const mergedProps = $derived(mergeProps(fileDropZoneTextareaState.props, restProps));
+	const textareaProps = $derived({
+		...restProps,
+		"data-slot": "file-drop-zone-textarea",
+		ondragover: (event: Parameters<NonNullable<TextareaProps["ondragover"]>>[0]) => {
+			event.preventDefault();
+			ondragover?.(event);
+		},
+		ondrop: (event: Parameters<NonNullable<TextareaProps["ondrop"]>>[0]) => {
+			fileDropZone.ondrop(event);
+			ondrop?.(event);
+		},
+		onpaste: (event: Parameters<NonNullable<TextareaProps["onpaste"]>>[0]) => {
+			const files = Array.from(event.clipboardData?.items ?? [])
+				.map((item) => item.getAsFile())
+				.filter((file) => file !== null);
+
+			if (files.length > 0) fileDropZone.upload(files);
+			onpaste?.(event);
+		}
+	});
 </script>
 
 {#if child}
-	{@render child({ props: mergedProps })}
+	{@render child({ props: textareaProps })}
 {:else}
-	<textarea data-slot="file-drop-zone-textarea" {...mergedProps}></textarea>
+	<textarea {...textareaProps}></textarea>
 {/if}

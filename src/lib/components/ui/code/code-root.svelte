@@ -31,11 +31,9 @@
 </script>
 
 <script lang="ts">
-	import { box } from "svelte-toolbelt";
-
 	import { cn } from "$lib/utils";
 
-	import { useCode } from "./code.svelte.js";
+	import { setCodeContext } from "./code-context.svelte.js";
 
 	let {
 		ref = $bindable(null),
@@ -49,11 +47,19 @@
 		...restProps
 	}: RootProps = $props();
 
-	const codeState = useCode({
-		code: box.with(() => code.trimEnd()),
-		hideLines: box.with(() => hideLines),
-		highlight: box.with(() => highlight),
-		lang: box.with(() => lang)
+	const codeState = setCodeContext({
+		get code() {
+			return code.trimEnd();
+		},
+		get hideLines() {
+			return hideLines;
+		},
+		get highlight() {
+			return highlight;
+		},
+		get lang() {
+			return lang;
+		}
 	});
 </script>
 

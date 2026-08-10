@@ -10,19 +10,28 @@
 	import { UploadIcon } from "$lib/icons";
 	import { cn } from "$lib/utils";
 
+	import { getFileDropZoneContext } from "./file-drop-zone-context.svelte.js";
 	import { displaySize } from "./file-drop-zone-utils";
-	import { useFileDropZoneTrigger } from "./file-drop-zone.svelte.js";
 
-	let { ref = $bindable(null), class: className, children, ...restProps }: TriggerProps = $props();
+	let { ref = $bindable(null), class: className, children, ondragover, ondrop, ...restProps }: TriggerProps = $props();
 
-	const triggerState = useFileDropZoneTrigger();
+	const fileDropZone = getFileDropZoneContext();
 </script>
 
 <label
 	bind:this={ref}
 	data-slot="file-drop-zone-trigger"
+	for={fileDropZone.options.id}
+	aria-disabled={!fileDropZone.canUploadFiles}
+	ondragover={(event) => {
+		event.preventDefault();
+		ondragover?.(event);
+	}}
+	ondrop={(event) => {
+		fileDropZone.ondrop(event);
+		ondrop?.(event);
+	}}
 	class={cn("group/file-drop-zone-trigger", className)}
-	{...triggerState.props}
 	{...restProps}
 >
 	{#if children}
@@ -36,21 +45,21 @@
 			</div>
 			<div class="flex flex-col gap-0.5 text-center">
 				<span class="font-medium text-muted-foreground"> Drag 'n' drop files here, or click to select files </span>
-				{#if triggerState.rootState.opts.maxFiles.current || triggerState.rootState.opts.maxFileSize.current}
+				{#if fileDropZone.options.maxFiles || fileDropZone.options.maxFileSize}
 					<span class="text-sm text-muted-foreground/75">
-						{#if triggerState.rootState.opts.maxFiles.current}
+						{#if fileDropZone.options.maxFiles}
 							<span>
-								You can upload {triggerState.rootState.opts.maxFiles.current} files
+								You can upload {fileDropZone.options.maxFiles} files
 							</span>
 						{/if}
-						{#if triggerState.rootState.opts.maxFiles.current && triggerState.rootState.opts.maxFileSize.current}
+						{#if fileDropZone.options.maxFiles && fileDropZone.options.maxFileSize}
 							<span>
-								(up to {displaySize(triggerState.rootState.opts.maxFileSize.current)} each)
+								(up to {displaySize(fileDropZone.options.maxFileSize)} each)
 							</span>
 						{/if}
-						{#if triggerState.rootState.opts.maxFileSize.current && !triggerState.rootState.opts.maxFiles.current}
+						{#if fileDropZone.options.maxFileSize && !fileDropZone.options.maxFiles}
 							<span>
-								Maximum size {displaySize(triggerState.rootState.opts.maxFileSize.current)}
+								Maximum size {displaySize(fileDropZone.options.maxFileSize)}
 							</span>
 						{/if}
 					</span>

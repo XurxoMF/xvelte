@@ -9,13 +9,11 @@
 <script lang="ts">
 	import { onDestroy } from "svelte";
 
-	import { box } from "svelte-toolbelt";
-
 	import { cn } from "$lib/utils";
 	import { PlusIcon } from "$lib/icons";
 	import { Root as Button } from "$lib/components/ui/button";
 
-	import { useNumberFieldButton } from "./number-field.svelte.js";
+	import { NumberFieldButtonState } from "./number-field-context.svelte.js";
 
 	let {
 		ref = $bindable(null),
@@ -33,14 +31,26 @@
 		...restProps
 	}: IncrementProps = $props();
 
-	const buttonState = useNumberFieldButton({
+	const buttonState = new NumberFieldButtonState({
 		direction: "up",
-		onpointerdown: box.with(() => onpointerdown),
-		onpointerup: box.with(() => onpointerup),
-		onpointerleave: box.with(() => onpointerleave),
-		onpointercancel: box.with(() => onpointercancel),
-		onclick: box.with(() => onclick),
-		disabled: box.with(() => disabled)
+		get onpointerdown() {
+			return onpointerdown;
+		},
+		get onpointerup() {
+			return onpointerup;
+		},
+		get onpointerleave() {
+			return onpointerleave;
+		},
+		get onpointercancel() {
+			return onpointercancel;
+		},
+		get onclick() {
+			return onclick;
+		},
+		get disabled() {
+			return disabled;
+		}
 	});
 
 	onDestroy(() => buttonState.destroy());

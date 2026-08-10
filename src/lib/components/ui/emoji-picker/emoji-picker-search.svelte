@@ -6,19 +6,17 @@
 
 <script lang="ts">
 	import { Command as CommandPrimitive } from "bits-ui";
-	import { box } from "svelte-toolbelt";
 
 	import { SearchIcon } from "$lib/icons";
 
-	import { useEmojiPickerInput } from "./emoji-picker.svelte.js";
+	import { getEmojiPickerContext } from "./emoji-picker-context.svelte.js";
 
 	let { value = $bindable(""), placeholder = "Search", ...restProps }: SearchProps = $props();
 
-	useEmojiPickerInput({
-		value: box.with(
-			() => value,
-			(v) => (value = v)
-		)
+	const emojiPicker = getEmojiPickerContext();
+
+	$effect(() => {
+		emojiPicker.search = value;
 	});
 </script>
 

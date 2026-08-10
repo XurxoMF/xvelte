@@ -37,14 +37,23 @@
 		startDate = startDate.add({ days: daysToShow });
 	}
 
+	/** Selects a date and notifies the root consumer. */
+	function handleSelect(date: DateValue) {
+		value = date;
+		onDateChange?.(date);
+	}
+
 	setDateStripContext({
-		selectedValue: () => value,
-		onSelect: (d) => {
-			value = d;
-			onDateChange?.(d);
+		get selectedValue() {
+			return value;
 		},
-		isDateDisabled: (date) => isDateDisabled(date),
-		direction: () => slideDirection
+		onSelect: handleSelect,
+		get isDateDisabled() {
+			return isDateDisabled;
+		},
+		get direction() {
+			return slideDirection;
+		}
 	});
 </script>
 

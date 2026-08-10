@@ -4,38 +4,32 @@ import { IsMobile } from "$lib/hooks/is-mobile.svelte";
 
 import { SIDEBAR_KEYBOARD_SHORTCUT } from "./sidebar-constants";
 
-type Getter<T> = () => T;
-
 export type SidebarStateProps = {
-	/**
-	 * A getter function that returns the current open state of the sidebar.
-	 * We use a getter function here to support `bind:open` on the `Sidebar.Provider`
-	 * component.
-	 */
-	open: Getter<boolean>;
-
-	/**
-	 * A function that sets the open state of the sidebar. To support `bind:open`, we need
-	 * a source of truth for changing the open state to ensure it will be synced throughout
-	 * the sub-components and any `bind:` references.
-	 */
-	setOpen: (open: boolean) => void;
+	/** Reactive desktop state owned by the provider. */
+	open: boolean;
 };
 
 /** Holds the responsive open state and controls shared by all sidebar parts. */
 export class SidebarState {
 	readonly props: SidebarStateProps;
-	open = $derived.by(() => this.props.open());
 	openMobile = $state(false);
-	setOpen: SidebarStateProps["setOpen"];
 	#isMobile: IsMobile;
 	state = $derived.by(() => (this.open ? "expanded" : "collapsed"));
 
 	/** @param props - Reactive desktop state getter and setter. */
 	constructor(props: SidebarStateProps) {
-		this.setOpen = props.setOpen;
 		this.#isMobile = new IsMobile();
 		this.props = props;
+	}
+
+	/** Whether the desktop sidebar is open. */
+	get open() {
+		return this.props.open;
+	}
+
+	/** Updates the desktop sidebar state through the provider binding. */
+	set open(value: boolean) {
+		this.props.open = value;
 	}
 
 	/** Whether the current viewport is below the mobile breakpoint. */
@@ -58,7 +52,7 @@ export class SidebarState {
 
 	/** Toggles the mobile drawer or desktop sidebar for the current viewport. */
 	toggle = () => {
-		return this.#isMobile.current ? (this.openMobile = !this.openMobile) : this.setOpen(!this.open);
+		return this.#isMobile.current ? (this.openMobile = !this.openMobile) : (this.open = !this.open);
 	};
 }
 

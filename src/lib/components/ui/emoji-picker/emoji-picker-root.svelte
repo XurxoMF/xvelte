@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import type { Command as CommandPrimitiveProps, WithChildren, WithoutChild } from "bits-ui";
 
-	import type { EmojiPickerSkin, SelectedEmoji } from "./emoji-picker.svelte.js";
+	import type { EmojiPickerSkin, SelectedEmoji } from "./emoji-picker-context.svelte.js";
 
 	type RootPropsWithoutHTML = WithChildren<{
 		skin?: EmojiPickerSkin | undefined;
@@ -19,11 +19,10 @@
 
 <script lang="ts">
 	import { Command as CommandPrimitive } from "bits-ui";
-	import { box } from "svelte-toolbelt";
 
 	import { cn } from "$lib/utils";
 
-	import { useEmojiPicker } from "./emoji-picker.svelte.js";
+	import { setEmojiPickerContext } from "./emoji-picker-context.svelte.js";
 
 	let {
 		value = $bindable(""),
@@ -38,20 +37,34 @@
 		...restProps
 	}: RootProps = $props();
 
-	const state = useEmojiPicker({
-		value: box.with(
-			() => value,
-			(v) => (value = v)
-		),
-		skin: box.with(
-			() => skin,
-			(v) => (skin = v)
-		),
-		showRecents: box.with(() => showRecents),
-		recentsKey: box.with(() => recentsKey),
-		maxRecents: box.with(() => maxRecents),
-		onSelect: box.with(() => onSelect),
-		onSkinChange: box.with(() => onSkinChange)
+	const state = setEmojiPickerContext({
+		get value() {
+			return value;
+		},
+		set value(next) {
+			value = next;
+		},
+		get skin() {
+			return skin;
+		},
+		set skin(next) {
+			skin = next;
+		},
+		get showRecents() {
+			return showRecents;
+		},
+		get recentsKey() {
+			return recentsKey;
+		},
+		get maxRecents() {
+			return maxRecents;
+		},
+		get onSelect() {
+			return onSelect;
+		},
+		get onSkinChange() {
+			return onSkinChange;
+		}
 	});
 </script>
 

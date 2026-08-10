@@ -74,9 +74,15 @@
 	}
 
 	setCompareContext({
-		position: () => value,
-		orientation: () => orientation,
-		isDragging: () => isDragging
+		get position() {
+			return value;
+		},
+		get orientation() {
+			return orientation;
+		},
+		get isDragging() {
+			return isDragging;
+		}
 	});
 </script>
 

@@ -10,21 +10,10 @@
 </script>
 
 <script lang="ts">
-	import { box } from "svelte-toolbelt";
-
 	import { cn } from "$lib/utils";
 	import { Root as Button } from "$lib/components/ui/button";
 
-	import { useCodeOverflow } from "./code.svelte.js";
-
 	let { collapsed = $bindable(true), class: className, children, ...restProps }: OverflowProps = $props();
-
-	const state = useCodeOverflow({
-		collapsed: box.with(
-			() => collapsed,
-			(v) => (collapsed = v)
-		)
-	});
 </script>
 
 <div
@@ -39,7 +28,7 @@
 		<div class="absolute bottom-0 left-0 z-10 h-full w-full bg-linear-to-t from-background to-transparent"></div>
 	{/if}
 	{#if collapsed}
-		<Button variant="secondary" size="sm" class="absolute bottom-2 left-1/2 z-20 w-fit -translate-x-1/2" onclick={state.toggleCollapsed}>
+		<Button variant="secondary" size="sm" class="absolute bottom-2 left-1/2 z-20 w-fit -translate-x-1/2" onclick={() => (collapsed = false)}>
 			Expand
 		</Button>
 	{/if}

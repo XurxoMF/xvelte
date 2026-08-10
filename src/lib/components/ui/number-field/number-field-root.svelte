@@ -14,9 +14,7 @@
 </script>
 
 <script lang="ts">
-	import { box } from "svelte-toolbelt";
-
-	import { useNumberField } from "./number-field.svelte.js";
+	import { setNumberFieldContext } from "./number-field-context.svelte.js";
 
 	let {
 		value = $bindable(0),
@@ -27,15 +25,25 @@
 		children
 	}: RootProps = $props();
 
-	useNumberField({
-		value: box.with(
-			() => value,
-			(v) => (value = v)
-		),
-		step: box.with(() => step),
-		min: box.with(() => min),
-		max: box.with(() => max),
-		rampSettings: box.with(() => rampSettings)
+	setNumberFieldContext({
+		get value() {
+			return value;
+		},
+		set value(next) {
+			value = next;
+		},
+		get step() {
+			return step;
+		},
+		get min() {
+			return min;
+		},
+		get max() {
+			return max;
+		},
+		get rampSettings() {
+			return rampSettings;
+		}
 	});
 </script>
 

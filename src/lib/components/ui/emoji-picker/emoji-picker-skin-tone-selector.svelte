@@ -9,17 +9,17 @@
 </script>
 
 <script lang="ts">
-	import { box } from "svelte-toolbelt";
-
 	import { cn } from "$lib/utils";
 	import { Root as Button, type RootProps as ButtonProps } from "$lib/components/ui/button";
 
-	import { useEmojiPickerSkinToneSelector } from "./emoji-picker.svelte.js";
+	import { EmojiPickerSkinToneState } from "./emoji-picker-context.svelte.js";
 
 	let { previewEmoji = "👋", variant = "outline", size = "icon", class: className, onclick, ...restProps }: SkinToneSelectorProps = $props();
 
-	const skinState = useEmojiPickerSkinToneSelector({
-		previewEmoji: box.with(() => previewEmoji)
+	const skinState = new EmojiPickerSkinToneState({
+		get previewEmoji() {
+			return previewEmoji;
+		}
 	});
 </script>
 

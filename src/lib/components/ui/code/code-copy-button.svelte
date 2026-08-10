@@ -19,7 +19,7 @@
 	import { cn } from "$lib/utils";
 	import { Root as Button } from "$lib/components/ui/button";
 
-	import { useCodeCopyButton } from "./code.svelte.js";
+	import { getCodeContext } from "./code-context.svelte.js";
 
 	let {
 		ref = $bindable(null),
@@ -32,7 +32,7 @@
 		...restProps
 	}: CopyButtonProps = $props();
 
-	const code = useCodeCopyButton();
+	const code = getCodeContext();
 	let status = $state<"success" | "failure">();
 	let resetTimeout: ReturnType<typeof setTimeout> | undefined;
 

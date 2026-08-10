@@ -7,29 +7,33 @@ export type ValueMap = {
 	multiple: string[];
 };
 
+export type ComboboxOptions<T extends ComboboxType> = {
+	value: ValueMap[T];
+	readonly type: T;
+};
+
 /** Coordinates value selection, popup state, and focus for a combobox root. */
 export class ComboboxState<T extends ComboboxType> {
 	open = $state(false);
 	triggerRef = $state<HTMLButtonElement | null>(null);
-	type: T;
-
-	#getValue: () => ValueMap[T];
-	#setValue: (v: ValueMap[T]) => void;
-
 	/**
-	 * @param getValue - Reactive getter for the bound value.
-	 * @param setValue - Callback that updates the bound value.
-	 * @param type - Whether the combobox permits one or multiple values.
+	 * @param options - Reactive value and selection mode owned by the root.
 	 */
-	constructor(getValue: () => ValueMap[T], setValue: (v: ValueMap[T]) => void, type: T) {
-		this.#getValue = getValue;
-		this.#setValue = setValue;
-		this.type = type;
-	}
+	constructor(private readonly options: ComboboxOptions<T>) {}
 
 	/** Current reactive single or multiple selection value. */
 	get value(): ValueMap[T] {
-		return this.#getValue();
+		return this.options.value;
+	}
+
+	/** Updates the current single or multiple selection value. */
+	set value(value: ValueMap[T]) {
+		this.options.value = value;
+	}
+
+	/** Whether the combobox permits one or multiple values. */
+	get type(): T {
+		return this.options.type;
 	}
 
 	/** Toggles the popup's open state. */
@@ -46,7 +50,7 @@ export class ComboboxState<T extends ComboboxType> {
 
 	/** @param itemValue - Item value to test. */
 	isSelected(itemValue: string): boolean {
-		const v = this.#getValue();
+		const v = this.value;
 		return Array.isArray(v) ? v.includes(itemValue) : v === itemValue;
 	}
 
@@ -57,11 +61,11 @@ export class ComboboxState<T extends ComboboxType> {
 	 */
 	selectItem(itemValue: string) {
 		if (this.type === "multiple") {
-			const current = (this.#getValue() as string[]) ?? [];
+			const current = (this.value as string[]) ?? [];
 			const next = current.includes(itemValue) ? current.filter((v) => v !== itemValue) : [...current, itemValue];
-			(this.#setValue as (v: string[]) => void)(next);
+			this.value = next as ValueMap[T];
 		} else {
-			(this.#setValue as (v: string) => void)(this.isSelected(itemValue) ? "" : itemValue);
+			this.value = (this.isSelected(itemValue) ? "" : itemValue) as ValueMap[T];
 			this.close();
 		}
 	}
@@ -92,16 +96,10 @@ const [getComboboxState, setComboboxState] = createContext<ComboboxContextState>
 /**
  * Creates and provides combobox state for descendant parts.
  *
- * @param getValue - Reactive getter for the bound value.
- * @param setValue - Callback that updates the bound value.
- * @param type - Whether selection is single or multiple.
+ * @param options - Reactive value and selection mode owned by the root.
  */
-export function setComboboxContext<T extends ComboboxType>(
-	getValue: () => ValueMap[T],
-	setValue: (v: ValueMap[T]) => void,
-	type: T
-): ComboboxState<T> {
-	const ctx = new ComboboxState(getValue, setValue, type);
+export function setComboboxContext<T extends ComboboxType>(options: ComboboxOptions<T>): ComboboxState<T> {
+	const ctx = new ComboboxState(options);
 	setComboboxState(ctx);
 	return ctx;
 }

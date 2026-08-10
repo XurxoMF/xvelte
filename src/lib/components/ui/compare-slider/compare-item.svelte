@@ -10,7 +10,7 @@
 	let { target = "first", class: className, children }: ItemProps = $props();
 
 	const ctx = getCompareContext();
-	let isHorizontal = $derived(ctx.orientation() === "horizontal");
+	let isHorizontal = $derived(ctx.orientation === "horizontal");
 </script>
 
 <div

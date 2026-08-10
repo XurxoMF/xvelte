@@ -1,7 +1,7 @@
 import Root, { type RootProps } from "./file-drop-zone-root.svelte";
 import Trigger, { type TriggerProps } from "./file-drop-zone-trigger.svelte";
 import Textarea, { type TextareaProps } from "./file-drop-zone-textarea.svelte";
-import type { FileRejectedReason } from "./file-drop-zone.svelte.js";
+import type { FileRejectedReason } from "./file-drop-zone-context.svelte.js";
 import { ACCEPT_AUDIO, ACCEPT_IMAGE, ACCEPT_VIDEO, BYTE, GIGABYTE, KILOBYTE, MEGABYTE, displaySize } from "./file-drop-zone-utils";
 
 export {

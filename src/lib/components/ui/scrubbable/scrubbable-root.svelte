@@ -132,8 +132,12 @@
 	}
 
 	setScrubbableContext({
-		value: () => value,
-		isDragging: () => isDragging
+		get value() {
+			return value;
+		},
+		get isDragging() {
+			return isDragging;
+		}
 	});
 </script>
 

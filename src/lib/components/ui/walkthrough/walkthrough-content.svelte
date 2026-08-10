@@ -150,9 +150,9 @@
 			<div class="p-4">
 				<div class="flex items-start justify-between gap-4">
 					<div class="space-y-1">
-						<h4 class="leading-none font-semibold">{ctx.currentStep()?.title}</h4>
+						<h4 class="leading-none font-semibold">{ctx.currentStep?.title}</h4>
 
-						<p class="text-sm text-muted-foreground">{ctx.currentStep()?.description}</p>
+						<p class="text-sm text-muted-foreground">{ctx.currentStep?.description}</p>
 					</div>
 
 					<Button.Root variant="ghost" size="icon" class="-mt-1 -mr-2 h-6 w-6 shrink-0" onclick={ctx.close}>
@@ -162,16 +162,16 @@
 
 				<div class="flex items-center justify-between pt-4">
 					<span class="text-xs text-muted-foreground">
-						Step {ctx.currentStepIndex() + 1}
+						Step {ctx.currentStepIndex + 1}
 					</span>
 
 					<div class="flex gap-2">
-						{#if ctx.currentStepIndex() > 0}
+						{#if ctx.currentStepIndex > 0}
 							<Button.Root variant="outline" size="sm" onclick={ctx.prev}>Back</Button.Root>
 						{/if}
 
 						<Button.Root size="sm" onclick={ctx.next}>
-							{ctx.isLastStep() ? "Finish" : "Next"}
+							{ctx.isLastStep ? "Finish" : "Next"}
 						</Button.Root>
 					</div>
 				</div>

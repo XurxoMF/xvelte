@@ -3,29 +3,33 @@ import { createContext, onDestroy } from "svelte";
 export type StepperOrientation = "horizontal" | "vertical";
 export type StepperItemState = "active" | "completed" | "inactive";
 
+export type StepperOptions = {
+	step: number;
+	readonly orientation: StepperOrientation;
+};
+
 /** Registers step items and coordinates selection and keyboard focus. */
 export class StepperContext {
 	items = $state<StepperItemContext[]>([]);
 
 	/**
-	 * @param getStep - Reads the currently selected one-based step.
-	 * @param setStep - Updates the currently selected one-based step.
-	 * @param getOrientation - Reads the layout and keyboard-navigation orientation.
+	 * @param options - Reactive values owned by the stepper root.
 	 */
-	constructor(
-		private readonly getStep: () => number,
-		private readonly setStep: (step: number) => void,
-		private readonly getOrientation: () => StepperOrientation
-	) {}
+	constructor(private readonly options: StepperOptions) {}
 
 	/** @returns The currently selected one-based step. */
 	get step() {
-		return this.getStep();
+		return this.options.step;
+	}
+
+	/** Updates the currently selected one-based step. */
+	set step(value: number) {
+		this.options.step = value;
 	}
 
 	/** @returns The current layout and keyboard-navigation orientation. */
 	get orientation() {
-		return this.getOrientation();
+		return this.options.orientation;
 	}
 
 	/** @returns Whether another registered step follows the current one. */
@@ -56,8 +60,8 @@ export class StepperContext {
 
 			// Keep the same logical item selected when an earlier item disappears,
 			// or clamp the selection when the final active item is removed.
-			if (this.step > removedStep) this.setStep(this.step - 1);
-			else if (this.step > this.items.length) this.setStep(Math.max(1, this.items.length));
+			if (this.step > removedStep) this.step--;
+			else if (this.step > this.items.length) this.step = Math.max(1, this.items.length);
 		};
 	}
 
@@ -69,17 +73,17 @@ export class StepperContext {
 	/** @param item - Registered item to select. */
 	select(item: StepperItemContext) {
 		const step = this.getItemStep(item);
-		if (step > 0) this.setStep(step);
+		if (step > 0) this.step = step;
 	}
 
 	/** Advances the selected step when another item exists. */
 	next() {
-		if (this.canIncrement) this.setStep(this.step + 1);
+		if (this.canIncrement) this.step++;
 	}
 
 	/** Moves to the previous step when the current item is not the first. */
 	previous() {
-		if (this.canDecrement) this.setStep(this.step - 1);
+		if (this.canDecrement) this.step--;
 	}
 
 	/**
@@ -95,7 +99,7 @@ export class StepperContext {
 			const trigger = item.trigger;
 
 			if (trigger && !trigger.disabled) {
-				this.setStep(index + 1);
+				this.step = index + 1;
 				trigger.focus();
 				return;
 			}
@@ -142,12 +146,10 @@ const [getStepperItemContext, provideStepperItemContext] = createContext<Stepper
 /**
  * Creates and provides the state shared by every part of a stepper.
  *
- * @param getStep - Reads the bound step value.
- * @param setStep - Updates the bound step value.
- * @param getOrientation - Reads the root orientation.
+ * @param options - Reactive values owned by the stepper root.
  */
-export function setStepperContext(getStep: () => number, setStep: (step: number) => void, getOrientation: () => StepperOrientation) {
-	return provideStepperContext(new StepperContext(getStep, setStep, getOrientation));
+export function setStepperContext(options: StepperOptions) {
+	return provideStepperContext(new StepperContext(options));
 }
 
 /** @returns The state from the nearest stepper root. */

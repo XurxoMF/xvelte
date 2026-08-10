@@ -1,9 +1,9 @@
 import { createContext } from "svelte";
 
 type CompareContext = {
-	position: () => number;
-	orientation: () => "horizontal" | "vertical";
-	isDragging: () => boolean;
+	readonly position: number;
+	readonly orientation: "horizontal" | "vertical";
+	readonly isDragging: boolean;
 };
 
 const [getCompareState, setCompareState] = createContext<CompareContext>();
@@ -11,7 +11,7 @@ const [getCompareState, setCompareState] = createContext<CompareContext>();
 /**
  * Provides compare-slider position, orientation, and dragging state.
  *
- * @param props - Reactive getters owned by the slider root.
+ * @param props - Reactive values owned by the slider root.
  */
 export function setCompareContext(props: CompareContext) {
 	return setCompareState(props);

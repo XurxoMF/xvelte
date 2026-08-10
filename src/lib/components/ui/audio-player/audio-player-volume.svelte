@@ -12,7 +12,7 @@
 	import { VolumeHighIcon, VolumeLowIcon, VolumeMutedIcon } from "$lib/icons";
 	import { cn } from "$lib/utils";
 
-	import { getAudioPlayerContext } from "./audio-player-context";
+	import { getAudioPlayerContext } from "./audio-player-context.svelte";
 
 	let { class: className, ...restProps }: VolumeProps = $props();
 	const ctx = getAudioPlayerContext();
@@ -34,9 +34,9 @@
 			onclick={ctx.toggleMute}
 			{...restProps}
 		>
-			{#if ctx.isMuted.value || ctx.volume.value === 0}
+			{#if ctx.muted || ctx.volume === 0}
 				<VolumeMutedIcon class="h-4 w-4" />
-			{:else if ctx.volume.value < 0.5}
+			{:else if ctx.volume < 0.5}
 				<VolumeLowIcon class="h-4 w-4" />
 			{:else}
 				<VolumeHighIcon class="h-4 w-4" />
@@ -47,14 +47,14 @@
 	<HoverCard.Content side="top" align="center" class="w-2 p-0 shadow-none" sideOffset={10}>
 		<div class="flex h-24 flex-col items-center justify-center gap-3">
 			<div class="relative h-full w-1.5 rounded-full bg-secondary">
-				<div class="absolute bottom-0 left-0 w-full rounded-full bg-primary" style="height: {ctx.isMuted.value ? 0 : ctx.volume.value * 100}%"></div>
+				<div class="absolute bottom-0 left-0 w-full rounded-full bg-primary" style="height: {ctx.muted ? 0 : ctx.volume * 100}%"></div>
 
 				<input
 					type="range"
 					min="0"
 					max="1"
 					step="0.01"
-					value={ctx.isMuted.value ? 0 : ctx.volume.value}
+					value={ctx.muted ? 0 : ctx.volume}
 					oninput={handleVolumeChange}
 					class="absolute inset-0 h-full w-full cursor-pointer opacity-0"
 					style="appearance: slider-vertical; -webkit-appearance: slider-vertical; width: 32px; left: -13px;"

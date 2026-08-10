@@ -9,7 +9,7 @@
 <script lang="ts">
 	import { cn } from "$lib/utils";
 
-	import { getAudioPlayerContext } from "./audio-player-context";
+	import { getAudioPlayerContext } from "./audio-player-context.svelte";
 
 	let { ref = $bindable(null), class: className, ...restProps }: TimeProps = $props();
 	const ctx = getAudioPlayerContext();
@@ -23,5 +23,5 @@
 </script>
 
 <span bind:this={ref} class={cn("text-xs font-medium text-muted-foreground tabular-nums", className)} data-slot="audio-player-time" {...restProps}>
-	{formatTime(ctx.currentTime.value)} / {formatTime(ctx.duration.value)}
+	{formatTime(ctx.currentTime)} / {formatTime(ctx.duration)}
 </span>

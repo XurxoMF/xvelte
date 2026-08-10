@@ -1,6 +1,4 @@
-import { getContext, setContext } from "svelte";
-
-const WALKTHROUGH_KEY = Symbol("walkthrough");
+import { createContext } from "svelte";
 
 export type Step = {
 	target: string;
@@ -19,16 +17,18 @@ export type WalkthroughContext = {
 	close: () => void;
 };
 
+const [getWalkthroughState, setWalkthroughState] = createContext<WalkthroughContext>();
+
 /**
  * Provides walkthrough state and navigation controls to descendant parts.
  *
  * @param ctx - Reactive step state and navigation callbacks.
  */
 export function setWalkthroughContext(ctx: WalkthroughContext) {
-	setContext(WALKTHROUGH_KEY, ctx);
+	return setWalkthroughState(ctx);
 }
 
 /** @returns The nearest walkthrough context. */
 export function getWalkthroughContext() {
-	return getContext<WalkthroughContext>(WALKTHROUGH_KEY);
+	return getWalkthroughState();
 }

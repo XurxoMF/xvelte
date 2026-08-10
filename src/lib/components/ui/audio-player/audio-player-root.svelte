@@ -9,73 +9,11 @@
 <script lang="ts">
 	import { cn } from "$lib/utils";
 
-	import { setAudioPlayerContext } from "./audio-player-context";
+	import { AudioPlayerState, setAudioPlayerContext } from "./audio-player-context.svelte";
 
 	let { ref = $bindable(null), src, class: className, children, ...restProps }: RootProps = $props();
 
-	let audio: HTMLAudioElement;
-
-	let isPaused = $state(true);
-	let duration = $state(0);
-	let currentTime = $state(0);
-	let volume = $state(1);
-	let isMuted = $state(false);
-
-	/** Toggles playback on the underlying audio element. */
-	function togglePlay() {
-		if (!audio) return;
-		if (audio.paused) {
-			audio.play();
-		} else {
-			audio.pause();
-		}
-	}
-
-	/** @param time - Playback position to seek to, in seconds. */
-	function seek(time: number) {
-		if (!audio) return;
-		audio.currentTime = time;
-		currentTime = time;
-	}
-
-	/** @param v - Native audio volume between 0 and 1. */
-	function setVolume(v: number) {
-		if (!audio) return;
-		audio.volume = v;
-		volume = v;
-	}
-
-	/** Toggles the native muted state without discarding the chosen volume. */
-	function toggleMute() {
-		isMuted = !isMuted;
-	}
-
-	setAudioPlayerContext({
-		/** Whether native playback is currently running. */
-		get isPlaying() {
-			return { value: !isPaused };
-		},
-		/** Loaded audio duration in seconds. */
-		get duration() {
-			return { value: duration };
-		},
-		/** Current playback position in seconds. */
-		get currentTime() {
-			return { value: currentTime };
-		},
-		/** Current native volume between 0 and 1. */
-		get volume() {
-			return { value: volume };
-		},
-		/** Whether native audio output is muted. */
-		get isMuted() {
-			return { value: isMuted };
-		},
-		togglePlay,
-		seek,
-		setVolume,
-		toggleMute
-	});
+	const player = setAudioPlayerContext(new AudioPlayerState());
 </script>
 
 <div
@@ -84,7 +22,15 @@
 	data-slot="audio-player"
 	{...restProps}
 >
-	<audio bind:this={audio} {src} bind:paused={isPaused} bind:currentTime bind:duration bind:volume bind:muted={isMuted}></audio>
+	<audio
+		bind:this={player.audio}
+		{src}
+		bind:paused={player.paused}
+		bind:currentTime={player.currentTime}
+		bind:duration={player.duration}
+		bind:volume={player.volume}
+		bind:muted={player.muted}
+	></audio>
 
 	{@render children?.()}
 </div>

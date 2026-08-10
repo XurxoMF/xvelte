@@ -1,4 +1,4 @@
-import { getContext, setContext, tick } from "svelte";
+import { createContext, tick } from "svelte";
 
 export type ComboboxType = "single" | "multiple";
 
@@ -6,8 +6,6 @@ export type ValueMap = {
 	single: string;
 	multiple: string[];
 };
-
-export const COMBOBOX_CONTEXT = Symbol("combobox");
 
 /** Coordinates value selection, popup state, and focus for a combobox root. */
 export class ComboboxState<T extends ComboboxType> {
@@ -69,6 +67,28 @@ export class ComboboxState<T extends ComboboxType> {
 	}
 }
 
+/** Type-erased state shared by single and multiple combobox descendants. */
+export type ComboboxContextState = {
+	/** Whether the options popup is open. */
+	open: boolean;
+	/** Trigger used to restore focus after closing. */
+	triggerRef: HTMLButtonElement | null;
+	/** Selection mode configured by the root. */
+	type: ComboboxType;
+	/** Current single or multiple selection. */
+	readonly value: ValueMap[ComboboxType];
+	/** Toggles the popup. */
+	toggle: () => void;
+	/** Closes the popup and restores trigger focus. */
+	close: () => Promise<void>;
+	/** Checks whether an item value is selected. */
+	isSelected: (itemValue: string) => boolean;
+	/** Applies selection behavior for an item value. */
+	selectItem: (itemValue: string) => void;
+};
+
+const [getComboboxState, setComboboxState] = createContext<ComboboxContextState>();
+
 /**
  * Creates and provides combobox state for descendant parts.
  *
@@ -82,11 +102,11 @@ export function createComboboxContext<T extends ComboboxType>(
 	type: T
 ): ComboboxState<T> {
 	const ctx = new ComboboxState(getValue, setValue, type);
-	setContext(COMBOBOX_CONTEXT, ctx);
+	setComboboxState(ctx);
 	return ctx;
 }
 
 /** @returns The state from the nearest combobox root. */
-export function getComboboxContext<T extends ComboboxType>(): ComboboxState<T> {
-	return getContext(COMBOBOX_CONTEXT);
+export function getComboboxContext(): ComboboxContextState {
+	return getComboboxState();
 }

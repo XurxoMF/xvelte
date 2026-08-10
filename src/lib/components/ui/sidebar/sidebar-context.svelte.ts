@@ -1,4 +1,4 @@
-import { getContext, setContext } from "svelte";
+import { createContext } from "svelte";
 
 import { IsMobile } from "$lib/hooks/is-mobile.svelte";
 
@@ -62,7 +62,7 @@ export class SidebarState {
 	};
 }
 
-export const SIDEBAR_CONTEXT = "scn-sidebar";
+const [getSidebarState, setSidebarState] = createContext<SidebarState>();
 
 /**
  * Instantiates a new `SidebarState` instance and sets it in the context.
@@ -71,7 +71,7 @@ export const SIDEBAR_CONTEXT = "scn-sidebar";
  * @returns The provided `SidebarState` instance.
  */
 export function setSidebar(props: SidebarStateProps): SidebarState {
-	return setContext(Symbol.for(SIDEBAR_CONTEXT), new SidebarState(props));
+	return setSidebarState(new SidebarState(props));
 }
 
 /**
@@ -80,5 +80,5 @@ export function setSidebar(props: SidebarStateProps): SidebarState {
  * @returns The `SidebarState` instance.
  */
 export function useSidebar(): SidebarState {
-	return getContext(Symbol.for(SIDEBAR_CONTEXT));
+	return getSidebarState();
 }

@@ -1,5 +1,5 @@
 import type { EmblaCarouselSvelteType, default as emblaCarouselSvelte } from "embla-carousel-svelte";
-import { getContext, hasContext, setContext } from "svelte";
+import { createContext } from "svelte";
 import type { HTMLAttributes } from "svelte/elements";
 
 import type { WithElementRef } from "$lib/utils";
@@ -21,8 +21,6 @@ export type CarouselProps = {
 	orientation?: "horizontal" | "vertical" | undefined;
 } & WithElementRef<HTMLAttributes<HTMLDivElement>>;
 
-export const EMBLA_CAROUSEL_CONTEXT = Symbol("EMBLA_CAROUSEL_CONTEXT");
-
 export type EmblaContext = {
 	api: CarouselAPI | undefined;
 	orientation: "horizontal" | "vertical";
@@ -39,6 +37,8 @@ export type EmblaContext = {
 	selectedIndex: number;
 };
 
+const [getEmblaState, setEmblaState] = createContext<EmblaContext>();
+
 /**
  * Provides carousel state and controls to descendant parts.
  *
@@ -46,8 +46,7 @@ export type EmblaContext = {
  * @returns The same context object for convenient local reuse.
  */
 export function setEmblaContext(config: EmblaContext): EmblaContext {
-	setContext(EMBLA_CAROUSEL_CONTEXT, config);
-	return config;
+	return setEmblaState(config);
 }
 
 /**
@@ -57,8 +56,9 @@ export function setEmblaContext(config: EmblaContext): EmblaContext {
  * @returns The nearest carousel context.
  */
 export function getEmblaContext(name = "This component") {
-	if (!hasContext(EMBLA_CAROUSEL_CONTEXT)) {
+	try {
+		return getEmblaState();
+	} catch {
 		throw new Error(`${name} must be used within a <Carousel.Root> component`);
 	}
-	return getContext<ReturnType<typeof setEmblaContext>>(EMBLA_CAROUSEL_CONTEXT);
 }

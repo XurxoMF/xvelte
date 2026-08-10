@@ -1,36 +1,15 @@
 <script lang="ts" module>
-	type ToggleVariants = VariantProps<typeof Toggle.rootVariants>;
+	import { ToggleGroup as ToggleGroupPrimitive } from "bits-ui";
 
-	interface ToggleGroupContext extends ToggleVariants {
-		spacing?: number | undefined;
-		orientation?: "horizontal" | "vertical" | undefined;
-	}
+	import type { ToggleGroupContext } from "./toggle-group-context";
 
-	/** @param props - Variant, size, spacing, and orientation shared with group items. */
-	export function setToggleGroupCtx(props: ToggleGroupContext) {
-		setContext("toggleGroup", props);
-	}
-
-	/** @returns Styling and orientation from the nearest toggle-group root. */
-	export function getToggleGroupCtx() {
-		return getContext<Required<ToggleGroupContext>>("toggleGroup");
-	}
-
-	export type RootProps = ToggleGroupPrimitive.RootProps &
-		ToggleVariants & {
-			spacing?: number | undefined;
-			orientation?: "horizontal" | "vertical" | undefined;
-		};
+	export type RootProps = ToggleGroupPrimitive.RootProps & ToggleGroupContext;
 </script>
 
 <script lang="ts">
-	import { ToggleGroup as ToggleGroupPrimitive } from "bits-ui";
-	import { getContext, setContext } from "svelte";
-	import type { VariantProps } from "tailwind-variants";
-
 	import { cn } from "$lib/utils";
 
-	import * as Toggle from "$lib/components/ui/toggle";
+	import { setToggleGroupContext } from "./toggle-group-context";
 
 	let {
 		ref = $bindable(null),
@@ -43,7 +22,7 @@
 		...restProps
 	}: RootProps = $props();
 
-	setToggleGroupCtx({
+	setToggleGroupContext({
 		/** Current toggle visual variant. */
 		get variant() {
 			return variant;

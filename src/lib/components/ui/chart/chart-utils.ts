@@ -1,5 +1,5 @@
 import type { Tooltip } from "layerchart";
-import { getContext, setContext, type Component, type Snippet } from "svelte";
+import type { Component, Snippet } from "svelte";
 
 export const THEMES = { light: "", dark: ".dark" } as const;
 
@@ -49,24 +49,4 @@ export function getPayloadConfigFromPayload(
 	}
 
 	return configLabelKey in config ? config[configLabelKey] : config[key as keyof typeof config];
-}
-
-export type ChartContextValue = {
-	config: ChartConfig;
-};
-
-export const CHART_CONTEXT = Symbol("chart-context");
-
-/**
- * Provides chart configuration to nested chart parts.
- *
- * @param value - Configuration shared by the chart container.
- */
-export function setChartContext(value: ChartContextValue) {
-	return setContext(CHART_CONTEXT, value);
-}
-
-/** @returns The configuration from the nearest chart container. */
-export function useChart() {
-	return getContext<ChartContextValue>(CHART_CONTEXT);
 }

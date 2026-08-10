@@ -11,7 +11,7 @@
 	import { PauseIcon, PlayIcon } from "$lib/icons";
 	import { cn } from "$lib/utils";
 
-	import { getAudioPlayerContext } from "./audio-player-context";
+	import { getAudioPlayerContext } from "./audio-player-context.svelte";
 
 	let { class: className, ...restProps }: PlayButtonProps = $props();
 	const ctx = getAudioPlayerContext();
@@ -25,7 +25,7 @@
 	onclick={ctx.togglePlay}
 	{...restProps}
 >
-	{#if ctx.isPlaying.value}
+	{#if ctx.isPlaying}
 		<PauseIcon class="h-5 w-5 fill-current" />
 	{:else}
 		<PlayIcon class="ml-0.5 h-5 w-5 fill-current" />

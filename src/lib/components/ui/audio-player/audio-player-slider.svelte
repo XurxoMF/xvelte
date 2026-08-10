@@ -9,12 +9,12 @@
 <script lang="ts">
 	import { cn } from "$lib/utils";
 
-	import { getAudioPlayerContext } from "./audio-player-context";
+	import { getAudioPlayerContext } from "./audio-player-context.svelte";
 
 	let { ref = $bindable(null), class: className, ...restProps }: SliderProps = $props();
 	const ctx = getAudioPlayerContext();
 
-	let progress = $derived(ctx.duration.value > 0 ? (ctx.currentTime.value / ctx.duration.value) * 100 : 0);
+	let progress = $derived(ctx.duration > 0 ? (ctx.currentTime / ctx.duration) * 100 : 0);
 </script>
 
 <div bind:this={ref} class={cn("relative h-1.5 w-full overflow-hidden bg-secondary", className)} data-slot="audio-player-slider" {...restProps}>
@@ -22,9 +22,9 @@
 	<input
 		type="range"
 		min="0"
-		max={ctx.duration.value}
+		max={ctx.duration}
 		step="0.01"
-		value={ctx.currentTime.value}
+		value={ctx.currentTime}
 		oninput={(e) => ctx.seek(parseFloat(e.currentTarget.value))}
 		class="absolute inset-0 h-full w-full cursor-pointer opacity-0"
 	/>

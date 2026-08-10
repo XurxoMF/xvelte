@@ -1,5 +1,6 @@
-import Root, { type RootProps, getToggleGroupCtx, setToggleGroupCtx } from "./toggle-group-root.svelte";
+import Root, { type RootProps } from "./toggle-group-root.svelte";
 import Item, { type ItemProps, type ToggleSizes, type ToggleVariants } from "./toggle-group-item.svelte";
+import { type ToggleGroupContext, getToggleGroupContext, setToggleGroupContext } from "./toggle-group-context";
 
 export {
 	Root,
@@ -9,7 +10,8 @@ export {
 	type ItemProps,
 	type ToggleSizes,
 	type ToggleVariants,
+	type ToggleGroupContext,
 	//
-	getToggleGroupCtx,
-	setToggleGroupCtx
+	getToggleGroupContext,
+	setToggleGroupContext
 };

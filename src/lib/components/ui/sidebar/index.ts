@@ -20,7 +20,7 @@ import Provider, { type ProviderProps } from "./sidebar-provider.svelte";
 import Rail, { type RailProps } from "./sidebar-rail.svelte";
 import Separator, { type SeparatorProps } from "./sidebar-separator.svelte";
 import Trigger, { type TriggerProps } from "./sidebar-trigger.svelte";
-import { type SidebarState, type SidebarStateProps, SIDEBAR_CONTEXT, setSidebar, useSidebar } from "./sidebar-context.svelte";
+import { type SidebarState, type SidebarStateProps, setSidebar, useSidebar } from "./sidebar-context.svelte";
 import {
 	SIDEBAR_COOKIE_MAX_AGE,
 	SIDEBAR_COOKIE_NAME,
@@ -80,7 +80,6 @@ export {
 	type SidebarState,
 	type SidebarStateProps,
 	//
-	SIDEBAR_CONTEXT,
 	SIDEBAR_COOKIE_MAX_AGE,
 	SIDEBAR_COOKIE_NAME,
 	SIDEBAR_KEYBOARD_SHORTCUT,

@@ -7,12 +7,12 @@ import Empty, { type EmptyProps } from "./combobox-empty.svelte";
 import Item, { type ItemProps } from "./combobox-item.svelte";
 import Trigger, { type TriggerProps } from "./combobox-trigger.svelte";
 import {
+	type ComboboxContextState,
 	type ComboboxState,
 	type ComboboxType,
 	type ValueMap,
 	createComboboxContext,
-	getComboboxContext,
-	COMBOBOX_CONTEXT
+	getComboboxContext
 } from "./combobox-context.svelte";
 
 export {
@@ -35,10 +35,9 @@ export {
 	type TriggerProps,
 	//
 	type ComboboxState,
+	type ComboboxContextState,
 	type ComboboxType,
 	type ValueMap,
-	//
-	COMBOBOX_CONTEXT,
 	//
 	createComboboxContext,
 	getComboboxContext

@@ -20,7 +20,7 @@
 
 	let { ref = $bindable(null), value = $bindable(), class: className, size, variant, ...restProps }: ItemProps = $props();
 
-	const ctx = ToggleGroup.getToggleGroupCtx();
+	const ctx = ToggleGroup.getToggleGroupContext();
 </script>
 
 <ToggleGroupPrimitive.Item

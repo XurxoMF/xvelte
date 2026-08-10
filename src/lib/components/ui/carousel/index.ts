@@ -11,8 +11,7 @@ import {
 	type EmblaCarouselConfig,
 	type EmblaContext,
 	getEmblaContext,
-	setEmblaContext,
-	EMBLA_CAROUSEL_CONTEXT
+	setEmblaContext
 } from "./carousel-context";
 
 export {
@@ -36,7 +35,5 @@ export {
 	type EmblaContext,
 	//
 	getEmblaContext,
-	setEmblaContext,
-	//
-	EMBLA_CAROUSEL_CONTEXT
+	setEmblaContext
 };

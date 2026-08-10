@@ -10,10 +10,16 @@ type DateStripContext = {
 	direction: () => "start" | "end";
 };
 
+/**
+ * Provides selection and navigation data to date-strip items.
+ *
+ * @param props - Reactive date-strip state and callbacks.
+ */
 export function setDateStripContext(props: DateStripContext) {
 	setContext(DATESTRIP_KEY, props);
 }
 
+/** @returns The nearest date-strip context. */
 export function getDateStripContext() {
 	return getContext<DateStripContext>(DATESTRIP_KEY);
 }

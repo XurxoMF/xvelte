@@ -25,15 +25,18 @@
 	const isLastStep = $derived(currentStepIndex === steps.length - 1);
 	const currentStep = $derived(steps[currentStepIndex]);
 
+	/** Advances to the next step or completes the walkthrough at the end. */
 	function next() {
 		if (!isLastStep) currentStepIndex++;
 		else finish();
 	}
 
+	/** Returns to the previous step when one exists. */
 	function prev() {
 		if (currentStepIndex > 0) currentStepIndex--;
 	}
 
+	/** Closes the walkthrough, then resets progress after the exit transition. */
 	function finish() {
 		open = false;
 		setTimeout(() => {

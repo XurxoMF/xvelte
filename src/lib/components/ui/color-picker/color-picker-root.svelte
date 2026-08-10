@@ -61,16 +61,23 @@
 		}
 	});
 
+	/** Serializes the internal HSVA state into the bound value's active format. */
 	function updateExternal() {
 		value = formatOutput(h, s, v, a, activeFormat);
 	}
 
+	/** @param fmt - Output color syntax to select before closing the format menu. */
 	function setFormat(fmt: ColorFormat) {
 		activeFormat = fmt;
 		updateExternal();
 		formatOpen = false;
 	}
 
+	/**
+	 * Parses supported CSS color syntaxes into the picker's shared HSVA representation.
+	 *
+	 * @param str - Hex, RGB, HSL, or OKLCH color string.
+	 */
 	function parseColor(str: string) {
 		str = str.trim().toLowerCase();
 		if (str.startsWith("#")) {
@@ -119,6 +126,13 @@
 		return null;
 	}
 
+	/**
+	 * @param h - Hue in degrees.
+	 * @param s - HSV saturation percentage.
+	 * @param v - HSV brightness percentage.
+	 * @param a - Alpha between 0 and 1.
+	 * @param format - CSS syntax to produce.
+	 */
 	function formatOutput(h: number, s: number, v: number, a: number, format: ColorFormat): string {
 		if (format === "hex") return hsvToHex(h, s, v, a);
 		if (format === "rgb") return hsvToRgbString(h, s, v, a);
@@ -127,6 +141,13 @@
 		return "";
 	}
 
+	/**
+	 * Converts RGB bytes into HSV channels.
+	 *
+	 * @param r - Red byte.
+	 * @param g - Green byte.
+	 * @param b - Blue byte.
+	 */
 	function rgbToHsv(r: number, g: number, b: number) {
 		r /= 255;
 		g /= 255;
@@ -154,6 +175,13 @@
 		return { h: h * 360, s: s * 100, v: v * 100 };
 	}
 
+	/**
+	 * Converts HSV channels into RGB bytes.
+	 *
+	 * @param h - Hue in degrees.
+	 * @param s - Saturation percentage.
+	 * @param v - Brightness percentage.
+	 */
 	function hsvToRgb(h: number, s: number, v: number) {
 		let sNorm = s / 100,
 			vNorm = v / 100;
@@ -200,6 +228,14 @@
 		return { r: Math.round(r * 255), g: Math.round(g * 255), b: Math.round(b * 255) };
 	}
 
+	/**
+	 * Converts HSVA channels into a CSS OKLCH string.
+	 *
+	 * @param h - Hue in degrees.
+	 * @param s - Saturation percentage.
+	 * @param v - Brightness percentage.
+	 * @param a - Alpha between 0 and 1.
+	 */
 	function hsvToOklchString(h: number, s: number, v: number, a: number) {
 		const rgb = hsvToRgb(h, s, v);
 		const oklch = rgbToOklch(rgb.r, rgb.g, rgb.b);
@@ -211,6 +247,13 @@
 		return `oklch(${L} ${C} ${H})`;
 	}
 
+	/**
+	 * Converts gamma-encoded RGB bytes through linear RGB and Oklab into OKLCH channels.
+	 *
+	 * @param r - Red byte.
+	 * @param g - Green byte.
+	 * @param b - Blue byte.
+	 */
 	function rgbToOklch(r: number, g: number, b: number) {
 		r /= 255;
 		g /= 255;
@@ -238,6 +281,13 @@
 		return { l: L, c: C, h: H };
 	}
 
+	/**
+	 * Converts OKLCH channels into clamped, gamma-encoded RGB bytes.
+	 *
+	 * @param l - Perceptual lightness between 0 and 1.
+	 * @param c - Chroma.
+	 * @param h - Hue in degrees.
+	 */
 	function oklchToRgb(l: number, c: number, h: number) {
 		const hRad = h * (Math.PI / 180);
 		const A = c * Math.cos(hRad);
@@ -266,8 +316,17 @@
 		return { r, g, b };
 	}
 
+	/**
+	 * Converts HSVA channels into uppercase hexadecimal notation.
+	 *
+	 * @param h - Hue in degrees.
+	 * @param s - Saturation percentage.
+	 * @param v - Brightness percentage.
+	 * @param a - Alpha between 0 and 1.
+	 */
 	function hsvToHex(h: number, s: number, v: number, a: number) {
 		const { r, g, b } = hsvToRgb(h, s, v);
+		/** @param x - Integer channel converted to a two-character hexadecimal pair. */
 		const toHex = (x: number) => {
 			const hex = x.toString(16);
 			return hex.length === 1 ? "0" + hex : hex;
@@ -277,12 +336,28 @@
 		return hex.toUpperCase();
 	}
 
+	/**
+	 * Converts HSVA channels into CSS RGB or RGBA notation.
+	 *
+	 * @param h - Hue in degrees.
+	 * @param s - Saturation percentage.
+	 * @param v - Brightness percentage.
+	 * @param a - Alpha between 0 and 1.
+	 */
 	function hsvToRgbString(h: number, s: number, v: number, a: number) {
 		const { r, g, b } = hsvToRgb(h, s, v);
 		if (allowOpacity && a < 1) return `rgba(${r}, ${g}, ${b}, ${parseFloat(a.toFixed(2))})`;
 		return `rgb(${r}, ${g}, ${b})`;
 	}
 
+	/**
+	 * Converts HSVA channels into CSS HSL or HSLA notation.
+	 *
+	 * @param h - Hue in degrees.
+	 * @param s - HSV saturation percentage.
+	 * @param v - HSV brightness percentage.
+	 * @param a - Alpha between 0 and 1.
+	 */
 	function hsvToHslString(h: number, s: number, v: number, a: number) {
 		const sNorm = s / 100,
 			vNorm = v / 100;
@@ -292,10 +367,19 @@
 		return `hsl(${Math.round(h)}, ${Math.round(sHsl * 100)}%, ${Math.round(l * 100)}%)`;
 	}
 
+	/**
+	 * Starts a mouse or touch drag and installs matching window listeners until release.
+	 *
+	 * @param e - Initial pointer-like event.
+	 * @param fn - Channel-specific updater invoked during the drag.
+	 */
 	function handleDragStart(e: MouseEvent | TouchEvent, fn: (e: MouseEvent | TouchEvent) => void) {
 		isDragging = true;
 		fn(e);
+		/** @param e - Window movement event forwarded to the active channel updater. */
 		const move = (e: MouseEvent | TouchEvent) => fn(e);
+
+		/** Ends dragging and removes every temporary window listener. */
 		const stop = () => {
 			isDragging = false;
 			window.removeEventListener("mousemove", move);
@@ -309,6 +393,7 @@
 		window.addEventListener("touchend", stop);
 	}
 
+	/** @param e - Drag event mapped to saturation and brightness percentages. */
 	function handleSbChange(e: MouseEvent | TouchEvent) {
 		if (!sbRef) return;
 		const rect = sbRef.getBoundingClientRect();
@@ -321,6 +406,7 @@
 		updateExternal();
 	}
 
+	/** @param e - Horizontal drag event mapped to a hue between 0 and 360 degrees. */
 	function handleHueChange(e: MouseEvent | TouchEvent) {
 		if (!hueRef) return;
 		const rect = hueRef.getBoundingClientRect();
@@ -330,6 +416,7 @@
 		updateExternal();
 	}
 
+	/** @param e - Horizontal drag event mapped to alpha between 0 and 1. */
 	function handleAlphaChange(e: MouseEvent | TouchEvent) {
 		if (!alphaRef) return;
 		const rect = alphaRef.getBoundingClientRect();
@@ -339,6 +426,7 @@
 		updateExternal();
 	}
 
+	/** @param e - Numeric input event containing opacity as a percentage. */
 	function handleAlphaInput(e: Event & { currentTarget: HTMLInputElement }) {
 		let val = parseInt(e.currentTarget.value);
 		if (isNaN(val)) return;
@@ -349,6 +437,7 @@
 </script>
 
 <div class={cn("flex w-87.5 flex-col gap-3 rounded-lg border bg-popover p-3 shadow-sm", className)} data-slot="color-picker">
+	<!-- Horizontal position controls saturation; vertical position controls brightness. -->
 	<div
 		bind:this={sbRef}
 		class="relative h-56 w-full cursor-crosshair touch-none overflow-hidden rounded-md shadow-sm"
@@ -361,7 +450,9 @@
 		ontouchstart={(e) => handleDragStart(e, handleSbChange)}
 	>
 		<div class="pointer-events-none absolute inset-0 bg-linear-to-r from-white to-transparent"></div>
+
 		<div class="pointer-events-none absolute inset-0 bg-linear-to-t from-black to-transparent"></div>
+
 		<div
 			class="pointer-events-none absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow-sm ring-1 ring-black/20"
 			style:left={`${s}%`}
@@ -369,6 +460,7 @@
 		></div>
 	</div>
 
+	<!-- Preview the result beside hue, alpha, and format controls. -->
 	<div class="flex items-center gap-3">
 		<div
 			class="relative mt-1 h-8 w-8 shrink-0 overflow-hidden rounded-md border bg-[url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYGAQYcAP3uCTZhw1gGGYhAGBZIA/nYDCgBDAm9BGDWAAJyRCgLaBCAAgXwixzAS0pgAAAABJRU5ErkJggg==')] shadow-sm"

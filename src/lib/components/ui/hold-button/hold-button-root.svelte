@@ -36,6 +36,7 @@
 	let completed = $state(false);
 	let timer: ReturnType<typeof setTimeout> | null = null;
 
+	/** Starts the visual fill and schedules completion after the configured duration. */
 	function startHold() {
 		if (completed) return;
 		isHolding = true;
@@ -52,6 +53,7 @@
 		}, duration);
 	}
 
+	/** Cancels an incomplete hold and clears its completion timer. */
 	function cancelHold() {
 		if (completed) return;
 		isHolding = false;

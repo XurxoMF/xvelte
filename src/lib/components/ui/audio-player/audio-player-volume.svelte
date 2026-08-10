@@ -17,6 +17,7 @@
 	let { class: className, ...restProps }: VolumeProps = $props();
 	const ctx = getAudioPlayerContext();
 
+	/** @param e - Range-input event containing the next volume between 0 and 1. */
 	function handleVolumeChange(e: Event & { currentTarget: HTMLInputElement }) {
 		const val = parseFloat(e.currentTarget.value);
 		ctx.setVolume(val);
@@ -42,6 +43,7 @@
 			{/if}
 		</Button.Root>
 	</HoverCard.Trigger>
+
 	<HoverCard.Content side="top" align="center" class="w-2 p-0 shadow-none" sideOffset={10}>
 		<div class="flex h-24 flex-col items-center justify-center gap-3">
 			<div class="relative h-full w-1.5 rounded-full bg-secondary">

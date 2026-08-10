@@ -46,7 +46,7 @@
 		order = undefined,
 		name = undefined,
 		ref = $bindable(null),
-		...rest
+		...restProps
 	}: RootProps = $props();
 	let el = $state<HTMLInputElement>();
 
@@ -54,6 +54,7 @@
 		if (ref !== el) ref = el ?? null;
 	});
 
+	/** Defers focus until the country popover has finished updating the DOM. */
 	function focus() {
 		setTimeout(() => {
 			el?.focus();
@@ -63,6 +64,7 @@
 
 <div data-slot="phone-input" class="flex place-items-center">
 	<CountrySelector {order} {countries} {disabled} bind:selected={country} onselect={focus} />
+
 	<TelInput
 		data-slot="phone-input-control"
 		{name}
@@ -81,6 +83,6 @@
 			"aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40",
 			className
 		)}
-		{...rest}
+		{...restProps}
 	/>
 </div>

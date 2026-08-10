@@ -16,11 +16,11 @@
 
 	import { useEmojiPickerFooter } from "./emoji-picker.svelte.js";
 
-	let { class: className, children, ...rest }: FooterProps = $props();
+	let { class: className, children, ...restProps }: FooterProps = $props();
 
 	const footerState = useEmojiPickerFooter();
 </script>
 
-<div {...rest} data-slot="emoji-picker-footer" class={cn("relative max-w-full border-t border-border p-2", className)}>
+<div {...restProps} data-slot="emoji-picker-footer" class={cn("relative max-w-full border-t border-border p-2", className)}>
 	{@render children?.({ active: footerState.root.emojiPickerState.active })}
 </div>

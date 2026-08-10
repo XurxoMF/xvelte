@@ -32,29 +32,34 @@
 	const hasPrevious = $derived(currentImageIndex !== null && currentImageIndex > 0);
 	const hasNext = $derived(currentImageIndex !== null && currentImageIndex < registeredImages.length - 1);
 
+	/** @param imageData - Image source and alternative text to append to the gallery. */
 	function registerImage(imageData: Omit<ZoomImageData, "index">) {
 		const index = $registeredImagesStore.length;
 		$registeredImagesStore = [...$registeredImagesStore, { ...imageData, index }];
 		return index;
 	}
 
+	/** @param index - Registered image index to display in the overlay. */
 	function openImage(index: number) {
 		$currentImageIndexStore = index;
 		$openStore = true;
 	}
 
+	/** Displays the next registered image when available. */
 	function nextImage() {
 		if (currentImageIndex !== null && hasNext) {
 			$currentImageIndexStore = currentImageIndex + 1;
 		}
 	}
 
+	/** Displays the previous registered image when available. */
 	function prevImage() {
 		if (currentImageIndex !== null && hasPrevious) {
 			$currentImageIndexStore = currentImageIndex - 1;
 		}
 	}
 
+	/** Closes the overlay and clears its current image. */
 	function closeZoom() {
 		$openStore = false;
 		$currentImageIndexStore = null;
@@ -70,6 +75,7 @@
 		prevImage
 	});
 
+	/** @param event - Window keyboard event used to close or navigate the open gallery. */
 	function handleKeydown(event: KeyboardEvent) {
 		if (!isOpen) return;
 		if (event.key === "Escape") closeZoom();

@@ -32,7 +32,7 @@
 		onSkinChange = () => {},
 		class: className,
 		children,
-		...rest
+		...restProps
 	}: RootProps = $props();
 
 	const state = useEmojiPicker({
@@ -53,11 +53,11 @@
 </script>
 
 <CommandPrimitive.Root
-	{...rest}
+	{...restProps}
 	data-slot="emoji-picker"
 	columns={6}
 	shouldFilter={false}
-	class={cn("max-w-[232px]", className)}
+	class={cn("max-w-58", className)}
 	onValueChange={state.onValueChange}
 >
 	{@render children?.()}

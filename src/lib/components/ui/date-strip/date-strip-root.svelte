@@ -25,11 +25,13 @@
 
 	const displayedDates = $derived(Array.from({ length: daysToShow }, (_, i) => startDate.add({ days: i })));
 
+	/** Moves the visible date window backward by its displayed day count. */
 	function handlePrev() {
 		slideDirection = "start";
 		startDate = startDate.add({ days: -daysToShow });
 	}
 
+	/** Moves the visible date window forward by its displayed day count. */
 	function handleNext() {
 		slideDirection = "end";
 		startDate = startDate.add({ days: daysToShow });

@@ -14,6 +14,7 @@
 	let { ref = $bindable(null), class: className, ...restProps }: TimeProps = $props();
 	const ctx = getAudioPlayerContext();
 
+	/** @param seconds - Duration to format as zero-padded minutes and seconds. */
 	function formatTime(seconds: number) {
 		const mins = Math.floor(seconds / 60);
 		const secs = Math.floor(seconds % 60);

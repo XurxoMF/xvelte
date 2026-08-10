@@ -15,11 +15,17 @@
 
 	import { makeValue, parseValue, useEmojiPickerList } from "./emoji-picker.svelte.js";
 
-	let { ref = $bindable(null), emptyMessage = "No results.", class: className, ...rest }: ListProps = $props();
+	let { ref = $bindable(null), emptyMessage = "No results.", class: className, ...restProps }: ListProps = $props();
 
 	const emojiData = data as EmojiMartData;
+
+	/** @param value - Category identifier whose first character should be capitalized. */
 	const formatCategory = (value: string) => (value.length === 0 ? value : `${value[0].toUpperCase()}${value.slice(1)}`);
 
+	/**
+	 * @param value - Case-insensitive search prefix.
+	 * @param keywords - Emoji keywords tested against that prefix.
+	 */
 	const filter = (value: string, keywords: string[]) => {
 		if (!Array.isArray(keywords)) {
 			return false;
@@ -35,10 +41,11 @@
 	const pickerState = useEmojiPickerList();
 </script>
 
-<Command.List bind:ref data-slot="emoji-picker-list" class={cn("relative h-[200px]", className)} {...rest}>
+<Command.List bind:ref data-slot="emoji-picker-list" class={cn("relative h-50", className)} {...restProps}>
 	<Command.Empty class="absolute inset-0 flex place-items-center justify-center py-0">
 		{emptyMessage}
 	</Command.Empty>
+
 	{#if pickerState.showRecents}
 		{@const recents = pickerState.root.frecency?.items
 			.filter((item) => {
@@ -68,6 +75,7 @@
 			</CommandPrimitive.Group>
 		{/if}
 	{/if}
+
 	{#each emojiData.categories as category (category.id)}
 		{@const emojis = category.emojis.filter((item) => filter(pickerState.root.emojiPickerState.search, emojiData.emojis[item].keywords))}
 		{#if emojis.length > 0}

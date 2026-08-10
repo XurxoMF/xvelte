@@ -22,10 +22,21 @@ type ImageZoomContext = {
 	registeredImages: Writable<ZoomImageData[]>;
 };
 
+/**
+ * Provides the image registry and zoom controls to descendant triggers.
+ *
+ * @param ctx - Image registry, dialog state, and navigation callbacks.
+ */
 export function setImageZoomContext(ctx: ImageZoomContext) {
 	setContext(IMAGE_ZOOM_KEY, ctx);
 }
 
+/**
+ * Retrieves the nearest image-zoom context.
+ *
+ * @returns The context created by `ImageZoom.Root`.
+ * @throws When called outside an image-zoom root.
+ */
 export function getImageZoomContext() {
 	const ctx = getContext<ImageZoomContext>(IMAGE_ZOOM_KEY);
 	if (!ctx) {

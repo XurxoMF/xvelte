@@ -21,6 +21,7 @@
 	let volume = $state(1);
 	let isMuted = $state(false);
 
+	/** Toggles playback on the underlying audio element. */
 	function togglePlay() {
 		if (!audio) return;
 		if (audio.paused) {
@@ -30,35 +31,43 @@
 		}
 	}
 
+	/** @param time - Playback position to seek to, in seconds. */
 	function seek(time: number) {
 		if (!audio) return;
 		audio.currentTime = time;
 		currentTime = time;
 	}
 
+	/** @param v - Native audio volume between 0 and 1. */
 	function setVolume(v: number) {
 		if (!audio) return;
 		audio.volume = v;
 		volume = v;
 	}
 
+	/** Toggles the native muted state without discarding the chosen volume. */
 	function toggleMute() {
 		isMuted = !isMuted;
 	}
 
 	setAudioPlayerContext({
+		/** Whether native playback is currently running. */
 		get isPlaying() {
 			return { value: !isPaused };
 		},
+		/** Loaded audio duration in seconds. */
 		get duration() {
 			return { value: duration };
 		},
+		/** Current playback position in seconds. */
 		get currentTime() {
 			return { value: currentTime };
 		},
+		/** Current native volume between 0 and 1. */
 		get volume() {
 			return { value: volume };
 		},
+		/** Whether native audio output is muted. */
 		get isMuted() {
 			return { value: isMuted };
 		},
@@ -76,5 +85,6 @@
 	{...restProps}
 >
 	<audio bind:this={audio} {src} bind:paused={isPaused} bind:currentTime bind:duration bind:volume bind:muted={isMuted}></audio>
+
 	{@render children?.()}
 </div>

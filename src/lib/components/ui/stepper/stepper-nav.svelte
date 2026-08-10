@@ -15,7 +15,7 @@
 
 	import { useStepperNav } from "./stepper.svelte.js";
 
-	let { ref = $bindable(null), orientation = "horizontal", class: className, children, ...rest }: NavProps = $props();
+	let { ref = $bindable(null), orientation = "horizontal", class: className, children, ...restProps }: NavProps = $props();
 
 	const stepperNavState = useStepperNav({
 		orientation: box.with(() => orientation)
@@ -34,7 +34,7 @@
 		className
 	)}
 	{...stepperNavState.props}
-	{...rest}
+	{...restProps}
 >
 	{@render children?.()}
 </div>

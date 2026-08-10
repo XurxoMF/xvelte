@@ -13,14 +13,14 @@
 
 	import { useStepperStepButton } from "./stepper.svelte.js";
 
-	let { disabled = false, child, children, variant = "outline", size = "default", ...rest }: PreviousProps = $props();
+	let { disabled = false, child, children, variant = "outline", size = "default", ...restProps }: PreviousProps = $props();
 
 	const buttonState = useStepperStepButton({
 		type: box.with(() => "previous"),
 		disabled: box.with(() => disabled ?? false)
 	});
 
-	const mergedProps = $derived(mergeProps(buttonState.props, rest, { variant, size, "data-slot": "stepper-previous" }));
+	const mergedProps = $derived(mergeProps(buttonState.props, restProps, { variant, size, "data-slot": "stepper-previous" }));
 </script>
 
 {#if child}

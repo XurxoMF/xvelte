@@ -22,6 +22,7 @@
 		myIndex = registerImage({ src, alt: alt || "" });
 	});
 
+	/** Opens this trigger's registered image when mounting has assigned its index. */
 	function handleOpenZoom() {
 		if (myIndex !== undefined) {
 			openImage(myIndex);

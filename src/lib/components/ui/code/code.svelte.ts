@@ -9,15 +9,19 @@ type CodeOverflowStateProps = WritableBoxedValues<{
 	collapsed: boolean;
 }>;
 
+/** Controls whether an overflow-enabled code block is collapsed. */
 class CodeOverflowState {
+	/** @param opts - Boxed collapsed state owned by the overflow component. */
 	constructor(readonly opts: CodeOverflowStateProps) {
 		this.toggleCollapsed = this.toggleCollapsed.bind(this);
 	}
 
+	/** Toggles the collapsed state. */
 	toggleCollapsed() {
 		this.opts.collapsed.current = !this.opts.collapsed.current;
 	}
 
+	/** Current reactive collapsed state. */
 	get collapsed() {
 		return this.opts.collapsed.current;
 	}
@@ -30,9 +34,14 @@ type CodeRootStateProps = ReadableBoxedValues<{
 	highlight: RootProps["highlight"];
 }>;
 
+/** Highlights source code and exposes it to nested code parts. */
 class CodeRootState {
 	highlighter: HighlighterCore | null = $state(null);
 
+	/**
+	 * @param opts - Boxed source, language, line-number, and highlight options.
+	 * @param overflow - Optional enclosing overflow state.
+	 */
 	constructor(
 		readonly opts: CodeRootStateProps,
 		readonly overflow?: CodeOverflowState
@@ -40,6 +49,11 @@ class CodeRootState {
 		highlighter.then((hl) => (this.highlighter = hl));
 	}
 
+	/**
+	 * Converts source code into themed Shiki markup and annotates selected lines.
+	 *
+	 * @param code - Raw source code to highlight.
+	 */
 	highlight(code: string) {
 		return this.highlighter?.codeToHtml(code, {
 			lang: this.opts.lang.current,
@@ -70,6 +84,7 @@ class CodeRootState {
 		});
 	}
 
+	/** Current raw source code. */
 	get code() {
 		return this.opts.code.current;
 	}
@@ -77,6 +92,12 @@ class CodeRootState {
 	highlighted = $derived(this.highlight(this.code) ?? "");
 }
 
+/**
+ * Determines whether a line belongs to any configured line or inclusive range.
+ *
+ * @param num - One-based line number.
+ * @param range - Individual lines and ranges selected for highlighting.
+ */
 function within(num: number, range: RootProps["highlight"]) {
 	if (!range) return false;
 
@@ -100,9 +121,12 @@ function within(num: number, range: RootProps["highlight"]) {
 	return within;
 }
 
+/** Exposes the nearest code root's raw source to a copy button. */
 class CodeCopyButtonState {
+	/** @param root - Code root whose source should be copied. */
 	constructor(readonly root: CodeRootState) {}
 
+	/** Current raw source code from the associated root. */
 	get code() {
 		return this.root.opts.code.current;
 	}
@@ -112,14 +136,17 @@ const overflowCtx = new Context<CodeOverflowState>("code-overflow-state");
 
 const ctx = new Context<CodeRootState>("code-root-state");
 
+/** @param props - Boxed collapsed state to provide to a nested code root. */
 export function useCodeOverflow(props: CodeOverflowStateProps) {
 	return overflowCtx.set(new CodeOverflowState(props));
 }
 
+/** @param props - Boxed source and highlighting options for the code root. */
 export function useCode(props: CodeRootStateProps) {
 	return ctx.set(new CodeRootState(props, overflowCtx.getOr(undefined)));
 }
 
+/** @returns Copy-button state connected to the nearest code root. */
 export function useCodeCopyButton() {
 	return new CodeCopyButtonState(ctx.get());
 }

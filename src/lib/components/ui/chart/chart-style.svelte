@@ -7,8 +7,10 @@
 
 	let { id, config }: StyleProps = $props();
 
+	// Only series with explicit colors need generated CSS custom properties.
 	const colorConfig = $derived(config ? Object.entries(config).filter(([, config]) => config.theme || config.color) : null);
 
+	// Build one selector per theme so each series variable follows its configured palette.
 	const themeContents = $derived.by(() => {
 		if (!colorConfig || !colorConfig.length) return;
 

@@ -72,6 +72,7 @@
 	const yPercent = $derived(maxY === minY ? 0 : 100 - (100 * (currentValue.y - minY)) / (maxY - minY));
 	const formattedValue = $derived(formatValue?.(currentValue) ?? `${currentValue.x.toFixed(0)}, ${currentValue.y.toFixed(0)}`);
 
+	/** @param next - Candidate point to quantize, clamp, and publish. */
 	function updateValue(next: Point) {
 		value = {
 			x: clamp(quantize(next.x, minX, stepX), minX, maxX),
@@ -80,6 +81,8 @@
 		onValueChange?.(value);
 		return value;
 	}
+
+	/** @param event - Pointer event whose viewport coordinates are mapped into value bounds. */
 	function valueFromPointer(event: RootEvent<PointerEvent>) {
 		const bounds = event.currentTarget.getBoundingClientRect();
 		return {
@@ -87,6 +90,8 @@
 			y: maxY - clamp((event.clientY - bounds.top) / bounds.height, 0, 1) * (maxY - minY)
 		};
 	}
+
+	/** @param event - Pointer event beginning a captured drag. */
 	function handlePointerDown(event: RootEvent<PointerEvent>) {
 		onpointerdown?.(event);
 		if (disabled || event.defaultPrevented) return;
@@ -95,10 +100,14 @@
 		event.currentTarget.setPointerCapture(event.pointerId);
 		updateValue(valueFromPointer(event));
 	}
+
+	/** @param event - Captured pointer event updating an active drag. */
 	function handlePointerMove(event: RootEvent<PointerEvent>) {
 		onpointermove?.(event);
 		if (dragging && !disabled) updateValue(valueFromPointer(event));
 	}
+
+	/** @param event - Pointer event committing the final dragged value. */
 	function handlePointerUp(event: RootEvent<PointerEvent>) {
 		onpointerup?.(event);
 		if (!dragging) return;
@@ -108,6 +117,8 @@
 		if (target.hasPointerCapture(event.pointerId)) target.releasePointerCapture(event.pointerId);
 		onValueCommit?.(committed);
 	}
+
+	/** @param event - Arrow, page, or boundary key used to move and commit the point. */
 	function handleKeyDown(event: RootEvent<KeyboardEvent>) {
 		onkeydown?.(event);
 		if (disabled || event.defaultPrevented) return;
@@ -116,6 +127,8 @@
 		event.preventDefault();
 		onValueCommit?.(updateValue(next));
 	}
+
+	/** @param event - Cancelled pointer event forwarded before ending the drag. */
 	function handlePointerCancel(event: RootEvent<PointerEvent>) {
 		onpointercancel?.(event);
 		dragging = false;
@@ -145,5 +158,6 @@
 	<div data-slot="point-picker-content" class="pointer-events-none absolute inset-0 z-0 overflow-hidden">
 		{@render children?.()}
 	</div>
+
 	<Indicators value={currentValue} {xPercent} {yPercent} {formattedValue} {showGrid} {showCrosshair} {showCursor} {showValue} {cursor} />
 </div>

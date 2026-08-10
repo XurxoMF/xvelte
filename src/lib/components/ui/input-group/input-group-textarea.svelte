@@ -7,7 +7,7 @@
 
 	import * as Textarea from "$lib/components/ui/textarea";
 
-	let { ref = $bindable(null), value = $bindable(), class: className, ...props }: TextareaProps = $props();
+	let { ref = $bindable(null), value = $bindable(), class: className, ...restProps }: TextareaProps = $props();
 </script>
 
 <Textarea.Root
@@ -18,5 +18,5 @@
 		className
 	)}
 	bind:value
-	{...props}
+	{...restProps}
 />

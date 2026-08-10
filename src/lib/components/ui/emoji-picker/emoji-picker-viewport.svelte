@@ -9,9 +9,9 @@
 <script lang="ts">
 	import { cn } from "$lib/utils";
 
-	let { ref = $bindable(null), class: className, children, ...rest }: ViewportProps = $props();
+	let { ref = $bindable(null), class: className, children, ...restProps }: ViewportProps = $props();
 </script>
 
-<div bind:this={ref} {...rest} data-slot="emoji-picker-viewport" class={cn("rounded-md border border-border", className)}>
+<div bind:this={ref} {...restProps} data-slot="emoji-picker-viewport" class={cn("rounded-md border border-border", className)}>
 	{@render children?.()}
 </div>

@@ -5,14 +5,36 @@ export type Point = {
 
 export type RootEvent<T extends Event> = T & { currentTarget: HTMLDivElement };
 
+/**
+ * Constrains a number to an inclusive range.
+ *
+ * @param number - Value to constrain.
+ * @param min - Lowest permitted value.
+ * @param max - Highest permitted value.
+ */
 export function clamp(number: number, min: number, max: number) {
 	return Math.max(min, Math.min(max, number));
 }
 
+/**
+ * Snaps a number to the closest step measured from a minimum value.
+ *
+ * @param number - Value to snap.
+ * @param min - Origin from which steps are measured.
+ * @param step - Distance between valid values; non-positive values disable snapping.
+ */
 export function quantize(number: number, min: number, step: number) {
 	return step > 0 ? min + Math.round((number - min) / step) * step : number;
 }
 
+/**
+ * Applies directional, page, or boundary keyboard navigation to a point.
+ *
+ * @param key - Keyboard key reported by the event.
+ * @param value - Current point.
+ * @param bounds - Coordinate limits and step sizes.
+ * @returns The requested point, or undefined when the key is not handled.
+ */
 export function getKeyboardValue(
 	key: string,
 	value: Point,

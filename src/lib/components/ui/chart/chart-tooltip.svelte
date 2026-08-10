@@ -34,6 +34,7 @@
 
 	import * as Chart from ".";
 
+	/** @param value - Tooltip value converted to display text by default. */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function defaultFormatter(value: any) {
 		return `${value}`;
@@ -58,8 +59,7 @@
 	const chart = Chart.useChart();
 	const chartCtx = getChartContext();
 
-	// Filter to series with defined values (important for item-based charts like Pie/Arc
-	// where only the hovered item has a value)
+	// Item-based charts populate only the hovered series, so omit every undefined value.
 	const visibleSeries = $derived(chartCtx.tooltip.series.filter((s: Chart.TooltipPayload) => s.value !== undefined));
 
 	const formattedLabel = $derived.by(() => {
@@ -68,7 +68,7 @@
 		const [item] = visibleSeries;
 		const tooltipData = chartCtx.tooltip.data;
 
-		// Get the x-axis label value from the raw tooltip data (e.g. a Date or month string)
+		// Resolve the axis label from the raw datum before applying component-level overrides.
 		const dataLabel = tooltipData != null ? chartCtx.x(tooltipData) : undefined;
 
 		const key = labelKey ?? item?.label ?? item?.key ?? "value";

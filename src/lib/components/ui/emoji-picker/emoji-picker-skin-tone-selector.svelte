@@ -16,7 +16,7 @@
 
 	import { useEmojiPickerSkinToneSelector } from "./emoji-picker.svelte.js";
 
-	let { previewEmoji = "👋", variant = "outline", size = "icon", class: className, onclick, ...rest }: SkinToneSelectorProps = $props();
+	let { previewEmoji = "👋", variant = "outline", size = "icon", class: className, onclick, ...restProps }: SkinToneSelectorProps = $props();
 
 	const skinState = useEmojiPickerSkinToneSelector({
 		previewEmoji: box.with(() => previewEmoji)
@@ -24,7 +24,7 @@
 </script>
 
 <Button
-	{...rest}
+	{...restProps}
 	data-slot="emoji-picker-skin-tone-selector"
 	{variant}
 	{size}

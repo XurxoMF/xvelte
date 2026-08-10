@@ -14,7 +14,15 @@ export type ExtractSnippetParams<T> = T extends Snippet<[infer P]> ? P : never;
 
 export type TooltipPayload = Tooltip.TooltipSeries;
 
-// Helper to extract item config from a payload.
+/**
+ * Resolves the chart configuration entry represented by a tooltip payload.
+ *
+ * @param config - Complete chart series configuration.
+ * @param payload - Tooltip series emitted by LayerChart.
+ * @param key - Preferred property used to identify the series.
+ * @param data - Optional source datum used as a final key lookup.
+ * @returns The matching series configuration, when one exists.
+ */
 export function getPayloadConfigFromPayload(
 	config: ChartConfig,
 	payload: TooltipPayload,
@@ -49,10 +57,16 @@ export type ChartContextValue = {
 
 export const CHART_CONTEXT = Symbol("chart-context");
 
+/**
+ * Provides chart configuration to nested chart parts.
+ *
+ * @param value - Configuration shared by the chart container.
+ */
 export function setChartContext(value: ChartContextValue) {
 	return setContext(CHART_CONTEXT, value);
 }
 
+/** @returns The configuration from the nearest chart container. */
 export function useChart() {
 	return getContext<ChartContextValue>(CHART_CONTEXT);
 }

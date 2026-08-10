@@ -36,7 +36,7 @@
 		accept,
 		children,
 		ref = $bindable(null),
-		...rest
+		...restProps
 	}: RootProps = $props();
 
 	const rootState = useFileDropZone({
@@ -51,6 +51,6 @@
 	});
 </script>
 
-<input bind:this={ref} data-slot="file-drop-zone" class="hidden" {...rootState.props} {...rest} />
+<input bind:this={ref} data-slot="file-drop-zone" class="hidden" {...rootState.props} {...restProps} />
 
 {@render children?.()}

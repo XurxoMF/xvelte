@@ -9,7 +9,7 @@
 <script lang="ts">
 	import { cn } from "$lib/utils";
 
-	let { ref = $bindable(null), class: className, children, ...rest }: GroupProps = $props();
+	let { ref = $bindable(null), class: className, children, ...restProps }: GroupProps = $props();
 </script>
 
 <div
@@ -22,7 +22,7 @@
 		"*:data-[slot=number-field-input]:rounded-none *:data-[slot=number-field-input]:border-x *:data-[slot=number-field-input]:border-y-0 *:data-[slot=number-field-input]:first:border-s-0 *:data-[slot=number-field-input]:last:border-e-0",
 		className
 	)}
-	{...rest}
+	{...restProps}
 >
 	{@render children?.()}
 </div>

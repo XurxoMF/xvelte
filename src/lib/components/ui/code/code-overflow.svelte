@@ -17,7 +17,7 @@
 
 	import { useCodeOverflow } from "./code.svelte.js";
 
-	let { collapsed = $bindable(true), class: className, children, ...props }: OverflowProps = $props();
+	let { collapsed = $bindable(true), class: className, children, ...restProps }: OverflowProps = $props();
 
 	const state = useCodeOverflow({
 		collapsed: box.with(
@@ -28,7 +28,7 @@
 </script>
 
 <div
-	{...props}
+	{...restProps}
 	data-slot="code-overflow"
 	data-code-overflow
 	data-collapsed={collapsed}

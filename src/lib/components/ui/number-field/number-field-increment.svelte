@@ -30,7 +30,7 @@
 		onpointercancel,
 		onclick,
 		tabindex = -1,
-		...rest
+		...restProps
 	}: IncrementProps = $props();
 
 	const buttonState = useNumberFieldButton({
@@ -55,7 +55,7 @@
 	aria-label="Increase"
 	class={cn("touch-manipulation", className)}
 	{...buttonState.props}
-	{...rest}
+	{...restProps}
 >
 	{#if children}
 		{@render children?.()}

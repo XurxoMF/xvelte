@@ -26,6 +26,7 @@
 		};
 	});
 
+	/** Advances the eased scroll position until it reaches the wheel target. */
 	function update() {
 		if (!ref) return;
 
@@ -44,6 +45,7 @@
 		animationFrame = requestAnimationFrame(update);
 	}
 
+	/** @param e - Vertical wheel event translated into bounded horizontal movement. */
 	function handleWheel(e: WheelEvent) {
 		if (!ref) return;
 		if (e.deltaY === 0) return;

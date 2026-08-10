@@ -15,9 +15,10 @@
 
 	const uid = $props.id();
 
-	let { ref = $bindable(null), id = uid, class: className, children, ...rest }: ItemProps = $props();
+	let { ref = $bindable(null), id = uid, class: className, children, ...restProps }: ItemProps = $props();
 
 	const stepperItemState = useStepperItem({
+		/** Current reactive identifier supplied to this step item. */
 		get id() {
 			return id;
 		}
@@ -35,7 +36,7 @@
 		className
 	)}
 	{...stepperItemState.props}
-	{...rest}
+	{...restProps}
 >
 	{@render children?.()}
 </div>

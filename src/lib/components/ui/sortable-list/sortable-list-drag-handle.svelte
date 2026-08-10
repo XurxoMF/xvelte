@@ -24,6 +24,11 @@
 
 	const attachmentKey = createAttachmentKey();
 
+	/**
+	 * Connects an explicit handle element to the DnD action.
+	 *
+	 * @param node - Handle element to register and expose through `ref`.
+	 */
 	function sortableDragHandle(node: HTMLElement) {
 		ref = node;
 		const action = dragHandle(node);

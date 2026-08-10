@@ -6,10 +6,12 @@
 		orientation?: "horizontal" | "vertical" | undefined;
 	}
 
+	/** @param props - Variant, size, spacing, and orientation shared with group items. */
 	export function setToggleGroupCtx(props: ToggleGroupContext) {
 		setContext("toggleGroup", props);
 	}
 
+	/** @returns Styling and orientation from the nearest toggle-group root. */
 	export function getToggleGroupCtx() {
 		return getContext<Required<ToggleGroupContext>>("toggleGroup");
 	}
@@ -42,15 +44,19 @@
 	}: RootProps = $props();
 
 	setToggleGroupCtx({
+		/** Current toggle visual variant. */
 		get variant() {
 			return variant;
 		},
+		/** Current toggle size. */
 		get size() {
 			return size;
 		},
+		/** Gap between adjacent group items. */
 		get spacing() {
 			return spacing;
 		},
+		/** Current group orientation. */
 		get orientation() {
 			return orientation;
 		}

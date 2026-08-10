@@ -40,6 +40,7 @@
 		...restProps
 	}: RootProps = $props();
 
+	// Dropdown captions stay compact unless the consumer explicitly selects another format.
 	const monthFormat = $derived.by(() => {
 		if (monthFormatProp) return monthFormatProp;
 		if (captionLayout.startsWith("dropdown")) return "short";

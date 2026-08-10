@@ -46,7 +46,7 @@
 		hideLines = false,
 		highlight = [],
 		children,
-		...rest
+		...restProps
 	}: RootProps = $props();
 
 	const codeState = useCode({
@@ -57,7 +57,7 @@
 	});
 </script>
 
-<div {...rest} bind:this={ref} data-slot="code" class={cn(codeVariants({ variant }), className)}>
+<div {...restProps} bind:this={ref} data-slot="code" class={cn(codeVariants({ variant }), className)}>
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 	{@html codeState.highlighted}
 	{@render children?.()}

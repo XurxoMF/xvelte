@@ -16,9 +16,11 @@ type FileDropZoneStateOptions = ReadableBoxedValues<{
 	accept: string | undefined;
 }>;
 
+/** Validates files and coordinates uploads shared by all drop-zone parts. */
 class FileDropZoneState {
 	uploading = $state(false);
 
+	/** @param opts - Boxed constraints, callbacks, and native input options. */
 	constructor(readonly opts: FileDropZoneStateOptions) {
 		if (this.opts.maxFiles !== undefined && this.opts.fileCount === undefined) {
 			console.warn("Make sure to provide FileDropZone with `fileCount` when using the `maxFiles` prompt");
@@ -28,6 +30,7 @@ class FileDropZoneState {
 		this.ondrop = this.ondrop.bind(this);
 	}
 
+	/** @param e - Drop event containing files to validate and upload. */
 	async ondrop(
 		e: DragEvent & {
 			currentTarget: EventTarget;
@@ -42,6 +45,7 @@ class FileDropZoneState {
 		await this.upload(droppedFiles);
 	}
 
+	/** @param e - Native file-input change event. */
 	async onchange(
 		e: Event & {
 			currentTarget: EventTarget & HTMLInputElement;
@@ -55,10 +59,17 @@ class FileDropZoneState {
 
 		await this.upload(Array.from(selectedFiles));
 
-		// this if a file fails and we upload the same file again we still get feedback
+		// Reset the native input so selecting the same rejected file emits another change event.
 		(e.target as HTMLInputElement).value = "";
 	}
 
+	/**
+	 * Validates one file against size, count, extension, and MIME constraints.
+	 *
+	 * @param file - File to validate.
+	 * @param fileNumber - One-based count including previously uploaded files.
+	 * @returns The first rejection reason, or undefined when accepted.
+	 */
 	shouldAcceptFile(file: File, fileNumber: number): FileRejectedReason | undefined {
 		if (this.opts.maxFileSize.current !== undefined && file.size > this.opts.maxFileSize.current) return "Maximum file size exceeded";
 
@@ -71,18 +82,18 @@ class FileDropZoneState {
 		const fileName = file.name.toLowerCase();
 
 		const isAcceptable = acceptedTypes.some((pattern) => {
-			// check extension like .mp4
+			// Empty MIME values and explicit extensions are matched against the filename.
 			if (fileType === "" || pattern.startsWith(".")) {
 				return fileName.endsWith(pattern);
 			}
 
-			// if pattern has wild card like video/*
+			// Wildcards such as `video/*` accept every subtype in the requested MIME family.
 			if (pattern.endsWith("/*")) {
 				const baseType = pattern.slice(0, pattern.indexOf("/*"));
 				return fileType.startsWith(baseType + "/");
 			}
 
-			// otherwise it must be a specific type like video/mp4
+			// Remaining patterns are exact MIME types such as `video/mp4`.
 			return fileType === pattern;
 		});
 
@@ -91,6 +102,7 @@ class FileDropZoneState {
 		return undefined;
 	}
 
+	/** @param uploadFiles - Candidate files to validate before invoking the upload callback. */
 	upload = async (uploadFiles: File[]) => {
 		this.uploading = true;
 		try {
@@ -136,13 +148,17 @@ class FileDropZoneState {
 	}));
 }
 
+/** Adapts a label-like trigger into a drag-and-drop target. */
 class FileDropZoneTrigger {
+	/** @param rootState - Drop-zone state that receives dropped files. */
 	constructor(readonly rootState: FileDropZoneState) {}
 
+	/** @param e - Drag event whose default must be prevented to allow dropping. */
 	ondragover(e: DragEvent) {
 		e.preventDefault();
 	}
 
+	/** @param e - Drop event forwarded to the root uploader. */
 	ondrop(
 		e: DragEvent & {
 			currentTarget: EventTarget & HTMLLabelElement;
@@ -165,22 +181,30 @@ type FileDropZoneTextareaOptions = ReadableBoxedValues<{
 	onpaste: HTMLAttributes<HTMLTextAreaElement>["onpaste"];
 }>;
 
+/** Adds file drag-and-drop and paste behavior to a textarea. */
 class FileDropZoneTextareaState {
+	/**
+	 * @param opts - Boxed native handlers to preserve after internal behavior.
+	 * @param rootState - Drop-zone state that receives extracted files.
+	 */
 	constructor(
 		readonly opts: FileDropZoneTextareaOptions,
 		readonly rootState: FileDropZoneState
 	) {}
 
+	/** @param e - Drag event whose default is prevented before forwarding. */
 	ondragover(e: Parameters<NonNullable<HTMLAttributes<HTMLTextAreaElement>["ondragover"]>>[0]) {
 		e.preventDefault();
 		this.opts.ondragover.current?.(e);
 	}
 
+	/** @param e - Drop event sent to both internal and consumer handlers. */
 	ondrop(e: Parameters<NonNullable<HTMLAttributes<HTMLTextAreaElement>["ondrop"]>>[0]) {
 		this.rootState.ondrop(e);
 		this.opts.ondrop.current?.(e);
 	}
 
+	/** @param e - Paste event from which clipboard files are extracted. */
 	onpaste(e: Parameters<NonNullable<HTMLAttributes<HTMLTextAreaElement>["onpaste"]>>[0]) {
 		const clipboardData = e.clipboardData;
 		if (!clipboardData) {
@@ -206,14 +230,17 @@ class FileDropZoneTextareaState {
 
 const ctx = new Context<FileDropZoneState>("file-drop-zone-state");
 
+/** @param opts - Boxed upload constraints and callbacks to provide to descendants. */
 export function useFileDropZone(opts: FileDropZoneStateOptions) {
 	return ctx.set(new FileDropZoneState(opts));
 }
 
+/** @returns Trigger behavior connected to the nearest drop-zone root. */
 export function useFileDropZoneTrigger() {
 	return new FileDropZoneTrigger(ctx.get());
 }
 
+/** @param opts - Boxed textarea handlers to compose with file behavior. */
 export function useFileDropZoneTextarea(opts: FileDropZoneTextareaOptions) {
 	return new FileDropZoneTextareaState(opts, ctx.get());
 }

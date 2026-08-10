@@ -20,6 +20,7 @@
 	let isDisabled = $derived(ctx.isDateDisabled(date));
 	let direction = $derived(ctx.direction());
 
+	/** Selects this date unless the root has marked it as disabled. */
 	function handleClick() {
 		if (!isDisabled) {
 			ctx.onSelect(date);

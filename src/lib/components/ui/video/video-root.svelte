@@ -30,6 +30,7 @@
 	let isLoading = $state(true);
 	let lastVolume = $state(1);
 
+	/** Toggles playback on the native video element. */
 	function togglePlay() {
 		if (video.paused) {
 			video.play();
@@ -38,25 +39,30 @@
 		}
 	}
 
+	/** Synchronizes UI state when native playback starts. */
 	function handlePlay() {
 		isPlaying = true;
 		isLoading = false;
 		showControlsTemporarily();
 	}
 
+	/** Synchronizes UI state and reveals controls when playback pauses. */
 	function handlePause() {
 		isPlaying = false;
 		showControls = true;
 	}
 
+	/** Copies the native playback position into reactive state. */
 	function handleTimeUpdate() {
 		currentTime = video.currentTime;
 	}
 
+	/** Copies the loaded media duration into reactive state. */
 	function handleDurationChange() {
 		duration = video.duration;
 	}
 
+	/** @param val - Next volume between 0 and 1. */
 	function handleVolumeChange(val: number) {
 		const newVolume = val;
 		volume = newVolume;
@@ -65,6 +71,7 @@
 		if (newVolume > 0) lastVolume = newVolume;
 	}
 
+	/** Toggles mute while remembering the last audible volume. */
 	function toggleMute() {
 		if (isMuted) {
 			isMuted = false;
@@ -80,6 +87,7 @@
 		}
 	}
 
+	/** Enters or exits fullscreen for the video container. */
 	function toggleFullscreen() {
 		if (!document.fullscreenElement) {
 			video.parentElement?.requestFullscreen();
@@ -90,12 +98,14 @@
 		}
 	}
 
+	/** @param seconds - Duration to format as zero-padded minutes and seconds. */
 	function formatTime(seconds: number) {
 		const mins = Math.floor(seconds / 60);
 		const secs = Math.floor(seconds % 60);
 		return `${mins}:${secs.toString().padStart(2, "0")}`;
 	}
 
+	/** Reveals controls and restarts their automatic hide timer. */
 	function showControlsTemporarily() {
 		showControls = true;
 		clearTimeout(controlsTimeout);
@@ -104,14 +114,17 @@
 		}, 2500);
 	}
 
+	/** Keeps controls visible while the pointer is moving over the player. */
 	function handleMouseMove() {
 		showControlsTemporarily();
 	}
 
+	/** Shows the loading indicator while playback is buffering. */
 	function handleWaiting() {
 		isLoading = true;
 	}
 
+	/** Hides the loading indicator once playback can continue. */
 	function handleCanPlay() {
 		isLoading = false;
 	}
@@ -176,6 +189,7 @@
 			showControls ? "opacity-100" : "opacity-0"
 		)}
 	>
+		<!-- The invisible native range sits above the visual track and thumb. -->
 		<div class="group/slider relative mb-4 flex h-4 w-full items-center">
 			<input
 				type="range"
@@ -190,14 +204,18 @@
 				}}
 				class="absolute z-20 h-full w-full cursor-pointer opacity-0"
 			/>
+
 			<div class="absolute h-1 w-full rounded-full bg-white/20 transition-all group-hover/slider:h-1.5"></div>
+
 			<div class="absolute h-1 rounded-full bg-white group-hover/slider:h-1.5" style="width: {(currentTime / duration) * 100}%"></div>
+
 			<div
 				class="absolute h-3 w-3 rounded-full bg-white opacity-0 shadow transition-opacity group-hover/slider:opacity-100"
 				style="left: {(currentTime / duration) * 100}%; transform: translateX(-50%)"
 			></div>
 		</div>
 
+		<!-- Playback and volume controls stay grouped opposite fullscreen. -->
 		<div class="flex items-center justify-between gap-4">
 			<div class="flex items-center gap-4">
 				<button
@@ -222,6 +240,7 @@
 							<VolumeHighIcon class="h-5 w-5" />
 						{/if}
 					</button>
+
 					<div class="flex h-10 w-0 items-center justify-center overflow-hidden p-2 transition-all duration-300 group-hover/volume:w-20">
 						<div class="group/slider relative flex h-4 w-full items-center">
 							<input
@@ -236,8 +255,11 @@
 								}}
 								class="absolute z-20 h-full w-full cursor-pointer opacity-0"
 							/>
+
 							<div class="absolute h-1 w-full rounded-full bg-white/20 transition-all group-hover/slider:h-1.5"></div>
+
 							<div class="absolute h-1 rounded-full bg-white group-hover/slider:h-1.5" style="width: {(volume / 1) * 100}%"></div>
+
 							<div
 								class="absolute h-3 w-3 rounded-full bg-white opacity-0 shadow transition-opacity group-hover/slider:opacity-100"
 								style="left: {(volume / 1) * 100}%; transform: translateX(-50%)"

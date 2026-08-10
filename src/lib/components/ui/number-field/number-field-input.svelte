@@ -11,7 +11,7 @@
 
 	import { useNumberFieldInput } from "./number-field.svelte.js";
 
-	let { ref = $bindable(null), class: className, ...rest }: InputProps = $props();
+	let { ref = $bindable(null), class: className, ...restProps }: InputProps = $props();
 
 	const inputState = useNumberFieldInput();
 </script>
@@ -22,7 +22,7 @@
 	data-slot="number-field-input"
 	bind:value={inputState.rootState.opts.value.current}
 	{...inputState.props}
-	{...rest}
+	{...restProps}
 />
 
 <style>

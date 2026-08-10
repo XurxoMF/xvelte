@@ -1,5 +1,5 @@
 export type UseRampOptions = {
-	/** The function to call to increment the value */
+	/** Function called for every repeated increment. */
 	increment: () => void;
 	/**
 	 * The maximum amount of time it should take to increment the value by 1 in milliseconds
@@ -21,10 +21,16 @@ export type UseRampOptions = {
 	 * @default 2500
 	 */
 	rampUpTime?: number;
-	/** A function to determine whether the value can be incremented. When false the ramp will be reset. */
+	/** Determines whether incrementing may continue. Returning false resets the ramp. */
 	canRamp: () => boolean;
 };
 
+/**
+ * Creates press-and-hold controls whose repeat interval accelerates over time.
+ *
+ * @param options - Increment callback, timing values, and continuation predicate.
+ * @returns Controls and reactive state for starting or resetting the ramp.
+ */
 export function useRamp({ increment, maxFrequency = 200, minFrequency = 25, startDelay = 100, rampUpTime = 2500, canRamp }: UseRampOptions) {
 	const slowFrequency = Math.max(0, maxFrequency, minFrequency);
 	const fastFrequency = Math.max(0, Math.min(maxFrequency, minFrequency));
@@ -34,6 +40,7 @@ export function useRamp({ increment, maxFrequency = 200, minFrequency = 25, star
 	let rampIntervalTimeout: ReturnType<typeof setTimeout> | undefined;
 	let rampStartedAt: number | undefined;
 
+	/** Executes an increment and schedules the following one at the current interval. */
 	function repeat() {
 		if (!active || !canRamp()) {
 			reset();
@@ -45,6 +52,7 @@ export function useRamp({ increment, maxFrequency = 200, minFrequency = 25, star
 		rampIntervalTimeout = setTimeout(repeat, getFrequency());
 	}
 
+	/** Returns the delay before the next increment, interpolated across the ramp window. */
 	function getFrequency() {
 		if (rampUpTime <= 0 || rampStartedAt === undefined) return fastFrequency;
 
@@ -53,6 +61,7 @@ export function useRamp({ increment, maxFrequency = 200, minFrequency = 25, star
 		return slowFrequency - progress * (slowFrequency - fastFrequency);
 	}
 
+	/** Stops pending work and returns the ramp to its idle state. */
 	function reset() {
 		clearTimeout(rampStartTimeout);
 		clearTimeout(rampIntervalTimeout);
@@ -61,6 +70,7 @@ export function useRamp({ increment, maxFrequency = 200, minFrequency = 25, star
 		ramping = false;
 	}
 
+	/** Restarts the initial delay and begins a fresh ramp cycle. */
 	function start() {
 		// Restarting must cancel the previous timers or one pointer could create multiple repeat loops.
 		reset();
@@ -77,9 +87,11 @@ export function useRamp({ increment, maxFrequency = 200, minFrequency = 25, star
 	return {
 		start,
 		reset,
+		/** Whether a ramp cycle is waiting or repeating. */
 		get active() {
 			return active;
 		},
+		/** Whether the initial delay has elapsed and repetition has begun. */
 		get ramping() {
 			return ramping;
 		}

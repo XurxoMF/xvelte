@@ -17,11 +17,17 @@
 
 	const attachmentKey = createAttachmentKey();
 
+	/**
+	 * Makes the whole item draggable only while no dedicated drag handle exists.
+	 *
+	 * @param node - Item element to observe and connect to the DnD action.
+	 */
 	function sortableItem(node: HTMLElement) {
 		ref = node;
 		let action: ReturnType<typeof dragHandle> | undefined;
 		let destroyed = false;
 
+		/** Reconnects the item-level action when a handle is added or removed. */
 		const sync = () => {
 			if (destroyed) return;
 			const hasDedicatedHandle = node.querySelector('[data-slot="sortable-list-drag-handle"]') !== null;

@@ -30,6 +30,11 @@
 
 	let actualPlacement = $state<Placement>(untrack(() => placement));
 
+	/**
+	 * Measures the target and publishes a rectangle expanded by the configured padding.
+	 *
+	 * @param el - Element that the current walkthrough step highlights.
+	 */
 	function updateSpotlight(el: HTMLElement) {
 		const rect = el.getBoundingClientRect();
 
@@ -46,12 +51,14 @@
 		});
 	}
 
+	/** Finds the current target, reveals it if needed, and starts automatic tooltip positioning. */
 	function setupFloating() {
 		const targetEl = document.getElementById(targetId);
 		if (!targetEl || !tooltipEl) return;
 
 		updateSpotlight(targetEl);
 
+		// Check every viewport edge before scrolling, avoiding movement for already visible targets.
 		const rect = targetEl.getBoundingClientRect();
 		const isVisible =
 			rect.top >= 0 &&
@@ -66,6 +73,7 @@
 		const middleware = [offset(12), flip(), shift({ padding: 10 })];
 		if (arrowEl) middleware.push(arrow({ element: arrowEl }));
 
+		// Recalculate both the spotlight and tooltip whenever layout or scroll position changes.
 		cleanup = autoUpdate(targetEl, tooltipEl, () => {
 			updateSpotlight(targetEl);
 
@@ -143,20 +151,25 @@
 				<div class="flex items-start justify-between gap-4">
 					<div class="space-y-1">
 						<h4 class="leading-none font-semibold">{ctx.currentStep()?.title}</h4>
+
 						<p class="text-sm text-muted-foreground">{ctx.currentStep()?.description}</p>
 					</div>
+
 					<Button.Root variant="ghost" size="icon" class="-mt-1 -mr-2 h-6 w-6 shrink-0" onclick={ctx.close}>
 						<CloseIcon class="h-4 w-4" />
 					</Button.Root>
 				</div>
+
 				<div class="flex items-center justify-between pt-4">
 					<span class="text-xs text-muted-foreground">
 						Step {ctx.currentStepIndex() + 1}
 					</span>
+
 					<div class="flex gap-2">
 						{#if ctx.currentStepIndex() > 0}
 							<Button.Root variant="outline" size="sm" onclick={ctx.prev}>Back</Button.Root>
 						{/if}
+
 						<Button.Root size="sm" onclick={ctx.next}>
 							{ctx.isLastStep() ? "Finish" : "Next"}
 						</Button.Root>

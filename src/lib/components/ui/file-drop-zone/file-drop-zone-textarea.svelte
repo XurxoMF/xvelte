@@ -11,7 +11,7 @@
 
 	import { useFileDropZoneTextarea } from "./file-drop-zone.svelte.js";
 
-	let { onpaste, ondragover, ondrop, child, ...rest }: TextareaProps = $props();
+	let { onpaste, ondragover, ondrop, child, ...restProps }: TextareaProps = $props();
 
 	const fileDropZoneTextareaState = useFileDropZoneTextarea({
 		onpaste: box.with(() => onpaste),
@@ -19,7 +19,7 @@
 		ondrop: box.with(() => ondrop)
 	});
 
-	const mergedProps = $derived(mergeProps(fileDropZoneTextareaState.props, rest));
+	const mergedProps = $derived(mergeProps(fileDropZoneTextareaState.props, restProps));
 </script>
 
 {#if child}

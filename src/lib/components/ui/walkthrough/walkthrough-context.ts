@@ -19,10 +19,16 @@ export type WalkthroughContext = {
 	close: () => void;
 };
 
+/**
+ * Provides walkthrough state and navigation controls to descendant parts.
+ *
+ * @param ctx - Reactive step state and navigation callbacks.
+ */
 export function setWalkthroughContext(ctx: WalkthroughContext) {
 	setContext(WALKTHROUGH_KEY, ctx);
 }
 
+/** @returns The nearest walkthrough context. */
 export function getWalkthroughContext() {
 	return getContext<WalkthroughContext>(WALKTHROUGH_KEY);
 }

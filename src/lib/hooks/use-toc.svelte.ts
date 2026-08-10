@@ -22,6 +22,7 @@ export class UseToc {
 	#toc = $state<Heading[]>([]);
 	#cleanup?: () => void;
 
+	/** Element whose descendant headings should populate the table of contents. */
 	set ref(ref: HTMLElement | undefined) {
 		this.#teardown();
 		this.#ref = ref;
@@ -36,6 +37,7 @@ export class UseToc {
 		const observer = new IntersectionObserver((entries) => {
 			for (const entry of entries) visibility.set(entry.target, entry.intersectionRatio);
 
+			// Keep visible headings, then select the one closest to the top of the viewport.
 			const active = [...visibility]
 				.filter((entry) => entry[1] > 0)
 				.sort((a, b) => a[0].getBoundingClientRect().top - b[0].getBoundingClientRect().top)[0];
@@ -45,6 +47,7 @@ export class UseToc {
 			setActive(this.#toc, Number(active[0].getAttribute(INDEX_ATTRIBUTE)));
 		});
 
+		/** Rebuilds the hierarchy and observes every current heading after content changes. */
 		const refresh = () => {
 			observer.disconnect();
 			visibility.clear();
@@ -64,26 +67,36 @@ export class UseToc {
 		};
 	}
 
+	/** Currently observed heading container. */
 	get ref() {
 		return this.#ref;
 	}
 
+	/** Current reactive heading hierarchy. */
 	get current() {
 		return this.#toc;
 	}
 
+	/** Disconnects observers and clears all retained DOM and heading references. */
 	destroy() {
 		this.#teardown();
 		this.#ref = undefined;
 		this.#toc = [];
 	}
 
+	/** Disconnects observers created for the previously assigned element. */
 	#teardown() {
 		this.#cleanup?.();
 		this.#cleanup = undefined;
 	}
 }
 
+/**
+ * Converts a heading element into the reactive data consumed by the TOC.
+ *
+ * @param element - Heading element found in the observed container.
+ * @param index - Stable index used to associate observer entries with TOC nodes.
+ */
 function createHeading(element: HTMLHeadingElement, index: number): Heading {
 	const kind = element.tagName.toLowerCase() as HeadingKind;
 	element.setAttribute(INDEX_ATTRIBUTE, index.toString());
@@ -99,10 +112,17 @@ function createHeading(element: HTMLHeadingElement, index: number): Heading {
 	};
 }
 
+/**
+ * Builds a nested heading tree from document order and heading levels.
+ *
+ * @param element - Container whose descendant headings should be indexed.
+ */
 function getToc(element: HTMLElement): Heading[] {
+	// Ignore explicitly excluded subtrees and convert the remaining headings to TOC nodes.
 	const headings = [...element.querySelectorAll<HTMLHeadingElement>("h1, h2, h3, h4, h5, h6")]
 		.filter((heading) => heading.closest(`[${TOC_IGNORE_ATTRIBUTE}]`) === null)
 		.map(createHeading);
+
 	const root: Heading[] = [];
 	const stack: Heading[] = [];
 
@@ -117,6 +137,12 @@ function getToc(element: HTMLElement): Heading[] {
 	return root;
 }
 
+/**
+ * Visits every heading in depth-first order.
+ *
+ * @param headings - Heading tree to traverse.
+ * @param callback - Function invoked once for every heading.
+ */
 function visit(headings: Heading[], callback: (heading: Heading) => void) {
 	for (const heading of headings) {
 		callback(heading);
@@ -124,6 +150,12 @@ function visit(headings: Heading[], callback: (heading: Heading) => void) {
 	}
 }
 
+/**
+ * Marks only the heading associated with an observed index as active.
+ *
+ * @param headings - Heading tree whose active state should change.
+ * @param index - Index assigned to the visible heading element.
+ */
 function setActive(headings: Heading[], index: number) {
 	visit(headings, (heading) => {
 		heading.active = heading.index === index;

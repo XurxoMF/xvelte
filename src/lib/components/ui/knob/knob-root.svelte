@@ -46,26 +46,31 @@
 	const circumference = 2 * Math.PI * 40;
 	const arcLength = (270 / 360) * circumference;
 
+	/** @param next - Candidate value to snap to the step and clamp to the bounds. */
 	function updateValue(next: number) {
 		value = Math.min(max, Math.max(min, Math.round(next / step) * step));
 		onValueChange?.(value);
 	}
 
+	/** @param clientY - Current vertical pointer coordinate used to measure drag distance. */
 	function handleMove(clientY: number) {
 		if (!isDragging || disabled) return;
 		updateValue(startValue + ((startY - clientY) / size) * (max - min) * 0.5);
 	}
 
+	/** @param event - Window mouse event forwarded to the shared drag calculation. */
 	function handleMouseMove(event: MouseEvent) {
 		handleMove(event.clientY);
 	}
 
+	/** Ends dragging and removes window-level mouse listeners. */
 	function stopDragging() {
 		isDragging = false;
 		window.removeEventListener("mousemove", handleMouseMove);
 		window.removeEventListener("mouseup", stopDragging);
 	}
 
+	/** @param clientY - Initial vertical coordinate used as the drag origin. */
 	function startDragging(clientY: number) {
 		if (disabled) return;
 		isDragging = true;
@@ -73,6 +78,7 @@
 		startValue = value;
 	}
 
+	/** @param event - Arrow or boundary key used to update the knob. */
 	function handleKeydown(event: KeyboardEvent) {
 		if (disabled) return;
 		const next =
@@ -132,6 +138,7 @@
 				stroke-linecap="round"
 				style="transform: rotate(135deg); transform-origin: 50% 50%;"
 			/>
+
 			<circle
 				cx="50"
 				cy="50"

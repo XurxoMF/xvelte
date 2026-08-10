@@ -68,6 +68,7 @@
 	let startX = 0;
 	let startValue = 0;
 
+	/** @param e - Primary mouse event establishing the drag origin and global listeners. */
 	function handleMouseDown(e: MouseEvent) {
 		if (e.button !== 0) return;
 
@@ -82,6 +83,7 @@
 		window.addEventListener("mouseup", handleUp);
 	}
 
+	/** @param e - Window mouse event converted into stepped horizontal value movement. */
 	function handleMove(e: MouseEvent) {
 		if (!isDragging) return;
 
@@ -106,6 +108,7 @@
 		onValueChange?.(newValue);
 	}
 
+	/** Ends dragging and restores document interaction styles. */
 	function handleUp() {
 		isDragging = false;
 		document.body.style.cursor = "";
@@ -115,6 +118,7 @@
 		window.removeEventListener("mouseup", handleUp);
 	}
 
+	/** Resets to the explicit default, finite minimum, or zero. */
 	function handleDoubleClick() {
 		let resetVal = defaultValue;
 

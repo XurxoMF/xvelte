@@ -39,11 +39,23 @@ export type EmblaContext = {
 	selectedIndex: number;
 };
 
+/**
+ * Provides carousel state and controls to descendant parts.
+ *
+ * @param config - Reactive Embla state and navigation callbacks.
+ * @returns The same context object for convenient local reuse.
+ */
 export function setEmblaContext(config: EmblaContext): EmblaContext {
 	setContext(EMBLA_CAROUSEL_CONTEXT, config);
 	return config;
 }
 
+/**
+ * Retrieves the nearest carousel context and produces a helpful error outside a root.
+ *
+ * @param name - Consumer name included in the missing-context error.
+ * @returns The nearest carousel context.
+ */
 export function getEmblaContext(name = "This component") {
 	if (!hasContext(EMBLA_CAROUSEL_CONTEXT)) {
 		throw new Error(`${name} must be used within a <Carousel.Root> component`);

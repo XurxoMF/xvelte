@@ -22,11 +22,19 @@
 	import * as TagsInput from ".";
 	import { handleKeydown } from "./tags-input-keyboard";
 
+	/**
+	 * @param value - Candidate input to trim and validate.
+	 * @param tags - Existing values used to reject duplicates.
+	 */
 	const defaultValidate: NonNullable<RootProps["validate"]> = (value, tags) => {
 		const transformed = value.trim();
 		return transformed.length > 0 && !tags.includes(transformed) ? transformed : undefined;
 	};
 
+	/**
+	 * @param value - Case-insensitive search value.
+	 * @param suggestions - Available suggestions to filter.
+	 */
 	const defaultFilter: NonNullable<RootProps["filterSuggestions"]> = (value, suggestions) => {
 		const search = value.toLowerCase();
 		return suggestions.filter((suggestion) => suggestion.toLowerCase().includes(search));
@@ -44,7 +52,7 @@
 		restrictToSuggestions = false,
 		ref = $bindable(null),
 		inputRef = $bindable(null),
-		...rest
+		...restProps
 	}: RootProps = $props();
 
 	let inputValue = $state("");
@@ -62,6 +70,7 @@
 		}
 	});
 
+	// Remove selected values first, then apply the consumer's search filter when input exists.
 	const filteredSuggestions = $derived.by(() => {
 		if (!suggestions) return [];
 
@@ -82,6 +91,7 @@
 		}
 	);
 
+	/** @param val - Suggested value to validate and append. */
 	const selectSuggestion = (val: string) => {
 		const validated = validate(val, value);
 
@@ -93,6 +103,7 @@
 		suggestionIndex = undefined;
 	};
 
+	/** Commits the highlighted suggestion or current input according to restriction settings. */
 	const enter = () => {
 		if (isComposing) return;
 
@@ -125,14 +136,17 @@
 		inputValue = "";
 	};
 
+	/** Prevents Enter from committing while an IME composition is active. */
 	const compositionStart = () => {
 		isComposing = true;
 	};
 
+	/** Re-enables Enter handling after an IME composition finishes. */
 	const compositionEnd = () => {
 		isComposing = false;
 	};
 
+	/** @param event - Keyboard event delegated to the tags navigation state machine. */
 	function keydown(event: KeyboardEvent) {
 		handleKeydown(event, {
 			inputValue,
@@ -149,6 +163,8 @@
 			enter
 		});
 	}
+
+	/** @param val - Tag value to find and remove. */
 	const deleteValue = (val: string) => {
 		const index = value.findIndex((v) => val === v);
 
@@ -157,11 +173,13 @@
 		deleteIndex(index);
 	};
 
+	/** @param index - Zero-based tag index to remove. */
 	const deleteIndex = (index: number) => {
 		value = [...value.slice(0, index), ...value.slice(index + 1)];
 		onValueChange?.(value);
 	};
 
+	/** Clears tag navigation immediately and hides suggestions after click selection can finish. */
 	const blur = () => {
 		tagIndex = undefined;
 		setTimeout(() => {
@@ -169,6 +187,7 @@
 		}, 150);
 	};
 
+	/** Marks the input as focused so available suggestions can open. */
 	const focus = () => {
 		inputFocused = true;
 	};
@@ -186,10 +205,11 @@
 	{#each value as tag, i (tag)}
 		<TagsInput.Tag value={tag} {disabled} onDelete={deleteValue} active={i === tagIndex} />
 	{/each}
+
 	<input
 		bind:this={inputRef}
 		data-slot="tags-input-control"
-		{...rest}
+		{...restProps}
 		bind:value={inputValue}
 		onblur={blur}
 		onfocus={focus}

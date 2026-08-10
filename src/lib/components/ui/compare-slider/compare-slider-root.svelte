@@ -13,6 +13,7 @@
 	let container: HTMLDivElement | undefined = $state();
 	let isDragging = $state(false);
 
+	/** @param e - Primary pointer event beginning a drag and capturing the pointer. */
 	function handleDown(e: PointerEvent) {
 		if (e.button !== 0 && e.pointerType === "mouse") return;
 
@@ -22,16 +23,24 @@
 		(e.target as Element).setPointerCapture(e.pointerId);
 	}
 
+	/** @param e - Captured pointer event used to update an active drag. */
 	function handleMove(e: PointerEvent) {
 		if (!isDragging) return;
 		updatePosition(e.clientX, e.clientY);
 	}
 
+	/** @param e - Pointer event ending the drag and releasing capture. */
 	function handleUp(e: PointerEvent) {
 		isDragging = false;
 		(e.target as Element).releasePointerCapture(e.pointerId);
 	}
 
+	/**
+	 * Converts viewport coordinates into a clamped percentage along the configured axis.
+	 *
+	 * @param clientX - Horizontal pointer coordinate in viewport pixels.
+	 * @param clientY - Vertical pointer coordinate in viewport pixels.
+	 */
 	function updatePosition(clientX: number, clientY: number) {
 		if (!container) return;
 
@@ -46,6 +55,7 @@
 		}
 	}
 
+	/** @param e - Keyboard event used for stepped or boundary slider movement. */
 	function handleKeyDown(e: KeyboardEvent) {
 		const step = e.shiftKey ? 10 : 1;
 		if (e.key === "ArrowLeft" || e.key === "ArrowUp") {

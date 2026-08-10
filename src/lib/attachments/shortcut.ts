@@ -2,24 +2,42 @@ import type { Attachment } from "svelte/attachments";
 
 export type ShortcutEvent = "keydown" | "keyup" | "keypress";
 
+/** Describes a keyboard shortcut and the action it invokes. */
 export type Shortcut = {
+	/** Key reported by `KeyboardEvent.key`, matched case-insensitively. */
 	key: string;
+	/** Callback invoked with the matching keyboard event. */
 	action: (event: KeyboardEvent) => void | Promise<void>;
+	/** Keyboard event to listen for. @default "keydown" */
 	event?: ShortcutEvent;
+	/** Whether Control must be pressed. */
 	ctrl?: boolean;
+	/** Whether Shift must be pressed. */
 	shift?: boolean;
+	/** Whether Alt must be pressed. */
 	alt?: boolean;
+	/** Whether Meta must be pressed. */
 	meta?: boolean;
+	/** Prevents the browser default when the shortcut matches. @default true */
 	preventDefault?: boolean;
+	/** Stops the matching event from propagating. @default false */
 	stopPropagation?: boolean;
+	/** Optional predicate used to enable the shortcut conditionally. */
 	when?: (event: KeyboardEvent) => boolean;
 };
 
+/**
+ * Creates a window attachment that registers one or more keyboard shortcuts and removes them when detached.
+ *
+ * @param options - Shortcut definition or definitions to register.
+ * @returns An attachment intended for `<svelte:window>`.
+ */
 export function shortcut(options: Shortcut | Shortcut[]): Attachment<Window> {
 	return (node) => {
 		const shortcuts = Array.isArray(options) ? options : [options];
 		const eventTypes = new Set(shortcuts.map((option) => option.event ?? "keydown"));
 
+		/** Finds and invokes the first shortcut matching the received keyboard event. */
 		const handleKeyboardEvent = (event: Event): void => {
 			if (!(event instanceof KeyboardEvent)) return;
 			const match = shortcuts.find((shortcut) => matchesShortcut(event, shortcut));
@@ -38,6 +56,12 @@ export function shortcut(options: Shortcut | Shortcut[]): Attachment<Window> {
 	};
 }
 
+/**
+ * Checks the event type, key, exact modifier state, and optional shortcut predicate.
+ *
+ * @param event - Keyboard event to evaluate.
+ * @param shortcut - Shortcut definition to compare against.
+ */
 function matchesShortcut(event: KeyboardEvent, shortcut: Shortcut): boolean {
 	if (event.type !== (shortcut.event ?? "keydown")) return false;
 	if (event.key.toLowerCase() !== shortcut.key.toLowerCase()) return false;

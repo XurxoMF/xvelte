@@ -13,6 +13,12 @@ type KeyboardState = {
 	enter: () => void;
 };
 
+/**
+ * Coordinates keyboard navigation between the text input, existing tags, and suggestions.
+ *
+ * @param event - Keyboard event emitted by the tags input.
+ * @param state - Current input state and mutation callbacks.
+ */
 export function handleKeydown(event: KeyboardEvent, state: KeyboardState) {
 	const input = event.currentTarget as HTMLInputElement;
 	if (event.key === "Escape" && state.showSuggestions) {

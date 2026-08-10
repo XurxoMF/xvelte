@@ -11,7 +11,7 @@
 
 	import { useStepperSeparator } from "./stepper.svelte.js";
 
-	let { ref = $bindable(null), class: className, children, ...rest }: SeparatorProps = $props();
+	let { ref = $bindable(null), class: className, children, ...restProps }: SeparatorProps = $props();
 
 	const separatorState = useStepperSeparator();
 </script>
@@ -29,7 +29,7 @@
 		className
 	)}
 	{...separatorState.props}
-	{...rest}
+	{...restProps}
 >
 	{@render children?.()}
 </div>

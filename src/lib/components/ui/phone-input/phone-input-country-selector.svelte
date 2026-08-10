@@ -7,7 +7,7 @@
 		disabled?: boolean;
 		selected?: CountryCode | null;
 		onselect?: (val: CountryCode | null) => void;
-		/** Default ordering is alphabetical by country name supply this function to customize the sorting behavior  */
+		/** Comparator for country ordering; defaults to alphabetical country names. */
 		order?: (a: Country, b: Country) => number;
 	};
 </script>
@@ -38,6 +38,7 @@
 	let open = $state(false);
 	let selectedValue = $state(false);
 
+	/** @param country - Country whose ISO code should become the selected value. */
 	function selectCountry(country: Country) {
 		selected = country.iso2;
 		selectedValue = true;
@@ -62,6 +63,7 @@
 			</Button>
 		{/snippet}
 	</Popover.Trigger>
+
 	<Popover.Content
 		data-slot="phone-input-country-content"
 		class="w-[300px] p-0"
@@ -75,17 +77,22 @@
 	>
 		<Command.Root>
 			<Command.Input placeholder="Search..." />
+
 			<Command.List>
 				<ScrollArea class="h-72">
 					<Command.Empty>No country found.</Command.Empty>
+
 					<Command.Group class="overflow-clip">
 						{#each sortedCountries as country (country.id)}
 							<Command.Item class="gap-2 [&_.cn-command-item-indicator]:hidden" value={country.name} onSelect={() => selectCountry(country)}>
 								<Flag {country} />
+
 								<span class="flex-1 text-sm">{country.name}</span>
+
 								<span class="text-sm text-foreground/50">
 									+{country.dialCode}
 								</span>
+
 								<div class="w-4">
 									{#if country.iso2 == selected}
 										<CheckIcon class="phone-input-check-icon size-4" />

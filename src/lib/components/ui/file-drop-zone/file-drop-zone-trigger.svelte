@@ -13,12 +13,18 @@
 	import { displaySize } from "./file-drop-zone-utils";
 	import { useFileDropZoneTrigger } from "./file-drop-zone.svelte.js";
 
-	let { ref = $bindable(null), class: className, children, ...rest }: TriggerProps = $props();
+	let { ref = $bindable(null), class: className, children, ...restProps }: TriggerProps = $props();
 
 	const triggerState = useFileDropZoneTrigger();
 </script>
 
-<label bind:this={ref} data-slot="file-drop-zone-trigger" class={cn("group/file-drop-zone-trigger", className)} {...triggerState.props} {...rest}>
+<label
+	bind:this={ref}
+	data-slot="file-drop-zone-trigger"
+	class={cn("group/file-drop-zone-trigger", className)}
+	{...triggerState.props}
+	{...restProps}
+>
 	{#if children}
 		{@render children()}
 	{:else}

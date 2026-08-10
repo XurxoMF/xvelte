@@ -7,7 +7,7 @@
 
 	import * as Input from "$lib/components/ui/input";
 
-	let { ref = $bindable(null), value = $bindable(), class: className, ...props }: InputProps = $props();
+	let { ref = $bindable(null), value = $bindable(), class: className, ...restProps }: InputProps = $props();
 </script>
 
 <Input.Root
@@ -18,5 +18,5 @@
 		className
 	)}
 	bind:value
-	{...props}
+	{...restProps}
 />

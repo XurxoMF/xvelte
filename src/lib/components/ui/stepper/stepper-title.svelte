@@ -9,7 +9,7 @@
 <script lang="ts">
 	import { cn } from "$lib/utils";
 
-	let { ref = $bindable(null), class: className, children, ...rest }: TitleProps = $props();
+	let { ref = $bindable(null), class: className, children, ...restProps }: TitleProps = $props();
 </script>
 
 <div
@@ -21,7 +21,7 @@
 		"group-data-[orientation=horizontal]/stepper-nav:text-center",
 		className
 	)}
-	{...rest}
+	{...restProps}
 >
 	{@render children?.()}
 </div>

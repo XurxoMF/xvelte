@@ -9,7 +9,7 @@
 <script lang="ts">
 	import { cn } from "$lib/utils";
 
-	let { ref = $bindable(null), class: className, children, ...rest }: IndicatorProps = $props();
+	let { ref = $bindable(null), class: className, children, ...restProps }: IndicatorProps = $props();
 </script>
 
 <div
@@ -21,7 +21,7 @@
 		"group-focus-visible/stepper-trigger:ring-ring/50",
 		className
 	)}
-	{...rest}
+	{...restProps}
 >
 	{@render children?.()}
 </div>

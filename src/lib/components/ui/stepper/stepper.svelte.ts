@@ -7,14 +7,19 @@ type StepperRootProps = WritableBoxedValues<{
 	step: number;
 }>;
 
+/** Registers steps and coordinates selection and focus navigation. */
 class StepperRootState {
 	steps: { id: string; triggerRef: () => HTMLButtonElement | null }[] = $state([]);
+
+	/** @param opts - Boxed current step. */
 	constructor(readonly opts: StepperRootProps) {}
 
+	/** @param step - Step item to append to the ordered registry. */
 	registerStep(step: StepperItemState): number {
 		return this.steps.push({ id: step.opts.id, triggerRef: () => step.getTriggerRef() });
 	}
 
+	/** Advances the selected step when another registered step exists. */
 	next() {
 		if (!this.canIncrement) return;
 		this.opts.step.current++;
@@ -24,6 +29,7 @@ class StepperRootState {
 		return this.steps.length > this.opts.step.current;
 	});
 
+	/** Moves to the previous step when the current step is not the first. */
 	previous() {
 		if (!this.canDecrement) return;
 		this.opts.step.current--;
@@ -33,10 +39,12 @@ class StepperRootState {
 		return this.opts.step.current > 1;
 	});
 
+	/** @param stepId - Registered identifier of the step to select. */
 	selectStep(stepId: string) {
 		this.opts.step.current = this.steps.findIndex((step) => step.id === stepId) + 1;
 	}
 
+	/** Selects and focuses the next enabled trigger during keyboard navigation. */
 	navigateNext() {
 		const nextStep = this.steps[this.opts.step.current];
 		if (!nextStep) return;
@@ -48,6 +56,7 @@ class StepperRootState {
 		triggerRef?.focus();
 	}
 
+	/** Selects and focuses the previous enabled trigger during keyboard navigation. */
 	navigatePrevious() {
 		const previousStep = this.steps[this.opts.step.current - 2];
 		if (!previousStep) return;
@@ -64,7 +73,9 @@ type StepperNavProps = ReadableBoxedValues<{
 	orientation: "horizontal" | "vertical";
 }>;
 
+/** Exposes orientation attributes for a stepper navigation container. */
 class StepperNavState {
+	/** @param opts - Boxed navigation orientation. */
 	constructor(readonly opts: StepperNavProps) {}
 
 	props = $derived.by(() => ({
@@ -77,9 +88,15 @@ type StepperItemProps = {
 	id: string;
 };
 
+/** Represents one registered step and derives its position and completion state. */
 class StepperItemState {
 	step: number;
 	triggerRef = $state<HTMLButtonElement | null>(null);
+	/**
+	 * @param opts - Stable identifier for the step.
+	 * @param navState - Parent navigation orientation.
+	 * @param rootState - Root registry and selected step.
+	 */
 	constructor(
 		readonly opts: StepperItemProps,
 		readonly navState: StepperNavState,
@@ -88,6 +105,7 @@ class StepperItemState {
 		this.step = this.rootState.registerStep(this);
 	}
 
+	/** @returns The current trigger element for focus navigation. */
 	getTriggerRef() {
 		return this.triggerRef;
 	}
@@ -120,7 +138,12 @@ type StepperItemTriggerProps = ReadableBoxedValues<{
 	onkeydown: HTMLButtonAttributes["onkeydown"];
 }>;
 
+/** Connects a step trigger's events and element reference to its item state. */
 class StepperItemTriggerState {
+	/**
+	 * @param opts - Boxed trigger reference, state, and forwarded handlers.
+	 * @param itemState - Step item controlled by this trigger.
+	 */
 	constructor(
 		readonly opts: StepperItemTriggerProps,
 		readonly itemState: StepperItemState
@@ -133,11 +156,13 @@ class StepperItemTriggerState {
 		);
 	}
 
+	/** @param e - Click event selecting the associated step. */
 	_onclick(e: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement }) {
 		this.itemState.rootState.selectStep(this.itemState.opts.id);
 		this.opts.onclick.current?.(e);
 	}
 
+	/** @param e - Arrow-key event used for orientation-aware step navigation. */
 	_onkeydown(e: KeyboardEvent & { currentTarget: EventTarget & HTMLButtonElement }) {
 		if (this.opts.disabled.current) return;
 		switch (e.key) {
@@ -173,7 +198,9 @@ class StepperItemTriggerState {
 	}));
 }
 
+/** Exposes the preceding item's state to its separator. */
 class StepperSeparatorState {
+	/** @param itemState - Item immediately before the separator. */
 	constructor(readonly itemState: StepperItemState) {}
 
 	props = $derived.by(() => ({
@@ -186,7 +213,12 @@ type StepperStepButtonProps = ReadableBoxedValues<{
 	disabled: boolean;
 }>;
 
+/** Controls a generic next or previous step button. */
 class StepperStepButtonState {
+	/**
+	 * @param opts - Button direction and explicit disabled state.
+	 * @param rootState - Stepper state to navigate.
+	 */
 	constructor(
 		readonly opts: StepperStepButtonProps,
 		readonly rootState: StepperRootState
@@ -200,6 +232,7 @@ class StepperStepButtonState {
 		return !this.rootState.canDecrement;
 	});
 
+	/** Moves the root in the configured direction. */
 	onclick() {
 		if (this.opts.type.current === "next") {
 			this.rootState.next();
@@ -218,26 +251,32 @@ const StepperCtx = new Context<StepperRootState>("stepper-root-ctx");
 const StepperNavCtx = new Context<StepperNavState>("stepper-nav-ctx");
 const StepperItemCtx = new Context<StepperItemState>("stepper-item-ctx");
 
+/** @param props - Boxed selected step to provide to descendants. */
 export function useStepperRoot(props: StepperRootProps) {
 	return StepperCtx.set(new StepperRootState(props));
 }
 
+/** @param props - Boxed orientation for the navigation container. */
 export function useStepperNav(props: StepperNavProps) {
 	return StepperNavCtx.set(new StepperNavState(props));
 }
 
+/** @param props - Stable identifier for a registered step. */
 export function useStepperItem(props: StepperItemProps) {
 	return StepperItemCtx.set(new StepperItemState(props, StepperNavCtx.get(), StepperCtx.get()));
 }
 
+/** @param props - Boxed trigger reference, disabled state, and event handlers. */
 export function useStepperItemTrigger(props: StepperItemTriggerProps) {
 	return new StepperItemTriggerState(props, StepperItemCtx.get());
 }
 
+/** @returns Separator state connected to the nearest step item. */
 export function useStepperSeparator() {
 	return new StepperSeparatorState(StepperItemCtx.get());
 }
 
+/** @param props - Boxed direction and disabled state for a navigation button. */
 export function useStepperStepButton(props: StepperStepButtonProps) {
 	return new StepperStepButtonState(props, StepperCtx.get());
 }

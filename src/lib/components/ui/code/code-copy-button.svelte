@@ -38,6 +38,7 @@
 
 	onDestroy(() => clearTimeout(resetTimeout));
 
+	/** @param event - Click event forwarded after the clipboard operation finishes. */
 	async function copy(event: Parameters<NonNullable<CopyButtonProps["onclick"]>>[0]) {
 		clearTimeout(resetTimeout);
 		try {

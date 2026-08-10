@@ -36,22 +36,29 @@
 	const octets: PartialOctets = $derived(safeParseIPv4(value ?? "") ?? [null, null, null, null]);
 	const inputs = $state<HTMLInputElement[]>([]);
 
+	/** @param octet - Candidate segment to normalize within the IPv4 byte range. */
 	function validate(octet: string | null): number | null {
 		if (octet === null || !isNumber(octet)) return null;
 		const number = Number.parseInt(octet);
 		return number >= 0 && number <= 255 ? number : null;
 	}
 
+	/** @param next - Four partial octets to join with the configured separator. */
 	function format(next: PartialOctets): string {
 		return next.join(separator);
 	}
 
+	/**
+	 * @param index - Segment index to replace.
+	 * @param octet - Partial value emitted by that segment.
+	 */
 	function update(index: number, octet: PartialOctet) {
 		const next = [...octets] as PartialOctets;
 		next[index] = octet === "" ? null : octet;
 		value = format(next);
 	}
 
+	/** @param event - Paste event whose text should populate all four segments. */
 	function paste(event: ClipboardEvent) {
 		const parsed = safeParseIPv4(event.clipboardData?.getData("text"));
 		if (!parsed) return;
@@ -84,7 +91,9 @@
 			placeholder={parsedPlaceholder?.[index] ?? undefined}
 			onpaste={paste}
 		/>
+
 		{#if index < 3}<span class="font-mono">{separator}</span>{/if}
 	{/each}
 </div>
+
 <input data-slot="ipv4-input-value" class="hidden" tabindex={-1} {name} {value} />

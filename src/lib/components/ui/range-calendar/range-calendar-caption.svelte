@@ -19,12 +19,14 @@
 
 	let { captionLayout, months, monthFormat, years, yearFormat, month, locale, placeholder = $bindable(), monthIndex = 0 }: CaptionProps = $props();
 
+	/** @param date - Calendar date whose year should use the configured formatter. */
 	function formatYear(date: DateValue) {
 		const dateObj = date.toDate(getLocalTimeZone());
 		if (typeof yearFormat === "function") return yearFormat(dateObj.getFullYear());
 		return new DateFormatter(locale, { year: yearFormat }).format(dateObj);
 	}
 
+	/** @param date - Calendar date whose month should use the configured formatter. */
 	function formatMonth(date: DateValue) {
 		const dateObj = date.toDate(getLocalTimeZone());
 		if (typeof monthFormat === "function") return monthFormat(dateObj.getMonth() + 1);

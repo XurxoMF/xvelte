@@ -12,12 +12,12 @@
 </script>
 
 <script lang="ts">
+	import { onDestroy } from "svelte";
 	import { scale } from "svelte/transition";
 
 	import { CheckIcon, CloseIcon, CopyIcon } from "$lib/icons";
 	import { cn } from "$lib/utils";
 	import { Root as Button } from "$lib/components/ui/button";
-	import { UseClipboard } from "$lib/hooks/use-clipboard.svelte";
 
 	import { useCodeCopyButton } from "./code.svelte.js";
 
@@ -33,10 +33,20 @@
 	}: CopyButtonProps = $props();
 
 	const code = useCodeCopyButton();
-	const clipboard = new UseClipboard();
+	let status = $state<"success" | "failure">();
+	let resetTimeout: ReturnType<typeof setTimeout> | undefined;
+
+	onDestroy(() => clearTimeout(resetTimeout));
 
 	async function copy(event: Parameters<NonNullable<CopyButtonProps["onclick"]>>[0]) {
-		const status = await clipboard.copy(code.code);
+		clearTimeout(resetTimeout);
+		try {
+			await navigator.clipboard.writeText(code.code);
+			status = "success";
+		} catch {
+			status = "failure";
+		}
+		resetTimeout = setTimeout(() => (status = undefined), 500);
 		onCopy?.(status);
 		onclick?.(event);
 	}
@@ -53,9 +63,9 @@
 	onclick={copy}
 	{...restProps}
 >
-	{#if clipboard.status === "success"}
+	{#if status === "success"}
 		<span in:scale={{ duration: animationDuration }}><CheckIcon /></span>
-	{:else if clipboard.status === "failure"}
+	{:else if status === "failure"}
 		<span in:scale={{ duration: animationDuration }}><CloseIcon /></span>
 	{:else}
 		<span in:scale={{ duration: animationDuration }}><CopyIcon /></span>

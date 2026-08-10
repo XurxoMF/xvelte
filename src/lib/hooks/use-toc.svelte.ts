@@ -16,26 +16,32 @@ export type Heading = {
 export const INDEX_ATTRIBUTE = "data-toc-index";
 export const TOC_IGNORE_ATTRIBUTE = "data-toc-ignore";
 
+/** Builds a reactive heading tree and tracks the first visible heading. */
 export class UseToc {
 	#ref = $state<HTMLElement>();
 	#toc = $state<Heading[]>([]);
 	#cleanup?: () => void;
 
 	set ref(ref: HTMLElement | undefined) {
-		this.#cleanup?.();
+		this.#teardown();
 		this.#ref = ref;
 		if (!ref) {
 			this.#toc = [];
 			return;
 		}
 
+		// Keep the last ratio for every heading because observer callbacks only contain changed entries.
 		const visibility = new SvelteMap<Element, number>();
+
 		const observer = new IntersectionObserver((entries) => {
 			for (const entry of entries) visibility.set(entry.target, entry.intersectionRatio);
+
 			const active = [...visibility]
 				.filter((entry) => entry[1] > 0)
 				.sort((a, b) => a[0].getBoundingClientRect().top - b[0].getBoundingClientRect().top)[0];
+
 			if (!active) return;
+
 			setActive(this.#toc, Number(active[0].getAttribute(INDEX_ATTRIBUTE)));
 		});
 
@@ -47,7 +53,9 @@ export class UseToc {
 		};
 
 		const mutations = new MutationObserver(refresh);
+
 		mutations.observe(ref, { childList: true, characterData: true, subtree: true });
+
 		refresh();
 
 		this.#cleanup = () => {
@@ -62,6 +70,17 @@ export class UseToc {
 
 	get current() {
 		return this.#toc;
+	}
+
+	destroy() {
+		this.#teardown();
+		this.#ref = undefined;
+		this.#toc = [];
+	}
+
+	#teardown() {
+		this.#cleanup?.();
+		this.#cleanup = undefined;
 	}
 }
 
@@ -88,6 +107,7 @@ function getToc(element: HTMLElement): Heading[] {
 	const stack: Heading[] = [];
 
 	for (const heading of headings) {
+		// The stack holds the closest heading at every open parent level.
 		while (stack.length > 0 && stack.at(-1)!.level >= heading.level) stack.pop();
 		const parent = stack.at(-1);
 		(parent?.children ?? root).push(heading);

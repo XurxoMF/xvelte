@@ -26,23 +26,31 @@ export type UseRampOptions = {
 };
 
 export function useRamp({ increment, maxFrequency = 200, minFrequency = 25, startDelay = 100, rampUpTime = 2500, canRamp }: UseRampOptions) {
+	const slowFrequency = Math.max(0, maxFrequency, minFrequency);
+	const fastFrequency = Math.max(0, Math.min(maxFrequency, minFrequency));
 	let active = $state(false);
 	let ramping = $state(false);
 	let rampStartTimeout: ReturnType<typeof setTimeout> | undefined;
 	let rampIntervalTimeout: ReturnType<typeof setTimeout> | undefined;
 	let rampStartedAt: number | undefined;
 
-	function rampUp() {
-		if (!active) return;
-		ramping = true;
-		const timeSinceStart = Date.now() - (rampStartedAt ?? 0);
-		const freq = rampUpTime === 0 ? 0 : Math.min(timeSinceStart, rampUpTime) / rampUpTime;
-		if (!canRamp()) {
+	function repeat() {
+		if (!active || !canRamp()) {
 			reset();
 			return;
 		}
+
+		ramping = true;
 		increment();
-		rampIntervalTimeout = setTimeout(() => rampUp(), maxFrequency - freq * (maxFrequency - minFrequency));
+		rampIntervalTimeout = setTimeout(repeat, getFrequency());
+	}
+
+	function getFrequency() {
+		if (rampUpTime <= 0 || rampStartedAt === undefined) return fastFrequency;
+
+		// Interpolate from the slow interval to the fast interval during the ramp window.
+		const progress = Math.min((Date.now() - rampStartedAt) / rampUpTime, 1);
+		return slowFrequency - progress * (slowFrequency - fastFrequency);
 	}
 
 	function reset() {
@@ -54,9 +62,16 @@ export function useRamp({ increment, maxFrequency = 200, minFrequency = 25, star
 	}
 
 	function start() {
+		// Restarting must cancel the previous timers or one pointer could create multiple repeat loops.
+		reset();
 		active = true;
-		rampStartedAt = Date.now();
-		rampStartTimeout = setTimeout(() => rampUp(), startDelay);
+		rampStartTimeout = setTimeout(
+			() => {
+				rampStartedAt = Date.now();
+				repeat();
+			},
+			Math.max(0, startDelay)
+		);
 	}
 
 	return {

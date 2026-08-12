@@ -14,8 +14,11 @@
 		maxFileSize?: number | undefined;
 		onFileRejected?: ((opts: { reason: FileRejectedReason; file: File }) => void) | undefined;
 		accept?: string | undefined;
+		/** Uploads clipboard files when a paste occurs anywhere in the document. */
+		capturePaste?: boolean | undefined;
 	}>;
 
+	/** Props for the root file-drop-zone input and shared upload state. */
 	export type RootProps = RootPropsWithoutHTML & Omit<HTMLInputAttributes, "multiple" | "files" | "id" | "class">;
 </script>
 
@@ -32,6 +35,7 @@
 		onUpload,
 		onFileRejected,
 		accept,
+		capturePaste = false,
 		children,
 		ref = $bindable(null),
 		...restProps
@@ -64,6 +68,8 @@
 		}
 	});
 </script>
+
+<svelte:document onpaste={capturePaste ? fileDropZone.onpaste : undefined} />
 
 <input bind:this={ref} data-slot="file-drop-zone" class="hidden" {...fileDropZone.props} {...restProps} />
 

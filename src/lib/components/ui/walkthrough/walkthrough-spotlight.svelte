@@ -20,7 +20,7 @@
 	<div
 		data-slot="walkthrough-spotlight"
 		transition:fade={{ duration: 300 }}
-		class="pointer-events-none fixed z-[9998] transition-all duration-500 ease-in-out"
+		class="pointer-events-none fixed z-9998 transition-all duration-500 ease-in-out"
 		style="
             top: {top}px;
             left: {left}px;

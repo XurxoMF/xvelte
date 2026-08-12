@@ -25,11 +25,7 @@
 			ondrop?.(event);
 		},
 		onpaste: (event: Parameters<NonNullable<TextareaProps["onpaste"]>>[0]) => {
-			const files = Array.from(event.clipboardData?.items ?? [])
-				.map((item) => item.getAsFile())
-				.filter((file) => file !== null);
-
-			if (files.length > 0) fileDropZone.upload(files);
+			fileDropZone.onpaste(event);
 			onpaste?.(event);
 		}
 	});

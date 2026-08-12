@@ -25,7 +25,7 @@
 	{type}
 	role="treeitem"
 	data-slot="tree-view-file"
-	class={cn("flex place-items-center gap-1 pl-[3px]", className)}
+	class={cn("flex place-items-center gap-1 pl-0.75", className)}
 	{...restProps}
 >
 	{#if icon}

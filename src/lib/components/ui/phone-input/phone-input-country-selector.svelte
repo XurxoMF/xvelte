@@ -66,7 +66,7 @@
 
 	<Popover.Content
 		data-slot="phone-input-country-content"
-		class="w-[300px] p-0"
+		class="w-75 p-0"
 		align="start"
 		onCloseAutoFocus={(e) => {
 			if (selectedValue) {

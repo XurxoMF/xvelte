@@ -1,5 +1,16 @@
 import { createContext } from "svelte";
 
+/** Returns the files carried by a drag or clipboard data transfer. */
+function getFiles(dataTransfer: DataTransfer | null): File[] {
+	return Array.from(dataTransfer?.files ?? []);
+}
+
+/** Returns whether a drag data transfer contains files. */
+function hasFiles(dataTransfer: DataTransfer | null): boolean {
+	return dataTransfer?.types.includes("Files") ?? false;
+}
+
+/** Reasons a candidate file can be rejected before upload. */
 export type FileRejectedReason = "Maximum file size exceeded" | "File type not allowed" | "Maximum files uploaded";
 
 type FileDropZoneOptions = {
@@ -16,6 +27,7 @@ type FileDropZoneOptions = {
 /** Validates files and coordinates uploads shared by all drop-zone parts. */
 export class FileDropZoneContext {
 	uploading = $state(false);
+	#handledPasteEvents = new WeakSet<ClipboardEvent>();
 
 	/** @param options - Reactive constraints, callbacks, and native input options. */
 	constructor(readonly options: FileDropZoneOptions) {
@@ -29,7 +41,18 @@ export class FileDropZoneContext {
 		if (this.options.disabled || !this.canUploadFiles) return;
 
 		event.preventDefault();
-		await this.upload(Array.from(event.dataTransfer?.files ?? []));
+		await this.upload(getFiles(event.dataTransfer));
+	};
+
+	/** @param event - Paste event whose clipboard files should be uploaded once. */
+	onpaste = async (event: ClipboardEvent) => {
+		if (this.options.disabled || !this.canUploadFiles || this.#handledPasteEvents.has(event)) return;
+
+		// The same event may be handled by Textarea and then bubble to the document.
+		this.#handledPasteEvents.add(event);
+
+		const files = getFiles(event.clipboardData);
+		if (files.length > 0) await this.upload(files);
 	};
 
 	/** @param event - Native file-input change event. */
@@ -117,6 +140,53 @@ export class FileDropZoneContext {
 		type: "file" as const,
 		onchange: this.onchange
 	}));
+}
+
+type FileDropZoneDragOverlayOptions = {
+	readonly disabled: boolean;
+};
+
+/** Tracks page-level file drags and coordinates drops with the root upload state. */
+export class FileDropZoneDragOverlayState {
+	#depth = $state(0);
+
+	/**
+	 * @param options - Reactive overlay configuration.
+	 * @param fileDropZone - Parent drop-zone state receiving accepted drops.
+	 */
+	constructor(
+		readonly options: FileDropZoneDragOverlayOptions,
+		readonly fileDropZone: FileDropZoneContext
+	) {}
+
+	canDropFiles = $derived.by(() => !this.options.disabled && this.fileDropZone.canUploadFiles);
+	show = $derived.by(() => this.#depth > 0 && this.canDropFiles);
+
+	/** @param event - Window drag-enter event used to track nested targets. */
+	ondragenter = (event: DragEvent) => {
+		if (hasFiles(event.dataTransfer)) this.#depth++;
+	};
+
+	/** @param event - Window drag-leave event used to track nested targets. */
+	ondragleave = (event: DragEvent) => {
+		if (hasFiles(event.dataTransfer)) this.#depth = Math.max(this.#depth - 1, 0);
+	};
+
+	/** @param event - Drag-over event that enables a file drop while the overlay is visible. */
+	ondragover = (event: DragEvent) => {
+		if (this.show) event.preventDefault();
+	};
+
+	/** Clears the nested drag depth after a drop, drag end, or cancelled drag. */
+	reset = () => {
+		this.#depth = 0;
+	};
+
+	/** @param event - Overlay drop event whose files should be uploaded. */
+	ondrop = async (event: DragEvent & { currentTarget: EventTarget }) => {
+		this.reset();
+		if (this.canDropFiles) await this.fileDropZone.ondrop(event);
+	};
 }
 
 const [getFileDropZoneContext, provideFileDropZoneContext] = createContext<FileDropZoneContext>();

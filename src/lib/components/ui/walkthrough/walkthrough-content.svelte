@@ -137,14 +137,14 @@
 <div
 	bind:this={tooltipEl}
 	role="dialog"
-	class="fixed top-0 left-0 z-[9999] w-max outline-none"
+	class="fixed top-0 left-0 z-9999 w-max outline-none"
 	data-slot="walkthrough-content"
 	transition:fade={{ duration: 200 }}
 >
 	{#if contentSnippet}
 		{@render contentSnippet(ctx)}
 	{:else}
-		<div class="relative w-[350px] rounded-lg border bg-popover text-popover-foreground shadow-xl">
+		<div class="relative w-87.5 rounded-lg border bg-popover text-popover-foreground shadow-xl">
 			<div bind:this={arrowEl} class={arrowClasses}></div>
 
 			<div class="p-4">

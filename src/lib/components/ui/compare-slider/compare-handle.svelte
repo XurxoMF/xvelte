@@ -18,7 +18,7 @@
 	data-slot="compare-slider-handle"
 	class={cn(
 		"pointer-events-none absolute z-2 flex items-center justify-center text-primary-foreground",
-		isHorizontal ? "top-0 bottom-0 left-[var(--pos)] -ml-0.5 w-1" : "top-[var(--pos)] right-0 left-0 -mt-0.5 h-1",
+		isHorizontal ? "top-0 bottom-0 left-(--pos) -ml-0.5 w-1" : "top-(--pos) right-0 left-0 -mt-0.5 h-1",
 		className
 	)}
 >

@@ -45,7 +45,7 @@
 		...restProps,
 		class: className,
 		"aria-label": ariaLabel,
-		"data-slot": "sortable-list-drag-handle",
+		"data-slot": "sortable-drag-handle",
 		[attachmentKey]: sortableDragHandle
 	});
 </script>

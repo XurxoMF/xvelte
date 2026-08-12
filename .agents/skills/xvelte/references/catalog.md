@@ -73,7 +73,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `skeleton`
 - `slider`
 - `sonner`
-- `sortable-list`
+- `sortable`
 - `spinner`
 - `star-rating`
 - `status-dot`

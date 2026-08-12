@@ -131,7 +131,7 @@
 	onconsider={handleConsider}
 	onfinalize={handleFinalize}
 	class={className}
-	data-slot="sortable-list"
+	data-slot="sortable"
 	{...restProps}
 >
 	<!-- Render the action-owned order so provisional drag positions appear immediately. -->

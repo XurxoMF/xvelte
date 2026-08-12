@@ -39,7 +39,7 @@
 		/** Reconnects the item-level action when a handle is added or removed. */
 		const sync = () => {
 			if (destroyed) return;
-			const hasDedicatedHandle = node.querySelector('[data-slot="sortable-list-drag-handle"]') !== null;
+			const hasDedicatedHandle = node.querySelector('[data-slot="sortable-drag-handle"]') !== null;
 			if (hasDedicatedHandle) {
 				action?.destroy();
 				action = undefined;
@@ -62,7 +62,7 @@
 		...restProps,
 		class: className,
 		"aria-label": ariaLabel,
-		"data-slot": "sortable-list-item",
+		"data-slot": "sortable-item",
 		[attachmentKey]: sortableItem
 	});
 </script>

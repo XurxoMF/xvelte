@@ -14,6 +14,7 @@
 	import type { Command as CommandPrimitive, Dialog as DialogPrimitive } from "bits-ui";
 	import type { Snippet } from "svelte";
 
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
 
 	import * as Dialog from "$lib/components/ui/dialog";
@@ -24,8 +25,8 @@
 		open = $bindable(false),
 		ref = $bindable(null),
 		value = $bindable(""),
-		title = "Command Palette",
-		description = "Search for a command to run...",
+		title = m.eager_panda_seek(),
+		description = m.frost_lime_drift(),
 		showCloseButton = false,
 		portalProps,
 		children,

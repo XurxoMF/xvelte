@@ -20,6 +20,7 @@
 	import { Portal } from "bits-ui";
 
 	import { FullscreenIcon, MinusIcon, PlusIcon, ResetIcon } from "$lib/icons";
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 
 	import * as Button from "$lib/components/ui/button";
@@ -52,7 +53,7 @@
 			bind:this={ref}
 			data-slot="canvas-controls"
 			role="group"
-			aria-label="Canvas controls"
+			aria-label={m.misty_acorn_controls()}
 			class={cn(
 				"pointer-events-auto absolute z-20 flex items-center gap-1 rounded-lg border bg-popover p-1 text-popover-foreground shadow-sm",
 				positions[position],
@@ -64,8 +65,8 @@
 				<Button.Root
 					variant="ghost"
 					size="icon-sm"
-					aria-label="Zoom out"
-					title="Zoom out"
+					aria-label={m.north_lark_zoomout()}
+					title={m.north_lark_zoomout()}
 					disabled={canvas.zoom <= canvas.minZoom}
 					onclick={() => canvas.zoomBy(1 / step)}
 				>
@@ -77,8 +78,8 @@
 				<Button.Root
 					variant="ghost"
 					size="icon-sm"
-					aria-label="Zoom in"
-					title="Zoom in"
+					aria-label={m.opal_shark_zoomin()}
+					title={m.opal_shark_zoomin()}
 					disabled={canvas.zoom >= canvas.maxZoom}
 					onclick={() => canvas.zoomBy(step)}
 				>
@@ -87,13 +88,13 @@
 			{/if}
 
 			{#if showFit}
-				<Button.Root variant="ghost" size="icon-sm" aria-label="Fit to content" title="Fit to content" onclick={() => canvas.fitView()}>
+				<Button.Root variant="ghost" size="icon-sm" aria-label={m.proud_reed_fit()} title={m.proud_reed_fit()} onclick={() => canvas.fitView()}>
 					<FullscreenIcon />
 				</Button.Root>
 			{/if}
 
 			{#if showReset}
-				<Button.Root variant="ghost" size="icon-sm" aria-label="Reset view" title="Reset view" onclick={() => canvas.reset()}>
+				<Button.Root variant="ghost" size="icon-sm" aria-label={m.quick_stork_reset()} title={m.quick_stork_reset()} onclick={() => canvas.reset()}>
 					<ResetIcon />
 				</Button.Root>
 			{/if}

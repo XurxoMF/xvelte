@@ -18,6 +18,7 @@
 </script>
 
 <script lang="ts">
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 
 	let {
@@ -107,7 +108,7 @@
 	<div
 		role="slider"
 		tabindex={disabled ? undefined : 0}
-		aria-label={label ?? "Knob"}
+		aria-label={label ?? m.navy_lynx_knob()}
 		aria-valuemin={min}
 		aria-valuemax={max}
 		aria-valuenow={value}

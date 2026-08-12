@@ -6,7 +6,7 @@
 	import type { SVGAttributes } from "svelte/elements";
 
 	import { LoaderIcon } from "$lib/icons";
-
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 
 	let {
@@ -16,7 +16,7 @@
 		name,
 		color,
 		stroke,
-		"aria-label": ariaLabel = "Loading",
+		"aria-label": ariaLabel = m.lucky_cedar_load(),
 		...restProps
 	}: RootProps = $props();
 </script>

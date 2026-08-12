@@ -13,12 +13,14 @@
 	import { createAttachmentKey } from "svelte/attachments";
 	import { dragHandle } from "svelte-dnd-action";
 
+	import * as m from "$lib/paraglide/messages.js";
+
 	let {
 		ref = $bindable(null),
 		class: className,
 		child,
 		children,
-		"aria-label": ariaLabel = "Drag to reorder",
+		"aria-label": ariaLabel = m.merry_finch_drag(),
 		...restProps
 	}: DragHandleProps = $props();
 

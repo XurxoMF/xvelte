@@ -1,49 +1,60 @@
 # xvelte
 
-A personal collection of Svelte/SvelteKit components based on
-[shadcn-svelte](https://www.shadcn-svelte.com/).
+`xvelte` is my personal collection of reusable components, attachments, hooks, utilities, styles, and supporting code for building applications and websites with SvelteKit.
 
-This is not a full fork of shadcn-svelte. It does not include a CLI, install
-scripts, or a component registry workflow. This repository is a SvelteKit app
-that contains a set of already generated components that I have modified,
-improved, and adapted for my own use cases. The app provides a development
-environment for previewing the components and running checks, while the source
-code remains available to copy into other projects.
+The repository also contains a small SvelteKit app used to develop, preview, and validate the reusable code. It is not a package with a fixed public API, a component registry, or a CLI: the intended workflow is to copy the code into a project and adapt it as needed.
 
-The philosophy is still the same as [shadcn](https://ui.shadcn.com/) and
-[shadcn-svelte](https://www.shadcn-svelte.com/): you copy the code into your
-project, and then it belongs to you. You can change the styles, structure, icons,
-dependencies, and behavior without being locked into a package API.
+> [!WARNING]
+> This collection is designed primarily for my own projects, preferences, and use cases. Code adapted or copied from other libraries remains credited to its original authors; see [Credits](#credits). Review each part before using it in your own project.
 
-Published releases are the stable source snapshots intended for use in other
-projects. The `main` branch is the development branch and may contain changes
-that have not been documented or published yet.
+Published releases are stable source snapshots intended for reuse. The `main` branch is the development branch and may contain unpublished or undocumented changes.
 
-## Up to date with
+## Contents
 
-- [shadcn-svelte](https://github.com/huntabyte/shadcn-svelte) · [dabbd4c](https://github.com/huntabyte/shadcn-svelte/commit/dabbd4c00fbca1feef29a2a155b2eecf6bb4ea7a)
-- [more-shadcn-svelte](https://github.com/kevwpl/more-shadcn-svelte) · [0066781](https://github.com/kevwpl/more-shadcn-svelte/commit/00667812c6394c9c30847b4fcc0a95a5c6180fd0)
-- [shadcn-svelte-extras](https://github.com/ieedan/shadcn-svelte-extras) · [e130961](https://github.com/ieedan/shadcn-svelte-extras/commit/e130961b6e9676c5c01cfa582d91d2d2b34e6b2f)
+- [About the project](#about-the-project)
+- [Intended use](#intended-use)
+- [Organization](#organization)
+- [Per-unit documentation](#per-unit-documentation)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage conventions](#usage-conventions)
+- [Development](#development)
+- [Design and customization](#design-and-customization)
+- [Upstream sources and local adaptations](#upstream-sources-and-local-adaptations)
+- [Projects using xvelte](#projects-using-xvelte)
+- [Important notes](#important-notes)
+- [Credits](#credits)
+- [Up to date with](#up-to-date-with)
 
-## Intended Use
+## About the project
 
-This collection is mostly aimed at application interfaces rather than marketing
-websites:
+`xvelte` brings together the reusable building blocks I commonly need when developing with SvelteKit. Its scope is broader than UI components and includes:
 
-- Local apps built with Tauri or Electron
-- Admin panels
-- Dashboards
+- Components and compound UI primitives
+- Svelte attachments
+- Hooks and reusable state logic
+- Shared utilities
+- Semantic icon mappings
+- Design tokens and global styles
+- Localization for human-readable reusable UI copy
+
+Many pieces are inspired by, derived from, or copied and subsequently modified from projects such as [shadcn-svelte](https://www.shadcn-svelte.com/), [more-shadcn-svelte](https://github.com/kevwpl/more-shadcn-svelte), and [shadcn-svelte-extras](https://github.com/ieedan/shadcn-svelte-extras). They are refactored to follow this repository's naming, imports, styling, accessibility, API conventions, and practical requirements.
+
+The copy-owned philosophy remains important: once code is copied into an application, it belongs to that application and can be changed without being constrained by a package API.
+
+## Intended use
+
+The collection supports both SvelteKit applications and websites, although many of its layout decisions are especially useful for application interfaces such as:
+
+- Local applications built with Tauri or Electron
+- Admin panels and dashboards
 - Internal tools
-- Interfaces with sidebars, fixed bars, and scrollable main content
+- Websites with reusable interactive UI
+- Interfaces with sidebars, fixed bars, and internally scrollable content
 
-The base layout is designed for apps where `html` and `body` have a fixed height
-and `overflow: hidden`. That means the main scroll area usually does not live on
-`window`, but inside an internal container if you add one. For example, if you need to scroll
-the main content, you need to add a ScrollableContainer inside the Sidebar.Inset (or where you need it) and do `scrollTo()` on that container instead of `window.scrollTo()`.
+The base app layout assumes that `html` and `body` have a fixed height and use `overflow: hidden`. Consequently, scrolling normally belongs to an internal container rather than `window`. For example, content inside `Sidebar.Inset` should use a scrollable container, and scrolling code should call `scrollTo()` on that element instead of `window.scrollTo()`.
 
-## Structure
-
-The reusable code and the development app live in:
+## Organization
 
 ```txt
 src
@@ -59,42 +70,57 @@ src
     └── layout.css
 ```
 
-Reusable components, attachments, and hooks live in `src/lib`. The files under `src/routes` belong to
-the development and preview app, except for `layout.css`, which contains the
-global styles and design tokens intended to be copied into consuming projects.
+- `src/lib/components/ui` contains reusable components and compound primitives.
+- `src/lib/attachments` contains reusable Svelte attachments.
+- `src/lib/hooks` contains hooks and reusable state helpers.
+- `src/lib/utils.ts` contains shared utilities.
+- `src/lib/icons.ts` is the semantic facade for the configured icon library.
+- `src/routes` contains the development and preview application.
+- `src/routes/layout.css` contains global styles, Tailwind configuration, design tokens, and theme variables intended to be copied into consuming projects.
+- `messages/en.json` contains the English source messages used by reusable code through Paraglide.
+
+The preview website under `src/routes` intentionally keeps its own copy hardcoded in English. Localization applies to reusable code so applications can translate it without editing component internals.
+
+## Per-unit documentation
+
+Each reusable component, attachment, hook, utility group, or equivalent unit is intended to have its own `README.md` beside the source. These focused guides document:
+
+- What the unit does and when to use it
+- Its public API, props, types, and exported parts
+- Basic and advanced usage examples
+- Its internal file organization
+- Required dependencies and related reusable units
+- Accessibility behavior and relevant implementation notes
+
+These per-unit guides are the canonical usage documentation for individual parts of the collection. They are being introduced progressively and are not yet present in every directory.
 
 ## Requirements
 
-- Svelte/SvelteKit
-- The `$lib` alias pointing to `src/lib`
+- Svelte and SvelteKit
 - Tailwind CSS configured for Svelte
-- The dependencies used by the components you copy
+- The `$lib` alias pointing to `src/lib`
+- The dependencies used by the specific reusable parts being copied
+- Paraglide when using reusable parts that import localized messages
 
-Depending on your project, Svelte, SvelteKit, and the Tailwind integration may
-already be installed. If you replace the font, swap the icon package, or remove
-some components, you can also remove the dependencies that are no longer used.
-Use the `package.json` and lockfile included in the selected release as the
-source of truth for compatible dependency versions.
+Use the `package.json` and lockfile from the selected release as the source of truth for compatible dependency versions. If only part of the collection is copied, install only the dependencies that part requires.
 
-## Installing a Release
+## Installation
 
-Do not copy installation files directly from `main`. Start from a tagged
-snapshot so component code, dependencies, documentation, and migration notes
-all belong to the same published version.
+Install reusable code from a tagged release so its source, dependencies, documentation, and migration notes belong to the same snapshot. Avoid treating `main` as a stable release.
 
-1. Open the [releases page](https://github.com/XurxoMF/xmfcn-svelte/releases) and choose the version you want to install.
-2. Download its automatically generated **Source code (`zip`)** or **Source code (`tar.gz`)** archive and extract it. Archives also follow these URL formats:
+1. Open the [releases page](https://github.com/XurxoMF/xvelte/releases) and select a version.
+2. Download and extract its generated **Source code (`zip`)** or **Source code (`tar.gz`)** archive. The direct URL formats are:
 
 ```txt
-https://github.com/XurxoMF/xmfcn-svelte/archive/refs/tags/<version>.zip
-https://github.com/XurxoMF/xmfcn-svelte/archive/refs/tags/<version>.tar.gz
+https://github.com/XurxoMF/xvelte/archive/refs/tags/<version>.zip
+https://github.com/XurxoMF/xvelte/archive/refs/tags/<version>.tar.gz
 ```
 
-3. Use the extracted release directory as the source for the following steps.
-4. Copy `src/lib` into your project's `src/lib`.
-5. Copy `src/routes/layout.css` wherever it makes sense for your app.
-6. Install the dependencies required by the components you copied, using the release's `package.json` and lockfile as reference.
-7. Import the global CSS from your root layout:
+3. Copy all of `src/lib`, or only the components, attachments, hooks, utilities, and icon mappings required by the project.
+4. Copy `src/routes/layout.css` to the appropriate global stylesheet in the consuming application.
+5. When copied code uses localized messages, copy the required entries from `messages/en.json` and configure Paraglide in the consuming project.
+6. Install the required dependencies using the release's `package.json` and lockfile as references.
+7. Import the global stylesheet from the root layout:
 
 ```svelte
 <script lang="ts">
@@ -104,12 +130,13 @@ https://github.com/XurxoMF/xmfcn-svelte/archive/refs/tags/<version>.tar.gz
 {@render children()}
 ```
 
-8. If you want app-wide tooltips to use the same delays and other properties, wrap your layout with the tooltip provider:
+If app-wide tooltips should share the same delay and provider settings, wrap the root layout:
 
 ```svelte
 <script lang="ts">
-	import "./layout.css";
 	import * as Tooltip from "$lib/components/ui/tooltip";
+
+	import "./layout.css";
 
 	let { children } = $props();
 </script>
@@ -119,7 +146,9 @@ https://github.com/XurxoMF/xmfcn-svelte/archive/refs/tags/<version>.tar.gz
 </Tooltip.Provider>
 ```
 
-9. Import components from `$lib/components/ui/...` always with `import * as XXXX from` and use them with `XXXX.Part`:
+## Usage conventions
+
+Import compound components through their directory barrel and use each exported part through its namespace:
 
 ```svelte
 <script lang="ts">
@@ -129,17 +158,18 @@ https://github.com/XurxoMF/xmfcn-svelte/archive/refs/tags/<version>.tar.gz
 <Button.Root>Save</Button.Root>
 ```
 
+Reusable code is deliberately copy-owned. After copying it, changing its styles, markup, behavior, dependencies, or API is part of the normal workflow.
+
 ## Development
 
-Clone `main` only when developing the collection itself or testing upcoming
-changes. Install the dependencies and start the SvelteKit development app:
+Clone `main` when developing the collection itself or testing upcoming changes:
 
 ```sh
 bun install
 bun run dev
 ```
 
-The repository also includes scripts for validating and formatting the source:
+Available validation and formatting commands include:
 
 ```sh
 bun run check
@@ -148,69 +178,67 @@ bun run format
 bun run build
 ```
 
-## Main differences with shadcn-svelte
+## Design and customization
 
-This collection started from shadcn-svelte components, but it is not a
-line-by-line mirror. The main changes are:
+The primary visual customization points are `src/routes/layout.css` and `src/lib/icons.ts`.
 
-- Imports, exports, prop ordering, variable ordering, and function ordering have
-  been standardized across the components.
-- Several code issues and warnings have been fixed, especially around Tailwind
-  CSS classes and generated component output.
-- The sidebar has been modified to fit inside any container. See the comments in
-  the sidebar components for the exact changes: the wrapper uses `h-full`, and
-  the desktop sidebar container no longer relies on viewport-fixed positioning.
-- The combobox includes its own context and a small constructor-style API,
-  similar to select components. Items read the root context and update the
-  selected value directly.
-- New `typography` components were added following shadcn-style typography
-  recommendations.
-- New `list` components were added for ordered and unordered lists.
-- New `floating-menu` components were added for positioning floating actions in
-  multiple places around a container. They are especially useful for buttons,
-  button groups, and compact tool clusters.
+`layout.css` defines color variables, radius, fonts, light and dark themes, sidebar tokens, chart colors, Tailwind configuration, and custom variants. Editing these shared values adapts the collection without coupling individual components to an application theme.
 
-## Customization
+`src/lib/icons.ts` maps semantic, library-independent icon names to `@tabler/icons-svelte`. Change those exports to replace the icon library without rewriting component directories.
 
-The main visual customization entry points are `layout.css` and `lib/icons.ts`.
+Other common customizations include:
 
-`layout.css` contains the CSS variables for colors, radius, fonts, dark mode, sidebar
-tokens, chart colors, and custom Tailwind variants. By changing those variables,
-you can adapt the collection to another product without editing every component.
+- Replacing `@fontsource-variable/inter`
+- Changing Tailwind classes and component structure
+- Replacing wrappers around `bits-ui`, `vaul-svelte`, `paneforge`, or other dependencies
+- Copying only the reusable modules required by an application
+- Adding locales and translations to the Paraglide message catalog
 
-`lib/icons.ts` maps the library-independent icon names used by the components to
-`@tabler/icons-svelte`. Change only these exports to use a different icon
-package; the component directories can then be updated without overwriting your
-icon choices.
+## Upstream sources and local adaptations
 
-You can also replace:
+This repository is not a line-by-line mirror or an official fork of any upstream project. Upstream code is adapted to the local conventions and may intentionally diverge in API, behavior, structure, or styling.
 
-- `@fontsource-variable/inter` with another font
-- The mappings in `lib/icons.ts` to use your preferred icon package
-- Any Tailwind class inside the components
-- The internal structure of any component
-- The wrappers around `bits-ui`, `vaul-svelte`, `paneforge`, and the other base libraries
+Examples of local adaptations include:
 
-There is no abstraction layer getting in your way. Once the code is inside your
-project, editing it is part of the workflow.
+- Standardized imports, exports, prop ordering, naming, and function organization
+- Svelte 5 runes and snippets throughout reusable components
+- Semantic icon imports through a single facade
+- Accessibility fixes and localized human-readable defaults
+- Tailwind class and generated-output warning fixes
+- A sidebar adapted to fit inside containers instead of relying on viewport-fixed positioning
+- A contextual combobox API in which items update the root selection directly
+- Additional typography, list, floating-menu, canvas, file-drop-zone, and other reusable parts
 
-## Projects using this collection
+When updating from an upstream source, local behavior and conventions take precedence over achieving exact parity.
+
+## Projects using xvelte
 
 - [Rustory](https://github.com/XurxoMF/rustory)
 
-## Important Notes
+## Important notes
 
-- There is no installation script or CLI.
-- Install reusable code from a release archive; `main` may contain unpublished changes.
-- This is not meant to replace the shadcn-svelte documentation.
-- Some components may be adapted to my own specific needs.
-- The global layout assumes a fixed-height app with internal scrolling.
-- Review the dependency list if you copy only part of the components.
+- There is no installation script, component registry, or CLI.
+- Releases are the stable installation source; `main` may contain unpublished work.
+- Some reusable parts are intentionally tailored to my own requirements.
+- The default app layout uses fixed-height pages with internal scrolling.
+- Review dependencies when copying only part of the collection.
+- Consult upstream documentation where relevant, while accounting for local modifications.
 
 ## Credits
 
-Based on [shadcn-svelte](https://www.shadcn-svelte.com/), which brings the
-[shadcn/ui](https://ui.shadcn.com/) philosophy to the Svelte ecosystem.
+Some components and ideas originate from or are based on the work of the authors and contributors of:
 
-This repository is a personal collection of derived and adapted components. It
-is not an official fork and is not affiliated with shadcn or shadcn-svelte.
+- [shadcn/ui](https://ui.shadcn.com/)
+- [shadcn-svelte](https://www.shadcn-svelte.com/)
+- [more-shadcn-svelte](https://github.com/kevwpl/more-shadcn-svelte)
+- [shadcn-svelte-extras](https://github.com/ieedan/shadcn-svelte-extras)
+
+Additional files may be inspired by other projects identified in their source, history, or documentation. Credit for copied or derived work belongs to its original authors. `xvelte` is a personal, independently maintained collection and is not affiliated with or endorsed by those projects.
+
+## Up to date with
+
+This maintainer-facing list records the latest reviewed upstream revisions:
+
+- [shadcn-svelte](https://github.com/huntabyte/shadcn-svelte) · [dabbd4c](https://github.com/huntabyte/shadcn-svelte/commit/dabbd4c00fbca1feef29a2a155b2eecf6bb4ea7a)
+- [more-shadcn-svelte](https://github.com/kevwpl/more-shadcn-svelte) · [0066781](https://github.com/kevwpl/more-shadcn-svelte/commit/00667812c6394c9c30847b4fcc0a95a5c6180fd0)
+- [shadcn-svelte-extras](https://github.com/ieedan/shadcn-svelte-extras) · [e130961](https://github.com/ieedan/shadcn-svelte-extras/commit/e130961b6e9676c5c01cfa582d91d2d2b34e6b2f)

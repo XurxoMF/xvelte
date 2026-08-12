@@ -8,6 +8,7 @@
 
 <script lang="ts">
 	import { UploadIcon } from "$lib/icons";
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 
 	import { getFileDropZoneContext } from "./file-drop-zone-context.svelte.js";
@@ -44,22 +45,22 @@
 				<UploadIcon class="size-7" />
 			</div>
 			<div class="flex flex-col gap-0.5 text-center">
-				<span class="font-medium text-muted-foreground"> Drag 'n' drop files here, or click to select files </span>
+				<span class="font-medium text-muted-foreground">{m.gold_gecko_choose()}</span>
 				{#if fileDropZone.options.maxFiles || fileDropZone.options.maxFileSize}
 					<span class="text-sm text-muted-foreground/75">
 						{#if fileDropZone.options.maxFiles}
 							<span>
-								You can upload {fileDropZone.options.maxFiles} files
+								{m.happy_birch_count({ count: fileDropZone.options.maxFiles })}
 							</span>
 						{/if}
 						{#if fileDropZone.options.maxFiles && fileDropZone.options.maxFileSize}
 							<span>
-								(up to {displaySize(fileDropZone.options.maxFileSize)} each)
+								{m.indigo_mouse_limit({ size: displaySize(fileDropZone.options.maxFileSize) })}
 							</span>
 						{/if}
 						{#if fileDropZone.options.maxFileSize && !fileDropZone.options.maxFiles}
 							<span>
-								Maximum size {displaySize(fileDropZone.options.maxFileSize)}
+								{m.jade_tiger_maximum({ size: displaySize(fileDropZone.options.maxFileSize) })}
 							</span>
 						{/if}
 					</span>

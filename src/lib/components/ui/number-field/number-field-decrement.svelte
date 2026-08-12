@@ -9,8 +9,9 @@
 <script lang="ts">
 	import { onDestroy } from "svelte";
 
-	import { cn } from "$lib/utils";
 	import { MinusIcon } from "$lib/icons";
+	import * as m from "$lib/paraglide/messages.js";
+	import { cn } from "$lib/utils";
 	import { Root as Button } from "$lib/components/ui/button";
 
 	import { NumberFieldButtonState } from "./number-field-context.svelte.js";
@@ -62,7 +63,7 @@
 	{tabindex}
 	bind:ref
 	data-slot="number-field-decrement"
-	aria-label="Decrease"
+	aria-label={m.rapid_willow_less()}
 	class={cn("touch-manipulation", className)}
 	{...buttonState.props}
 	{...restProps}

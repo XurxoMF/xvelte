@@ -16,6 +16,8 @@
 
 <script lang="ts">
 	import qrcode from "qrcode-generator";
+
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 
 	let {
@@ -82,7 +84,7 @@
 			style:height={`${size * logoSize}px`}
 		>
 			{#if typeof logo === "string"}
-				<img src={logo} alt="QR Logo" class="h-full w-full object-contain" />
+				<img src={logo} alt={m.quiet_falcon_logo()} class="h-full w-full object-contain" />
 			{:else}
 				{@render logo()}
 			{/if}

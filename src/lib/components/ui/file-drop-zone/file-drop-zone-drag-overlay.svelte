@@ -21,6 +21,7 @@
 	import { Portal } from "bits-ui";
 
 	import { UploadIcon } from "$lib/icons";
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 
 	import { FileDropZoneDragOverlayState, getFileDropZoneContext } from "./file-drop-zone-context.svelte.js";
@@ -78,7 +79,7 @@
 			{:else}
 				<div class="flex flex-col place-items-center justify-center gap-3">
 					<UploadIcon class="size-8" />
-					<span class="text-lg font-medium">Drop files here to upload</span>
+					<span class="text-lg font-medium">{m.fresh_mango_drop()}</span>
 				</div>
 			{/if}
 		</div>

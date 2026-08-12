@@ -18,6 +18,7 @@
 	import * as Command from "$lib/components/ui/command";
 	import * as ButtonGroup from "$lib/components/ui/button-group";
 	import * as Input from "$lib/components/ui/input";
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 
 	let {
@@ -443,7 +444,7 @@
 		class="relative h-56 w-full cursor-crosshair touch-none overflow-hidden rounded-md shadow-sm"
 		style:background-color={`hsl(${h}, 100%, 50%)`}
 		role="slider"
-		aria-label="Saturation and Brightness"
+		aria-label={m.pearl_bison_color()}
 		aria-valuenow={s}
 		tabindex="0"
 		onmousedown={(e) => handleDragStart(e, handleSbChange)}

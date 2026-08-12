@@ -8,6 +8,7 @@
 	import type { HTMLAttributes } from "svelte/elements";
 	import { Dialog as DialogPrimitive } from "bits-ui";
 
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn, type WithElementRef } from "$lib/utils";
 
 	import * as Button from "$lib/components/ui/button";
@@ -25,7 +26,7 @@
 	{#if showCloseButton}
 		<DialogPrimitive.Close>
 			{#snippet child({ props })}
-				<Button.Root variant="outline" {...props}>Close</Button.Root>
+				<Button.Root variant="outline" {...props}>{m.amber_fox_glide()}</Button.Root>
 			{/snippet}
 		</DialogPrimitive.Close>
 	{/if}

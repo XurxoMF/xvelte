@@ -10,6 +10,7 @@
 </script>
 
 <script lang="ts">
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 	import { Root as Button } from "$lib/components/ui/button";
 
@@ -29,7 +30,7 @@
 	{/if}
 	{#if collapsed}
 		<Button variant="secondary" size="sm" class="absolute bottom-2 left-1/2 z-20 w-fit -translate-x-1/2" onclick={() => (collapsed = false)}>
-			Expand
+			{m.deep_lotus_expand()}
 		</Button>
 	{/if}
 </div>

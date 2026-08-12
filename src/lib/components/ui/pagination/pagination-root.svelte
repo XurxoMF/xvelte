@@ -5,6 +5,7 @@
 <script lang="ts">
 	import { Pagination as PaginationPrimitive } from "bits-ui";
 
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, count = 0, perPage = 10, page = $bindable(1), siblingCount = 1, ...restProps }: RootProps = $props();
@@ -14,7 +15,7 @@
 	bind:ref
 	bind:page
 	role="navigation"
-	aria-label="pagination"
+	aria-label={m.tidy_robin_pages()}
 	data-slot="pagination"
 	{count}
 	{perPage}

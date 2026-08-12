@@ -8,10 +8,11 @@
 	import { Command as CommandPrimitive } from "bits-ui";
 
 	import { SearchIcon } from "$lib/icons";
+	import * as m from "$lib/paraglide/messages.js";
 
 	import { getEmojiPickerContext } from "./emoji-picker-context.svelte.js";
 
-	let { value = $bindable(""), placeholder = "Search", ...restProps }: SearchProps = $props();
+	let { value = $bindable(""), placeholder = m.gentle_mole_scan(), ...restProps }: SearchProps = $props();
 
 	const emojiPicker = getEmojiPickerContext();
 

@@ -18,6 +18,7 @@
 	import * as Popover from "$lib/components/ui/popover";
 	import { Root as ScrollArea } from "$lib/components/ui/scroll-area";
 	import { CheckIcon, SelectorIcon } from "$lib/icons";
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 
 	import Flag from "./phone-input-flag.svelte";
@@ -76,11 +77,11 @@
 		}}
 	>
 		<Command.Root>
-			<Command.Input placeholder="Search..." />
+			<Command.Input placeholder={m.harbor_wren_pause()} />
 
 			<Command.List>
 				<ScrollArea class="h-72">
-					<Command.Empty>No country found.</Command.Empty>
+					<Command.Empty>{m.kind_badger_country()}</Command.Empty>
 
 					<Command.Group class="overflow-clip">
 						{#each sortedCountries as country (country.id)}

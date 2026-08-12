@@ -6,7 +6,7 @@
 	import type { HTMLAttributes } from "svelte/elements";
 
 	import { EllipsisIcon } from "$lib/icons";
-
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn, type WithElementRef, type WithoutChildren } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, ...restProps }: EllipsisProps = $props();
@@ -20,5 +20,5 @@
 	{...restProps}
 >
 	<EllipsisIcon />
-	<span class="sr-only">More pages</span>
+	<span class="sr-only">{m.zesty_duck_pages()}</span>
 </span>

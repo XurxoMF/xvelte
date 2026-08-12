@@ -16,6 +16,7 @@
 	import { scale } from "svelte/transition";
 
 	import { CheckIcon, CloseIcon, CopyIcon } from "$lib/icons";
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 	import { Root as Button } from "$lib/components/ui/button";
 
@@ -58,7 +59,7 @@
 	data-slot="code-copy-button"
 	class={cn("absolute top-2 right-2", className)}
 	tabindex={-1}
-	aria-label="Copy code"
+	aria-label={m.early_swan_copy()}
 	{variant}
 	{size}
 	onclick={copy}

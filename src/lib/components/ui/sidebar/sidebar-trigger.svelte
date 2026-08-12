@@ -6,7 +6,7 @@
 
 <script lang="ts">
 	import { SidebarIcon } from "$lib/icons";
-
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 
 	import * as Button from "$lib/components/ui/button";
@@ -38,12 +38,12 @@
 				{...restProps}
 			>
 				<SidebarIcon />
-				<span class="sr-only">Toggle Sidebar</span>
+				<span class="sr-only">{m.brisk_otter_turn()}</span>
 			</Button.Root>
 		{/snippet}
 	</Tooltip.Trigger>
 
 	<Tooltip.Content>
-		<p>Toggle Sidebar</p>
+		<p>{m.brisk_otter_turn()}</p>
 	</Tooltip.Content>
 </Tooltip.Root>

@@ -5,6 +5,7 @@
 
 	import * as Button from "$lib/components/ui/button";
 	import { CloseIcon } from "$lib/icons";
+	import * as m from "$lib/paraglide/messages.js";
 
 	import { getWalkthroughContext, type WalkthroughContext } from "./walkthrough-context";
 
@@ -162,16 +163,16 @@
 
 				<div class="flex items-center justify-between pt-4">
 					<span class="text-xs text-muted-foreground">
-						Step {ctx.currentStepIndex + 1}
+						{m.dry_wolf_step({ step: ctx.currentStepIndex + 1 })}
 					</span>
 
 					<div class="flex gap-2">
 						{#if ctx.currentStepIndex > 0}
-							<Button.Root variant="outline" size="sm" onclick={ctx.prev}>Back</Button.Root>
+							<Button.Root variant="outline" size="sm" onclick={ctx.prev}>{m.even_palm_back()}</Button.Root>
 						{/if}
 
 						<Button.Root size="sm" onclick={ctx.next}>
-							{ctx.isLastStep ? "Finish" : "Next"}
+							{ctx.isLastStep ? m.flint_dove_finish() : m.young_elm_next()}
 						</Button.Root>
 					</div>
 				</div>

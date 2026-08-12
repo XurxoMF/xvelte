@@ -6,7 +6,7 @@
 	import type { WithoutChildren } from "bits-ui";
 
 	import { ChevronRightIcon } from "$lib/icons";
-
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 
 	import * as Button from "$lib/components/ui/button";
@@ -35,5 +35,5 @@
 	{...restProps}
 >
 	<ChevronRightIcon />
-	<span class="sr-only">Next slide</span>
+	<span class="sr-only">{m.crisp_hare_forward()}</span>
 </Button.Root>

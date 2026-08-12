@@ -32,6 +32,7 @@
 <script lang="ts">
 	import { untrack } from "svelte";
 
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 
 	import { clamp, nodeBounds, setCanvasContext, type CanvasRect } from "./canvas-context.svelte.js";
@@ -260,7 +261,7 @@
 	bind:this={ref}
 	data-slot="canvas"
 	role="application"
-	aria-label="Canvas"
+	aria-label={m.keen_spruce_canvas()}
 	tabindex="-1"
 	class={cn(
 		"relative size-full touch-none overflow-hidden overscroll-none bg-background select-none",

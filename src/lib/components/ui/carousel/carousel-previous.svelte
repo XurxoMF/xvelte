@@ -6,7 +6,7 @@
 	import type { WithoutChildren } from "bits-ui";
 
 	import { ChevronLeftIcon } from "$lib/icons";
-
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 
 	import * as Button from "$lib/components/ui/button";
@@ -35,5 +35,5 @@
 	bind:ref
 >
 	<ChevronLeftIcon />
-	<span class="sr-only">Previous slide</span>
+	<span class="sr-only">{m.bright_coral_back()}</span>
 </Button.Root>

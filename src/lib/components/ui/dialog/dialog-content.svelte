@@ -11,7 +11,7 @@
 	import type { Snippet } from "svelte";
 
 	import { CloseIcon } from "$lib/icons";
-
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
 
 	import * as Button from "$lib/components/ui/button";
@@ -38,7 +38,7 @@
 				{#snippet child({ props })}
 					<Button.Root variant="ghost" class="absolute top-2 right-2" size="icon-sm" {...props}>
 						<CloseIcon />
-						<span class="sr-only">Close</span>
+						<span class="sr-only">{m.amber_fox_glide()}</span>
 					</Button.Root>
 				{/snippet}
 			</DialogPrimitive.Close>

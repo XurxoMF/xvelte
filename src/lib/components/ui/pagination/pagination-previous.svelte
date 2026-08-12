@@ -6,7 +6,7 @@
 	import { Pagination as PaginationPrimitive } from "bits-ui";
 
 	import { ChevronLeftIcon } from "$lib/icons";
-
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 
 	import * as Button from "$lib/components/ui/button";
@@ -16,10 +16,10 @@
 
 <PaginationPrimitive.PrevButton
 	bind:ref
-	aria-label="Go to previous page"
+	aria-label={m.urban_deer_previous()}
 	class={cn(Button.rootVariants({ variant: "ghost", size: "icon" }), className)}
 	{...restProps}
 >
 	<ChevronLeftIcon />
-	<span class="cn-pagination-previous-text sr-only">Previous</span>
+	<span class="cn-pagination-previous-text sr-only">{m.warm_koala_previous()}</span>
 </PaginationPrimitive.PrevButton>

@@ -18,6 +18,7 @@
 <script lang="ts">
 	import { Portal } from "bits-ui";
 
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 
 	import { getCanvasContext, nodeBounds } from "./canvas-context.svelte.js";
@@ -100,7 +101,7 @@
 			style:width="{width}px"
 			style:height="{height}px"
 			role="button"
-			aria-label="Canvas minimap"
+			aria-label={m.light_cobra_map()}
 			aria-disabled={!interactive}
 			tabindex={interactive ? 0 : -1}
 			{...restProps}

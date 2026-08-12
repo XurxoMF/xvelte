@@ -30,6 +30,7 @@
 </script>
 
 <script lang="ts">
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 
 	import Indicators from "./point-picker-indicators.svelte";
@@ -142,7 +143,7 @@
 	data-disabled={disabled ? "true" : undefined}
 	role="application"
 	tabindex={disabled ? -1 : 0}
-	aria-label={label ?? "Point picker"}
+	aria-label={label ?? m.olive_heron_point()}
 	aria-disabled={disabled}
 	class={cn(
 		"relative block w-full touch-none overflow-hidden outline-none select-none focus-visible:ring-3 focus-visible:ring-ring/50 data-disabled:pointer-events-none data-disabled:opacity-50",

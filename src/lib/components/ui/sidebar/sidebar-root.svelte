@@ -9,6 +9,7 @@
 <script lang="ts">
 	import type { HTMLAttributes } from "svelte/elements";
 
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn, type WithElementRef } from "$lib/utils";
 
 	import * as Sheet from "$lib/components/ui/sheet";
@@ -44,8 +45,8 @@
 			{side}
 		>
 			<Sheet.Header class="sr-only">
-				<Sheet.Title>Sidebar</Sheet.Title>
-				<Sheet.Description>Displays the mobile sidebar.</Sheet.Description>
+				<Sheet.Title>{m.calm_raven_nest()}</Sheet.Title>
+				<Sheet.Description>{m.dune_maple_shine()}</Sheet.Description>
 			</Sheet.Header>
 			<div class="flex h-full w-full flex-col">
 				{@render children?.()}

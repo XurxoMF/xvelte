@@ -50,6 +50,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 
 	let {
@@ -110,14 +111,21 @@
 		idle: "bg-muted-foreground"
 	};
 
-	const statusLabel: Record<PingStatus, string> = {
-		excellent: "Excellent connection",
-		good: "Good connection",
-		fair: "Fair connection",
-		poor: "Poor connection",
-		offline: "Offline",
-		idle: "Checking connection"
-	};
+	const statusLabel = $derived.by<Record<PingStatus, string>>(() => ({
+		excellent: m.rusty_clover_excellent(),
+		good: m.soft_badger_good(),
+		fair: m.tall_mint_fair(),
+		poor: m.umber_hawk_poor(),
+		offline: m.velvet_owl_offline(),
+		idle: m.wild_ash_checking()
+	}));
+
+	const accessibleLabel = $derived.by(() => {
+		if (label && latency !== null) return m.clear_poppy_signal({ label, status: statusLabel[status], latency });
+		if (label) return m.agile_moss_named({ label, status: statusLabel[status] });
+		if (latency !== null) return m.blue_ibis_latency({ status: statusLabel[status], latency });
+		return m.zen_cedar_status({ status: statusLabel[status] });
+	});
 
 	const dimensions = $derived(pingIndicatorSizes[size]);
 	const running = $derived(!paused && !(pauseWhenHidden && hidden));
@@ -197,7 +205,7 @@
 	role="status"
 	aria-live="off"
 	title={label ?? statusLabel[status]}
-	aria-label={`${label ? `${label}: ` : ""}${statusLabel[status]}${latency === null ? "" : `, ${latency} ms`}`}
+	aria-label={accessibleLabel}
 	{...restProps}
 >
 	{#if children}
@@ -218,7 +226,7 @@
 		</span>
 
 		{#if status === "offline"}
-			<span class={cn("font-medium text-destructive", dimensions.text)}>offline</span>
+			<span class={cn("font-medium text-destructive", dimensions.text)}>{m.yellow_frog_offline()}</span>
 		{:else if showLatency}
 			<span class={cn("font-mono text-muted-foreground tabular-nums", dimensions.text)}>
 				{latency === null ? "—" : `${latency} ms`}

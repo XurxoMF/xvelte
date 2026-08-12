@@ -5,6 +5,7 @@
 <script lang="ts">
 	import { untrack } from "svelte";
 
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn, type WithElementRef } from "$lib/utils";
 
 	import * as Carousel from ".";
@@ -92,6 +93,13 @@
 	});
 </script>
 
-<div bind:this={ref} data-slot="carousel" class={cn("relative", className)} role="region" aria-roledescription="carousel" {...restProps}>
+<div
+	bind:this={ref}
+	data-slot="carousel"
+	class={cn("relative", className)}
+	role="region"
+	aria-roledescription={m.purple_mink_carousel()}
+	{...restProps}
+>
 	{@render children?.()}
 </div>

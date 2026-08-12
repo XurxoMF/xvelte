@@ -11,16 +11,30 @@
 	import { Command as CommandPrimitive } from "bits-ui";
 
 	import * as Command from "$lib/components/ui/command";
+	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 
 	import { getEmojiPickerContext, makeValue, parseValue } from "./emoji-picker-context.svelte.js";
 
-	let { ref = $bindable(null), emptyMessage = "No results.", class: className, ...restProps }: ListProps = $props();
+	let { ref = $bindable(null), emptyMessage = m.ivory_crane_empty(), class: className, ...restProps }: ListProps = $props();
 
 	const emojiData = data as EmojiMartData;
 
-	/** @param value - Category identifier whose first character should be capitalized. */
-	const formatCategory = (value: string) => (value.length === 0 ? value : `${value[0].toUpperCase()}${value.slice(1)}`);
+	/** @param value - Category identifier to translate for display. */
+	function formatCategory(value: string) {
+		const labels: Record<string, string> = {
+			people: m.green_vole_people(),
+			nature: m.honey_fir_nature(),
+			foods: m.icy_marten_foods(),
+			activity: m.juniper_bear_activity(),
+			places: m.khaki_whale_places(),
+			objects: m.lilac_eagle_objects(),
+			symbols: m.marine_rabbit_symbols(),
+			flags: m.noble_peach_flags()
+		};
+
+		return labels[value] ?? value;
+	}
 
 	/**
 	 * @param value - Case-insensitive search prefix.
@@ -55,7 +69,7 @@
 			.slice(0, emojiPicker.maxRecents)}
 		{#if recents && recents.length > 0}
 			<CommandPrimitive.Group>
-				<CommandPrimitive.GroupHeading class="px-2 py-1 text-xs text-muted-foreground">Recents</CommandPrimitive.GroupHeading>
+				<CommandPrimitive.GroupHeading class="px-2 py-1 text-xs text-muted-foreground">{m.jolly_fern_recent()}</CommandPrimitive.GroupHeading>
 				<CommandPrimitive.GroupItems class="grid grid-cols-6 px-2">
 					{#each recents as item (item)}
 						{@const { name, skin } = parseValue(item)}

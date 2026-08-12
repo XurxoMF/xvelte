@@ -18,6 +18,7 @@ Published releases are stable source snapshots intended for reuse. The `main` br
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage conventions](#usage-conventions)
+- [Agent integration](#agent-integration)
 - [Development](#development)
 - [Design and customization](#design-and-customization)
 - [Upstream sources and local adaptations](#upstream-sources-and-local-adaptations)
@@ -57,6 +58,8 @@ The base app layout assumes that `html` and `body` have a fixed height and use `
 ## Organization
 
 ```txt
+.agents
+└── skills/xvelte
 src
 ├── lib
 │   ├── attachments
@@ -70,6 +73,7 @@ src
     └── layout.css
 ```
 
+- `.agents/skills/xvelte` contains the portable instructions and public-unit catalog used by compatible coding agents.
 - `src/lib/components/ui` contains reusable components and compound primitives.
 - `src/lib/attachments` contains reusable Svelte attachments.
 - `src/lib/hooks` contains hooks and reusable state helpers.
@@ -119,8 +123,9 @@ https://github.com/XurxoMF/xvelte/archive/refs/tags/<version>.tar.gz
 3. Copy all of `src/lib`, or only the components, attachments, hooks, utilities, and icon mappings required by the project.
 4. Copy `src/routes/layout.css` to the appropriate global stylesheet in the consuming application.
 5. When copied code uses localized messages, copy the required entries from `messages/en.json` and configure Paraglide in the consuming project.
-6. Install the required dependencies using the release's `package.json` and lockfile as references.
-7. Import the global stylesheet from the root layout:
+6. Copy `.agents/skills/xvelte` when coding agents should discover and use the collection according to its public conventions without adding instructions to the consuming project's README or `AGENTS.md`.
+7. Install the required dependencies using the release's `package.json` and lockfile as references.
+8. Import the global stylesheet from the root layout:
 
 ```svelte
 <script lang="ts">
@@ -159,6 +164,12 @@ Import compound components through their directory barrel and use each exported 
 ```
 
 Reusable code is deliberately copy-owned. After copying it, changing its styles, markup, behavior, dependencies, or API is part of the normal workflow.
+
+## Agent integration
+
+The repository includes a portable `xvelte` agent skill under `.agents/skills/xvelte`. Copy that directory into a consuming project to teach compatible coding agents how to discover, import, compose, and protect the installed xvelte units.
+
+The skill directs agents to prefer existing public APIs, read each selected unit's local guide, confirm exports and types, and avoid changing shared components, attachments, hooks, utilities, or icon mappings for application-specific requirements. It also defines the documentation and catalog updates required when a reusable unit genuinely must change.
 
 ## Development
 

@@ -48,8 +48,11 @@
 
 ## Documentation and readability
 
-- Every reusable component, attachment, hook, utility group, or equivalent unit directory must include a `README.md` that serves as its focused guide, covering purpose, public API, usage, organization, dependencies, accessibility considerations, and relevant examples.
-- Keep each unit guide beside its source and update it whenever that unit's API, structure, dependencies, or behavior changes.
+- Treat authored reusable code under `src/lib/components`, `src/lib/attachments`, `src/lib/hooks`, `src/lib/icons.ts`, `src/lib/utils.ts`, and future equivalent public-library locations as public units. Generated outputs such as `src/lib/paraglide` are not public units for documentation purposes.
+- Every public unit directory must include a `README.md` that serves as its focused guide, covering purpose, public API, usage, organization, dependencies, accessibility considerations, and relevant examples. Until standalone public files are moved into dedicated unit directories, document them in the closest relevant `README.md`.
+- Creating, editing, moving, renaming, or deleting a public unit requires updating its guide in the same change. Re-check the guide even when a code change appears internal, and update it whenever API, behavior, structure, dependencies, accessibility, localization, examples, credits, or limitations are affected.
+- Keep `.agents/skills/xvelte/references/catalog.md` synchronized when public units or their paths, categories, exports, or noteworthy capabilities change. Update the `xvelte` skill itself whenever repository-wide usage or maintenance conventions change.
+- Do not consider a public-library change complete until its local documentation and the relevant `xvelte` skill material are accurate.
 - Document every function, method, class, and public type or interface with useful TSDoc, including each parameter and non-obvious return value; preserve or improve existing accurate comments.
 - Add short intent-focused comments around algorithms, browser APIs, non-obvious ordering/filtering, or complex markup, but do not merely restate the code.
 

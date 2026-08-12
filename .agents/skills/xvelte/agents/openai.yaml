@@ -1,0 +1,4 @@
+interface:
+  display_name: "xvelte"
+  short_description: "Build SvelteKit interfaces with xvelte"
+  default_prompt: "Use $xvelte to build this SvelteKit interface with the existing reusable library."

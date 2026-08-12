@@ -1,4 +1,4 @@
-# xmfcn-svelte
+# xvelte
 
 A personal collection of Svelte/SvelteKit components based on
 [shadcn-svelte](https://www.shadcn-svelte.com/).
@@ -23,7 +23,7 @@ that have not been documented or published yet.
 
 - [shadcn-svelte](https://github.com/huntabyte/shadcn-svelte) · [dabbd4c](https://github.com/huntabyte/shadcn-svelte/commit/dabbd4c00fbca1feef29a2a155b2eecf6bb4ea7a)
 - [more-shadcn-svelte](https://github.com/kevwpl/more-shadcn-svelte) · [0066781](https://github.com/kevwpl/more-shadcn-svelte/commit/00667812c6394c9c30847b4fcc0a95a5c6180fd0)
-- [shadcn-svelte-extras](https://github.com/ieedan/shadcn-svelte-extras) · [019b6d5](https://github.com/ieedan/shadcn-svelte-extras/commit/019b6d570a62ac44f6dc502c4b5a5fb93814eef8)
+- [shadcn-svelte-extras](https://github.com/ieedan/shadcn-svelte-extras) · [e130961](https://github.com/ieedan/shadcn-svelte-extras/commit/e130961b6e9676c5c01cfa582d91d2d2b34e6b2f)
 
 ## Intended Use
 

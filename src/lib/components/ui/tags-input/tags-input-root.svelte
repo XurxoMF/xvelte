@@ -15,8 +15,6 @@
 </script>
 
 <script lang="ts">
-	import { watch } from "runed";
-
 	import { cn } from "$lib/utils";
 
 	import * as TagsInput from ".";
@@ -84,12 +82,10 @@
 
 	const showSuggestions = $derived(inputFocused && filteredSuggestions.length > 0 && tagIndex === undefined);
 
-	watch(
-		() => inputValue,
-		() => {
-			invalid = false;
-		}
-	);
+	/** Clears the validation error as soon as the user edits the input. */
+	const inputCapture = () => {
+		invalid = false;
+	};
 
 	/** @param val - Suggested value to validate and append. */
 	const selectSuggestion = (val: string) => {
@@ -211,6 +207,7 @@
 		data-slot="tags-input-control"
 		{...restProps}
 		bind:value={inputValue}
+		oninputcapture={inputCapture}
 		onblur={blur}
 		onfocus={focus}
 		oncompositionstart={compositionStart}

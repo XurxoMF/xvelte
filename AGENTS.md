@@ -49,12 +49,51 @@
 ## Documentation and readability
 
 - Treat authored reusable code under `src/lib/components`, `src/lib/attachments`, `src/lib/hooks`, `src/lib/icons.ts`, `src/lib/utils.ts`, and future equivalent public-library locations as public units. Generated outputs such as `src/lib/paraglide` are not public units for documentation purposes.
-- Every public unit directory must include a `README.md` that serves as its focused guide, covering purpose, public API, usage, organization, dependencies, accessibility considerations, and relevant examples. Until standalone public files are moved into dedicated unit directories, document them in the closest relevant `README.md`.
+- Every public unit directory must include a `README.md` that serves as its focused guide for both people and LLMs/agents. Until standalone public files are moved into dedicated unit directories, document them in the closest relevant `README.md`.
 - Creating, editing, moving, renaming, or deleting a public unit requires updating its guide in the same change. Re-check the guide even when a code change appears internal, and update it whenever API, behavior, structure, dependencies, accessibility, localization, examples, credits, or limitations are affected.
-- Keep `.agents/skills/xvelte/references/catalog.md` synchronized when public units or their paths, categories, exports, or noteworthy capabilities change. Update the `xvelte` skill itself whenever repository-wide usage or maintenance conventions change.
+- Keep `.agents/skills/xvelte/references/catalog.md` synchronized when public units or their paths, categories, exports, or noteworthy capabilities change. Update the `xvelte` skill itself only when consumer-facing discovery or usage guidance changes; keep repository development and maintenance rules in `AGENTS.md`.
 - Do not consider a public-library change complete until its local documentation and the relevant `xvelte` skill material are accurate.
 - Document every function, method, class, and public type or interface with useful TSDoc, including each parameter and non-obvious return value; preserve or improve existing accurate comments.
 - Add short intent-focused comments around algorithms, browser APIs, non-obvious ordering/filtering, or complex markup, but do not merely restate the code.
+
+### Public component README format
+
+- Use `src/lib/components/ui/accordion/README.md` as the reference implementation for tone, detail, Markdown formatting, tables, and example style.
+- Write for people installing and using the component, not for repository maintainers. Prefer plain terms such as “component”, “component folder”, “the component's `index.ts`”, “documented API”, “your app/project”, and “installation requirements”. Avoid internal or abstract wording such as “unit”, “public unit”, “public surface”, “consumer-owned”, “consuming project”, “portability”, or “barrel” when a clearer phrase works. Explain any unavoidable technical term the first time it appears, and use direct instructions such as “Copy the Separator component and follow its README to install it.”
+- Write guides in English and describe the local xvelte component rather than presenting it as upstream-compatible. Make local behavior, defaults, constraints, forwarding rules, and unsupported composition explicit; never infer an API that is not present in the component's `index.ts`, exported types, source, or installed stable dependency.
+- Begin with one `# <Public name>` heading followed by a concise description of the component's purpose, main capabilities, appropriate uses, and important cases where it should not be used.
+- Place a `## Contents` index immediately after the introduction. Link every subsequent `##` section in document order and keep the index synchronized when sections change.
+- Insert a Markdown horizontal rule (`---`) before every top-level `##` section after `Contents` so the sections are visually distinct.
+- Use the following top-level sections and order. Keep a section concise when the unit is simple; omit `Credits` only when the implementation is original, and omit any other section only when it genuinely cannot apply:
+  1. `Import`
+  2. `Anatomy`
+  3. `Basic usage`
+  4. `Examples`
+  5. `Public API`
+  6. `Styling and DOM contract`
+  7. `Accessibility`
+  8. `Localization`
+  9. `Dependencies`
+  10. `Credits`, when required
+  11. `File organization`
+- `Import` must show the public `$lib` barrel import and list exported public types, variants, helpers, or other relevant symbols. Never teach imports from private implementation files.
+- `Anatomy` must show the required component composition or, for a simple component, briefly explain its rendered structure and relationship to related components.
+- `Basic usage` must be a minimal, complete, copyable Svelte 5 example. `Examples` must add only focused scenarios needed for correct real-world use, such as controlled state, multiple modes, disabled behavior, composition, localization, or important edge cases. Use realistic accessible copy and current project conventions.
+- `Public API` must document every xvelte-owned component part, prop, type, variant, default, binding, snippet, callback, behavioral adaptation, and non-obvious prop or attribute forwarding rule. Use compact tables where they improve scanning. When the component wraps an external primitive, summarize only the important inherited options and link to the exact upstream component/API reference instead of duplicating its complete API. State that the component's `index.ts` and exported types are the source of truth.
+- `Styling and DOM contract` must document stable local `data-slot` values, public state attributes, semantic tokens, CSS variables, stable classes, class-merging behavior, animation hooks, and unusual class or attribute placement. Clearly distinguish stable xvelte hooks from dependency-owned implementation details.
+- `Accessibility` must explain semantics, keyboard and focus behavior, heading or labeling requirements, accessible-name responsibilities, disabled behavior, and any consumer obligations or misuse to avoid. Link to an upstream accessibility implementation when appropriate, but document local adaptations directly.
+- `Localization` must list built-in human-readable copy and its message IDs or state explicitly that the component has no built-in copy and the app supplies and translates it. Include override props and dynamic parameters when present.
+- `Dependencies` is an operational portability checklist, not an attribution section. It must include all of the following that apply:
+  - Package names and copyable installation commands for Bun, npm, and pnpm. Put every package-installation command in one `sh` code block, grouped by package manager; within each group, list runtime dependencies first and development dependencies second. Always use the short `-D` flag for development dependencies, never `--dev` or `--save-dev`.
+  - Required global stylesheet imports, semantic variables, `@theme` mappings, keyframes, or other code from `src/routes/layout.css`. Include only the minimal tokens and code the component actually uses, and explain which values users may replace with their own theme.
+  - Every required semantic export from `src/lib/icons.ts` and its backing icon package.
+  - Required exports from `$lib/utils`, including their package dependencies.
+  - Required xvelte components, hooks, attachments, context modules, localization messages, shared styles, or other files that must be copied or configured.
+  - An explicit statement when a dependency category does not apply, so a reader or agent does not need to infer whether it was overlooked.
+- Whenever `Dependencies` instructs the reader to add exports, configuration, helpers, or other code to a shared or source file, include the exact copyable code block immediately in that section; never name required code without showing it. Localization message keys and values need not be duplicated when they are already listed completely in `Localization`. For a required standalone internal file, include its complete contents. For a required UI component, list its exact folder and source files, then tell readers to follow that component's README instead of duplicating it.
+- Never combine `Dependencies` and `Credits`. `Credits` is only for code or design adapted from external projects such as shadcn-svelte or more-shadcn-svelte, and must name and link each actual source. Runtime primitives and packages belong under `Dependencies`, not `Credits`. Omit `Credits` for original xvelte work; if provenance is unknown, ask the repository owner instead of guessing.
+- `File organization` must use a compact table mapping every file in the component folder to its responsibility and end by identifying `index.ts` and the exported types as the source of truth for the public API.
+- Keep code examples narrowly relevant, formatted with Prettier, and free of deprecated APIs. Verify external links against official project documentation or repositories before adding them.
 
 ## Localization
 

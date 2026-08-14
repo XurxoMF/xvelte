@@ -22,7 +22,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `carousel`
 - `chart`
 - `checkbox`
-- `code`
+- `code` — Shiki code blocks with caller-provided, on-demand language loaders
 - `collapsible`
 - `color-picker`
 - `combobox`

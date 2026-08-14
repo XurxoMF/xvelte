@@ -4,7 +4,7 @@
 	import type { WithChildren, WithoutChildren } from "bits-ui";
 	import { type VariantProps, tv } from "tailwind-variants";
 
-	import type { SupportedLanguage } from "./shiki";
+	import type { LanguageLoader, PlainTextLanguage } from "./shiki";
 
 	export const codeVariants = tv({
 		base: "not-prose relative h-full overflow-auto rounded-lg border",
@@ -18,16 +18,29 @@
 
 	export type CodeVariant = VariantProps<typeof codeVariants>["variant"];
 
-	export type RootProps = WithChildren<{
+	type BaseRootProps = WithChildren<{
 		ref?: HTMLDivElement | null | undefined;
 		variant?: CodeVariant | undefined;
-		lang?: SupportedLanguage | undefined;
 		code: string;
 		class?: string | undefined;
 		hideLines?: boolean | undefined;
 		highlight?: (number | [number, number])[] | undefined;
-	}> &
-		WithoutChildren<HTMLAttributes<HTMLDivElement>>;
+	}>;
+
+	/** Props for plain code, which Shiki handles without loading a grammar. */
+	export type PlainTextRootProps = BaseRootProps & {
+		lang?: PlainTextLanguage | undefined;
+		loadLanguage?: never;
+	};
+
+	/** Props for syntax-highlighted code loaded on demand. */
+	export type HighlightedRootProps = BaseRootProps & {
+		lang: string;
+		loadLanguage: LanguageLoader;
+	};
+
+	/** Props accepted by the Code root. */
+	export type RootProps = (PlainTextRootProps | HighlightedRootProps) & WithoutChildren<HTMLAttributes<HTMLDivElement>>;
 </script>
 
 <script lang="ts">
@@ -38,7 +51,8 @@
 	let {
 		ref = $bindable(null),
 		variant = "default",
-		lang = "typescript",
+		lang = "text",
+		loadLanguage,
 		code,
 		class: className,
 		hideLines = false,
@@ -59,6 +73,9 @@
 		},
 		get lang() {
 			return lang;
+		},
+		get loadLanguage() {
+			return loadLanguage;
 		}
 	});
 </script>

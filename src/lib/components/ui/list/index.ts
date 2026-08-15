@@ -1,13 +1,12 @@
+import Root, { type RootProps, type RootSpacings, type RootVariants } from "./list-root.svelte";
 import Item, { type ItemProps } from "./list-item.svelte";
-import Ordered, { type OrderedProps } from "./list-ordered.svelte";
-import Unordered, { type UnorderedProps } from "./list-unordered.svelte";
 
 export {
+	Root,
 	Item,
-	Ordered,
-	Unordered,
 	//
-	type ItemProps,
-	type OrderedProps,
-	type UnorderedProps
+	type RootProps,
+	type RootVariants,
+	type RootSpacings,
+	type ItemProps
 };

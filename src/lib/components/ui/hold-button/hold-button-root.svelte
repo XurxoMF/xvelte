@@ -19,7 +19,7 @@
 	import { cn } from "$lib/utils";
 
 	let {
-		duration = 1500,
+		duration = 1000,
 		onComplete,
 		class: className,
 		children,

@@ -1,26 +1,17 @@
 import Root, { type RootProps } from "./emoji-picker-root.svelte";
-import List, { type ListProps } from "./emoji-picker-list.svelte";
-import Viewport, { type ViewportProps } from "./emoji-picker-viewport.svelte";
-import Search, { type SearchProps } from "./emoji-picker-search.svelte";
-import Footer, { type FooterProps } from "./emoji-picker-footer.svelte";
-import SkinToneSelector, { type SkinToneSelectorProps } from "./emoji-picker-skin-tone-selector.svelte";
-import type { EmojiPickerSkin, SelectedEmoji } from "./emoji-picker-context.svelte.js";
+import { applySkinTone, emojiCategories, SKIN_TONES } from "./emoji-data";
+import type { Emoji, EmojiCategory, EmojiCategoryId, EmojiSkinTone } from "./emoji-data";
 
 export {
 	Root,
-	List,
-	Viewport,
-	Search,
-	Footer,
-	SkinToneSelector,
+	Root as EmojiPicker,
+	emojiCategories,
+	applySkinTone,
+	SKIN_TONES,
 	//
 	type RootProps,
-	type ListProps,
-	type ViewportProps,
-	type SearchProps,
-	type FooterProps,
-	type SkinToneSelectorProps,
-	//
-	type SelectedEmoji,
-	type EmojiPickerSkin
+	type Emoji,
+	type EmojiCategory,
+	type EmojiCategoryId,
+	type EmojiSkinTone
 };

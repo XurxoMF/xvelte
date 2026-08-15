@@ -33,7 +33,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `dialog`
 - `drawer`
 - `dropdown-menu`
-- `emoji-picker`
+- `emoji-picker` — self-contained picker with bundled data, search, categories, skin tones, recents, and optional local persistence
 - `empty`
 - `field`
 - `file-drop-zone`
@@ -43,9 +43,9 @@ All component paths are relative to `src/lib/components/ui`.
 - `hover-card`
 - `input`
 - `input-group`
+- `input-ipv4`
+- `input-ipv6`
 - `input-otp`
-- `ipv4-input`
-- `ipv6-input`
 - `item`
 - `kbd`
 - `knob`

@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import type { SVGAttributes } from "svelte/elements";
+
 	export type RootProps = SVGAttributes<SVGSVGElement>;
 </script>
 
 <script lang="ts">
-	import type { SVGAttributes } from "svelte/elements";
-
 	import { LoaderIcon } from "$lib/icons";
 	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";

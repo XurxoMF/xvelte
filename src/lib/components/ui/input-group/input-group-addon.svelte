@@ -1,4 +1,10 @@
 <script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import { tv, type VariantProps } from "tailwind-variants";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	export const addonVariants = tv({
 		base: "text-muted-foreground h-auto gap-2 py-1.5 text-sm font-medium group-data-[disabled=true]/input-group:opacity-50 [&>kbd]:rounded-[calc(var(--radius)-5px)] [&>svg:not([class*='size-'])]:size-4 flex cursor-text items-center justify-center select-none",
 		variants: {
@@ -22,10 +28,7 @@
 </script>
 
 <script lang="ts">
-	import { tv, type VariantProps } from "tailwind-variants";
-	import type { HTMLAttributes } from "svelte/elements";
-
-	import { cn, type WithElementRef } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children, align = "inline-start", ...restProps }: AddonProps = $props();
 </script>

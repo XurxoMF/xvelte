@@ -1,12 +1,13 @@
 <script lang="ts" module>
+	import type { HTMLTableAttributes } from "svelte/elements";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	export type RootProps = WithElementRef<HTMLTableAttributes>;
 </script>
 
 <script lang="ts">
-	import type { HTMLTableAttributes } from "svelte/elements";
-
-	import { cn, type WithElementRef } from "$lib/utils";
-
+	import { cn } from "$lib/utils";
 	import * as ScrollArea from "$lib/components/ui/scroll-area";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: RootProps = $props();

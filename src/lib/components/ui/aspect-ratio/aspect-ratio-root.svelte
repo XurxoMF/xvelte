@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { AspectRatio as AspectRatioPrimitive } from "bits-ui";
+
 	export type RootProps = AspectRatioPrimitive.RootProps;
 </script>
 
 <script lang="ts">
-	import { AspectRatio as AspectRatioPrimitive } from "bits-ui";
-
 	let { ref = $bindable(null), ...restProps }: RootProps = $props();
 </script>
 

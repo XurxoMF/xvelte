@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
+
 	export type SeparatorProps = DropdownMenuPrimitive.SeparatorProps;
 </script>
 
 <script lang="ts">
-	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
-
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, ...restProps }: SeparatorProps = $props();

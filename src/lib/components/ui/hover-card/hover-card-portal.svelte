@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { LinkPreview as HoverCardPrimitive } from "bits-ui";
+
 	export type PortalProps = HoverCardPrimitive.PortalProps;
 </script>
 
 <script lang="ts">
-	import { LinkPreview as HoverCardPrimitive } from "bits-ui";
-
 	let { ...restProps }: PortalProps = $props();
 </script>
 

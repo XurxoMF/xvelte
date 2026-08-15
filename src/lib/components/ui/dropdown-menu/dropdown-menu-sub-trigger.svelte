@@ -1,14 +1,13 @@
 <script lang="ts" module>
+	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
+
 	export type SubTriggerProps = DropdownMenuPrimitive.SubTriggerProps & {
 		inset?: boolean | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
-
 	import { ChevronRightIcon } from "$lib/icons";
-
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, inset, children, ...restProps }: SubTriggerProps = $props();

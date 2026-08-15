@@ -1,4 +1,9 @@
 <script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+	import type { Snippet } from "svelte";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	export type Error = { message?: string | undefined };
 
 	export type ErrorProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
@@ -8,10 +13,7 @@
 </script>
 
 <script lang="ts">
-	import type { HTMLAttributes } from "svelte/elements";
-	import type { Snippet } from "svelte";
-
-	import { cn, type WithElementRef } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children, errors, ...restProps }: ErrorProps = $props();
 

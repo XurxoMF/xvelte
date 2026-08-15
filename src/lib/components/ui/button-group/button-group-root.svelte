@@ -1,4 +1,10 @@
 <script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import { tv, type VariantProps } from "tailwind-variants";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	export const rootVariants = tv({
 		base: "has-[>[data-slot=button-group]]:gap-2 has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-lg flex w-fit items-stretch [&>*]:focus-visible:relative [&>*]:focus-visible:z-10 [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1",
 		variants: {
@@ -22,10 +28,7 @@
 </script>
 
 <script lang="ts">
-	import { tv, type VariantProps } from "tailwind-variants";
-	import type { HTMLAttributes } from "svelte/elements";
-
-	import { cn, type WithElementRef } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children, orientation = "horizontal", ...restProps }: RootProps = $props();
 </script>

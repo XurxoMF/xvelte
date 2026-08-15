@@ -1,13 +1,14 @@
 <script lang="ts" module>
+	import { Select as SelectPrimitive } from "bits-ui";
+
+	import type { WithoutChild } from "$lib/utils";
+
 	export type ItemProps = WithoutChild<SelectPrimitive.ItemProps>;
 </script>
 
 <script lang="ts">
-	import { Select as SelectPrimitive } from "bits-ui";
-
+	import { cn } from "$lib/utils";
 	import { CheckIcon } from "$lib/icons";
-
-	import { cn, type WithoutChild } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, value, label, children: childrenProp, ...restProps }: ItemProps = $props();
 </script>

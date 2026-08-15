@@ -1,12 +1,14 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
+
 	export type HandleProps = { class?: string | undefined; children?: Snippet | undefined };
 </script>
 
 <script lang="ts">
 	import { cn } from "$lib/utils";
-	import { getCompareContext } from "./compare-slider-context";
 	import { DragHandleIcon, DragHorizontalIcon } from "$lib/icons";
+
+	import { getCompareContext } from "./compare-slider-context";
 
 	let { class: className, children }: HandleProps = $props();
 

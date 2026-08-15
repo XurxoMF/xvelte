@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { Collapsible as CollapsiblePrimitive } from "bits-ui";
+
 	export type RootProps = CollapsiblePrimitive.RootProps;
 </script>
 
 <script lang="ts">
-	import { Collapsible as CollapsiblePrimitive } from "bits-ui";
-
 	let { ref = $bindable(null), open = $bindable(false), ...restProps }: RootProps = $props();
 </script>
 

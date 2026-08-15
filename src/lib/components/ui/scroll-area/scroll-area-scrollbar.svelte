@@ -1,11 +1,13 @@
 <script lang="ts" module>
+	import { ScrollArea as ScrollAreaPrimitive } from "bits-ui";
+
+	import type { WithoutChild } from "$lib/utils";
+
 	export type ScrollbarProps = WithoutChild<ScrollAreaPrimitive.ScrollbarProps>;
 </script>
 
 <script lang="ts">
-	import { ScrollArea as ScrollAreaPrimitive } from "bits-ui";
-
-	import { cn, type WithoutChild } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, orientation = "vertical", children, ...restProps }: ScrollbarProps = $props();
 </script>

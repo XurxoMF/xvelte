@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { Menubar as MenubarPrimitive } from "bits-ui";
+
 	export type RootProps = MenubarPrimitive.RootProps;
 </script>
 
 <script lang="ts">
-	import { Menubar as MenubarPrimitive } from "bits-ui";
-
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, ...restProps }: RootProps = $props();

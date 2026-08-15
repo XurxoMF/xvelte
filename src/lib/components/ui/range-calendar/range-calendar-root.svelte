@@ -1,4 +1,12 @@
 <script lang="ts" module>
+	import type { Snippet } from "svelte";
+
+	import { RangeCalendar as RangeCalendarPrimitive } from "bits-ui";
+	import type { DateValue } from "@internationalized/date";
+
+	import type { WithoutChildrenOrChild } from "$lib/utils";
+	import * as Button from "$lib/components/ui/button";
+
 	export type RootProps = WithoutChildrenOrChild<RangeCalendarPrimitive.RootProps> & {
 		buttonVariant?: Button.RootVariants | undefined;
 		captionLayout?: "dropdown" | "dropdown-months" | "dropdown-years" | "label" | undefined;
@@ -11,14 +19,9 @@
 </script>
 
 <script lang="ts">
-	import { RangeCalendar as RangeCalendarPrimitive } from "bits-ui";
-	import type { Snippet } from "svelte";
+	import { isEqualMonth } from "@internationalized/date";
 
-	import { isEqualMonth, type DateValue } from "@internationalized/date";
-
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
-
-	import * as Button from "$lib/components/ui/button";
+	import { cn } from "$lib/utils";
 
 	import * as RangeCalendar from ".";
 

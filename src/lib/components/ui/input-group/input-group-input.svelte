@@ -1,11 +1,11 @@
 <script lang="ts" module>
+	import * as Input from "$lib/components/ui/input";
+
 	export type InputProps = Input.RootProps;
 </script>
 
 <script lang="ts">
 	import { cn } from "$lib/utils";
-
-	import * as Input from "$lib/components/ui/input";
 
 	let { ref = $bindable(null), value = $bindable(), class: className, ...restProps }: InputProps = $props();
 </script>

@@ -1,16 +1,18 @@
 <script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	export type FooterProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
 		showCloseButton?: boolean | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import type { HTMLAttributes } from "svelte/elements";
 	import { Dialog as DialogPrimitive } from "bits-ui";
 
+	import { cn } from "$lib/utils";
 	import * as m from "$lib/paraglide/messages.js";
-	import { cn, type WithElementRef } from "$lib/utils";
-
 	import * as Button from "$lib/components/ui/button";
 
 	let { ref = $bindable(null), class: className, children, showCloseButton = false, ...restProps }: FooterProps = $props();

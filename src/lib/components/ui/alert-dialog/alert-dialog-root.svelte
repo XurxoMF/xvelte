@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { AlertDialog as AlertDialogPrimitive } from "bits-ui";
+
 	export type RootProps = AlertDialogPrimitive.RootProps;
 </script>
 
 <script lang="ts">
-	import { AlertDialog as AlertDialogPrimitive } from "bits-ui";
-
 	let { open = $bindable(false), ...restProps }: RootProps = $props();
 </script>
 

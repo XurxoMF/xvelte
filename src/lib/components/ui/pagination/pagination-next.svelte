@@ -1,14 +1,13 @@
 <script lang="ts" module>
+	import { Pagination as PaginationPrimitive } from "bits-ui";
+
 	export type NextProps = PaginationPrimitive.NextButtonProps;
 </script>
 
 <script lang="ts">
-	import { Pagination as PaginationPrimitive } from "bits-ui";
-
 	import { ChevronRightIcon } from "$lib/icons";
 	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
-
 	import * as Button from "$lib/components/ui/button";
 
 	let { ref = $bindable(null), class: className, ...restProps }: NextProps = $props();

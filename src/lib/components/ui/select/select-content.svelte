@@ -1,15 +1,17 @@
 <script lang="ts" module>
+	import { Select as SelectPrimitive } from "bits-ui";
+
+	import type { WithoutChild, WithoutChildrenOrChild } from "$lib/utils";
+
+	import * as Select from ".";
+
 	export type ContentProps = WithoutChild<SelectPrimitive.ContentProps> & {
 		portalProps?: WithoutChildrenOrChild<Select.PortalProps> | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import { Select as SelectPrimitive } from "bits-ui";
-
-	import { cn, type WithoutChild, type WithoutChildrenOrChild } from "$lib/utils";
-
-	import * as Select from ".";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, sideOffset = 4, portalProps, children, preventScroll = true, ...restProps }: ContentProps = $props();
 </script>

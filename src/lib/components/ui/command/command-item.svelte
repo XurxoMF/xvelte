@@ -1,12 +1,11 @@
 <script lang="ts" module>
+	import { Command as CommandPrimitive } from "bits-ui";
+
 	export type ItemProps = CommandPrimitive.ItemProps;
 </script>
 
 <script lang="ts">
-	import { Command as CommandPrimitive } from "bits-ui";
-
 	import { CheckIcon } from "$lib/icons";
-
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: ItemProps = $props();

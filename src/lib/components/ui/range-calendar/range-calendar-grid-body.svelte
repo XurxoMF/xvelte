@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { RangeCalendar as RangeCalendarPrimitive } from "bits-ui";
+
 	export type GridBodyProps = RangeCalendarPrimitive.GridBodyProps;
 </script>
 
 <script lang="ts">
-	import { RangeCalendar as RangeCalendarPrimitive } from "bits-ui";
-
 	let { ref = $bindable(null), ...restProps }: GridBodyProps = $props();
 </script>
 

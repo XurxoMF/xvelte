@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { AlertDialog as AlertDialogPrimitive } from "bits-ui";
+
 	export type DescriptionProps = AlertDialogPrimitive.DescriptionProps;
 </script>
 
 <script lang="ts">
-	import { AlertDialog as AlertDialogPrimitive } from "bits-ui";
-
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, ...restProps }: DescriptionProps = $props();

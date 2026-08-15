@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
+
 	export type GroupProps = DropdownMenuPrimitive.GroupProps;
 </script>
 
 <script lang="ts">
-	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
-
 	let { ref = $bindable(null), ...restProps }: GroupProps = $props();
 </script>
 

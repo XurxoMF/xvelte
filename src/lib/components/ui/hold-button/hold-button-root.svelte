@@ -1,5 +1,6 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
+
 	import type { WithoutChildren } from "bits-ui";
 
 	import type { RootProps as ButtonProps } from "$lib/components/ui/button";

@@ -1,4 +1,10 @@
 <script lang="ts" module>
+	import type { Snippet } from "svelte";
+
+	import { ContextMenu as ContextMenuPrimitive } from "bits-ui";
+
+	import type { WithoutChildrenOrChild } from "$lib/utils";
+
 	export type CheckboxItemProps = WithoutChildrenOrChild<ContextMenuPrimitive.CheckboxItemProps> & {
 		inset?: boolean | undefined;
 		children?: Snippet | undefined;
@@ -6,12 +12,8 @@
 </script>
 
 <script lang="ts">
-	import { ContextMenu as ContextMenuPrimitive } from "bits-ui";
-	import type { Snippet } from "svelte";
-
+	import { cn } from "$lib/utils";
 	import { CheckIcon } from "$lib/icons";
-
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
 
 	let {
 		ref = $bindable(null),

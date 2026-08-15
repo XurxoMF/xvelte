@@ -1,10 +1,12 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
+
 	export type ItemProps = { target?: "first" | "second" | undefined; class?: string | undefined; children: Snippet };
 </script>
 
 <script lang="ts">
 	import { cn } from "$lib/utils";
+
 	import { getCompareContext } from "./compare-slider-context";
 
 	let { target = "first", class: className, children }: ItemProps = $props();

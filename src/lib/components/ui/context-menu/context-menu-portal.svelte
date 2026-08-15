@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { ContextMenu as ContextMenuPrimitive } from "bits-ui";
+
 	export type PortalProps = ContextMenuPrimitive.PortalProps;
 </script>
 
 <script lang="ts">
-	import { ContextMenu as ContextMenuPrimitive } from "bits-ui";
-
 	let { ...restProps }: PortalProps = $props();
 </script>
 

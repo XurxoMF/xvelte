@@ -1,11 +1,11 @@
 <script lang="ts" module>
+	import * as Separator from "$lib/components/ui/separator";
+
 	export type SeparatorProps = Separator.RootProps;
 </script>
 
 <script lang="ts">
 	import { cn } from "$lib/utils";
-
-	import * as Separator from "$lib/components/ui/separator";
 
 	let { ref = $bindable(null), class: className, ...restProps }: SeparatorProps = $props();
 </script>

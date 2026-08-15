@@ -1,13 +1,14 @@
 <script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import type { WithElementRef } from "bits-ui";
+
 	export type LabelProps = WithElementRef<HTMLAttributes<HTMLElement>> & {
 		inset?: boolean | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import { type WithElementRef } from "bits-ui";
-	import type { HTMLAttributes } from "svelte/elements";
-
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), inset, children, class: className, ...restProps }: LabelProps = $props();

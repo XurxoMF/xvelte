@@ -1,4 +1,10 @@
 <script lang="ts" module>
+	import { AlertDialog as AlertDialogPrimitive } from "bits-ui";
+
+	import type { WithoutChild, WithoutChildrenOrChild } from "$lib/utils";
+
+	import * as Dialog from ".";
+
 	export type ContentProps = WithoutChild<AlertDialogPrimitive.ContentProps> & {
 		size?: "default" | "sm" | undefined;
 		portalProps?: WithoutChildrenOrChild<Dialog.PortalProps> | undefined;
@@ -6,11 +12,7 @@
 </script>
 
 <script lang="ts">
-	import { AlertDialog as AlertDialogPrimitive } from "bits-ui";
-
-	import { cn, type WithoutChild, type WithoutChildrenOrChild } from "$lib/utils";
-
-	import * as Dialog from ".";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, size = "default", portalProps, ...restProps }: ContentProps = $props();
 </script>

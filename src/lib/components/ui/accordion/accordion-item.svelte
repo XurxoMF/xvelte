@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { Accordion as AccordionPrimitive } from "bits-ui";
+
 	export type ItemProps = AccordionPrimitive.ItemProps;
 </script>
 
 <script lang="ts">
-	import { Accordion as AccordionPrimitive } from "bits-ui";
-
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, ...restProps }: ItemProps = $props();

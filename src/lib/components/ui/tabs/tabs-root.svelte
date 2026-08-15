@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { Tabs as TabsPrimitive } from "bits-ui";
+
 	export type RootProps = TabsPrimitive.RootProps;
 </script>
 
 <script lang="ts">
-	import { Tabs as TabsPrimitive } from "bits-ui";
-
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), value = $bindable(""), class: className, ...restProps }: RootProps = $props();

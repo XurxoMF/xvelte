@@ -11,6 +11,7 @@
 
 <script lang="ts">
 	import { createAttachmentKey } from "svelte/attachments";
+
 	import { dragHandle } from "svelte-dnd-action";
 
 	import * as m from "$lib/paraglide/messages.js";

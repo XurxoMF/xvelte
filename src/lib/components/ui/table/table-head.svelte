@@ -1,11 +1,13 @@
 <script lang="ts" module>
+	import type { HTMLThAttributes } from "svelte/elements";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	export type HeadProps = WithElementRef<HTMLThAttributes>;
 </script>
 
 <script lang="ts">
-	import type { HTMLThAttributes } from "svelte/elements";
-
-	import { cn, type WithElementRef } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: HeadProps = $props();
 </script>

@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import * as Chart from ".";
+
 	export type StyleProps = { id: string; config: Chart.ChartConfig };
 </script>
 
 <script lang="ts">
-	import * as Chart from ".";
-
 	let { id, config }: StyleProps = $props();
 
 	// Only series with explicit colors need generated CSS custom properties.

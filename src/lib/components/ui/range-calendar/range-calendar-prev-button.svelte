@@ -1,17 +1,16 @@
 <script lang="ts" module>
+	import { RangeCalendar as RangeCalendarPrimitive } from "bits-ui";
+
+	import * as Button from "$lib/components/ui/button";
+
 	export type PrevButtonProps = RangeCalendarPrimitive.PrevButtonProps & {
 		variant?: Button.RootVariants | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import { RangeCalendar as RangeCalendarPrimitive } from "bits-ui";
-
 	import { ChevronLeftIcon } from "$lib/icons";
-
 	import { cn } from "$lib/utils";
-
-	import * as Button from "$lib/components/ui/button";
 
 	let { ref = $bindable(null), class: className, children, variant = "ghost", ...restProps }: PrevButtonProps = $props();
 </script>

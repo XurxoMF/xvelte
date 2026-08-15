@@ -1,12 +1,11 @@
 <script lang="ts" module>
+	import { NavigationMenu as NavigationMenuPrimitive } from "bits-ui";
+
 	export type TriggerProps = NavigationMenuPrimitive.TriggerProps;
 </script>
 
 <script lang="ts">
-	import { NavigationMenu as NavigationMenuPrimitive } from "bits-ui";
-
 	import { ChevronDownIcon } from "$lib/icons";
-
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: TriggerProps = $props();

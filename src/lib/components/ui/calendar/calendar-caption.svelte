@@ -1,4 +1,8 @@
 <script lang="ts" module>
+	import type { DateValue } from "@internationalized/date";
+
+	import * as Calendar from ".";
+
 	export type CaptionProps = {
 		captionLayout: Calendar.RootProps["captionLayout"];
 		months: Calendar.MonthSelectProps["months"];
@@ -13,9 +17,7 @@
 </script>
 
 <script lang="ts">
-	import { DateFormatter, getLocalTimeZone, type DateValue } from "@internationalized/date";
-
-	import * as Calendar from ".";
+	import { DateFormatter, getLocalTimeZone } from "@internationalized/date";
 
 	let { captionLayout, months, monthFormat, years, yearFormat, month, locale, placeholder = $bindable(), monthIndex = 0 }: CaptionProps = $props();
 

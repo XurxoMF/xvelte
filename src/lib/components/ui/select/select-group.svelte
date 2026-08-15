@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { Select as SelectPrimitive } from "bits-ui";
+
 	export type GroupProps = SelectPrimitive.GroupProps;
 </script>
 
 <script lang="ts">
-	import { Select as SelectPrimitive } from "bits-ui";
-
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, ...restProps }: GroupProps = $props();

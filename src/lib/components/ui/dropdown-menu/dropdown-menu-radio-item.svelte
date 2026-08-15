@@ -1,13 +1,14 @@
 <script lang="ts" module>
+	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
+
+	import type { WithoutChild } from "$lib/utils";
+
 	export type RadioItemProps = WithoutChild<DropdownMenuPrimitive.RadioItemProps>;
 </script>
 
 <script lang="ts">
-	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
-
+	import { cn } from "$lib/utils";
 	import { CheckIcon } from "$lib/icons";
-
-	import { cn, type WithoutChild } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children: childrenProp, ...restProps }: RadioItemProps = $props();
 </script>

@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { Select as SelectPrimitive } from "bits-ui";
+
 	export type RootProps = SelectPrimitive.RootProps;
 </script>
 
 <script lang="ts">
-	import { Select as SelectPrimitive } from "bits-ui";
-
 	let { open = $bindable(false), value = $bindable(), ...restProps }: RootProps = $props();
 </script>
 

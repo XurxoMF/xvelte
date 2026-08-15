@@ -1,13 +1,14 @@
 <script lang="ts" module>
+	import { Checkbox as CheckboxPrimitive } from "bits-ui";
+
+	import type { WithoutChildrenOrChild } from "$lib/utils";
+
 	export type RootProps = WithoutChildrenOrChild<CheckboxPrimitive.RootProps>;
 </script>
 
 <script lang="ts">
-	import { Checkbox as CheckboxPrimitive } from "bits-ui";
-
+	import { cn } from "$lib/utils";
 	import { CheckIcon, MinusIcon } from "$lib/icons";
-
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
 
 	let { ref = $bindable(null), checked = $bindable(false), indeterminate = $bindable(false), class: className, ...restProps }: RootProps = $props();
 </script>

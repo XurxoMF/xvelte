@@ -1,12 +1,14 @@
 <script lang="ts" module>
+	import type { HTMLLiAttributes } from "svelte/elements";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	/** Props for one native list item. */
 	export type ItemProps = WithElementRef<HTMLLiAttributes, HTMLLIElement>;
 </script>
 
 <script lang="ts">
-	import type { HTMLLiAttributes } from "svelte/elements";
-
-	import { cn, type WithElementRef } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: ItemProps = $props();
 </script>

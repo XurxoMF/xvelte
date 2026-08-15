@@ -1,4 +1,6 @@
 <script lang="ts" module>
+	import { Command as CommandPrimitive } from "bits-ui";
+
 	export type RootApi = CommandPrimitive.Root;
 
 	export type RootProps = CommandPrimitive.RootProps & {
@@ -7,8 +9,6 @@
 </script>
 
 <script lang="ts">
-	import { Command as CommandPrimitive } from "bits-ui";
-
 	import { cn } from "$lib/utils";
 
 	let { api = $bindable(null), ref = $bindable(null), value = $bindable(""), class: className, ...restProps }: RootProps = $props();

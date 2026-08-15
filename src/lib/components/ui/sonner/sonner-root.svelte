@@ -1,9 +1,11 @@
 <script lang="ts" module>
+	import type { ToasterProps as SonnerProps } from "svelte-sonner";
+
 	export type RootProps = SonnerProps;
 </script>
 
 <script lang="ts">
-	import { Toaster as Sonner, type ToasterProps as SonnerProps } from "svelte-sonner";
+	import { Toaster as Sonner } from "svelte-sonner";
 	import { mode } from "mode-watcher";
 
 	import { AlertErrorIcon, AlertInfoIcon, AlertSuccessIcon, AlertWarningIcon, LoaderIcon } from "$lib/icons";

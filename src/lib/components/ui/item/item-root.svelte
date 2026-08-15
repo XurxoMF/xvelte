@@ -1,4 +1,11 @@
 <script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+	import type { Snippet } from "svelte";
+
+	import { tv, type VariantProps } from "tailwind-variants";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	export const rootVariants = tv({
 		base: "[a]:hover:bg-muted rounded-lg border text-sm group/item focus-visible:border-ring focus-visible:ring-ring/50 flex w-full flex-wrap items-center transition-colors duration-100 outline-none focus-visible:ring-[3px] [a]:transition-colors",
 		variants: {
@@ -30,11 +37,7 @@
 </script>
 
 <script lang="ts">
-	import { tv, type VariantProps } from "tailwind-variants";
-	import type { HTMLAttributes } from "svelte/elements";
-	import type { Snippet } from "svelte";
-
-	import { cn, type WithElementRef } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, child, variant, size, ...restProps }: RootProps = $props();
 

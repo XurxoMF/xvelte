@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
+
 	export type CheckboxGroupProps = DropdownMenuPrimitive.CheckboxGroupProps;
 </script>
 
 <script lang="ts">
-	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
-
 	let { ref = $bindable(null), value = $bindable([]), ...restProps }: CheckboxGroupProps = $props();
 </script>
 

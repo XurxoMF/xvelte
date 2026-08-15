@@ -1,12 +1,12 @@
 <script lang="ts" module>
+	import { NavigationMenu as NavigationMenuPrimitive } from "bits-ui";
+
 	export type RootProps = NavigationMenuPrimitive.RootProps & {
 		viewport?: boolean | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import { NavigationMenu as NavigationMenuPrimitive } from "bits-ui";
-
 	import { cn } from "$lib/utils";
 
 	import * as NavigationMenu from ".";

@@ -1,14 +1,16 @@
 <script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+	import type { Snippet } from "svelte";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	export type TextProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
 		child?: Snippet<[{ props: Record<string, unknown> }]> | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import type { HTMLAttributes } from "svelte/elements";
-	import type { Snippet } from "svelte";
-
-	import { cn, type WithElementRef } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, child, ...restProps }: TextProps = $props();
 

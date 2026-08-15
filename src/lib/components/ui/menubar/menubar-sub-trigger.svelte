@@ -1,15 +1,16 @@
 <script lang="ts" module>
+	import { Menubar as MenubarPrimitive } from "bits-ui";
+
+	import type { WithoutChild } from "$lib/utils";
+
 	export type SubTriggerProps = WithoutChild<MenubarPrimitive.SubTriggerProps> & {
 		inset?: boolean | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import { Menubar as MenubarPrimitive } from "bits-ui";
-
+	import { cn } from "$lib/utils";
 	import { ChevronRightIcon } from "$lib/icons";
-
-	import { cn, type WithoutChild } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, inset = undefined, children, ...restProps }: SubTriggerProps = $props();
 </script>

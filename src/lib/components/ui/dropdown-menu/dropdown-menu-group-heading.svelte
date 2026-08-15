@@ -1,12 +1,12 @@
 <script lang="ts" module>
+	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
+
 	export type GroupHeadingProps = DropdownMenuPrimitive.GroupHeadingProps & {
 		inset?: boolean | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
-
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, inset, ...restProps }: GroupHeadingProps = $props();

@@ -1,4 +1,8 @@
 <script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	export type ProviderProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
 		open?: boolean | undefined;
 		onOpenChange?: ((open: boolean) => void) | undefined;
@@ -6,9 +10,7 @@
 </script>
 
 <script lang="ts">
-	import type { HTMLAttributes } from "svelte/elements";
-
-	import { cn, type WithElementRef } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	import * as Sidebar from ".";
 

@@ -1,4 +1,6 @@
 <script lang="ts" module>
+	import * as Button from "$lib/components/ui/button";
+
 	export type TriggerProps = Button.RootProps & {
 		onclick?: ((e: MouseEvent) => void) | undefined;
 	};
@@ -8,8 +10,6 @@
 	import { SidebarIcon } from "$lib/icons";
 	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
-
-	import * as Button from "$lib/components/ui/button";
 	import * as Tooltip from "$lib/components/ui/tooltip";
 
 	import * as Sidebar from ".";

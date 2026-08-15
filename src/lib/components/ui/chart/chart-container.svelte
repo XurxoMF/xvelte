@@ -1,15 +1,17 @@
 <script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import type { WithElementRef } from "$lib/utils";
+
+	import * as Chart from ".";
+
 	export type ContainerProps = WithElementRef<HTMLAttributes<HTMLElement>> & {
 		config: Chart.ChartConfig;
 	};
 </script>
 
 <script lang="ts">
-	import type { HTMLAttributes } from "svelte/elements";
-
-	import { cn, type WithElementRef } from "$lib/utils";
-
-	import * as Chart from ".";
+	import { cn } from "$lib/utils";
 
 	const uid = $props.id();
 

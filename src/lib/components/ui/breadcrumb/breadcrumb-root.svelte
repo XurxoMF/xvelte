@@ -1,12 +1,14 @@
 <script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLElement>>;
 </script>
 
 <script lang="ts">
-	import type { HTMLAttributes } from "svelte/elements";
-
+	import { cn } from "$lib/utils";
 	import * as m from "$lib/paraglide/messages.js";
-	import { cn, type WithElementRef } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: RootProps = $props();
 </script>

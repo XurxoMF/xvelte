@@ -1,4 +1,8 @@
 <script lang="ts" module>
+	import type { HTMLInputAttributes, HTMLInputTypeAttribute } from "svelte/elements";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	export type RootTypes = Exclude<HTMLInputTypeAttribute, "file">;
 
 	export type RootProps = WithElementRef<
@@ -7,9 +11,7 @@
 </script>
 
 <script lang="ts">
-	import type { HTMLInputAttributes, HTMLInputTypeAttribute } from "svelte/elements";
-
-	import { cn, type WithElementRef } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	let {
 		ref = $bindable(null),

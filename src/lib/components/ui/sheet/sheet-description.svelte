@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { Dialog as SheetPrimitive } from "bits-ui";
+
 	export type DescriptionProps = SheetPrimitive.DescriptionProps;
 </script>
 
 <script lang="ts">
-	import { Dialog as SheetPrimitive } from "bits-ui";
-
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, ...restProps }: DescriptionProps = $props();

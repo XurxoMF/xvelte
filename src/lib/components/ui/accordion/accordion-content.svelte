@@ -1,11 +1,13 @@
 <script lang="ts" module>
+	import { Accordion as AccordionPrimitive } from "bits-ui";
+
+	import type { WithoutChild } from "$lib/utils";
+
 	export type ContentProps = WithoutChild<AccordionPrimitive.ContentProps>;
 </script>
 
 <script lang="ts">
-	import { Accordion as AccordionPrimitive } from "bits-ui";
-
-	import { cn, type WithoutChild } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: ContentProps = $props();
 </script>

@@ -1,14 +1,12 @@
 <script lang="ts" module>
+	import { Command as CommandPrimitive } from "bits-ui";
+
 	export type InputProps = CommandPrimitive.InputProps;
 </script>
 
 <script lang="ts">
-	import { Command as CommandPrimitive } from "bits-ui";
-
 	import { SearchIcon } from "$lib/icons";
-
 	import { cn } from "$lib/utils";
-
 	import * as InputGroup from "$lib/components/ui/input-group";
 
 	let { ref = $bindable(null), class: className, value = $bindable(""), ...restProps }: InputProps = $props();

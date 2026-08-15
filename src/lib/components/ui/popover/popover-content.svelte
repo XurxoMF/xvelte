@@ -1,15 +1,17 @@
 <script lang="ts" module>
+	import { Popover as PopoverPrimitive } from "bits-ui";
+
+	import type { WithoutChildrenOrChild } from "$lib/utils";
+
+	import * as Popover from ".";
+
 	export type ContentProps = PopoverPrimitive.ContentProps & {
 		portalProps?: WithoutChildrenOrChild<Popover.PortalProps> | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import { Popover as PopoverPrimitive } from "bits-ui";
-
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
-
-	import * as Popover from ".";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, sideOffset = 4, align = "center", portalProps, ...restProps }: ContentProps = $props();
 </script>

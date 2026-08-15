@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { AlertDialog as AlertDialogPrimitive } from "bits-ui";
+
 	export type TriggerProps = AlertDialogPrimitive.TriggerProps;
 </script>
 
 <script lang="ts">
-	import { AlertDialog as AlertDialogPrimitive } from "bits-ui";
-
 	let { ref = $bindable(null), ...restProps }: TriggerProps = $props();
 </script>
 

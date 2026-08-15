@@ -1,15 +1,17 @@
 <script lang="ts" module>
+	import { ContextMenu as ContextMenuPrimitive } from "bits-ui";
+
+	import type { WithoutChildrenOrChild } from "$lib/utils";
+
+	import * as ContextMenu from ".";
+
 	export type ContentProps = ContextMenuPrimitive.ContentProps & {
 		portalProps?: WithoutChildrenOrChild<ContextMenu.PortalProps> | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import { ContextMenu as ContextMenuPrimitive } from "bits-ui";
-
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
-
-	import * as ContextMenu from ".";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), portalProps, class: className, ...restProps }: ContentProps = $props();
 </script>

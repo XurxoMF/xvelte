@@ -1,4 +1,12 @@
 <script lang="ts" module>
+	import type { Snippet } from "svelte";
+
+	import { Drawer as DrawerPrimitive } from "vaul-svelte";
+
+	import type { WithoutChildrenOrChild } from "$lib/utils";
+
+	import * as Drawer from ".";
+
 	export type ContentProps = Omit<DrawerPrimitive.ContentProps, "el"> & {
 		ref?: HTMLDivElement | undefined;
 		portalProps?: WithoutChildrenOrChild<Drawer.PortalProps> | undefined;
@@ -7,12 +15,7 @@
 </script>
 
 <script lang="ts">
-	import type { Snippet } from "svelte";
-	import { Drawer as DrawerPrimitive } from "vaul-svelte";
-
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
-
-	import * as Drawer from ".";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(undefined), class: className, portalProps, children, ...restProps }: ContentProps = $props();
 </script>

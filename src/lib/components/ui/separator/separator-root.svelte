@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { Separator as SeparatorPrimitive } from "bits-ui";
+
 	export type RootProps = SeparatorPrimitive.RootProps;
 </script>
 
 <script lang="ts">
-	import { Separator as SeparatorPrimitive } from "bits-ui";
-
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, "data-slot": dataSlot = "separator", ...restProps }: RootProps = $props();

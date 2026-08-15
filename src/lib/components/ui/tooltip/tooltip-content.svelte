@@ -1,4 +1,10 @@
 <script lang="ts" module>
+	import { Tooltip as TooltipPrimitive } from "bits-ui";
+
+	import type { WithoutChildrenOrChild } from "$lib/utils";
+
+	import * as Tooltip from ".";
+
 	export type ContentProps = TooltipPrimitive.ContentProps & {
 		arrowClasses?: string | undefined;
 		portalProps?: WithoutChildrenOrChild<Tooltip.PortalProps> | undefined;
@@ -6,11 +12,7 @@
 </script>
 
 <script lang="ts">
-	import { Tooltip as TooltipPrimitive } from "bits-ui";
-
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
-
-	import * as Tooltip from ".";
+	import { cn } from "$lib/utils";
 
 	let {
 		ref = $bindable(null),

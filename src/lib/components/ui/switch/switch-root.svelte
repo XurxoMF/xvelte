@@ -1,13 +1,15 @@
 <script lang="ts" module>
+	import { Switch as SwitchPrimitive } from "bits-ui";
+
+	import type { WithoutChildrenOrChild } from "$lib/utils";
+
 	export type RootProps = WithoutChildrenOrChild<SwitchPrimitive.RootProps> & {
 		size?: "sm" | "default" | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import { Switch as SwitchPrimitive } from "bits-ui";
-
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, checked = $bindable(false), size = "default", ...restProps }: RootProps = $props();
 </script>

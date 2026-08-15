@@ -1,13 +1,15 @@
 <script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	export type LegendProps = WithElementRef<HTMLAttributes<HTMLLegendElement>> & {
 		variant?: "legend" | "label" | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import type { HTMLAttributes } from "svelte/elements";
-
-	import { cn, type WithElementRef } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, variant = "legend", children, ...restProps }: LegendProps = $props();
 </script>

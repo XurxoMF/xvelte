@@ -1,4 +1,6 @@
 <script lang="ts" module>
+	import type { Snippet } from "svelte";
+
 	export type ItemProps = {
 		value: string;
 		class?: string | undefined;
@@ -7,12 +9,8 @@
 </script>
 
 <script lang="ts">
-	import type { Snippet } from "svelte";
-
 	import { CheckIcon } from "$lib/icons";
-
 	import { cn } from "$lib/utils";
-
 	import * as Command from "$lib/components/ui/command";
 
 	import { getComboboxContext } from "./combobox-context.svelte";

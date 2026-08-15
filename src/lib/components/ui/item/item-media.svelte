@@ -1,4 +1,10 @@
 <script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import { tv, type VariantProps } from "tailwind-variants";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	export const mediaVariants = tv({
 		base: "gap-2 group-has-data-[slot=item-description]/item:translate-y-0.5 group-has-data-[slot=item-description]/item:self-start flex shrink-0 items-center justify-center [&_svg]:pointer-events-none",
 		variants: {
@@ -22,10 +28,7 @@
 </script>
 
 <script lang="ts">
-	import { tv, type VariantProps } from "tailwind-variants";
-	import type { HTMLAttributes } from "svelte/elements";
-
-	import { cn, type WithElementRef } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children, variant = "default", ...restProps }: MediaProps = $props();
 </script>

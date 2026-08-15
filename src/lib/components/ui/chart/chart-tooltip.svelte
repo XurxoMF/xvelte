@@ -1,4 +1,11 @@
 <script lang="ts" module>
+	import type { Snippet } from "svelte";
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import type { WithElementRef, WithoutChildren } from "$lib/utils";
+
+	import * as Chart from ".";
+
 	export type TooltipProps = WithoutChildren<WithElementRef<HTMLAttributes<HTMLDivElement>>> & {
 		hideLabel?: boolean | undefined;
 		label?: string | undefined;
@@ -27,12 +34,8 @@
 
 <script lang="ts">
 	import { getChartContext, Tooltip as TooltipPrimitive } from "layerchart";
-	import type { Snippet } from "svelte";
-	import type { HTMLAttributes } from "svelte/elements";
 
-	import { cn, type WithElementRef, type WithoutChildren } from "$lib/utils";
-
-	import * as Chart from ".";
+	import { cn } from "$lib/utils";
 
 	/** @param value - Tooltip value converted to display text by default. */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,16 +1,18 @@
 <script lang="ts" module>
+	import type { Snippet } from "svelte";
+
+	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
+
+	import type { WithoutChildrenOrChild } from "$lib/utils";
+
 	export type CheckboxItemProps = WithoutChildrenOrChild<DropdownMenuPrimitive.CheckboxItemProps> & {
 		children?: Snippet | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import type { Snippet } from "svelte";
-	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
-
+	import { cn } from "$lib/utils";
 	import { CheckIcon, MinusIcon } from "$lib/icons";
-
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
 
 	let {
 		ref = $bindable(null),

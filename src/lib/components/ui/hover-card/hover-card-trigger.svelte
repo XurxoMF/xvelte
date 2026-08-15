@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { LinkPreview as HoverCardPrimitive } from "bits-ui";
+
 	export type TriggerProps = HoverCardPrimitive.TriggerProps;
 </script>
 
 <script lang="ts">
-	import { LinkPreview as HoverCardPrimitive } from "bits-ui";
-
 	let { ref = $bindable(null), ...restProps }: TriggerProps = $props();
 </script>
 

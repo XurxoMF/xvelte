@@ -1,4 +1,8 @@
 <script lang="ts" module>
+	import { AlertDialog as AlertDialogPrimitive } from "bits-ui";
+
+	import * as Button from "$lib/components/ui/button";
+
 	export type CancelProps = AlertDialogPrimitive.CancelProps & {
 		variant?: Button.RootVariants | undefined;
 		size?: Button.RootSizes | undefined;
@@ -6,11 +10,7 @@
 </script>
 
 <script lang="ts">
-	import { AlertDialog as AlertDialogPrimitive } from "bits-ui";
-
 	import { cn } from "$lib/utils";
-
-	import * as Button from "$lib/components/ui/button";
 
 	let { ref = $bindable(null), class: className, variant = "outline", size = "default", ...restProps }: CancelProps = $props();
 </script>

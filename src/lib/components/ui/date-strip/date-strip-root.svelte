@@ -1,6 +1,8 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
+
 	import type { DateValue } from "@internationalized/date";
+
 	export type RootProps = {
 		value?: DateValue | undefined;
 		class?: string | undefined;
@@ -12,11 +14,13 @@
 </script>
 
 <script lang="ts">
+	import { getLocalTimeZone, today, startOfWeek } from "@internationalized/date";
+
 	import { cn } from "$lib/utils";
-	import { setDateStripContext } from "./date-strip-context";
 	import * as Button from "$lib/components/ui/button";
 	import { ChevronLeftIcon, ChevronRightIcon } from "$lib/icons";
-	import { getLocalTimeZone, today, startOfWeek } from "@internationalized/date";
+
+	import { setDateStripContext } from "./date-strip-context";
 
 	let { value = $bindable(), class: className, daysToShow = 5, isDateDisabled = () => false, onDateChange, children }: RootProps = $props();
 

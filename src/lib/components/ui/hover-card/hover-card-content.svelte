@@ -1,15 +1,17 @@
 <script lang="ts" module>
+	import { LinkPreview as HoverCardPrimitive } from "bits-ui";
+
+	import type { WithoutChildrenOrChild } from "$lib/utils";
+
+	import * as HoverCard from ".";
+
 	export type ContentProps = HoverCardPrimitive.ContentProps & {
 		portalProps?: WithoutChildrenOrChild<HoverCard.PortalProps> | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import { LinkPreview as HoverCardPrimitive } from "bits-ui";
-
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
-
-	import * as HoverCard from ".";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, align = "center", sideOffset = 4, portalProps, ...restProps }: ContentProps = $props();
 </script>

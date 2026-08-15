@@ -1,12 +1,12 @@
 <script lang="ts" module>
+	import { Avatar as AvatarPrimitive } from "bits-ui";
+
 	export type RootProps = AvatarPrimitive.RootProps & {
 		size?: "default" | "sm" | "lg" | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import { Avatar as AvatarPrimitive } from "bits-ui";
-
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), loadingStatus = $bindable("loading"), size = "default", class: className, ...restProps }: RootProps = $props();

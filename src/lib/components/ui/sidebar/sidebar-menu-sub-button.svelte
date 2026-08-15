@@ -1,4 +1,9 @@
 <script lang="ts" module>
+	import type { Snippet } from "svelte";
+	import type { HTMLAnchorAttributes } from "svelte/elements";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	export type MenuSubButtonProps = WithElementRef<HTMLAnchorAttributes> & {
 		child?: Snippet<[{ props: Record<string, unknown> }]> | undefined;
 		size?: "sm" | "md" | undefined;
@@ -7,10 +12,7 @@
 </script>
 
 <script lang="ts">
-	import type { Snippet } from "svelte";
-	import type { HTMLAnchorAttributes } from "svelte/elements";
-
-	import { cn, type WithElementRef } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), children, child, class: className, size = "md", isActive = false, ...restProps }: MenuSubButtonProps = $props();
 

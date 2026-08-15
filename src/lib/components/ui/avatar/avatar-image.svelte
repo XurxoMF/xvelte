@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { Avatar as AvatarPrimitive } from "bits-ui";
+
 	export type ImageProps = AvatarPrimitive.ImageProps;
 </script>
 
 <script lang="ts">
-	import { Avatar as AvatarPrimitive } from "bits-ui";
-
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, ...restProps }: ImageProps = $props();

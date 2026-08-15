@@ -1,11 +1,13 @@
 <script lang="ts" module>
+	import { Command as CommandPrimitive } from "bits-ui";
+
 	export type GroupProps = CommandPrimitive.GroupProps & {
 		heading?: string | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import { Command as CommandPrimitive, useId } from "bits-ui";
+	import { useId } from "bits-ui";
 
 	import { cn } from "$lib/utils";
 

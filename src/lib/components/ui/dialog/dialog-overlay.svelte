@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { Dialog as DialogPrimitive } from "bits-ui";
+
 	export type OverlayProps = DialogPrimitive.OverlayProps;
 </script>
 
 <script lang="ts">
-	import { Dialog as DialogPrimitive } from "bits-ui";
-
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, ...restProps }: OverlayProps = $props();

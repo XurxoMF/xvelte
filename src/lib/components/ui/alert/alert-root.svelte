@@ -1,4 +1,10 @@
 <script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import { type VariantProps, tv } from "tailwind-variants";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	export const rootVariants = tv({
 		base: "grid gap-0.5 rounded-lg border px-2.5 py-2 text-left text-sm has-data-[slot=alert-action]:relative has-data-[slot=alert-action]:pr-18 has-[>svg]:grid-cols-[auto_1fr] has-[>svg]:gap-x-2 *:[svg]:row-span-2 *:[svg]:translate-y-0.5 *:[svg]:text-current *:[svg:not([class*='size-'])]:size-4 group/alert relative w-full",
 		variants: {
@@ -20,10 +26,7 @@
 </script>
 
 <script lang="ts">
-	import { type VariantProps, tv } from "tailwind-variants";
-	import type { HTMLAttributes } from "svelte/elements";
-
-	import { cn, type WithElementRef } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, variant = "default", children, ...restProps }: RootProps = $props();
 </script>

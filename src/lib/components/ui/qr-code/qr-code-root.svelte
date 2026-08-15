@@ -1,5 +1,6 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
+
 	export type ErrorCorrection = "L" | "M" | "Q" | "H";
 	export type RootProps = {
 		value: string;

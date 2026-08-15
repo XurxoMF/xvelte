@@ -1,11 +1,13 @@
 <script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	export type MonthProps = WithElementRef<HTMLAttributes<HTMLElement>>;
 </script>
 
 <script lang="ts">
-	import type { HTMLAttributes } from "svelte/elements";
-
-	import { type WithElementRef, cn } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: MonthProps = $props();
 </script>

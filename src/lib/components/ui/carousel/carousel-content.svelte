@@ -1,12 +1,15 @@
 <script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	export type ContentProps = WithElementRef<HTMLAttributes<HTMLDivElement>>;
 </script>
 
 <script lang="ts">
 	import emblaCarouselSvelte from "embla-carousel-svelte";
-	import type { HTMLAttributes } from "svelte/elements";
 
-	import { cn, type WithElementRef } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	import * as Carousel from ".";
 

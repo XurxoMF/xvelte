@@ -1,4 +1,9 @@
 <script lang="ts" module>
+	import { ToggleGroup as ToggleGroupPrimitive } from "bits-ui";
+	import type { VariantProps } from "tailwind-variants";
+
+	import * as Toggle from "$lib/components/ui/toggle";
+
 	export type ToggleVariants = VariantProps<typeof Toggle.rootVariants>["variant"];
 	export type ToggleSizes = VariantProps<typeof Toggle.rootVariants>["size"];
 
@@ -9,12 +14,7 @@
 </script>
 
 <script lang="ts">
-	import { ToggleGroup as ToggleGroupPrimitive } from "bits-ui";
-	import type { VariantProps } from "tailwind-variants";
-
 	import { cn } from "$lib/utils";
-
-	import * as Toggle from "$lib/components/ui/toggle";
 
 	import * as ToggleGroup from ".";
 

@@ -1,4 +1,9 @@
 <script lang="ts" module>
+	import type { Snippet } from "svelte";
+	import type { HTMLButtonAttributes } from "svelte/elements";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	export type MenuActionProps = WithElementRef<HTMLButtonAttributes> & {
 		child?: Snippet<[{ props: Record<string, unknown> }]> | undefined;
 		showOnHover?: boolean | undefined;
@@ -6,10 +11,7 @@
 </script>
 
 <script lang="ts">
-	import type { Snippet } from "svelte";
-	import type { HTMLButtonAttributes } from "svelte/elements";
-
-	import { cn, type WithElementRef } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, showOnHover = false, children, child, ...restProps }: MenuActionProps = $props();
 

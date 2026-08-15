@@ -1,4 +1,9 @@
 <script lang="ts" module>
+	import { tv, type VariantProps } from "tailwind-variants";
+
+	import { cn } from "$lib/utils";
+	import * as Button from "$lib/components/ui/button";
+
 	export const buttonVariants = tv({
 		base: "gap-2 text-sm flex items-center shadow-none",
 		variants: {
@@ -22,12 +27,6 @@
 </script>
 
 <script lang="ts">
-	import { tv, type VariantProps } from "tailwind-variants";
-
-	import { cn } from "$lib/utils";
-
-	import * as Button from "$lib/components/ui/button";
-
 	let { ref = $bindable(null), class: className, children, type = "button", variant = "ghost", size = "xs", ...restProps }: ButtonProps = $props();
 </script>
 

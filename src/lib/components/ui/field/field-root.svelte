@@ -1,4 +1,10 @@
 <script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import { tv, type VariantProps } from "tailwind-variants";
+
+	import { cn, type WithElementRef } from "$lib/utils";
+
 	export const rootVariants = tv({
 		base: "data-[invalid=true]:text-destructive gap-2 group/field flex w-full",
 		variants: {
@@ -23,11 +29,6 @@
 </script>
 
 <script lang="ts">
-	import { tv, type VariantProps } from "tailwind-variants";
-	import type { HTMLAttributes } from "svelte/elements";
-
-	import { cn, type WithElementRef } from "$lib/utils";
-
 	let { ref = $bindable(null), class: className, orientation = "vertical", children, ...restProps }: RootProps = $props();
 </script>
 

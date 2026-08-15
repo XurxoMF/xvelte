@@ -1,14 +1,16 @@
 <script lang="ts" module>
+	import type { HTMLAnchorAttributes } from "svelte/elements";
+	import type { Snippet } from "svelte";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	export type LinkProps = WithElementRef<HTMLAnchorAttributes> & {
 		child?: Snippet<[{ props: HTMLAnchorAttributes }]> | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import type { HTMLAnchorAttributes } from "svelte/elements";
-	import type { Snippet } from "svelte";
-
-	import { cn, type WithElementRef } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, href = undefined, child, children, ...restProps }: LinkProps = $props();
 

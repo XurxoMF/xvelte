@@ -1,14 +1,17 @@
 <script lang="ts" module>
 	import type { DateValue } from "@internationalized/date";
+
 	export type ItemProps = { date: DateValue; class?: string | undefined };
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
-	import { getDateStripContext } from "./date-strip-context";
 	import { getLocalTimeZone, isToday } from "@internationalized/date";
 	import { DateFormatter } from "@internationalized/date";
+
+	import { cn } from "$lib/utils";
 	import * as Button from "$lib/components/ui/button";
+
+	import { getDateStripContext } from "./date-strip-context";
 
 	let { date, class: className }: ItemProps = $props();
 

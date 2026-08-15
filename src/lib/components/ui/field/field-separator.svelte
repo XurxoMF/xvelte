@@ -2,6 +2,7 @@
 	import type { HTMLAttributes } from "svelte/elements";
 
 	import type { WithElementRef } from "$lib/utils";
+	import * as Separator from "$lib/components/ui/separator";
 
 	export type SeparatorProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
 		orientation?: Separator.RootProps["orientation"] | undefined;
@@ -11,8 +12,6 @@
 
 <script lang="ts">
 	import { cn } from "$lib/utils";
-
-	import * as Separator from "$lib/components/ui/separator";
 
 	let { ref = $bindable(null), class: className, orientation, decorative, ...restProps }: SeparatorProps = $props();
 </script>

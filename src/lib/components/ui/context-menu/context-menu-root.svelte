@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { ContextMenu as ContextMenuPrimitive } from "bits-ui";
+
 	export type RootProps = ContextMenuPrimitive.RootProps;
 </script>
 
 <script lang="ts">
-	import { ContextMenu as ContextMenuPrimitive } from "bits-ui";
-
 	let { open = $bindable(false), ...restProps }: RootProps = $props();
 </script>
 

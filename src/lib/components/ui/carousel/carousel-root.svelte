@@ -1,14 +1,16 @@
 <script lang="ts" module>
+	import type { WithElementRef } from "$lib/utils";
+
+	import * as Carousel from ".";
+
 	export type RootProps = WithElementRef<Carousel.CarouselProps>;
 </script>
 
 <script lang="ts">
 	import { untrack } from "svelte";
 
+	import { cn } from "$lib/utils";
 	import * as m from "$lib/paraglide/messages.js";
-	import { cn, type WithElementRef } from "$lib/utils";
-
-	import * as Carousel from ".";
 
 	let {
 		ref = $bindable(null),

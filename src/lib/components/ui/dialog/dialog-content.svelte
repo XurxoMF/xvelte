@@ -1,4 +1,12 @@
 <script lang="ts" module>
+	import type { Snippet } from "svelte";
+
+	import { Dialog as DialogPrimitive } from "bits-ui";
+
+	import type { WithoutChildrenOrChild } from "$lib/utils";
+
+	import * as Dialog from ".";
+
 	export type ContentProps = WithoutChildrenOrChild<DialogPrimitive.ContentProps> & {
 		portalProps?: WithoutChildrenOrChild<Dialog.PortalProps> | undefined;
 		children: Snippet;
@@ -7,16 +15,10 @@
 </script>
 
 <script lang="ts">
-	import { Dialog as DialogPrimitive } from "bits-ui";
-	import type { Snippet } from "svelte";
-
+	import { cn } from "$lib/utils";
 	import { CloseIcon } from "$lib/icons";
 	import * as m from "$lib/paraglide/messages.js";
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
-
 	import * as Button from "$lib/components/ui/button";
-
-	import * as Dialog from ".";
 
 	let { ref = $bindable(null), class: className, portalProps, children, showCloseButton = true, ...restProps }: ContentProps = $props();
 </script>

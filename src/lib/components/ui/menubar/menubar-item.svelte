@@ -1,4 +1,6 @@
 <script lang="ts" module>
+	import { Menubar as MenubarPrimitive } from "bits-ui";
+
 	export type ItemProps = MenubarPrimitive.ItemProps & {
 		inset?: boolean | undefined;
 		variant?: "default" | "destructive" | undefined;
@@ -6,8 +8,6 @@
 </script>
 
 <script lang="ts">
-	import { Menubar as MenubarPrimitive } from "bits-ui";
-
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, inset = undefined, variant = "default", ...restProps }: ItemProps = $props();

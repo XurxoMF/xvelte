@@ -1,11 +1,13 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
+
 	export type Orientation = "horizontal" | "vertical";
 	export type RootProps = { value?: number | undefined; orientation?: Orientation | undefined; class?: string | undefined; children: Snippet };
 </script>
 
 <script lang="ts">
 	import { cn } from "$lib/utils";
+
 	import { setCompareContext } from "./compare-slider-context";
 
 	let { value = $bindable(50), orientation = "horizontal", class: className, children }: RootProps = $props();

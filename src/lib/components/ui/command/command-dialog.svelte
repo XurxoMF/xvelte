@@ -1,4 +1,10 @@
 <script lang="ts" module>
+	import type { Snippet } from "svelte";
+
+	import type { Command as CommandPrimitive, Dialog as DialogPrimitive } from "bits-ui";
+
+	import type { WithoutChildrenOrChild } from "$lib/utils";
+
 	export type DialogProps = WithoutChildrenOrChild<DialogPrimitive.RootProps> &
 		WithoutChildrenOrChild<CommandPrimitive.RootProps> & {
 			portalProps?: DialogPrimitive.PortalProps | undefined;
@@ -11,12 +17,8 @@
 </script>
 
 <script lang="ts">
-	import type { Command as CommandPrimitive, Dialog as DialogPrimitive } from "bits-ui";
-	import type { Snippet } from "svelte";
-
+	import { cn } from "$lib/utils";
 	import * as m from "$lib/paraglide/messages.js";
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
-
 	import * as Dialog from "$lib/components/ui/dialog";
 
 	import * as Command from ".";

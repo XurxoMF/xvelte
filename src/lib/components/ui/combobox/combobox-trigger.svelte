@@ -1,4 +1,8 @@
 <script lang="ts" module>
+	import type { Snippet } from "svelte";
+
+	import * as Popover from "$lib/components/ui/popover";
+
 	export type TriggerProps = Popover.TriggerProps & {
 		class?: string | undefined;
 		children: Snippet;
@@ -7,13 +11,8 @@
 </script>
 
 <script lang="ts">
-	import type { Snippet } from "svelte";
-
 	import { SelectorIcon } from "$lib/icons";
-
 	import { cn } from "$lib/utils";
-
-	import * as Popover from "$lib/components/ui/popover";
 	import * as Button from "$lib/components/ui/button";
 
 	import { getComboboxContext } from "./combobox-context.svelte";

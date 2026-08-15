@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { Dialog as DialogPrimitive } from "bits-ui";
+
 	export type RootProps = DialogPrimitive.RootProps;
 </script>
 
 <script lang="ts">
-	import { Dialog as DialogPrimitive } from "bits-ui";
-
 	let { open = $bindable(false), ...restProps }: RootProps = $props();
 </script>
 

@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { Menubar as MenubarPrimitive } from "bits-ui";
+
 	export type RadioGroupProps = MenubarPrimitive.RadioGroupProps;
 </script>
 
 <script lang="ts">
-	import { Menubar as MenubarPrimitive } from "bits-ui";
-
 	let { ref = $bindable(null), value = $bindable(""), ...restProps }: RadioGroupProps = $props();
 </script>
 

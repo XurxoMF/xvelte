@@ -1,4 +1,8 @@
 <script lang="ts" module>
+	import type { ComponentProps, Snippet } from "svelte";
+
+	import { Drawer as DrawerPrimitive } from "vaul-svelte";
+
 	type PrimitiveTriggerProps = ComponentProps<InstanceType<typeof DrawerPrimitive.Trigger>>;
 	export type TriggerProps = Omit<PrimitiveTriggerProps, "el"> & {
 		ref?: HTMLButtonElement | undefined;
@@ -7,9 +11,6 @@
 </script>
 
 <script lang="ts">
-	import type { ComponentProps, Snippet } from "svelte";
-	import { Drawer as DrawerPrimitive } from "vaul-svelte";
-
 	let { ref = $bindable(undefined), children, ...restProps }: TriggerProps = $props();
 </script>
 

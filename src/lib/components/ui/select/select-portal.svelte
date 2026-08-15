@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { Select as SelectPrimitive } from "bits-ui";
+
 	export type PortalProps = SelectPrimitive.PortalProps;
 </script>
 
 <script lang="ts">
-	import { Select as SelectPrimitive } from "bits-ui";
-
 	let { ...restProps }: PortalProps = $props();
 </script>
 

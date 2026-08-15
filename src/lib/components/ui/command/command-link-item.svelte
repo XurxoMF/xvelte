@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { Command as CommandPrimitive } from "bits-ui";
+
 	export type LinkItemProps = CommandPrimitive.LinkItemProps;
 </script>
 
 <script lang="ts">
-	import { Command as CommandPrimitive } from "bits-ui";
-
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, ...restProps }: LinkItemProps = $props();

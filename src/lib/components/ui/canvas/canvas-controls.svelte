@@ -22,7 +22,6 @@
 	import { FullscreenIcon, MinusIcon, PlusIcon, ResetIcon } from "$lib/icons";
 	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
-
 	import * as Button from "$lib/components/ui/button";
 
 	import { getCanvasContext } from "./canvas-context.svelte.js";

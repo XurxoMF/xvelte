@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { Pagination as PaginationPrimitive } from "bits-ui";
+
 	export type RootProps = PaginationPrimitive.RootProps;
 </script>
 
 <script lang="ts">
-	import { Pagination as PaginationPrimitive } from "bits-ui";
-
 	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 

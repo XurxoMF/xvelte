@@ -19,6 +19,8 @@
 
 ## Imports
 
+- Place imports according to their Svelte scope: imports used only by exported module-level types, variants, or helpers belong in `<script module>`; imports used only by instance logic or markup belong in the regular `<script>`; imports shared by both belong in `<script module>`, whose bindings are available to the instance.
+- Split mixed import declarations when their imported symbols belong to different scopes instead of moving implementation-only symbols into `<script module>`.
 - Always import shared utilities through `$lib/utils`; never use a relative path to `utils` or add `.js` to that alias.
 - Import icons only from `$lib/icons`, using library-neutral names such as `SidebarIcon`, not vendor names such as `LayoutSidebar`.
 - Import UI components through their directory barrel: `import * as Dialog from "$lib/components/ui/dialog"`.

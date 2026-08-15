@@ -1,15 +1,17 @@
 <script lang="ts" module>
+	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
+
+	import type { WithoutChildrenOrChild } from "$lib/utils";
+
+	import * as Dropdown from ".";
+
 	export type ContentProps = DropdownMenuPrimitive.ContentProps & {
 		portalProps?: WithoutChildrenOrChild<Dropdown.PortalProps> | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
-
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
-
-	import * as Dropdown from ".";
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), sideOffset = 4, align = "start", portalProps, class: className, ...restProps }: ContentProps = $props();
 </script>

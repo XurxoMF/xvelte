@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { Dialog as SheetPrimitive } from "bits-ui";
+
 	export type TriggerProps = SheetPrimitive.TriggerProps;
 </script>
 
 <script lang="ts">
-	import { Dialog as SheetPrimitive } from "bits-ui";
-
 	let { ref = $bindable(null), ...restProps }: TriggerProps = $props();
 </script>
 

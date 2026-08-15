@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { Calendar as CalendarPrimitive } from "bits-ui";
+
 	export type DayProps = CalendarPrimitive.DayProps;
 </script>
 
 <script lang="ts">
-	import { Calendar as CalendarPrimitive } from "bits-ui";
-
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, ...restProps }: DayProps = $props();

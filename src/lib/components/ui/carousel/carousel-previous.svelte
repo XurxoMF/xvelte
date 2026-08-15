@@ -1,15 +1,15 @@
 <script lang="ts" module>
+	import type { WithoutChildren } from "bits-ui";
+
+	import * as Button from "$lib/components/ui/button";
+
 	export type PreviousProps = WithoutChildren<Button.RootProps>;
 </script>
 
 <script lang="ts">
-	import type { WithoutChildren } from "bits-ui";
-
 	import { ChevronLeftIcon } from "$lib/icons";
 	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
-
-	import * as Button from "$lib/components/ui/button";
 
 	import * as Carousel from ".";
 

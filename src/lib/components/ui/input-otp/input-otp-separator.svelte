@@ -1,13 +1,14 @@
 <script lang="ts" module>
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import type { WithElementRef } from "$lib/utils";
+
 	export type SeparatorProps = WithElementRef<HTMLAttributes<HTMLDivElement>>;
 </script>
 
 <script lang="ts">
-	import type { HTMLAttributes } from "svelte/elements";
-
+	import { cn } from "$lib/utils";
 	import { MinusIcon } from "$lib/icons";
-
-	import { cn, type WithElementRef } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: SeparatorProps = $props();
 </script>

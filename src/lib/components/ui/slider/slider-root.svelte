@@ -1,4 +1,8 @@
 <script lang="ts" module>
+	import { Slider as SliderPrimitive } from "bits-ui";
+
+	import type { WithoutChildrenOrChild } from "$lib/utils";
+
 	export type RootProps = WithoutChildrenOrChild<SliderPrimitive.RootProps> & {
 		/** Buffered value in the same scale as `min` and `max`. */
 		bufferValue?: number | undefined;
@@ -6,9 +10,7 @@
 </script>
 
 <script lang="ts">
-	import { Slider as SliderPrimitive } from "bits-ui";
-
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	let {
 		ref = $bindable(null),

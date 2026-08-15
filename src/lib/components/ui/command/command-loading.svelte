@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { Command as CommandPrimitive } from "bits-ui";
+
 	export type LoadingProps = CommandPrimitive.LoadingProps;
 </script>
 
 <script lang="ts">
-	import { Command as CommandPrimitive } from "bits-ui";
-
 	let { ref = $bindable(null), ...restProps }: LoadingProps = $props();
 </script>
 

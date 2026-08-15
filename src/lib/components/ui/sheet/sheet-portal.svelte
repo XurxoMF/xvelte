@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { Dialog as SheetPrimitive } from "bits-ui";
+
 	export type PortalProps = SheetPrimitive.PortalProps;
 </script>
 
 <script lang="ts">
-	import { Dialog as SheetPrimitive } from "bits-ui";
-
 	let { ...restProps }: PortalProps = $props();
 </script>
 

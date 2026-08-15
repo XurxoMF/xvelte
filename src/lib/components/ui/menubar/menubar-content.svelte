@@ -1,15 +1,17 @@
 <script lang="ts" module>
+	import { Menubar as MenubarPrimitive } from "bits-ui";
+
+	import type { WithoutChildrenOrChild } from "$lib/utils";
+
+	import * as Menubar from ".";
+
 	export type ContentProps = MenubarPrimitive.ContentProps & {
 		portalProps?: WithoutChildrenOrChild<Menubar.PortalProps> | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import { Menubar as MenubarPrimitive } from "bits-ui";
-
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
-
-	import * as Menubar from ".";
+	import { cn } from "$lib/utils";
 
 	let {
 		ref = $bindable(null),

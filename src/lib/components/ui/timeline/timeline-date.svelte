@@ -2,6 +2,7 @@
 	import type { HTMLAttributes } from "svelte/elements";
 
 	import type { WithElementRef } from "$lib/utils";
+
 	export type DateProps = WithElementRef<HTMLAttributes<HTMLParagraphElement>>;
 </script>
 

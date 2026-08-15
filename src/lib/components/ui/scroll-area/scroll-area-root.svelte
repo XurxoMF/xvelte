@@ -1,4 +1,8 @@
 <script lang="ts" module>
+	import { ScrollArea as ScrollAreaPrimitive } from "bits-ui";
+
+	import type { WithoutChild } from "$lib/utils";
+
 	export type RootProps = WithoutChild<ScrollAreaPrimitive.RootProps> & {
 		orientation?: "vertical" | "horizontal" | "both" | undefined;
 		scrollbarXClasses?: string | undefined;
@@ -8,9 +12,7 @@
 </script>
 
 <script lang="ts">
-	import { ScrollArea as ScrollAreaPrimitive } from "bits-ui";
-
-	import { cn, type WithoutChild } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
 	import * as ScrollArea from ".";
 

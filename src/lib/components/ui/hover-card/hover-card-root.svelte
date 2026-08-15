@@ -1,10 +1,10 @@
 <script lang="ts" module>
+	import { LinkPreview as HoverCardPrimitive } from "bits-ui";
+
 	export type RootProps = HoverCardPrimitive.RootProps;
 </script>
 
 <script lang="ts">
-	import { LinkPreview as HoverCardPrimitive } from "bits-ui";
-
 	let { open = $bindable(false), ...restProps }: RootProps = $props();
 </script>
 

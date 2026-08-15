@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	export type ContentProps = WithoutChildrenOrChild<MenubarPrimitive.ContentProps> & {
+	export type ContentProps = MenubarPrimitive.ContentProps & {
 		portalProps?: WithoutChildrenOrChild<Menubar.PortalProps> | undefined;
 	};
 </script>

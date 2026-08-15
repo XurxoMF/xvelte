@@ -55,7 +55,6 @@ All component paths are relative to `src/lib/components/ui`.
 - `menubar`
 - `navigation-menu`
 - `pagination`
-- `ping-indicator`
 - `point-picker`
 - `popover`
 - `progress`

@@ -53,7 +53,6 @@ All component paths are relative to `src/lib/components/ui`.
 - `list` — semantic ordered and unordered lists with configurable spacing
 - `menubar`
 - `navigation-menu`
-- `number-field`
 - `pagination`
 - `phone-input`
 - `ping-indicator`

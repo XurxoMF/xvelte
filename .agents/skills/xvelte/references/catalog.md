@@ -46,6 +46,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `input-ipv4`
 - `input-ipv6`
 - `input-otp`
+- `input-phone` — composable international phone state, searchable country flags, formatting, and validation
 - `item`
 - `kbd`
 - `knob`
@@ -54,7 +55,6 @@ All component paths are relative to `src/lib/components/ui`.
 - `menubar`
 - `navigation-menu`
 - `pagination`
-- `phone-input`
 - `ping-indicator`
 - `point-picker`
 - `popover`

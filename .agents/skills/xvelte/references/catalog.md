@@ -50,9 +50,8 @@ All component paths are relative to `src/lib/components/ui`.
 - `kbd`
 - `knob`
 - `label`
-- `list`
+- `list` — semantic ordered and unordered lists with configurable spacing
 - `menubar`
-- `native-select`
 - `navigation-menu`
 - `number-field`
 - `pagination`

@@ -14,7 +14,7 @@
 <script lang="ts">
 	import { cn } from "$lib/utils";
 
-	import { isHexDigit } from "./ipv6-input-utils";
+	import { isHexDigit } from "./input-ipv6-utils";
 
 	let { value = $bindable(null), goPrevious, goNext, ref = $bindable(), class: className, onkeydown, oninput, ...restProps }: SegmentProps = $props();
 

@@ -13,7 +13,7 @@
 <script lang="ts">
 	import { cn } from "$lib/utils";
 
-	import { isNumber } from "./ipv4-input-utils";
+	import { isNumber } from "./input-ipv4-utils";
 
 	let { value = $bindable(null), goPrevious, goNext, ref = $bindable(), class: className, ...restProps }: SegmentProps = $props();
 

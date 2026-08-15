@@ -16,8 +16,8 @@
 <script lang="ts">
 	import { cn } from "$lib/utils";
 
-	import Segment from "./ipv6-input-segment.svelte";
-	import { isValidIPv6, safeParseIPv6, type IPv6Segments } from "./ipv6-input-utils";
+	import Segment from "./input-ipv6-segment.svelte";
+	import { isValidIPv6, safeParseIPv6, type IPv6Segments } from "./input-ipv6-utils";
 
 	let {
 		separator = ":",

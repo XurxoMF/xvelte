@@ -1,3 +1,4 @@
+/** Four normalized segments composing an IPv4 address. */
 export type IPv4Segments = [string | null, string | null, string | null, string | null];
 
 /**

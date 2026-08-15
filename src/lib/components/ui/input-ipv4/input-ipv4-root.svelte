@@ -15,8 +15,8 @@
 <script lang="ts">
 	import { cn } from "$lib/utils";
 
-	import { isNumber, isValidIPv4, safeParseIPv4 } from "./ipv4-input-utils";
-	import Input from "./ipv4-input-segment.svelte";
+	import { isNumber, isValidIPv4, safeParseIPv4 } from "./input-ipv4-utils";
+	import Input from "./input-ipv4-segment.svelte";
 
 	type PartialOctet = number | string | null;
 	type PartialOctets = [PartialOctet, PartialOctet, PartialOctet, PartialOctet];

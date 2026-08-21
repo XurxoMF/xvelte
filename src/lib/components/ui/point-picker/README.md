@@ -354,7 +354,6 @@ Point Picker does not wrap an external interaction primitive and requires no add
 Copy the complete `src/lib/components/ui/point-picker` component folder:
 
 - `point-picker-root.svelte`
-- `point-picker-indicators.svelte`
 - `point-picker-utils.ts`
 - `index.ts`
 - `README.md`
@@ -440,12 +439,11 @@ Point Picker is adapted from the [Svelte Audio UI XY Pad](https://svelte-audio-u
 
 ## File organization
 
-| File                             | Responsibility                                                                                  |
-| -------------------------------- | ----------------------------------------------------------------------------------------------- |
-| `point-picker-root.svelte`       | Public bindings, pointer and keyboard interaction, coordinate mapping, callbacks, and Root DOM. |
-| `point-picker-indicators.svelte` | Internal grid, crosshair, cursor, custom cursor, and formatted value overlays.                  |
-| `point-picker-utils.ts`          | Public `Point` type plus internal clamping, quantization, event, and keyboard helpers.          |
-| `index.ts`                       | Public Root component and exported `RootProps` and `Point` types.                               |
-| `README.md`                      | Usage, API, DOM contract, accessibility, localization, dependencies, and credits.               |
+| File                       | Responsibility                                                                                              |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `point-picker-root.svelte` | Public bindings, interaction, coordinate mapping, callbacks, Root DOM, and every built-in visual indicator. |
+| `point-picker-utils.ts`    | Public `Point` type plus internal clamping, quantization, event, and keyboard helpers.                      |
+| `index.ts`                 | Public Root component and exported `RootProps` and `Point` types.                                           |
+| `README.md`                | Usage, API, DOM contract, accessibility, localization, dependencies, and credits.                           |
 
 The component's `index.ts` and exported types are the source of truth for the public API.

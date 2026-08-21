@@ -27,7 +27,6 @@ type FileDropZoneOptions = {
 /** Validates files and coordinates uploads shared by all drop-zone parts. */
 export class FileDropZoneContext {
 	uploading = $state(false);
-	#handledPasteEvents = new WeakSet<ClipboardEvent>();
 
 	/** @param options - Reactive constraints, callbacks, and native input options. */
 	constructor(readonly options: FileDropZoneOptions) {
@@ -44,12 +43,9 @@ export class FileDropZoneContext {
 		await this.upload(getFiles(event.dataTransfer));
 	};
 
-	/** @param event - Paste event whose clipboard files should be uploaded once. */
+	/** @param event - Document paste event whose clipboard files should be uploaded. */
 	onpaste = async (event: ClipboardEvent) => {
-		if (this.options.disabled || !this.canUploadFiles || this.#handledPasteEvents.has(event)) return;
-
-		// The same event may be handled by Textarea and then bubble to the document.
-		this.#handledPasteEvents.add(event);
+		if (this.options.disabled || !this.canUploadFiles) return;
 
 		const files = getFiles(event.clipboardData);
 		if (files.length > 0) await this.upload(files);

@@ -16,6 +16,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `breadcrumb`
 - `button`
 - `button-group`
+- `button-hold`
 - `calendar`
 - `canvas`
 - `card`
@@ -33,12 +34,10 @@ All component paths are relative to `src/lib/components/ui`.
 - `dialog`
 - `drawer`
 - `dropdown-menu`
-- `emoji-picker` — self-contained picker with bundled data, search, categories, skin tones, recents, and optional local persistence
 - `empty`
 - `field`
 - `file-drop-zone`
 - `floating-menu`
-- `hold-button`
 - `horizontal-scroll`
 - `hover-card`
 - `input`
@@ -70,7 +69,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `skeleton`
 - `slider`
 - `sonner`
-- `sortable`
+- `sortable` — drag-and-drop reordering with required explicit drag handles
 - `spinner`
 - `star-rating`
 - `status-dot`
@@ -79,7 +78,6 @@ All component paths are relative to `src/lib/components/ui`.
 - `table`
 - `table-of-contents`
 - `tabs`
-- `tags-input`
 - `textarea`
 - `timeline`
 - `toggle`

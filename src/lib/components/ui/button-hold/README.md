@@ -26,7 +26,7 @@ Import the component from its public `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as HoldButton from "$lib/components/ui/hold-button";
+	import * as ButtonHold from "$lib/components/ui/button-hold";
 </script>
 ```
 
@@ -39,7 +39,7 @@ Import the component from its public `index.ts`:
 Hold Button has one public part and always renders the local Button component:
 
 ```svelte
-<HoldButton.Root onComplete={confirmAction}>Hold to confirm</HoldButton.Root>
+<ButtonHold.Root onComplete={confirmAction}>Hold to confirm</ButtonHold.Root>
 ```
 
 The rendered button contains two internal layers:
@@ -57,14 +57,14 @@ The app supplies the label and performs the guarded action in `onComplete`. Do n
 
 ```svelte
 <script lang="ts">
-	import * as HoldButton from "$lib/components/ui/hold-button";
+	import * as ButtonHold from "$lib/components/ui/button-hold";
 
 	let confirmed = $state(false);
 </script>
 
-<HoldButton.Root duration={1500} variant="destructive" fillColor="bg-black/20" onComplete={() => (confirmed = true)}>
+<ButtonHold.Root duration={1500} variant="destructive" fillColor="bg-black/20" onComplete={() => (confirmed = true)}>
 	Hold for 1.5 seconds to delete
-</HoldButton.Root>
+</ButtonHold.Root>
 
 {#if confirmed}
 	<p role="status">The item was deleted.</p>
@@ -83,10 +83,10 @@ Press and hold with the mouse or touch. Releasing early cancels the timer and re
 
 ```svelte
 <div class="grid grid-cols-2 gap-3">
-	<HoldButton.Root from="top" onComplete={confirmAction}>Fill from top</HoldButton.Root>
-	<HoldButton.Root from="bottom" onComplete={confirmAction}>Fill from bottom</HoldButton.Root>
-	<HoldButton.Root from="left" onComplete={confirmAction}>Fill from left</HoldButton.Root>
-	<HoldButton.Root from="right" onComplete={confirmAction}>Fill from right</HoldButton.Root>
+	<ButtonHold.Root from="top" onComplete={confirmAction}>Fill from top</ButtonHold.Root>
+	<ButtonHold.Root from="bottom" onComplete={confirmAction}>Fill from bottom</ButtonHold.Root>
+	<ButtonHold.Root from="left" onComplete={confirmAction}>Fill from left</ButtonHold.Root>
+	<ButtonHold.Root from="right" onComplete={confirmAction}>Fill from right</ButtonHold.Root>
 </div>
 ```
 
@@ -98,13 +98,13 @@ Hold Button forwards the local Button's `variant` and `size` props. `fillColor` 
 
 ```svelte
 <div class="flex flex-wrap gap-3">
-	<HoldButton.Root variant="outline" size="sm" from="left" fillColor="bg-emerald-500/20" duration={1000} onComplete={confirmAction}>
+	<ButtonHold.Root variant="outline" size="sm" from="left" fillColor="bg-emerald-500/20" duration={1000} onComplete={confirmAction}>
 		Hold to approve
-	</HoldButton.Root>
+	</ButtonHold.Root>
 
-	<HoldButton.Root variant="destructive" from="bottom" fillColor="bg-black/20" duration={2500} onComplete={deleteAccount}>
+	<ButtonHold.Root variant="destructive" from="bottom" fillColor="bg-black/20" duration={2500} onComplete={deleteAccount}>
 		Hold to delete account
-	</HoldButton.Root>
+	</ButtonHold.Root>
 </div>
 ```
 
@@ -116,7 +116,7 @@ Choose a fill with enough contrast against both the selected Button variant and 
 
 ```svelte
 <script lang="ts">
-	import * as HoldButton from "$lib/components/ui/hold-button";
+	import * as ButtonHold from "$lib/components/ui/button-hold";
 
 	let deleting = $state(false);
 	let error = $state("");
@@ -135,7 +135,7 @@ Choose a fill with enough contrast against both the selected Button variant and 
 	}
 </script>
 
-<HoldButton.Root
+<ButtonHold.Root
 	disabled={deleting}
 	variant="destructive"
 	duration={2000}
@@ -144,7 +144,7 @@ Choose a fill with enough contrast against both the selected Button variant and 
 	}}
 >
 	{deleting ? "Deleting…" : "Hold to delete project"}
-</HoldButton.Root>
+</ButtonHold.Root>
 
 {#if error}
 	<p role="alert">{error}</p>
@@ -159,7 +159,7 @@ The inherited Button default is `type="button"`. Keep it when submission must ha
 
 ```svelte
 <script lang="ts">
-	import * as HoldButton from "$lib/components/ui/hold-button";
+	import * as ButtonHold from "$lib/components/ui/button-hold";
 
 	let formRef = $state<HTMLFormElement | null>(null);
 
@@ -172,7 +172,7 @@ The inherited Button default is `type="button"`. Keep it when submission must ha
 <form bind:this={formRef} onsubmit={save}>
 	<!-- Fields -->
 
-	<HoldButton.Root type="button" duration={1200} onComplete={() => formRef?.requestSubmit()}>Hold to submit</HoldButton.Root>
+	<ButtonHold.Root type="button" duration={1200} onComplete={() => formRef?.requestSubmit()}>Hold to submit</ButtonHold.Root>
 </form>
 ```
 
@@ -183,7 +183,7 @@ Do not set `type="submit"` or `type="reset"` for the guarded action. Native clic
 Mouse and touch handlers can observe the gesture without replacing its main internal handlers:
 
 ```svelte
-<HoldButton.Root
+<ButtonHold.Root
 	onComplete={confirmAction}
 	onmousedown={() => console.info("Hold started with mouse")}
 	onmouseup={() => console.info("Mouse released")}
@@ -191,7 +191,7 @@ Mouse and touch handlers can observe the gesture without replacing its main inte
 	ontouchend={() => console.info("Touch ended")}
 >
 	Hold to confirm
-</HoldButton.Root>
+</ButtonHold.Root>
 ```
 
 The four handlers above run after Hold Button's corresponding internal logic. Do not pass `onmouseleave`: because of the current native-prop forwarding order, it replaces the internal mouse-leave cancellation handler instead of composing with it.
@@ -202,7 +202,7 @@ The four handlers above run after Hold Button's corresponding internal logic. Do
 
 Hold Button wraps the local Button component. The table documents every Hold Button-owned prop and the inherited Button options most relevant to normal use. Follow the Button component's README for its complete variants, sizes, native attributes, form behavior, styling, and dependencies. Hold Button's `index.ts`, exported types, and local source are the source of truth.
 
-### `HoldButton.Root`
+### `ButtonHold.Root`
 
 Type: `RootProps`, based on Button's `RootProps` after replacing its optional children with a required snippet.
 
@@ -262,9 +262,9 @@ Stable xvelte hook:
 
 | Part | Stable hook               | Element         |
 | ---- | ------------------------- | --------------- |
-| Root | `data-slot="hold-button"` | Native `button` |
+| Root | `data-slot="button-hold"` | Native `button` |
 
-Passing `data-slot="hold-button"` through Button replaces Button's usual `data-slot="button"` on the rendered element. Do not rely on `data-slot="button"` selectors for Hold Button.
+Passing `data-slot="button-hold"` through Button replaces Button's usual `data-slot="button"` on the rendered element. Do not rely on `data-slot="button"` selectors for Hold Button.
 
 The fill layer is an absolute `div` covering the button with `pointer-events-none` and `z-0`. It receives the selected `origin-*` class, `fillColor`, an inline `transform`, and an inline linear `transition`:
 
@@ -434,7 +434,7 @@ Adapted from [more-shadcn-svelte's Hold Button](https://more-shadcn.noair.fun/do
 
 | File                      | Responsibility                                                                                                               |
 | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `hold-button-root.svelte` | Hold timers, mouse/touch composition, cancellation, completion reset, directional transform, fill layer, and Button wrapper. |
+| `button-hold-root.svelte` | Hold timers, mouse/touch composition, cancellation, completion reset, directional transform, fill layer, and Button wrapper. |
 | `index.ts`                | Public Root component, props type, and direction type exports.                                                               |
 | `README.md`               | Composition, examples, API, gesture lifecycle, styling, accessibility, localization, dependencies, limitations, and credits. |
 

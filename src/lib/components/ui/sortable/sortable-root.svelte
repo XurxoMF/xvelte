@@ -6,22 +6,35 @@
 
 	import type { WithElementRef } from "$lib/utils";
 
+	/** Minimum item shape accepted by Sortable Root. */
 	export type SortableItem = {
+		/** Stable identifier used for keyed rendering and drag-state cleanup. */
 		id: string | number;
 	};
 
+	/** State passed to the item-rendering snippet. */
 	export type SortableRenderState = {
+		/** Current zero-based position in the provisional order. */
 		index: number;
+		/** Whether the entry is the active dragged item or its temporary shadow. */
 		dragging: boolean;
 	};
 
+	/** Props for the sortable drag-handle zone. */
 	export type RootProps<Item extends SortableItem = SortableItem> = WithoutChildren<WithElementRef<HTMLAttributes<HTMLDivElement>>> & {
+		/** App-owned items in their authoritative order. */
 		items: Item[];
+		/** Renders each item in the current provisional order. */
 		item: Snippet<[Item, SortableRenderState]>;
+		/** Prevents pointer and keyboard reordering. */
 		disabled?: boolean | undefined;
+		/** Runs when a drag starts with the source item and index. */
 		onDragStart?: ((item: Item, index: number) => void) | undefined;
+		/** Reports cleaned provisional ordering during a drag. */
 		onConsider?: ((items: Item[]) => void) | undefined;
+		/** Reports the cleaned committed ordering after a drag stops. */
 		onDrop?: ((items: Item[]) => void) | undefined;
+		/** Position-transition coordination duration in milliseconds. */
 		flipDuration?: number | undefined;
 	};
 </script>

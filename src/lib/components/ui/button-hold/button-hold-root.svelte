@@ -5,12 +5,20 @@
 
 	import type { RootProps as ButtonProps } from "$lib/components/ui/button";
 
+	/** Edge from which the progress fill expands. */
 	export type HoldDirection = "top" | "bottom" | "left" | "right";
+
+	/** Props for the hold-to-complete Button wrapper. */
 	export type RootProps = WithoutChildren<ButtonProps> & {
+		/** Continuous hold duration in milliseconds. */
 		duration?: number | undefined;
+		/** Runs after the supported pointer hold reaches its duration. */
 		onComplete?: (() => void) | undefined;
+		/** Visible Button content. */
 		children: Snippet;
+		/** Tailwind classes applied to the internal progress fill. */
 		fillColor?: string | undefined;
+		/** Edge from which the progress fill expands. */
 		from?: HoldDirection | undefined;
 	};
 </script>
@@ -92,7 +100,7 @@
 </script>
 
 <Button.Root
-	data-slot="hold-button"
+	data-slot="button-hold"
 	class={cn("relative overflow-hidden select-none", className)}
 	onmousedown={(e) => {
 		startHold();

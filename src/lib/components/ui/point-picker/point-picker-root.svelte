@@ -33,7 +33,6 @@
 	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 
-	import Indicators from "./point-picker-indicators.svelte";
 	import { clamp, getKeyboardValue, quantize, type RootEvent } from "./point-picker-utils";
 
 	let {
@@ -72,6 +71,7 @@
 	const xPercent = $derived(maxX === minX ? 0 : (100 * (currentValue.x - minX)) / (maxX - minX));
 	const yPercent = $derived(maxY === minY ? 0 : 100 - (100 * (currentValue.y - minY)) / (maxY - minY));
 	const formattedValue = $derived(formatValue?.(currentValue) ?? `${currentValue.x.toFixed(0)}, ${currentValue.y.toFixed(0)}`);
+	const gridPositions = [20, 40, 60, 80];
 
 	/** @param next - Candidate point to quantize, clamp, and publish. */
 	function updateValue(next: Point) {
@@ -160,5 +160,57 @@
 		{@render children?.()}
 	</div>
 
-	<Indicators value={currentValue} {xPercent} {yPercent} {formattedValue} {showGrid} {showCrosshair} {showCursor} {showValue} {cursor} />
+	{#if showGrid}
+		<div data-slot="point-picker-grid" aria-hidden="true" class="pointer-events-none absolute inset-0 z-10">
+			{#each gridPositions as position (position)}
+				<span data-slot="point-picker-grid-line" class="absolute inset-y-0 w-px bg-border/30" style:left={`${position}%`}></span>
+				<span data-slot="point-picker-grid-line" class="absolute inset-x-0 h-px bg-border/30" style:top={`${position}%`}></span>
+			{/each}
+		</div>
+	{/if}
+
+	{#if showCrosshair}
+		<div
+			data-slot="point-picker-crosshair"
+			aria-hidden="true"
+			class="pointer-events-none absolute inset-y-0 z-10 w-px bg-primary/50"
+			style:left={`${xPercent}%`}
+		></div>
+		<div
+			data-slot="point-picker-crosshair"
+			aria-hidden="true"
+			class="pointer-events-none absolute inset-x-0 z-10 h-px bg-primary/50"
+			style:top={`${yPercent}%`}
+		></div>
+	{/if}
+
+	{#if showCursor}
+		<div
+			data-slot="point-picker-cursor"
+			aria-hidden="true"
+			class="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-1/2"
+			style:left={`${xPercent}%`}
+			style:top={`${yPercent}%`}
+		>
+			{#if cursor}
+				{@render cursor(currentValue)}
+			{:else}
+				<div class="relative size-5">
+					<span data-slot="point-picker-cursor-glow" class="absolute inset-0 rounded-full bg-primary/30 blur-lg"></span>
+					<span data-slot="point-picker-cursor-dot" class="absolute inset-1 rounded-full bg-primary shadow-lg shadow-primary/50"></span>
+					<span data-slot="point-picker-cursor-highlight" class="absolute inset-2 rounded-full bg-primary-foreground/30"></span>
+				</div>
+			{/if}
+		</div>
+	{/if}
+
+	{#if showValue}
+		<div
+			data-slot="point-picker-value"
+			aria-live="polite"
+			class="pointer-events-none absolute top-1.5 right-1.5 z-20 rounded-sm border border-border bg-background/80 px-2 py-1 font-mono text-xs text-muted-foreground backdrop-blur-sm"
+		>
+			{formattedValue}
+		</div>
+	{/if}
 </div>

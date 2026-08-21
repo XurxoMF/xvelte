@@ -2,9 +2,13 @@
 	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
 
+	/** Props for the element that initiates pointer and keyboard dragging. */
 	export type DragHandleProps = Omit<HTMLAttributes<HTMLElement>, "children"> & {
+		/** Bindable rendered handle element. */
 		ref?: HTMLElement | null | undefined;
+		/** Delegates rendering while applying every supplied prop to the replacement element. */
 		child?: Snippet<[{ props: Record<string, unknown> }]> | undefined;
+		/** Visible handle content. */
 		children?: Snippet | undefined;
 	};
 </script>

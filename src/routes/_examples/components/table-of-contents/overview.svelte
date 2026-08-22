@@ -1,5 +1,6 @@
 <script lang="ts">
 	import * as TableOfContents from "$lib/components/ui/table-of-contents";
+	import * as Typography from "$lib/components/ui/typography";
 	import { UseToc } from "$lib/hooks/use-toc.svelte";
 
 	const headings = new UseToc();
@@ -17,11 +18,11 @@
 	</nav>
 
 	<article bind:this={article} class="space-y-6">
-		<h1 id="overview">Overview</h1>
-		<p>Introduction.</p>
-		<h2 id="installation">Installation</h2>
-		<p>Installation instructions.</p>
-		<h2 id="usage">Usage</h2>
-		<p>Usage instructions.</p>
+		<Typography.H1 id="overview">Overview</Typography.H1>
+		<Typography.P>Introduction.</Typography.P>
+		<Typography.H2 id="installation">Installation</Typography.H2>
+		<Typography.P>Installation instructions.</Typography.P>
+		<Typography.H2 id="usage">Usage</Typography.H2>
+		<Typography.P>Usage instructions.</Typography.P>
 	</article>
 </div>

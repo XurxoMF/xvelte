@@ -7,15 +7,17 @@
 	];
 </script>
 
-<Timeline.Root role="list" aria-label="Order history">
-	{#each events as event (event.title)}
-		<Timeline.Item role="listitem">
-			<Timeline.Separator aria-hidden="true" />
-			<Timeline.Content>
-				<Timeline.Date>{event.date}</Timeline.Date>
-				<Timeline.Title>{event.title}</Timeline.Title>
-				<Timeline.Description>{event.description}</Timeline.Description>
-			</Timeline.Content>
-		</Timeline.Item>
-	{/each}
-</Timeline.Root>
+<div class="flex items-center justify-center">
+	<Timeline.Root role="list" aria-label="Order history">
+		{#each events as event (event.title)}
+			<Timeline.Item role="listitem">
+				<Timeline.Separator aria-hidden="true" />
+				<Timeline.Content>
+					<Timeline.Date>{event.date}</Timeline.Date>
+					<Timeline.Title>{event.title}</Timeline.Title>
+					<Timeline.Description>{event.description}</Timeline.Description>
+				</Timeline.Content>
+			</Timeline.Item>
+		{/each}
+	</Timeline.Root>
+</div>

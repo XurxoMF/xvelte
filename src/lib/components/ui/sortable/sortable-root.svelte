@@ -2,153 +2,123 @@
 	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
 
-	import type { WithoutChildren } from "bits-ui";
+	import type { WithElementRef, WithoutChildren } from "$lib/utils";
 
-	import type { WithElementRef } from "$lib/utils";
+	import type { SortableItemState, SortableOrder } from "./sortable-types";
 
-	/** Minimum item shape accepted by Sortable Root. */
-	export type SortableItem = {
-		/** Stable identifier used for keyed rendering and drag-state cleanup. */
-		id: string | number;
-	};
-
-	/** State passed to the item-rendering snippet. */
-	export type SortableRenderState = {
-		/** Current zero-based position in the provisional order. */
-		index: number;
-		/** Whether the entry is the active dragged item or its temporary shadow. */
-		dragging: boolean;
-	};
-
-	/** Props for the sortable drag-handle zone. */
-	export type RootProps<Item extends SortableItem = SortableItem> = WithoutChildren<WithElementRef<HTMLAttributes<HTMLDivElement>>> & {
-		/** App-owned items in their authoritative order. */
-		items: Item[];
-		/** Renders each item in the current provisional order. */
-		item: Snippet<[Item, SortableRenderState]>;
+	/** Props for the declarative sortable drag-handle zone. */
+	export type RootProps = WithoutChildren<WithElementRef<HTMLAttributes<HTMLDivElement>>> & {
+		/** Bindable authoritative identifier order; initialize it with persisted IDs before rendering. */
+		order?: SortableOrder | undefined;
 		/** Prevents pointer and keyboard reordering. */
 		disabled?: boolean | undefined;
-		/** Runs when a drag starts with the source item and index. */
-		onDragStart?: ((item: Item, index: number) => void) | undefined;
-		/** Reports cleaned provisional ordering during a drag. */
-		onConsider?: ((items: Item[]) => void) | undefined;
-		/** Reports the cleaned committed ordering after a drag stops. */
-		onDrop?: ((items: Item[]) => void) | undefined;
+		/** Runs when a pointer or keyboard drag starts. */
+		onDragStart?: ((state: SortableItemState, states: SortableItemState[]) => void) | undefined;
+		/** Reports provisional ordering throughout a pointer or keyboard drag. */
+		onDragging?: ((state: SortableItemState, states: SortableItemState[]) => void) | undefined;
+		/** Reports committed ordering when the drag ends. */
+		onDragEnd?: ((state: SortableItemState, states: SortableItemState[]) => void) | undefined;
 		/** Position-transition coordination duration in milliseconds. */
 		flipDuration?: number | undefined;
+		/** Declarative Sortable Items. */
+		children?: Snippet | undefined;
 	};
 </script>
 
-<script lang="ts" generics="Item extends SortableItem">
-	import { tick } from "svelte";
-	import { SvelteSet } from "svelte/reactivity";
+<script lang="ts">
+	import { createAttachmentKey } from "svelte/attachments";
 
-	import { SHADOW_ITEM_MARKER_PROPERTY_NAME, SOURCES, TRIGGERS, dragHandleZone, type DndEvent } from "svelte-dnd-action";
+	import { SOURCES, TRIGGERS, dragHandleZone, type DndEvent } from "svelte-dnd-action";
+
+	import { setSortableContext } from "./sortable-context.svelte";
 
 	let {
 		ref = $bindable(null),
 		class: className,
-		items,
-		item,
+		order = $bindable([]),
 		disabled = false,
 		onDragStart,
-		onConsider,
-		onDrop,
+		onDragging,
+		onDragEnd,
 		flipDuration = 150,
+		children,
 		...restProps
-	}: RootProps<Item> = $props();
+	}: RootProps = $props();
 
-	let isDragging = $state(false);
-	let dndItems = $state<Item[]>([]);
-	let draggedItem = $state<Item>();
-
-	$effect(() => {
-		if (isDragging) return;
-		const needsSync = dndItems.length !== items.length || dndItems.some((item, i) => item.id !== items[i]?.id);
-		if (needsSync) {
-			dndItems = [...items];
+	const attachmentKey = createAttachmentKey();
+	const sortable = setSortableContext({
+		get order() {
+			return order;
+		},
+		set order(value) {
+			order = value;
+		},
+		get disabled() {
+			return disabled;
+		},
+		get onDragStart() {
+			return onDragStart;
+		},
+		get onDragging() {
+			return onDragging;
+		},
+		get onDragEnd() {
+			return onDragEnd;
 		}
 	});
 
-	/** @param value - DnD item to test for the library's temporary shadow marker. */
-	function isShadowItem(value: Item) {
-		return SHADOW_ITEM_MARKER_PROPERTY_NAME in value && value[SHADOW_ITEM_MARKER_PROPERTY_NAME] === true;
+	$effect(() => sortable.syncOrder(order));
+
+	/** @param event - Provisional DnD ordering event, including drag start and keyboard stop. */
+	function handleConsider(event: CustomEvent<DndEvent<{ id: string | number }>>) {
+		if (event.detail.info.trigger === TRIGGERS.DRAG_STOPPED) {
+			sortable.finish(event.detail.items);
+			return;
+		}
+
+		if (event.detail.info.trigger === TRIGGERS.DRAG_STARTED) sortable.start(event.detail.info.id, event.detail.info.source);
+		sortable.move(event.detail.items);
+	}
+
+	/** @param event - Final pointer ordering or provisional keyboard movement event. */
+	function handleFinalize(event: CustomEvent<DndEvent<{ id: string | number }>>) {
+		if (event.detail.info.source === SOURCES.KEYBOARD) {
+			sortable.move(event.detail.items);
+			return;
+		}
+
+		sortable.finish(event.detail.items);
 	}
 
 	/**
-	 * Replaces the temporary shadow with the dragged item and removes duplicate identifiers.
+	 * Exposes the action-owned Root element.
 	 *
-	 * @param values - Current item array emitted by the DnD action.
+	 * @param node - Rendered drag-handle zone.
 	 */
-	function cleanItems(values: Item[]) {
-		const clean: Item[] = [];
-		const ids = new SvelteSet<string | number>();
-
-		for (const value of values) {
-			const candidate = isShadowItem(value) ? draggedItem : value;
-			if (!candidate || ids.has(candidate.id)) continue;
-			ids.add(candidate.id);
-			clean.push(candidate);
-		}
-
-		return clean;
+	function sortableRoot(node: HTMLDivElement) {
+		ref = node;
+		sortable.mount();
+		return () => {
+			sortable.destroy();
+			if (ref === node) ref = null;
+		};
 	}
 
-	/** @param event - Drag-start event used to identify and publish the source item. */
-	function startDrag(event: CustomEvent<DndEvent<Item>>) {
-		const clean = cleanItems(dndItems);
-		const index = clean.findIndex((entry) => entry.id === event.detail.info.id);
-		draggedItem = clean[index];
-		if (draggedItem) onDragStart?.(draggedItem, index);
-	}
-
-	/** @param finalItems - Clean ordered items to commit after the DOM settles. */
-	async function finishDrag(finalItems: Item[]) {
-		dndItems = finalItems;
-		onDrop?.(finalItems);
-		await tick();
-		isDragging = false;
-		draggedItem = undefined;
-	}
-
-	/** @param event - Provisional DnD ordering event, including drag start and stop. */
-	function handleConsider(event: CustomEvent<DndEvent<Item>>) {
-		if (event.detail.info.trigger === TRIGGERS.DRAG_STOPPED) {
-			void finishDrag(cleanItems(event.detail.items));
-			return;
-		}
-
-		if (event.detail.info.trigger === TRIGGERS.DRAG_STARTED) startDrag(event);
-		isDragging = true;
-		dndItems = event.detail.items;
-		onConsider?.(cleanItems(event.detail.items));
-	}
-
-	/** @param event - Final pointer or keyboard ordering event. */
-	function handleFinalize(event: CustomEvent<DndEvent<Item>>) {
-		const clean = cleanItems(event.detail.items);
-		dndItems = event.detail.items;
-
-		if (event.detail.info.source === SOURCES.KEYBOARD) {
-			onConsider?.(clean);
-			return;
-		}
-
-		void finishDrag(clean);
-	}
+	const rootProps = $derived({
+		...restProps,
+		class: className,
+		"data-slot": "sortable",
+		"data-dragging": sortable.dragging ? "true" : undefined,
+		"data-disabled": disabled ? "true" : undefined,
+		[attachmentKey]: sortableRoot
+	});
 </script>
 
 <div
-	bind:this={ref}
-	use:dragHandleZone={{ items: dndItems, flipDurationMs: flipDuration, dragDisabled: disabled, dropTargetStyle: {} }}
+	{...rootProps}
+	use:dragHandleZone={{ items: sortable.dndItems, flipDurationMs: flipDuration, dragDisabled: disabled, dropTargetStyle: {} }}
 	onconsider={handleConsider}
 	onfinalize={handleFinalize}
-	class={className}
-	data-slot="sortable"
-	{...restProps}
 >
-	<!-- Render the action-owned order so provisional drag positions appear immediately. -->
-	{#each dndItems as entry, index (entry.id)}
-		{@render item(entry, { index, dragging: isShadowItem(entry) || entry.id === draggedItem?.id })}
-	{/each}
+	{@render children?.()}
 </div>

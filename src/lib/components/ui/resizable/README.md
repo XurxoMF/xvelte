@@ -41,11 +41,13 @@ Import the component from its public `index.ts`:
 Place one `Handle` between every pair of adjacent panes:
 
 ```svelte
-<Resizable.PaneGroup direction="horizontal">
-	<Resizable.Pane>First pane</Resizable.Pane>
-	<Resizable.Handle />
-	<Resizable.Pane>Second pane</Resizable.Pane>
-</Resizable.PaneGroup>
+<div class="h-72">
+	<Resizable.PaneGroup direction="horizontal">
+		<Resizable.Pane>First pane</Resizable.Pane>
+		<Resizable.Handle />
+		<Resizable.Pane>Second pane</Resizable.Pane>
+	</Resizable.PaneGroup>
+</div>
 ```
 
 `PaneGroup` supplies the shared layout and resize state. `Pane` defines one adjustable area, while `Handle` controls the two panes immediately beside it. A group can contain another complete `PaneGroup` inside one of its panes for nested layouts.
@@ -59,20 +61,22 @@ Place one `Handle` between every pair of adjacent panes:
 	import * as Resizable from "$lib/components/ui/resizable";
 </script>
 
-<Resizable.PaneGroup direction="horizontal" class="h-72 rounded-lg border">
-	<Resizable.Pane defaultSize={35} minSize={20}>
-		<div class="flex h-full items-center justify-center p-6">Navigation</div>
-	</Resizable.Pane>
+<div class="h-72">
+	<Resizable.PaneGroup direction="horizontal" class="rounded-lg border">
+		<Resizable.Pane defaultSize={35} minSize={20}>
+			<div class="flex h-full items-center justify-center p-6">Navigation</div>
+		</Resizable.Pane>
 
-	<Resizable.Handle withHandle />
+		<Resizable.Handle withHandle />
 
-	<Resizable.Pane defaultSize={65} minSize={30}>
-		<div class="flex h-full items-center justify-center p-6">Workspace</div>
-	</Resizable.Pane>
-</Resizable.PaneGroup>
+		<Resizable.Pane defaultSize={65} minSize={30}>
+			<div class="flex h-full items-center justify-center p-6">Workspace</div>
+		</Resizable.Pane>
+	</Resizable.PaneGroup>
+</div>
 ```
 
-Pane sizes are percentages of the group. Give the group or one of its ancestors a definite height for a horizontal split; the local group otherwise uses `h-full`.
+Pane sizes are percentages of the group. `PaneGroup` always renders with an inline `height: 100%` owned by PaneForge, so height utilities such as `h-72`, `h-96`, or `h-auto` do not control it. Always place the group inside a wrapper with a definite height or aspect ratio and put the height utility on that wrapper.
 
 ---
 
@@ -83,17 +87,19 @@ Pane sizes are percentages of the group. Give the group or one of its ancestors 
 Set the direction on the group. The local handle and optional visual grip rotate automatically:
 
 ```svelte
-<Resizable.PaneGroup direction="vertical" class="h-96 rounded-lg border">
-	<Resizable.Pane defaultSize={60} minSize={25}>
-		<div class="flex h-full items-center justify-center p-6">Preview</div>
-	</Resizable.Pane>
+<div class="h-96">
+	<Resizable.PaneGroup direction="vertical" class="rounded-lg border">
+		<Resizable.Pane defaultSize={60} minSize={25}>
+			<div class="flex h-full items-center justify-center p-6">Preview</div>
+		</Resizable.Pane>
 
-	<Resizable.Handle withHandle />
+		<Resizable.Handle withHandle />
 
-	<Resizable.Pane defaultSize={40} minSize={20}>
-		<div class="flex h-full items-center justify-center p-6">Console</div>
-	</Resizable.Pane>
-</Resizable.PaneGroup>
+		<Resizable.Pane defaultSize={40} minSize={20}>
+			<div class="flex h-full items-center justify-center p-6">Console</div>
+		</Resizable.Pane>
+	</Resizable.PaneGroup>
+</div>
 ```
 
 ### Collapsible pane
@@ -107,24 +113,26 @@ Set the direction on the group. The local handle and optional visual grip rotate
 	let status = $state("Sidebar expanded");
 </script>
 
-<Resizable.PaneGroup direction="horizontal" class="h-72 rounded-lg border">
-	<Resizable.Pane
-		defaultSize={30}
-		minSize={20}
-		collapsedSize={5}
-		collapsible
-		onCollapse={() => (status = "Sidebar collapsed")}
-		onExpand={() => (status = "Sidebar expanded")}
-	>
-		<div class="h-full overflow-auto p-4">Sidebar</div>
-	</Resizable.Pane>
+<div class="h-72">
+	<Resizable.PaneGroup direction="horizontal" class="rounded-lg border">
+		<Resizable.Pane
+			defaultSize={30}
+			minSize={20}
+			collapsedSize={5}
+			collapsible
+			onCollapse={() => (status = "Sidebar collapsed")}
+			onExpand={() => (status = "Sidebar expanded")}
+		>
+			<div class="h-full overflow-auto p-4">Sidebar</div>
+		</Resizable.Pane>
 
-	<Resizable.Handle withHandle />
+		<Resizable.Handle withHandle />
 
-	<Resizable.Pane defaultSize={70} minSize={30}>
-		<div class="h-full overflow-auto p-4">Main content</div>
-	</Resizable.Pane>
-</Resizable.PaneGroup>
+		<Resizable.Pane defaultSize={70} minSize={30}>
+			<div class="h-full overflow-auto p-4">Main content</div>
+		</Resizable.Pane>
+	</Resizable.PaneGroup>
+</div>
 
 <p class="mt-2 text-sm" aria-live="polite">{status}</p>
 ```
@@ -136,11 +144,13 @@ Keep enough collapsed content visible to make the boundary understandable, or pr
 `autoSaveId` stores pane sizes in browser local storage and restores them on a later visit. Use a stable ID that is unique to this layout:
 
 ```svelte
-<Resizable.PaneGroup direction="horizontal" autoSaveId="project-editor-layout" class="h-72 rounded-lg border">
-	<Resizable.Pane defaultSize={25}>Files</Resizable.Pane>
-	<Resizable.Handle />
-	<Resizable.Pane defaultSize={75}>Editor</Resizable.Pane>
-</Resizable.PaneGroup>
+<div class="h-72">
+	<Resizable.PaneGroup direction="horizontal" autoSaveId="project-editor-layout" class="rounded-lg border">
+		<Resizable.Pane defaultSize={25}>Files</Resizable.Pane>
+		<Resizable.Handle />
+		<Resizable.Pane defaultSize={75}>Editor</Resizable.Pane>
+	</Resizable.PaneGroup>
+</div>
 ```
 
 Pass a `storage` object with compatible `getItem` and `setItem` methods when the layout must use another storage mechanism. PaneForge performs persistence only when `autoSaveId` is present.
@@ -159,11 +169,13 @@ Bind the group instance when application controls need to read or replace the co
 
 <button type="button" onclick={() => group?.setLayout([25, 75])}>Reset layout</button>
 
-<Resizable.PaneGroup bind:this={group} direction="horizontal" class="mt-3 h-72 rounded-lg border">
-	<Resizable.Pane>Navigation</Resizable.Pane>
-	<Resizable.Handle />
-	<Resizable.Pane>Workspace</Resizable.Pane>
-</Resizable.PaneGroup>
+<div class="mt-3 h-72">
+	<Resizable.PaneGroup bind:this={group} direction="horizontal" class="rounded-lg border">
+		<Resizable.Pane>Navigation</Resizable.Pane>
+		<Resizable.Handle />
+		<Resizable.Pane>Workspace</Resizable.Pane>
+	</Resizable.PaneGroup>
+</div>
 
 <button type="button" onclick={() => console.info(group?.getLayout())}>Log current layout</button>
 ```
@@ -173,21 +185,23 @@ Bind the group instance when application controls need to read or replace the co
 ### Nested groups
 
 ```svelte
-<Resizable.PaneGroup direction="horizontal" class="h-96 rounded-lg border">
-	<Resizable.Pane defaultSize={30}>Navigation</Resizable.Pane>
-	<Resizable.Handle />
+<div class="h-96">
+	<Resizable.PaneGroup direction="horizontal" class="rounded-lg border">
+		<Resizable.Pane defaultSize={30}>Navigation</Resizable.Pane>
+		<Resizable.Handle />
 
-	<Resizable.Pane defaultSize={70}>
-		<Resizable.PaneGroup direction="vertical">
-			<Resizable.Pane defaultSize={70}>Editor</Resizable.Pane>
-			<Resizable.Handle withHandle />
-			<Resizable.Pane defaultSize={30}>Console</Resizable.Pane>
-		</Resizable.PaneGroup>
-	</Resizable.Pane>
-</Resizable.PaneGroup>
+		<Resizable.Pane defaultSize={70}>
+			<Resizable.PaneGroup direction="vertical">
+				<Resizable.Pane defaultSize={70}>Editor</Resizable.Pane>
+				<Resizable.Handle withHandle />
+				<Resizable.Pane defaultSize={30}>Console</Resizable.Pane>
+			</Resizable.PaneGroup>
+		</Resizable.Pane>
+	</Resizable.PaneGroup>
+</div>
 ```
 
-Each nested group owns its direction, constraints, callbacks, and optional persistence ID.
+Each nested group owns its direction, constraints, callbacks, and optional persistence ID. In this example, the outer wrapper supplies the definite height and the parent `Pane` is the inner group's full-height wrapper.
 
 ---
 
@@ -213,6 +227,8 @@ Type: `PaneGroupProps`, based on `PaneForge.PaneGroupProps` plus the local binda
 | `children` / `child` | PaneForge snippets                                              | —                     | Render normal children or replace the underlying element through PaneForge's advanced child snippet.                       |
 
 The group forwards native `<div>` attributes. It does not expose a bindable `value`; use `onLayoutChange`, `getLayout()`, and `setLayout()` when application state needs the sizes.
+
+PaneForge sets `height: 100%` directly on the rendered group. A height class on `PaneGroup` cannot override that inline style; use a definite-height or aspect-ratio wrapper around the group instead.
 
 ### `Resizable.Pane`
 
@@ -268,7 +284,7 @@ PaneForge also supplies state and relationship attributes. These are dependency-
 - Pane: `data-pane`, `data-pane-id`, and `data-pane-group-id`.
 - Handle: `data-pane-resizer`, `data-pane-resizer-id`, `data-pane-group-id`, `data-direction`, `data-enabled`, and `data-active="pointer|keyboard"`.
 
-All `class` props pass through `cn()`, so later Tailwind utilities replace conflicting local utilities. PaneForge owns essential inline flex sizing and interaction styles; avoid overriding them unless the complete resize behavior has been tested.
+All `class` props pass through `cn()`, so later Tailwind utilities replace conflicting local utilities. They do not override PaneForge's inline styles: in particular, `PaneGroup` always has inline `height: 100%`. Size a wrapper and let the group fill it. PaneForge also owns essential inline flex sizing and interaction styles; avoid overriding them unless the complete resize behavior has been tested.
 
 ---
 

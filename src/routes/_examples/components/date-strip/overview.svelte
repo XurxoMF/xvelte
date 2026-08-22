@@ -2,14 +2,19 @@
 	import { getLocalTimeZone, today, type DateValue } from "@internationalized/date";
 
 	import * as DateStrip from "$lib/components/ui/date-strip";
+	import * as Field from "$lib/components/ui/field";
 
 	let selectedDate = $state<DateValue>(today(getLocalTimeZone()));
 </script>
 
-<DateStrip.Root bind:value={selectedDate}>
-	{#snippet children({ date })}
-		<DateStrip.Item {date} />
-	{/snippet}
-</DateStrip.Root>
+<Field.Field>
+	<Field.Title>Delivery date</Field.Title>
 
-<p class="text-sm">Selected date: {selectedDate.toString()}</p>
+	<DateStrip.Root bind:value={selectedDate}>
+		{#snippet children({ date })}
+			<DateStrip.Item {date} />
+		{/snippet}
+	</DateStrip.Root>
+
+	<Field.Description>Selected date: {selectedDate.toString()}.</Field.Description>
+</Field.Field>

@@ -1,10 +1,14 @@
 <script lang="ts">
 	import * as Progress from "$lib/components/ui/progress";
 
-	let value = $state(68);
+	let value = $state(5);
+
+	setInterval(() => {
+		if (value < 100) value++;
+	}, 250);
 </script>
 
-<div class="grid max-w-md gap-2">
+<div class="flex w-full flex-col gap-4">
 	<div class="flex items-center justify-between text-sm">
 		<span id="upload-progress-label">Uploading files</span>
 		<span>{value}%</span>

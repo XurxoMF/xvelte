@@ -4,8 +4,9 @@
 
 	import type { WithElementRef } from "$lib/utils";
 
-	import type { Point } from "./point-picker-utils";
+	import type { Point, PointOrigin } from "./point-picker-utils";
 
+	/** Props accepted by the Point Picker Root component. */
 	export type RootProps = Omit<WithElementRef<HTMLAttributes<HTMLDivElement>>, "children"> & {
 		value?: Point | undefined;
 		defaultValue?: Point | undefined;
@@ -15,9 +16,12 @@
 		maxY?: number | undefined;
 		stepX?: number | undefined;
 		stepY?: number | undefined;
+		origin?: PointOrigin | undefined;
 		disabled?: boolean | undefined;
 		label?: string | undefined;
 		showGrid?: boolean | undefined;
+		gridX?: number | undefined;
+		gridY?: number | undefined;
 		showCrosshair?: boolean | undefined;
 		showCursor?: boolean | undefined;
 		showValue?: boolean | undefined;
@@ -33,7 +37,7 @@
 	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
 
-	import { clamp, getKeyboardValue, quantize, type RootEvent } from "./point-picker-utils";
+	import { clamp, getGridPositions, getKeyboardValue, quantize, type RootEvent } from "./point-picker-utils";
 
 	let {
 		ref = $bindable(null),
@@ -45,9 +49,12 @@
 		maxY = 100,
 		stepX = 1,
 		stepY = 1,
+		origin = "top-left",
 		disabled = false,
 		label,
 		showGrid = false,
+		gridX = 10,
+		gridY = 10,
 		showCrosshair = false,
 		showCursor = true,
 		showValue = false,
@@ -68,10 +75,16 @@
 	let dragging = false;
 	const fallbackValue = $derived(defaultValue ?? { x: (minX + maxX) / 2, y: (minY + maxY) / 2 });
 	const currentValue = $derived(value ?? fallbackValue);
-	const xPercent = $derived(maxX === minX ? 0 : (100 * (currentValue.x - minX)) / (maxX - minX));
-	const yPercent = $derived(maxY === minY ? 0 : 100 - (100 * (currentValue.y - minY)) / (maxY - minY));
+	const coordinateAspectRatio = $derived(maxX > minX && maxY > minY ? `${maxX - minX} / ${maxY - minY}` : "1 / 1");
+	const xStartsAtRight = $derived(origin.endsWith("right"));
+	const yStartsAtBottom = $derived(origin.startsWith("bottom"));
+	const xProgress = $derived(maxX === minX ? 0 : (currentValue.x - minX) / (maxX - minX));
+	const yProgress = $derived(maxY === minY ? 0 : (currentValue.y - minY) / (maxY - minY));
+	const xPercent = $derived(100 * (xStartsAtRight ? 1 - xProgress : xProgress));
+	const yPercent = $derived(100 * (yStartsAtBottom ? 1 - yProgress : yProgress));
+	const xGridPositions = $derived(getGridPositions(minX, maxX, gridX, xStartsAtRight));
+	const yGridPositions = $derived(getGridPositions(minY, maxY, gridY, yStartsAtBottom));
 	const formattedValue = $derived(formatValue?.(currentValue) ?? `${currentValue.x.toFixed(0)}, ${currentValue.y.toFixed(0)}`);
-	const gridPositions = [20, 40, 60, 80];
 
 	/** @param next - Candidate point to quantize, clamp, and publish. */
 	function updateValue(next: Point) {
@@ -86,9 +99,11 @@
 	/** @param event - Pointer event whose viewport coordinates are mapped into value bounds. */
 	function valueFromPointer(event: RootEvent<PointerEvent>) {
 		const bounds = event.currentTarget.getBoundingClientRect();
+		const xPointerProgress = clamp((event.clientX - bounds.left) / bounds.width, 0, 1);
+		const yPointerProgress = clamp((event.clientY - bounds.top) / bounds.height, 0, 1);
 		return {
-			x: minX + clamp((event.clientX - bounds.left) / bounds.width, 0, 1) * (maxX - minX),
-			y: maxY - clamp((event.clientY - bounds.top) / bounds.height, 0, 1) * (maxY - minY)
+			x: xStartsAtRight ? maxX - xPointerProgress * (maxX - minX) : minX + xPointerProgress * (maxX - minX),
+			y: yStartsAtBottom ? maxY - yPointerProgress * (maxY - minY) : minY + yPointerProgress * (maxY - minY)
 		};
 	}
 
@@ -97,6 +112,7 @@
 		onpointerdown?.(event);
 		if (disabled || event.defaultPrevented) return;
 		event.preventDefault();
+		event.currentTarget.focus({ preventScroll: true });
 		dragging = true;
 		event.currentTarget.setPointerCapture(event.pointerId);
 		updateValue(valueFromPointer(event));
@@ -123,10 +139,11 @@
 	function handleKeyDown(event: RootEvent<KeyboardEvent>) {
 		onkeydown?.(event);
 		if (disabled || event.defaultPrevented) return;
-		const next = getKeyboardValue(event.key, currentValue, { minX, maxX, minY, maxY, stepX, stepY });
+		const next = getKeyboardValue(event.key, currentValue, { minX, maxX, minY, maxY, stepX, stepY, origin }, event.shiftKey);
 		if (!next) return;
 		event.preventDefault();
-		onValueCommit?.(updateValue(next));
+		const committed = updateValue(next);
+		onValueCommit?.(committed);
 	}
 
 	/** @param event - Cancelled pointer event forwarded before ending the drag. */
@@ -141,10 +158,12 @@
 	bind:this={ref}
 	data-slot="point-picker"
 	data-disabled={disabled ? "true" : undefined}
+	data-origin={origin}
 	role="application"
 	tabindex={disabled ? -1 : 0}
 	aria-label={label ?? m.olive_heron_point()}
 	aria-disabled={disabled}
+	style:aspect-ratio={coordinateAspectRatio}
 	class={cn(
 		"relative block w-full touch-none overflow-hidden outline-none select-none focus-visible:ring-3 focus-visible:ring-ring/50 data-disabled:pointer-events-none data-disabled:opacity-50",
 		className
@@ -162,8 +181,11 @@
 
 	{#if showGrid}
 		<div data-slot="point-picker-grid" aria-hidden="true" class="pointer-events-none absolute inset-0 z-10">
-			{#each gridPositions as position (position)}
+			{#each xGridPositions as position (position)}
 				<span data-slot="point-picker-grid-line" class="absolute inset-y-0 w-px bg-border/30" style:left={`${position}%`}></span>
+			{/each}
+
+			{#each yGridPositions as position (position)}
 				<span data-slot="point-picker-grid-line" class="absolute inset-x-0 h-px bg-border/30" style:top={`${position}%`}></span>
 			{/each}
 		</div>

@@ -10,35 +10,43 @@
 	}
 
 	.docs-markdown {
-		@apply max-w-none text-[0.98rem] leading-7 text-foreground;
+		@apply max-w-none text-foreground;
 	}
 
 	.docs-markdown > h1 {
-		@apply mt-4 mb-5 scroll-mt-20 text-4xl font-bold tracking-tight sm:text-5xl;
+		@apply mt-4 mb-5 scroll-m-20 text-4xl font-semibold tracking-tight lg:text-5xl;
 	}
 
 	.docs-markdown h2 {
-		@apply mt-16 mb-5 scroll-mt-20 border-t pt-10 text-2xl font-semibold tracking-tight;
+		@apply mt-16 mb-5 scroll-m-20 border-t pt-10 text-3xl font-semibold tracking-tight transition-colors first:mt-0;
 	}
 
 	.docs-markdown h3 {
-		@apply mt-10 mb-4 scroll-mt-20 text-xl font-semibold tracking-tight;
+		@apply mt-10 mb-4 scroll-m-20 text-2xl font-semibold tracking-tight;
 	}
 
 	.docs-markdown h4 {
-		@apply mt-8 mb-3 scroll-mt-20 text-base font-semibold;
+		@apply mt-8 mb-3 scroll-m-20 text-xl font-semibold tracking-tight;
+	}
+
+	.docs-markdown h5 {
+		@apply mt-6 mb-3 scroll-m-20 text-lg font-semibold tracking-tight;
+	}
+
+	.docs-markdown h6 {
+		@apply mt-6 mb-3 scroll-m-20 text-base font-semibold tracking-tight;
 	}
 
 	.docs-markdown p {
-		@apply my-4 max-w-4xl text-muted-foreground;
+		@apply my-4 max-w-4xl leading-7 text-muted-foreground;
 	}
 
 	.docs-markdown > p:first-of-type {
-		@apply max-w-3xl text-lg leading-8;
+		@apply max-w-3xl text-xl text-muted-foreground;
 	}
 
 	.docs-markdown a {
-		@apply font-medium text-primary underline decoration-primary/30 underline-offset-4 transition-colors hover:decoration-primary;
+		@apply font-medium text-primary underline underline-offset-4;
 	}
 
 	.docs-markdown ul,
@@ -63,11 +71,11 @@
 	}
 
 	.docs-markdown code:not(pre code) {
-		@apply rounded-md bg-muted px-1.5 py-0.5 font-mono text-[0.86em] text-foreground;
+		@apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold text-foreground;
 	}
 
 	.docs-markdown pre {
-		@apply my-6 max-h-[36rem] overflow-auto rounded-xl border bg-zinc-950 p-4 text-sm leading-6 text-zinc-100 shadow-sm;
+		@apply my-6 max-h-[36rem] overflow-auto rounded-xl border bg-zinc-950 p-4 text-sm leading-7 text-zinc-100 shadow-sm;
 	}
 
 	.docs-markdown pre code {
@@ -75,7 +83,11 @@
 	}
 
 	.docs-markdown blockquote {
-		@apply my-6 border-l-2 border-primary bg-primary/5 px-5 py-1 italic;
+		@apply my-6 border-s-2 ps-6 italic;
+	}
+
+	.docs-markdown blockquote p {
+		@apply my-0 text-foreground;
 	}
 
 	.docs-markdown .docs-table {

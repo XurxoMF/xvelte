@@ -1,6 +1,6 @@
 # Input IPv4
 
-A segmented IPv4 address input with four numeric octets, automatic focus movement, full-address paste handling, bindable validation state, and native form submission support. Use it when an app needs structured IPv4 entry; use a normal text input when incomplete or non-address text must remain untouched.
+A responsive segmented IPv4 address input with four equal-width numeric octets, automatic focus movement, full-address paste handling, bindable validation state, and native form submission support. Use it when an app needs structured IPv4 entry; use a normal text input when incomplete or non-address text must remain untouched.
 
 <!-- xvelte-example: overview -->
 
@@ -28,19 +28,19 @@ A segmented IPv4 address input with four numeric octets, automatic focus movemen
 </script>
 ```
 
-The component's `index.ts` exports `Root`, `Segment`, the `RootProps`, `SegmentProps`, and `IPv4Segments` types, and the `isValidIPv4` and `safeParseIPv4` helpers.
+The component's `index.ts` exports `Root`, the `RootProps` and `IPv4Segments` types, and the `isValidIPv4` and `safeParseIPv4` helpers. Individual segments are internal implementation details and are not exported.
 
 ---
 
 ## Anatomy
 
-`Root` renders four `Segment` text inputs, three visible separators, and a visually hidden input that carries the joined value for native form submission.
+`Root` renders four internal text inputs, three visible separators, and a visually hidden input that carries the joined value for native form submission.
 
 ```svelte
 <InputIPv4.Root name="serverAddress" />
 ```
 
-`Root` creates and coordinates its segments automatically. Use the public `Segment` part only when building a lower-level custom composition and supplying its focus-navigation callbacks yourself.
+`Root` owns and coordinates every segment automatically. Each octet receives an equal share of the available editable width, so the component follows the width supplied by its parent or `class`.
 
 ---
 
@@ -107,20 +107,6 @@ Type: `RootProps`, based on native `div` attributes.
 
 Remaining native `div` attributes are forwarded to the visible root. `name` and `value` belong to the separate hidden input rather than the root element.
 
-### `InputIPv4.Segment`
-
-Type: `SegmentProps`, based on native input attributes.
-
-| Prop         | Type                       | Default     | Behavior                                                                 |
-| ------------ | -------------------------- | ----------- | ------------------------------------------------------------------------ |
-| `value`      | `number \| string \| null` | `null`      | Bindable octet value.                                                    |
-| `goNext`     | `() => void`               | `undefined` | Called when input should move to the following segment.                  |
-| `goPrevious` | `() => void`               | `undefined` | Called when Backspace or Arrow Left should move to the previous segment. |
-| `ref`        | `HTMLInputElement \| null` | `undefined` | Bindable input reference.                                                |
-| `class`      | `string`                   | `undefined` | Merged after the local segment classes.                                  |
-
-The segment accepts digits only, limits values to `0–255`, and forwards remaining native input attributes. `Root` supplies the callbacks and constraints required for the standard four-part experience.
-
 ### Helpers and types
 
 | Export          | Signature                                                   | Purpose                                                    |
@@ -139,7 +125,7 @@ The segment accepts digits only, limits values to `0–255`, and forwards remain
 | Editable octet    | `ipv4-input-segment` |
 | Hidden form value | `ipv4-input-value`   |
 
-The historical slot names remain stable even though the component folder is named `input-ipv4`. The root exposes `aria-invalid`, uses semantic theme colors, and applies `focus-within` ring styling. Custom root and segment classes are merged with `cn()`. Segment inputs also use the local `hide-ramp` class to suppress WebKit number controls.
+The historical slot names remain stable even though the component folder is named `input-ipv4`. The root exposes `aria-invalid`, uses semantic theme colors, applies `focus-within` ring styling, and fills its available width. Its four internal segments use `flex: 1 1 0%` with `min-width: 0`, so each receives one quarter of the editable width after the fixed separators and padding. The public `class` prop styles the root; segment classes are internal. Segment inputs also use the local `hide-ramp` class to suppress WebKit number controls.
 
 ---
 
@@ -179,7 +165,7 @@ pnpm add -D tailwindcss
 
 ### Component files
 
-Copy the complete `src/lib/components/ui/input-ipv4` component folder, including `index.ts`, both Svelte files, the utility file, and this README.
+Copy the complete `src/lib/components/ui/input-ipv4` component folder, including `index.ts`, `input-ipv4-root.svelte`, the utility file, and this README.
 
 ### Shared utilities
 
@@ -238,18 +224,17 @@ No icon export, localization message, animation import, keyframe, font, image, n
 
 ## Credits
 
-The original IPv4 input was adapted from [shadcn-svelte-extras](https://www.shadcn-svelte-extras.com/components/ipv4address-input). xvelte's local exports, segment API, helpers, styling, and behavior are the documented implementation.
+The original IPv4 input was adapted from [shadcn-svelte-extras](https://www.shadcn-svelte-extras.com/components/ipv4address-input). xvelte's local exports, helpers, responsive segment layout, styling, and behavior are the documented implementation.
 
 ---
 
 ## File organization
 
-| File                        | Responsibility                                                         |
-| --------------------------- | ---------------------------------------------------------------------- |
-| `input-ipv4-root.svelte`    | Coordinates four octets, focus, paste, validation, and the form value. |
-| `input-ipv4-segment.svelte` | Edits one numeric octet and handles segment navigation.                |
-| `input-ipv4-utils.ts`       | Exports IPv4 parsing, validation, and tuple types.                     |
-| `index.ts`                  | Public components, types, and helper exports.                          |
-| `README.md`                 | Installation and usage guide.                                          |
+| File                     | Responsibility                                                                                 |
+| ------------------------ | ---------------------------------------------------------------------------------------------- |
+| `input-ipv4-root.svelte` | Renders and coordinates four equal-width octets, focus, paste, validation, and the form value. |
+| `input-ipv4-utils.ts`    | Exports IPv4 parsing, validation, and tuple types.                                             |
+| `index.ts`               | Public root, types, and helper exports.                                                        |
+| `README.md`              | Installation and usage guide.                                                                  |
 
 The component's `index.ts` and its exported types are the source of truth for the public API.

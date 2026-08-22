@@ -1,12 +1,12 @@
 <script lang="ts">
+	import * as Field from "$lib/components/ui/field";
 	import * as InputOTP from "$lib/components/ui/input-otp";
-	import * as Label from "$lib/components/ui/label";
 
 	let code = $state("");
 </script>
 
-<div class="grid gap-2">
-	<Label.Root for="verification-code">Verification code</Label.Root>
+<Field.Field>
+	<Field.Label for="verification-code">Verification code</Field.Label>
 
 	<InputOTP.Root
 		inputId="verification-code"
@@ -16,6 +16,7 @@
 		inputmode="numeric"
 		autocomplete="one-time-code"
 		bind:value={code}
+		aria-describedby="verification-code-description"
 	>
 		{#snippet children({ cells })}
 			<InputOTP.Group>
@@ -25,4 +26,6 @@
 			</InputOTP.Group>
 		{/snippet}
 	</InputOTP.Root>
-</div>
+
+	<Field.Description id="verification-code-description">Enter the six-digit code sent to your device.</Field.Description>
+</Field.Field>

@@ -55,7 +55,7 @@ Item registers with its nearest Root when mounted and unregisters when destroyed
 
 ## Basic usage
 
-Item has a Card-like default surface, so a separate Card is not required:
+Item is headless: its default `div` has no visual or layout classes. Add the surface and sizing required by your app:
 
 ```svelte
 <script lang="ts">
@@ -63,7 +63,7 @@ Item has a Card-like default surface, so a separate Card is not required:
 </script>
 
 <WidgetGrid.Root columns={6} gap={12}>
-	<WidgetGrid.Item id="activity" x={0} y={0} width={3} height={2} class="p-4">
+	<WidgetGrid.Item id="activity" x={0} y={0} width={3} height={2} class="size-full rounded-xl border bg-card p-4">
 		<WidgetGrid.DragHandle class="absolute top-2 right-2" />
 		<h2 class="font-medium">Recent activity</h2>
 		<p class="text-muted-foreground">No new events.</p>
@@ -78,9 +78,9 @@ Drag interaction never falls back to the complete Item. Removing or conditionall
 
 ## Examples
 
-### Custom Item with Card
+### Delegated Item with Card
 
-The `child` snippet replaces Item's default Card-like visual surface. Spread every supplied prop so the structural size, state attributes, native attributes, and reference attachment remain connected:
+The `child` snippet replaces Item's default `div`. Spread every supplied prop so native attributes, state attributes, and the reference attachment remain connected:
 
 ```svelte
 <script lang="ts">
@@ -89,7 +89,7 @@ The `child` snippet replaces Item's default Card-like visual surface. Spread eve
 </script>
 
 <WidgetGrid.Root columns={12}>
-	<WidgetGrid.Item id="sales" width={4} height={3}>
+	<WidgetGrid.Item id="sales" width={4} height={3} class="size-full">
 		{#snippet child({ props })}
 			<Card.Root {...props}>
 				<WidgetGrid.DragHandle>
@@ -108,11 +108,11 @@ The `child` snippet replaces Item's default Card-like visual surface. Spread eve
 </WidgetGrid.Root>
 ```
 
-The delegated Card receives Item's required `relative` and full-size structure but not another copy of Item's default visual styles. DragHandle delegation similarly keeps cursor, registration, and accessibility props without imposing Button styling or the default icon.
+The delegated Card receives Item's `class` unchanged. WidgetGrid does not impose Card, size, positioning, or surface styles on it. DragHandle delegation similarly keeps cursor, registration, and accessibility props without imposing Button styling or the default icon.
 
 ### Default and custom ResizeHandle
 
-Render exactly one component in each resizable Item. It controls the bottom-right corner through GridStack's native resize interaction, positions itself automatically, and shows a compact icon inside a 44-pixel touch target:
+Render exactly one component in each resizable Item. It controls the bottom-right corner through GridStack's native resize interaction and defaults to the same compact ghost Button as DragHandle, with a resize icon and an extended 44-pixel pointer target:
 
 ```svelte
 <WidgetGrid.Item id="report" width={4} height={2}>
@@ -122,7 +122,7 @@ Render exactly one component in each resizable Item. It controls the bottom-righ
 </WidgetGrid.Item>
 ```
 
-Delegate rendering for a custom visual. The supplied inline structural style preserves edge placement and the pointer hit area even when the replacement supplies its own class:
+Delegate rendering for a custom visual. The supplied inline structural style preserves edge placement and the compact handle size even when the replacement supplies its own class:
 
 ```svelte
 <WidgetGrid.ResizeHandle>
@@ -277,21 +277,21 @@ Root forwards remaining native `div` attributes. It observes its own width, neve
 
 ### `WidgetGrid.Item`
 
-| Prop                                             | Type                   | Default             | Behavior                                                                                 |
-| ------------------------------------------------ | ---------------------- | ------------------- | ---------------------------------------------------------------------------------------- |
-| `id`                                             | `string \| number`     | Hydration-stable ID | Snapshot and persistence identifier. Provide it explicitly for saved layouts.            |
-| `x`, `y`                                         | `number`               | Automatic           | Zero-based grid coordinates.                                                             |
-| `width`, `height`                                | `number`               | `1`                 | Dimensions in grid cells.                                                                |
-| `minWidth`, `maxWidth`, `minHeight`, `maxHeight` | `number`               | —                   | Resize constraints in grid cells.                                                        |
-| `draggable`                                      | `boolean`              | Root default        | Overrides Root drag enablement; a DragHandle remains required.                           |
-| `resizable`                                      | `boolean`              | Root default        | Overrides Root resize enablement; one ResizeHandle remains required.                     |
-| `static`                                         | `boolean`              | `false`             | Fully locks movement, resize, collision displacement, and coordinates.                   |
-| `onMoveStart`, `onMoving`, `onMoveEnd`           | `(state) => void`      | —                   | Item-only movement lifecycle.                                                            |
-| `onResizeStart`, `onResizing`, `onResizeEnd`     | `(state) => void`      | —                   | Item-only resize lifecycle.                                                              |
-| `children`                                       | `Snippet`              | —                   | Arbitrary content and handles rendered in the default surface.                           |
-| `child`                                          | `Snippet<[{ props }]>` | —                   | Replaces the default visual element; spread all props on the delegated element.          |
-| `ref`                                            | `HTMLElement \| null`  | `null`              | Bindable default or delegated visible element, not the private engine wrapper.           |
-| `class`                                          | `string`               | —                   | Merged with structural classes; also customizes the default Card-like surface when used. |
+| Prop                                             | Type                     | Default             | Behavior                                                                       |
+| ------------------------------------------------ | ------------------------ | ------------------- | ------------------------------------------------------------------------------ |
+| `id`                                             | `string \| number`       | Hydration-stable ID | Snapshot and persistence identifier. Provide it explicitly for saved layouts.  |
+| `x`, `y`                                         | `number`                 | Automatic           | Zero-based grid coordinates.                                                   |
+| `width`, `height`                                | `number`                 | `1`                 | Dimensions in grid cells.                                                      |
+| `minWidth`, `maxWidth`, `minHeight`, `maxHeight` | `number`                 | —                   | Resize constraints in grid cells.                                              |
+| `draggable`                                      | `boolean`                | Root default        | Overrides Root drag enablement; a DragHandle remains required.                 |
+| `resizable`                                      | `boolean`                | Root default        | Overrides Root resize enablement; one ResizeHandle remains required.           |
+| `static`                                         | `boolean`                | `false`             | Fully locks movement, resize, collision displacement, and coordinates.         |
+| `onMoveStart`, `onMoving`, `onMoveEnd`           | `(state) => void`        | —                   | Item-only movement lifecycle.                                                  |
+| `onResizeStart`, `onResizing`, `onResizeEnd`     | `(state) => void`        | —                   | Item-only resize lifecycle.                                                    |
+| `children`                                       | `Snippet`                | —                   | Arbitrary content and handles rendered in the default headless `div`.          |
+| `child`                                          | `Snippet<[{ props }]>`   | —                   | Replaces the default `div`; spread all props on the delegated element.         |
+| `ref`                                            | `HTMLDivElement \| null` | `null`              | Bindable default or delegated visible element, not the private engine wrapper. |
+| `class`                                          | `string`                 | —                   | Forwarded unchanged; Item adds no classes.                                     |
 
 Item forwards compatible native `div` attributes to its visible default or delegated element. All listed state props reactively update a mounted Item. Public state deliberately excludes snippets, DOM refs, classes, callbacks, and engine objects.
 
@@ -309,15 +309,15 @@ The default element is `Button.Root` with `variant="ghost"`, `size="icon-sm"`, a
 
 ### `WidgetGrid.ResizeHandle`
 
-| Prop         | Type                   | Default                     | Behavior                                                                                    |
-| ------------ | ---------------------- | --------------------------- | ------------------------------------------------------------------------------------------- |
-| `aria-label` | `string`               | Localized `"Resize widget"` | Accessible name; provide a widget-specific override when useful.                            |
-| `children`   | `Snippet`              | Resize icon                 | Replaces only the default icon.                                                             |
-| `child`      | `Snippet<[{ props }]>` | —                           | Replaces the visual element while preserving placement, hit area, cursor, and registration. |
-| `ref`        | `HTMLElement \| null`  | `null`                      | Bindable rendered handle.                                                                   |
-| `class`      | `string`               | —                           | Merged with bottom-right structural utilities.                                              |
+| Prop         | Type                   | Default                     | Behavior                                                                                  |
+| ------------ | ---------------------- | --------------------------- | ----------------------------------------------------------------------------------------- |
+| `aria-label` | `string`               | Localized `"Resize widget"` | Accessible name; provide a widget-specific override when useful.                          |
+| `children`   | `Snippet`              | Resize icon                 | Replaces only the default icon inside the ghost Button.                                   |
+| `child`      | `Snippet<[{ props }]>` | —                           | Replaces Button and icon while preserving placement, cursor, state, and registration.     |
+| `ref`        | `HTMLElement \| null`  | `null`                      | Bindable rendered handle.                                                                 |
+| `class`      | `string`               | —                           | Merged with bottom-right placement, resize cursor, and extended pointer-target utilities. |
 
-Render at most one ResizeHandle per Item. It always controls the bottom-right corner through GridStack's native resizer. The default lightweight `span` has a 44-pixel pointer area and a 16-pixel icon; it is not a Button. Root `disabled`, Item `resizable={false}`, and Item `static` disable its interaction.
+Render at most one ResizeHandle per Item. It always controls the bottom-right corner through GridStack's native resizer. The default element is `Button.Root` with `variant="ghost"`, `size="icon-sm"`, `type="button"`, a resize icon, and an invisible extension that increases its pointer target to 44 pixels. Root `disabled`, Item `resizable={false}`, and Item `static` disable the native Button and its resize interaction.
 
 ### Public state types
 
@@ -347,18 +347,18 @@ Lifecycle snapshots always contain resolved `x`, `y`, `width`, and `height`, eve
 
 ## Styling and DOM contract
 
-| Part         | Stable hook                             | Default element                         |
-| ------------ | --------------------------------------- | --------------------------------------- |
-| Root         | `data-slot="widget-grid"`               | `div`                                   |
-| Item         | `data-slot="widget-grid-item"`          | Card-like `div` inside private wrappers |
-| DragHandle   | `data-slot="widget-grid-drag-handle"`   | xvelte ghost Button                     |
-| ResizeHandle | `data-slot="widget-grid-resize-handle"` | Lightweight `span`                      |
+| Part         | Stable hook                             | Default element                        |
+| ------------ | --------------------------------------- | -------------------------------------- |
+| Root         | `data-slot="widget-grid"`               | `div`                                  |
+| Item         | `data-slot="widget-grid-item"`          | Headless `div` inside private wrappers |
+| DragHandle   | `data-slot="widget-grid-drag-handle"`   | xvelte ghost Button                    |
+| ResizeHandle | `data-slot="widget-grid-resize-handle"` | xvelte ghost Button                    |
 
 Root exposes `data-moving`, `data-resizing`, and `data-disabled` as `"true"` only while active. Item exposes `data-moving`, `data-resizing`, `data-disabled`, and `data-static` the same way. Both handles expose `data-disabled`.
 
-Root is visually transparent and adds only the structural class needed by the internal layout engine. Private direct-child wrappers receive engine-owned classes, coordinate attributes, inline positioning, and animation state; these are implementation details and must not be selected from app CSS. The public Item remains nested inside those wrappers and always receives `relative size-full`.
+Root is visually transparent and adds only the structural class needed by the internal layout engine. Its private content wrapper clips overflow so absolute handles and full-size delegated elements do not create a second scrollbar around Item; add an app-owned scrolling region inside Item when its content must scroll. During movement or resizing, Root overrides GridStack's private placeholder with the semantic `muted` background and the local `rounded-md` radius (`calc(var(--radius) * 0.8)`) so its occupied cells remain visible in both color modes. Private direct-child wrappers receive engine-owned classes, coordinate attributes, inline positioning, and animation state; these are implementation details and must not be selected from app CSS. The public Item remains nested inside those wrappers.
 
-Without `child`, Item reuses Card Root's surface, radius, semantic colors, ring, spacing, and overflow behavior. With `child`, no Card visual classes are supplied. DragHandle and ResizeHandle follow the same distinction between required structure and replaceable default visuals. Public classes are merged with `cn`; ResizeHandle also passes essential placement as inline style so delegated elements remain positioned when they replace the supplied class.
+Root and Item are headless. Without `child`, Item renders a `div`; with `child`, it renders only the delegated element. In both cases Item forwards its `class` unchanged and adds no visual, sizing, or positioning classes. DragHandle and ResizeHandle default to compact ghost Buttons and allow their complete visual elements to be replaced. Their public classes are merged with `cn`; ResizeHandle also passes essential placement and dimensions as inline style so delegated elements remain positioned when they replace the supplied class.
 
 WidgetGrid imports GridStack's structural stylesheet inside Root. Apps do not add GridStack classes, attributes, wrappers, or stylesheet imports themselves.
 
@@ -367,11 +367,11 @@ WidgetGrid imports GridStack's structural stylesheet inside Root. Apps do not ad
 ## Accessibility
 
 - Default DragHandle is a native `button` with `type="button"`, disabled propagation, focus styling from Button, and localized accessible name.
-- ResizeHandle and its delegated replacement receive a role, tab stop, accessible name, disabled state, 44-pixel touch target, and southeast resize cursor. Pointer dragging and resizing are the interaction mechanisms supplied in this version; provide ordinary move/resize controls when keyboard-only layout editing is required.
+- The default ResizeHandle is a native Button with Button's focus styling, disabled behavior, and a 44-pixel extended pointer target. Delegated replacements receive the equivalent role, tab stop, accessible name, disabled state, and southeast resize cursor. Pointer dragging and resizing are the interaction mechanisms supplied in this version; provide ordinary move/resize controls when keyboard-only layout editing is required.
 - Override handle labels with widget-specific text when the generic default would make several controls indistinguishable.
 - Keep interactive buttons, links, fields, and menus outside a DragHandle. The handle should describe moving, not perform another action.
 - `static` and disabled values remove handles from the tab order and prevent pointer interaction.
-- Item is a visual container, not a landmark or heading. Add app-owned semantics and labelled regions only where the content structure requires them.
+- Item is a headless container, not a landmark or heading. Add app-owned semantics and labelled regions only where the content structure requires them.
 - Collision movement is spatial. Persist and announce important layout changes in app code when users need confirmation beyond the visible animation.
 
 ---
@@ -413,12 +413,11 @@ The local component targets `gridstack@13.2.0`. Root imports `gridstack/dist/gri
 
 ### Component files
 
-Copy the complete `src/lib/components/ui/widget-grid` folder. WidgetGrid also requires these xvelte component folders:
+Copy the complete `src/lib/components/ui/widget-grid` folder. WidgetGrid also requires this xvelte component folder:
 
 - `src/lib/components/ui/button`: `button-root.svelte`, `index.ts`, and `README.md`. Follow Button's README for its full package, token, and utility setup.
-- `src/lib/components/ui/card`: `card-root.svelte`, `card-header.svelte`, `card-title.svelte`, `card-description.svelte`, `card-action.svelte`, `card-content.svelte`, `card-footer.svelte`, `index.ts`, and `README.md`. Follow Card's README for its full package, token, and utility setup.
 
-WidgetGrid requires no other xvelte component, hook, public attachment, shared component stylesheet, image, font, network service, or route-level integration. Its context and adapter files are private files copied with the component folder.
+Card is used only by one optional example and is not a WidgetGrid dependency. WidgetGrid requires no other xvelte component, hook, public attachment, shared component stylesheet, image, font, network service, or route-level integration. Its context and adapter files are private files copied with the component folder.
 
 ### Shared utilities
 
@@ -462,7 +461,7 @@ Configure Paraglide so `$lib/paraglide/messages.js` is generated, and add every 
 
 ### Global styles
 
-Root imports all GridStack-specific structural CSS. WidgetGrid's own default ResizeHandle uses the same `muted`, `muted-foreground`, and `foreground` semantic colors as Button and Card. Copy and configure those components first; their READMEs include the exact `layout.css` variables, `@theme` mappings, border base rule, and replaceable theme values required by the complete composition.
+Root imports all GridStack-specific structural CSS, prevents its private Item wrapper from creating an outer scrollbar, and restyles its interaction placeholder with `--muted` and `--radius`. WidgetGrid's handles use Button's `muted`, `muted-foreground`, and `foreground` semantic colors. Copy and configure Button first; its README includes the exact `layout.css` variables, `@theme` mappings, border base rule, and replaceable theme values required by the handles.
 
 WidgetGrid adds no component-specific CSS variable, global class, keyframe, animation import, or font. The app remains responsible for light/dark theme activation.
 
@@ -473,9 +472,9 @@ WidgetGrid adds no component-specific CSS variable, global class, keyframe, anim
 | File                               | Responsibility                                                                                            |
 | ---------------------------------- | --------------------------------------------------------------------------------------------------------- |
 | `widget-grid-root.svelte`          | Root props, transparent structural DOM, responsive engine lifecycle, state attributes, and callbacks.     |
-| `widget-grid-item.svelte`          | Declarative registration, reactive state, private wrappers, default Card surface, and delegation.         |
+| `widget-grid-item.svelte`          | Headless Item wrapper, declarative registration, reactive state, private engine wrappers, and delegation. |
 | `widget-grid-drag-handle.svelte`   | Required explicit drag registration, default ghost Button, grip icon, label, and delegation.              |
-| `widget-grid-resize-handle.svelte` | Single native bottom-right handle, touch target, resize icon, localized label, and delegation.            |
+| `widget-grid-resize-handle.svelte` | Single native bottom-right ghost Button, extended pointer target, resize icon, label, and delegation.     |
 | `widget-grid-context.svelte.ts`    | Native Svelte contexts, item and handle registries, reactive interaction state, and callback routing.     |
 | `widget-grid-adapter.ts`           | Private GridStack translation, responsive columns, native interactions, collision updates, and snapshots. |
 | `widget-grid-types.ts`             | Public engine-independent item, breakpoint, and mode types.                                               |

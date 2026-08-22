@@ -517,7 +517,7 @@
 						</Button.Root>
 					{/snippet}
 				</Popover.Trigger>
-				<Popover.Content class="w-18 p-0" align="start">
+				<Popover.Content class="w-fit p-0" align="start">
 					<Command.Root>
 						<Command.List>
 							<Command.Group>
@@ -536,6 +536,7 @@
 				{activeFormat.toUpperCase()}
 			</Button.Root>
 		{/if}
+
 		<Input.Root
 			class="h-9 flex-1 font-mono text-[10px] uppercase"
 			{value}

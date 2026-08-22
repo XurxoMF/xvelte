@@ -1,8 +1,8 @@
 # Sortable
 
-A headless drag-and-drop list for reordering objects with stable string or number IDs. It keeps provisional ordering responsive during a drag, supports pointer and keyboard interaction through `svelte-dnd-action`, reports intermediate and committed arrays, and requires an explicit DragHandle inside every draggable Item.
+A declarative list for reordering content with pointer or keyboard controls. Root owns the `svelte-dnd-action` lifecycle and updates a bindable identifier order internally, each Item registers itself through context, and explicit DragHandle descendants keep ordinary item interactions separate from reordering.
 
-Use Sortable when the app owns the item layout and needs reorder callbacks without prescribed visual styling. Do not use it for moving arbitrary elements without data IDs, nesting interactive drop zones without additional design work, or cases where ordinary move-up/move-down controls would be clearer.
+Use Sortable for one ordered collection whose visual design and application data belong to your app. Do not use it for free-positioned layouts, moving items between independent lists, or cases where simple Move up and Move down buttons would be clearer.
 
 <!-- xvelte-example: overview -->
 
@@ -23,122 +23,116 @@ Use Sortable when the app owns the item layout and needs reorder callbacks witho
 
 ## Import
 
-Import every public part through the component's `index.ts`:
-
 ```svelte
 <script lang="ts">
-	import type { SortableItem, SortableRenderState } from "$lib/components/ui/sortable";
+	import type { SortableItemId, SortableItemState, SortableOrder } from "$lib/components/ui/sortable";
 
 	import * as Sortable from "$lib/components/ui/sortable";
 </script>
 ```
 
-The component exports `Root`, `Item`, and `DragHandle`; the `RootProps`, `ItemProps`, `DragHandleProps`, `SortableItem`, and `SortableRenderState` types are also public.
+The component exports `Root`, `Item`, `DragHandle`, and `orderItems`, plus the public `RootProps`, `ItemProps`, `DragHandleProps`, `SortableItemId`, `SortableOrder`, and `SortableItemState` types.
 
 ---
 
 ## Anatomy
 
-Root renders the current ordering through its required `item` snippet. Each rendered entry needs an Item and a descendant DragHandle:
+Declare Items directly inside Root. Every movable Item needs an explicit descendant DragHandle:
 
 ```svelte
-<Sortable.Root {items} item={sortableItem} />
-
-{#snippet sortableItem(entry: Entry, state: Sortable.SortableRenderState)}
-	<Sortable.Item>
-		<span>{entry.label}</span>
-		<Sortable.DragHandle aria-label={`Move ${entry.label}`}>Drag</Sortable.DragHandle>
+<Sortable.Root>
+	<Sortable.Item id="first">
+		<span>First task</span>
+		<Sortable.DragHandle aria-label="Move First task">Drag</Sortable.DragHandle>
 	</Sortable.Item>
-{/snippet}
+</Sortable.Root>
 ```
 
-Item is only the draggable entry container. It deliberately does not activate whole-item dragging. Without a DragHandle inside it, the Item cannot be dragged.
+Each Item renders its own element and registers its ID and lifecycle state with the nearest Root, like the other declarative xvelte components. Root coordinates `svelte-dnd-action` and writes provisional and final IDs to `order`; no `items` prop or item-rendering snippet is needed.
 
 ---
 
 ## Basic usage
 
-Keep app state synchronized from `onConsider` so provisional positions remain available outside the component, and use `onDrop` for persistence:
+Initialize `order` from persisted IDs, bind it to Root, and use `orderItems` to produce the single keyed loop consumed by Svelte. Root changes `order` internally during pointer and keyboard movement, so an effect can persist every change without lifecycle callbacks:
 
 ```svelte
 <script lang="ts">
-	import type { SortableRenderState } from "$lib/components/ui/sortable";
-
 	import * as Sortable from "$lib/components/ui/sortable";
 
-	type Task = {
-		id: number;
-		label: string;
-	};
+	type Task = { id: number; label: string };
 
-	let tasks = $state<Task[]>([
+	const tasks: Task[] = [
 		{ id: 1, label: "Confirm venue" },
 		{ id: 2, label: "Send invitations" },
 		{ id: 3, label: "Order supplies" }
-	]);
+	];
 
-	function updateOrder(next: Task[]) {
-		tasks = next;
-	}
+	let order = $state<(string | number)[]>(loadTaskOrder());
+	const orderedTasks = $derived(Sortable.orderItems(tasks, order, (task) => task.id));
 
-	function saveOrder(next: Task[]) {
-		tasks = next;
-		void persistTaskOrder(next.map((task) => task.id));
-	}
+	$effect(() => {
+		void persistTaskOrder(order);
+	});
 </script>
 
-{#snippet taskItem(task: Task, state: SortableRenderState)}
-	<Sortable.Item class="flex items-center gap-3 rounded-md border bg-background p-3" data-dragging={state.dragging || undefined}>
-		<span class="flex-1">{task.label}</span>
+<Sortable.Root class="space-y-2" bind:order>
+	{#each orderedTasks as task (task.id)}
+		<Sortable.Item id={task.id} class="flex items-center gap-3 rounded-md border p-3 data-[dragging=true]:opacity-60">
+			<span class="flex-1">{task.label}</span>
 
-		<Sortable.DragHandle>
-			{#snippet child({ props })}
-				<button {...props} type="button" class="cursor-grab rounded-sm px-2 py-1 active:cursor-grabbing" aria-label={`Move ${task.label}`}>
-					Drag
-				</button>
-			{/snippet}
-		</Sortable.DragHandle>
-	</Sortable.Item>
-{/snippet}
-
-<Sortable.Root items={tasks} item={taskItem} onConsider={updateOrder} onDrop={saveOrder} />
+			<Sortable.DragHandle aria-label={`Move ${task.label}`} />
+		</Sortable.Item>
+	{/each}
+</Sortable.Root>
 ```
 
-Always spread every delegated DragHandle prop. Those props contain the attachment that registers the element with the drag-and-drop library.
+`orderItems` never mutates `tasks` or `order`. It ignores persisted IDs that no longer exist and appends new tasks missing from the saved order in their input order. Keep the loop keyed by the same stable IDs supplied to Item.
+
+`order` is live, not drop-only state. Whenever the active Item reaches a new provisional position, Root writes that exact current ID sequence to the binding and then calls `onDragging`. Reading `order` inside `onDragging` therefore returns the same provisional order currently displayed, even though the Item has not been dropped yet. When the pointer is released, or a keyboard drag is completed, Root commits the final sequence and only then calls `onDragEnd` once. `onDragEnd` observes the completed interaction; it does not perform or enable the reordering.
+
+The effect runs for initial normalization and every provisional move. Use `onDragEnd` instead when persistence should happen only once after a completed interaction, or when it needs the active Item snapshot. Always spread every delegated DragHandle prop because it contains the attachment that connects the handle to the drag-and-drop action.
 
 ---
 
 ## Examples
 
+### Item-level lifecycle
+
+Root callbacks receive the active state and the complete order. Item callbacks receive only that Item's current state:
+
+```svelte
+<Sortable.Root
+	bind:order
+	onDragStart={(active, states) => console.log("Started", active, states)}
+	onDragging={(active, states) => console.log("Moving", active, states)}
+	onDragEnd={(active, states) => console.log("Finished", active, states)}
+>
+	{#each orderedTasks as task (task.id)}
+		<Sortable.Item id={task.id} onDragging={(state) => console.log("Position", state.index)}>
+			<span>{task.label}</span>
+			<Sortable.DragHandle aria-label={`Move ${task.label}`}>Drag</Sortable.DragHandle>
+		</Sortable.Item>
+	{/each}
+</Sortable.Root>
+```
+
 ### Disabled sorting
 
 ```svelte
-<Sortable.Root items={tasks} item={taskItem} disabled={saving} onConsider={updateOrder} onDrop={saveOrder} />
+<Sortable.Root bind:order disabled={saving} data-saving={saving || undefined}>
+	{#each orderedTasks as task (task.id)}
+		<Sortable.Item id={task.id}>...</Sortable.Item>
+	{/each}
+</Sortable.Root>
 ```
 
-`disabled` prevents the zone from starting or accepting drag operations. The component does not automatically change Item or DragHandle styling, so reflect the state visually and remove misleading instructions in app code.
-
-### Observe drag state
-
-The item snippet receives its current index and whether it represents the active or temporary shadow entry:
-
-```svelte
-{#snippet taskItem(task: Task, { index, dragging }: SortableRenderState)}
-	<Sortable.Item data-dragging={dragging || undefined} class="flex items-center gap-3 opacity-100 data-[dragging=true]:opacity-50">
-		<span>{index + 1}. {task.label}</span>
-		<Sortable.DragHandle aria-label={`Move ${task.label}`}>Drag</Sortable.DragHandle>
-	</Sortable.Item>
-{/snippet}
-```
-
-Use `dragging` for lightweight visual feedback. Do not use the temporary render state as persisted app data.
+Root and every rendered Item expose `data-disabled="true"`. The dependency prevents pointer and keyboard dragging; your app remains responsible for the disabled visual treatment.
 
 ### Delegated Item element
 
-Item can apply its props to an app-owned element:
-
 ```svelte
-<Sortable.Item>
+<Sortable.Item id={task.id}>
 	{#snippet child({ props })}
 		<article {...props} class="flex items-center gap-3 rounded-md border p-3">
 			<span class="flex-1">{task.label}</span>
@@ -148,103 +142,113 @@ Item can apply its props to an app-owned element:
 </Sortable.Item>
 ```
 
-Spread all supplied Item props so its stable slot and bindable reference attachment remain connected. Delegation does not make the Item a handle.
+Spread every supplied prop on the delegated element to preserve its ref attachment and stable state attributes.
 
 ---
 
 ## Public API
 
-Sortable is a local wrapper around the installed `svelte-dnd-action` drag-handle API. The tables document the complete xvelte API; see the [official drag-handle documentation](https://github.com/isaacHagoel/svelte-dnd-action#drag-handles-support) for dependency-owned interaction details. The component's `index.ts`, exported types, and source are the source of truth.
+Sortable wraps the installed `svelte-dnd-action` drag-handle API. See the [official drag-handle documentation](https://github.com/isaacHagoel/svelte-dnd-action#drag-handles-support) for dependency-owned interaction details. The component's `index.ts` and exported types are the source of truth.
 
 ### `Sortable.Root`
 
-`RootProps<Item>` accepts an item type extending `SortableItem`.
+| Prop           | Type                      | Default | Behavior                                                                       |
+| -------------- | ------------------------- | ------- | ------------------------------------------------------------------------------ |
+| `children`     | `Snippet`                 | —       | Declarative Item registrations. Non-Item output is unsupported.                |
+| `order`        | `(string \| number)[]`    | `[]`    | Bindable authoritative ID order, updated internally before observer callbacks. |
+| `disabled`     | `boolean`                 | `false` | Prevents pointer and keyboard reordering.                                      |
+| `onDragStart`  | `(state, states) => void` | —       | Optionally observes the initial state when dragging starts.                    |
+| `onDragging`   | `(state, states) => void` | —       | Optionally observes provisional ordering after `order` updates.                |
+| `onDragEnd`    | `(state, states) => void` | —       | Runs once after release or keyboard completion and the final `order` update.   |
+| `flipDuration` | `number`                  | `150`   | Milliseconds used to coordinate dependency position transitions.               |
+| `ref`          | `HTMLDivElement \| null`  | `null`  | Bindable rendered Root element.                                                |
+| `class`        | `ClassValue`              | —       | Forwarded unchanged; Root adds no visual classes.                              |
 
-| Prop           | Type                                   | Default  | Behavior                                                                    |
-| -------------- | -------------------------------------- | -------- | --------------------------------------------------------------------------- |
-| `items`        | `Item[]`                               | Required | App-owned ordered objects. Every object needs a stable, unique `id`.        |
-| `item`         | `Snippet<[Item, SortableRenderState]>` | Required | Renders each entry in the action-owned provisional order.                   |
-| `disabled`     | `boolean`                              | `false`  | Passes the disabled state to the drag-handle zone.                          |
-| `onDragStart`  | `(item: Item, index: number) => void`  | —        | Runs once the local wrapper identifies the source item at drag start.       |
-| `onConsider`   | `(items: Item[]) => void`              | —        | Reports cleaned provisional ordering during the interaction.                |
-| `onDrop`       | `(items: Item[]) => void`              | —        | Reports the cleaned final ordering after the drag stops.                    |
-| `flipDuration` | `number`                               | `150`    | Milliseconds supplied to the dependency's position-transition coordination. |
-| `ref`          | `HTMLDivElement \| null`               | `null`   | Bindable Root element.                                                      |
-| `class`        | `string`                               | —        | Applied directly; Root has no local visual classes.                         |
+Initialize `order` before rendering when restoring persisted state. Root normalizes it against registered Items: stale IDs are removed, duplicates are ignored, and newly registered IDs are appended. During dragging Root writes a new array to the binding before calling `onDragging` or `onDragEnd`; callbacks never need to reorder app data. Render the keyed Item loop from `orderItems` so Svelte and the dependency share the same DOM order. Observe `order` with an effect for every change, or use `onDragEnd` when only the completed interaction matters.
 
-Root forwards remaining native `div` attributes and handlers. It owns `items`, the dependency actions, `onconsider`, `onfinalize`, and `data-slot`; overriding those through forwarded attributes can break reordering.
-
-The component synchronizes external `items` while idle by comparing array length and IDs. Changes to other object fields with the same IDs do not replace the internal array until IDs or order change, so keep item objects stable or change the surrounding Root key when a full refresh is required.
-
-`onConsider` and `onDrop` receive arrays with the dependency's temporary shadow entry removed and duplicate IDs discarded. The callbacks do not bind `items` automatically; assign the result in app state when it should become authoritative.
+Each Root callback receives the active `SortableItemState` first and the complete ordered `SortableItemState[]` second. Root forwards remaining native `div` props and handlers, while owning the DnD action, `onconsider`, `onfinalize`, and stable data attributes.
 
 ### `Sortable.Item`
 
-| Prop       | Type                   | Default | Behavior                                                                                  |
-| ---------- | ---------------------- | ------- | ----------------------------------------------------------------------------------------- |
-| `children` | `Snippet`              | —       | Renders item content and the required descendant DragHandle inside a default `div`.       |
-| `child`    | `Snippet<[{ props }]>` | —       | Replaces the default element. Spread every supplied prop on the delegated element.        |
-| `ref`      | `HTMLElement \| null`  | `null`  | Bindable reference connected through a Svelte attachment for direct and delegated output. |
-| `class`    | `string`               | —       | Forwarded unchanged; Item provides no visual classes.                                     |
+| Prop          | Type                     | Default                   | Behavior                                                                         |
+| ------------- | ------------------------ | ------------------------- | -------------------------------------------------------------------------------- |
+| `id`          | `string \| number`       | Hydration-stable local ID | Registers the Item; use an explicit ID for application ordering and persistence. |
+| `children`    | `Snippet`                | —                         | Item content, normally including one DragHandle.                                 |
+| `child`       | `Snippet<[{ props }]>`   | —                         | Replaces the default `div`; spread every supplied prop.                          |
+| `onDragStart` | `(state) => void`        | —                         | Runs when this Item starts being dragged.                                        |
+| `onDragging`  | `(state) => void`        | —                         | Runs whenever this Item's provisional index changes or is republished.           |
+| `onDragEnd`   | `(state) => void`        | —                         | Runs with this Item's committed position.                                        |
+| `ref`         | `HTMLDivElement \| null` | `null`                    | Bindable visible Item element.                                                   |
+| `class`       | `ClassValue`             | —                         | Forwarded unchanged; Item adds no visual classes.                                |
 
-Item forwards compatible native element attributes. It supplies the stable `data-slot` and reference attachment but no drag action, role, label, keyboard behavior, or visual state. A descendant DragHandle is required for dragging.
+Remaining native `div` props are forwarded to the visible Item element. IDs must be unique within a Root. Item declarations must remain descendants of that Root and should be keyed by their explicit IDs when generated with `{#each}`.
 
 ### `Sortable.DragHandle`
 
-| Prop         | Type                   | Default                       | Behavior                                                                            |
-| ------------ | ---------------------- | ----------------------------- | ----------------------------------------------------------------------------------- |
-| `children`   | `Snippet`              | —                             | Renders visible handle content inside the default `div`.                            |
-| `child`      | `Snippet<[{ props }]>` | —                             | Replaces the default element. Spread every supplied prop to preserve drag behavior. |
-| `aria-label` | `string`               | Localized `"Drag to reorder"` | Accessible name forwarded to the handle element.                                    |
-| `ref`        | `HTMLElement \| null`  | `null`                        | Bindable handle reference.                                                          |
-| `class`      | `string`               | —                             | Forwarded unchanged; DragHandle provides no visual classes.                         |
+| Prop         | Type                   | Default                       | Behavior                                                       |
+| ------------ | ---------------------- | ----------------------------- | -------------------------------------------------------------- |
+| `children`   | `Snippet`              | Grip icon                     | Replaces the default visible grip icon.                        |
+| `child`      | `Snippet<[{ props }]>` | —                             | Replaces the default ghost Button; spread every supplied prop. |
+| `aria-label` | `string`               | Localized `"Drag to reorder"` | Accessible handle name.                                        |
+| `ref`        | `HTMLElement \| null`  | `null`                        | Bindable rendered handle element.                              |
+| `class`      | `ClassValue`           | —                             | Merged with the default grab-cursor classes.                   |
 
-DragHandle registers its rendered element with `svelte-dnd-action`. Remaining compatible native element attributes are forwarded. Prefer a context-specific accessible label such as `Move Quarterly report` when multiple handles are present.
+Without `child`, DragHandle renders the same ghost `Button.Root` with `size="icon-sm"` and grip icon used by WidgetGrid. With `child`, it applies the behavior and state props to the user's element instead. Give each handle a contextual accessible name.
 
-### Public types
+### `orderItems`
 
 ```ts
-type SortableItem = {
-	id: string | number;
-};
+function orderItems<Item>(items: readonly Item[], order: readonly SortableItemId[], getId: (item: Item) => SortableItemId): Item[];
+```
 
-type SortableRenderState = {
+Returns a new array without changing either input. Known IDs follow `order`, stale IDs are ignored, and records absent from `order` follow in their original input order. `getId` must return the same identifier supplied to the corresponding Item.
+
+### Public ordering types
+
+```ts
+type SortableItemId = string | number;
+type SortableOrder = SortableItemId[];
+
+type SortableItemState = {
+	id: SortableItemId;
 	index: number;
-	dragging: boolean;
 };
 ```
+
+Snapshots contain only ordering metadata. Keep labels, records, and other application payload in app state and map them by `id`.
 
 ---
 
 ## Styling and DOM contract
 
-Sortable is intentionally headless and adds no visual classes.
+Root and Item are headless. DragHandle provides the collection's standard compact ghost Button by default.
 
-| Part       | Stable hook                        | Default element |
-| ---------- | ---------------------------------- | --------------- |
-| Root       | `data-slot="sortable"`             | `div`           |
-| Item       | `data-slot="sortable-item"`        | `div`           |
-| DragHandle | `data-slot="sortable-drag-handle"` | `div`           |
+| Part       | Stable hook                        | Additional stable state          |
+| ---------- | ---------------------------------- | -------------------------------- |
+| Root       | `data-slot="sortable"`             | `data-dragging`, `data-disabled` |
+| Item       | `data-slot="sortable-item"`        | `data-dragging`, `data-disabled` |
+| DragHandle | `data-slot="sortable-drag-handle"` | `data-disabled`                  |
 
-The dependency adds temporary inline styles, ARIA attributes, tab stops, and shadow elements while dragging. Treat those as dependency-owned implementation details. Use `SortableRenderState.dragging` or app-owned attributes for visual state instead of depending on undocumented generated markup.
+Boolean state attributes are present with value `"true"` and omitted otherwise. Root `data-dragging` means any registered Item is being dragged; Item `data-dragging` identifies the active Item, including its temporary pointer shadow.
 
-Item and DragHandle do not merge classes; the provided `class` value is forwarded unchanged. Root also has no class-merging utility. The component has no semantic color requirement, CSS variable, keyframe, shared stylesheet, icon, or animation class.
+Root and Item default to `div`, and Item may delegate its element. DragHandle defaults to Button and merges `cursor-grab touch-none active:cursor-grabbing` with its `class`; delegated handles receive the same merged class and behavioral props. Root and Item classes are forwarded unchanged. `svelte-dnd-action` also applies temporary inline styles, ARIA attributes, tab stops, cloned drag elements, and shadow decoration; those are dependency-owned and are not stable styling hooks.
+
+The component requires no semantic color, CSS variable, global keyframe, or shared stylesheet.
 
 ---
 
 ## Accessibility
 
-`svelte-dnd-action` supplies pointer and keyboard drag behavior and screen-reader announcements. The local wrapper ensures DragHandle has a default accessible label, but the app still owns the visible interaction design.
+`svelte-dnd-action` provides pointer and keyboard dragging plus screen-reader announcements. Press Space or Enter on a focused handle to pick up or drop an Item, and use the arrow keys while it is picked up to change its position.
 
-- Render exactly one clear DragHandle inside every Item that should be movable.
-- Give each handle a contextual accessible name when the generic default would make several controls indistinguishable.
-- Use a native `button` through `child` when the handle should have familiar control semantics and visible focus styling; spread every supplied prop.
-- Keep a visible focus indicator and adequate pointer target on the handle.
-- Do not put essential item actions on the handle itself because activating it starts reordering behavior.
-- Keep IDs unique and stable. Duplicate IDs are removed by local cleanup and can make the rendered list inconsistent.
-- Provide non-drag alternatives such as Move up and Move down actions when the workflow needs the simplest predictable assistive interaction.
+- Render one clear DragHandle for each movable Item.
+- The default handle is a native Button with focus styling. When using `child`, prefer an equivalent native button and spread every supplied prop.
+- Give repeated handles item-specific accessible names such as `Move Quarterly report`.
+- Keep Item IDs unique and stable.
+- Do not place unrelated actions inside the handle.
+- Provide Move up and Move down alternatives when the workflow requires simpler assistive controls.
 
-Without DragHandle an Item remains ordinary content and cannot be moved by pointer or keyboard.
+When Root is disabled, the dependency prevents starting a drag. The app should also communicate that state visually.
 
 ---
 
@@ -252,11 +256,11 @@ Without DragHandle an Item remains ordinary content and cannot be moved by point
 
 DragHandle uses one Paraglide message from `messages/en.json`:
 
-| Message ID         | English value     | Used by                              |
-| ------------------ | ----------------- | ------------------------------------ |
-| `merry_finch_drag` | `Drag to reorder` | Default DragHandle accessible label. |
+| Message ID         | English value     | Used by                             |
+| ------------------ | ----------------- | ----------------------------------- |
+| `merry_finch_drag` | `Drag to reorder` | Default DragHandle accessible label |
 
-Override `aria-label` for item-specific copy. Visible item content, disabled explanations, status text, persistence errors, and alternative move actions belong to the app and must use its localization system.
+Override `aria-label` for item-specific copy. Item content, persistence messages, and alternative movement controls belong to the app and use its localization system.
 
 ---
 
@@ -264,54 +268,70 @@ Override `aria-label` for item-specific copy. Visible item content, disabled exp
 
 ### Packages
 
-Install the runtime drag-and-drop package first and the localization compiler as a development dependency:
-
 ```sh
 # Bun
-bun add svelte-dnd-action
-bun add -D @inlang/paraglide-js
+bun add svelte-dnd-action @tabler/icons-svelte clsx tailwind-merge tailwind-variants
+bun add -D @inlang/paraglide-js tailwindcss
 
 # npm
-npm install svelte-dnd-action
-npm install -D @inlang/paraglide-js
+npm install svelte-dnd-action @tabler/icons-svelte clsx tailwind-merge tailwind-variants
+npm install -D @inlang/paraglide-js tailwindcss
 
 # pnpm
-pnpm add svelte-dnd-action
-pnpm add -D @inlang/paraglide-js
+pnpm add svelte-dnd-action @tabler/icons-svelte clsx tailwind-merge tailwind-variants
+pnpm add -D @inlang/paraglide-js tailwindcss
 ```
 
-The local component targets the stable version declared by xvelte (`svelte-dnd-action@^0.9.69`) and uses `dragHandleZone`, `dragHandle`, drag event metadata, and the shadow-item marker. Follow the [official package documentation](https://github.com/isaacHagoel/svelte-dnd-action) when changing dependency-owned behavior.
+The component targets `svelte-dnd-action@^0.9.69` and uses `dragHandleZone`, `dragHandle`, public event metadata, and the public shadow marker.
 
 ### Component files
 
-Copy the complete `src/lib/components/ui/sortable` component folder:
+Copy the complete `src/lib/components/ui/sortable` folder:
 
 - `sortable-root.svelte`
 - `sortable-item.svelte`
 - `sortable-drag-handle.svelte`
+- `sortable-context.svelte.ts`
+- `sortable-types.ts`
 - `index.ts`
 - `README.md`
 
-Sortable requires no other xvelte component, shared utility, icon export, hook, public attachment, context module, shared style, font, image, or network service. Its private Svelte attachments are defined inside Item and DragHandle.
+Sortable also requires `src/lib/components/ui/button`: copy `button-root.svelte`, `index.ts`, and `README.md`, then follow Button's README for its complete package, utility, and semantic-token setup. The context file is internal but required. Sortable needs no other xvelte component, hook, public attachment, shared component stylesheet, image, font, network service, or route-level integration.
+
+### Shared utilities
+
+Sortable imports `cn`, `WithElementRef`, and `WithoutChildren` from `$lib/utils`. Copy their existing documented definitions from xvelte; Button's README covers the `cn` packages and setup.
+
+### Icons
+
+DragHandle uses the semantic icon facade. Add this exact export to `src/lib/icons.ts`:
+
+```ts
+export { default as DragHandleIcon } from "@tabler/icons-svelte/icons/grip-vertical";
+```
+
+The package block includes `@tabler/icons-svelte`.
 
 ### Localization setup
 
-Configure Paraglide so `$lib/paraglide/messages.js` is generated and add the message listed in [Localization](#localization) to `messages/en.json`. Its exact key and value are already shown there and are not duplicated here.
+Configure Paraglide so `$lib/paraglide/messages.js` is generated and add the message listed in [Localization](#localization) to `messages/en.json`.
 
 ### Global styles
 
-No global stylesheet import, semantic token, theme mapping, custom variant, keyframe, or component-specific CSS variable is required. Add app-owned styles to Root, Item, and DragHandle through their `class` props.
+Sortable adds no component-specific stylesheet, variable, keyframe, or font. Its default DragHandle uses Button's semantic colors and focus styles, so copy and configure Button first.
 
 ---
 
 ## File organization
 
-| File                          | Responsibility                                                                                                 |
-| ----------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `sortable-root.svelte`        | Drag-handle zone, provisional ordering, shadow cleanup, callbacks, disabled state, and item snippet rendering. |
-| `sortable-item.svelte`        | Headless item container, public reference attachment, delegated element, and stable slot.                      |
-| `sortable-drag-handle.svelte` | Required drag-handle registration, default localized label, delegated element, reference, and stable slot.     |
-| `index.ts`                    | Public components and all exported props, item, and render-state types.                                        |
-| `README.md`                   | Composition, examples, API, drag behavior, styling, accessibility, localization, and dependencies.             |
+| File                          | Responsibility                                                                                          |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `sortable-root.svelte`        | Transparent declarative wrapper, DnD action, lifecycle translation, and stable Root state.              |
+| `sortable-item.svelte`        | Visible Item element, context registration, pointer-shadow replacement, callbacks, delegation, and ref. |
+| `sortable-drag-handle.svelte` | Explicit dependency handle action, delegated element, localized label, and ref.                         |
+| `sortable-context.svelte.ts`  | Native Svelte contexts, Item registry, action ordering, shadow cleanup, and callback routing.           |
+| `sortable-types.ts`           | Public ID, order, snapshot types, and the non-mutating `orderItems` helper.                             |
+| `index.ts`                    | Public components, helper, and exported prop and ordering types.                                        |
+| `README.md`                   | Composition, examples, API, DOM contract, accessibility, localization, and installation.                |
 
-The component's `index.ts`, exported types, and local source are the source of truth for the public API.
+The component's `index.ts` and exported types are the source of truth for the public API.

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import * as Button from "$lib/components/ui/button";
+	import * as Typography from "$lib/components/ui/typography";
 	import { UseFrecency } from "$lib/hooks/use-frecency.svelte";
 
 	const recentProjects = new UseFrecency("recent-projects", {}, { maxItems: 5 });
@@ -21,7 +22,7 @@
 	{/each}
 </div>
 
-<p class="mt-4 text-sm font-medium">Ranked by recent use</p>
+<Typography.P>Ranked by recent use</Typography.P>
 <ul>
 	{#each recentProjects.items as id (id)}
 		{@const project = projects.find((item) => item.id === id)}

@@ -11,15 +11,19 @@
 </script>
 
 <Stepper.Root bind:step>
-	<Stepper.Nav aria-label="Account setup progress">
+	<Stepper.Nav aria-label="Account setup progress" class="w-full justify-between px-4">
 		{#each steps as item, index (item.title)}
 			<Stepper.Item>
-				<Stepper.Trigger>
+				<Stepper.Trigger class="flex w-[150px] flex-col items-center">
 					<Stepper.Indicator>{index + 1}</Stepper.Indicator>
-					<Stepper.Title>{item.title}</Stepper.Title>
-					<Stepper.Description>{item.description}</Stepper.Description>
+
+					<div class="flex flex-col">
+						<Stepper.Title>{item.title}</Stepper.Title>
+						<Stepper.Description>{item.description}</Stepper.Description>
+					</div>
 				</Stepper.Trigger>
-				<Stepper.Separator aria-hidden="true" />
+
+				<Stepper.Separator aria-hidden="true" class="left-[75px]" />
 			</Stepper.Item>
 		{/each}
 	</Stepper.Nav>

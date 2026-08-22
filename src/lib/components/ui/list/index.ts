@@ -1,4 +1,4 @@
-import Root, { type RootProps, type RootSpacings, type RootVariants } from "./list-root.svelte";
+import Root, { type RootProps, type RootSpacings, type RootVariants, rootVariants } from "./list-root.svelte";
 import Item, { type ItemProps } from "./list-item.svelte";
 
 export {
@@ -8,5 +8,7 @@ export {
 	type RootProps,
 	type RootVariants,
 	type RootSpacings,
-	type ItemProps
+	type ItemProps,
+	//
+	rootVariants
 };

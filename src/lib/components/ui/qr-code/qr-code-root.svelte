@@ -61,7 +61,7 @@
 </script>
 
 <div
-	class={cn("relative inline-flex shrink-0 items-center justify-center", className)}
+	class={cn("relative inline-flex shrink-0 items-center justify-center overflow-hidden", className)}
 	data-slot="qr-code"
 	style:width={`${size}px`}
 	style:height={`${size}px`}

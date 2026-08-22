@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Button from "$lib/components/ui/button";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
 
 	function renameFile() {
@@ -10,17 +11,19 @@
 	}
 </script>
 
-<DropdownMenu.Root>
-	<DropdownMenu.Trigger class="rounded-md border px-3 py-2 text-sm">File actions</DropdownMenu.Trigger>
+<div class="flex items-center justify-center">
+	<DropdownMenu.Root>
+		<DropdownMenu.Trigger class={Button.rootVariants({ variant: "outline" })}>File actions</DropdownMenu.Trigger>
 
-	<DropdownMenu.Content>
-		<DropdownMenu.Item onSelect={renameFile}>
-			Rename
-			<DropdownMenu.Shortcut>F2</DropdownMenu.Shortcut>
-		</DropdownMenu.Item>
+		<DropdownMenu.Content>
+			<DropdownMenu.Item onSelect={renameFile}>
+				Rename
+				<DropdownMenu.Shortcut>F2</DropdownMenu.Shortcut>
+			</DropdownMenu.Item>
 
-		<DropdownMenu.Item disabled>Share</DropdownMenu.Item>
-		<DropdownMenu.Separator />
-		<DropdownMenu.Item variant="destructive" onSelect={deleteFile}>Delete</DropdownMenu.Item>
-	</DropdownMenu.Content>
-</DropdownMenu.Root>
+			<DropdownMenu.Item disabled>Share</DropdownMenu.Item>
+			<DropdownMenu.Separator />
+			<DropdownMenu.Item variant="destructive" onSelect={deleteFile}>Delete</DropdownMenu.Item>
+		</DropdownMenu.Content>
+	</DropdownMenu.Root>
+</div>

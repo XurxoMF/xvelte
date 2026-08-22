@@ -1,5 +1,6 @@
 <script lang="ts">
 	import * as HorizontalScroll from "$lib/components/ui/horizontal-scroll";
+	import * as Card from "$lib/components/ui/card";
 
 	const projects = [
 		{ name: "Storefront", status: "Ready for review" },
@@ -9,11 +10,13 @@
 	];
 </script>
 
-<HorizontalScroll.Root class="gap-4 pb-2" role="region" aria-label="Projects" tabindex={0}>
+<HorizontalScroll.Root class="gap-4" aria-label="Projects" tabindex={0}>
 	{#each projects as project (project.name)}
-		<article class="w-72 shrink-0 rounded-lg border p-4">
-			<h3 class="font-medium">{project.name}</h3>
-			<p class="text-sm text-muted-foreground">{project.status}</p>
-		</article>
+		<Card.Root class="w-90 shrink-0">
+			<Card.Header>
+				<Card.Title>{project.name}</Card.Title>
+				<Card.Description>{project.status}</Card.Description>
+			</Card.Header>
+		</Card.Root>
 	{/each}
 </HorizontalScroll.Root>

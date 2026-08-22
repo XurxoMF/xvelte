@@ -1,11 +1,14 @@
 <script lang="ts">
-	import * as Label from "$lib/components/ui/label";
+	import * as Field from "$lib/components/ui/field";
 	import * as Textarea from "$lib/components/ui/textarea";
 
 	let message = $state("");
 </script>
 
-<div class="grid gap-2">
-	<Label.Root for="message">Message</Label.Root>
-	<Textarea.Root id="message" name="message" bind:value={message} placeholder="Write your message" />
-</div>
+<Field.Field>
+	<Field.Label for="message">Message</Field.Label>
+
+	<Textarea.Root id="message" name="message" bind:value={message} placeholder="Write your message" aria-describedby="message-description" />
+
+	<Field.Description id="message-description">Share enough detail for us to understand your request.</Field.Description>
+</Field.Field>

@@ -10,4 +10,8 @@
 	let { ref = $bindable(null), class: className, ...restProps }: GridProps = $props();
 </script>
 
-<RangeCalendarPrimitive.Grid bind:ref class={cn("mt-4 flex w-full border-collapse flex-col gap-1", className)} {...restProps} />
+<RangeCalendarPrimitive.Grid
+	bind:ref
+	class={cn("mt-4 w-full table-fixed border-separate border-spacing-x-0 border-spacing-y-1", className)}
+	{...restProps}
+/>

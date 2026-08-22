@@ -1,9 +1,13 @@
 <script lang="ts">
 	import * as Tooltip from "$lib/components/ui/tooltip";
-
-	let { children } = $props();
 </script>
 
-<Tooltip.Provider delayDuration={500}>
-	{@render children()}
-</Tooltip.Provider>
+<div class="flex items-center justify-center">
+	<Tooltip.Provider delayDuration={100}>
+		<Tooltip.Root>
+			<Tooltip.Trigger>Hover me!</Tooltip.Trigger>
+
+			<Tooltip.Content>Some description!</Tooltip.Content>
+		</Tooltip.Root>
+	</Tooltip.Provider>
+</div>

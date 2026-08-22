@@ -3,7 +3,7 @@
 	import { PlusIcon } from "$lib/icons";
 </script>
 
-<div class="flex flex-col items-center gap-6">
+<div class="flex flex-col items-center justify-center gap-6">
 	<div class="flex flex-wrap items-center justify-center gap-2">
 		<Button.Root variant="default">Default</Button.Root>
 		<Button.Root variant="outline">Outline</Button.Root>

@@ -6,7 +6,7 @@
 	}
 </script>
 
-<Command.Root label="Workspace commands" class="max-w-md border shadow-md">
+<Command.Root label="Workspace commands" class="w-full">
 	<Command.Input placeholder="Search workspace commands..." />
 
 	<Command.List aria-label="Workspace commands">

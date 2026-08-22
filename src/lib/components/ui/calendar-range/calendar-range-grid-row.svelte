@@ -10,4 +10,4 @@
 	let { ref = $bindable(null), class: className, ...restProps }: GridRowProps = $props();
 </script>
 
-<RangeCalendarPrimitive.GridRow bind:ref class={cn("flex", className)} {...restProps} />
+<RangeCalendarPrimitive.GridRow bind:ref class={cn(className)} {...restProps} />

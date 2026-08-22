@@ -1,6 +1,6 @@
 # Input IPv6
 
-A segmented IPv6 address input with eight hexadecimal hextets, automatic focus movement, full-address paste handling, bindable validation state, and native form submission support. Use it for guided IPv6 entry; use a normal text input when users must freely edit compressed notation without expansion.
+A responsive segmented IPv6 address input with eight equal-width hexadecimal hextets, automatic focus movement, full-address paste handling, bindable validation state, and native form submission support. Use it for guided IPv6 entry; use a normal text input when users must freely edit compressed notation without expansion.
 
 <!-- xvelte-example: overview -->
 
@@ -27,19 +27,19 @@ A segmented IPv6 address input with eight hexadecimal hextets, automatic focus m
 </script>
 ```
 
-The component's `index.ts` exports `Root`, `Segment`, the `RootProps`, `SegmentProps`, and `IPv6Segments` types, and the `isValidIPv6` and `safeParseIPv6` helpers.
+The component's `index.ts` exports `Root`, the `RootProps` and `IPv6Segments` types, and the `isValidIPv6` and `safeParseIPv6` helpers. Individual segments are internal implementation details and are not exported.
 
 ---
 
 ## Anatomy
 
-`Root` renders eight `Segment` text inputs, seven visible separators, and a visually hidden input that carries the joined value for native form submission.
+`Root` renders eight internal text inputs, seven visible separators, and a visually hidden input that carries the joined value for native form submission.
 
 ```svelte
 <InputIPv6.Root name="serverAddress" />
 ```
 
-`Root` creates and coordinates its segments automatically. Use `Segment` directly only for a custom low-level composition where you supply focus-navigation callbacks.
+`Root` owns and coordinates every segment automatically. Each hextet receives an equal share of the available editable width, so the component follows the width supplied by its parent or `class`.
 
 ---
 
@@ -106,20 +106,6 @@ Type: `RootProps`, based on native `div` attributes.
 
 Remaining native `div` attributes are forwarded to the visible root. `name` and `value` belong to the separate hidden input.
 
-### `InputIPv6.Segment`
-
-Type: `SegmentProps`, based on native input attributes.
-
-| Prop         | Type                       | Default     | Behavior                                                                 |
-| ------------ | -------------------------- | ----------- | ------------------------------------------------------------------------ |
-| `value`      | `number \| string \| null` | `null`      | Bindable hextet value.                                                   |
-| `goNext`     | `() => void`               | `undefined` | Called when input should move to the following segment.                  |
-| `goPrevious` | `() => void`               | `undefined` | Called when Backspace or Arrow Left should move to the previous segment. |
-| `ref`        | `HTMLInputElement \| null` | `undefined` | Bindable input reference.                                                |
-| `class`      | `string`                   | `undefined` | Merged after the local segment classes.                                  |
-
-The segment accepts hexadecimal characters, displays them in uppercase, limits input to four characters, composes supplied `oninput` and `onkeydown` handlers with its internal behavior, and forwards remaining native input attributes.
-
 ### Helpers and types
 
 | Export          | Signature                                                   | Purpose                                                                       |
@@ -138,7 +124,7 @@ The segment accepts hexadecimal characters, displays them in uppercase, limits i
 | Editable hextet   | `ipv6-input-segment` |
 | Hidden form value | `ipv6-input-value`   |
 
-The historical slot names remain stable even though the component folder is named `input-ipv6`. The root exposes `aria-invalid`, uses semantic theme colors, and applies `focus-within` ring styling. Custom root and segment classes are merged with `cn()`.
+The historical slot names remain stable even though the component folder is named `input-ipv6`. The root exposes `aria-invalid`, uses semantic theme colors, applies `focus-within` ring styling, and fills its available width. Its eight internal segments use `flex: 1 1 0%` with `min-width: 0`, so each receives one eighth of the editable width after the fixed separators and padding. The public `class` prop styles the root; segment classes are internal.
 
 ---
 
@@ -178,7 +164,7 @@ pnpm add -D tailwindcss
 
 ### Component files
 
-Copy the complete `src/lib/components/ui/input-ipv6` component folder, including `index.ts`, both Svelte files, the utility file, and this README.
+Copy the complete `src/lib/components/ui/input-ipv6` component folder, including `index.ts`, `input-ipv6-root.svelte`, the utility file, and this README.
 
 ### Shared utilities
 
@@ -237,12 +223,11 @@ No icon export, localization message, animation import, keyframe, font, image, n
 
 ## File organization
 
-| File                        | Responsibility                                                           |
-| --------------------------- | ------------------------------------------------------------------------ |
-| `input-ipv6-root.svelte`    | Coordinates eight hextets, focus, paste, validation, and the form value. |
-| `input-ipv6-segment.svelte` | Edits one hexadecimal hextet and handles segment navigation.             |
-| `input-ipv6-utils.ts`       | Exports IPv6 parsing, expansion, validation, and tuple types.            |
-| `index.ts`                  | Public components, types, and helper exports.                            |
-| `README.md`                 | Installation and usage guide.                                            |
+| File                     | Responsibility                                                                                   |
+| ------------------------ | ------------------------------------------------------------------------------------------------ |
+| `input-ipv6-root.svelte` | Renders and coordinates eight equal-width hextets, focus, paste, validation, and the form value. |
+| `input-ipv6-utils.ts`    | Exports IPv6 parsing, expansion, validation, and tuple types.                                    |
+| `index.ts`               | Public root, types, and helper exports.                                                          |
+| `README.md`              | Installation and usage guide.                                                                    |
 
 The component's `index.ts` and its exported types are the source of truth for the public API.

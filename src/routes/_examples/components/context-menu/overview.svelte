@@ -11,7 +11,7 @@
 </script>
 
 <ContextMenu.Root>
-	<ContextMenu.Trigger class="flex h-40 w-72 items-center justify-center rounded-lg border border-dashed text-sm">
+	<ContextMenu.Trigger class="mx-auto flex h-60 w-full items-center justify-center rounded-lg border border-dashed text-sm">
 		Right-click the selected file
 	</ContextMenu.Trigger>
 

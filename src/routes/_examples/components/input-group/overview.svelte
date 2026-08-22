@@ -1,18 +1,20 @@
 <script lang="ts">
+	import * as Field from "$lib/components/ui/field";
 	import * as InputGroup from "$lib/components/ui/input-group";
-	import * as Label from "$lib/components/ui/label";
 
 	let domain = $state("");
 </script>
 
-<div class="grid max-w-sm gap-1.5">
-	<Label.Root for="website-domain">Website</Label.Root>
+<Field.Field>
+	<Field.Label for="website-domain">Website</Field.Label>
 
 	<InputGroup.Root>
 		<InputGroup.Addon>
 			<InputGroup.Text>https://</InputGroup.Text>
 		</InputGroup.Addon>
 
-		<InputGroup.Input id="website-domain" name="domain" placeholder="example.com" bind:value={domain} />
+		<InputGroup.Input id="website-domain" name="domain" placeholder="example.com" bind:value={domain} aria-describedby="website-domain-description" />
 	</InputGroup.Root>
-</div>
+
+	<Field.Description id="website-domain-description">Enter the domain without the protocol.</Field.Description>
+</Field.Field>

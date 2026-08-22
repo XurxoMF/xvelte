@@ -19,18 +19,11 @@
 	import { ResizeHandleIcon } from "$lib/icons";
 	import * as m from "$lib/paraglide/messages.js";
 	import { cn } from "$lib/utils";
+	import * as Button from "$lib/components/ui/button";
 
 	import { getWidgetGridItemContext } from "./widget-grid-context.svelte";
 
-	let {
-		ref = $bindable(null),
-		class: className,
-		style: styleProp,
-		child,
-		children,
-		"aria-label": ariaLabel,
-		...restProps
-	}: ResizeHandleProps = $props();
+	let { ref = $bindable(null), class: className, child, children, "aria-label": ariaLabel, ...restProps }: ResizeHandleProps = $props();
 	const item = getWidgetGridItemContext();
 	const attachmentKey = createAttachmentKey();
 	const disabled = $derived(item.grid.options.disabled || item.state.static === true || !(item.state.resizable ?? item.grid.options.resizable));
@@ -50,12 +43,15 @@
 	}
 
 	const structuralClass = $derived(
-		cn("absolute right-0 bottom-0 z-20 flex size-11 touch-none cursor-se-resize items-end justify-end p-2 select-none", className)
+		cn(
+			"absolute right-1 bottom-1 z-20 flex size-7 touch-none cursor-se-resize items-center justify-center select-none after:absolute after:-inset-2",
+			className
+		)
 	);
+
 	const handleProps = $derived({
 		...restProps,
 		class: structuralClass,
-		style: `position:absolute;right:0;bottom:0;z-index:20;display:flex;width:2.75rem;height:2.75rem;touch-action:none;cursor:se-resize;user-select:none;align-items:flex-end;justify-content:flex-end;padding:0.5rem;${styleProp ?? ""}`,
 		role: "button",
 		tabindex: disabled ? -1 : 0,
 		"aria-label": ariaLabel ?? m.green_otter_resize_bottom_right(),
@@ -69,11 +65,11 @@
 {#if child}
 	{@render child({ props: handleProps })}
 {:else}
-	<span {...handleProps} class={cn(structuralClass, "rounded-md text-muted-foreground hover:bg-muted hover:text-foreground")}>
+	<Button.Root {...handleProps} type="button" variant="ghost" size="icon-sm" {disabled}>
 		{#if children}
 			{@render children()}
 		{:else}
-			<ResizeHandleIcon class="size-4" />
+			<ResizeHandleIcon />
 		{/if}
-	</span>
+	</Button.Root>
 {/if}

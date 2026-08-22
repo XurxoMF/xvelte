@@ -22,7 +22,7 @@
 		className
 	)}
 >
-	<Command.Root class="w-full">
+	<Command.Root class="w-full p-0">
 		{@render children()}
 	</Command.Root>
 </Popover.Content>

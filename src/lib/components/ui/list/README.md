@@ -1,6 +1,6 @@
 # List
 
-A semantic list component with one Root that switches between native ordered and unordered markup, plus an Item for native list entries. It provides consistent indentation, markers, configurable spacing, item line height, precise ordered-list attributes, and stable styling hooks without adding application state or data transformation.
+A semantic list component with one Root that switches between native ordered and unordered markup, plus an Item for native list entries. It provides consistent indentation, markers, reusable class variants, configurable spacing, item line height, precise ordered-list attributes, and stable styling hooks without adding application state or data transformation.
 
 Use List for prose, instructions, rankings, requirements, and other content whose grouping or order has semantic meaning. Do not use it for interactive menus, selectable collections, virtualized datasets, definition lists, or tabular data.
 
@@ -31,7 +31,7 @@ Import the components through the public `index.ts` entry point:
 </script>
 ```
 
-List's `index.ts` exports `Root`, `Item`, the `RootProps` and `ItemProps` component types, and the `RootVariants` and `RootSpacings` option types.
+List's `index.ts` exports `Root`, `Item`, the `RootProps` and `ItemProps` component types, the `RootVariants` and `RootSpacings` option types, and the `rootVariants` styling function.
 
 ---
 
@@ -144,6 +144,23 @@ Changing `variant` replaces the underlying `ul` or `ol`. Any bound Root referenc
 
 `default` adds `mt-2`, `compact` adds `mt-1`, and `none` adds `mt-0` to every direct Item.
 
+### Reuse the Root classes
+
+Use `rootVariants` when app-owned native list markup needs the same indentation, markers, and spacing without rendering `List.Root`:
+
+```svelte
+<script lang="ts">
+	import { rootVariants } from "$lib/components/ui/list";
+</script>
+
+<ol class={rootVariants({ variant: "ordered", spacing: "compact", class: "text-muted-foreground" })}>
+	<li>Prepare the release.</li>
+	<li>Run the production checks.</li>
+</ol>
+```
+
+The function returns classes only. It does not select an `ol` or `ul`, add `data-slot`, `data-variant`, or `data-spacing`, or filter ordered-list attributes.
+
 ### Nested lists
 
 Place a complete Root inside an Item to preserve valid native list structure:
@@ -209,7 +226,21 @@ Type: `RootProps`, based on the common native attributes of `ol` and `ul`, plus 
 
 The ordered-only native options `start`, `reversed`, and `type` remain typed on Root so they work with both a literal ordered variant and a dynamic `RootVariants` value. They are forwarded only while `variant="ordered"`; Root omits them from the rendered `ul` while unordered. Generic attributes, ARIA attributes, data attributes, styles, and event handlers are forwarded to either element.
 
-`RootVariants` and `RootSpacings` export the accepted option unions for application state, wrapper props, and reusable configurations.
+`RootVariants` and `RootSpacings` are derived from `rootVariants` and export the accepted option unions for application state, wrapper props, and reusable configurations.
+
+### `rootVariants`
+
+`rootVariants` is the Tailwind Variants function used by Root. It accepts `variant`, `spacing`, and an optional `class` value:
+
+```ts
+const className = rootVariants({
+	variant: "unordered",
+	spacing: "none",
+	class: "text-muted-foreground"
+});
+```
+
+It defaults to `variant="unordered"` and `spacing="default"`, matching the component. Supplying `class` merges custom utilities after the local variants. The function adds presentation only; consumers remain responsible for using the matching semantic list element.
 
 ### `List.Item`
 
@@ -236,7 +267,7 @@ Stable xvelte hooks:
 | `Root` unordered | `ul`    | `list`      | `data-variant="unordered"`, `data-spacing` |
 | `Item`           | `li`    | `list-item` | —                                          |
 
-Root always uses logical start margin `ms-6`. Ordered uses decimal markers and Unordered uses disc markers. The logical margin follows text direction, so indentation moves to the appropriate inline-start side in right-to-left layouts.
+Root builds its classes with the exported `rootVariants` function. Its base always uses logical start margin `ms-6`; the ordered variant uses decimal markers and the unordered variant uses disc markers. The logical margin follows text direction, so indentation moves to the appropriate inline-start side in right-to-left layouts.
 
 Spacing is implemented with a direct-child selector:
 
@@ -279,19 +310,19 @@ Ordered numbering and unordered marker shapes come from CSS and the browser. Log
 
 List expects a Svelte 5 project using Tailwind CSS 4. It has no primitive library, icon package, localization package, other xvelte component, hook, attachment, context, or shared component style dependency.
 
-Install the class-merging packages as runtime dependencies and Tailwind as a development dependency:
+Install Tailwind Variants and the class-merging packages as runtime dependencies, then Tailwind as a development dependency:
 
 ```sh
-# bun
-bun add clsx tailwind-merge
+# Bun
+bun add clsx tailwind-merge tailwind-variants
 bun add -D tailwindcss
 
 # npm
-npm install clsx tailwind-merge
+npm install clsx tailwind-merge tailwind-variants
 npm install -D tailwindcss
 
 # pnpm
-pnpm add clsx tailwind-merge
+pnpm add clsx tailwind-merge tailwind-variants
 pnpm add -D tailwindcss
 ```
 
@@ -329,7 +360,7 @@ export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
 };
 ```
 
-The package installation block includes `clsx` and `tailwind-merge`.
+The package installation block includes `clsx` and `tailwind-merge`. Root imports `tv` and `VariantProps` from `tailwind-variants`; no additional setup is required for that package.
 
 ### Global CSS
 
@@ -345,11 +376,11 @@ List requires no `tw-animate-css` import, semantic CSS variable, `@theme` mappin
 
 ## File organization
 
-| File               | Responsibility                                                                                                   |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------- |
-| `list-root.svelte` | Ordered/unordered element selection, precise native props, markers, indentation, spacing, and stable attributes. |
-| `list-item.svelte` | Native list item, value support, line height, stable slot, children, and forwarded attributes.                   |
-| `index.ts`         | Public components, discriminated props, and option-type exports.                                                 |
-| `README.md`        | Installation, API, styling, accessibility, localization, and usage guide.                                        |
+| File               | Responsibility                                                                                                                            |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `list-root.svelte` | Ordered/unordered element selection, exported class variants, precise native props, markers, indentation, spacing, and stable attributes. |
+| `list-item.svelte` | Native list item, value support, line height, stable slot, children, and forwarded attributes.                                            |
+| `index.ts`         | Public components, discriminated props, option types, and `rootVariants` export.                                                          |
+| `README.md`        | Installation, API, styling, accessibility, localization, and usage guide.                                                                 |
 
 The component's `index.ts` and exported types are the source of truth for the public API.

@@ -1,6 +1,6 @@
 # Sonner
 
-A globally mounted toast renderer built on `svelte-sonner`. It follows the application's current `mode-watcher` theme, maps success, error, warning, information, and loading states to semantic project icons, and exposes the complete toaster configuration API.
+A globally mounted toast renderer built on `svelte-sonner`. It follows the application's current `mode-watcher` theme, maps success, error, warning, information, and loading states to semantic project icons, exposes the complete toaster configuration API, and provides the complete toast runtime through the local component entry point.
 
 Use Sonner for brief asynchronous feedback that does not block the current task, such as a saved preference or failed background action. Use inline validation, Alert, or Dialog when information must remain visible, be associated with a field, or require an explicit decision.
 
@@ -24,17 +24,15 @@ Use Sonner for brief asynchronous feedback that does not block the current task,
 
 ## Import
 
-Mount the local component and import `toast` from its runtime package where notifications originate:
+Import the component and toast runtime from the local entry point:
 
 ```svelte
 <script lang="ts">
-	import { toast } from "svelte-sonner";
-
 	import * as Sonner from "$lib/components/ui/sonner";
 </script>
 ```
 
-`index.ts` exports `Root` and `RootProps`. Toast creation functions and their types remain owned by `svelte-sonner` and are imported from that package.
+`index.ts` exports `Root`, `RootProps`, and `toast`. The local `toast` wrapper forwards the callable API and all installed helpers, so application code does not import `svelte-sonner` directly.
 
 ---
 
@@ -46,7 +44,7 @@ Render one Root near the application's top-level layout:
 <Sonner.Root />
 ```
 
-The component renders the package Toaster with local theme variables and icon snippets. Individual toasts are created from any descendant or application module with `toast()`, `toast.success()`, `toast.error()`, and the other `svelte-sonner` helpers.
+The component renders the package Toaster with local theme variables and icon snippets. Individual toasts are created from any descendant or application module with `Sonner.toast()`, `Sonner.toast.success()`, `Sonner.toast.error()`, and the other forwarded helpers.
 
 ---
 
@@ -73,7 +71,7 @@ From a page or component:
 
 ```svelte
 <script lang="ts">
-	import { toast } from "svelte-sonner";
+	import { toast } from "$lib/components/ui/sonner";
 </script>
 
 <button type="button" onclick={() => toast.success("Profile saved")}>Save profile</button>
@@ -133,7 +131,7 @@ The local loading icon spins automatically. Promise copy should describe the ope
 
 ```svelte
 <script lang="ts">
-	import { toast } from "svelte-sonner";
+	import { toast } from "$lib/components/ui/sonner";
 
 	function runExport() {
 		const id = toast.loading("Preparing export…");
@@ -154,7 +152,7 @@ Reuse the ID to update the same notification instead of stacking each lifecycle 
 
 `RootProps` equals the installed `svelte-sonner@1.1.1` `ToasterProps`. The local Root fixes the icon snippets, defaults `theme` from `mode.current`, and supplies theme CSS variables before forwarding caller props. Because forwarded props are applied last, callers can intentionally override `theme`, `class`, `style`, or icon snippets.
 
-The table summarizes the commonly used options; see the complete [svelte-sonner documentation](https://svelte-sonner.vercel.app/) and [package source](https://github.com/wobsoriano/svelte-sonner). The component's `index.ts`, exported type, and installed package types are the source of truth.
+The table summarizes the commonly used options; see the complete [svelte-sonner documentation](https://svelte-sonner.vercel.app/) and [package source](https://github.com/wobsoriano/svelte-sonner). The component's `index.ts`, exported `RootProps` and `toast`, and installed package types are the source of truth.
 
 | Prop                      | Type                                         | Default                     | Behavior                                                            |
 | ------------------------- | -------------------------------------------- | --------------------------- | ------------------------------------------------------------------- |
@@ -177,6 +175,26 @@ The table summarizes the commonly used options; see the complete [svelte-sonner 
 | `closeButtonAriaLabel`    | `string`                                     | `"Close toast"`             | Accessible name for close controls.                                 |
 
 Native ordered-list attributes are also accepted. Per-toast options, custom components, actions, cancellation, callbacks, IDs, dismissal, and promise APIs belong to the exported `toast` runtime rather than `Sonner.Root`.
+
+### `toast`
+
+The exported `toast` callable forwards directly to the installed `svelte-sonner` runtime and returns its toast identifier. Its attached helpers are forwarded too:
+
+| API                        | Behavior                                                      |
+| -------------------------- | ------------------------------------------------------------- |
+| `toast(message, options?)` | Creates or updates a normal toast.                            |
+| `toast.message(...)`       | Creates the package's explicit message variant.               |
+| `toast.success(...)`       | Creates a success toast.                                      |
+| `toast.info(...)`          | Creates an informational toast.                               |
+| `toast.warning(...)`       | Creates a warning toast.                                      |
+| `toast.error(...)`         | Creates an error toast.                                       |
+| `toast.loading(...)`       | Creates a loading toast.                                      |
+| `toast.custom(...)`        | Creates a toast from a Svelte component.                      |
+| `toast.promise(...)`       | Connects loading, success, and error states to a promise.     |
+| `toast.dismiss(id?)`       | Dismisses one toast or all toasts.                            |
+| `toast.getActiveToasts()`  | Returns the active toast records from the underlying runtime. |
+
+Arguments, return values, generic component support, options, and helper behavior remain those of the installed package. Import this wrapper from `$lib/components/ui/sonner` instead of importing `svelte-sonner` in application code.
 
 ---
 
@@ -306,7 +324,7 @@ The local wrapper is adapted from [shadcn-svelte Sonner](https://www.shadcn-svel
 | File                 | Responsibility                                                                         |
 | -------------------- | -------------------------------------------------------------------------------------- |
 | `sonner-root.svelte` | Toaster theme integration, semantic CSS variables, icon snippets, and prop forwarding. |
-| `index.ts`           | Public component and Toaster props type.                                               |
+| `index.ts`           | Public component, Toaster props type, and fully forwarded toast runtime.               |
 | `README.md`          | Mounting, toast usage, API, accessibility, styling, and installation guide.            |
 
-The component's `index.ts`, `RootProps`, and installed `svelte-sonner` types are the source of truth for the public API.
+The component's `index.ts`, `RootProps`, exported `toast`, and installed `svelte-sonner` types are the source of truth for the public API.

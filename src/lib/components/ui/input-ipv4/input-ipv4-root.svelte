@@ -16,7 +16,6 @@
 	import { cn } from "$lib/utils";
 
 	import { isNumber, isValidIPv4, safeParseIPv4 } from "./input-ipv4-utils";
-	import Input from "./input-ipv4-segment.svelte";
 
 	type PartialOctet = number | string | null;
 	type PartialOctets = [PartialOctet, PartialOctet, PartialOctet, PartialOctet];
@@ -35,6 +34,7 @@
 	const parsedPlaceholder = $derived(safeParseIPv4(placeholder));
 	const octets: PartialOctets = $derived(safeParseIPv4(value ?? "") ?? [null, null, null, null]);
 	const inputs = $state<HTMLInputElement[]>([]);
+	const after: Array<(() => void) | undefined> = [];
 
 	/** @param octet - Candidate segment to normalize within the IPv4 byte range. */
 	function validate(octet: string | null): number | null {
@@ -66,6 +66,68 @@
 		value = format(parsed.map(validate) as PartialOctets);
 	}
 
+	/** @param index - Segment whose deferred navigation should run after its input value commits. */
+	function handleInput(index: number) {
+		after[index]?.();
+		after[index] = undefined;
+	}
+
+	/**
+	 * Preserves numeric constraints and coordinated focus movement for one internal octet.
+	 *
+	 * @param event - Keyboard event emitted by the octet input.
+	 * @param index - Octet position within the address.
+	 */
+	function handleKeydown(event: KeyboardEvent, index: number) {
+		if (event.ctrlKey || event.metaKey) return;
+		if (event.key === "Tab" || event.key === "Delete") return;
+
+		const octet = octets[index];
+		const target = event.currentTarget as HTMLInputElement;
+
+		if (event.key === "Backspace") {
+			if (octet === null || octet.toString().length === 0) setTimeout(() => inputs[index - 1]?.focus(), 2);
+			return;
+		}
+
+		if ([".", " ", "_"].includes(event.key)) {
+			event.preventDefault();
+			inputs[index + 1]?.focus();
+			return;
+		}
+
+		if (event.key === "ArrowRight") {
+			if (target.selectionStart === target.value.length) {
+				event.preventDefault();
+				inputs[index + 1]?.focus();
+			}
+			return;
+		}
+
+		if (event.key === "ArrowLeft") {
+			if (target.selectionStart === 0) {
+				event.preventDefault();
+				inputs[index - 1]?.focus();
+			}
+			return;
+		}
+
+		if (!isNumber(event.key)) {
+			event.preventDefault();
+			return;
+		}
+
+		const nextValue = target.value + event.key;
+
+		if (nextValue.length > 3 || Number.parseInt(nextValue) > 255) {
+			event.preventDefault();
+			inputs[index + 1]?.focus();
+			return;
+		}
+
+		if (nextValue.length === 3) after[index] = () => inputs[index + 1]?.focus();
+	}
+
 	$effect(() => {
 		valid = isValidIPv4(value);
 	});
@@ -76,24 +138,38 @@
 	data-slot="ipv4-input"
 	aria-invalid={!valid}
 	class={cn(
-		"flex h-9 w-fit place-items-center rounded-md border border-input bg-background px-3 font-mono font-light ring-2 ring-transparent ring-offset-background selection:bg-primary focus-within:ring-ring focus-within:ring-offset-2 dark:bg-input/30",
+		"flex h-9 w-full place-items-center rounded-md border border-input bg-background px-3 font-mono font-light ring-2 ring-transparent ring-offset-background selection:bg-primary focus-within:ring-ring focus-within:ring-offset-2 dark:bg-input/30",
 		className
 	)}
 	{...restProps}
 >
 	{#each [0, 1, 2, 3] as index (index)}
-		<Input
-			bind:ref={inputs[index]}
+		<input
+			bind:this={inputs[index]}
+			data-slot="ipv4-input-segment"
+			min={0}
+			max={255}
+			maxlength={3}
 			tabindex={index === 0 ? undefined : -1}
-			goNext={() => inputs[index + 1]?.focus()}
-			goPrevious={() => inputs[index - 1]?.focus()}
 			bind:value={() => octets[index], (octet) => update(index, octet)}
 			placeholder={parsedPlaceholder?.[index] ?? undefined}
+			type="text"
+			class="hide-ramp h-full min-w-0 flex-1 border-0 bg-transparent text-center outline-hidden placeholder:text-muted-foreground focus:outline-hidden"
+			oninput={() => handleInput(index)}
+			onkeydown={(event) => handleKeydown(event, index)}
 			onpaste={paste}
 		/>
 
-		{#if index < 3}<span class="font-mono">{separator}</span>{/if}
+		{#if index < 3}<span class="shrink-0 font-mono">{separator}</span>{/if}
 	{/each}
 </div>
 
 <input data-slot="ipv4-input-value" class="hidden" tabindex={-1} {name} {value} />
+
+<style lang="postcss">
+	.hide-ramp::-webkit-inner-spin-button,
+	.hide-ramp::-webkit-outer-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+</style>

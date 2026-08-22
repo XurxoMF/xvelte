@@ -4,6 +4,7 @@
 	import { attachments, components, hooks } from "./_docs/catalog";
 	import { rootVariants } from "$lib/components/ui/button";
 	import * as Card from "$lib/components/ui/card";
+	import * as Typography from "$lib/components/ui/typography";
 </script>
 
 <svelte:head
@@ -17,12 +18,12 @@
 	<section class="relative overflow-hidden border-b px-5 py-20 sm:px-8 sm:py-28">
 		<div class="docs-grid-mask pointer-events-none absolute inset-0"></div>
 		<div class="relative mx-auto max-w-5xl">
-			<p class="mb-5 text-sm font-semibold tracking-[0.2em] text-primary uppercase">Svelte 5 · local-first · composable</p>
-			<h1 class="max-w-4xl text-5xl font-bold tracking-[-0.045em] text-balance sm:text-7xl">Useful interface pieces, shaped by real projects.</h1>
-			<p class="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
+			<Typography.P class="text-primary">Svelte 5 · local-first · composable</Typography.P>
+			<Typography.H1>Useful interface pieces, shaped by real projects.</Typography.H1>
+			<Typography.P class="text-muted-foreground">
 				xvelte is a personal collection of accessible components, reactive hooks, and focused attachments for building SvelteKit interfaces without
 				starting from zero.
-			</p>
+			</Typography.P>
 			<div class="mt-8 flex flex-wrap gap-3">
 				<a href={resolve("/components")} class={rootVariants({ size: "lg" })}>Browse components</a>
 				<a href={resolve("/components/button")} class={rootVariants({ variant: "outline", size: "lg" })}>Start with Button</a>
@@ -49,15 +50,17 @@
 
 		<div class="mt-20 grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
 			<div>
-				<p class="text-sm font-semibold text-primary">A living reference</p>
-				<h2 class="mt-2 text-3xl font-semibold tracking-tight">The docs follow the code.</h2>
+				<Typography.P class="text-primary">A living reference</Typography.P>
+				<Typography.H2>The docs follow the code.</Typography.H2>
 			</div>
 			<div class="space-y-5 text-base leading-7 text-muted-foreground">
-				<p>
+				<Typography.P>
 					Every reference page is sourced from the README beside its implementation. That keeps installation notes, public API, accessibility details,
 					and examples in one place.
-				</p>
-				<p>The site itself is built with xvelte: its sidebar, cards, buttons, tabs, and code blocks double as a practical showcase.</p>
+				</Typography.P>
+				<Typography.P
+					>The site itself is built with xvelte: its sidebar, cards, buttons, tabs, and code blocks double as a practical showcase.</Typography.P
+				>
 			</div>
 		</div>
 	</section>

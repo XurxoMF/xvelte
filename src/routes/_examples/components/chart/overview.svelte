@@ -2,6 +2,7 @@
 	import { BarChart } from "layerchart";
 
 	import * as Chart from "$lib/components/ui/chart";
+	import * as Typography from "$lib/components/ui/typography";
 
 	const chartData = [
 		{ month: "January", desktop: 186, mobile: 80 },
@@ -31,8 +32,8 @@
 
 <figure class="w-full">
 	<figcaption class="mb-3">
-		<h2 class="font-medium">Visitors by device</h2>
-		<p class="text-sm text-muted-foreground">Monthly visitors during the first half of the year.</p>
+		<Typography.H2>Visitors by device</Typography.H2>
+		<Typography.P class="text-muted-foreground">Monthly visitors during the first half of the year.</Typography.P>
 	</figcaption>
 
 	<Chart.Container config={chartConfig} class="min-h-64 w-full">

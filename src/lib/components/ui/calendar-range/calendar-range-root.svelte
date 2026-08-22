@@ -23,7 +23,7 @@
 
 	import { cn } from "$lib/utils";
 
-	import * as RangeCalendar from ".";
+	import * as CalendarRange from ".";
 
 	let {
 		ref = $bindable(null),
@@ -58,7 +58,7 @@
 	{weekdayFormat}
 	{disableDaysOutsideMonth}
 	class={cn(
-		"group/calendar bg-background p-2 [--cell-radius:var(--radius-md)] [--cell-size:--spacing(7)] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent",
+		"group/calendar w-fit max-w-full bg-background p-2 [--cell-radius:var(--radius-md)] [--cell-size:--spacing(7)] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent",
 		className
 	)}
 	{locale}
@@ -67,15 +67,15 @@
 	{...restProps}
 >
 	{#snippet children({ months, weekdays })}
-		<RangeCalendar.Months>
-			<RangeCalendar.Nav>
-				<RangeCalendar.PrevButton variant={buttonVariant} />
-				<RangeCalendar.NextButton variant={buttonVariant} />
-			</RangeCalendar.Nav>
+		<CalendarRange.Months>
+			<CalendarRange.Nav>
+				<CalendarRange.PrevButton variant={buttonVariant} />
+				<CalendarRange.NextButton variant={buttonVariant} />
+			</CalendarRange.Nav>
 			{#each months as month, monthIndex (month)}
-				<RangeCalendar.Month>
-					<RangeCalendar.Header>
-						<RangeCalendar.Caption
+				<CalendarRange.Month>
+					<CalendarRange.Header>
+						<CalendarRange.Caption
 							{captionLayout}
 							months={monthsProp}
 							{monthFormat}
@@ -86,39 +86,39 @@
 							{locale}
 							{monthIndex}
 						/>
-					</RangeCalendar.Header>
+					</CalendarRange.Header>
 
-					<RangeCalendar.Grid>
-						<RangeCalendar.GridHead>
-							<RangeCalendar.GridRow class="select-none">
+					<CalendarRange.Grid>
+						<CalendarRange.GridHead>
+							<CalendarRange.GridRow class="select-none">
 								{#each weekdays as weekday (weekday)}
-									<RangeCalendar.HeadCell>
+									<CalendarRange.HeadCell>
 										{weekday.slice(0, 2)}
-									</RangeCalendar.HeadCell>
+									</CalendarRange.HeadCell>
 								{/each}
-							</RangeCalendar.GridRow>
-						</RangeCalendar.GridHead>
-						<RangeCalendar.GridBody>
+							</CalendarRange.GridRow>
+						</CalendarRange.GridHead>
+						<CalendarRange.GridBody>
 							{#each month.weeks as weekDates (weekDates)}
-								<RangeCalendar.GridRow class="mt-2 w-full">
+								<CalendarRange.GridRow>
 									{#each weekDates as date (date)}
-										<RangeCalendar.Cell {date} month={month.value}>
+										<CalendarRange.Cell {date} month={month.value}>
 											{#if day}
 												{@render day({
 													day: date,
 													outsideMonth: !isEqualMonth(date, month.value)
 												})}
 											{:else}
-												<RangeCalendar.Day />
+												<CalendarRange.Day />
 											{/if}
-										</RangeCalendar.Cell>
+										</CalendarRange.Cell>
 									{/each}
-								</RangeCalendar.GridRow>
+								</CalendarRange.GridRow>
 							{/each}
-						</RangeCalendar.GridBody>
-					</RangeCalendar.Grid>
-				</RangeCalendar.Month>
+						</CalendarRange.GridBody>
+					</CalendarRange.Grid>
+				</CalendarRange.Month>
 			{/each}
-		</RangeCalendar.Months>
+		</CalendarRange.Months>
 	{/snippet}
 </RangeCalendarPrimitive.Root>

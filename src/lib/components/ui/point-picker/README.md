@@ -1,6 +1,6 @@
 # Point Picker
 
-A two-dimensional input for selecting an `x` and `y` coordinate over arbitrary visual content. It supports independent bounds and steps, pointer dragging, keyboard control, controlled or initial values, optional grid and crosshair overlays, custom cursors, formatted value display, and separate change and commit callbacks.
+A scale-preserving two-dimensional input for selecting an `x` and `y` coordinate over arbitrary visual content. It derives its aspect ratio from the coordinate ranges and supports a configurable origin, independent bounds, steps and grid intervals, pointer dragging, keyboard control, controlled or initial values, optional grid and crosshair overlays, custom cursors, formatted value display, and separate change and commit callbacks.
 
 Use Point Picker for map coordinates, audio parameters, image positions, color planes, spatial controls, or other genuinely two-dimensional values. Prefer Slider for one-dimensional values, and do not place interactive controls inside its visual background layer.
 
@@ -35,8 +35,7 @@ Import the component through its public `index.ts`:
 The component exports:
 
 - Component: `Root`.
-- Props type: `RootProps`.
-- Coordinate type: `Point`.
+- Props and coordinate types: `RootProps`, `Point`, and `PointOrigin`.
 
 The indicator component and coordinate helpers remain internal.
 
@@ -44,10 +43,10 @@ The indicator component and coordinate helpers remain internal.
 
 ## Anatomy
 
-Point Picker has one public part. Place any visual layer inside Root and give Root an explicit height or aspect ratio:
+Point Picker has one public part. Place any visual layer inside Root. Root derives its aspect ratio from the configured axis spans, so the default `0–100` ranges produce a square:
 
 ```svelte
-<PointPicker.Root class="h-64" label="Position">
+<PointPicker.Root class="max-w-64" label="Position">
 	<div class="size-full">Visual background</div>
 </PointPicker.Root>
 ```
@@ -68,7 +67,7 @@ Root places `children` below its grid, crosshair, cursor, and value indicators. 
 </script>
 
 <div class="grid max-w-xl gap-2">
-	<PointPicker.Root bind:value label="Map position" class="h-64 rounded-lg border bg-background" showGrid showCrosshair showValue>
+	<PointPicker.Root bind:value label="Map position" class="max-w-64 rounded-lg border bg-background" showGrid showCrosshair showValue>
 		<div class="grid size-full place-items-center text-sm text-muted-foreground">Map or visual content</div>
 	</PointPicker.Root>
 
@@ -76,7 +75,7 @@ Root places `children` below its grid, crosshair, cursor, and value indicators. 
 </div>
 ```
 
-The default range for both axes is `0` to `100`. Horizontal movement increases `x` from left to right; vertical movement increases `y` from bottom to top.
+The default range for both axes is `0` to `100`, the default origin is the top-left corner, and grid lines use 10-coordinate intervals. Horizontal movement increases `x` from left to right and vertical movement increases `y` from top to bottom. Equal axis spans make the surface square, while different spans make it rectangular without changing the visual scale of a coordinate unit.
 
 ---
 
@@ -104,8 +103,9 @@ Use independent geographic bounds and format the visible value with application-
 	maxY={90}
 	stepX={0.01}
 	stepY={0.01}
+	origin="bottom-left"
 	label="Map coordinates"
-	class="h-72 rounded-lg border bg-background"
+	class="max-w-72 rounded-lg border bg-background"
 	showCrosshair
 	showValue
 	formatValue={(point) => `${point.y.toFixed(2)}°, ${point.x.toFixed(2)}°`}
@@ -116,6 +116,35 @@ Use independent geographic bounds and format the visible value with application-
 ```
 
 Replace the placeholder with your map, image, canvas output, or other visual layer. Pointer interaction belongs to Point Picker; do not rely on interaction from the nested background.
+
+The `360 × 180` coordinate span makes this example `2:1`. `bottom-left` places larger latitude values toward the top of a north-up map. Match the bounds and origin to the coordinate system of the visual content: for a `1920 × 1080` image whose pixel origin is at the top-left, for example, use `minX={0}`, `maxX={1920}`, `minY={0}`, and `maxY={1080}` with the default origin. The resulting surface is `16:9`, each coordinate unit has the same visual scale on both axes, and the point remains aligned with the image. A `16:9` surface cannot simultaneously fill its bounds, preserve equal X/Y scale, and represent `0–100` on both axes; one of those constraints must change.
+
+### Coordinate origin
+
+Choose any corner as the location of `{ x: minX, y: minY }`:
+
+```svelte
+<PointPicker.Root origin="top-left" label="Image pixel" />
+<PointPicker.Root origin="top-right" label="Mirrored image pixel" />
+<PointPicker.Root origin="bottom-left" label="Cartesian coordinate" />
+<PointPicker.Root origin="bottom-right" label="Mirrored Cartesian coordinate" />
+```
+
+Pointer mapping, cursor and crosshair positions, arrow keys, and boundary keys all follow the selected origin. `top-left` matches common image and canvas pixel coordinates. Use the origin defined by the map projection or game data rather than assuming every map-like system uses the same convention.
+
+### Grid intervals
+
+`gridX` and `gridY` set the coordinate distance between decorative grid lines. They are independent from `stepX` and `stepY`, which control value snapping:
+
+```svelte
+<!-- Square 10 × 10-coordinate cells -->
+<PointPicker.Root maxX={160} maxY={90} gridX={10} gridY={10} label="Image coordinate" showGrid />
+
+<!-- Rectangular 20 × 10-coordinate cells -->
+<PointPicker.Root maxX={160} maxY={90} gridX={20} gridY={10} label="Image coordinate" showGrid />
+```
+
+Both grid intervals default to `10`. Equal values create square cells because Root preserves the scale between coordinate axes. A non-positive or non-finite interval hides the lines for that axis. Choose intervals appropriate to the configured range; extremely small intervals can create unnecessarily many decorative elements.
 
 ### Audio parameters
 
@@ -139,7 +168,7 @@ The axes do not need to share a range or step:
 	maxY={6}
 	stepY={0.5}
 	label="Stereo pan and level"
-	class="h-56 rounded-lg border bg-background"
+	class="max-w-56 rounded-lg border bg-background"
 	showGrid
 	showValue
 	formatValue={(point) => `Pan ${point.x.toFixed(2)}, level ${point.y.toFixed(1)} dB`}
@@ -156,7 +185,7 @@ Use `onValueChange` for live audio or visual updates. Use `onValueCommit` for pe
 <PointPicker.Root
 	defaultValue={{ x: 25, y: 75 }}
 	label="Crop focal point"
-	class="h-48 rounded-lg border bg-background"
+	class="max-w-48 rounded-lg border bg-background"
 	onValueCommit={(point) => saveFocalPoint(point)}
 />
 ```
@@ -180,7 +209,7 @@ The `cursor` snippet receives the current effective `Point`. Point Picker positi
 	</div>
 {/snippet}
 
-<PointPicker.Root {cursor} label="Custom marker position" class="h-56 rounded-lg border bg-background" showCrosshair />
+<PointPicker.Root {cursor} label="Custom marker position" class="max-w-56 rounded-lg border bg-background" showCrosshair />
 ```
 
 The complete cursor wrapper is decorative and uses `aria-hidden="true"`. Expose meaningful values through labels, adjacent text, or the optional value indicator instead of cursor content alone.
@@ -188,7 +217,7 @@ The complete cursor wrapper is decorative and uses `aria-hidden="true"`. Expose 
 ### Disabled state
 
 ```svelte
-<PointPicker.Root value={{ x: 40, y: 60 }} label="Saved position" class="h-40 rounded-lg border bg-background" showValue disabled />
+<PointPicker.Root value={{ x: 40, y: 60 }} label="Saved position" class="max-w-40 rounded-lg border bg-background" showValue disabled />
 ```
 
 Disabled Root is removed from the tab order, ignores pointer interaction, and exposes `aria-disabled="true"`.
@@ -207,15 +236,18 @@ The component's `index.ts` and exported types are the source of truth.
 | --------------- | -------------------------- | --------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | `value`         | `Point`                    | `undefined`                       | Bindable current point. When absent, Root reads `defaultValue` or the midpoint until the first update.     |
 | `defaultValue`  | `Point`                    | Both axis midpoints               | Initial fallback used while `value` is undefined.                                                          |
-| `minX`          | `number`                   | `0`                               | Inclusive horizontal minimum at the left edge.                                                             |
-| `maxX`          | `number`                   | `100`                             | Inclusive horizontal maximum at the right edge.                                                            |
-| `minY`          | `number`                   | `0`                               | Inclusive vertical minimum at the bottom edge.                                                             |
-| `maxY`          | `number`                   | `100`                             | Inclusive vertical maximum at the top edge.                                                                |
+| `minX`          | `number`                   | `0`                               | Inclusive horizontal minimum at the selected origin; contributes to the derived aspect ratio.              |
+| `maxX`          | `number`                   | `100`                             | Inclusive horizontal maximum opposite the selected origin; contributes to the derived aspect ratio.        |
+| `minY`          | `number`                   | `0`                               | Inclusive vertical minimum at the selected origin; contributes to the derived aspect ratio.                |
+| `maxY`          | `number`                   | `100`                             | Inclusive vertical maximum opposite the selected origin; contributes to the derived aspect ratio.          |
 | `stepX`         | `number`                   | `1`                               | Horizontal snapping interval measured from `minX`.                                                         |
 | `stepY`         | `number`                   | `1`                               | Vertical snapping interval measured from `minY`.                                                           |
+| `origin`        | `PointOrigin`              | `"top-left"`                      | Corner where `{ x: minX, y: minY }` is displayed.                                                          |
 | `disabled`      | `boolean`                  | `false`                           | Disables pointer and keyboard interaction and removes Root from the tab order.                             |
 | `label`         | `string`                   | Localized `"Point picker"`        | Accessible name placed on the application role.                                                            |
-| `showGrid`      | `boolean`                  | `false`                           | Shows fixed horizontal and vertical grid lines at 20%, 40%, 60%, and 80%.                                  |
+| `showGrid`      | `boolean`                  | `false`                           | Shows horizontal and vertical grid lines using the configured coordinate intervals.                        |
+| `gridX`         | `number`                   | `10`                              | Coordinate distance between vertical grid lines; non-positive or non-finite values hide them.              |
+| `gridY`         | `number`                   | `10`                              | Coordinate distance between horizontal grid lines; non-positive or non-finite values hide them.            |
 | `showCrosshair` | `boolean`                  | `false`                           | Shows full-width and full-height lines through the current point.                                          |
 | `showCursor`    | `boolean`                  | `true`                            | Shows the built-in or custom cursor at the current point.                                                  |
 | `showValue`     | `boolean`                  | `false`                           | Shows the formatted value in a polite live region.                                                         |
@@ -225,7 +257,7 @@ The component's `index.ts` and exported types are the source of truth.
 | `children`      | `Snippet`                  | —                                 | Renders arbitrary non-interactive visual content below the indicators.                                     |
 | `cursor`        | `Snippet<[Point]>`         | Built-in three-layer circular dot | Replaces the cursor marker and receives the current effective point.                                       |
 | `ref`           | `HTMLDivElement \| null`   | `null`                            | Bindable Root element reference.                                                                           |
-| `class`         | `string`                   | —                                 | Merged after local positioning, interaction, focus, and disabled classes.                                  |
+| `class`         | `string`                   | —                                 | Merged after local sizing, positioning, interaction, focus, and disabled classes.                          |
 
 Root forwards remaining native `div` attributes and event handlers. It handles these native callbacks specially:
 
@@ -234,7 +266,7 @@ Root forwards remaining native `div` attributes and event handlers. It handles t
 - Calling `preventDefault()` from `onpointerdown` or `onkeydown` cancels the corresponding internal update.
 - Pointer release publishes one final value and then calls `onValueCommit`; pointer cancellation ends dragging without a commit.
 
-The remaining attributes are spread last. Do not override `role`, `tabindex`, `data-slot`, `data-disabled`, `aria-label`, or `aria-disabled` unless you intentionally replace the component's documented semantics and styling hooks.
+The remaining attributes are spread last. Do not override `role`, `tabindex`, `data-slot`, `data-disabled`, `data-origin`, `aria-label`, or `aria-disabled` unless you intentionally replace the component's documented semantics and styling hooks.
 
 Supply `minX <= maxX`, `minY <= maxY`, and normally positive step values. Pointer and keyboard updates are quantized and clamped, but externally supplied `value` and `defaultValue` objects are displayed as provided; keep them inside the configured bounds.
 
@@ -247,27 +279,38 @@ type Point = {
 };
 ```
 
-`x` maps from left to right and `y` maps from bottom to top. Point Picker publishes a new object for each update instead of mutating the previous object.
+The selected `origin` controls the visual direction of both coordinates. Point Picker publishes a new object for each update instead of mutating the previous object.
+
+### `PointOrigin`
+
+```ts
+type PointOrigin = "top-left" | "top-right" | "bottom-left" | "bottom-right";
+```
+
+The selected corner displays both axis minima. Increasing X moves away from the horizontal origin edge, and increasing Y moves away from the vertical origin edge. The default `top-left` therefore increases X to the right and Y downward.
 
 ### Pointer behavior
 
 - Pointer down captures the pointer and immediately updates the point.
+- Pointer down focuses Root without scrolling the page, allowing the same interaction to continue with the keyboard.
 - Captured pointer movement continues updating even when the pointer leaves the visible surface.
 - Pointer up performs a final update, releases capture, and commits the point.
-- Coordinates are calculated from Root's current bounding rectangle, then snapped to the configured step and clamped to the configured bounds.
+- Coordinates are calculated from Root's current bounding rectangle and selected origin, then snapped to the configured step and clamped to the configured bounds.
 
 ### Keyboard behavior
 
-| Key          | Result                                    |
-| ------------ | ----------------------------------------- |
-| `ArrowRight` | Adds `stepX` to `x`.                      |
-| `ArrowLeft`  | Subtracts `stepX` from `x`.               |
-| `ArrowUp`    | Adds `stepY` to `y`.                      |
-| `ArrowDown`  | Subtracts `stepY` from `y`.               |
-| `PageUp`     | Adds ten `stepY` intervals to `y`.        |
-| `PageDown`   | Subtracts ten `stepY` intervals from `y`. |
-| `Home`       | Moves to `{ x: minX, y: maxY }`.          |
-| `End`        | Moves to `{ x: maxX, y: minY }`.          |
+| Key                | Result                                                                 |
+| ------------------ | ---------------------------------------------------------------------- |
+| `ArrowRight`       | Moves visually right by `stepX`, increasing or decreasing X as needed. |
+| `ArrowLeft`        | Moves visually left by `stepX`, increasing or decreasing X as needed.  |
+| `ArrowUp`          | Moves visually up by `stepY`, increasing or decreasing Y as needed.    |
+| `ArrowDown`        | Moves visually down by `stepY`, increasing or decreasing Y as needed.  |
+| `PageUp`           | Moves visually up by ten `stepY` intervals.                            |
+| `PageDown`         | Moves visually down by ten `stepY` intervals.                          |
+| `Shift + PageUp`   | Moves visually left by ten `stepX` intervals.                          |
+| `Shift + PageDown` | Moves visually right by ten `stepX` intervals.                         |
+| `Home`             | Moves to `{ x: minX, y: minY }` at the selected origin.                |
+| `End`              | Moves to `{ x: maxX, y: maxY }` at the opposite corner.                |
 
 Every handled key prevents the browser default, clamps the result, calls `onValueChange`, and then calls `onValueCommit`.
 
@@ -275,24 +318,24 @@ Every handled key prevents the browser default, clamps the result, calls `onValu
 
 ## Styling and DOM contract
 
-Root has no intrinsic height because its visual content is absolutely positioned. Always supply a height, minimum height, or aspect-ratio class. It defaults to `width: 100%`, clips overflow, disables touch scrolling and text selection during interaction, and shows a semantic focus ring.
+Root defaults to `width: 100%` and applies an inline aspect ratio of `(maxX - minX) / (maxY - minY)`. This keeps one coordinate unit at the same visual scale on both axes: equal spans produce a square, `160 × 90` produces `16:9`, and `360 × 180` produces `2:1`. If either span is zero, Root falls back to `1:1`. Constrain the width with `max-width` when needed and avoid setting both width and height, which would override the ratio. Root clips overflow, disables touch scrolling and text selection during interaction, and shows a semantic focus ring.
 
 Stable xvelte hooks:
 
-| Element                                 | Stable hook                                 | Notes                                                         |
-| --------------------------------------- | ------------------------------------------- | ------------------------------------------------------------- |
-| Root                                    | `data-slot="point-picker"`                  | Also has `data-disabled="true"` only while disabled.          |
-| Background wrapper                      | `data-slot="point-picker-content"`          | Absolute, clipped, and `pointer-events: none`.                |
-| Grid wrapper                            | `data-slot="point-picker-grid"`             | Decorative overlay below crosshair, cursor, and value.        |
-| Each horizontal or vertical grid line   | `data-slot="point-picker-grid-line"`        | Positioned at one of the four fixed percentage intervals.     |
-| Horizontal and vertical crosshair lines | `data-slot="point-picker-crosshair"`        | Positioned from the current axis percentages.                 |
-| Cursor wrapper                          | `data-slot="point-picker-cursor"`           | Positions either the built-in marker or the `cursor` snippet. |
-| Built-in cursor glow                    | `data-slot="point-picker-cursor-glow"`      | Present only when no custom cursor is supplied.               |
-| Built-in cursor dot                     | `data-slot="point-picker-cursor-dot"`       | Present only when no custom cursor is supplied.               |
-| Built-in cursor highlight               | `data-slot="point-picker-cursor-highlight"` | Present only when no custom cursor is supplied.               |
-| Value indicator                         | `data-slot="point-picker-value"`            | Top-right, translucent, monospaced polite live region.        |
+| Element                                 | Stable hook                                 | Notes                                                                          |
+| --------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------ |
+| Root                                    | `data-slot="point-picker"`                  | Also exposes `data-origin` and has `data-disabled="true"` only while disabled. |
+| Background wrapper                      | `data-slot="point-picker-content"`          | Absolute, clipped, and `pointer-events: none`.                                 |
+| Grid wrapper                            | `data-slot="point-picker-grid"`             | Decorative overlay below crosshair, cursor, and value.                         |
+| Each horizontal or vertical grid line   | `data-slot="point-picker-grid-line"`        | Positioned from `gridX` or `gridY` relative to the corresponding axis minimum. |
+| Horizontal and vertical crosshair lines | `data-slot="point-picker-crosshair"`        | Positioned from the current axis percentages.                                  |
+| Cursor wrapper                          | `data-slot="point-picker-cursor"`           | Positions either the built-in marker or the `cursor` snippet.                  |
+| Built-in cursor glow                    | `data-slot="point-picker-cursor-glow"`      | Present only when no custom cursor is supplied.                                |
+| Built-in cursor dot                     | `data-slot="point-picker-cursor-dot"`       | Present only when no custom cursor is supplied.                                |
+| Built-in cursor highlight               | `data-slot="point-picker-cursor-highlight"` | Present only when no custom cursor is supplied.                                |
+| Value indicator                         | `data-slot="point-picker-value"`            | Top-right, translucent, monospaced polite live region.                         |
 
-Root classes are merged with `cn()`. The `children` and `cursor` snippets own their internal styling. Grid, crosshair, cursor, and value positions are applied through inline percentage styles and are part of the component's behavior.
+Root classes are merged with `cn()`. The derived aspect ratio plus grid, crosshair, cursor, and value positions are applied through inline styles and are part of the component's behavior. Grid lines begin one interval away from the selected origin and exclude the two outer edges. The `children` and `cursor` snippets own their internal styling.
 
 The component uses the semantic `background`, `primary`, `primary-foreground`, `muted-foreground`, `border`, and `ring` color tokens. It has no component-specific CSS variables, keyframes, stable class names, or external animation hooks.
 
@@ -304,7 +347,8 @@ Root uses `role="application"` because the same focused surface handles two coor
 
 - Supply a concise `label` describing the controlled value. The localized default is generic and may not explain a map, audio, or editing context adequately.
 - Preserve Root's focus ring and keyboard handlers.
-- Arrow keys move by one axis step; Page Up and Page Down move vertically by ten steps; Home and End select opposite corners.
+- Tab focuses Root directly; pointer down also focuses it so arrow-key control is available immediately after clicking or dragging.
+- Arrow keys move visually in their named direction by one axis step. Page Up and Page Down move vertically by ten steps; holding Shift changes them to ten horizontal steps. Home selects the configured origin and End selects its opposite corner.
 - `showValue` exposes formatted changes through `aria-live="polite"`. For important values, also render persistent text outside Root so it remains discoverable without interaction.
 - Grid, crosshair, cursor, and the cursor snippet are hidden from assistive technology. Do not put the only meaningful label or state inside the cursor.
 - Background children remain in the accessibility tree even though pointer events are disabled. Give meaningful images appropriate alternative text and mark purely decorative content as hidden.
@@ -444,8 +488,8 @@ Point Picker is adapted from the [Svelte Audio UI XY Pad](https://svelte-audio-u
 | File                       | Responsibility                                                                                              |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | `point-picker-root.svelte` | Public bindings, interaction, coordinate mapping, callbacks, Root DOM, and every built-in visual indicator. |
-| `point-picker-utils.ts`    | Public `Point` type plus internal clamping, quantization, event, and keyboard helpers.                      |
-| `index.ts`                 | Public Root component and exported `RootProps` and `Point` types.                                           |
+| `point-picker-utils.ts`    | Public coordinate types plus internal grid, clamping, quantization, event, and keyboard helpers.            |
+| `index.ts`                 | Public Root component and exported `RootProps`, `Point`, and `PointOrigin` types.                           |
 | `README.md`                | Usage, API, DOM contract, accessibility, localization, dependencies, and credits.                           |
 
 The component's `index.ts` and exported types are the source of truth for the public API.

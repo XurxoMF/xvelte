@@ -104,7 +104,7 @@
 		class="pointer-events-auto absolute top-0 left-0"
 		style:transform="translate({midpoint.x}px, {midpoint.y}px) translate(-50%, -50%)"
 	>
-		<span class="rounded-full border bg-background px-2 py-0.5 text-xs text-muted-foreground">
+		<span class="rounded-full border bg-background px-2 py-0.5 text-xs whitespace-nowrap text-muted-foreground">
 			{@render label()}
 		</span>
 	</div>

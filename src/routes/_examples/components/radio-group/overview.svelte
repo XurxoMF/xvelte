@@ -1,29 +1,30 @@
 <script lang="ts">
-	import * as Label from "$lib/components/ui/label";
+	import * as Field from "$lib/components/ui/field";
 	import * as RadioGroup from "$lib/components/ui/radio-group";
 
 	let density = $state("comfortable");
 </script>
 
-<div class="grid gap-2">
-	<p id="density-label" class="text-sm font-medium">Interface density</p>
+<Field.Set>
+	<Field.Legend>Interface density</Field.Legend>
+	<Field.Description id="density-description">Choose how much space appears between interface elements.</Field.Description>
 
-	<RadioGroup.Root bind:value={density} aria-labelledby="density-label">
-		<div class="flex items-center gap-2">
+	<RadioGroup.Root bind:value={density} aria-describedby="density-description">
+		<Field.Field orientation="horizontal">
 			<RadioGroup.Item id="density-default" value="default" />
-			<Label.Root for="density-default">Default</Label.Root>
-		</div>
+			<Field.Label for="density-default">Default</Field.Label>
+		</Field.Field>
 
-		<div class="flex items-center gap-2">
+		<Field.Field orientation="horizontal">
 			<RadioGroup.Item id="density-comfortable" value="comfortable" />
-			<Label.Root for="density-comfortable">Comfortable</Label.Root>
-		</div>
+			<Field.Label for="density-comfortable">Comfortable</Field.Label>
+		</Field.Field>
 
-		<div class="flex items-center gap-2">
+		<Field.Field orientation="horizontal">
 			<RadioGroup.Item id="density-compact" value="compact" />
-			<Label.Root for="density-compact">Compact</Label.Root>
-		</div>
+			<Field.Label for="density-compact">Compact</Field.Label>
+		</Field.Field>
 	</RadioGroup.Root>
 
-	<p class="text-sm text-muted-foreground">Selected: {density}</p>
-</div>
+	<Field.Description>Selected: {density}</Field.Description>
+</Field.Set>

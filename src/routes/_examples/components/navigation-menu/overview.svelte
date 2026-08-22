@@ -6,16 +6,17 @@
 	<NavigationMenu.List>
 		<NavigationMenu.Item value="resources">
 			<NavigationMenu.Trigger>Resources</NavigationMenu.Trigger>
+
 			<NavigationMenu.Content>
-				<ul class="grid w-80 gap-1 p-2">
+				<ul class="grid w-80 gap-1">
 					<li>
-						<NavigationMenu.Link href="/guides">
+						<NavigationMenu.Link href="#" class="flex-col items-start">
 							<div class="font-medium">Guides</div>
 							<div class="text-sm opacity-70">Step-by-step help for common workflows.</div>
 						</NavigationMenu.Link>
 					</li>
 					<li>
-						<NavigationMenu.Link href="/api">
+						<NavigationMenu.Link href="#" class="flex-col items-start">
 							<div class="font-medium">API reference</div>
 							<div class="text-sm opacity-70">Detailed documentation for every endpoint.</div>
 						</NavigationMenu.Link>
@@ -25,7 +26,7 @@
 		</NavigationMenu.Item>
 
 		<NavigationMenu.Item>
-			<NavigationMenu.Link href="/pricing">Pricing</NavigationMenu.Link>
+			<NavigationMenu.Link href="#">Pricing</NavigationMenu.Link>
 		</NavigationMenu.Item>
 
 		<NavigationMenu.Indicator />

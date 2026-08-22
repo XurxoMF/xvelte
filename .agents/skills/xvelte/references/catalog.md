@@ -18,6 +18,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `button-group`
 - `button-hold`
 - `calendar`
+- `calendar-range` — responsive date-range selection with evenly distributed weekday columns and multiple-month layouts
 - `canvas`
 - `card`
 - `carousel`
@@ -42,24 +43,23 @@ All component paths are relative to `src/lib/components/ui`.
 - `hover-card`
 - `input`
 - `input-group`
-- `input-ipv4`
-- `input-ipv6`
+- `input-ipv4` — responsive four-segment IPv4 entry with internal equal-width octets, paste normalization, validation, and form submission
+- `input-ipv6` — responsive eight-segment IPv6 entry with internal equal-width hextets, compressed-address paste expansion, validation, and form submission
 - `input-otp`
 - `input-phone` — composable international phone state, searchable country flags, formatting, and validation
 - `item`
 - `kbd`
 - `knob`
 - `label`
-- `list` — semantic ordered and unordered lists with configurable spacing
+- `list` — semantic ordered and unordered lists with configurable spacing and reusable exported class variants
 - `menubar`
 - `navigation-menu`
 - `pagination`
-- `point-picker`
+- `point-picker` — scale-preserving two-dimensional coordinate input with range-derived aspect ratio, configurable origin and grid intervals, pointer control, and keyboard control
 - `popover`
 - `progress`
 - `qr-code`
 - `radio-group`
-- `range-calendar`
 - `resizable`
 - `scroll-area`
 - `select`
@@ -68,8 +68,8 @@ All component paths are relative to `src/lib/components/ui`.
 - `sidebar`
 - `skeleton`
 - `slider`
-- `sonner`
-- `sortable` — drag-and-drop reordering with required explicit drag handles
+- `sonner` — themed global toast renderer with a locally exported, fully forwarded toast runtime
+- `sortable` — declarative drag-and-drop lists with internally updated bindable ID order, ordering helpers, optional lifecycle callbacks, stable drag-state attributes, and explicit handles
 - `spinner`
 - `star-rating`
 - `status-dot`
@@ -87,7 +87,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `typography`
 - `video`
 - `walkthrough`
-- `widget-grid` — responsive declarative dashboards with explicit drag and one touch-friendly native resize handle per item
+- `widget-grid` — responsive declarative dashboards with headless items, explicit drag, and one touch-friendly native resize handle per item
 
 ## Attachments
 

@@ -13,23 +13,25 @@
 	}
 </script>
 
-<Dialog.Root bind:open>
-	<Dialog.Trigger class={Button.rootVariants({ variant: "outline" })}>Edit profile</Dialog.Trigger>
+<div class="flex items-center justify-center">
+	<Dialog.Root bind:open>
+		<Dialog.Trigger class={Button.rootVariants({ variant: "outline" })}>Edit profile</Dialog.Trigger>
 
-	<Dialog.Content>
-		<Dialog.Header>
-			<Dialog.Title>Edit profile</Dialog.Title>
-			<Dialog.Description>Update the name displayed on your public profile.</Dialog.Description>
-		</Dialog.Header>
+		<Dialog.Content>
+			<Dialog.Header>
+				<Dialog.Title>Edit profile</Dialog.Title>
+				<Dialog.Description>Update the name displayed on your public profile.</Dialog.Description>
+			</Dialog.Header>
 
-		<div class="grid gap-2">
-			<Label.Root for="dialog-display-name">Display name</Label.Root>
-			<Input.Root id="dialog-display-name" name="displayName" autocomplete="name" bind:value={displayName} />
-		</div>
+			<div class="grid gap-2">
+				<Label.Root for="dialog-display-name">Display name</Label.Root>
+				<Input.Root id="dialog-display-name" name="displayName" autocomplete="name" bind:value={displayName} />
+			</div>
 
-		<Dialog.Footer>
-			<Dialog.Close class={Button.rootVariants({ variant: "outline" })}>Cancel</Dialog.Close>
-			<Button.Root onclick={saveProfile}>Save changes</Button.Root>
-		</Dialog.Footer>
-	</Dialog.Content>
-</Dialog.Root>
+			<Dialog.Footer>
+				<Dialog.Close class={Button.rootVariants({ variant: "outline" })}>Cancel</Dialog.Close>
+				<Button.Root onclick={saveProfile}>Save changes</Button.Root>
+			</Dialog.Footer>
+		</Dialog.Content>
+	</Dialog.Root>
+</div>

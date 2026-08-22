@@ -144,3 +144,16 @@
 <div {...rootProps}>
 	{@render children?.()}
 </div>
+
+<style>
+	:global([data-slot="widget-grid"] > .grid-stack-item > .grid-stack-item-content) {
+		overflow: hidden;
+	}
+
+	:global([data-slot="widget-grid"] > .grid-stack-placeholder > .placeholder-content) {
+		margin: 1rem;
+		border-radius: calc(var(--radius) * 0.8);
+		background-color: var(--muted);
+		opacity: 50%;
+	}
+</style>

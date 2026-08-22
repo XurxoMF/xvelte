@@ -172,7 +172,7 @@ The default label is an inline-width flex container with centered children, a sm
 Disabled styling has two independent triggers:
 
 - `peer-disabled:*` activates when a disabled element with the `peer` class precedes Label in a compatible sibling structure.
-- `group-data-[disabled=true]:*` activates when a compatible ancestor has the `group` class and `data-disabled="true"`.
+- `group-data-disabled:*` activates when a compatible ancestor has the `group` class and `data-disabled="true"`.
 
 The peer path adds a not-allowed cursor and reduced opacity. The group path adds reduced opacity and disables pointer events. These selectors only style Label; they do not derive, set, or forward a disabled state.
 

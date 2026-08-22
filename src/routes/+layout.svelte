@@ -2,27 +2,39 @@
 	import type { Pathname } from "$app/types";
 	import { resolve } from "$app/paths";
 	import { page } from "$app/state";
-	import { locales, localizeHref } from "$lib/paraglide/runtime";
+
 	import "./layout.css";
 	import "./custom.css";
-	import { ModeWatcher } from "mode-watcher";
-	import { SearchIcon } from "$lib/icons";
-	import * as Sidebar from "$lib/components/ui/sidebar";
-	import * as Tooltip from "$lib/components/ui/tooltip";
+
 	import { attachments, components, hooks } from "./_docs/catalog";
 
+	import { locales, localizeHref } from "$lib/paraglide/runtime";
+
+	import { SearchIcon } from "$lib/icons";
+
+	import { ModeWatcher } from "mode-watcher";
+
+	import * as Sidebar from "$lib/components/ui/sidebar";
+	import * as Tooltip from "$lib/components/ui/tooltip";
+	import * as Typography from "$lib/components/ui/typography";
+	import * as Sonner from "$lib/components/ui/sonner";
+
 	let { children } = $props();
+
 	let query = $state("");
+
 	let filteredComponents = $derived(components.filter((unit) => unit.title.toLowerCase().includes(query.toLowerCase().trim())));
+
 	let currentPath = $derived(page.url.pathname);
 </script>
 
 <ModeWatcher />
+<Sonner.Root />
 
 <Tooltip.Provider delayDuration={500}>
 	<Sidebar.Provider class="relative" style="--sidebar-width: 17rem;">
 		<Sidebar.Root collapsible="offcanvas" class="border-r-0 bg-sidebar md:absolute">
-			<Sidebar.Header class="gap-3 border-b px-4 py-4">
+			<Sidebar.Header id="sidebar-header" class="gap-3 border-b px-4 py-4">
 				<a href={resolve("/")} class="group flex items-center gap-3" aria-label="xvelte home">
 					<span class="grid size-9 place-items-center rounded-xl bg-primary text-lg font-bold text-primary-foreground shadow-sm shadow-primary/25"
 						>x</span
@@ -78,8 +90,8 @@
 				</Sidebar.Group>
 			</Sidebar.Content>
 
-			<Sidebar.Footer class="border-t px-4 py-3">
-				<p class="text-xs leading-relaxed text-muted-foreground">Built from the library it documents.</p>
+			<Sidebar.Footer id="sidebar-footer" class="border-t px-4 py-3">
+				<Typography.P class="text-muted-foreground">Built from the library it documents.</Typography.P>
 			</Sidebar.Footer>
 			<Sidebar.Rail />
 		</Sidebar.Root>

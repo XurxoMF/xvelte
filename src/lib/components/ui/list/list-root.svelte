@@ -1,13 +1,35 @@
 <script lang="ts" module>
 	import type { HTMLAttributes, HTMLOlAttributes } from "svelte/elements";
 
+	import { tv, type VariantProps } from "tailwind-variants";
+
 	import type { WithElementRef } from "$lib/utils";
 
+	/** Builds the Root indentation, marker, spacing, and caller-supplied classes. */
+	export const rootVariants = tv({
+		base: "ms-6",
+		variants: {
+			variant: {
+				ordered: "list-decimal",
+				unordered: "list-disc"
+			},
+			spacing: {
+				default: "[&>li]:mt-2",
+				compact: "[&>li]:mt-1",
+				none: "[&>li]:mt-0"
+			}
+		},
+		defaultVariants: {
+			variant: "unordered",
+			spacing: "default"
+		}
+	});
+
 	/** Semantic element variants rendered by Root. */
-	export type RootVariants = "ordered" | "unordered";
+	export type RootVariants = VariantProps<typeof rootVariants>["variant"];
 
 	/** Vertical spacing options applied to direct list items. */
-	export type RootSpacings = "default" | "compact" | "none";
+	export type RootSpacings = VariantProps<typeof rootVariants>["spacing"];
 
 	type RootElement = HTMLOListElement | HTMLUListElement;
 	type OrderedAttributes = Pick<HTMLOlAttributes, "reversed" | "start" | "type">;
@@ -34,8 +56,6 @@
 		...restProps
 	}: RootProps = $props();
 
-	const spacingClass = $derived(spacing === "compact" ? "[&>li]:mt-1" : spacing === "none" ? "[&>li]:mt-0" : "[&>li]:mt-2");
-	const rootClass = $derived(cn("ms-6", variant === "ordered" ? "list-decimal" : "list-disc", spacingClass, className));
 	const orderedProps = $derived(variant === "ordered" ? { reversed, start, type } : {});
 </script>
 
@@ -47,7 +67,7 @@
 	data-slot="list"
 	data-variant={variant}
 	data-spacing={spacing}
-	class={rootClass}
+	class={cn(rootVariants({ variant, spacing }), className)}
 >
 	{@render children?.()}
 </svelte:element>

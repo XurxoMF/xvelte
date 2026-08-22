@@ -35,6 +35,7 @@
 			<div class="my-10 flex min-h-56 items-center justify-center rounded-xl border text-sm text-muted-foreground">Loading preview…</div>
 		{:then loaded}
 			{@const Preview = loaded.component}
+
 			<Example title={segment.example.title} source={loaded.source}>
 				<Preview />
 			</Example>

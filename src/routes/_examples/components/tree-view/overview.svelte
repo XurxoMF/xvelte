@@ -1,5 +1,6 @@
 <script lang="ts">
 	import * as TreeView from "$lib/components/ui/tree-view";
+	import * as Typography from "$lib/components/ui/typography";
 
 	let selectedFile = $state("No file selected");
 
@@ -8,14 +9,16 @@
 	}
 </script>
 
-<TreeView.Root aria-label="Project files">
-	<TreeView.Folder name="src">
-		<TreeView.Folder name="components">
-			<TreeView.File name="Header.svelte" onclick={() => openFile("src/components/Header.svelte")} />
+<div class="flex flex-col items-center justify-center gap-4">
+	<TreeView.Root aria-label="Project files">
+		<TreeView.Folder name="src">
+			<TreeView.Folder name="components">
+				<TreeView.File name="Header.svelte" onclick={() => openFile("src/components/Header.svelte")} />
+			</TreeView.Folder>
+			<TreeView.File name="app.css" onclick={() => openFile("src/app.css")} />
 		</TreeView.Folder>
-		<TreeView.File name="app.css" onclick={() => openFile("src/app.css")} />
-	</TreeView.Folder>
-	<TreeView.File name="package.json" onclick={() => openFile("package.json")} />
-</TreeView.Root>
+		<TreeView.File name="package.json" onclick={() => openFile("package.json")} />
+	</TreeView.Root>
 
-<p class="mt-3 text-sm text-muted-foreground">{selectedFile}</p>
+	<Typography.P class="text-muted-foreground">{selectedFile}</Typography.P>
+</div>

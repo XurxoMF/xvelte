@@ -1,14 +1,14 @@
 <script lang="ts" module>
 	import type { DateValue } from "@internationalized/date";
 
-	import * as RangeCalendar from ".";
+	import * as CalendarRange from ".";
 
 	export type CaptionProps = {
-		captionLayout: RangeCalendar.RootProps["captionLayout"];
-		months: RangeCalendar.MonthSelectProps["months"];
-		monthFormat: RangeCalendar.MonthSelectProps["monthFormat"];
-		years: RangeCalendar.YearSelectProps["years"];
-		yearFormat: RangeCalendar.YearSelectProps["yearFormat"];
+		captionLayout: CalendarRange.RootProps["captionLayout"];
+		months: CalendarRange.MonthSelectProps["months"];
+		monthFormat: CalendarRange.MonthSelectProps["monthFormat"];
+		years: CalendarRange.YearSelectProps["years"];
+		yearFormat: CalendarRange.YearSelectProps["yearFormat"];
 		month: DateValue;
 		placeholder: DateValue | undefined;
 		locale: string;
@@ -37,7 +37,7 @@
 </script>
 
 {#snippet MonthSelect()}
-	<RangeCalendar.MonthSelect
+	<CalendarRange.MonthSelect
 		{months}
 		{monthFormat}
 		value={month.month}
@@ -51,7 +51,7 @@
 {/snippet}
 
 {#snippet YearSelect()}
-	<RangeCalendar.YearSelect {years} {yearFormat} value={month.year} />
+	<CalendarRange.YearSelect {years} {yearFormat} value={month.year} />
 {/snippet}
 
 {#if captionLayout === "dropdown"}

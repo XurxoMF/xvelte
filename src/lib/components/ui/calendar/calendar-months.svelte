@@ -12,6 +12,6 @@
 	let { ref = $bindable(null), class: className, children, ...restProps }: MonthsProps = $props();
 </script>
 
-<div bind:this={ref} class={cn("relative flex flex-col gap-4 md:flex-row", className)} {...restProps}>
+<div bind:this={ref} class={cn("relative flex w-full flex-col gap-4 md:flex-row", className)} {...restProps}>
 	{@render children?.()}
 </div>

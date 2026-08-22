@@ -2,7 +2,7 @@
 
 An accessible calendar for selecting one or several dates. It renders complete month navigation, optional month/year dropdowns, one or more month grids, disabled and unavailable dates, localized labels, and a customizable day snippet on top of Bits UI and `@internationalized/date`.
 
-Use Calendar when people need to choose dates from a visual month grid. Do not use it for date ranges, free-form date input, time-only input, event scheduling with time zones, or a read-only event calendar; use Range Calendar or a purpose-built input/display instead.
+Use Calendar when people need to choose dates from a visual month grid. Do not use it for date ranges, free-form date input, time-only input, event scheduling with time zones, or a read-only event calendar; use Calendar Range or a purpose-built input/display instead.
 
 <!-- xvelte-example: overview -->
 
@@ -226,8 +226,8 @@ These exports support the built-in structure and advanced composition. Most Bits
 
 | Component     | Props type         | Default element | Local behavior and important props                                                                                                  |
 | ------------- | ------------------ | --------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `Months`      | `MonthsProps`      | `div`           | Responsive column/row wrapper for all visible months; forwards native `div` props and bindable `ref`.                               |
-| `Month`       | `MonthProps`       | `div`           | Vertical wrapper for one month; forwards native `div` props and bindable `ref`.                                                     |
+| `Months`      | `MonthsProps`      | `div`           | Full-width responsive column/row wrapper for all visible months; forwards native `div` props and bindable `ref`.                    |
+| `Month`       | `MonthProps`       | `div`           | Flexible equal-width wrapper for one month, with a seven-cell minimum width; forwards native `div` props and bindable `ref`.        |
 | `Nav`         | `NavProps`         | `nav`           | Absolutely positions previous/next controls; forwards native `nav` props and bindable `ref`.                                        |
 | `PrevButton`  | `PrevButtonProps`  | `button`        | Bits UI previous button styled with Button; local `variant` defaults to `"ghost"`; default left chevron.                            |
 | `NextButton`  | `NextButtonProps`  | `button`        | Bits UI next button styled with Button; local `variant` defaults to `"ghost"`; default right chevron.                               |
@@ -243,15 +243,15 @@ These exports support the built-in structure and advanced composition. Most Bits
 
 ### Grid and day components
 
-| Component  | Props type      | Default element            | Local behavior and important props                                                                        |
-| ---------- | --------------- | -------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `Grid`     | `GridProps`     | `table`                    | Bits UI calendar grid styled as a full-width flex column.                                                 |
-| `GridHead` | `GridHeadProps` | `thead`                    | Bits UI grid head; xvelte only merges `class`.                                                            |
-| `GridBody` | `GridBodyProps` | `tbody`                    | Bits UI grid body; xvelte only merges `class`.                                                            |
-| `GridRow`  | `GridRowProps`  | `tr`                       | Bits UI row with local flex layout.                                                                       |
-| `HeadCell` | `HeadCellProps` | `th`                       | Cell-width weekday heading with muted, normal-weight text.                                                |
-| `Cell`     | `CellProps`     | `td`                       | Requires `date` and `month`; controls cell size, focus stacking, and selected edge radii.                 |
-| `Day`      | `DayProps`      | `div` with `role="button"` | Selectable day with local hover, today, selected, outside-month, disabled, unavailable, and focus styles. |
+| Component  | Props type      | Default element            | Local behavior and important props                                                                   |
+| ---------- | --------------- | -------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `Grid`     | `GridProps`     | `table`                    | Full-width fixed-layout table whose seven columns share the available width equally.                 |
+| `GridHead` | `GridHeadProps` | `thead`                    | Bits UI grid head; xvelte only merges `class`.                                                       |
+| `GridBody` | `GridBodyProps` | `tbody`                    | Bits UI grid body; xvelte only merges `class`.                                                       |
+| `GridRow`  | `GridRowProps`  | `tr`                       | Native table row so the table can distribute all seven columns evenly.                               |
+| `HeadCell` | `HeadCellProps` | `th`                       | One-seventh-width weekday heading with muted, normal-weight text.                                    |
+| `Cell`     | `CellProps`     | `td`                       | Requires `date` and `month`; uses one seventh of the row and controls focus stacking and edge radii. |
+| `Day`      | `DayProps`      | `div` with `role="button"` | Full-cell selectable day with fixed height and local date-state styles.                              |
 
 These props are aliases of their matching Bits UI component props, including `children`, `child`, native attributes, state snippet values, and bindable refs. Use the [Bits UI Calendar API reference](https://www.bits-ui.com/docs/components/calendar#api-reference) for their complete inherited options.
 
@@ -263,15 +263,21 @@ Use `index.ts` and the exported props types as the source of truth for the local
 
 Calendar uses semantic Tailwind tokens and two root-scoped CSS variables:
 
-| Variable        | Default                          | Purpose                                        |
-| --------------- | -------------------------------- | ---------------------------------------------- |
-| `--cell-size`   | Tailwind spacing `7` (`1.75rem`) | Width/height of days, headers, and navigation. |
-| `--cell-radius` | `var(--radius-md)`               | Radius for day cells and selection edges.      |
+| Variable        | Default                          | Purpose                                                |
+| --------------- | -------------------------------- | ------------------------------------------------------ |
+| `--cell-size`   | Tailwind spacing `7` (`1.75rem`) | Day height, minimum column width, and navigation size. |
+| `--cell-radius` | `var(--radius-md)`               | Radius for day cells and selection edges.              |
 
 Override them on `Root` when a different density is needed:
 
 ```svelte
 <Calendar.Root type="single" class="[--cell-radius:var(--radius-lg)] [--cell-size:--spacing(9)]" />
+```
+
+Root is compact by default. Add `w-full` to make it fill its container; months grow equally and each grid always divides that width into seven equal columns:
+
+```svelte
+<Calendar.Root type="single" class="w-full rounded-lg border" />
 ```
 
 The local components do not add xvelte `data-slot` attributes. Bits UI supplies dependency-owned selectors instead:
@@ -286,7 +292,8 @@ Prefer component `class` props and documented state attributes. Check the instal
 Notable local styling behavior:
 
 - Root uses `group/calendar`, background, padding, and transparent backgrounds inside `card-content` or `popover-content` slots.
-- `Months` changes from a vertical layout to a row at the `md` breakpoint.
+- `Months` changes from a vertical layout to a row at the `md` breakpoint, and visible months share the available width equally.
+- Every grid uses native fixed table layout. Weekday headings, cells, and day controls therefore stay centered in seven equal columns at compact and full widths.
 - Navigation is absolutely positioned across the top of the root.
 - Selected days use primary colors; today uses accent colors when unselected.
 - Outside-month days are muted; disabled days lose pointer events and opacity; unavailable days are struck through.
@@ -467,7 +474,7 @@ Your global stylesheet must import Tailwind, define the dark variant, and expose
 
 The app remains responsible for applying its `.dark` class, normally through root-level theme management.
 
-No `tw-animate-css` import, animation, keyframe, Paraglide message, shared component stylesheet, or additional icon is required. Popover, Date Picker, Range Calendar, form fields, and date summaries shown in larger compositions have their own installation requirements; follow each component's README when you use them.
+No `tw-animate-css` import, animation, keyframe, Paraglide message, shared component stylesheet, or additional icon is required. Popover, Date Picker, Calendar Range, form fields, and date summaries shown in larger compositions have their own installation requirements; follow each component's README when you use them.
 
 ---
 

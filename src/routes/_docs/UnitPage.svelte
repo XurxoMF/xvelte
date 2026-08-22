@@ -1,6 +1,8 @@
 <script lang="ts">
 	import type { Pathname } from "$app/types";
 	import { resolve } from "$app/paths";
+	import * as Typography from "$lib/components/ui/typography";
+
 	import type { DocKind } from "./catalog";
 	import { getUnit } from "./catalog";
 	import Document from "./Document.svelte";
@@ -28,8 +30,8 @@
 	</main>
 {:else}
 	<main class="mx-auto max-w-3xl px-5 py-20 sm:px-8">
-		<p class="text-sm font-semibold text-primary">404</p>
-		<h1 class="mt-2 text-4xl font-bold">Documentation not found</h1>
-		<p class="mt-4 text-muted-foreground">This entry does not exist in the local xvelte catalog.</p>
+		<Typography.P class="text-primary">404</Typography.P>
+		<Typography.H1>Documentation not found</Typography.H1>
+		<Typography.P class="text-muted-foreground">This entry does not exist in the local xvelte catalog.</Typography.P>
 	</main>
 {/if}

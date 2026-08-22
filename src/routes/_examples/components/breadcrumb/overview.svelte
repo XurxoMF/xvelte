@@ -2,7 +2,7 @@
 	import * as Breadcrumb from "$lib/components/ui/breadcrumb";
 </script>
 
-<Breadcrumb.Root>
+<Breadcrumb.Root class="flex items-center justify-center">
 	<Breadcrumb.List>
 		<Breadcrumb.Item>
 			<Breadcrumb.Link href="/">Home</Breadcrumb.Link>

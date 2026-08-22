@@ -1,5 +1,6 @@
 <script lang="ts">
 	import * as Button from "$lib/components/ui/button";
+	import * as ButtonGroup from "$lib/components/ui/button-group";
 	import * as FloatingMenu from "$lib/components/ui/floating-menu";
 
 	let zoom = $state(100);
@@ -12,11 +13,15 @@
 
 	<FloatingMenu.Root position="bottom-right" orientation="horizontal">
 		<FloatingMenu.Group role="group" aria-label="Preview zoom">
-			<Button.Root variant="ghost" size="icon" aria-label="Zoom out" onclick={() => (zoom = Math.max(25, zoom - 25))}>−</Button.Root>
-			<Button.Root variant="ghost" onclick={() => (zoom = 100)}>
-				{zoom}%
-			</Button.Root>
-			<Button.Root variant="ghost" size="icon" aria-label="Zoom in" onclick={() => (zoom = Math.min(200, zoom + 25))}>+</Button.Root>
+			<ButtonGroup.Root>
+				<Button.Root variant="ghost" size="icon" aria-label="Zoom out" onclick={() => (zoom = Math.max(25, zoom - 25))}>−</Button.Root>
+
+				<Button.Root variant="ghost" onclick={() => (zoom = 100)}>
+					{zoom}%
+				</Button.Root>
+
+				<Button.Root variant="ghost" size="icon" aria-label="Zoom in" onclick={() => (zoom = Math.min(200, zoom + 25))}>+</Button.Root>
+			</ButtonGroup.Root>
 		</FloatingMenu.Group>
 	</FloatingMenu.Root>
 </div>

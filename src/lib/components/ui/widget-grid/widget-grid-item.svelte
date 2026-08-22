@@ -2,7 +2,7 @@
 	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
 
-	import type { WithElementRef } from "$lib/utils";
+	import { cn, type WithElementRef } from "$lib/utils";
 
 	import type { WidgetGridItemState } from "./widget-grid-types";
 
@@ -25,7 +25,7 @@
 			onResizeEnd?: ((state: WidgetGridItemState) => void) | undefined;
 			/** Item content, including any explicit interaction handles. */
 			children?: Snippet | undefined;
-			/** Replaces the default Card-like surface while preserving structural props. */
+			/** Replaces the default `div` while preserving registration and state props. */
 			child?: Snippet<[{ props: Record<string, unknown> }]> | undefined;
 		};
 </script>
@@ -33,9 +33,6 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import { createAttachmentKey } from "svelte/attachments";
-
-	import { cn } from "$lib/utils";
-	import * as Card from "$lib/components/ui/card";
 
 	import { setWidgetGridItemContext } from "./widget-grid-context.svelte";
 
@@ -122,7 +119,7 @@
 	/**
 	 * Exposes the default or delegated public item element.
 	 *
-	 * @param node - Visible item surface element.
+	 * @param node - Default or delegated visible Item element.
 	 */
 	function widgetGridItemContent(node: HTMLElement) {
 		ref = node;
@@ -133,10 +130,9 @@
 		};
 	}
 
-	const structuralClass = $derived(cn("relative size-full", className));
 	const itemProps = $derived({
 		...restProps,
-		class: structuralClass,
+		class: cn("size-full", className),
 		"aria-disabled": item.grid.options.disabled || undefined,
 		"data-slot": "widget-grid-item",
 		"data-moving": item.moving ? "true" : undefined,
@@ -152,9 +148,9 @@
 		{#if child}
 			{@render child({ props: itemProps })}
 		{:else}
-			<Card.Root {...itemProps}>
+			<div {...itemProps}>
 				{@render children?.()}
-			</Card.Root>
+			</div>
 		{/if}
 	</div>
 </div>

@@ -2,7 +2,7 @@
 	import * as StatusDot from "$lib/components/ui/status-dot";
 </script>
 
-<span class="inline-flex items-center gap-2">
-	<StatusDot.Root variant="success" aria-hidden="true" />
+<span class="flex items-center justify-center gap-4">
+	<StatusDot.Root variant="success" pulse aria-hidden="true" />
 	<span>Service operational</span>
 </span>

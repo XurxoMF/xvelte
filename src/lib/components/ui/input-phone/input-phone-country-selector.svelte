@@ -86,6 +86,7 @@
 
 	<Combobox.Content class={cn("w-80", contentClass)}>
 		<Combobox.Input placeholder={searchPlaceholder} />
+
 		<Combobox.Empty>{emptyText}</Combobox.Empty>
 
 		<Combobox.List>

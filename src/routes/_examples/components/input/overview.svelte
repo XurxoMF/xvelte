@@ -1,14 +1,23 @@
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
+	import * as Field from "$lib/components/ui/field";
 	import * as Input from "$lib/components/ui/input";
-	import * as Label from "$lib/components/ui/label";
 
 	let email = $state("");
 </script>
 
-<form class="grid max-w-sm gap-2">
-	<Label.Root for="account-email">Email address</Label.Root>
-	<Input.Root id="account-email" name="email" type="email" autocomplete="email" placeholder="name@example.com" bind:value={email} required />
+<Field.Field>
+	<Field.Label for="account-email">Email address</Field.Label>
 
-	<Button.Root type="submit">Continue</Button.Root>
-</form>
+	<Input.Root
+		id="account-email"
+		name="email"
+		type="email"
+		autocomplete="email"
+		placeholder="name@example.com"
+		bind:value={email}
+		aria-describedby="account-email-description"
+		required
+	/>
+
+	<Field.Description id="account-email-description">Enter your email address.</Field.Description>
+</Field.Field>

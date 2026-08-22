@@ -51,6 +51,7 @@
 		"clsx": "^2.1.1",
 		"country-flag-icons": "1.6.15",
 		"embla-carousel-svelte": "^8.6.0",
+		"gridstack": "^13.2.0",
 		"layerchart": "^2.1.0",
 		"libphonenumber-js": "1.12.40",
 		"mode-watcher": "^1.1.0",

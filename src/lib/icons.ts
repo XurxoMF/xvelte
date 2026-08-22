@@ -32,6 +32,7 @@ export { default as QueueIcon } from "@tabler/icons-svelte/icons/playlist";
 export { default as RepeatIcon } from "@tabler/icons-svelte/icons/repeat";
 export { default as RepeatOneIcon } from "@tabler/icons-svelte/icons/repeat-once";
 export { default as ResetIcon } from "@tabler/icons-svelte/icons/restore";
+export { default as ResizeHandleIcon } from "@tabler/icons-svelte/icons/resize";
 export { default as RewindIcon } from "@tabler/icons-svelte/icons/player-skip-back";
 export { default as SearchIcon } from "@tabler/icons-svelte/icons/search";
 export { default as SelectorIcon } from "@tabler/icons-svelte/icons/selector";

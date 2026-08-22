@@ -87,6 +87,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `typography`
 - `video`
 - `walkthrough`
+- `widget-grid` — responsive declarative dashboards with explicit drag and one touch-friendly native resize handle per item
 
 ## Attachments
 

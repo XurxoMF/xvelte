@@ -4,6 +4,8 @@ An accessible calendar for selecting one or several dates. It renders complete m
 
 Use Calendar when people need to choose dates from a visual month grid. Do not use it for date ranges, free-form date input, time-only input, event scheduling with time zones, or a read-only event calendar; use Range Calendar or a purpose-built input/display instead.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

@@ -4,6 +4,8 @@ An accessible modal confirmation dialog for important decisions that require an 
 
 Use an alert dialog when a consequential action must be confirmed or when proceeding without a response would be unsafe, such as deleting data or abandoning unsaved work. Do not use it for ordinary information, non-blocking feedback, complex multi-step forms, or actions that can be reversed easily; use Alert, Dialog, or a toast when interruption is unnecessary.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

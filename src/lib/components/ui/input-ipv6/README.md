@@ -2,6 +2,8 @@
 
 A segmented IPv6 address input with eight hexadecimal hextets, automatic focus movement, full-address paste handling, bindable validation state, and native form submission support. Use it for guided IPv6 entry; use a normal text input when users must freely edit compressed notation without expansion.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

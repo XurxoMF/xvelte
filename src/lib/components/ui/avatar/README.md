@@ -4,6 +4,8 @@ A composable identity image with a loading/error fallback, three local sizes, an
 
 Use Avatar for people, organizations, accounts, or other entities represented by a compact image or initials. Do not use it as the only accessible name for an action, as a replacement for larger editorial imagery, or when the image must expose controls, captions, zooming, or gallery behavior.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

@@ -4,6 +4,8 @@ An accessible single-value or multi-value range input built on Bits UI. It rende
 
 Use Slider when people benefit from adjusting a value spatially, such as volume, price, zoom, or a range. Use a numeric input when exact entry is more important, and use Progress when the value is display-only.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

@@ -4,6 +4,8 @@ A native action control with six visual variants, eight sizes, predictable form 
 
 Use Button to trigger an immediate action, submit or reset a form, open an interface, or control application state. Do not use it for navigation, passive labels, toggled state without the corresponding ARIA contract, or actions that are unavailable but still need an explanation outside the native disabled state.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

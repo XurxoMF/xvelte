@@ -4,6 +4,8 @@ An accessible single-selection or multiple-selection group of related toggle but
 
 Use Toggle Group for compact related options such as text alignment or formatting. Use Radio Group when labels and choices should remain explicit, Tabs when selection switches content panels, and independent Toggle controls when buttons do not form one set.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

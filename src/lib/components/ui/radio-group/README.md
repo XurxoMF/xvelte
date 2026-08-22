@@ -4,6 +4,8 @@ An accessible single-choice control for selecting one value from a related set. 
 
 Use Radio Group when the available options are visible and mutually exclusive. Use Select when a long option list should remain compact, Checkbox when choices are independent or multiple values may be selected, and Toggle Group when the controls behave as a compact toolbar or view switcher rather than a form question.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

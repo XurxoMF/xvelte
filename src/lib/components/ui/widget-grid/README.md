@@ -2,6 +2,8 @@
 
 WidgetGrid is a dynamic dashboard layout for arbitrary Svelte content. It registers declarative items, positions them on a responsive cell grid, resolves collisions, supports explicit drag and one touch-friendly resize handle per item, and reports complete layout snapshots for persistence. Use it for dashboards and customizable workspaces; do not use it when ordinary document flow or a simple sortable list communicates the content more clearly.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

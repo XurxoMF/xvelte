@@ -4,6 +4,8 @@ An accessible rating input that renders full, half, and empty semantic star icon
 
 Use Star Rating when people assign or review a bounded preference score. Use Slider for a continuous numeric scale, Radio Group when every labelled choice must remain explicit, and a plain text value when the rating is display-only and stars would add no meaning.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

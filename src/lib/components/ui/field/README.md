@@ -4,6 +4,8 @@ A composable form layout for labels, controls, descriptions, validation errors, 
 
 Use Field to organize accessible form controls without coupling their values or validation to a particular form library. It supplies structure and presentation, but the app must connect labels, descriptions, errors, disabled state, and validation state to each control. Do not use it as a substitute for native form semantics or validation logic.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

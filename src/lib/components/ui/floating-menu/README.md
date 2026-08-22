@@ -4,6 +4,8 @@ A lightweight layout component for placing one or more groups of controls along 
 
 Use Floating Menu for canvas controls, map tools, media actions, preview controls, or other compact actions that must float over content. Do not use it as a dropdown, context menu, focus-managed application menu, or popup: it does not open or close, portal content, manage focus, add menu roles, or implement keyboard navigation.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

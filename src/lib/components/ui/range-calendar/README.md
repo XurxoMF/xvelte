@@ -4,6 +4,8 @@ An accessible calendar for selecting a start and end date. It renders complete m
 
 Use Range Calendar when people need to choose a continuous date interval visually, such as a stay, report period, or availability window. Use Calendar for one or several independent dates, and use a date-range field or picker when compact typed input and popover behavior are also required. It does not select times or calculate time-zone-aware durations for the app.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

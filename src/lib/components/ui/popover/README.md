@@ -4,6 +4,8 @@ An accessible floating panel opened from a trigger. It supports controlled state
 
 Use Popover for compact interactive content such as filters, settings, forms, or contextual actions that should remain anchored to another control. Use Tooltip for short non-interactive hints, Hover Card for supplementary previews, and Dialog when the task needs stronger interruption, more space, or a clearly modal workflow.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

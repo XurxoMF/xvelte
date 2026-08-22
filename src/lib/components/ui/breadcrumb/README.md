@@ -4,6 +4,8 @@ A composable navigation trail that represents the hierarchy leading to the curre
 
 Use Breadcrumb on nested sites or applications where people benefit from understanding and navigating the current resource hierarchy. Do not use it for a flat primary navigation menu, a stepper whose items represent progress, browser history, or paths so shallow that the trail adds no useful context.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

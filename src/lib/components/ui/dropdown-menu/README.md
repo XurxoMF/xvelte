@@ -4,6 +4,8 @@ An accessible action menu opened from a button. It supports regular and destruct
 
 Use Dropdown Menu for secondary actions and compact settings associated with a visible trigger. Keep important or frequently used actions visible elsewhere, and use Select rather than a menu when choosing one value is the primary form task.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

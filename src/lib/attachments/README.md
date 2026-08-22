@@ -38,6 +38,8 @@ Registers one or more keyboard shortcuts on `<svelte:window>` and removes the li
 
 Use it for app-level commands such as opening search, saving a draft, or closing an interface. Do not use it to replace visible controls, override common browser or assistive-technology commands, or capture ordinary typing without checking the event target.
 
+<!-- xvelte-example: overview -->
+
 ### Import
 
 Import the function and optional types directly from the attachment file:

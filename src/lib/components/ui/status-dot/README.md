@@ -4,6 +4,8 @@ A small colored status marker with configurable meaning, size, and optional puls
 
 Use Status Dot beside text that explains availability, health, severity, or connection state. Never communicate status by color or animation alone, and do not use it as an interactive control.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

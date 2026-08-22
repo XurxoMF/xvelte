@@ -4,6 +4,8 @@ A compact label for statuses, categories, counts, and short metadata. Badge rend
 
 Use Badge for brief, secondary information that benefits from a visually distinct treatment. Do not use it for long text, primary page content, form input, notifications that must be announced automatically, or interactive actions that should be buttons.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

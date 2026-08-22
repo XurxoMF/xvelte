@@ -4,15 +4,98 @@
 	import { page } from "$app/state";
 	import { locales, localizeHref } from "$lib/paraglide/runtime";
 	import "./layout.css";
+	import "./custom.css";
 	import { ModeWatcher } from "mode-watcher";
+	import { SearchIcon } from "$lib/icons";
+	import * as Sidebar from "$lib/components/ui/sidebar";
 	import * as Tooltip from "$lib/components/ui/tooltip";
+	import { attachments, components, hooks } from "./_docs/catalog";
 
 	let { children } = $props();
+	let query = $state("");
+	let filteredComponents = $derived(components.filter((unit) => unit.title.toLowerCase().includes(query.toLowerCase().trim())));
+	let currentPath = $derived(page.url.pathname);
 </script>
 
 <ModeWatcher />
 
-<Tooltip.Provider delayDuration={500}>{@render children()}</Tooltip.Provider>
+<Tooltip.Provider delayDuration={500}>
+	<Sidebar.Provider class="relative" style="--sidebar-width: 17rem;">
+		<Sidebar.Root collapsible="offcanvas" class="border-r-0 bg-sidebar md:absolute">
+			<Sidebar.Header class="gap-3 border-b px-4 py-4">
+				<a href={resolve("/")} class="group flex items-center gap-3" aria-label="xvelte home">
+					<span class="grid size-9 place-items-center rounded-xl bg-primary text-lg font-bold text-primary-foreground shadow-sm shadow-primary/25"
+						>x</span
+					>
+					<span>
+						<strong class="block leading-none tracking-tight">xvelte</strong>
+						<span class="text-xs text-muted-foreground">Svelte 5 collection</span>
+					</span>
+				</a>
+
+				<label class="relative block">
+					<span class="sr-only">Filter components</span>
+					<SearchIcon class="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+					<Sidebar.Input bind:value={query} type="search" placeholder="Filter components…" class="pl-8" />
+				</label>
+			</Sidebar.Header>
+
+			<Sidebar.Content>
+				<Sidebar.Group>
+					<Sidebar.GroupLabel>Explore</Sidebar.GroupLabel>
+					<Sidebar.GroupContent>
+						<Sidebar.Menu>
+							{#each [{ href: "/components", label: "Components", count: components.length }, { href: "/hooks", label: "Hooks", count: hooks.length }, { href: "/attachments", label: "Attachments", count: attachments.length }] as item (item.href)}
+								<Sidebar.MenuItem>
+									<Sidebar.MenuButton isActive={currentPath === item.href} tooltipContent={item.label}>
+										{#snippet child({ props })}<a href={resolve(item.href as Pathname)} {...props}
+												><span>{item.label}</span><span class="ml-auto text-xs text-muted-foreground">{item.count}</span></a
+											>{/snippet}
+									</Sidebar.MenuButton>
+								</Sidebar.MenuItem>
+							{/each}
+						</Sidebar.Menu>
+					</Sidebar.GroupContent>
+				</Sidebar.Group>
+
+				<Sidebar.Group>
+					<Sidebar.GroupLabel>{query ? "Results" : "Components"}</Sidebar.GroupLabel>
+					<Sidebar.GroupContent>
+						<Sidebar.Menu>
+							{#each filteredComponents as unit (unit.slug)}
+								<Sidebar.MenuItem>
+									<Sidebar.MenuButton isActive={currentPath === unit.href} tooltipContent={unit.title}>
+										{#snippet child({ props })}<a
+												href={resolve(unit.href as Pathname)}
+												aria-current={currentPath === unit.href ? "page" : undefined}
+												{...props}>{unit.title}</a
+											>{/snippet}
+									</Sidebar.MenuButton>
+								</Sidebar.MenuItem>
+							{/each}
+						</Sidebar.Menu>
+					</Sidebar.GroupContent>
+				</Sidebar.Group>
+			</Sidebar.Content>
+
+			<Sidebar.Footer class="border-t px-4 py-3">
+				<p class="text-xs leading-relaxed text-muted-foreground">Built from the library it documents.</p>
+			</Sidebar.Footer>
+			<Sidebar.Rail />
+		</Sidebar.Root>
+
+		<Sidebar.Inset class="min-w-0 overflow-hidden bg-background">
+			<header class="flex h-14 shrink-0 items-center gap-3 border-b bg-background/90 px-4 backdrop-blur sm:px-6">
+				<Sidebar.Trigger />
+				<div class="h-4 w-px bg-border"></div>
+				<a href={resolve("/")} class="text-sm font-medium">Documentation</a>
+				<a href="https://github.com/XurxoMF/xvelte" class="ml-auto text-sm text-muted-foreground transition-colors hover:text-foreground">GitHub</a>
+			</header>
+
+			<div class="min-h-0 flex-1 overflow-y-auto">{@render children()}</div>
+		</Sidebar.Inset>
+	</Sidebar.Provider>
+</Tooltip.Provider>
 
 <div style="display:none">
 	{#each locales as locale (locale)}

@@ -4,6 +4,8 @@ A compact, paginated row of dates for choosing one day from a short visible rang
 
 Use Date Strip when nearby dates are the main choice and a full calendar would be unnecessarily large. Do not use it when people need to browse distant dates, enter a date directly, understand selected state through assistive technology, or rely on locale-aware week starts and date labels; the current local component does not provide those capabilities.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

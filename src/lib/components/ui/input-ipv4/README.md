@@ -2,6 +2,8 @@
 
 A segmented IPv4 address input with four numeric octets, automatic focus movement, full-address paste handling, bindable validation state, and native form submission support. Use it when an app needs structured IPv4 entry; use a normal text input when incomplete or non-address text must remain untouched.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

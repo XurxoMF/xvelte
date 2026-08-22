@@ -2,6 +2,8 @@
 
 A self-contained video player with a poster, WebVTT captions, custom playback and volume controls, buffering feedback, autoplay handling, and fullscreen support. Use it when the local visual treatment and compact API fit the experience. Prefer a native `<video controls>` element or a more complete player when you need broad media-format handling, keyboard shortcuts, configurable tracks, or production-ready accessible controls without modifying this component.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

@@ -2,6 +2,8 @@
 
 Menubar provides a persistent row of application menus, with keyboard navigation, nested submenus, checkable choices, radio groups, shortcuts, and destructive or disabled actions. Use it for command-oriented interfaces such as editors and desktop-style tools; use ordinary links or a navigation landmark for primary website navigation.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

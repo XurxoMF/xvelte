@@ -4,6 +4,8 @@ An interactive workspace for node editors, diagrams, whiteboards, and other inte
 
 Use Canvas when items need positions in a shared two-dimensional space. Do not use it for ordinary page layout, static illustrations, pixel drawing, or bitmap rendering: despite its name, this component uses accessible HTML and SVG rather than the browser's `<canvas>` element.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

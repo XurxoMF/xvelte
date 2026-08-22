@@ -4,6 +4,8 @@ A composable audio player built around the native HTML audio element. It provide
 
 Use Audio Player for finite audio files that need a compact, custom interface. Do not use it when native browser controls are sufficient or when the product requires playlists, buffering/error states, captions or transcripts managed by the player, playback-rate controls, live-stream duration formatting, Media Session integration, or a fully accessible range-control API without extending the component.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

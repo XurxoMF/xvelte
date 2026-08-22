@@ -4,6 +4,8 @@ A presentational compound component for arranging dated events along a vertical 
 
 Use Timeline for chronological histories, activity feeds, release notes, or process milestones. Use Stepper for an interactive multi-stage workflow and a normal list when chronology does not need a visual axis.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

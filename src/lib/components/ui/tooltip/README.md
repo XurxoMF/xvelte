@@ -4,6 +4,8 @@ An accessible popup for brief supplementary information shown when a trigger rec
 
 Use Tooltip to explain unfamiliar icon controls or provide short optional context. Do not place essential instructions, validation, interactive workflows, or information available only to pointer users inside a tooltip.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

@@ -4,6 +4,8 @@ A headless drag-and-drop list for reordering objects with stable string or numbe
 
 Use Sortable when the app owns the item layout and needs reorder callbacks without prescribed visual styling. Do not use it for moving arbitrary elements without data IDs, nesting interactive drop zones without additional design work, or cases where ordinary move-up/move-down controls would be clearer.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

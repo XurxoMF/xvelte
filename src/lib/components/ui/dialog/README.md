@@ -4,6 +4,8 @@ An accessible modal window for focused content, forms, settings, and short workf
 
 Use Dialog when people must interact with content without leaving the current page. Use Alert Dialog instead for consequential confirmations that require an explicit choice, and avoid a dialog when inline content, navigation to a dedicated page, or non-blocking feedback would be clearer.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

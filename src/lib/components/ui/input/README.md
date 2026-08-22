@@ -4,6 +4,8 @@ A styled native input for collecting single-line text, numbers, dates, files, an
 
 Use Input for ordinary form fields whose behavior is provided by the native `input` element. Do not use it for multiline content, compound fields with icons or actions, one-time passwords, or specialized selection controls when xvelte provides Textarea, Input Group, Input OTP, Checkbox, Radio Group, Switch, or another purpose-built component.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

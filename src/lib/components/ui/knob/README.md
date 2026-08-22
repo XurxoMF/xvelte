@@ -4,6 +4,8 @@ An accessible rotary-style value control for choosing a number within a range. I
 
 Use Knob for compact continuous controls such as gain, intensity, balance, or effect parameters when a rotary visual matches the interface. Prefer Slider when a linear range is easier to understand, and use a native number input when exact text entry is the primary task.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

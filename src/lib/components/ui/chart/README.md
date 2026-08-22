@@ -6,6 +6,8 @@ Use Chart together with LayerChart when data needs a visual comparison, trend, d
 
 This project uses stable `layerchart@2.1.0`. Consult the [LayerChart v2 documentation](https://www.layerchart.com/docs), the [LayerChart Chart API](https://www.layerchart.com/docs/components/Chart), and the [LayerChart v2 release guide](https://www.layerchart.com/docs/releases/layerchart-2.0.0) for the installed major version.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

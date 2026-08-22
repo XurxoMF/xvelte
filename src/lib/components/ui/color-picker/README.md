@@ -4,6 +4,8 @@ An integrated color editor with a saturation-and-brightness field, hue control, 
 
 Use Color Picker when an app needs a visible, compact color editor. Do not use it when a native browser picker is sufficient, when a form requires built-in `name`, validation, disabled, or read-only behavior, or when complete keyboard access is required without first extending the local implementation.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

@@ -4,6 +4,8 @@ A composable layout for empty states, missing results, first-use prompts, and un
 
 Use Empty when a successfully loaded area has no content to display and people may need context or a next action. Do not use it as a loading indicator, an unexplained error state, or a replacement for content that is merely filtered or temporarily unavailable unless the message clearly describes that condition.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

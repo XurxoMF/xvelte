@@ -2,6 +2,8 @@
 
 Navigation Menu provides an accessible collection of links for a website's primary or sectional navigation. It supports direct links, expandable link panels, an animated shared viewport, active-page state, delayed pointer opening, and an optional position indicator. Use it for navigation between pages; use Menubar for application commands and Dropdown Menu for a compact action menu.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

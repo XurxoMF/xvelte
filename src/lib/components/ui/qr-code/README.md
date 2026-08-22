@@ -4,6 +4,8 @@ A reactive SVG QR code generator with automatic symbol sizing, configurable dime
 
 Use QR Code to encode a URL, identifier, contact action, network configuration, or other text that should be transferred by scanning. Always expose important destinations or instructions as readable text too, and do not treat a QR code as encryption or as the only accessible way to complete a task.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

@@ -4,6 +4,8 @@ An accessible carousel with touch dragging, mouse dragging, animated snapping, h
 
 Use Carousel for a short, ordered collection of related items when viewing one or a few items at a time helps people focus. Prefer a normal list or grid when every item should remain visible, easy to scan, searchable on the page, or compared at once.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

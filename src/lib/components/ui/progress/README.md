@@ -4,6 +4,8 @@ An accessible horizontal progress bar for showing how far a task has advanced to
 
 Use Progress for uploads, downloads, installations, multi-step processing, or another task that advances toward completion. Use Meter for a measurement that may fluctuate, such as storage, signal strength, or resource usage, and use Spinner when no meaningful amount of completion is available.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

@@ -4,6 +4,8 @@ A thin horizontal or vertical line that visually or semantically separates relat
 
 Use Separator to clarify groups inside menus, toolbars, cards, or layouts. Do not use it as a substitute for spacing, headings, or borders when no meaningful division exists.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

@@ -4,6 +4,8 @@ A horizontal overflow container that translates vertical mouse-wheel movement in
 
 Use Horizontal Scroll for card rows, media shelves, tag filters, timelines, or other wide content where vertical wheel input should move through a horizontal strip. Do not use it for ordinary page sections that can wrap cleanly, or when capturing vertical page scrolling would be surprising. The component is a visual and input-behavior helper, not a carousel: it has no slides, snapping, pagination, navigation buttons, selection state, or announcements.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

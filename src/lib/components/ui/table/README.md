@@ -4,6 +4,8 @@ A set of semantic HTML table components with consistent local styling and an aut
 
 Use Table for genuinely tabular information whose rows and columns have meaningful relationships. Use lists or cards for unrelated records, and use a dedicated data-table implementation when sorting, filtering, pagination, virtualization, or column state must be managed for the app.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

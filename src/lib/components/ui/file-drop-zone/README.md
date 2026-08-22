@@ -4,6 +4,8 @@ A compound file picker for choosing files through the native file dialog, drag a
 
 Use File Drop Zone when an app needs immediate client-side file handling or uploads with a reusable visual target. Do not use it as a complete upload service: the component does not transfer files, render progress, retry failures, store server state, or submit retained files through a native form by itself.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

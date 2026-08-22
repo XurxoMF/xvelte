@@ -4,6 +4,8 @@ An accessible compound component for grouping related content into collapsible s
 
 Use an accordion when several sections are equally important but do not need to be visible at the same time, such as FAQs or groups of settings. Do not hide information that users must compare simultaneously or critical actions whose existence should remain visible.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

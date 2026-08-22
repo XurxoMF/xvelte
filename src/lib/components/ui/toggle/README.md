@@ -4,6 +4,8 @@ An accessible two-state button with bindable pressed state, default and outline 
 
 Use Toggle for an independent on/off action such as pinning, muting, or showing formatting. Use Switch for a setting that takes effect immediately, Checkbox for form selections, and Toggle Group when several related toggle buttons need coordinated focus or selection.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

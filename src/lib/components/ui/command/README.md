@@ -4,6 +4,8 @@ A composable command menu for searching, filtering, navigating, and selecting ac
 
 Use Command for command palettes, searchable action lists, launchers, and other interfaces where selecting a result performs an action. Use Combobox when the result represents a persistent form value, and do not use Command as ordinary site navigation when visible links would be clearer and easier to discover.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

@@ -4,6 +4,8 @@ An accessible compound component for arranging content in horizontal or vertical
 
 Use Resizable for adjustable workspaces such as sidebars, editors, inspectors, and split previews. Do not use it when the content should simply reflow at responsive breakpoints, and avoid making essential content unreachable by allowing a pane to collapse without a clear way to expand it again.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

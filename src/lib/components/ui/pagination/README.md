@@ -4,6 +4,8 @@ Pagination divides a large collection into numbered pages and provides controls 
 
 This component wraps Bits UI pagination with xvelte styling, localized control labels, button variants, bindable state, and a renderable page model.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

@@ -4,6 +4,8 @@ An interactive before-and-after viewer that reveals one visual over another with
 
 Use Compare Slider to compare two aligned images, designs, maps, or visual states. Do not use it for unrelated content, precise numeric input, or interactive descendants such as buttons and links; use the dedicated Slider component when the numeric value itself is the primary information.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

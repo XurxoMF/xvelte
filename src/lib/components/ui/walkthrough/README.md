@@ -2,6 +2,8 @@
 
 A guided-tour overlay that highlights elements by DOM ID, positions step content around each target, scrolls off-screen targets into view, and exposes navigation state to custom content. Use it for short contextual tours whose targets already exist in the page. Do not use it as a modal, a guaranteed interaction blocker, or a substitute for persistent help content.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

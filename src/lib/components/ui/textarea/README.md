@@ -4,6 +4,8 @@ A styled native multiline text field with bindable value, content-based field si
 
 Use Textarea for free-form text that may span multiple lines. Use Input for short single-line values, a rich-text editor for structured formatting, and Code or a code editor for source input that needs syntax-aware behavior.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

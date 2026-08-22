@@ -4,6 +4,8 @@ A semantic list component with one Root that switches between native ordered and
 
 Use List for prose, instructions, rankings, requirements, and other content whose grouping or order has semantic meaning. Do not use it for interactive menus, selectable collections, virtualized datasets, definition lists, or tabular data.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

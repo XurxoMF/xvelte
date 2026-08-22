@@ -4,6 +4,8 @@ A contextual action menu opened at a pointer location with right-click or long p
 
 Use Context Menu for optional actions that apply to a specific surface or item. Keep important and frequently used actions visible elsewhere, because context menus are less discoverable and may be difficult to invoke with some input methods.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

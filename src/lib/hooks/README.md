@@ -44,6 +44,8 @@ These hooks require no Tailwind CSS, global stylesheet values, icons, `$lib/util
 
 `IsMobile` is a reactive media-query class that reports whether the viewport is narrower than a configurable breakpoint. Use it when JavaScript behavior or component composition genuinely changes by viewport. Prefer CSS media or container queries when only presentation changes, particularly in server-rendered pages.
 
+<!-- xvelte-example: overview -->
+
 ### Import
 
 ```svelte
@@ -138,6 +140,8 @@ During server-side rendering the viewport is unknown. Because `IsMobile` does no
 ## UseFrecency
 
 `UseFrecency` stores how often and how recently string keys were used, then returns them ordered by a time-decayed score. Use it to rank command items, recent destinations, search choices, or other stable identifiers. Do not store private content in the keys or use the ranking as a precise analytics system.
+
+<!-- xvelte-example: overview -->
 
 ### Import
 
@@ -295,6 +299,8 @@ Copy `use-frecency.svelte.ts` and install `runed` plus Svelte using the shared c
 
 `useRamp` repeats an increment after an initial delay and gradually shortens the interval while an interaction remains active. Use it to build press-and-hold steppers, scrub controls, or other repeated adjustments. It supplies timing and state only; the consuming control owns pointer, keyboard, disabled, focus, and labeling behavior.
 
+<!-- xvelte-example: overview -->
+
 ### Import
 
 ```svelte
@@ -435,6 +441,8 @@ Labels, values, units, validation, and feedback are supplied and translated by t
 ## UseToc
 
 `UseToc` builds a reactive nested hierarchy from the headings inside one element and marks an intersecting heading as active. Use it to power an “On this page” navigation for browser-rendered content. It observes DOM structure and visibility; it does not render the navigation, generate heading IDs, scroll links, or manage history.
+
+<!-- xvelte-example: overview -->
 
 ### Import
 

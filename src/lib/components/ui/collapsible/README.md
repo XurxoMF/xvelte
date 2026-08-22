@@ -4,6 +4,8 @@ An accessible compound component for showing and hiding one section of content. 
 
 Use Collapsible for optional details, advanced settings, compact metadata, or a single expandable panel. Use Accordion when several related sections need coordinated disclosure behavior, and do not hide critical information or actions that users must always notice.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

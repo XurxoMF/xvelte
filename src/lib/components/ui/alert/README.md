@@ -4,6 +4,8 @@ A static callout for drawing attention to important information, outcomes, warni
 
 Use an alert for concise information that deserves attention in the current context. Do not use it as a modal interruption, a transient toast, or a replacement for field-level validation next to the affected control. Because `Root` uses `role="alert"` by default, reserve that behavior for important messages that should be announced promptly by assistive technology.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

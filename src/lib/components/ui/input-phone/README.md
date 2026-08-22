@@ -4,6 +4,8 @@ A composable international telephone field with a searchable country selector, S
 
 Use Input Phone when a form must accept numbers from multiple countries. Prefer a normal Input for local-only numbers, extensions without a main number, or values that must remain completely unparsed.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

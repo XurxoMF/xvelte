@@ -4,6 +4,8 @@ A flexible content row for presenting a title, description, media, actions, and 
 
 Use Item for records, resources, notifications, settings summaries, menus, and similar display content. Use Field instead when the primary purpose is to label, describe, validate, or arrange a form control.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

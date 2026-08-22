@@ -1,8 +1,10 @@
-# Hold Button
+# Button Hold
 
 A button that completes an action only after a continuous mouse or touch hold. A directional overlay fills across the native button for a configurable duration, cancels when the supported hold ends early, and calls `onComplete` after the timer finishes.
 
 Use Hold Button as an additional guard for deliberate pointer actions such as deleting, resetting, powering off, or confirming a physical-style control. Do not use it as the only way to perform an essential action: the local hold gesture is not available from the keyboard, does not expose progress to assistive technology, and is not a replacement for a fully accessible confirmation flow.
+
+<!-- xvelte-example: overview -->
 
 ## Contents
 

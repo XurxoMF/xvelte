@@ -4,6 +4,8 @@ A single-part layout component that keeps its content at a specified width-to-he
 
 Use Aspect Ratio when the ratio is part of the layout and the available width determines the height. Do not use it when the content must keep fixed dimensions, determine its own intrinsic size, or change ratio independently at different breakpoints without updating the `ratio` prop.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

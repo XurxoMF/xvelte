@@ -4,6 +4,8 @@ A layout primitive for visually joining related controls into horizontal or vert
 
 Use Button Group for related actions or compact combinations of buttons, inputs, and selectors. Do not use it as a selection model, toggle group, toolbar with arrow-key navigation, segmented control without explicit state semantics, or a substitute for labeling unrelated controls.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

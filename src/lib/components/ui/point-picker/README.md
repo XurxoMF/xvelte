@@ -4,6 +4,8 @@ A two-dimensional input for selecting an `x` and `y` coordinate over arbitrary v
 
 Use Point Picker for map coordinates, audio parameters, image positions, color planes, spatial controls, or other genuinely two-dimensional values. Prefer Slider for one-dimensional values, and do not place interactive controls inside its visual background layer.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

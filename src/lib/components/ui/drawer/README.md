@@ -4,6 +4,8 @@ A touch-friendly modal panel that slides from any viewport edge and can be dragg
 
 Use Drawer for compact forms, filters, navigation, details, and mobile or tablet workflows that benefit from direct manipulation. Prefer Dialog for centered desktop content, Alert Dialog for consequential confirmation, and a permanent panel when the content should remain continuously visible.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

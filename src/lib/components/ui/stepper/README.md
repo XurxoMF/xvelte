@@ -4,6 +4,8 @@ A composable step-navigation component for multi-stage tasks. It owns a bindable
 
 Use Stepper to show progress and navigate a short ordered workflow such as setup, checkout, or onboarding. Do not use it as a complete form controller: validation, panel rendering, persistence, submission, and rules about which steps may be visited remain application responsibilities.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

@@ -4,6 +4,8 @@ A responsive, composable application sidebar with desktop off-canvas or icon col
 
 Use Sidebar for persistent application navigation or tools that share the available layout with main content. Do not use it for a small contextual menu, ordinary document table of contents, or content that should remain in the normal responsive flow without independent collapse state.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

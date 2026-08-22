@@ -4,6 +4,8 @@ A pointer-triggered preview for showing brief, supplementary information about a
 
 Use Hover Card to preview a profile, document, product, or other destination before a sighted pointer user follows its link. Do not place essential information or required actions inside it: touch interaction does not open the preview, and keyboard users cannot move focus into its content. Use Popover, Dialog, or another explicitly activated component when people must interact with the floating content.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

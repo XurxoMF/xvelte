@@ -4,6 +4,8 @@ A composable code block that highlights source with Shiki, loads each language g
 
 Use Code for examples, documentation, configuration, commands, and other preformatted source. Use plain `<code>` for a short inline fragment, and do not use this client-rendered component when highlighted markup must be present in server-rendered HTML before JavaScript runs.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

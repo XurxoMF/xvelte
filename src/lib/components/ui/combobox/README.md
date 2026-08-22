@@ -4,6 +4,8 @@ A searchable selection component that combines a button trigger, an anchored opt
 
 Use Combobox when a long or searchable option list would be cumbersome in a native select, or when option rows need custom markup. Prefer a native select for short, simple lists and use Command directly for actions that do not represent a selected value.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

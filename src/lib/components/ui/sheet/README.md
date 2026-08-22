@@ -4,6 +4,8 @@ An accessible modal or non-modal panel that slides in from any viewport edge. It
 
 Use Sheet for secondary tasks or navigation that should remain connected to the current screen, such as filters, details, or mobile menus. Use Dialog for centered decisions, Drawer for gesture-oriented bottom panels, and a normal page or persistent sidebar for large primary workflows.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

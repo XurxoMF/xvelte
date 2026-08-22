@@ -4,6 +4,8 @@ A small semantic component for displaying keyboard keys and shortcut sequences. 
 
 Use Kbd in instructions, menus, buttons, tooltips, command palettes, and help content to show shortcuts people can press. Do not use it as an interactive control: it presents a key or shortcut but does not listen for keyboard input or trigger an action.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

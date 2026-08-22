@@ -4,6 +4,8 @@ An accessible control for choosing one or more independent options. It supports 
 
 Use a checkbox when each choice can be turned on or off independently, such as accepting terms, enabling preferences, or selecting several items. Use a radio group instead when exactly one option must be chosen, and use a switch when an immediately applied on/off setting is easier to understand as a state than as a selection.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

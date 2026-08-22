@@ -4,6 +4,8 @@ An accessible text label for identifying a form control. It renders a native `la
 
 Use Label for inputs, checkboxes, radio controls, selects, textareas, and other labelable controls. Do not use it as ordinary body text, a section heading, placeholder text, or the only explanation of a validation error.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

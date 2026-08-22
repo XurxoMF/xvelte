@@ -4,6 +4,8 @@ A non-interactive placeholder block with a pulse animation for representing cont
 
 Use Skeleton when the final layout is known and a temporary shape reduces perceived movement. Do not use it for indeterminate actions that need a status announcement; use Spinner or visible loading text instead, and avoid skeleton screens that imitate content which may never appear.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

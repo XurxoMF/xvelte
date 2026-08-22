@@ -4,6 +4,8 @@ A compound field container that places text, metadata, buttons, and other suppor
 
 Use Input Group when a field needs a unit, domain, result count, action, status, or short instruction inside the same visual container. Do not use it merely to place a label or error beside a field, or to hide a complex toolbar inside an input. Keep essential instructions and validation messages visible outside the group, and use dedicated components for selects, comboboxes, segmented controls, or other interaction patterns.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

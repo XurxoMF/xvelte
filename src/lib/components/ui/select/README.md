@@ -4,6 +4,8 @@ An accessible custom select menu for choosing one or several values from a list.
 
 Use Select when the option list needs custom styling or richer composition. Use radio controls when a short list should remain visible, Combobox when people need to filter many options, and a native select when native mobile behavior or minimal JavaScript is the priority.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

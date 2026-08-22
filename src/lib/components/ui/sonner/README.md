@@ -4,6 +4,8 @@ A globally mounted toast renderer built on `svelte-sonner`. It follows the appli
 
 Use Sonner for brief asynchronous feedback that does not block the current task, such as a saved preference or failed background action. Use inline validation, Alert, or Dialog when information must remain visible, be associated with a field, or require an explicit decision.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

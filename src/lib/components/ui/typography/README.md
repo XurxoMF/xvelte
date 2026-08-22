@@ -4,6 +4,8 @@ A custom collection of styled native text elements for consistent headings, para
 
 Use Typography to apply the xvelte text scale to authored content without repeating utility classes. Keep heading levels in document order, use Link only for real navigation, and use Code for full syntax-highlighted blocks rather than InlineCode.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

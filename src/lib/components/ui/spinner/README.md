@@ -4,6 +4,8 @@ A compact animated loading indicator that renders the project's semantic loader 
 
 Use Spinner for short indeterminate waits near the control or region being updated. Use Progress when measurable completion exists, and add visible status text when the loading operation is not obvious from context.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

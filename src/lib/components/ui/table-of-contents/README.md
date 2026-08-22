@@ -4,6 +4,8 @@ A recursive list of document headings with active-heading styling. It is designe
 
 Use Table of Contents for long structured articles or documentation. Do not add it to short pages, and do not rely on it to repair missing heading hierarchy or IDs in the source document.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

@@ -4,6 +4,8 @@ An accessible custom-styled scrolling container built on Bits UI. It can render 
 
 Use Scroll Area for bounded panels whose custom scrollbar must match the interface, such as side lists or horizontally scrolling galleries. Prefer the browser's normal page scroll for primary documents and avoid creating unnecessary nested scroll regions.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

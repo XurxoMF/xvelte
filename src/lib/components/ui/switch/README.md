@@ -4,6 +4,8 @@ An accessible binary control for turning a setting on or off. It wraps Bits UI, 
 
 Use Switch for settings that take effect immediately. Use Checkbox for independent selections, acknowledgements, or values submitted together, and avoid a switch when saving requires a separate confirmation action.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

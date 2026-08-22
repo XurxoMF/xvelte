@@ -4,6 +4,8 @@ A composable file-tree presentation with expandable folders, file buttons, defau
 
 Use Tree View for compact file or hierarchical resource browsing. Do not treat it as a complete ARIA tree widget: the current local implementation does not provide roving focus, arrow-key traversal across nodes, selection state, or tree data management.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

@@ -4,6 +4,8 @@ A flexible surface for grouping related information, supporting text, actions, m
 
 Use Card for self-contained summaries, settings, forms, products, events, and other content that benefits from a visible boundary. Do not use it only to add spacing to ordinary page sections, and do not assume that Card adds selection, navigation, or button behavior by itself.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

@@ -4,6 +4,8 @@ An accessible compound component for switching between related content panels. I
 
 Use Tabs when several peer panels share one context and only one should be visible at a time. Do not hide content that people must compare simultaneously, preserve across panels while editing, or discover through normal document scrolling.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)

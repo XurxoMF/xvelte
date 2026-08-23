@@ -19,10 +19,7 @@
 <RatingGroup.Item
 	{index}
 	data-slot="star-rating-star"
-	class={cn(
-		"group/item size-5 rounded-md text-primary ring-ring ring-offset-2 ring-offset-background outline-hidden group-aria-disabled:opacity-50 focus-visible:ring-2",
-		className
-	)}
+	class={cn("group/item size-5 rounded-md text-primary group-aria-disabled:opacity-50", className)}
 	{...restProps}
 >
 	<div class="relative size-full">

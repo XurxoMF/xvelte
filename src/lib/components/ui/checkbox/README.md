@@ -292,6 +292,12 @@ Copy the Tailwind import, dark-mode selector, semantic variables, and theme mapp
 	--color-primary: var(--primary);
 	--radius-sm: calc(var(--radius) * 0.6);
 }
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
+	}
+}
 ```
 
 Checkbox requires no global keyframes, animation stylesheet, font, or shared component-specific CSS.

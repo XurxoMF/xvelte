@@ -234,7 +234,7 @@ The component `index.ts` and its exported types are the source of truth.
 | `defaultCountry`   | `CountryCode \| null`                                    | `null`                  | Initial country when `country` is not supplied.                                              |
 | `details`          | `InputPhoneDetails \| null`                              | `null`                  | Bindable live parse, formatting, possibility, validity, and error information.               |
 | `allowedCountries` | `CountryCode[]`                                          | All supported countries | Filters both CountrySelector entries and accepted detected countries.                        |
-| `locale`           | `string`                                                 | `"en"`                  | Locale used by `Intl.DisplayNames` and default country sorting.                              |
+| `locale`           | `string`                                                 | Paraglide               | Locale used by `Intl.DisplayNames` and default country sorting.                              |
 | `order`            | `(a: InputPhoneCountry, b: InputPhoneCountry) => number` | Localized name order    | Optional final comparator.                                                                   |
 | `required`         | `boolean`                                                | `false`                 | Makes empty state invalid and applies native `required` to Input.                            |
 | `disabled`         | `boolean`                                                | `false`                 | Disables Input and CountrySelector.                                                          |
@@ -355,7 +355,7 @@ Input Phone uses these Paraglide messages from `messages/en.json`:
 | `mellow_ibis_country` | `Select country`                                       | Trigger label without a selection  |
 | `nimble_lynx_country` | `Change country, currently {country} (+{callingCode})` | Trigger label with a selection     |
 
-`locale` controls country names through `Intl.DisplayNames`; it does not select the Paraglide locale. The app supplies and translates Input placeholders, visible field labels, instructions, validation messages, and value summaries.
+Root uses the active Paraglide locale for country names and sorting by default. Pass `locale` to override it for one Input Phone. The app supplies and translates Input placeholders, visible field labels, instructions, validation messages, and value summaries.
 
 `searchPlaceholder`, `emptyText`, and `aria-label` override the corresponding built-in selector copy.
 
@@ -552,7 +552,7 @@ No `svelte-tel-input` stylesheet, Input Phone keyframe, or component-specific CS
 
 ### Localization setup
 
-Configure Paraglide so `$lib/paraglide/messages.js` is generated and add the four entries listed in [Localization](#localization) to `messages/en.json`. Their exact keys and values are already shown there and are not duplicated here.
+Configure Paraglide so `$lib/paraglide/messages.js` and `$lib/paraglide/runtime.js` are generated, and add the four entries listed in [Localization](#localization) to `messages/en.json`. Root imports `getLocale()` from the runtime for its default country-name locale. The exact message keys and values are already shown above and are not duplicated here.
 
 ---
 

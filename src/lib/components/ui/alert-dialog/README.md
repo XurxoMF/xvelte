@@ -307,12 +307,12 @@ The default mobile column uses `flex-col-reverse`, so writing `Cancel` before `A
 
 Type: `CancelProps`, which extends the Bits UI cancel props with xvelte Button variants and sizes.
 
-| Prop      | Type                        | Default     | xvelte behavior                                                            |
-| --------- | --------------------------- | ----------- | -------------------------------------------------------------------------- |
-| `variant` | `Button.RootVariants`       | `"outline"` | Applies any public Button visual variant.                                  |
-| `size`    | `Button.RootSizes`          | `"default"` | Applies any public Button size.                                            |
-| `ref`     | `HTMLButtonElement \| null` | `null`      | Bindable reference to the default button.                                  |
-| `class`   | `string`                    | `undefined` | Merged after Button classes and the stable `cn-alert-dialog-cancel` class. |
+| Prop      | Type                        | Default     | xvelte behavior                           |
+| --------- | --------------------------- | ----------- | ----------------------------------------- |
+| `variant` | `Button.RootVariants`       | `"outline"` | Applies any public Button visual variant. |
+| `size`    | `Button.RootSizes`          | `"default"` | Applies any public Button size.           |
+| `ref`     | `HTMLButtonElement \| null` | `null`      | Bindable reference to the default button. |
+| `class`   | `string`                    | `undefined` | Merged after Button classes.              |
 
 `Cancel` closes the dialog without confirming. It also forwards `children`, `child`, `disabled`, event handlers, and native button attributes.
 
@@ -320,12 +320,12 @@ Type: `CancelProps`, which extends the Bits UI cancel props with xvelte Button v
 
 Type: `ActionProps`, which extends the Bits UI action props with xvelte Button variants and sizes.
 
-| Prop      | Type                        | Default     | xvelte behavior                                                            |
-| --------- | --------------------------- | ----------- | -------------------------------------------------------------------------- |
-| `variant` | `Button.RootVariants`       | `"default"` | Applies any public Button visual variant.                                  |
-| `size`    | `Button.RootSizes`          | `"default"` | Applies any public Button size.                                            |
-| `ref`     | `HTMLButtonElement \| null` | `null`      | Bindable reference to the default button.                                  |
-| `class`   | `string`                    | `undefined` | Merged after Button classes and the stable `cn-alert-dialog-action` class. |
+| Prop      | Type                        | Default     | xvelte behavior                           |
+| --------- | --------------------------- | ----------- | ----------------------------------------- |
+| `variant` | `Button.RootVariants`       | `"default"` | Applies any public Button visual variant. |
+| `size`    | `Button.RootSizes`          | `"default"` | Applies any public Button size.           |
+| `ref`     | `HTMLButtonElement \| null` | `null`      | Bindable reference to the default button. |
+| `class`   | `string`                    | `undefined` | Merged after Button classes.              |
 
 `Action` does not close the dialog automatically. It forwards `children`, `child`, `disabled`, `type`, event handlers, and other native button attributes so your app can run synchronous, asynchronous, or form actions and then update `open`.
 
@@ -375,8 +375,8 @@ Stable xvelte hooks:
 | `Title`       | `alert-dialog-title`       | Responds to the content size and presence of media.                          |
 | `Description` | `alert-dialog-description` | Styles direct links and semantic supporting text.                            |
 | `Footer`      | `alert-dialog-footer`      | Responds to `data-size` on `Content`.                                        |
-| `Cancel`      | `alert-dialog-cancel`      | Stable class `cn-alert-dialog-cancel`; uses Button variants.                 |
-| `Action`      | `alert-dialog-action`      | Stable class `cn-alert-dialog-action`; uses Button variants.                 |
+| `Cancel`      | `alert-dialog-cancel`      | Uses Button variants.                                                        |
+| `Action`      | `alert-dialog-action`      | Uses Button variants.                                                        |
 
 Bits UI also supplies `data-state`, `data-open`/`data-closed`-compatible state, nested-dialog attributes, ARIA relationships, and `--bits-dialog-depth`/`--bits-dialog-nested-count`. Treat the state and nesting details as dependency-owned; use the exact [Bits UI Alert Dialog documentation](https://www.bits-ui.com/docs/components/alert-dialog) before relying on advanced nesting behavior.
 

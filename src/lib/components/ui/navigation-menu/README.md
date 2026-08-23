@@ -272,18 +272,16 @@ All local component classes are merged with `cn()`, so a supplied `class` can ex
 
 Stable xvelte hooks:
 
-| Component   | Stable hook                                                         |
-| ----------- | ------------------------------------------------------------------- |
-| `Root`      | `data-slot="navigation-menu"`, `data-viewport="true" \| "false"`    |
-| `List`      | `data-slot="navigation-menu-list"` on the inner `ul`                |
-| `Item`      | `data-slot="navigation-menu-item"`, class `cn-navigation-menu-item` |
-| `Trigger`   | `data-slot="navigation-menu-trigger"`                               |
-| `Content`   | `data-slot="navigation-menu-content"`                               |
-| `Link`      | `data-slot="navigation-menu-link"`                                  |
-| `Viewport`  | `data-slot="navigation-menu-viewport"` on the inner viewport        |
-| `Indicator` | `data-slot="navigation-menu-indicator"`                             |
-
-`cn-navigation-menu-item` is an available class hook but has no global rule in the current xvelte stylesheet.
+| Component   | Stable hook                                                      |
+| ----------- | ---------------------------------------------------------------- |
+| `Root`      | `data-slot="navigation-menu"`, `data-viewport="true" \| "false"` |
+| `List`      | `data-slot="navigation-menu-list"` on the inner `ul`             |
+| `Item`      | `data-slot="navigation-menu-item"`                               |
+| `Trigger`   | `data-slot="navigation-menu-trigger"`                            |
+| `Content`   | `data-slot="navigation-menu-content"`                            |
+| `Link`      | `data-slot="navigation-menu-link"`                               |
+| `Viewport`  | `data-slot="navigation-menu-viewport"` on the inner viewport     |
+| `Indicator` | `data-slot="navigation-menu-indicator"`                          |
 
 Bits UI owns these relevant state hooks:
 
@@ -296,6 +294,8 @@ Bits UI owns these relevant state hooks:
 The active Viewport publishes `--bits-navigation-menu-viewport-width` and `--bits-navigation-menu-viewport-height`. The local viewport adds `1rem` to both measured dimensions so its `p-1` content padding fits inside.
 
 The component uses `popover`, `popover-foreground`, `foreground`, `muted`, `border`, and `ring` semantic colors plus the shared radius scale. `tw-animate-css` supplies fade, zoom, and directional slide animations.
+
+Trigger and Link receive their three-pixel, 50%-opacity semantic `ring` halo from the required global `*:focus-visible` rule. Content does not cancel that treatment for nested links.
 
 The local layout is optimized for a horizontal navigation bar. `orientation="vertical"` changes Bits UI behavior but does not rewrite the fixed flex row, `top-full`, responsive absolute positioning, or viewport wrapper classes.
 
@@ -389,6 +389,12 @@ Import Tailwind and the animation utilities, define the state variants used by t
 	&:where([data-state="open"]),
 	&:where([data-open]:not([data-open="false"])) {
 		@slot;
+	}
+}
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
 	}
 }
 

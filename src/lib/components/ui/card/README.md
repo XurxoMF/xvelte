@@ -273,7 +273,7 @@ Card uses semantic Tailwind colors and exposes stable `data-slot` selectors:
 
 Root also exposes `data-size="default"` or `data-size="sm"`. Descendants use the named `group/card` state, while Header exposes `group/card-header` and `@container/card-header` for custom composition.
 
-`class` is merged with Tailwind Merge, so ordinary conflicting utilities can replace local ones. Some structural selectors react to descendants or classes—such as Footer presence, a leading image, `card-action`, and `border-b`—and should be preserved when the matching behavior is wanted.
+`class` is merged with Tailwind Merge, so ordinary conflicting utilities can replace local ones. Some structural selectors react to descendants or classes—such as Footer presence, a leading image, `data-slot="card-action"`, and `border-b`—and should be preserved when the matching behavior is wanted.
 
 ---
 

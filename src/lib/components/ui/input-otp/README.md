@@ -304,7 +304,7 @@ Type: `RootProps`, equal to Bits UI's `PinInput.RootProps`.
 | `inputRef`                    | `HTMLInputElement \| null`                    | `null`             | Bindable reference to the real transparent input.                                                |
 | `ref`                         | `HTMLElement \| null`                         | `null`             | Bindable reference to Bits UI's outer Root container.                                            |
 | `children`                    | `Snippet<[{ cells, isFocused, isHovering }]>` | Required           | Renders the visual Groups, Slots, and Separators from reactive primitive state.                  |
-| `class`                       | `string`                                      | `undefined`        | Merged onto the outer Root container after `cn-input-otp-input flex items-center gap-2 ...`.     |
+| `class`                       | `string`                                      | `undefined`        | Merged onto the outer Root container after its local layout and disabled-state classes.          |
 
 Native input props such as `name`, `form`, `required`, `readonly`, `aria-*`, event handlers, and related attributes are forwarded to the real input according to Bits UI's prop-merging behavior. Root locally supplies `spellcheck={false}` and `data-slot="input-otp"`; both reach the real input rather than the outer container. A forwarded conflicting value can replace either local default.
 
@@ -368,14 +368,14 @@ The default MinusIcon comes from the shared xvelte icon facade. It receives a `1
 
 The component combines xvelte hooks with Bits UI's generated structure:
 
-| Part                 | Stable local hook                                         | Default element |
-| -------------------- | --------------------------------------------------------- | --------------- |
-| Root's real input    | `data-slot="input-otp"`                                   | Native `input`  |
-| Group                | `data-slot="input-otp-group"`                             | Native `div`    |
-| Slot                 | `data-slot="input-otp-slot"`                              | Native `div`    |
-| Separator            | `data-slot="input-otp-separator"`                         | Native `div`    |
-| Root outer container | No local `data-slot`; class includes `cn-input-otp-input` | Native `div`    |
-| Fake-caret wrapper   | No `data-slot`; class includes `cn-input-otp-caret`       | Native `div`    |
+| Part                 | Stable local hook                 | Default element |
+| -------------------- | --------------------------------- | --------------- |
+| Root's real input    | `data-slot="input-otp"`           | Native `input`  |
+| Group                | `data-slot="input-otp-group"`     | Native `div`    |
+| Slot                 | `data-slot="input-otp-slot"`      | Native `div`    |
+| Separator            | `data-slot="input-otp-separator"` | Native `div`    |
+| Root outer container | No local `data-slot`              | Native `div`    |
+| Fake-caret wrapper   | No local `data-slot`              | Native `div`    |
 
 Root's class is applied to the outer Bits UI container, while native input attributes and `data-slot="input-otp"` are applied to the transparent input. Do not assume that the slot and Root's layout classes share the same DOM element.
 
@@ -393,8 +393,6 @@ Bits UI owns additional implementation details, including:
 - A document-level `<style id="pin-input-style">` injected once for autofill, selection, iOS, and password-manager behavior.
 
 All local parts with a `class` prop merge through `cn`, allowing later conflicting Tailwind utilities to replace ordinary defaults. High-specificity state, first/last, descendant, ARIA, and data-attribute selectors may require equally specific overrides.
-
-The `cn-input-otp-input` and `cn-input-otp-caret` literals have no separate CSS definitions in xvelte; they are identifiers only and require no shared stylesheet.
 
 ---
 

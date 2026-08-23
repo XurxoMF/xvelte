@@ -19,6 +19,6 @@
 	class={cn(Button.rootVariants({ variant: "ghost", size: "icon" }), className)}
 	{...restProps}
 >
-	<span class="cn-pagination-next-text sr-only">{m.young_elm_next()}</span>
+	<span class="sr-only">{m.young_elm_next()}</span>
 	<ChevronRightIcon />
 </PaginationPrimitive.NextButton>

@@ -372,7 +372,9 @@ Most sidebar-specific parts also expose `data-sidebar` with the shorter role nam
 
 Mobile Root exposes `data-mobile="true"`. MenuButton and MenuSubButton expose `data-size` and `data-active`. Step-specific named Tailwind groups and peers such as `group/sidebar-wrapper`, `group/menu-item`, and `peer/menu-button` coordinate sibling presentation and are part of the local styling contract.
 
-Provider defines `--sidebar-width` and `--sidebar-width-icon`; mobile Content replaces `--sidebar-width`. Classes use `cn()` except delegated prop objects, whose class is already built with `cn()` before being passed. Root's desktop outer state wrapper has fixed classes while caller class targets the container.
+Provider defines `--sidebar-width` and `--sidebar-width-icon`; mobile Content replaces `--sidebar-width`. Classes use `cn()` except delegated prop objects, whose class is already built with `cn()` before being passed, and Trigger, which forwards its `class` prop to Button. Root's desktop outer state wrapper has fixed classes while caller class targets the container.
+
+Keyboard-focusable labels, actions, menu buttons, and submenu buttons receive the shared three-pixel, 50%-opacity `ring` halo from the required global `*:focus-visible` rule.
 
 ---
 
@@ -469,6 +471,7 @@ Sheet requires its own `CloseIcon`; follow Sheet's README for that dependent com
 	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
 	--color-sidebar-border: var(--sidebar-border);
 	--color-sidebar-ring: var(--sidebar-ring);
+	--color-ring: var(--sidebar-ring);
 	--radius-md: calc(var(--radius) * 0.8);
 	--radius-lg: var(--radius);
 }
@@ -492,6 +495,12 @@ Sheet requires its own `CloseIcon`; follow Sheet's README for that dependent com
 	scrollbar-width: none;
 	&::-webkit-scrollbar {
 		display: none;
+	}
+}
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
 	}
 }
 ```

@@ -124,7 +124,7 @@ Remaining native `div` attributes are forwarded to the visible root. `name` and 
 | Editable hextet   | `ipv6-input-segment` |
 | Hidden form value | `ipv6-input-value`   |
 
-The historical slot names remain stable even though the component folder is named `input-ipv6`. The root exposes `aria-invalid`, uses semantic theme colors, applies `focus-within` ring styling, and fills its available width. Its eight internal segments use `flex: 1 1 0%` with `min-width: 0`, so each receives one eighth of the editable width after the fixed separators and padding. The public `class` prop styles the root; segment classes are internal.
+The historical slot names remain stable even though the component folder is named `input-ipv6`. The root exposes `aria-invalid`, uses semantic theme colors, and applies the Input component's `focus-within` treatment: a `ring` border and three-pixel, 50%-opacity halo without a contrasting ring offset. It fills its available width. Its eight internal segments use `flex: 1 1 0%` with `min-width: 0`, so each receives one eighth of the editable width after the fixed separators and padding. The public `class` prop styles the root; segment classes are internal.
 
 ---
 
@@ -214,6 +214,12 @@ Add the required semantic tokens and mappings to the global Tailwind stylesheet.
 	--color-muted-foreground: var(--muted-foreground);
 	--color-input: var(--input);
 	--color-ring: var(--ring);
+}
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
+	}
 }
 ```
 

@@ -6,6 +6,8 @@
 	export type RootProps = {
 		value?: DateValue | undefined;
 		class?: string | undefined;
+		/** Locale used for the initial week boundary and visible date labels. */
+		locale?: string | undefined;
 		daysToShow?: number | undefined;
 		isDateDisabled?: ((date: DateValue) => boolean) | undefined;
 		onDateChange?: ((date: DateValue) => void) | undefined;
@@ -16,29 +18,39 @@
 <script lang="ts">
 	import { getLocalTimeZone, today, startOfWeek } from "@internationalized/date";
 
+	import { getLocale } from "$lib/paraglide/runtime";
 	import { cn } from "$lib/utils";
 	import * as Button from "$lib/components/ui/button";
 	import { ChevronLeftIcon, ChevronRightIcon } from "$lib/icons";
 
 	import { setDateStripContext } from "./date-strip-context";
 
-	let { value = $bindable(), class: className, daysToShow = 5, isDateDisabled = () => false, onDateChange, children }: RootProps = $props();
+	let {
+		value = $bindable(),
+		class: className,
+		locale = getLocale(),
+		daysToShow = 5,
+		isDateDisabled = () => false,
+		onDateChange,
+		children
+	}: RootProps = $props();
 
-	let startDate = $state(startOfWeek(today(getLocalTimeZone()), "en-US"));
+	let dayOffset = $state(0);
 	let slideDirection = $state<"start" | "end">("end");
 
+	const startDate = $derived(startOfWeek(today(getLocalTimeZone()), locale).add({ days: dayOffset }));
 	const displayedDates = $derived(Array.from({ length: daysToShow }, (_, i) => startDate.add({ days: i })));
 
 	/** Moves the visible date window backward by its displayed day count. */
 	function handlePrev() {
 		slideDirection = "start";
-		startDate = startDate.add({ days: -daysToShow });
+		dayOffset -= daysToShow;
 	}
 
 	/** Moves the visible date window forward by its displayed day count. */
 	function handleNext() {
 		slideDirection = "end";
-		startDate = startDate.add({ days: daysToShow });
+		dayOffset += daysToShow;
 	}
 
 	/** Selects a date and notifies the root consumer. */
@@ -50,6 +62,9 @@
 	setDateStripContext({
 		get selectedValue() {
 			return value;
+		},
+		get locale() {
+			return locale;
 		},
 		onSelect: handleSelect,
 		get isDateDisabled() {

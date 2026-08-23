@@ -199,10 +199,10 @@ Star forwards native `<div>` attributes and Bits UI's `child`/`children` options
 
 ## Styling and DOM contract
 
-| Part | Stable hook                    | Local styling                                                         |
-| ---- | ------------------------------ | --------------------------------------------------------------------- |
-| Root | `data-slot="star-rating"`      | `group`, row flex, 0.25rem gap, rounded outline container.            |
-| Star | `data-slot="star-rating-star"` | 1.25rem square, semantic primary color, background-offset focus ring. |
+| Part | Stable hook                    | Local styling                                                                       |
+| ---- | ------------------------------ | ----------------------------------------------------------------------------------- |
+| Root | `data-slot="star-rating"`      | `group`, row flex, 0.25rem gap, rounded outline container.                          |
+| Star | `data-slot="star-rating-star"` | 1.25rem square and semantic primary color; the global focus rule supplies its halo. |
 
 Each Star renders one full outline icon and two mirrored half-star icons. `active` fills the full icon; `partial` fills the direction-appropriate half. Bits UI supplies dependency-owned `data-state` and disabled/ARIA state.
 
@@ -276,6 +276,12 @@ export { default as StarIcon } from "@tabler/icons-svelte/icons/star";
 	--color-primary: var(--primary);
 	--color-ring: var(--ring);
 	--radius-md: calc(var(--radius) * 0.8);
+}
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
+	}
 }
 ```
 

@@ -21,6 +21,7 @@
 <script lang="ts">
 	import { isEqualMonth } from "@internationalized/date";
 
+	import { getLocale } from "$lib/paraglide/runtime";
 	import { cn } from "$lib/utils";
 
 	import * as CalendarRange from ".";
@@ -33,7 +34,7 @@
 		class: className,
 		buttonVariant = "ghost",
 		captionLayout = "label",
-		locale = "en-US",
+		locale = getLocale(),
 		months: monthsProp,
 		years,
 		monthFormat: monthFormatProp,

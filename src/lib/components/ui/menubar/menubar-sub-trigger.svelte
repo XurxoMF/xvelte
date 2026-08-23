@@ -26,5 +26,5 @@
 	{...restProps}
 >
 	{@render children?.()}
-	<ChevronRightIcon class="cn-rtl-flip ml-auto size-4" />
+	<ChevronRightIcon class="ml-auto size-4" />
 </MenubarPrimitive.SubTrigger>

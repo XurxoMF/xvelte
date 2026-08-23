@@ -15,6 +15,6 @@
 	bind:value
 	data-slot="input-otp"
 	spellcheck={false}
-	class={cn("cn-input-otp-input flex items-center gap-2 disabled:cursor-not-allowed has-disabled:opacity-50", className)}
+	class={cn("flex items-center gap-2 disabled:cursor-not-allowed has-disabled:opacity-50", className)}
 	{...restProps}
 />

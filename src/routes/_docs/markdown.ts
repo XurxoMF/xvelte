@@ -86,7 +86,7 @@ export function renderMarkdown(source: string) {
 			index++;
 			while (index < lines.length && !/^```\s*$/.test(lines[index] ?? "")) body.push(lines[index++] ?? "");
 			index++;
-			output.push(`<pre><code class="language-${escapeHtml(language)}">${escapeHtml(body.join("\n"))}</code></pre>`);
+			output.push(`<pre tabindex="0"><code class="language-${escapeHtml(language)}">${escapeHtml(body.join("\n"))}</code></pre>`);
 			continue;
 		}
 

@@ -31,7 +31,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `command`
 - `compare-slider`
 - `context-menu`
-- `date-strip`
+- `date-strip` — compact paginated date selection with locale-aware week starts and labels from the active Paraglide locale
 - `dialog`
 - `drawer`
 - `dropdown-menu`
@@ -46,7 +46,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `input-ipv4` — responsive four-segment IPv4 entry with internal equal-width octets, paste normalization, validation, and form submission
 - `input-ipv6` — responsive eight-segment IPv6 entry with internal equal-width hextets, compressed-address paste expansion, validation, and form submission
 - `input-otp`
-- `input-phone` — composable international phone state, searchable country flags, formatting, and validation
+- `input-phone` — composable international phone state, searchable country flags and Paraglide-locale country names, formatting, and validation
 - `item`
 - `kbd`
 - `knob`

@@ -26,10 +26,10 @@
 	{#snippet children({ selected, highlighted })}
 		<span class="absolute inset-e-2 flex size-3.5 items-center justify-center">
 			{#if selected}
-				<CheckIcon class="cn-select-item-indicator-icon" />
+				<CheckIcon />
 			{/if}
 		</span>
-		<span class="cn-select-item-text shrink-0 whitespace-nowrap">
+		<span class="shrink-0 whitespace-nowrap">
 			{#if childrenProp}
 				{@render childrenProp({ selected, highlighted })}
 			{:else}

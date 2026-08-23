@@ -15,9 +15,4 @@
 	let { ref = $bindable(null), class: className, variant = "outline", size = "default", ...restProps }: CancelProps = $props();
 </script>
 
-<AlertDialogPrimitive.Cancel
-	bind:ref
-	data-slot="alert-dialog-cancel"
-	class={cn(Button.rootVariants({ variant, size }), "cn-alert-dialog-cancel", className)}
-	{...restProps}
-/>
+<AlertDialogPrimitive.Cancel bind:ref data-slot="alert-dialog-cancel" class={cn(Button.rootVariants({ variant, size }), className)} {...restProps} />

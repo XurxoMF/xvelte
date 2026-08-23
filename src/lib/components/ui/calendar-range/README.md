@@ -143,10 +143,11 @@ Use `excludeDisabled` when a completed range must not cross a disabled date:
 <script lang="ts">
 	import { isWeekend } from "@internationalized/date";
 
+	import { getLocale } from "$lib/paraglide/runtime";
 	import * as CalendarRange from "$lib/components/ui/calendar-range";
 </script>
 
-<CalendarRange.Root calendarLabel="Working-day range" isDateDisabled={(date) => isWeekend(date, "en-US")} excludeDisabled />
+<CalendarRange.Root calendarLabel="Working-day range" isDateDisabled={(date) => isWeekend(date, getLocale())} excludeDisabled />
 ```
 
 Disabled dates cannot be focused or selected. With `excludeDisabled`, Bits UI also rejects or clears a range containing one. Without it, disabled dates between selectable endpoints do not automatically invalidate the range.
@@ -174,6 +175,7 @@ With `pagedNavigation`, previous/next moves by the number of visible months. Wit
 ```
 
 `locale` formats month, year, weekday, day accessibility text, and dropdown options. The built-in header displays the first two characters of each formatted weekday, so verify narrow and non-Latin labels in every supported locale.
+When `locale` is omitted, Root uses the active Paraglide locale.
 
 ### Custom day content
 
@@ -223,7 +225,7 @@ Type: `RootProps`, based on Bits UI `RangeCalendar.RootProps` with `children` an
 | `monthFormat`             | `Intl...['month'] \| (month: number) => string`                  | Contextual                             | Defaults to `"short"` for dropdown captions and `"long"` for label captions.                                   |
 | `yearFormat`              | `Intl...['year'] \| (year: number) => string`                    | `"numeric"`                            | Formats year captions and options.                                                                             |
 | `weekdayFormat`           | `Intl.DateTimeFormatOptions["weekday"]`                          | `"short"`                              | Formats weekday data; the built-in header displays its first two characters.                                   |
-| `locale`                  | `string`                                                         | `"en-US"`                              | Locale used for visible and accessible date text.                                                              |
+| `locale`                  | `string`                                                         | Paraglide                              | Locale used for visible and accessible date text.                                                              |
 | `day`                     | `Snippet<[{ day: DateValue; outsideMonth: boolean }]>`           | —                                      | Replaces the default Day; render `CalendarRange.Day` inside to preserve behavior.                              |
 | `minDays` / `maxDays`     | `number`                                                         | `undefined`                            | Inclusive minimum and maximum number of days in a completed range.                                             |
 | `minValue` / `maxValue`   | `DateValue`                                                      | `undefined`                            | Constrains selectable dates and caption navigation/options.                                                    |
@@ -364,11 +366,11 @@ Calendar Range does not provide a text-entry alternative or surrounding dialog/p
 
 ## Localization
 
-Calendar Range has no Paraglide message keys. Date text is generated from `locale`, `calendarLabel`, `monthFormat`, `yearFormat`, and `weekdayFormat`. The installed Bits UI primitive also contains English accessibility defaults and announcements:
+Calendar Range has no Paraglide message keys, but Root uses `getLocale()` from the generated Paraglide runtime as its default `locale`. Date text is generated from `locale`, `calendarLabel`, `monthFormat`, `yearFormat`, and `weekdayFormat`. The installed Bits UI primitive also contains English accessibility defaults and announcements:
 
 | Copy/input          | Local or dependency default | Purpose                                                                   |
 | ------------------- | --------------------------- | ------------------------------------------------------------------------- |
-| `locale`            | `en-US`                     | Formats visible and accessible dates, weekdays, months, and years.        |
+| `locale`            | Paraglide                   | Formats visible and accessible dates, weekdays, months, and years.        |
 | `calendarLabel`     | `Event`                     | Accessible calendar purpose; visible month/year is appended.              |
 | `monthFormat`       | Contextual                  | Long for label captions and short for dropdown captions by default.       |
 | `yearFormat`        | `numeric`                   | Formats year labels and options.                                          |
@@ -390,15 +392,15 @@ Calendar Range requires Svelte 5, Bits UI, `@internationalized/date`, Tabler's S
 ```sh
 # Bun
 bun add bits-ui @internationalized/date @tabler/icons-svelte tailwind-variants clsx tailwind-merge
-bun add -D tailwindcss
+bun add -D @inlang/paraglide-js tailwindcss
 
 # npm
 npm install bits-ui @internationalized/date @tabler/icons-svelte tailwind-variants clsx tailwind-merge
-npm install -D tailwindcss
+npm install -D @inlang/paraglide-js tailwindcss
 
 # pnpm
 pnpm add bits-ui @internationalized/date @tabler/icons-svelte tailwind-variants clsx tailwind-merge
-pnpm add -D tailwindcss
+pnpm add -D @inlang/paraglide-js tailwindcss
 ```
 
 ### Component files
@@ -462,6 +464,10 @@ export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
 ```
 
 The package block includes `clsx` and `tailwind-merge`, which these helpers import.
+
+### Paraglide locale
+
+Configure and compile Paraglide so `$lib/paraglide/runtime.js` exports `getLocale`. Calendar Range has no message keys, but Root reads that generated runtime when `locale` is omitted. Passing `locale` remains the per-calendar override.
 
 ### Icons
 
@@ -544,6 +550,12 @@ Load Tailwind, configure the class-based dark variant, and expose the semantic c
 	}
 }
 
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
+	}
+}
+
 @custom-variant data-disabled {
 	&:where([data-disabled="true"]),
 	&:where([data-disabled]:not([data-disabled="false"])) {
@@ -552,7 +564,7 @@ Load Tailwind, configure the class-based dark variant, and expose the semantic c
 }
 ```
 
-The app owns dark-mode activation. No `tw-animate-css` import, keyframe, Paraglide message, shared component stylesheet, or component-specific global variable is required.
+The app owns dark-mode activation. No `tw-animate-css` import, keyframe, Paraglide message, shared component stylesheet, or component-specific global variable is required. The generated Paraglide runtime is required for the default locale.
 
 ---
 

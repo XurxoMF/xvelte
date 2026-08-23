@@ -15,9 +15,4 @@
 	let { ref = $bindable(null), class: className, variant = "default", size = "default", ...restProps }: ActionProps = $props();
 </script>
 
-<AlertDialogPrimitive.Action
-	bind:ref
-	data-slot="alert-dialog-action"
-	class={cn(Button.rootVariants({ variant, size }), "cn-alert-dialog-action", className)}
-	{...restProps}
-/>
+<AlertDialogPrimitive.Action bind:ref data-slot="alert-dialog-action" class={cn(Button.rootVariants({ variant, size }), className)} {...restProps} />

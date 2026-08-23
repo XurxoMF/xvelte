@@ -26,6 +26,7 @@ If a selected unit has no guide yet, inspect its barrel, public types, and imple
 - Compose components or add application-local wrappers before extending shared primitives.
 - Keep page-specific copy, state, validation, layout, and product behavior in application code.
 - Preserve accessibility semantics and use the consuming application's localization conventions for application copy.
+- Keep the shared global `*:focus-visible` rule from `src/routes/layout.css` when copying xvelte components. Standard focus borders, rings, and native-outline suppression are centralized there; component classes retain only structural wrapper handling and state-specific overrides.
 
 ## Protect reusable infrastructure
 

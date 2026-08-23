@@ -197,6 +197,12 @@ No primitive or animation package is required.
 	--color-destructive: var(--destructive);
 	--radius-lg: var(--radius);
 }
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
+	}
+}
 ```
 
 Values may be replaced by the app's theme. No keyframe, custom state variant, font, or layout rule is required.

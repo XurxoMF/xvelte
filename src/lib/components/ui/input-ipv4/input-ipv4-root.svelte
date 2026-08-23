@@ -138,7 +138,7 @@
 	data-slot="ipv4-input"
 	aria-invalid={!valid}
 	class={cn(
-		"flex h-9 w-full place-items-center rounded-md border border-input bg-background px-3 font-mono font-light ring-2 ring-transparent ring-offset-background selection:bg-primary focus-within:ring-ring focus-within:ring-offset-2 dark:bg-input/30",
+		"flex h-9 w-full place-items-center rounded-md border border-input bg-background px-3 font-mono font-light transition-colors selection:bg-primary focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50 dark:bg-input/30",
 		className
 	)}
 	{...restProps}
@@ -154,7 +154,7 @@
 			bind:value={() => octets[index], (octet) => update(index, octet)}
 			placeholder={parsedPlaceholder?.[index] ?? undefined}
 			type="text"
-			class="hide-ramp h-full min-w-0 flex-1 border-0 bg-transparent text-center outline-hidden placeholder:text-muted-foreground focus:outline-hidden"
+			class="hide-ramp h-full min-w-0 flex-1 border-0 bg-transparent text-center placeholder:text-muted-foreground focus-visible:ring-0"
 			oninput={() => handleInput(index)}
 			onkeydown={(event) => handleKeydown(event, index)}
 			onpaste={paste}

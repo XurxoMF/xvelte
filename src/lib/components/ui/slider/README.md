@@ -233,6 +233,12 @@ No animation package is required.
 	}
 }
 
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
+	}
+}
+
 @custom-variant data-horizontal {
 	&:where([data-orientation="horizontal"]) {
 		@slot;

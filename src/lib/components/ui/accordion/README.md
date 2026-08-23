@@ -215,13 +215,13 @@ The component uses semantic Tailwind tokens and `tw-animate-css`. Opening and cl
 
 Stable xvelte hooks:
 
-| Part                    | `data-slot`              | Additional stable class     |
-| ----------------------- | ------------------------ | --------------------------- |
-| `Root`                  | `accordion`              | `cn-accordion`              |
-| `Item`                  | `accordion-item`         | —                           |
-| `Trigger`               | `accordion-trigger`      | —                           |
-| Built-in trigger icons  | `accordion-trigger-icon` | `cn-accordion-trigger-icon` |
-| `Content` outer element | `accordion-content`      | —                           |
+| Part                    | `data-slot`              |
+| ----------------------- | ------------------------ |
+| `Root`                  | `accordion`              |
+| `Item`                  | `accordion-item`         |
+| `Trigger`               | `accordion-trigger`      |
+| Built-in trigger icons  | `accordion-trigger-icon` |
+| `Content` outer element | `accordion-content`      |
 
 Bits UI also supplies state, orientation, disabled, and ARIA attributes. Prefer those attributes and the xvelte hooks above when styling state. Classes supplied to any public part are merged with its local styles, subject to the `Content` placement described in its API section.
 
@@ -288,6 +288,12 @@ Accordion uses the `foreground`, `muted-foreground`, `border`, and `ring` semant
 	--color-muted-foreground: var(--muted-foreground);
 	--color-border: var(--border);
 	--color-ring: var(--ring);
+}
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
+	}
 }
 ```
 

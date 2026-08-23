@@ -435,6 +435,12 @@ The global stylesheet must load Tailwind and expose the semantic colors and radi
 	--color-ring: var(--ring);
 	--radius-lg: var(--radius);
 }
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
+	}
+}
 ```
 
 The app owns dark-mode activation. Item requires no icon export from `src/lib/icons.ts`, localization message, hook, attachment, context, animation import, keyframe, image, font, network service, or additional layout rule. Icons, avatars, images, buttons, dropdowns, and other content shown inside Item are optional compositions; install and follow their own component guides only when using them.

@@ -13,10 +13,12 @@
 </script>
 
 <div data-slot="command-input-wrapper" class="p-1 pb-0">
-	<InputGroup.Root class="h-8! rounded-lg! border-input/30 bg-input/30 shadow-none! *:data-[slot=input-group-addon]:pl-2!">
+	<InputGroup.Root
+		class="h-8! rounded-lg! border-input/30 bg-input/30 shadow-none! focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50 *:data-[slot=input-group-addon]:pl-2!"
+	>
 		<CommandPrimitive.Input
 			data-slot="command-input"
-			class={cn("w-full text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50", className)}
+			class={cn("w-full text-sm focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50", className)}
 			bind:ref
 			{...restProps}
 			bind:value

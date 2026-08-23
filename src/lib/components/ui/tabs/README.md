@@ -169,9 +169,9 @@ Root forwards native div attributes and merges class after local flex/orientatio
 | Root    | `data-slot="tabs"`, `group/tabs`                           | Bits UI `data-orientation`.                                                                 |
 | List    | `data-slot="tabs-list"`, `group/tabs-list`, `data-variant` | Filled muted or transparent line presentation.                                              |
 | Trigger | `data-slot="tabs-trigger"`                                 | Bits UI active and disabled attributes; local focus, dark, icon, and line indicator styles. |
-| Content | `data-slot="tabs-content"`                                 | Bits UI panel visibility and relationships.                                                 |
+| Content | `data-slot="tabs-content"`                                 | Bits UI panel visibility and relationships; rounded `ring` focus treatment when focusable.  |
 
-List has stable classes `cn-tabs-list-variant-default` and `cn-tabs-list-variant-line`. Styled parts merge class with `cn()`. The Trigger's active underline is an internal pseudo-element rather than a separate DOM node.
+Styled parts merge class with `cn()`. Trigger and focusable Content receive the shared three-pixel, 50%-opacity semantic `ring` halo from the required global `*:focus-visible` rule. The Trigger's active underline is an internal pseudo-element rather than a separate DOM node.
 
 ---
 
@@ -250,6 +250,12 @@ No animation package is required.
 	&:where([data-state="active"]),
 	&:where([data-active]:not([data-active="false"])) {
 		@slot;
+	}
+}
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
 	}
 }
 

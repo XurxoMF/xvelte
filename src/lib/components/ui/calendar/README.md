@@ -147,6 +147,7 @@ With `pagedNavigation`, previous/next changes the view by the number of visible 
 ```
 
 `locale` formats month, year, weekday, and select labels through `Intl.DateTimeFormat`. The built-in header displays the first two characters of each formatted weekday, so check narrow or non-Latin labels in every supported locale.
+When `locale` is omitted, Root uses the active Paraglide locale.
 
 ### Custom day content
 
@@ -197,7 +198,7 @@ Type: `RootProps`, based on Bits UI `Calendar.RootProps` with `children` and `ch
 | `monthFormat`             | `Intl...['month'] \| (month: number) => string`                  | See below     | Defaults to `"short"` for dropdown captions and `"long"` for label captions.                             |
 | `yearFormat`              | `Intl...['year'] \| (year: number) => string`                    | `"numeric"`   | Formats year labels and options.                                                                         |
 | `weekdayFormat`           | `Intl.DateTimeFormatOptions["weekday"]`                          | `"short"`     | Formats weekday data; the built-in header then displays its first two characters.                        |
-| `locale`                  | `string`                                                         | `"en-US"`     | Locale used for date labels, month/year captions, weekdays, and Bits UI accessibility text.              |
+| `locale`                  | `string`                                                         | Paraglide     | Locale used for date labels, month/year captions, weekdays, and Bits UI accessibility text.              |
 | `day`                     | `Snippet<[{ day: DateValue; outsideMonth: boolean }]>`           | `undefined`   | Replaces the default `Day`; render `Calendar.Day` inside to preserve behavior.                           |
 | `numberOfMonths`          | `number`                                                         | `1`           | Number of visible months.                                                                                |
 | `pagedNavigation`         | `boolean`                                                        | `false`       | Moves by all visible months instead of one month.                                                        |
@@ -322,11 +323,11 @@ Bits UI supplies the calendar grid semantics, labels, focus management, and date
 
 ## Localization
 
-Calendar has no Paraglide message keys. Date text is generated from `locale`, `calendarLabel`, `monthFormat`, `yearFormat`, and `weekdayFormat`. Bits UI currently supplies three English defaults directly: `"Event"` for `calendarLabel`, plus `"Previous"` and `"Next"` for the navigation buttons.
+Calendar has no Paraglide message keys, but Root uses `getLocale()` from the generated Paraglide runtime as its default `locale`. Date text is generated from `locale`, `calendarLabel`, `monthFormat`, `yearFormat`, and `weekdayFormat`. Bits UI currently supplies three English defaults directly: `"Event"` for `calendarLabel`, plus `"Previous"` and `"Next"` for the navigation buttons.
 
 | Input           | Local default | What it controls                                                                 |
 | --------------- | ------------- | -------------------------------------------------------------------------------- |
-| `locale`        | `en-US`       | Month/year/weekday labels, dropdown options, and date accessibility text.        |
+| `locale`        | Paraglide     | Month/year/weekday labels, dropdown options, and date accessibility text.        |
 | `calendarLabel` | `Event`       | Purpose of the calendar; your app should pass a translated, specific label.      |
 | `monthFormat`   | Contextual    | Long for label captions, short for dropdown captions, or a custom formatter.     |
 | `yearFormat`    | `numeric`     | Year label/options, or a custom formatter.                                       |
@@ -343,15 +344,15 @@ Calendar requires Svelte 5, Bits UI, `@internationalized/date`, the Tabler Svelt
 ```sh
 # bun
 bun add bits-ui @internationalized/date @tabler/icons-svelte tailwind-variants clsx tailwind-merge
-bun add -D tailwindcss
+bun add -D @inlang/paraglide-js tailwindcss
 
 # npm
 npm install bits-ui @internationalized/date @tabler/icons-svelte tailwind-variants clsx tailwind-merge
-npm install -D tailwindcss
+npm install -D @inlang/paraglide-js tailwindcss
 
 # pnpm
 pnpm add bits-ui @internationalized/date @tabler/icons-svelte tailwind-variants clsx tailwind-merge
-pnpm add -D tailwindcss
+pnpm add -D @inlang/paraglide-js tailwindcss
 ```
 
 ### Required UI component
@@ -389,6 +390,10 @@ export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
 ```
 
 The package block above includes `clsx` and `tailwind-merge`, which this code imports.
+
+### Paraglide locale
+
+Configure and compile Paraglide so `$lib/paraglide/runtime.js` exports `getLocale`. Calendar has no message keys, but Root reads that generated runtime when its `locale` prop is omitted. Passing `locale` keeps the documented per-calendar override.
 
 ### Icons
 
@@ -470,11 +475,17 @@ Your global stylesheet must import Tailwind, define the dark variant, and expose
 	--radius-md: calc(var(--radius) * 0.8);
 	--radius-lg: var(--radius);
 }
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
+	}
+}
 ```
 
 The app remains responsible for applying its `.dark` class, normally through root-level theme management.
 
-No `tw-animate-css` import, animation, keyframe, Paraglide message, shared component stylesheet, or additional icon is required. Popover, Date Picker, Calendar Range, form fields, and date summaries shown in larger compositions have their own installation requirements; follow each component's README when you use them.
+No `tw-animate-css` import, animation, keyframe, Paraglide message, shared component stylesheet, or additional icon is required. The generated Paraglide runtime is required for the default locale. Popover, Date Picker, Calendar Range, form fields, and date summaries shown in larger compositions have their own installation requirements; follow each component's README when you use them.
 
 ---
 

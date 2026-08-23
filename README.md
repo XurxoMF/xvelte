@@ -193,7 +193,7 @@ bun run build
 
 The primary visual customization points are `src/routes/layout.css` and `src/lib/icons.ts`.
 
-`layout.css` defines color variables, radius, fonts, light and dark themes, sidebar tokens, chart colors, Tailwind configuration, and custom variants. Editing these shared values adapts the collection without coupling individual components to an application theme.
+`layout.css` defines color variables, radius, fonts, light and dark themes, sidebar tokens, chart colors, Tailwind configuration, custom variants, and the shared `*:focus-visible` border/ring treatment. Editing these shared values adapts the collection without coupling individual components to an application theme.
 
 `src/lib/icons.ts` maps semantic, library-independent icon names to `@tabler/icons-svelte`. Change those exports to replace the icon library without rewriting component directories.
 

@@ -32,7 +32,7 @@
 
 	<span class="absolute inset-e-2 flex size-3.5 items-center justify-center">
 		{#if ctx.isSelected(value)}
-			<CheckIcon class="cn-select-item-indicator-icon" />
+			<CheckIcon />
 		{/if}
 	</span>
 </Command.Item>

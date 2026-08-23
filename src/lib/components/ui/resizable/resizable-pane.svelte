@@ -10,4 +10,4 @@
 	let { ref = $bindable(null), class: className, ...restProps }: PaneProps = $props();
 </script>
 
-<ResizablePrimitive.Pane bind:ref data-slot="resizable-pane" class={cn("cn-resizable-pane flex-1 overflow-hidden", className)} {...restProps} />
+<ResizablePrimitive.Pane bind:ref data-slot="resizable-pane" class={cn("flex-1 overflow-hidden", className)} {...restProps} />

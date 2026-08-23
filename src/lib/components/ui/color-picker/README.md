@@ -192,6 +192,8 @@ Internal saturation, hue, alpha, preview, and handle elements do not have stable
 
 The white/black saturation overlays and rainbow hue gradient are functional color controls, not theme colors. The preview and alpha track use an embedded checkerboard PNG so transparency remains visible without an external asset. Descendant Button, Button Group, Input, Popover, and Command components retain their own documented `data-slot` and dependency-owned state attributes.
 
+The three keyboard-focusable color controls receive their three-pixel, 50%-opacity semantic `ring` treatment from the required global `*:focus-visible` rule.
+
 The internal Popover uses Bits UI positioning variables and open/closed state attributes through the local Popover wrapper. See the [Bits UI Popover documentation](https://www.bits-ui.com/docs/components/popover) for those dependency-owned behaviors and the [Bits UI Command documentation](https://www.bits-ui.com/docs/components/command) for the format list's selection and keyboard behavior.
 
 ---
@@ -389,6 +391,12 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define the dark
 	&:where([data-state="open"]),
 	&:where([data-open]:not([data-open="false"])) {
 		@slot;
+	}
+}
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
 	}
 }
 

@@ -20,5 +20,5 @@
 	{...restProps}
 >
 	<ChevronLeftIcon />
-	<span class="cn-pagination-previous-text sr-only">{m.warm_koala_previous()}</span>
+	<span class="sr-only">{m.warm_koala_previous()}</span>
 </PaginationPrimitive.PrevButton>

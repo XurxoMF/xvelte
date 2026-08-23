@@ -164,10 +164,7 @@
 	aria-label={label ?? m.olive_heron_point()}
 	aria-disabled={disabled}
 	style:aspect-ratio={coordinateAspectRatio}
-	class={cn(
-		"relative block w-full touch-none overflow-hidden outline-none select-none focus-visible:ring-3 focus-visible:ring-ring/50 data-disabled:pointer-events-none data-disabled:opacity-50",
-		className
-	)}
+	class={cn("relative block w-full touch-none overflow-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50", className)}
 	onpointerdown={handlePointerDown}
 	onpointermove={handlePointerMove}
 	onpointerup={handlePointerUp}

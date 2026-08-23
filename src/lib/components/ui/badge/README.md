@@ -191,7 +191,7 @@ Variant behavior:
 | `ghost`       | Transparent until hover, then uses muted surface and text.                             |
 | `link`        | Primary text that underlines on hover.                                                 |
 
-Every variant inherits visible focus-ring and `aria-invalid` styling. Classes passed by your app are merged last through `cn`; when copying the component, keep Tailwind Merge so conflicting utility overrides remain predictable.
+Every interactive variant inherits the required global three-pixel, 50%-opacity `ring` focus treatment; the component adds only its `aria-invalid` styling. Classes passed by your app are merged last through `cn`; when copying the component, keep Tailwind Merge so conflicting utility overrides remain predictable.
 
 ---
 
@@ -298,6 +298,12 @@ Your global stylesheet must import Tailwind, define the dark variant, and expose
 	--color-destructive: var(--destructive);
 	--color-border: var(--border);
 	--color-ring: var(--ring);
+}
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
+	}
 }
 ```
 

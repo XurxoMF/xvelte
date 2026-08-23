@@ -127,7 +127,7 @@ The stable local hook is:
 | ---------------- | ------------------- |
 | Player container | `data-slot="video"` |
 
-The root uses `aspect-video`, full width, `min-w-75`, a black background, `rounded-xl`, and `shadow-lg`. Internal controls deliberately use black and white overlays rather than semantic theme surfaces. `primary` is used only for the visible focus ring on icon buttons.
+The root uses `aspect-video`, full width, `min-w-75`, a black background, `rounded-xl`, and `shadow-lg`. Internal controls deliberately use black and white overlays rather than semantic theme surfaces. Icon buttons receive the shared three-pixel, 50%-opacity semantic `ring` halo from the required global `*:focus-visible` rule.
 
 `class` applies only to the root container. Internal loading, control, slider, and icon elements have no public `data-slot` hooks. Component-scoped CSS hides the native thumbs of the transparent range inputs; visible tracks and thumbs are separate decorative elements.
 
@@ -183,11 +183,17 @@ The component requires Tailwind CSS to process its utility classes. Add the styl
 @import "tailwindcss";
 
 :root {
-	--primary: oklch(0.841 0.238 128.85);
+	--ring: oklch(0.709 0.01 56.259);
 }
 
 @theme inline {
-	--color-primary: var(--primary);
+	--color-ring: var(--ring);
+}
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
+	}
 }
 ```
 

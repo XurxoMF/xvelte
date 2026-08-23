@@ -101,7 +101,7 @@
 	onpointerup={handleUp}
 	onkeydown={handleKeyDown}
 	class={cn(
-		"group relative touch-none overflow-hidden select-none",
+		"group relative touch-none overflow-hidden rounded-[inherit] select-none",
 		orientation === "horizontal" ? "cursor-ew-resize" : "cursor-ns-resize",
 		className
 	)}

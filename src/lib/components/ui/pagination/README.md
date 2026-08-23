@@ -294,15 +294,15 @@ Their standard rendering is intentionally fixed to a localized accessible name, 
 
 Stable xvelte hooks:
 
-| Part       | Element             | Stable hooks                                                       |
-| ---------- | ------------------- | ------------------------------------------------------------------ |
-| `Root`     | `div` by default    | `data-slot="pagination"`, `cn-pagination`                          |
-| `Content`  | `ul`                | `data-slot="pagination-content"`                                   |
-| `Item`     | `li`                | `data-slot="pagination-item"`                                      |
-| `Link`     | `button` by default | `data-slot="pagination-link"`, `data-active`, `cn-pagination-link` |
-| `Ellipsis` | `span`              | `data-slot="pagination-ellipsis"`                                  |
-| `Previous` | `button` by default | `cn-pagination-previous-text` on its hidden text                   |
-| `Next`     | `button` by default | `cn-pagination-next-text` on its hidden text                       |
+| Part       | Element             | Stable hooks                                       |
+| ---------- | ------------------- | -------------------------------------------------- |
+| `Root`     | `div` by default    | `data-slot="pagination"`                           |
+| `Content`  | `ul`                | `data-slot="pagination-content"`                   |
+| `Item`     | `li`                | `data-slot="pagination-item"`                      |
+| `Link`     | `button` by default | `data-slot="pagination-link"`, `data-active`       |
+| `Ellipsis` | `span`              | `data-slot="pagination-ellipsis"`                  |
+| `Previous` | `button` by default | No local stable hook; contains screen-reader text. |
+| `Next`     | `button` by default | No local stable hook; contains screen-reader text. |
 
 `Previous` and `Next` do not define local `data-slot` attributes. Bits UI currently adds `data-pagination-root`, `data-pagination-page`, `data-pagination-prev-button`, `data-pagination-next-button`, `data-orientation`, `data-value`, and `data-selected`. Treat those as dependency-owned behavior and confirm them against the installed Bits UI version before relying on them as a long-term xvelte contract.
 

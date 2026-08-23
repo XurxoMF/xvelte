@@ -1,8 +1,8 @@
 # Date Strip
 
-A compact, paginated row of dates for choosing one day from a short visible range. It starts at the current week's Sunday, displays five dates by default, moves backward or forward by one complete visible range, supports controlled selection, and lets the app disable individual dates.
+A compact, paginated row of dates for choosing one day from a short visible range. It starts at the current locale's week boundary, displays five dates by default, moves backward or forward by one complete visible range, supports controlled selection, and lets the app disable individual dates.
 
-Use Date Strip when nearby dates are the main choice and a full calendar would be unnecessarily large. Do not use it when people need to browse distant dates, enter a date directly, understand selected state through assistive technology, or rely on locale-aware week starts and date labels; the current local component does not provide those capabilities.
+Use Date Strip when nearby dates are the main choice and a full calendar would be unnecessarily large. Do not use it when people need to browse distant dates, enter a date directly, or understand selected state through assistive technology.
 
 <!-- xvelte-example: overview -->
 
@@ -170,13 +170,14 @@ Type: `RootProps`.
 | Prop             | Type                             | Default       | xvelte behavior                                                                                                  |
 | ---------------- | -------------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------- |
 | `value`          | `DateValue`                      | `undefined`   | Bindable selected date. It does not control or reposition the visible range.                                     |
+| `locale`         | `string`                         | Paraglide     | Formats month/day labels and chooses the initial week boundary. An explicit value overrides the active locale.   |
 | `daysToShow`     | `number`                         | `5`           | Number of consecutive dates rendered and number of days moved per navigation action.                             |
 | `isDateDisabled` | `(date: DateValue) => boolean`   | `() => false` | Evaluated for every displayed Item to determine its native disabled state.                                       |
 | `onDateChange`   | `(date: DateValue) => void`      | `undefined`   | Runs after an enabled Item is selected. It does not run for navigation or an app-driven binding change.          |
 | `children`       | `Snippet<[{ date: DateValue }]>` | required      | Called once for every displayed date. Render `<DateStrip.Item {date} />` to connect local selection behavior.    |
 | `class`          | `string`                         | `undefined`   | Merged after the outer container's local layout, surface, border, radius, padding, and shadow classes with `cn`. |
 
-Root does not forward native `div` attributes, expose its element reference, accept navigation labels, or provide previous/next callbacks. Its initial range starts at `startOfWeek(today(getLocalTimeZone()), "en-US")`, which is Sunday of the current local week. Navigation adds or subtracts exactly `daysToShow` days.
+Root does not forward native `div` attributes, expose its element reference, accept navigation labels, or provide previous/next callbacks. Its initial range starts at `startOfWeek(today(getLocalTimeZone()), locale)`, using the active Paraglide locale unless `locale` is passed explicitly. Navigation adds or subtracts exactly `daysToShow` days.
 
 Changing `daysToShow` updates the number of displayed dates reactively. Passing zero renders no Items; negative, fractional, non-finite, or extremely large values are not validated and should be avoided.
 
@@ -199,7 +200,7 @@ Type: `ItemProps`.
 
 Item always renders Button.Root with `variant="ghost"` as a native button. It derives disabled state from Root, highlights today's date with `bg-accent`, and gives the selected date `bg-primary text-primary-foreground`; selected styling takes precedence when the date is also today.
 
-Each Item displays a fixed `en-US` abbreviated month above a numeric day. It does not display weekday, year, full date, or app-provided children. Item does not forward native button attributes, events, a ref, `aria-*`, or alternative labels. It cannot be used outside Root because its internal context would be missing.
+Each Item displays a locale-formatted abbreviated month above a numeric day. It does not display weekday, year, full date, or app-provided children. Item does not forward native button attributes, events, a ref, `aria-*`, or alternative labels. It cannot be used outside Root because its internal context would be missing.
 
 ---
 
@@ -240,13 +241,9 @@ Treat Date Strip as a compact visual date control, not as a complete accessible 
 
 ## Localization
 
-Date Strip has no visible word labels and does not use Paraglide messages. However, its date behavior is currently hard-coded to `en-US`:
+Date Strip has no visible word labels and uses no Paraglide message keys. Root imports `getLocale()` from the generated Paraglide runtime and uses the active locale by default for both the initial week boundary and the Item month/day formatters. Pass `locale` to override that default for one Date Strip. Items convert dates in the user's local time zone before formatting.
 
-- Root calculates the week start with the `en-US` locale, so the initial page begins on Sunday.
-- Item formats the month with `new DateFormatter("en-US", { month: "short" })` and the day with `new DateFormatter("en-US", { day: "numeric" })`.
-- Item converts each `DateValue` with `date.toDate("UTC")` before formatting. The formatter itself receives no explicit time zone, so verify displayed dates in the deployment's supported time zones.
-
-There is no locale prop, formatter prop, week-start prop, or message ID to override this behavior. Navigation buttons also lack built-in accessible labels rather than containing translatable default copy. Apps cannot localize or label them through the current public API.
+There is no formatter prop, explicit week-start prop, or message ID. Navigation buttons also lack built-in accessible labels rather than containing translatable default copy, and the current public API cannot override those labels.
 
 ---
 
@@ -257,15 +254,15 @@ Date Strip requires `@internationalized/date`, the shared Button component, two 
 ```sh
 # bun
 bun add @internationalized/date @tabler/icons-svelte tailwind-variants clsx tailwind-merge
-bun add -D tailwindcss tw-animate-css
+bun add -D @inlang/paraglide-js tailwindcss tw-animate-css
 
 # npm
 npm install @internationalized/date @tabler/icons-svelte tailwind-variants clsx tailwind-merge
-npm install -D tailwindcss tw-animate-css
+npm install -D @inlang/paraglide-js tailwindcss tw-animate-css
 
 # pnpm
 pnpm add @internationalized/date @tabler/icons-svelte tailwind-variants clsx tailwind-merge
-pnpm add -D tailwindcss tw-animate-css
+pnpm add -D @inlang/paraglide-js tailwindcss tw-animate-css
 ```
 
 ### Shared utilities
@@ -286,6 +283,10 @@ export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
 ```
 
 The package block includes `clsx` and `tailwind-merge`, which `cn` imports.
+
+### Paraglide locale
+
+Configure and compile Paraglide so `$lib/paraglide/runtime.js` exports `getLocale`. Date Strip has no message keys, but its default locale depends on that generated runtime. A passed `locale` prop overrides Paraglide for that Root.
 
 ### Icons
 
@@ -320,6 +321,7 @@ import type { DateValue } from "@internationalized/date";
 
 type DateStripContext = {
 	readonly selectedValue: DateValue | undefined;
+	readonly locale: string;
 	onSelect: (date: DateValue) => void;
 	isDateDisabled: (date: DateValue) => boolean;
 	readonly direction: "start" | "end";
@@ -328,7 +330,7 @@ type DateStripContext = {
 const [getDateStripState, setDateStripState] = createContext<DateStripContext>();
 
 /**
- * Provides selection and navigation data to date-strip items.
+ * Provides locale, selection, and navigation data to date-strip items.
  *
  * @param props - Reactive date-strip state and callbacks.
  */
@@ -405,7 +407,7 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define the dark
 
 ### Other requirements
 
-Date Strip requires no hook, attachment, external context library, localization message, Paraglide setup, shared component stylesheet, or external asset. Its internal Svelte context must remain in the component folder as shown above.
+Date Strip requires no hook, attachment, external context library, localization message, shared component stylesheet, or external asset. Its internal Svelte context must remain in the component folder as shown above, and the generated Paraglide runtime must be available.
 
 ---
 
@@ -417,12 +419,12 @@ Date Strip is adapted from [more-shadcn-svelte's Date Strip component](https://m
 
 ## File organization
 
-| File                     | Responsibility                                                                                                   |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------- |
-| `date-strip-root.svelte` | Visible-range state, page navigation, selected-value binding, disabled-date callback, layout, and children loop. |
-| `date-strip-item.svelte` | Date formatting, current/selected/disabled state, selection action, Button composition, and transition classes.  |
-| `date-strip-context.ts`  | Internal reactive bridge between Root and descendant Items.                                                      |
-| `index.ts`               | Public Root, Item, and props-type exports.                                                                       |
-| `README.md`              | Installation, composition, examples, API, styling, accessibility, localization, dependencies, and credits.       |
+| File                     | Responsibility                                                                                                                |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| `date-strip-root.svelte` | Locale-aware visible-range state, page navigation, selected-value binding, disabled-date callback, layout, and children loop. |
+| `date-strip-item.svelte` | Locale-aware date formatting, current/selected/disabled state, selection action, Button composition, and transition classes.  |
+| `date-strip-context.ts`  | Internal reactive bridge between Root and descendant Items.                                                                   |
+| `index.ts`               | Public Root, Item, and props-type exports.                                                                                    |
+| `README.md`              | Installation, composition, examples, API, styling, accessibility, localization, dependencies, and credits.                    |
 
 Treat `index.ts`, its exported types, and the local component source as the source of truth for the public API.

@@ -136,7 +136,7 @@
 	style:width={width === undefined ? undefined : `${width}px`}
 	style:height={height === undefined ? undefined : `${height}px`}
 	class={cn(
-		"pointer-events-auto absolute top-0 left-0 touch-none outline-none",
+		"pointer-events-auto absolute top-0 left-0 touch-none",
 		draggable && (dragging ? "cursor-grabbing" : "cursor-grab"),
 		selected && "z-10",
 		className

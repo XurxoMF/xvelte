@@ -348,7 +348,7 @@ Combobox uses Tailwind utilities, semantic theme tokens, Bits UI state attribute
 | `Input`   | Command input inside an Input Group               | `data-slot="command-input-wrapper"`, `command-input`, and Input Group hooks |
 | `List`    | Command list                                      | `data-slot="command-list"`                                                  |
 | `Group`   | Command group and optional group heading          | `data-slot="command-group"`                                                 |
-| `Item`    | Command item and trailing indicator               | `data-slot="command-item"`, `.cn-select-item-indicator-icon`                |
+| `Item`    | Command item and trailing indicator               | `data-slot="command-item"`                                                  |
 | `Empty`   | Command empty state                               | `data-slot="command-empty"`                                                 |
 
 `Content` uses `w-(--bits-popover-anchor-width)`, so its normal width follows the trigger's measured anchor width and never drops below `9rem`. `class` can override that width. `--bits-popover-anchor-width`, positioning transforms, `data-state`, `data-side`, Command selection attributes, ARIA relationships, and generated IDs are dependency-owned and may follow the installed stable Bits UI version.
@@ -581,6 +581,12 @@ The global stylesheet must import Tailwind and `tw-animate-css`, provide the hid
 
 	&::-webkit-scrollbar {
 		display: none;
+	}
+}
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
 	}
 }
 ```

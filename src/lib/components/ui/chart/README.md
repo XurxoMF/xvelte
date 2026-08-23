@@ -149,6 +149,7 @@ Container generates `--color-revenue` under both the normal and `.dark` selector
 <script lang="ts">
 	import { LineChart } from "layerchart";
 
+	import { getLocale } from "$lib/paraglide/runtime";
 	import * as Chart from "$lib/components/ui/chart";
 
 	const chartConfig = {
@@ -169,12 +170,12 @@ Container generates `--color-revenue` under both the normal and `.dark` selector
 		axis="x"
 		props={{
 			xAxis: {
-				format: (value) => new Intl.DateTimeFormat("en", { month: "short" }).format(value)
+				format: (value) => new Intl.DateTimeFormat(getLocale(), { month: "short" }).format(value)
 			}
 		}}
 	>
 		{#snippet tooltip()}
-			<Chart.Tooltip labelFormatter={(value) => new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(value)} />
+			<Chart.Tooltip labelFormatter={(value) => new Intl.DateTimeFormat(getLocale(), { dateStyle: "medium" }).format(value)} />
 		{/snippet}
 	</LineChart>
 </Chart.Container>
@@ -386,7 +387,7 @@ Use `index.ts` and the exported props types as the source of truth for the local
 - The default heading comes from LayerChart's x accessor. `label`, `labelKey`, and `labelFormatter` can replace or format it.
 - With one visible series and a `line` or `dashed` indicator, the heading moves beside the series details. Dot indicators keep the heading above the rows.
 - A config icon takes precedence over the colored indicator. Otherwise indicator color resolves from `color`, LayerChart's item config color, or the payload color.
-- Default values call `toLocaleString()` without an explicit locale or formatting options. Use `formatter` for currency, units, percentages, dates, or deterministic locale output.
+- Default headings and values call `toLocaleString(getLocale())` with the active Paraglide locale. Use `formatter` for currency, units, percentages, custom date styles, or time zones.
 - A falsey formatted heading such as an empty string or numeric zero is not rendered by the current local template.
 - LayerChart v2 owns tooltip hit testing and placement. Configure modes such as band, bisect, quadtree, or manual interaction on the LayerChart component; see the [LayerChart v2 tooltip guide](https://www.layerchart.com/docs/guides/tooltip).
 
@@ -439,7 +440,7 @@ Do not add `role="img"` around interactive controls. For a purely static chart, 
 
 Chart contains no built-in human-readable strings and does not require Paraglide messages. Config labels, captions, axis ticks, legend text, units, custom tooltip labels, and accessible summaries are supplied by the app and should follow its localization conventions.
 
-The built-in Tooltip calls `toLocaleString()` with the browser's active locale for values. Use the `formatter` snippet and `Intl.NumberFormat` or `Intl.DateTimeFormat` when the app requires a specific locale, currency, unit, notation, or time zone.
+The built-in Tooltip calls `toLocaleString(getLocale())` for default headings and values, so dates and numbers follow the active Paraglide locale. Use `labelFormatter`, the `formatter` snippet, `Intl.NumberFormat`, or `Intl.DateTimeFormat` when the app requires a currency, unit, notation, date style, or time zone.
 
 ---
 
@@ -450,15 +451,15 @@ Chart requires Svelte 5, stable LayerChart 2.1, the local utility helpers, and T
 ```sh
 # bun
 bun add layerchart@^2.1.0 clsx tailwind-merge
-bun add -D tailwindcss
+bun add -D @inlang/paraglide-js tailwindcss
 
 # npm
 npm install layerchart@^2.1.0 clsx tailwind-merge
-npm install -D tailwindcss
+npm install -D @inlang/paraglide-js tailwindcss
 
 # pnpm
 pnpm add layerchart@^2.1.0 clsx tailwind-merge
-pnpm add -D tailwindcss
+pnpm add -D @inlang/paraglide-js tailwindcss
 ```
 
 Do not replace the stable version with `layerchart@next` when reproducing the current xvelte component. This implementation is written against stable v2.1.0. Use the [LayerChart v2 documentation](https://www.layerchart.com/docs), [v2 release guide](https://www.layerchart.com/docs/releases/layerchart-2.0.0), and official component pages for its chart APIs.
@@ -486,6 +487,10 @@ export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
 ```
 
 The package block above includes `clsx` and `tailwind-merge`, which this code imports.
+
+### Paraglide locale
+
+Configure and compile Paraglide so `$lib/paraglide/runtime.js` exports `getLocale`. Chart has no message keys, but Tooltip reads the active locale from that generated runtime for its default heading and value formatting.
 
 ### Global CSS
 
@@ -535,7 +540,7 @@ Your global stylesheet must import Tailwind and expose the semantic and chart co
 
 The app remains responsible for applying its `.dark` class, normally through root-level theme management. LayerChart v2 ships its own default component styles; no LayerChart stylesheet import is required by the local component.
 
-Chart requires no other xvelte UI component, icon export, hook, attachment, context outside its own folder, localization message, `tw-animate-css` import, or global keyframe. Keep `chart-context.ts` and `chart-utils.ts` with the component because Container and Tooltip import them directly.
+Chart requires no other xvelte UI component, icon export, hook, attachment, context outside its own folder, localization message, `tw-animate-css` import, or global keyframe. The generated Paraglide runtime is required. Keep `chart-context.ts` and `chart-utils.ts` with the component because Container and Tooltip import them directly.
 
 ---
 

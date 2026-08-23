@@ -258,16 +258,16 @@ Content also inherits Bits UI floating-position options such as `side`, `align`,
 
 ## Styling and DOM contract
 
-| Part           | Stable `data-slot`                                     | Noteworthy local hooks                                                                                    |
-| -------------- | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
-| Trigger        | `select-trigger`                                       | `data-size`, focus/invalid states, placeholder text, fixed selector icon.                                 |
-| Content        | `select-content`                                       | Floating side attributes, open/closed animation, popover tokens.                                          |
-| Group          | `select-group`                                         | Scroll margin and padding.                                                                                |
-| GroupHeading   | `select-group-heading`                                 | Muted 12-pixel heading.                                                                                   |
-| Label          | `select-label`                                         | Muted plain visual label.                                                                                 |
-| Item           | `select-item`                                          | Highlighted/disabled/selected primitive state; `cn-select-item-indicator-icon` and `cn-select-item-text`. |
-| Separator      | `select-separator`                                     | Reused component boundary.                                                                                |
-| Scroll buttons | `select-scroll-up-button`, `select-scroll-down-button` | Popover background and fixed chevrons.                                                                    |
+| Part           | Stable `data-slot`                                     | Noteworthy local hooks                                                    |
+| -------------- | ------------------------------------------------------ | ------------------------------------------------------------------------- |
+| Trigger        | `select-trigger`                                       | `data-size`, focus/invalid states, placeholder text, fixed selector icon. |
+| Content        | `select-content`                                       | Floating side attributes, open/closed animation, popover tokens.          |
+| Group          | `select-group`                                         | Scroll margin and padding.                                                |
+| GroupHeading   | `select-group-heading`                                 | Muted 12-pixel heading.                                                   |
+| Label          | `select-label`                                         | Muted plain visual label.                                                 |
+| Item           | `select-item`                                          | Highlighted, disabled, and selected primitive state.                      |
+| Separator      | `select-separator`                                     | Reused component boundary.                                                |
+| Scroll buttons | `select-scroll-up-button`, `select-scroll-down-button` | Popover background and fixed chevrons.                                    |
 
 Bits UI's internal Viewport has no local slot but receives anchor-derived `--bits-select-anchor-height` and `--bits-select-anchor-width` sizing. Content uses dependency-owned positioning variables and `data-side`; Portal renders outside the source DOM by default.
 
@@ -374,6 +374,12 @@ export { default as SelectorIcon } from "@tabler/icons-svelte/icons/selector";
 	&:where([data-state="open"]),
 	&:where([data-open]:not([data-open="false"])) {
 		@slot;
+	}
+}
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
 	}
 }
 

@@ -295,10 +295,12 @@ The stable xvelte selectors are:
 
 The component uses the `popover`, `foreground`, `accent`, `muted`, `destructive`, and `border` color families plus the shared radius scale. `Content` and `SubContent` use `tw-animate-css` utilities for opening, closing, fading, zooming, and directional movement.
 
+Top-level Trigger and focused items receive the standard three-pixel, 50%-opacity semantic `ring` treatment from the required global `*:focus-visible` rule. Items inside an open menu additionally retain the conventional accent-background highlight used by the roving-focus menu pattern.
+
 Current implementation details worth knowing:
 
 - `Content` references `--bits-menubar-content-transform-origin`. The installed Bits UI version exposes `--bits-menubar-menu-content-transform-origin`, so the computed transform origin is not applied unless the app defines an alias or the local class is corrected.
-- The chevron inside `SubTrigger` has the local `cn-rtl-flip` class, but this repository currently provides no CSS rule for that class. It therefore does not automatically mirror in right-to-left layouts.
+- The chevron inside `SubTrigger` does not automatically mirror in right-to-left layouts.
 - `Group.inset` is present in the exported type but has no local styling effect.
 
 Treat these three points as current limitations, not as recommended extension hooks.
@@ -317,7 +319,7 @@ Application responsibilities:
 - Keep `Shortcut` text consistent with the actual shortcut registered by the application and with the user's platform.
 - Do not rely on color alone for dangerous actions. The `destructive` variant changes styling but does not add a warning or confirmation flow.
 - Preserve primitive focus and state attributes when overriding classes or using `child` delegation.
-- If right-to-left chevron mirroring is required, address the current `cn-rtl-flip` limitation described above.
+- If right-to-left chevron mirroring is required, provide and test an app-specific adaptation.
 
 The fixed check, minus, and chevron icons are decorative helpers; selection state and submenu semantics continue to come from Bits UI.
 
@@ -372,6 +374,7 @@ Import Tailwind and the animation utilities, then provide the semantic variables
 	--muted-foreground: oklch(0.553 0.013 58.071);
 	--destructive: oklch(0.577 0.245 27.325);
 	--border: oklch(0.923 0.003 48.717);
+	--ring: oklch(0.709 0.01 56.259);
 }
 
 .dark {
@@ -384,6 +387,7 @@ Import Tailwind and the animation utilities, then provide the semantic variables
 	--muted-foreground: oklch(0.709 0.01 56.259);
 	--destructive: oklch(0.704 0.191 22.216);
 	--border: oklch(1 0 0 / 10%);
+	--ring: oklch(0.553 0.013 58.071);
 }
 
 @theme inline {
@@ -399,11 +403,16 @@ Import Tailwind and the animation utilities, then provide the semantic variables
 	--color-muted-foreground: var(--muted-foreground);
 	--color-destructive: var(--destructive);
 	--color-border: var(--border);
+	--color-ring: var(--ring);
 }
 
 @layer base {
 	* {
 		@apply border-border;
+	}
+
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
 	}
 }
 ```

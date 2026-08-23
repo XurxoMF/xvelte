@@ -46,7 +46,7 @@
 	}
 
 	.docs-markdown a {
-		@apply font-medium text-primary underline underline-offset-4;
+		@apply rounded-sm font-medium text-primary;
 	}
 
 	.docs-markdown ul,

@@ -218,10 +218,7 @@
 		<!-- Playback and volume controls stay grouped opposite fullscreen. -->
 		<div class="flex items-center justify-between gap-4">
 			<div class="flex items-center gap-4">
-				<button
-					onclick={togglePlay}
-					class="text-white/90 transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
-				>
+				<button onclick={togglePlay} class="rounded-md text-white/90 transition-colors hover:text-white">
 					{#if isPlaying}
 						<PauseIcon class="h-5 w-5 fill-white/90" />
 					{:else}
@@ -230,10 +227,7 @@
 				</button>
 
 				<div class="group/volume flex items-center gap-2">
-					<button
-						onclick={toggleMute}
-						class="text-white/90 transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
-					>
+					<button onclick={toggleMute} class="rounded-md text-white/90 transition-colors hover:text-white">
 						{#if isMuted || volume === 0}
 							<VolumeMutedIcon class="h-5 w-5" />
 						{:else}
@@ -273,10 +267,7 @@
 				</div>
 			</div>
 
-			<button
-				onclick={toggleFullscreen}
-				class="text-white/90 transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
-			>
+			<button onclick={toggleFullscreen} class="rounded-md text-white/90 transition-colors hover:text-white">
 				{#if isFullscreen}
 					<ExitFullscreenIcon class="h-5 w-5" />
 				{:else}

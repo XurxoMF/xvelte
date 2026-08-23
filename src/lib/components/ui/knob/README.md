@@ -192,6 +192,8 @@ The component uses semantic `primary`, `secondary`, `muted`, `muted-foreground`,
 
 Disabled state adds reduced opacity and slight grayscale. The slider cursor is a vertical-resize cursor when enabled and `not-allowed` when disabled.
 
+The enabled slider receives the standard three-pixel, 50%-opacity semantic `ring` treatment from the required global `*:focus-visible` rule.
+
 ---
 
 ## Accessibility
@@ -303,6 +305,7 @@ The global stylesheet must load Tailwind and expose the semantic colors used by 
 	--muted: oklch(0.97 0.001 106.424);
 	--muted-foreground: oklch(0.553 0.013 58.071);
 	--border: oklch(0.923 0.003 48.717);
+	--ring: oklch(0.709 0.01 56.259);
 }
 
 .dark {
@@ -312,6 +315,7 @@ The global stylesheet must load Tailwind and expose the semantic colors used by 
 	--muted: oklch(0.268 0.007 34.298);
 	--muted-foreground: oklch(0.709 0.01 56.259);
 	--border: oklch(1 0 0 / 10%);
+	--ring: oklch(0.553 0.013 58.071);
 }
 
 @theme inline {
@@ -321,11 +325,16 @@ The global stylesheet must load Tailwind and expose the semantic colors used by 
 	--color-muted: var(--muted);
 	--color-muted-foreground: var(--muted-foreground);
 	--color-border: var(--border);
+	--color-ring: var(--ring);
 }
 
 @layer base {
 	* {
 		@apply border-border;
+	}
+
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
 	}
 }
 ```

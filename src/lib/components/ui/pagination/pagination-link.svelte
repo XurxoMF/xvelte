@@ -23,7 +23,7 @@
 	aria-current={isActive ? "page" : undefined}
 	data-slot="pagination-link"
 	data-active={isActive}
-	class={cn(Button.rootVariants({ size: "icon", variant: isActive ? "outline" : "ghost" }), "cn-pagination-link", className)}
+	class={cn(Button.rootVariants({ size: "icon", variant: isActive ? "outline" : "ghost" }), className)}
 	{...restProps}
 >
 	{#if children}

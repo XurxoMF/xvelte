@@ -3,6 +3,7 @@ import type { DateValue } from "@internationalized/date";
 
 type DateStripContext = {
 	readonly selectedValue: DateValue | undefined;
+	readonly locale: string;
 	onSelect: (date: DateValue) => void;
 	isDateDisabled: (date: DateValue) => boolean;
 	readonly direction: "start" | "end";
@@ -11,7 +12,7 @@ type DateStripContext = {
 const [getDateStripState, setDateStripState] = createContext<DateStripContext>();
 
 /**
- * Provides selection and navigation data to date-strip items.
+ * Provides locale, selection, and navigation data to date-strip items.
  *
  * @param props - Reactive date-strip state and callbacks.
  */

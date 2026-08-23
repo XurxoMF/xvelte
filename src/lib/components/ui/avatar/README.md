@@ -268,7 +268,7 @@ Bits UI additionally owns `data-avatar-root`, `data-avatar-image`, and `data-ava
 
 The root's visual border is a circular `::after` overlay using `border`, with dark/light mix-blend behavior. If changing Avatar from circular to another shape, apply matching radius changes to the root overlay, image, fallback, and badge placement rather than overriding only one part.
 
-`Badge` and `GroupCount` resize direct SVG children but do not provide icons. `Group` includes the stable `cn-avatar-group` class for group styling and relies on direct child roots for its ring selector.
+`Badge` and `GroupCount` resize direct SVG children but do not provide icons. `Group` relies on direct child roots for its ring selector.
 
 ---
 

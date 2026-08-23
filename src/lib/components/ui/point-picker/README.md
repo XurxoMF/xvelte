@@ -467,6 +467,12 @@ Load Tailwind CSS and expose the semantic tokens used by the component. The valu
 		@slot;
 	}
 }
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
+	}
+}
 ```
 
 Define the dark values only when your app supports a dark theme. Point Picker requires no global keyframe, `tw-animate-css` import, font, or component-specific CSS variable.

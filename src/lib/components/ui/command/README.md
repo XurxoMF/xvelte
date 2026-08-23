@@ -360,7 +360,7 @@ Type: `ItemProps`, matching Bits UI Command Item props.
 | `class`              | `string`                 | `undefined`  | Merged after local item, selected, disabled, descendant icon, and Dialog-specific radius styles.       |
 | `children` / `child` | Bits UI snippets         | `undefined`  | Render content or delegate the primitive while spreading its supplied semantics and interaction props. |
 
-Compatible native `div` attributes are forwarded. The local wrapper always appends a Check icon with class `.cn-command-item-indicator`, but its visibility currently depends on `data-checked="true"`. Installed Bits UI 2.18.1 exposes `data-selected` instead, so the icon remains transparent by default; an Item containing `Command.Shortcut` hides it explicitly too. Item values must be unique even when visible labels are duplicated.
+Compatible native `div` attributes are forwarded. The local wrapper always appends a Check icon, but its visibility currently depends on `data-checked="true"`. Installed Bits UI 2.18.1 exposes `data-selected` instead, so the icon remains transparent by default; an Item containing `Command.Shortcut` hides it explicitly too. Item values must be unique even when visible labels are duplicated.
 
 ### `Command.LinkItem`
 
@@ -411,7 +411,7 @@ Command uses Tailwind utilities, semantic theme tokens, local slots, Bits UI sta
 | `Input`     | `data-slot="command-input-wrapper"`, `command-input`, plus Input Group and addon hooks                             |
 | `List`      | `data-slot="command-list"`                                                                                         |
 | `Group`     | `data-slot="command-group"`; dependency-owned `cmdk-group-heading` attribute                                       |
-| `Item`      | `data-slot="command-item"`, `.cn-command-item-indicator`                                                           |
+| `Item`      | `data-slot="command-item"`; includes a trailing selection indicator                                                |
 | `LinkItem`  | `data-slot="command-item"`                                                                                         |
 | `Empty`     | `data-slot="command-empty"`                                                                                        |
 | `Loading`   | No local slot; Bits UI attributes only                                                                             |
@@ -421,6 +421,8 @@ Command uses Tailwind utilities, semantic theme tokens, local slots, Bits UI sta
 Bits UI supplies dependency-owned attributes including `data-command-root`, `data-command-input`, `data-selected`, `data-disabled`, filtering wrappers, generated IDs, roles, and ARIA relationships. Dialog additionally supplies open/closed state attributes. Use the [Bits UI Command documentation](https://www.bits-ui.com/docs/components/command) for their semantics.
 
 `class` is merged with `cn` for every styled local wrapper. Primitive rest props are usually spread last and may override local slot attributes; preserve documented slot names because local descendant selectors and app integrations rely on them. The `no-scrollbar` global utility hides the visual scrollbar without disabling scrolling.
+
+When Command Input receives keyboard focus, its Input Group wrapper uses the same `ring` border and three-pixel, 50%-opacity halo as the standalone Input component.
 
 ---
 
@@ -639,6 +641,12 @@ The global stylesheet must import Tailwind and `tw-animate-css`, provide the hid
 
 	&::-webkit-scrollbar {
 		display: none;
+	}
+}
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
 	}
 }
 ```

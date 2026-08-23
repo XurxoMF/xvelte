@@ -229,6 +229,12 @@ No animation package is required.
 	}
 }
 
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
+	}
+}
+
 @custom-variant data-unchecked {
 	&:where([data-state="unchecked"]),
 	&:where([data-unchecked]:not([data-unchecked="false"])) {

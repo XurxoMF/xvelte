@@ -270,13 +270,13 @@ The handle forwards native `<div>` attributes, but it does not accept custom chi
 
 The following hooks are local and stable:
 
-| Part        | `data-slot`            | Stable class               | Local layout                                                                                       |
-| ----------- | ---------------------- | -------------------------- | -------------------------------------------------------------------------------------------------- |
-| `PaneGroup` | `resizable-pane-group` | `cn-resizable-panel-group` | Full width and height, flex row by default and flex column for vertical groups.                    |
-| `Pane`      | `resizable-pane`       | `cn-resizable-pane`        | Flexible pane with clipped overflow. Add an inner scrolling element when pane content must scroll. |
-| `Handle`    | `resizable-handle`     | `cn-resizable-handle`      | One-pixel `border`-token divider, focus ring, and a four-pixel pseudo-element hit area.            |
+| Part        | `data-slot`            | Local layout                                                                                       |
+| ----------- | ---------------------- | -------------------------------------------------------------------------------------------------- |
+| `PaneGroup` | `resizable-pane-group` | Full width and height, flex row by default and flex column for vertical groups.                    |
+| `Pane`      | `resizable-pane`       | Flexible pane with clipped overflow. Add an inner scrolling element when pane content must scroll. |
+| `Handle`    | `resizable-handle`     | One-pixel `border`-token divider, focus ring, and a four-pixel pseudo-element hit area.            |
 
-`withHandle` adds an empty four-by-24-pixel rounded element using the `border` token. It rotates for a vertical group. The handle uses the `ring` token for keyboard focus and PaneForge supplies axis-appropriate cursor, touch-action, and selection-blocking inline styles.
+`withHandle` adds an empty four-by-24-pixel rounded element using the `border` token. It rotates for a vertical group. The handle receives the shared three-pixel, 50%-opacity `ring` halo from the required global `*:focus-visible` rule. PaneForge supplies axis-appropriate cursor, touch-action, and selection-blocking inline styles.
 
 PaneForge also supplies state and relationship attributes. These are dependency-owned and should be checked when upgrading PaneForge:
 
@@ -356,6 +356,12 @@ Copy the minimal Tailwind import, semantic values, and theme mappings below into
 	--color-border: var(--border);
 	--color-ring: var(--ring);
 	--radius-lg: var(--radius);
+}
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
+	}
 }
 ```
 

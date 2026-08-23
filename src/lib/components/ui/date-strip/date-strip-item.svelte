@@ -16,8 +16,8 @@
 	let { date, class: className }: ItemProps = $props();
 
 	const ctx = getDateStripContext();
-	const formatterMonth = new DateFormatter("en-US", { month: "short" });
-	const formatterDay = new DateFormatter("en-US", { day: "numeric" });
+	const formatterMonth = $derived(new DateFormatter(ctx.locale, { month: "short" }));
+	const formatterDay = $derived(new DateFormatter(ctx.locale, { day: "numeric" }));
 
 	let isSelected = $derived(ctx.selectedValue?.compare(date) === 0);
 	let isDisabled = $derived(ctx.isDateDisabled(date));
@@ -30,7 +30,7 @@
 		}
 	}
 
-	const dateObj = $derived(date.toDate("UTC"));
+	const dateObj = $derived(date.toDate(getLocalTimeZone()));
 </script>
 
 <Button.Root

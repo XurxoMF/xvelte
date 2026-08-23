@@ -2,6 +2,7 @@
 	import { renderMarkdown } from "./markdown";
 
 	let { source }: { source: string } = $props();
+
 	let html = $derived(renderMarkdown(source));
 </script>
 

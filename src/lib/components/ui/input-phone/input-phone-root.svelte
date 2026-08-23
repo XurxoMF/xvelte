@@ -34,6 +34,7 @@
 </script>
 
 <script lang="ts">
+	import { getLocale } from "$lib/paraglide/runtime";
 	import { cn } from "$lib/utils";
 
 	import { createInputPhoneCountries, InputPhoneState, setInputPhoneContext } from "./input-phone-context.svelte";
@@ -46,7 +47,7 @@
 		country = $bindable(defaultCountry),
 		details = $bindable(null),
 		allowedCountries,
-		locale = "en",
+		locale = getLocale(),
 		order,
 		required = false,
 		disabled = false,

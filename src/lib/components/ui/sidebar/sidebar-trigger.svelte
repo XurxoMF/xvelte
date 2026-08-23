@@ -9,7 +9,6 @@
 <script lang="ts">
 	import { SidebarIcon } from "$lib/icons";
 	import * as m from "$lib/paraglide/messages.js";
-	import { cn } from "$lib/utils";
 	import * as Tooltip from "$lib/components/ui/tooltip";
 
 	import * as Sidebar from ".";
@@ -29,7 +28,7 @@
 				data-slot="sidebar-trigger"
 				variant="ghost"
 				size="icon-sm"
-				class={cn("cn-sidebar-trigger", className)}
+				class={className}
 				type="button"
 				onclick={(e) => {
 					onclick?.(e);

@@ -19,11 +19,11 @@
 			<Tabs.Trigger value="code">Code</Tabs.Trigger>
 		</Tabs.List>
 
-		<Tabs.Content value="preview" class="w-full rounded-lg border p-8">
+		<Tabs.Content value="preview" class="w-full border p-8">
 			{@render children()}
 		</Tabs.Content>
 
-		<Tabs.Content value="code" class="w-full overflow-hidden rounded-lg border">
+		<Tabs.Content value="code" class="w-full overflow-hidden border">
 			<SourceCode {source} />
 		</Tabs.Content>
 	</Tabs.Root>

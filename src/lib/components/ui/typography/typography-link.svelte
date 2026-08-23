@@ -12,6 +12,6 @@
 	let { ref = $bindable(null), class: className, children, ...restProps }: LinkProps = $props();
 </script>
 
-<a class={cn("font-medium text-primary underline underline-offset-4", className)} bind:this={ref} {...restProps}>
+<a class={cn("font-medium text-primary", className)} bind:this={ref} {...restProps}>
 	{@render children?.()}
 </a>

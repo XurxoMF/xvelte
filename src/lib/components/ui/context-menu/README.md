@@ -252,7 +252,7 @@ Type: `TriggerProps`, matching Bits UI Context Menu Trigger props.
 | -------------------- | ------------------------ | ----------- | ------------------------------------------------------------------------------------------ |
 | `disabled`           | `boolean`                | `false`     | Prevents context-menu and long-press opening; writes dependency-owned disabled state.      |
 | `ref`                | `HTMLDivElement \| null` | `null`      | Bindable reference to the default trigger element.                                         |
-| `class`              | `string`                 | `undefined` | Merged after `select-none` and the stable `.cn-context-menu-trigger` class.                |
+| `class`              | `string`                 | `undefined` | Merged after the local `select-none` class.                                                |
 | `children` / `child` | Bits UI snippets         | `undefined` | Render default content or delegate the element while spreading the supplied trigger props. |
 
 Remaining compatible native `div` attributes are forwarded. Bits UI supplies `tabindex="-1"` by default but preserves an explicit `tabindex` passed by the app. The local wrapper adds `data-slot="context-menu-trigger"`. On touch or pen input, a stationary 700ms press opens the menu; pointer movement, release, cancellation, disabling, or component destruction clears the timer.
@@ -383,23 +383,23 @@ The component's `index.ts`, exported types, and local source are the source of t
 
 Context Menu uses Tailwind utilities, semantic theme tokens, local `data-slot` hooks, locally owned presentation attributes, and dependency-owned Bits UI state/positioning attributes. It exposes no component-specific CSS variables.
 
-| Part           | Stable xvelte hook or class                                    |
-| -------------- | -------------------------------------------------------------- |
-| `Root`, `Sub`  | No DOM and no local hook                                       |
-| `Trigger`      | `data-slot="context-menu-trigger"`, `.cn-context-menu-trigger` |
-| `Content`      | `data-slot="context-menu-content"`                             |
-| `Item`         | `data-slot="context-menu-item"`, `data-inset`, `data-variant`  |
-| `CheckboxItem` | `data-slot="context-menu-checkbox-item"`, `data-inset`         |
-| `RadioGroup`   | `data-slot="context-menu-radio-group"`                         |
-| `RadioItem`    | `data-slot="context-menu-radio-item"`, `data-inset`            |
-| `Group`        | `data-slot="context-menu-group"`                               |
-| `GroupHeading` | `data-slot="context-menu-group-heading"`, `data-inset`         |
-| `Label`        | `data-slot="context-menu-label"`, `data-inset`                 |
-| `Separator`    | `data-slot="context-menu-separator"`                           |
-| `Shortcut`     | `data-slot="context-menu-shortcut"`                            |
-| `SubTrigger`   | `data-slot="context-menu-sub-trigger"`, `data-inset`           |
-| `SubContent`   | `data-slot="context-menu-sub-content"`                         |
-| `Portal`       | No rendered wrapper                                            |
+| Part           | Stable xvelte hook or class                                   |
+| -------------- | ------------------------------------------------------------- |
+| `Root`, `Sub`  | No DOM and no local hook                                      |
+| `Trigger`      | `data-slot="context-menu-trigger"`                            |
+| `Content`      | `data-slot="context-menu-content"`                            |
+| `Item`         | `data-slot="context-menu-item"`, `data-inset`, `data-variant` |
+| `CheckboxItem` | `data-slot="context-menu-checkbox-item"`, `data-inset`        |
+| `RadioGroup`   | `data-slot="context-menu-radio-group"`                        |
+| `RadioItem`    | `data-slot="context-menu-radio-item"`, `data-inset`           |
+| `Group`        | `data-slot="context-menu-group"`                              |
+| `GroupHeading` | `data-slot="context-menu-group-heading"`, `data-inset`        |
+| `Label`        | `data-slot="context-menu-label"`, `data-inset`                |
+| `Separator`    | `data-slot="context-menu-separator"`                          |
+| `Shortcut`     | `data-slot="context-menu-shortcut"`                           |
+| `SubTrigger`   | `data-slot="context-menu-sub-trigger"`, `data-inset`          |
+| `SubContent`   | `data-slot="context-menu-sub-content"`                        |
+| `Portal`       | No rendered wrapper                                           |
 
 Bits UI additionally supplies dependency-owned `data-state`, `data-open`, `data-closed`, `data-disabled`, `data-highlighted`, `data-side`, `data-align`, transition, and positioning attributes; roles; IDs; and ARIA relationships. Preserve the xvelte slot values because component styles and app integrations may target them.
 

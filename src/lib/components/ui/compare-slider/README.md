@@ -238,7 +238,7 @@ Compare Slider uses Tailwind utilities, three semantic theme tokens, a shared CS
 
 Root writes `--pos: <value>%` inline. Item and Handle read it through Tailwind's arbitrary property utilities and inline clipping. Treat `--pos` as a stable local styling hook, but update the public `value` binding rather than writing the variable independently or the ARIA value and visuals will disagree.
 
-There is no default width, height, aspect ratio, image object-fit, border radius, focus ring, caption, or label placement. Supply these through Root class and child content. Root clips everything through `overflow-hidden`, so focusable descendants and overlays extending outside its bounds are unsuitable.
+There is no default width, height, aspect ratio, image object-fit, caption, or label placement. Supply these through Root class and child content. Root inherits the surrounding radius and receives the standard three-pixel, 50%-opacity semantic `ring` treatment from the required global `*:focus-visible` rule. It clips everything through `overflow-hidden`, so focusable descendants and overlays extending outside its bounds are unsuitable.
 
 The accent divider and thumb use semantic colors. The thumb also uses a low-opacity black border and a fixed black drop shadow so it remains visible over varied imagery; these are local implementation colors rather than theme variables.
 
@@ -254,7 +254,7 @@ The current public API has important limitations:
 - Vertical mode does not expose `aria-orientation="vertical"`; slider role defaults to horizontal semantics.
 - Root does not expose `aria-valuetext`, so assistive technology receives only the numeric percentage.
 - Arrow Up decreases and Arrow Down increases, which is opposite the usual vertical-slider expectation.
-- Root has no disabled or read-only mode and no explicit focus-visible styling.
+- Root has no disabled or read-only mode.
 - `pointercancel` and lost pointer capture are not handled explicitly.
 
 Do not describe this implementation as fully accessible without addressing those gaps. For production use, add public accessible-name props, forward the required ARIA attributes, set orientation, and align vertical keyboard direction with the intended value model.
@@ -358,12 +358,20 @@ The global stylesheet must import Tailwind and expose the semantic colors used b
 	--primary: oklch(0.841 0.238 128.85);
 	--primary-foreground: oklch(0.405 0.101 131.063);
 	--accent: oklch(0.841 0.238 128.85);
+	--ring: oklch(0.709 0.01 56.259);
 }
 
 @theme inline {
 	--color-primary: var(--primary);
 	--color-primary-foreground: var(--primary-foreground);
 	--color-accent: var(--accent);
+	--color-ring: var(--ring);
+}
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
+	}
 }
 ```
 

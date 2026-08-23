@@ -365,6 +365,8 @@ Canvas uses semantic Tailwind colors and exposes stable `data-slot` selectors:
 
 `class` is merged onto each public wrapper. Width, height, transforms, and other functional inline styles may take precedence over utility classes, so use the matching props for those values. The animated edge keyframes are colocated in `canvas-edge.svelte`; no global animation CSS is required.
 
+Keyboard-focused nodes and the interactive minimap receive the shared three-pixel, 50%-opacity semantic `ring` treatment from the required global `*:focus-visible` rule.
+
 ---
 
 ## Accessibility
@@ -533,6 +535,12 @@ Your global stylesheet must import Tailwind, define the dark variant, set the de
 @layer base {
 	* {
 		@apply border-border outline-ring/50;
+	}
+}
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
 	}
 }
 ```

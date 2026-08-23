@@ -421,6 +421,12 @@ Load Tailwind CSS, configure the class-based dark variant, expose the checked-st
 		@slot;
 	}
 }
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
+	}
+}
 ```
 
 No keyframe, `tw-animate-css` import, font, radius variable, or component-specific CSS variable is required.

@@ -186,7 +186,7 @@ Type: `RootProps`, based on native `nav`/HTML element attributes with an element
 | `children`   | `Snippet`             | `undefined`              | Renders the breadcrumb list and any additional content.         |
 | `aria-label` | Native `aria-label`   | Localized `"Breadcrumb"` | Labels the navigation landmark; a forwarded value overrides it. |
 | `ref`        | `HTMLElement \| null` | `null`                   | Bindable reference to the rendered `nav`.                       |
-| `class`      | `string`              | `undefined`              | Merged with the stable `cn-breadcrumb` class.                   |
+| `class`      | `string`              | `undefined`              | Applied to the root navigation element.                         |
 
 Remaining native HTML attributes are forwarded to `nav`. Root owns no path data, collapse logic, navigation state, or context; your app composes every descendant explicitly.
 
@@ -280,7 +280,7 @@ Breadcrumb uses semantic Tailwind colors and exposes no variants or CSS variable
 
 | Part        | `data-slot`            | Element | Notable behavior                                                                  |
 | ----------- | ---------------------- | ------- | --------------------------------------------------------------------------------- |
-| `Root`      | `breadcrumb`           | `nav`   | Navigation landmark with localized label and stable `cn-breadcrumb` class.        |
+| `Root`      | `breadcrumb`           | `nav`   | Navigation landmark with a localized label.                                       |
 | `List`      | `breadcrumb-list`      | `ol`    | Wrapping flex path with muted text and breakable long labels.                     |
 | `Item`      | `breadcrumb-item`      | `li`    | Inline-flex container for one path location or composed control.                  |
 | `Link`      | `breadcrumb-link`      | `a`     | Foreground hover transition; your link component owns the element when delegated. |

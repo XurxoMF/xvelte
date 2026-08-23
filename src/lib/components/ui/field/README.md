@@ -286,9 +286,9 @@ Field renders a native `div` with `role="group"`, `data-slot="field"`, and the `
 
 Orientation behavior:
 
-- `vertical` uses a column, makes direct children full-width except `.sr-only`, and adds `cn-field-orientation-vertical`.
-- `horizontal` uses a centered row, lets a direct Label flex, aligns to the start when Content is present, and adds `cn-field-orientation-horizontal`.
-- `responsive` begins with the vertical rules and switches to the horizontal rules at the named Field.Group container's `@md` threshold. It adds `cn-field-orientation-responsive`.
+- `vertical` uses a column and makes direct children full-width except `.sr-only`.
+- `horizontal` uses a centered row, lets a direct Label flex, and aligns to the start when Content is present.
+- `responsive` begins with the vertical rules and switches to the horizontal rules at the named Field.Group container's `@md` threshold.
 
 Set `data-invalid="true"` to activate the local destructive text color and `data-disabled="true"` to activate descendant Field Label and Title opacity. These attributes are styling hooks only: Field does not validate values, disable descendants, or set ARIA state.
 
@@ -400,19 +400,19 @@ The underlying source declares a `RootOrientations` helper type, but the compone
 
 Field uses Tailwind utilities, semantic theme tokens, named groups, a named container, stable slot attributes, and app-supplied invalid, disabled, and checked attributes. It exposes no component-specific CSS variables or animations.
 
-| Part              | Stable xvelte hook                                                                               |
-| ----------------- | ------------------------------------------------------------------------------------------------ |
-| `Field`           | `data-slot="field"`, `data-orientation`, `role="group"`, `group/field`, `cn-field-orientation-*` |
-| `Set`             | `data-slot="field-set"`                                                                          |
-| `Legend`          | `data-slot="field-legend"`, `data-variant="legend"` or `"label"`                                 |
-| `Group`           | `data-slot="field-group"`, `group/field-group`, `@container/field-group`                         |
-| `Content`         | `data-slot="field-content"`, `group/field-content`                                               |
-| `Label`           | `data-slot="field-label"`, `group/field-label`, `peer/field-label`                               |
-| `Title`           | `data-slot="field-label"`                                                                        |
-| `Description`     | `data-slot="field-description"`                                                                  |
-| `Separator` outer | `data-slot="field-separator"`                                                                    |
-| Separator inner   | `data-slot="separator"`, dependency-provided role/orientation attributes                         |
-| `Error`           | `data-slot="field-error"`, `role="alert"` only while rendered                                    |
+| Part              | Stable xvelte hook                                                       |
+| ----------------- | ------------------------------------------------------------------------ |
+| `Field`           | `data-slot="field"`, `data-orientation`, `role="group"`, `group/field`   |
+| `Set`             | `data-slot="field-set"`                                                  |
+| `Legend`          | `data-slot="field-legend"`, `data-variant="legend"` or `"label"`         |
+| `Group`           | `data-slot="field-group"`, `group/field-group`, `@container/field-group` |
+| `Content`         | `data-slot="field-content"`, `group/field-content`                       |
+| `Label`           | `data-slot="field-label"`, `group/field-label`, `peer/field-label`       |
+| `Title`           | `data-slot="field-label"`                                                |
+| `Description`     | `data-slot="field-description"`                                          |
+| `Separator` outer | `data-slot="field-separator"`                                            |
+| Separator inner   | `data-slot="separator"`, dependency-provided role/orientation attributes |
+| `Error`           | `data-slot="field-error"`, `role="alert"` only while rendered            |
 
 Important state contracts:
 

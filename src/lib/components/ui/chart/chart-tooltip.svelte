@@ -35,12 +35,13 @@
 <script lang="ts">
 	import { getChartContext, Tooltip as TooltipPrimitive } from "layerchart";
 
+	import { getLocale } from "$lib/paraglide/runtime";
 	import { cn } from "$lib/utils";
 
 	/** @param value - Tooltip value converted to display text by default. */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function defaultFormatter(value: any) {
-		return `${value}`;
+		return value?.toLocaleString?.(getLocale()) ?? `${value}`;
 	}
 
 	let {
@@ -159,7 +160,7 @@
 							</div>
 							{#if item.value !== undefined}
 								<span class="font-mono font-medium text-foreground tabular-nums">
-									{item.value.toLocaleString()}
+									{defaultFormatter(item.value)}
 								</span>
 							{/if}
 						</div>

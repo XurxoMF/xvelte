@@ -292,12 +292,12 @@ Type: `ButtonProps`, based on local Button `RootProps` after replacing its size 
 
 The wrapper does not forward its custom `size` to Button's size prop. Button therefore starts from its own default size and Input Group's `buttonVariants` overrides the necessary dimensions:
 
-| Size      | Effective local behavior                                                                                                                      |
-| --------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `xs`      | `h-6`, compact gap and padding, smaller radius, and `0.875rem` default SVGs.                                                                  |
-| `sm`      | Adds the literal class `cn-input-group-button-size-sm`; no CSS definition exists locally, so Button's default `h-8` sizing remains effective. |
-| `icon-xs` | `1.5rem` square, no padding, smaller radius, and `0.875rem` default SVGs.                                                                     |
-| `icon-sm` | `2rem` square with no padding; underlying Button SVG sizing remains effective.                                                                |
+| Size      | Effective local behavior                                                          |
+| --------- | --------------------------------------------------------------------------------- |
+| `xs`      | `h-6`, compact gap and padding, smaller radius, and `0.875rem` default SVGs.      |
+| `sm`      | Adds no local size utilities, so Button's default `h-8` sizing remains effective. |
+| `icon-xs` | `1.5rem` square, no padding, smaller radius, and `0.875rem` default SVGs.         |
+| `icon-sm` | `2rem` square with no padding; underlying Button SVG sizing remains effective.    |
 
 Input Group Button always renders the local native Button. It has no `href`, render delegation, loading state, or built-in accessible icon label. Follow the Button component's README for inherited variants, native props, styling, form behavior, and accessibility.
 
@@ -381,7 +381,7 @@ Input and Textarea remove their own borders, radius, background, shadow, and rin
 
 All public parts that accept `class` merge through `cn`, directly or through their required component. Later conflicting Tailwind utilities normally replace ordinary defaults. Descendant, `:has()`, group, dark, and high-specificity selectors may require an equally specific override.
 
-Input Group defines no CSS variable, animation, keyframe, context, or shared stylesheet. Radius calculations read the global `--radius` token. The literal `cn-input-group-button-size-sm` class currently has no definition elsewhere in xvelte and is not an additional stylesheet dependency.
+Input Group defines no CSS variable, animation, keyframe, context, or shared stylesheet. Radius calculations read the global `--radius` token.
 
 ---
 
@@ -551,6 +551,12 @@ The global stylesheet must load Tailwind, define the dark variant, and expose th
 	--color-ring: var(--ring);
 	--radius-md: calc(var(--radius) * 0.8);
 	--radius-lg: var(--radius);
+}
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
+	}
 }
 ```
 

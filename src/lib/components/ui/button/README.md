@@ -405,6 +405,12 @@ Your global stylesheet must import Tailwind, define the dark variant, and expose
 	--radius-md: calc(var(--radius) * 0.8);
 	--radius-lg: var(--radius);
 }
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
+	}
+}
 ```
 
 The application remains responsible for applying its `.dark` class, normally through root-level theme management.

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Pathname } from "$app/types";
-	import { resolve } from "$app/paths";
+	import { asset, resolve } from "$app/paths";
 	import { page } from "$app/state";
 
 	import "./layout.css";
@@ -21,6 +21,8 @@
 
 	let { children } = $props();
 
+	const appIcon = asset("/favicon.png");
+
 	let query = $state("");
 
 	let filteredComponents = $derived(components.filter((unit) => unit.title.toLowerCase().includes(query.toLowerCase().trim())));
@@ -36,9 +38,13 @@
 		<Sidebar.Root collapsible="offcanvas" class="border-r-0 bg-sidebar md:absolute">
 			<Sidebar.Header id="sidebar-header" class="gap-3 border-b px-4 py-4">
 				<a href={resolve("/")} class="group flex items-center gap-3" aria-label="xvelte home">
-					<span class="grid size-9 place-items-center rounded-xl bg-primary text-lg font-bold text-primary-foreground shadow-sm shadow-primary/25"
-						>x</span
-					>
+					<img
+						src={appIcon}
+						alt=""
+						width="36"
+						height="36"
+						class="size-9 rounded-xl border-2 border-primary object-cover shadow-md shadow-primary/50"
+					/>
 					<span>
 						<strong class="block leading-none tracking-tight">xvelte</strong>
 						<span class="text-xs text-muted-foreground">Svelte 5 collection</span>

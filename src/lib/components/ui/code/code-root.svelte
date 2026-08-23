@@ -97,7 +97,7 @@
 	}
 
 	:global(pre.shiki) {
-		overflow-x: auto;
+		overflow-x: visible;
 		border-radius: var(--radius);
 		background: inherit;
 		padding-block: 1rem;
@@ -106,7 +106,7 @@
 	}
 
 	:global(pre.shiki:not([data-code-overflow] *):not([data-code-overflow])) {
-		overflow-y: auto;
+		overflow-y: visible;
 		max-height: min(100%, 650px);
 	}
 

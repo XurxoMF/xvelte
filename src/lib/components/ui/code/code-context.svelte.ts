@@ -64,6 +64,8 @@ export class CodeContext {
 					pre: (el) => {
 						el.properties.style = "";
 
+						el.properties.tabindex = "-1";
+
 						if (!hideLines) {
 							el.properties.class += " line-numbers";
 						}

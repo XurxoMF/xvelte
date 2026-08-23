@@ -23,7 +23,7 @@
 			{@render children()}
 		</Tabs.Content>
 
-		<Tabs.Content value="code" class="w-full overflow-hidden border">
+		<Tabs.Content value="code" class="w-full">
 			<SourceCode {source} />
 		</Tabs.Content>
 	</Tabs.Root>

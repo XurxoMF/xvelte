@@ -6,6 +6,6 @@
 	const loadLanguage = () => import("@shikijs/langs/svelte");
 </script>
 
-<Code.Root code={source} {lang} {loadLanguage} class="max-h-[34rem] rounded-none border-none">
+<Code.Root code={source} {lang} {loadLanguage} class="max-h-[34rem] border-none">
 	<Code.CopyButton tabindex={0} />
 </Code.Root>

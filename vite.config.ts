@@ -21,5 +21,8 @@ export default defineConfig({
 			emitTsDeclarations: true,
 			strategy: ["localStorage", "preferredLanguage", "baseLocale"]
 		})
-	]
+	],
+	preview: {
+		allowedHosts: ["xvelte.xurxomf.xyz"]
+	}
 });

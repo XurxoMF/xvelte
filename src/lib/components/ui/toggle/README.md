@@ -20,8 +20,6 @@ Use Toggle for an independent on/off action such as pinning, muting, or showing 
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -32,8 +30,6 @@ Use Toggle for an independent on/off action such as pinning, muting, or showing 
 
 `index.ts` exports `Root`, `RootProps`, `RootVariants`, `RootSizes`, and `rootVariants`.
 
----
-
 ## Anatomy
 
 Toggle is a single Bits UI button:
@@ -43,8 +39,6 @@ Toggle is a single Bits UI button:
 ```
 
 Its children may be text, a semantic icon from `$lib/icons`, or both.
-
----
 
 ## Basic usage
 
@@ -59,8 +53,6 @@ Its children may be text, a semantic icon from `$lib/icons`, or both.
 ```
 
 Bits UI manages `aria-pressed`; visible text explains the action without a separate label.
-
----
 
 ## Examples
 
@@ -102,8 +94,6 @@ Icon-only controls require an accessible name. The icon must be imported through
 
 The helper applies Toggle presentation only; it does not add pressed-button semantics to another element.
 
----
-
 ## Public API
 
 `RootProps` extends the installed stable `bits-ui@2.18.1` Toggle Root with local variants. See the complete [Bits UI Toggle API](https://bits-ui.com/docs/components/toggle#api-reference). The component's `index.ts`, exported types/helper, and source are the source of truth.
@@ -120,8 +110,6 @@ The helper applies Toggle presentation only; it does not add pressed-button sema
 
 Native button attributes and handlers are forwarded. `RootVariants` and `RootSizes` expose the helper's option types.
 
----
-
 ## Styling and DOM contract
 
 - Stable hook: `data-slot="toggle"`.
@@ -134,21 +122,15 @@ Native button attributes and handlers are forwarded. `RootVariants` and `RootSiz
 
 Icon sizing targets descendant SVG elements unless they already have a `size-*` class. `data-icon="inline-start|inline-end"` on an icon or wrapper adjusts text padding.
 
----
-
 ## Accessibility
 
 Bits UI renders a native button with `aria-pressed`, keyboard activation, disabled behavior, and focus handling. Provide visible text or `aria-label`, keep the label stable across states when possible, and expose state through pressed semantics rather than changing only color or icon.
 
 Do not use Toggle for navigation. Delegated `child` output must spread every supplied prop to preserve semantics and interaction.
 
----
-
 ## Localization
 
 Toggle contains no built-in copy and requires no localization messages. The app supplies and translates button labels, accessible names, state descriptions, and disabled explanations.
-
----
 
 ## Dependencies
 
@@ -234,13 +216,9 @@ toggle/
 
 Toggle needs no other xvelte component, hook, attachment, context, localization setup, shared style, image, font, or network service.
 
----
-
 ## Credits
 
 The component structure and variants are adapted from [shadcn-svelte Toggle](https://www.shadcn-svelte.com/docs/components/toggle).
-
----
 
 ## File organization
 

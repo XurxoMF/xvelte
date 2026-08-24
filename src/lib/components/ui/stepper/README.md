@@ -20,8 +20,6 @@ Use Stepper to show progress and navigate a short ordered workflow such as setup
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -31,8 +29,6 @@ Use Stepper to show progress and navigate a short ordered workflow such as setup
 ```
 
 `index.ts` exports `Root`, `Nav`, `Item`, `Trigger`, `Indicator`, `Separator`, `Title`, `Description`, `Next`, and `Previous`, together with a matching props type for every part.
-
----
 
 ## Anatomy
 
@@ -57,8 +53,6 @@ Use Stepper to show progress and navigate a short ordered workflow such as setup
 ```
 
 Root provides state but renders no element. Nav lays out registered Items. Trigger selects its Item; Indicator, Title, Description, and Separator read state through the surrounding group attributes. Previous and Next may be placed anywhere beneath Root.
-
----
 
 ## Basic usage
 
@@ -107,8 +101,6 @@ Root provides state but renders no element. Nav lays out registered Items. Trigg
 ```
 
 Steps are one-based. Root does not render or hide panels; use `step` in app markup as shown.
-
----
 
 ## Examples
 
@@ -195,8 +187,6 @@ Spread all supplied props so click handling and automatic disabled state remain 
 
 Items register in mount order. When an earlier item disappears, the local context adjusts the one-based `step` to keep the same logical position where possible and clamps removal of the final active step. Use stable IDs and understand that a changed item order changes numeric step positions.
 
----
-
 ## Public API
 
 Stepper is a local component with no external state primitive. The tables document its complete xvelte-owned API; native attributes mentioned below are forwarded. The component's `index.ts`, exported types, and source are the source of truth.
@@ -249,8 +239,6 @@ These are presentational divs. They do not create heading or description relatio
 
 Both add their stable `data-slot`, forward remaining Button props, and allow delegated rendering. Neither validates panels, submits forms intentionally, skips disabled Item triggers, or wraps around.
 
----
-
 ## Styling and DOM contract
 
 | Part        | Stable `data-slot`    | State hooks                                                  |
@@ -267,8 +255,6 @@ Both add their stable `data-slot`, forward remaining Button props, and allow del
 
 All locally styled div/button parts merge classes with `cn()` or the Button component. Root has no element or class. State attributes and named group classes are part of the local composition contract.
 
----
-
 ## Accessibility
 
 Trigger is a native button, supports direct activation, and marks the active step with `aria-current="step"`. Arrow navigation follows orientation, selects the destination, focuses it, skips disabled triggers, stops at either end, and does not implement Home/End or wrapping.
@@ -277,15 +263,11 @@ Nav and Item are plain divs, while Title and Description are presentational divs
 
 Do not rely on color alone: the active `aria-current`, visible numbers/titles, and completed wording or icons should make progress understandable. Announce validation errors near the relevant panel and move focus deliberately when a step change replaces substantial content.
 
----
-
 ## Localization
 
 Stepper contains no built-in human-readable copy and requires no localization messages. The app supplies and translates titles, descriptions, button labels, progress announcements, validation errors, and active-panel content.
 
 IDs, numeric `step`, `data-state`, and orientation values are implementation data and must not be translated.
-
----
 
 ## Dependencies
 
@@ -389,13 +371,9 @@ stepper/
 
 Stepper requires no hook, public attachment, localization setup, shared style, image, font, or network service. The private native Svelte context is contained in the copied folder.
 
----
-
 ## Credits
 
 The original composition is adapted from [shadcn-svelte-extras Stepper](https://shadcn-svelte-extras.com/docs/components/stepper), with local state, orientation, registration, and keyboard behavior defining the documented API.
-
----
 
 ## File organization
 

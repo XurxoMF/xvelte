@@ -17,8 +17,6 @@ WidgetGrid is a dynamic dashboard layout for arbitrary Svelte content. It regist
 - [Dependencies](#dependencies)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import every public part through the component's `index.ts`:
@@ -32,8 +30,6 @@ Import every public part through the component's `index.ts`:
 ```
 
 The component exports `Root`, `Item`, `DragHandle`, and `ResizeHandle`. It also exports `RootProps`, `ItemProps`, `DragHandleProps`, `ResizeHandleProps`, `WidgetGridItemState`, `WidgetGridBreakpoint`, and `WidgetGridMode`.
-
----
 
 ## Anatomy
 
@@ -50,8 +46,6 @@ Declare Items directly under Root. Each movable Item needs a DragHandle, and eac
 ```
 
 Item registers with its nearest Root when mounted and unregisters when destroyed. Handles register with their nearest Item. Root does not accept an item array and does not know the app's widget types or payloads.
-
----
 
 ## Basic usage
 
@@ -73,8 +67,6 @@ Item is headless: its default `div` has no visual or layout classes. Add the sur
 ```
 
 Drag interaction never falls back to the complete Item. Removing or conditionally hiding DragHandle makes that Item non-draggable. Resize interaction requires one ResizeHandle and never falls back to invisible borders.
-
----
 
 ## Examples
 
@@ -247,8 +239,6 @@ The engine is the temporary source of truth during a direct interaction. Externa
 
 Adding, removing, and reordering keyed Items needs no Root reinitialization. DragHandle may appear conditionally. Mount the single ResizeHandle together with its Item so GridStack can bind its native resizer directly to that element. Item generates a hydration-stable local ID when `id` is omitted, but persistent layouts should always provide an app-owned stable ID.
 
----
-
 ## Public API
 
 WidgetGrid uses GridStack internally, but no GridStack type, option name, class, node, or event is public. The [official GridStack API](https://gridstackjs.com/doc/html/classes/GridStack.html) describes dependency-owned collision behavior. WidgetGrid's `index.ts`, exported types, and source are the source of truth for the xvelte API.
@@ -343,8 +333,6 @@ type WidgetGridMode = "stack" | "free";
 
 Lifecycle snapshots always contain resolved `x`, `y`, `width`, and `height`, even when the corresponding input coordinates were omitted for automatic placement.
 
----
-
 ## Styling and DOM contract
 
 | Part         | Stable hook                             | Default element                        |
@@ -362,8 +350,6 @@ Root and Item are headless. Without `child`, Item renders a `div`; with `child`,
 
 WidgetGrid imports GridStack's structural stylesheet inside Root. Apps do not add GridStack classes, attributes, wrappers, or stylesheet imports themselves.
 
----
-
 ## Accessibility
 
 - Default DragHandle is a native `button` with `type="button"`, disabled propagation, focus styling from Button, and localized accessible name.
@@ -373,8 +359,6 @@ WidgetGrid imports GridStack's structural stylesheet inside Root. Apps do not ad
 - `static` and disabled values remove handles from the tab order and prevent pointer interaction.
 - Item is a headless container, not a landmark or heading. Add app-owned semantics and labelled regions only where the content structure requires them.
 - Collision movement is spatial. Persist and announce important layout changes in app code when users need confirmation beyond the visible animation.
-
----
 
 ## Localization
 
@@ -386,8 +370,6 @@ WidgetGrid uses these Paraglide messages from `messages/en.json`:
 | `green_otter_resize_bottom_right` | `Resize widget` | Default ResizeHandle accessible label. |
 
 Override `aria-label` for contextual names. Widget content, empty states, persistence feedback, and alternative layout controls are app-supplied and use the app's localization system.
-
----
 
 ## Dependencies
 
@@ -464,8 +446,6 @@ Configure Paraglide so `$lib/paraglide/messages.js` is generated, and add every 
 Root imports all GridStack-specific structural CSS, prevents its private Item wrapper from creating an outer scrollbar, and restyles its interaction placeholder with `--muted` and `--radius`. WidgetGrid's handles use Button's `muted`, `muted-foreground`, and `foreground` semantic colors. Copy and configure Button first; its README includes the exact `layout.css` variables, `@theme` mappings, border base rule, and replaceable theme values required by the handles.
 
 WidgetGrid adds no component-specific CSS variable, global class, keyframe, animation import, or font. The app remains responsible for light/dark theme activation.
-
----
 
 ## File organization
 

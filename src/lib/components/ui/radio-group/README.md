@@ -20,8 +20,6 @@ Use Radio Group when the available options are visible and mutually exclusive. U
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import all public parts through the component's `index.ts`:
@@ -33,8 +31,6 @@ Import all public parts through the component's `index.ts`:
 ```
 
 The component exports `Root` and `Item`, together with the `RootProps` and `ItemProps` types.
-
----
 
 ## Anatomy
 
@@ -55,8 +51,6 @@ Place every Item inside Root and associate it with visible label text:
 ```
 
 Root owns the selected string value and the roving keyboard focus. Item renders a button with radio semantics and creates its circular indicator internally. The local Item API removes Bits UI's `children` and `child` props, so labels must remain outside Item and its indicator cannot be replaced.
-
----
 
 ## Basic usage
 
@@ -92,8 +86,6 @@ Root owns the selected string value and the roving keyboard focus. Item renders 
 ```
 
 `value` is bindable and defaults locally to an empty string. Give every Item a unique `value`, a stable `id`, and an associated label.
-
----
 
 ## Examples
 
@@ -212,8 +204,6 @@ Read-only groups remain focusable and navigable but do not allow selection chang
 
 The callback runs after Bits UI changes the selected value. Use `bind:value` when the app must retain the new selection in local state.
 
----
-
 ## Public API
 
 Radio Group wraps the installed stable Bits UI Radio Group primitive. The tables summarize the local behavior and important inherited options; use the [Bits UI Radio Group API](https://bits-ui.com/docs/components/radio-group#api-reference) for the complete primitive API. The component's `index.ts` and exported types remain the source of truth.
@@ -267,8 +257,6 @@ Item forwards compatible native button and ARIA attributes. It always renders th
 
 Directional behavior follows the dependency's document-direction handling. Re-test exact arrow direction when using right-to-left layouts or a different Bits UI version.
 
----
-
 ## Styling and DOM contract
 
 Stable xvelte hooks:
@@ -291,8 +279,6 @@ The Item's `::after` pseudo-element extends the pointer target by `0.75rem` hori
 
 Root and Item classes are merged with `cn()`. The indicator and icon have no public class prop, but the stable indicator slot can be targeted from an Item class with a descendant selector. Preserve the local slots, focus ring, disabled state, checked state, and ARIA-invalid styling when customizing.
 
----
-
 ## Accessibility
 
 Bits UI supplies radiogroup/radio roles, checked state, required, disabled and read-only state, roving focus, keyboard interaction, and form integration.
@@ -308,15 +294,11 @@ Bits UI supplies radiogroup/radio roles, checked state, required, disabled and r
 
 Visible label text, not the circle icon, provides each radio's accessible name. Preserve the primitive-generated props when delegating Root through `child`.
 
----
-
 ## Localization
 
 Radio Group contains no built-in human-readable copy and uses no localization message. Your app supplies and translates the group question, option labels, descriptions, validation errors, selection summaries, and related actions.
 
 Item values, form names, orientation values, `data-state`, and other implementation attributes are technical identifiers and are not translated.
-
----
 
 ## Dependencies
 
@@ -431,13 +413,9 @@ Load Tailwind CSS, configure the class-based dark variant, expose the checked-st
 
 No keyframe, `tw-animate-css` import, font, radius variable, or component-specific CSS variable is required.
 
----
-
 ## Credits
 
 Radio Group is adapted from the [shadcn-svelte Radio Group](https://www.shadcn-svelte.com/docs/components/radio-group). Its implementation has been modified to follow xvelte's local indicator, icon, styling, type, and import conventions.
-
----
 
 ## File organization
 

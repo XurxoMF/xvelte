@@ -20,8 +20,6 @@ Use Sidebar for persistent application navigation or tools that share the availa
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -32,8 +30,6 @@ Use Sidebar for persistent application navigation or tools that share the availa
 ```
 
 `index.ts` exports 22 component parts and a matching props type for each. It also exports `SidebarState`, `SidebarStateProps`, `getSidebarContext`, `setSidebarContext`, and the constants `SIDEBAR_COOKIE_NAME`, `SIDEBAR_COOKIE_MAX_AGE`, `SIDEBAR_WIDTH`, `SIDEBAR_WIDTH_MOBILE`, `SIDEBAR_WIDTH_ICON`, and `SIDEBAR_KEYBOARD_SHORTCUT`.
-
----
 
 ## Anatomy
 
@@ -55,8 +51,6 @@ Provider
 ```
 
 On viewports below 768 pixels, Root renders its contents inside Sheet. On desktop it reserves a layout gap and renders the sidebar container beside Inset. The project is designed for fixed-height application shells, so Provider uses `h-full`; an ancestor must provide the height.
-
----
 
 ## Basic usage
 
@@ -117,8 +111,6 @@ On viewports below 768 pixels, Root renders its contents inside Sheet. On deskto
 ```
 
 Tooltip.Provider is required because Trigger and tooltip-enabled MenuButton use Tooltip internally.
-
----
 
 ## Examples
 
@@ -233,8 +225,6 @@ Sidebar.Input reuses the xvelte Input API and styles. Sidebar.Separator reuses x
 ```
 
 Call `getSidebarContext()` during component initialization beneath Provider. Keep the class instance intact rather than destructuring reactive getters such as `state` or `isMobile`.
-
----
 
 ## Public API
 
@@ -357,8 +347,6 @@ SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
 Changing these source constants changes collection-wide defaults. Provider exposes desktop width variables for per-instance overrides.
 
----
-
 ## Styling and DOM contract
 
 Every visible part has a stable `data-slot`: `sidebar-wrapper`, `sidebar`, `sidebar-gap`, `sidebar-container`, `sidebar-inner`, `sidebar-header`, `sidebar-content`, `sidebar-footer`, `sidebar-group`, `sidebar-group-label`, `sidebar-group-action`, `sidebar-group-content`, `sidebar-menu`, `sidebar-menu-item`, `sidebar-menu-button`, `sidebar-menu-action`, `sidebar-menu-badge`, `sidebar-menu-sub`, `sidebar-menu-sub-item`, `sidebar-menu-sub-button`, `sidebar-input`, `sidebar-separator`, `sidebar-trigger`, `sidebar-rail`, and `sidebar-inset`.
@@ -376,8 +364,6 @@ Provider defines `--sidebar-width` and `--sidebar-width-icon`; mobile Content re
 
 Keyboard-focusable labels, actions, menu buttons, and submenu buttons receive the shared three-pixel, 50%-opacity `ring` halo from the required global `*:focus-visible` rule.
 
----
-
 ## Accessibility
 
 Trigger is the primary keyboard-reachable toggle, includes localized screen-reader text and a tooltip, and responds to Ctrl/Cmd+B through Provider's window listener. Mobile Root inherits Sheet's dialog labelling, focus handling, escape dismissal, and hidden localized Title/Description.
@@ -385,8 +371,6 @@ Trigger is the primary keyboard-reachable toggle, includes localized screen-read
 Menus use `ul`/`li`, but MenuButton defaults to a button. Render navigation destinations as anchors through `child`, spread every delegated prop, preserve visible focus, and set `aria-current="page"` in addition to `isActive` when a link represents the current page. Supply `tooltipContent` for icon-collapse buttons so hidden labels remain discoverable.
 
 Rail is removed from sequential focus with `tabindex=-1`; keep Trigger available. GroupAction and MenuAction need accessible names when icon-only. Do not rely on collapse animations, color, or badges alone to communicate navigation state. The shortcut should not conflict with application or browser commands.
-
----
 
 ## Localization
 
@@ -397,8 +381,6 @@ Rail is removed from sequential focus with `tabindex=-1`; keep Trigger available
 | `dune_maple_shine` | `Displays the mobile sidebar.` | Hidden mobile Sheet description.                              |
 
 The app supplies and translates navigation labels, group headings, menu tooltips, action names, search placeholders, badge context, account text, and page content.
-
----
 
 ## Dependencies
 
@@ -640,13 +622,9 @@ sidebar/
 
 No public attachment, image, font, or network service is required. Give Provider a parent with a definite height.
 
----
-
 ## Credits
 
 The component structure and design are adapted from [shadcn-svelte Sidebar](https://www.shadcn-svelte.com/docs/components/sidebar). Local responsive state, fixed-container layout, context conventions, and public exports define this implementation.
-
----
 
 ## File organization
 

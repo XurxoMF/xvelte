@@ -18,8 +18,6 @@ Menubar provides a persistent row of application menus, with keyboard navigation
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -34,8 +32,6 @@ The component's `index.ts` exports:
 - Types: `RootProps`, `MenuProps`, `TriggerProps`, `ContentProps`, `PortalProps`, `ItemProps`, `CheckboxItemProps`, `RadioGroupProps`, `RadioItemProps`, `GroupProps`, `GroupHeadingProps`, `LabelProps`, `SeparatorProps`, `ShortcutProps`, `SubProps`, `SubTriggerProps`, and `SubContentProps`.
 
 Import only from the component folder. The implementation files are private details.
-
----
 
 ## Anatomy
 
@@ -68,8 +64,6 @@ Each top-level menu needs its own stable `value`. `Content` creates its portal a
 ```
 
 `Label` is a styled `div` for simple visual labels. Prefer `Group` with `GroupHeading` when the label describes a semantic group of related choices.
-
----
 
 ## Basic usage
 
@@ -104,8 +98,6 @@ Each top-level menu needs its own stable `value`. `Content` creates its portal a
 ```
 
 Use `onSelect` for menu actions. A `Shortcut` only displays a key hint; register the actual keyboard command separately in your application.
-
----
 
 ## Examples
 
@@ -219,8 +211,6 @@ The `CheckboxItem` child snippet does not receive state arguments. `RadioItem` c
 
 Use a portal target that exists in the browser DOM. Disabling the portal changes stacking and clipping behavior.
 
----
-
 ## Public API
 
 The tables below describe the local xvelte API and the most important inherited behavior. The component's `index.ts` and exported types are the source of truth. For the complete primitive API, including shared `child`, positioning, event, and binding options, see the [Bits UI Menubar API reference](https://www.bits-ui.com/docs/components/menubar#api-reference).
@@ -268,8 +258,6 @@ The local component does not export Bits UI's `CheckboxGroup`. Checkbox items ca
 
 All component classes are merged with `cn()`, so a supplied `class` can extend or override compatible Tailwind utilities.
 
----
-
 ## Styling and DOM contract
 
 The stable xvelte selectors are:
@@ -305,8 +293,6 @@ Current implementation details worth knowing:
 
 Treat these three points as current limitations, not as recommended extension hooks.
 
----
-
 ## Accessibility
 
 Bits UI supplies the menubar and menu semantics, roving focus, typeahead, disabled-item behavior, focus return, and keyboard interactions. Users can move between top-level menus, open and traverse their contents, enter submenus, select actions, and close menus using the expected arrow, Enter, Space, and Escape keys.
@@ -323,15 +309,11 @@ Application responsibilities:
 
 The fixed check, minus, and chevron icons are decorative helpers; selection state and submenu semantics continue to come from Bits UI.
 
----
-
 ## Localization
 
 Menubar contains no built-in human-readable copy and requires no entries in `messages/en.json`. The application supplies and translates all trigger text, item labels, group headings, shortcut hints, and any confirmation dialog copy.
 
 Pass the interface direction through `Root.dir` when it is not inherited correctly from the document. Shortcut labels may also need platform-aware formatting; they are display text, not executable bindings.
-
----
 
 ## Dependencies
 
@@ -465,13 +447,9 @@ export type WithoutChildrenOrChild<T> = WithoutChildren<WithoutChild<T>>;
 - No xvelte hook, attachment, context module, shared style file, or localization message is required.
 - Menubar does not depend on application route code.
 
----
-
 ## Credits
 
 The local component is adapted from [shadcn-svelte's Menubar](https://www.shadcn-svelte.com/docs/components/menubar). Interaction primitives and their runtime API are provided by Bits UI and are listed under Dependencies.
-
----
 
 ## File organization
 

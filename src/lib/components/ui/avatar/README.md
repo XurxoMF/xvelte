@@ -20,8 +20,6 @@ Use Avatar for people, organizations, accounts, or other entities represented by
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import the component from its public `index.ts` entry point:
 ```
 
 Avatar's `index.ts` exports `Root`, `Image`, `Fallback`, `Badge`, `Group`, and `GroupCount`, together with the `RootProps`, `ImageProps`, `FallbackProps`, `BadgeProps`, `GroupProps`, and `GroupCountProps` types.
-
----
 
 ## Anatomy
 
@@ -60,8 +56,6 @@ Compose several roots and an optional count inside a group:
 
 `Image` and `Fallback` must be descendants of the same `Root` because the Bits UI primitive coordinates their loading state through context. `Badge` should remain inside its root so its position and size follow that avatar. Your app supplies the `GroupCount` content; the component does not inspect the group or calculate a hidden-item count.
 
----
-
 ## Basic usage
 
 ```svelte
@@ -83,8 +77,6 @@ Compose several roots and an optional count inside a group:
 ```
 
 The image uses an empty `alt` here because the adjacent text already identifies the person. While the image is loading, or if it fails, Bits UI displays the fallback instead.
-
----
 
 ## Examples
 
@@ -158,8 +150,6 @@ Bind `loadingStatus` when application behavior needs to react to loading or fail
 ```
 
 `delayMs` keeps the fallback visible for the specified interval after the image has loaded, which can avoid a very brief fallback-to-image flash. When changing an already loaded `src`, reset a controlled `loadingStatus` to `"loading"` so the new source is checked.
-
----
 
 ## Public API
 
@@ -249,8 +239,6 @@ All remaining native `div` attributes are forwarded. The component does not calc
 
 Use `index.ts` and the exported props types as the source of truth for the local API. The installed Bits UI types define all inherited options.
 
----
-
 ## Styling and DOM contract
 
 Avatar uses semantic Tailwind tokens and exposes no CSS variables or variant generator. Classes supplied by your app are merged after local classes with `cn`, so conflicting Tailwind utilities normally favor your values.
@@ -270,8 +258,6 @@ The root's visual border is a circular `::after` overlay using `border`, with da
 
 `Badge` and `GroupCount` resize direct SVG children but do not provide icons. `Group` relies on direct child roots for its ring selector.
 
----
-
 ## Accessibility
 
 Avatar manages visual loading state but intentionally adds no identity semantics, accessible name, live announcements, focus handling, or keyboard interaction.
@@ -286,15 +272,11 @@ Avatar manages visual loading state but intentionally adds no identity semantics
 
 Neither the component nor Bits UI makes Avatar interactive, so there are no built-in keyboard shortcuts.
 
----
-
 ## Localization
 
 Avatar contains no built-in user-facing copy and uses no localization messages. Your app supplies image alternative text, fallback content, badge labels, group labels, and count formatting. Localize a count's accessible label even when the visible value remains a compact language-neutral form such as `+3`.
 
 Do not translate the technical `data-slot`, `data-size`, or `data-status` values.
-
----
 
 ## Dependencies
 
@@ -372,13 +354,9 @@ The `dark` custom variant enables the root border overlay's dark-mode blend util
 
 No `tw-animate-css` import, animation, keyframe, radius token, icon export from `$lib/icons`, other xvelte component, hook, attachment, context module, localization message, or shared component stylesheet is required. Icons placed inside `Badge` or `GroupCount` are optional content supplied by your app and bring their own dependency.
 
----
-
 ## Credits
 
 Avatar is adapted from the [shadcn-svelte Avatar](https://www.shadcn-svelte.com/docs/components/avatar). Its sizing, badge, group, styling, utility, and import conventions have been adapted for xvelte.
-
----
 
 ## File organization
 

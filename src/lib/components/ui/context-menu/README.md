@@ -20,8 +20,6 @@ Use Context Menu for optional actions that apply to a specific surface or item. 
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import all parts from the component's public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import all parts from the component's public `index.ts` entry point:
 ```
 
 Context Menu's `index.ts` exports `Root`, `Trigger`, `Portal`, `Content`, `Item`, `CheckboxItem`, `RadioGroup`, `RadioItem`, `Group`, `GroupHeading`, `Label`, `Separator`, `Shortcut`, `Sub`, `SubTrigger`, and `SubContent`, together with a named props type for every part.
-
----
 
 ## Anatomy
 
@@ -61,8 +57,6 @@ Compose a trigger and content beneath one root:
 `Root` owns open state and direction. `Trigger` defines the surface that receives context-menu and long-press interaction. `Content` is automatically rendered through the local `Portal` and contains items, groups, selection controls, separators, labels, and submenus. Each `Sub` coordinates one `SubTrigger` with one `SubContent`.
 
 Use `GroupHeading` within `Group` when a heading should label that group semantically. `Label` is a standalone visual heading and does not create the same menu-group relationship.
-
----
 
 ## Basic usage
 
@@ -98,8 +92,6 @@ Use `GroupHeading` within `Group` when a heading should label that group semanti
 ```
 
 `onSelect` receives the selection event. Danger styling does not add confirmation or undo behavior; implement those safeguards in the app.
-
----
 
 ## Examples
 
@@ -223,8 +215,6 @@ Spread every supplied prop so pointer, long-press, state, ref, and positioning b
 ```
 
 The standalone `Portal` export is available for custom compositions built from compatible Bits UI parts; it is unnecessary in the standard xvelte composition.
-
----
 
 ## Public API
 
@@ -377,8 +367,6 @@ Type: `PortalProps`, matching Bits UI Portal props. It forwards the portal desti
 
 The component's `index.ts`, exported types, and local source are the source of truth for the public API.
 
----
-
 ## Styling and DOM contract
 
 Context Menu uses Tailwind utilities, semantic theme tokens, local `data-slot` hooks, locally owned presentation attributes, and dependency-owned Bits UI state/positioning attributes. It exposes no component-specific CSS variables.
@@ -405,8 +393,6 @@ Bits UI additionally supplies dependency-owned `data-state`, `data-open`, `data-
 
 `class` is merged with `cn` on styled local parts. Primitive rest props are generally spread last and can override local `data-slot`, `data-inset`, or `data-variant`; doing so can break styling and is not recommended. `Content` and `SubContent` use Bits UI's floating-position variables internally but expose no xvelte-specific variable.
 
----
-
 ## Accessibility
 
 Bits UI supplies menu roles, menu-item roles, checkbox/radio states, roving focus, disabled behavior, typeahead, arrow-key navigation, Home/End navigation, submenu direction, Escape handling, outside interaction, focus management, and pointer intent. Content is portaled so it is not clipped by the trigger's ancestors.
@@ -426,15 +412,11 @@ App responsibilities:
 
 The local CheckboxItem does not visually distinguish indeterminate from unchecked state, even though the primitive exposes the state semantically. Add an indeterminate icon before using that state where sighted users must perceive it.
 
----
-
 ## Localization
 
 Context Menu contains no built-in human-readable copy and does not use Paraglide messages. Apps supply and translate trigger instructions, item labels, group headings, visual labels, checkbox/radio copy, submenu labels, shortcut descriptions, danger confirmations, and any supporting help text.
 
 The right-chevron is an icon rather than text, and Bits UI derives direction behavior from `Root.dir`. Shortcut symbols such as `⌘` are platform-specific presentation, not translated interaction; render the appropriate localized or platform-specific hint and implement the matching command in the app.
-
----
 
 ## Dependencies
 
@@ -575,13 +557,9 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define dark and
 
 Context Menu requires no other xvelte component, hook, attachment, context file, localization message, Paraglide setup, or external asset. Bits UI owns its internal contexts and floating-position logic.
 
----
-
 ## Credits
 
 Context Menu is adapted from [shadcn-svelte's Context Menu component](https://www.shadcn-svelte.com/docs/components/context-menu). Local xvelte styling, exports, dependencies, behavior, and limitations documented here take precedence.
-
----
 
 ## File organization
 

@@ -20,8 +20,6 @@ Use an alert dialog when a consequential action must be confirmed or when procee
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import the component from its public `index.ts` entry point:
 ```
 
 Alert Dialog's `index.ts` exports `Root`, `Trigger`, `Content`, `Header`, `Media`, `Title`, `Description`, `Footer`, `Cancel`, `Action`, `Portal`, and `Overlay`, together with a named props type for every part: `RootProps`, `TriggerProps`, `ContentProps`, `HeaderProps`, `MediaProps`, `TitleProps`, `DescriptionProps`, `FooterProps`, `CancelProps`, `ActionProps`, `PortalProps`, and `OverlayProps`.
-
----
 
 ## Anatomy
 
@@ -60,8 +56,6 @@ Compose the public parts in this order:
 ```
 
 Unlike the underlying Bits UI anatomy, xvelte's `Content` automatically renders `Portal` and `Overlay`. Do not wrap ordinary `Content` in another `AlertDialog.Portal` or add a sibling `AlertDialog.Overlay`; the standalone exports exist for lower-level composition and maintenance. `Header`, `Footer`, and `Media` are local layout parts rather than Bits UI primitives.
-
----
 
 ## Basic usage
 
@@ -89,8 +83,6 @@ Unlike the underlying Bits UI anatomy, xvelte's `Content` automatically renders 
 ```
 
 `Trigger` is an unstyled Bits UI trigger, so apply button classes or compose it with another accessible control. `Cancel` closes without confirming. `Action` communicates the affirmative choice but does not close automatically; your app must perform the work and update `open` when appropriate.
-
----
 
 ## Examples
 
@@ -197,8 +189,6 @@ You provide any icons. `Media` sizes an SVG to `1.5rem` unless the SVG already h
 ```
 
 Disabling the portal also changes stacking and clipping behavior. Ensure the form's ancestors do not clip or obscure the fixed overlay and content.
-
----
 
 ## Public API
 
@@ -357,8 +347,6 @@ Ordinary composition receives the default internal overlay from `Content`.
 
 Use `index.ts` and the exported props types as the source of truth for the local API. The installed Bits UI types define all inherited options, while Button's `index.ts` defines valid action and cancel variants and sizes.
 
----
-
 ## Styling and DOM contract
 
 Alert Dialog uses semantic Tailwind tokens, `tw-animate-css`, Bits UI state attributes, and parent group/data selectors. `Content` and `Overlay` fade in and out; `Content` also scales between 95% and 100%.
@@ -382,8 +370,6 @@ Bits UI also supplies `data-state`, `data-open`/`data-closed`-compatible state, 
 
 Classes passed to styled parts are merged after local classes with `cn`, so conflicting Tailwind utilities favor classes from your app. Preserve `data-slot` and `data-size`: local cross-part selectors depend on them.
 
----
-
 ## Accessibility
 
 Bits UI provides modal dialog semantics, the accessible title and description relationships, focus trapping, initial focus, focus restoration, Escape handling, outside-interaction behavior, and body scroll locking.
@@ -397,15 +383,11 @@ Bits UI provides modal dialog semantics, the accessible title and description re
 - Avoid disabling `trapFocus`, `preventScroll`, Escape handling, or focus restoration unless the alternative behavior has been tested with keyboard and assistive technology.
 - When using render delegation through `Trigger`, `Action`, `Cancel`, or `Overlay`, apply every primitive-provided prop to the rendered element so semantics and event handling are preserved.
 
----
-
 ## Localization
 
 Alert Dialog has no built-in user-facing copy or localization messages. Your app provides and translates trigger text, title, description, cancel and action labels, pending/error feedback, and accessible media names. Keep action labels explicit after translation and parameterize dynamic object names inside your app's messages.
 
 The `default`, `sm`, Button variant/size names, state values, and `data-slot` identifiers are implementation values and must not be translated.
-
----
 
 ## Dependencies
 
@@ -547,13 +529,9 @@ export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
 
 The `any` conditional types may require the same targeted ESLint exceptions used by xvelte. Alert Dialog does not require hooks, attachments, custom context modules, localization messages, or additional shared styles.
 
----
-
 ## Credits
 
 Alert Dialog is adapted from the [shadcn-svelte Alert Dialog](https://www.shadcn-svelte.com/docs/components/alert-dialog). Its implementation has been modified to follow xvelte's local composition, content sizing, media, Button, portal, styling, utility, and import conventions.
-
----
 
 ## File organization
 

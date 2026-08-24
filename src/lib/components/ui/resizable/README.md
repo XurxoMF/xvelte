@@ -20,8 +20,6 @@ Use Resizable for adjustable workspaces such as sidebars, editors, inspectors, a
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts`:
@@ -33,8 +31,6 @@ Import the component from its public `index.ts`:
 ```
 
 `index.ts` exports `PaneGroup`, `Pane`, and `Handle`, together with the `PaneGroupProps`, `PaneProps`, and `HandleProps` types.
-
----
 
 ## Anatomy
 
@@ -51,8 +47,6 @@ Place one `Handle` between every pair of adjacent panes:
 ```
 
 `PaneGroup` supplies the shared layout and resize state. `Pane` defines one adjustable area, while `Handle` controls the two panes immediately beside it. A group can contain another complete `PaneGroup` inside one of its panes for nested layouts.
-
----
 
 ## Basic usage
 
@@ -77,8 +71,6 @@ Place one `Handle` between every pair of adjacent panes:
 ```
 
 Pane sizes are percentages of the group. `PaneGroup` always renders with an inline `height: 100%` owned by PaneForge, so height utilities such as `h-72`, `h-96`, or `h-auto` do not control it. Always place the group inside a wrapper with a definite height or aspect ratio and put the height utility on that wrapper.
-
----
 
 ## Examples
 
@@ -203,8 +195,6 @@ Bind the group instance when application controls need to read or replace the co
 
 Each nested group owns its direction, constraints, callbacks, and optional persistence ID. In this example, the outer wrapper supplies the definite height and the parent `Pane` is the inner group's full-height wrapper.
 
----
-
 ## Public API
 
 Resizable wraps the installed stable `paneforge@1.0.2` components. The tables describe the local API and important inherited behavior; see the complete PaneForge references for [PaneGroup](https://www.paneforge.com/docs/components/pane-group), [Pane](https://www.paneforge.com/docs/components/pane), and [PaneResizer](https://paneforge.com/docs/components/pane-resizer). The component's `index.ts`, exported types, and source are the source of truth.
@@ -264,8 +254,6 @@ Type: `HandleProps`, based on `PaneForge.PaneResizerProps` with `children` and `
 
 The handle forwards native `<div>` attributes, but it does not accept custom child content. Use `withHandle` for the built-in grip and style the public hooks for another visual treatment.
 
----
-
 ## Styling and DOM contract
 
 The following hooks are local and stable:
@@ -286,8 +274,6 @@ PaneForge also supplies state and relationship attributes. These are dependency-
 
 All `class` props pass through `cn()`, so later Tailwind utilities replace conflicting local utilities. They do not override PaneForge's inline styles: in particular, `PaneGroup` always has inline `height: 100%`. Size a wrapper and let the group fill it. PaneForge also owns essential inline flex sizing and interaction styles; avoid overriding them unless the complete resize behavior has been tested.
 
----
-
 ## Accessibility
 
 PaneForge renders each handle as a focusable separator and maintains `aria-valuemin`, `aria-valuemax`, and `aria-valuenow` from the adjacent pane constraints. Pointer dragging, touch dragging, and keyboard resizing share the same constrained layout logic.
@@ -304,13 +290,9 @@ Render exactly one handle between adjacent panes, keep it keyboard focusable, an
 
 See the [PaneForge documentation](https://paneforge.com/docs) for the underlying interaction implementation.
 
----
-
 ## Localization
 
 Resizable contains no built-in human-readable copy and requires no localization messages. The app supplies and translates all pane content, headings, status announcements, and any external controls that change or reset the layout.
-
----
 
 ## Dependencies
 
@@ -402,13 +384,9 @@ resizable/
 └── resizable-pane.svelte
 ```
 
----
-
 ## Credits
 
 The component structure and styling are adapted from [shadcn-svelte Resizable](https://www.shadcn-svelte.com/docs/components/resizable).
-
----
 
 ## File organization
 

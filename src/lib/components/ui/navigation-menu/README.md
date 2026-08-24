@@ -18,8 +18,6 @@ Navigation Menu provides an accessible collection of links for a website's prima
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -34,8 +32,6 @@ The component's `index.ts` exports:
 - Types: `RootProps`, `ListProps`, `ItemProps`, `TriggerProps`, `ContentProps`, `LinkProps`, `ViewportProps`, and `IndicatorProps`.
 
 Import only from the component folder. The implementation files are private details.
-
----
 
 ## Anatomy
 
@@ -63,8 +59,6 @@ Import only from the component folder. The implementation files are private deta
 `Indicator` is optional and belongs inside `List`. Do not add `Viewport` manually while `Root.viewport` is `true`, or two viewports will compete for the same content.
 
 The installed Bits UI primitive supports nested `Sub` menus, but xvelte does not export a `Sub` component. Nested Navigation Menu submenus are therefore not part of the local public API.
-
----
 
 ## Basic usage
 
@@ -105,8 +99,6 @@ The installed Bits UI primitive supports nested `Sub` menus, but xvelte does not
 ```
 
 The default `Link` renders an anchor and accepts `href` plus normal anchor attributes directly.
-
----
 
 ## Examples
 
@@ -205,8 +197,6 @@ Without the viewport, each `Content` is positioned below its own item and uses t
 
 Spread `props` onto the actual anchor so Bits UI keeps its focus, active-page, and selection behavior.
 
----
-
 ## Public API
 
 The tables describe the local xvelte API and the most important inherited behavior. The component's `index.ts` and exported types are the source of truth. See the [Bits UI Navigation Menu API reference](https://www.bits-ui.com/docs/components/navigation-menu#api-reference) for the complete primitive API.
@@ -266,8 +256,6 @@ The outside-interaction and Escape behavior options accept `"close"`, `"ignore"`
 
 All local component classes are merged with `cn()`, so a supplied `class` can extend or override compatible Tailwind utilities.
 
----
-
 ## Styling and DOM contract
 
 Stable xvelte hooks:
@@ -299,8 +287,6 @@ Trigger and Link receive their three-pixel, 50%-opacity semantic `ring` halo fro
 
 The local layout is optimized for a horizontal navigation bar. `orientation="vertical"` changes Bits UI behavior but does not rewrite the fixed flex row, `top-full`, responsive absolute positioning, or viewport wrapper classes.
 
----
-
 ## Accessibility
 
 Bits UI provides the navigation landmark, list semantics, button and anchor semantics, expanded and controls relationships, roving focus between top-level items, focus movement into and out of panels, Escape handling, and direction-aware arrow-key behavior.
@@ -317,15 +303,11 @@ Application responsibilities:
 
 The fixed trigger chevron is marked `aria-hidden="true"`; it does not replace the visible trigger label.
 
----
-
 ## Localization
 
 Navigation Menu contains no built-in human-readable copy and requires no entries in `messages/en.json`. The application supplies and translates trigger labels, link text, descriptions, and the Root accessible name.
 
 Use `Root.dir` for `"ltr"` or `"rtl"` behavior when direction is not inherited correctly from the surrounding application.
-
----
 
 ## Dependencies
 
@@ -447,13 +429,9 @@ export function cn(...inputs: ClassValue[]) {
 - No xvelte hook, attachment, context module, shared style file, or localization message is required.
 - Navigation Menu does not depend on application route code.
 
----
-
 ## Credits
 
 The local component is adapted from [shadcn-svelte's Navigation Menu](https://www.shadcn-svelte.com/docs/components/navigation-menu). Interaction primitives and their runtime API are provided by Bits UI and are listed under Dependencies.
-
----
 
 ## File organization
 

@@ -20,8 +20,6 @@ Use Popover for compact interactive content such as filters, settings, forms, or
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import all public parts through the component's `index.ts`:
@@ -35,8 +33,6 @@ Import all public parts through the component's `index.ts`:
 The component exports `Root`, `Trigger`, `Content`, `Close`, `Portal`, `Header`, `Title`, and `Description`, together with their corresponding `RootProps`, `TriggerProps`, `ContentProps`, `CloseProps`, `PortalProps`, `HeaderProps`, `TitleProps`, and `DescriptionProps` types.
 
 The local component does not export the Bits UI `Arrow`, `Overlay`, `ContentStatic`, or custom anchor parts. `Content` still accepts the primitive's `customAnchor` prop.
-
----
 
 ## Anatomy
 
@@ -61,8 +57,6 @@ Place Trigger and Content inside Root. Header, Title, Description, and Close are
 Content automatically wraps the Bits UI floating panel in the local Portal, which defaults to `document.body`. Do not wrap Content in another `Popover.Portal`; configure its built-in portal through `portalProps`.
 
 Trigger and Close render buttons by default. Header, Title, and Description are styled `div` elements. They organize content visually but do not automatically connect IDs, create a heading, or add ARIA labelling relationships.
-
----
 
 ## Basic usage
 
@@ -96,8 +90,6 @@ Trigger and Close render buttons by default. Header, Title, and Description are 
 ```
 
 The trigger is intentionally visually unstyled so it can be styled directly or replaced through its `child` snippet. Content defaults to a centered alignment, a `4px` side offset, and a width of `18rem` (`w-72`).
-
----
 
 ## Examples
 
@@ -224,8 +216,6 @@ Content normally uses Trigger as its anchor. Supply an element or selector throu
 
 Trigger continues to own open state and keyboard activation. `customAnchor` changes positioning and outside-interaction handling; it does not become another trigger.
 
----
-
 ## Public API
 
 Popover wraps the installed stable Bits UI Popover primitive. The tables summarize the local behavior and important inherited options; use the [Bits UI Popover API](https://bits-ui.com/docs/components/popover#api-reference) for the complete primitive API. The component's `index.ts` and exported types remain the source of truth.
@@ -321,8 +311,6 @@ These are local styled `div` helpers based on native `HTMLAttributes<HTMLDivElem
 
 Each helper accepts `children`, a bindable `HTMLDivElement` `ref`, `class`, and remaining native `div` attributes. Classes are merged after local styles. Add IDs and connect them through `aria-labelledby` or `aria-describedby` on Content when the floating panel needs those relationships. Put a semantic heading element inside Title when the surrounding document structure requires one.
 
----
-
 ## Styling and DOM contract
 
 Stable local hooks:
@@ -346,8 +334,6 @@ The installed primitive exposes `--bits-popover-content-transform-origin`, `--bi
 
 `Root` and `Portal` render no local DOM elements. Trigger and Close have no local appearance beyond their hooks. Preserve every stable `data-slot`; remaining attributes are forwarded last and can technically override these hooks.
 
----
-
 ## Accessibility
 
 Bits UI provides the activation, expanded state, content relationship, focus management, dismissal, and pointer-outside behavior.
@@ -364,15 +350,11 @@ Bits UI provides the activation, expanded state, content relationship, focus man
 
 Use Dialog instead when focus must be strongly isolated from the page, the workflow is complex, or the panel should behave as a modal interruption.
 
----
-
 ## Localization
 
 Popover contains no built-in human-readable copy and uses no localization message. Your app supplies and translates Trigger text, titles, descriptions, field labels, actions, and accessible names.
 
 Primitive state values, IDs, `data-*` values, side/alignment values, and CSS variables are implementation details and are not translated.
-
----
 
 ## Dependencies
 
@@ -490,13 +472,9 @@ Load Tailwind CSS and `tw-animate-css`, then expose the semantic values used by 
 
 No Popover-specific keyframe, icon style, font, or app-owned CSS variable is required. `tw-animate-css` provides the enter, exit, fade, zoom, and slide utilities used by Content.
 
----
-
 ## Credits
 
 Popover is adapted from the [shadcn-svelte Popover](https://www.shadcn-svelte.com/docs/components/popover). Its implementation has been modified to follow xvelte's local API, portal configuration, styling, type, and import conventions.
-
----
 
 ## File organization
 

@@ -20,8 +20,6 @@ Use QR Code to encode a URL, identifier, contact action, network configuration, 
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component through its public `index.ts`:
@@ -34,8 +32,6 @@ Import the component through its public `index.ts`:
 
 The component exports `Root`, the `RootProps` type, and the `ErrorCorrection` type.
 
----
-
 ## Anatomy
 
 QR Code has one public part:
@@ -47,8 +43,6 @@ QR Code has one public part:
 Root renders a sized wrapper containing an SVG background and one SVG rectangle for every dark QR module. When `logo` is supplied, it also renders a centered HTML layer above the SVG.
 
 The logo is not embedded into the SVG. Copying or exporting only the generated `<svg>` omits the logo layer.
-
----
 
 ## Basic usage
 
@@ -66,8 +60,6 @@ The logo is not embedded into the SVG. Copying or exporting only the generated `
 ```
 
 The readable destination helps people who cannot or do not want to scan the image, and makes a link QR code's target visible before opening it.
-
----
 
 ## Examples
 
@@ -151,8 +143,6 @@ The snippet receives no parameters. It owns its internal markup and styles but r
 
 Changing the level regenerates the QR matrix. The generator automatically selects the smallest supported QR type that fits the value and correction level.
 
----
-
 ## Public API
 
 The component's `index.ts`, exported types, and local source are the source of truth. Matrix generation uses [`qrcode-generator`](https://www.npmjs.com/package/qrcode-generator), but Root exposes only the xvelte-owned props below rather than the package's complete API.
@@ -215,8 +205,6 @@ If `value` is empty or generation throws:
 
 Longer values generally create larger matrices and more SVG elements. Avoid regenerating very large values on every keystroke when the extra DOM and synchronous generation work would be noticeable.
 
----
-
 ## Styling and DOM contract
 
 Stable xvelte hook:
@@ -233,8 +221,6 @@ Root classes are merged with `cn()`, but inline width and height from `size` tak
 
 Only the optional logo wrapper uses the semantic `background` token. It is absolutely centered, circular, padded, and shadowed. There is no component-specific CSS variable, keyframe, state attribute, stable class, or animation hook.
 
----
-
 ## Accessibility
 
 The generated SVG has no role, title, description, or accessible name, and Root does not accept ARIA attributes. Treat the QR graphic as a visual transfer convenience rather than the only presentation of its data.
@@ -250,8 +236,6 @@ The generated SVG has no role, title, description, or accessible name, and Root 
 
 The component has no keyboard interaction because it is display-only. Any download, copy, refresh, or navigation action belongs in separate accessible controls supplied by your app.
 
----
-
 ## Localization
 
 QR Code uses one Paraglide message from `messages/en.json`:
@@ -263,8 +247,6 @@ QR Code uses one Paraglide message from `messages/en.json`:
 The string-logo alternative text has no override prop. Use the `logo` snippet for different accessible markup.
 
 Your app supplies and translates visible destinations, captions, instructions, validation, errors, download labels, and surrounding actions. The console-only `"QR Generation failed"` text is a developer diagnostic rather than user-facing copy and is not localized.
-
----
 
 ## Dependencies
 
@@ -341,13 +323,9 @@ Define the dark value only when your app supports a dark theme. No custom varian
 
 Configure Paraglide so `$lib/paraglide/messages.js` is generated and add the message listed in [Localization](#localization) to `messages/en.json`. Its exact key and value are already shown there and are not duplicated here.
 
----
-
 ## Credits
 
 QR Code is adapted from the [more-shadcn-svelte QR Code](https://more-shadcn.noair.fun/docs/components/qr-code). Its implementation has been modified to follow xvelte's local API, SVG rendering, localization, styling, and import conventions.
-
----
 
 ## File organization
 

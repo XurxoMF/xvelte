@@ -20,8 +20,6 @@ Use Separator to clarify groups inside menus, toolbars, cards, or layouts. Do no
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -32,8 +30,6 @@ Use Separator to clarify groups inside menus, toolbars, cards, or layouts. Do no
 
 The component's `index.ts` exports `Root` and `RootProps`.
 
----
-
 ## Anatomy
 
 Separator is a single Bits UI element:
@@ -43,8 +39,6 @@ Separator is a single Bits UI element:
 ```
 
 It is horizontal and decorative by default. Set `orientation="vertical"` inside a container with a definite height.
-
----
 
 ## Basic usage
 
@@ -67,8 +61,6 @@ It is horizontal and decorative by default. Set `orientation="vertical"` inside 
 	</div>
 </div>
 ```
-
----
 
 ## Examples
 
@@ -102,8 +94,6 @@ Use semantic mode only when the separator communicates a structural boundary tha
 
 The local wrapper deliberately permits a custom `data-slot`; most components should keep the default.
 
----
-
 ## Public API
 
 `RootProps` equals the installed stable `bits-ui@2.18.1` `Separator.RootProps`. The table summarizes the important options; see the complete [Bits UI Separator API](https://bits-ui.com/docs/components/separator#api-reference). The component's `index.ts` and exported type are the source of truth.
@@ -118,8 +108,6 @@ The local wrapper deliberately permits a custom `data-slot`; most components sho
 
 Native `<div>` attributes and handlers are forwarded. `class` is merged after local classes with `cn()`.
 
----
-
 ## Styling and DOM contract
 
 - Stable default hook: `data-slot="separator"`; callers may intentionally override it.
@@ -131,21 +119,15 @@ Native `<div>` attributes and handlers are forwarded. `class` is merged after lo
 
 The rendered element and accessibility attributes are owned by Bits UI when `child` is used.
 
----
-
 ## Accessibility
 
 The default `decorative={true}` separator is hidden from the accessibility tree. With `decorative={false}`, Bits UI exposes separator semantics and orientation. Use semantic separators sparingly, preserve the generated role and orientation, and do not make the element interactive.
 
 Separator provides no accessible name by default. Add `aria-label` or `aria-labelledby` only when semantic mode needs a name that is not already clear from surrounding headings.
 
----
-
 ## Localization
 
 Separator contains no built-in human-readable copy and requires no localization messages. The app translates any optional `aria-label` it supplies.
-
----
 
 ## Dependencies
 
@@ -210,13 +192,9 @@ separator/
 
 Separator needs no icon, other xvelte component, hook, attachment, context, localization setup, shared style, image, font, or network service.
 
----
-
 ## Credits
 
 The component structure and styling are adapted from [shadcn-svelte Separator](https://www.shadcn-svelte.com/docs/components/separator).
-
----
 
 ## File organization
 

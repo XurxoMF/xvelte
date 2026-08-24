@@ -20,8 +20,6 @@ Use Hover Card to preview a profile, document, product, or other destination bef
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import all public parts through the component's `index.ts`:
@@ -33,8 +31,6 @@ Import all public parts through the component's `index.ts`:
 ```
 
 `index.ts` exports `Root`, `Trigger`, `Content`, and `Portal`, together with their `RootProps`, `TriggerProps`, `ContentProps`, and `PortalProps` types.
-
----
 
 ## Anatomy
 
@@ -52,8 +48,6 @@ Place Trigger and Content inside Root:
 Trigger renders an anchor by default. Content renders a floating `div` and automatically wraps itself in the local Portal, which defaults to `document.body`. Do not add a second Portal around Content; configure the built-in portal through `portalProps` instead.
 
 The component does not export Bits UI's `Arrow` or `ContentStatic` parts. The documented local composition is Root, Trigger, and Content. Portal is public for advanced portal composition but is not required around the standard Content.
-
----
 
 ## Basic usage
 
@@ -80,8 +74,6 @@ Keep the complete destination and all essential information available without op
 ```
 
 Hovering the trigger with a non-touch pointer opens the card after `700ms` by default. Moving from Trigger to Content keeps it open, and leaving the preview area closes it after `300ms`. Keyboard focus can open the preview in the installed Bits UI version, but focus remains on the trigger and Content is not an interactive keyboard destination.
-
----
 
 ## Examples
 
@@ -179,8 +171,6 @@ Trigger accepts Bits UI's `child` snippet when an anchor is not appropriate. Spr
 
 A button trigger does not make Content keyboard-interactive. Use Popover when the trigger must open content containing links, buttons, forms, or other controls.
 
----
-
 ## Public API
 
 Hover Card wraps the installed stable Bits UI `LinkPreview` primitive. The tables summarize every local adaptation and the inherited options most relevant to ordinary use; see the [Bits UI Link Preview API](https://bits-ui.com/docs/components/link-preview) for the complete primitive API. Hover Card's `index.ts`, exported types, and local source are the source of truth.
@@ -259,8 +249,6 @@ Type: `PortalProps`, equal to Bits UI's `LinkPreview.PortalProps`.
 
 Normal Content already uses this component internally. Prefer `Content portalProps={...}` rather than manually nesting the standard Hover Card in another Portal.
 
----
-
 ## Styling and DOM contract
 
 Root and Portal do not render stable local elements of their own. Trigger and Content expose these stable xvelte hooks:
@@ -292,8 +280,6 @@ The local origin class reads `--transform-origin`, while the installed primitive
 
 The local `data-open:` and `data-closed:` variants recognize Bits UI's state attributes. Treat all dependency-owned hooks as version-specific unless the upstream API documents them.
 
----
-
 ## Accessibility
 
 Hover Card is only for supplementary preview information. The installed Bits UI primitive provides pointer safe-area handling between Trigger and Content, delayed opening/closing, Escape dismissal, trigger `aria-haspopup`, `aria-expanded`, `aria-controls`, state attributes, and selection-aware closing for pointer users.
@@ -311,15 +297,11 @@ Important limitations and app responsibilities:
 
 The preview does not trap focus, move focus, lock document scrolling, or add a live region. Its animation does not include a local reduced-motion override; provide one globally or adapt the classes when required.
 
----
-
 ## Localization
 
 Hover Card has no built-in user-facing copy and imports no localization messages. The app supplies and translates Trigger content, preview text, accessible names, destination descriptions, dates, statuses, and any other content.
 
 Placement values, open state, delay values, CSS variables, and `data-*` attributes are technical identifiers and are not translated.
-
----
 
 ## Dependencies
 
@@ -428,13 +410,9 @@ The global stylesheet must import Tailwind and `tw-animate-css`, expose the sema
 
 The app owns dark-mode activation. No global base rule, component-specific keyframe, icon export from `src/lib/icons.ts`, localization message, or additional layout CSS is required.
 
----
-
 ## Credits
 
 Adapted from [shadcn-svelte's Hover Card](https://www.shadcn-svelte.com/docs/components/hover-card). Bits UI is the runtime dependency and is documented separately in [Public API](#public-api).
-
----
 
 ## File organization
 

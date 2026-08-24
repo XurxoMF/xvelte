@@ -20,8 +20,6 @@ Use Date Strip when nearby dates are the main choice and a full calendar would b
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import both parts from the component's public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import both parts from the component's public `index.ts` entry point:
 ```
 
 Date Strip's `index.ts` exports `Root`, `Item`, `RootProps`, and `ItemProps`.
-
----
 
 ## Anatomy
 
@@ -49,8 +45,6 @@ Date Strip's `index.ts` exports `Root`, `Item`, `RootProps`, and `ItemProps`.
 ```
 
 Root renders a previous-page button, the date row, and a next-page button. Item must render below Root because it reads selection, disabled-date, and animation state from the component's internal context.
-
----
 
 ## Basic usage
 
@@ -73,8 +67,6 @@ Root renders a previous-page button, the date row, and a next-page button. Item 
 ```
 
 The selected value is bindable. Selecting an enabled Item updates the binding; navigating changes only the visible range and does not change the selected date.
-
----
 
 ## Examples
 
@@ -157,8 +149,6 @@ Root still opens on the current week. It does not derive the visible range from 
 
 Root and Item accept only `class` for DOM customization. They do not forward arbitrary HTML attributes, element references, event handlers, snippets for replacing their internal markup, or props for changing the navigation buttons.
 
----
-
 ## Public API
 
 Date Strip owns its API directly rather than wrapping an external component primitive. `DateValue` and the date operations come from `@internationalized/date`; the local `index.ts`, exported types, and source are the source of truth.
@@ -202,8 +192,6 @@ Item always renders Button.Root with `variant="ghost"` as a native button. It de
 
 Each Item displays a locale-formatted abbreviated month above a numeric day. It does not display weekday, year, full date, or app-provided children. Item does not forward native button attributes, events, a ref, `aria-*`, or alternative labels. It cannot be used outside Root because its internal context would be missing.
 
----
-
 ## Styling and DOM contract
 
 Date Strip uses Tailwind utilities, Tailwind animation utilities, semantic theme tokens, and two stable local `data-slot` hooks. It exposes no component-specific CSS variables or public state attributes.
@@ -221,8 +209,6 @@ Root and Item merge app classes with `cn`, so later Tailwind classes can replace
 
 The current date uses the accent background. The selected date uses primary colors. Disabled presentation comes from Button. Item enters with a fade and a slide from the right after forward navigation or from the left after backward navigation; the initial render uses the forward direction. The internal viewport clips animation overflow.
 
----
-
 ## Accessibility
 
 Each date and navigation control is a native Button, so standard button activation, focus, and disabled behavior are available. Disabled dates cannot be activated with pointer or keyboard input.
@@ -237,15 +223,11 @@ The current local implementation has important accessibility limitations:
 
 Treat Date Strip as a compact visual date control, not as a complete accessible calendar or date picker. Until the local API supplies navigation labels and semantic date states, use Calendar or another accessible date input when screen-reader operation is required. Do not rely on color alone to explain a selected date elsewhere in the interface.
 
----
-
 ## Localization
 
 Date Strip has no visible word labels and uses no Paraglide message keys. Root imports `getLocale()` from the generated Paraglide runtime and uses the active locale by default for both the initial week boundary and the Item month/day formatters. Pass `locale` to override that default for one Date Strip. Items convert dates in the user's local time zone before formatting.
 
 There is no formatter prop, explicit week-start prop, or message ID. Navigation buttons also lack built-in accessible labels rather than containing translatable default copy, and the current public API cannot override those labels.
-
----
 
 ## Dependencies
 
@@ -409,13 +391,9 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define the dark
 
 Date Strip requires no hook, attachment, external context library, localization message, shared component stylesheet, or external asset. Its internal Svelte context must remain in the component folder as shown above, and the generated Paraglide runtime must be available.
 
----
-
 ## Credits
 
 Date Strip is adapted from [more-shadcn-svelte's Date Strip component](https://more-shadcn.noair.fun/docs/components/date-strip). Local xvelte behavior, API, styling, dependencies, accessibility limitations, and localization limitations documented here take precedence.
-
----
 
 ## File organization
 

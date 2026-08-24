@@ -20,8 +20,6 @@ Use Dropdown Menu for secondary actions and compact settings associated with a v
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import all parts from the component's public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import all parts from the component's public `index.ts` entry point:
 ```
 
 Dropdown Menu's `index.ts` exports `Root`, `Trigger`, `Portal`, `Content`, `Item`, `CheckboxGroup`, `CheckboxItem`, `RadioGroup`, `RadioItem`, `Group`, `GroupHeading`, `Label`, `Separator`, `Shortcut`, `Sub`, `SubTrigger`, and `SubContent`, together with a named props type for every part.
-
----
 
 ## Anatomy
 
@@ -61,8 +57,6 @@ Compose a button trigger and menu content below one Root:
 Root owns open state and text direction. Trigger defines the button and positioning anchor. Content automatically renders through the local Portal and contains actions, groups, selection controls, separators, labels, shortcuts, and submenus. Each Sub coordinates one SubTrigger with one SubContent.
 
 Use GroupHeading inside Group when a heading should label that group semantically. Label is a native visual caption and does not create the same menu-group relationship.
-
----
 
 ## Basic usage
 
@@ -96,8 +90,6 @@ Use GroupHeading inside Group when a heading should label that group semanticall
 ```
 
 `onSelect` receives the selection event, and an enabled Item closes the menu by default. Danger styling does not add confirmation or undo behavior; implement those safeguards in the app.
-
----
 
 ## Examples
 
@@ -266,8 +258,6 @@ Content already uses Portal. Pass its configuration through `portalProps`:
 
 The standalone Portal export is unnecessary in the standard composition.
 
----
-
 ## Public API
 
 Parts backed by Bits UI forward compatible Bits UI options and native element props unless a local adaptation below states otherwise. The tables summarize local behavior and important inherited options; use the complete [Bits UI Dropdown Menu API reference](https://www.bits-ui.com/docs/components/dropdown-menu#api-reference) for options provided directly by that library.
@@ -429,8 +419,6 @@ Type: `PortalProps`, matching Bits UI Portal props. It forwards the destination,
 
 The component's `index.ts`, exported types, and local source are the source of truth for the public API.
 
----
-
 ## Styling and DOM contract
 
 Dropdown Menu uses Tailwind utilities, semantic theme tokens, local `data-slot` hooks, locally owned presentation attributes, and dependency-owned Bits UI state and positioning attributes. It exposes no component-specific CSS variables.
@@ -459,8 +447,6 @@ Bits UI additionally supplies dependency-owned `data-state`, `data-open`, `data-
 
 `class` is merged with `cn` on styled local parts. Trigger forwards class without adding visual styles. Forwarded props are generally spread after local `data-slot`, `data-inset`, or `data-variant` and can override them; doing so can break styling and is not recommended.
 
----
-
 ## Accessibility
 
 Bits UI supplies menu and menu-item roles, checkbox/radio state, group-heading relationships, roving focus, disabled behavior, typeahead, arrow-key navigation, Home/End navigation, submenu direction, Escape handling, outside interaction, focus management, and Trigger expanded/controls state.
@@ -478,15 +464,11 @@ App responsibilities:
 
 The indicators are hidden from pointer interaction and selection state is supplied semantically by Bits UI. CheckboxItem visually distinguishes checked, unchecked, and indeterminate states.
 
----
-
 ## Localization
 
 Dropdown Menu contains no built-in human-readable copy and does not use Paraglide messages. The app supplies and translates Trigger text, item labels, group headings, visual labels, checkbox/radio copy, submenu labels, shortcut descriptions, danger confirmations, and any supporting instructions.
 
 The right-chevron, check, and minus symbols are icons rather than text. Shortcut symbols such as `⌘` are platform-specific presentation, not translated interaction; render the appropriate localized or platform-specific hint and implement the matching command in the app.
-
----
 
 ## Dependencies
 
@@ -629,13 +611,9 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define dark and
 
 Dropdown Menu requires no other xvelte component, hook, attachment, context file, localization message, Paraglide setup, shared component stylesheet, or external asset. Bits UI owns its internal contexts, floating-position logic, focus management, and selection state. Button is optional and appears only in the delegation example.
 
----
-
 ## Credits
 
 Dropdown Menu is adapted from [shadcn-svelte's Dropdown Menu component](https://www.shadcn-svelte.com/docs/components/dropdown-menu). Local xvelte behavior, API, defaults, styling, dependencies, and limitations documented here take precedence.
-
----
 
 ## File organization
 

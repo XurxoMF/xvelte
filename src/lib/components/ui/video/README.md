@@ -18,8 +18,6 @@ A self-contained video player with a poster, WebVTT captions, custom playback an
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts` entry point:
@@ -32,8 +30,6 @@ Import the component from its public `index.ts` entry point:
 
 Video's `index.ts` exports `Root` and the `RootProps` type.
 
----
-
 ## Anatomy
 
 Video has one public part:
@@ -43,8 +39,6 @@ Video has one public part:
 ```
 
 `Root` renders a fixed-aspect container, a native `<video>` without native controls, one default captions track, and local overlays for loading, play/pause, volume, time, and fullscreen.
-
----
 
 ## Basic usage
 
@@ -57,8 +51,6 @@ Video has one public part:
 ```
 
 Place the media, poster, and WebVTT file in your app's static assets or provide URLs that the browser can load.
-
----
 
 ## Examples
 
@@ -86,8 +78,6 @@ The player fills the available width and keeps a 16:9 aspect ratio. Override loc
 ```
 
 The built-in `min-w-75` class may cause horizontal overflow in containers narrower than 18.75rem; override it with `min-w-0` when necessary.
-
----
 
 ## Public API
 
@@ -117,8 +107,6 @@ The component does not expose `ref`, `children`, `controls`, `preload`, `playsin
 - The fullscreen button requests fullscreen on the root container. Fullscreen state is not synchronized through a `fullscreenchange` listener, so browser- or keyboard-initiated exits can leave its icon stale.
 - There is no media error state; a failed source can leave the loading overlay visible.
 
----
-
 ## Styling and DOM contract
 
 The stable local hook is:
@@ -132,8 +120,6 @@ The root uses `aspect-video`, full width, `min-w-75`, a black background, `round
 `class` applies only to the root container. Internal loading, control, slider, and icon elements have no public `data-slot` hooks. Component-scoped CSS hides the native thumbs of the transparent range inputs; visible tracks and thumbs are separate decorative elements.
 
 The player uses `cn`, so later conflicting Tailwind utilities passed through `class` win where `tailwind-merge` recognizes the conflict.
-
----
 
 ## Accessibility
 
@@ -149,15 +135,11 @@ The current component has significant accessibility limitations:
 
 Because the purpose-built API cannot add the missing labels or native video attributes, do not use the current component as the only production media control for an accessibility-critical experience without updating its implementation. Decorative icons should remain hidden from assistive technology once accessible button names are added.
 
----
-
 ## Localization
 
 The component contains no translatable built-in words. Its visible time is numeric and formatted as `m:ss`.
 
 Captions are external content and must be translated in their WebVTT files. The local API accepts only one captions URL and does not expose language selection. The unlabeled controls described in Accessibility are an implementation limitation, not text that can currently be overridden or translated.
-
----
 
 ## Dependencies
 
@@ -222,13 +204,9 @@ export function cn(...inputs: ClassValue[]) {
 
 No other xvelte components, hooks, attachments, contexts, shared styles, animation package, or localization runtime are required. Copy both source files listed under File organization and provide the media, poster when used, and captions assets from your app.
 
----
-
 ## Credits
 
 The player is adapted from [More Shadcn's Video component](https://more-shadcn.noair.fun/docs/components/video). The API and behavior documented here describe the local xvelte implementation.
-
----
 
 ## File organization
 

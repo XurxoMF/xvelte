@@ -20,8 +20,6 @@ Use Table for genuinely tabular information whose rows and columns have meaningf
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -31,8 +29,6 @@ Use Table for genuinely tabular information whose rows and columns have meaningf
 ```
 
 `index.ts` exports `Root`, `Header`, `Body`, `Footer`, `Row`, `Head`, `Cell`, and `Caption`, together with a matching props type for every part.
-
----
 
 ## Anatomy
 
@@ -54,8 +50,6 @@ Use Table for genuinely tabular information whose rows and columns have meaningf
 ```
 
 Root renders a native `<table>` inside an xvelte Scroll Area configured for horizontal scrolling. The remaining parts map directly to native table elements.
-
----
 
 ## Basic usage
 
@@ -91,8 +85,6 @@ Root renders a native `<table>` inside an xvelte Scroll Area configured for hori
 ```
 
 The inner table keeps its intrinsic width and scrolls horizontally when columns no longer fit.
-
----
 
 ## Examples
 
@@ -146,8 +138,6 @@ The local Row styles `data-state="selected"`; selection state and interaction re
 
 Head and Cell remove end padding when a descendant has `role="checkbox"`. Native checkbox inputs do not receive that role attribute explicitly in every browser, so add the desired column padding class when the selector does not match.
 
----
-
 ## Public API
 
 Table is implemented with native HTML elements. Every part accepts the corresponding Svelte element attributes, children, `class`, and a bindable element `ref`. The component's `index.ts`, exported types, and source are the source of truth.
@@ -165,8 +155,6 @@ Table is implemented with native HTML elements. Every part accepts the correspon
 
 All native attributes—including `scope`, `colspan`, `rowspan`, ARIA attributes, event handlers, and IDs—are forwarded. Classes merge through `cn()` after local defaults.
 
----
-
 ## Styling and DOM contract
 
 | Element        | Stable hook                                      |
@@ -183,21 +171,15 @@ All native attributes—including `scope`, `colspan`, `rowspan`, ARIA attributes
 
 Row recognizes `data-state="selected"`. The scroll container's viewport, scrollbar, and thumb hooks are documented by Scroll Area. Root exposes no direct prop for styling that outer container; use `data-slot="table-container"` in app-level CSS when necessary.
 
----
-
 ## Accessibility
 
 Native table semantics are preserved. Provide a concise Caption for unfamiliar tables, use Head with correct `scope="col"` or `scope="row"`, and keep a logical source order. Do not replace table elements with generic divs.
 
 Horizontal scrolling does not change semantics, but keyboard and zoom users must still be able to reach every column. Interactive sorting, selection, or expansion controls require their own accessible names, state attributes, and keyboard behavior; this component does not add them.
 
----
-
 ## Localization
 
 Table contains no built-in copy and requires no localization messages. The app supplies and translates captions, headings, cell content, action labels, empty states, formatted numbers, dates, and currencies.
-
----
 
 ## Dependencies
 
@@ -291,13 +273,9 @@ table/
 
 Table needs no icon, hook, attachment, context, localization setup, shared style, image, font, or network service.
 
----
-
 ## Credits
 
 The component structure and styling are adapted from [shadcn-svelte Table](https://www.shadcn-svelte.com/docs/components/table).
-
----
 
 ## File organization
 

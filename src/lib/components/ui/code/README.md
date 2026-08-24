@@ -20,8 +20,6 @@ Use Code for examples, documentation, configuration, commands, and other preform
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import the component from its public `index.ts` entry point:
 ```
 
 Code's `index.ts` exports `Root`, `CopyButton`, `Overflow`, their props types, `LanguageLoader`, `PlainTextLanguage`, `CodeVariant`, and the `codeVariants` styling function.
-
----
 
 ## Anatomy
 
@@ -58,8 +54,6 @@ Wrap the root in `Overflow` when a long block should start collapsed:
 
 `CopyButton` must be a descendant of `Root`. `Overflow` does not consume Code context and may wrap the complete block.
 
----
-
 ## Basic usage
 
 ```svelte
@@ -75,8 +69,6 @@ Wrap the root in `Overflow` when a long block should start collapsed:
 ```
 
 The dynamic import creates a separate language chunk. The shared highlighter loads it on first use and reuses it for later TypeScript blocks. `code` remains required because it is the source passed to Shiki and copied by `CopyButton`.
-
----
 
 ## Examples
 
@@ -190,8 +182,6 @@ The first block highlights lines 2 and 5 through 7. Highlighting is visual only 
 
 The callback receives `success` or `failure`. Use it to provide an accessible status announcement; the built-in icon change is visual only.
 
----
-
 ## Public API
 
 ### `Code.Root`
@@ -266,8 +256,6 @@ It returns classes only and does not load Shiki, render markup, establish contex
 
 The component's `index.ts` and exported types are the source of truth for the public API.
 
----
-
 ## Styling and DOM contract
 
 Stable xvelte hooks:
@@ -287,8 +275,6 @@ Generated blocks scroll horizontally, use a grid of full-width line spans, and n
 
 Classes supplied to public parts are merged with `cn()`. Root classes can override its variant and sizing utilities; CopyButton and Overflow classes can override their positioning. Preserve the stable hooks and Shiki class names when replacing local styles.
 
----
-
 ## Accessibility
 
 Shiki generates semantic `<pre><code>` markup and escapes the source before xvelte renders it with `{@html}`. The generated code remains selectable and readable as text.
@@ -302,8 +288,6 @@ Shiki generates semantic `<pre><code>` markup and escapes the source before xvel
 - The initial server-rendered root is empty because highlighting runs after client initialization. Use a server-side Shiki integration when code must be available without JavaScript or indexed in its highlighted form.
 - When accepting user-selected language names, map them to an allowlisted loader. Do not construct arbitrary import paths from untrusted input.
 
----
-
 ## Localization
 
 Code includes two localized strings:
@@ -314,8 +298,6 @@ Code includes two localized strings:
 | `deep_lotus_expand` | `Expand`        | Visible button rendered by collapsed `Overflow`. |
 
 `CopyButton` accepts `aria-label` to override its default. `Overflow` has no prop for overriding the Expand label, so change the message through the app's localization catalog. Your app supplies and translates captions, language selectors, copy-result announcements, and surrounding explanations. Source code, language identifiers, `data-*` values, and Shiki theme names are not translated.
-
----
 
 ## Dependencies
 
@@ -622,13 +604,9 @@ Add the two message IDs and English values listed in [Localization](#localizatio
 
 No hook, attachment, external context library, global shared style, WebAssembly file, `tw-animate-css`, or browser polyfill is required. Clipboard copying requires the native `navigator.clipboard` API and normally a secure browser context.
 
----
-
 ## Credits
 
 Code is adapted from the [shadcn-svelte-extras Code component](https://shadcn-svelte-extras.com/docs/components/code). The local on-demand language API and cache differ from the source component's fixed language configuration.
-
----
 
 ## File organization
 

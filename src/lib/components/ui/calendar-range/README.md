@@ -20,8 +20,6 @@ Use Calendar Range when people need to choose a continuous date interval visuall
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts`:
@@ -35,8 +33,6 @@ Import the component from its public `index.ts`:
 `index.ts` exports `Root`, `Months`, `Month`, `Nav`, `PrevButton`, `NextButton`, `Header`, `Caption`, `Heading`, `MonthSelect`, `YearSelect`, `Grid`, `GridHead`, `GridBody`, `GridRow`, `HeadCell`, `Cell`, and `Day`. It also exports a matching props type for every component.
 
 Date values come from `@internationalized/date`. Bits UI's public `DateRange` type can be imported from `bits-ui` when an explicit range type is useful.
-
----
 
 ## Anatomy
 
@@ -64,8 +60,6 @@ Root
 
 Unlike the underlying Bits UI Root, the local Root does not accept `children` or `child`; it owns this composition. Use the `day` snippet for supported day-content customization. The remaining exports support the built-in implementation and advanced composition with a Bits UI Range Calendar root.
 
----
-
 ## Basic usage
 
 ```svelte
@@ -90,8 +84,6 @@ Unlike the underlying Bits UI Root, the local Root does not accept `children` or
 ```
 
 `value` is a bindable `{ start, end }` object whose fields are `DateValue | undefined`. These are `@internationalized/date` objects, not JavaScript `Date` instances or date strings. Use `toString()` for ISO-style storage and `toDate(timeZone)` when a native `Date` is required.
-
----
 
 ## Examples
 
@@ -204,8 +196,6 @@ Render `CalendarRange.Day` inside the snippet to preserve Bits UI's roles, focus
 
 `readonly` keeps navigation and focus available but prevents selection changes. `disabled` prevents calendar focus and selection.
 
----
-
 ## Public API
 
 Calendar Range wraps the installed stable `bits-ui@2.18.1` primitive. The tables document the local options and important inherited behavior; use the complete [Bits UI Range Calendar API](https://bits-ui.com/docs/components/range-calendar#api-reference) for native attributes and advanced primitive details. The component's `index.ts`, exported types, and source are the source of truth.
@@ -298,8 +288,6 @@ PrevButton and NextButton accept custom children; supplying them replaces the de
 
 These props are aliases of their matching Bits UI parts, including `children`, `child`, native attributes, state snippet values, and bindable refs. The local MonthSelect and YearSelect deliberately remove primitive child snippets because they own the native select composition.
 
----
-
 ## Styling and DOM contract
 
 Calendar Range uses semantic Tailwind tokens and two root-scoped CSS variables:
@@ -343,8 +331,6 @@ Notable local styling behavior:
 
 Check the installed Bits UI API before relying on dependency-owned selectors across upgrades.
 
----
-
 ## Accessibility
 
 Bits UI supplies grid semantics, date labels, range announcements, roving focus, keyboard navigation, and selection behavior. Local wrappers preserve those attributes and keep native selects for dropdown captions.
@@ -361,8 +347,6 @@ Bits UI supplies grid semantics, date labels, range announcements, roving focus,
 - Do not communicate today, selection endpoints, range middle, disabled, or unavailable state only through color. Add visible instructions or summaries when those distinctions matter.
 
 Calendar Range does not provide a text-entry alternative or surrounding dialog/popover focus management. Compose those separately when required.
-
----
 
 ## Localization
 
@@ -382,8 +366,6 @@ Calendar Range has no Paraglide message keys, but Root uses `getLocale()` from t
 Always pass a translated, context-specific `calendarLabel`. Month/year formatting follows `locale`, but the navigation, select, and live-announcement strings cannot all be replaced through local Root. Fully localizing those strings requires adapting the exported wrappers or using an advanced custom composition.
 
 Translate surrounding instructions, selected-range summaries, validation feedback, and empty states in the app. Technical values such as data attributes, caption layouts, and ISO date strings are not translated.
-
----
 
 ## Dependencies
 
@@ -566,13 +548,9 @@ Load Tailwind, configure the class-based dark variant, and expose the semantic c
 
 The app owns dark-mode activation. No `tw-animate-css` import, keyframe, Paraglide message, shared component stylesheet, or component-specific global variable is required. The generated Paraglide runtime is required for the default locale.
 
----
-
 ## Credits
 
 Calendar Range is adapted from the [shadcn-svelte Range Calendar](https://www.shadcn-svelte.com/docs/components/range-calendar). Its complete built-in composition, local caption behavior, Button integration, icon facade, range styling, and defaults have been adapted for xvelte.
-
----
 
 ## File organization
 

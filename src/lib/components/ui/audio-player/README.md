@@ -20,8 +20,6 @@ Use Audio Player for finite audio files that need a compact, custom interface. D
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import the component from its public `index.ts` entry point:
 ```
 
 Audio Player's `index.ts` exports `Root`, `PlayButton`, `Slider`, `Time`, and `Volume`, together with the `RootProps`, `PlayButtonProps`, `SliderProps`, `TimeProps`, and `VolumeProps` types.
-
----
 
 ## Anatomy
 
@@ -51,8 +47,6 @@ Compose the controls as descendants of `Root` so they can read its audio-player 
 ```
 
 `Root` renders a native `<audio>` element without browser controls, followed by its `children`. The other parts must be placed beneath the same root; using them outside it throws because no context is available. Your app supplies the media information and arranges the controls.
-
----
 
 ## Basic usage
 
@@ -76,8 +70,6 @@ Compose the controls as descendants of `Root` so they can read its audio-player 
 ```
 
 The root supplies only its card surface; the example's flex and grid classes define the actual player layout. See [Accessibility](#accessibility) before using the current range controls in production.
-
----
 
 ## Examples
 
@@ -145,8 +137,6 @@ Each root owns a separate native audio element and context. Controls always use 
 ```
 
 The roots do not coordinate playback. Starting one player does not pause another.
-
----
 
 ## Public API
 
@@ -221,8 +211,6 @@ The component accepts no `children`, accessible label, volume callback, panel pr
 
 Use `index.ts` and the exported props types as the source of truth for the public API. Button's exported types define the inherited control props.
 
----
-
 ## Styling and DOM contract
 
 Audio Player uses semantic Tailwind tokens, the xvelte Button and Hover Card styles, `tw-animate-css` for the volume panel, and native audio state. It exposes no public CSS variables or variants of its own.
@@ -241,8 +229,6 @@ The internal progress bar, native audio element, seek input, volume bar, and vol
 
 Classes passed to the component parts are merged after their local classes with `cn`, so conflicting Tailwind utilities favor classes from your app. The play and volume Button props are forwarded after local defaults; preserve their internal events and stable slots.
 
----
-
 ## Accessibility
 
 The native audio element is not exposed with browser controls, so the custom controls are responsible for the complete interaction.
@@ -257,15 +243,11 @@ The native audio element is not exposed with browser controls, so the custom con
 - Provide a transcript for spoken content and captions or an equivalent synchronized alternative when the audio accompanies visual media. The current `Root` cannot render `<track>` inside its internal audio element.
 - Do not communicate playing, muted, or progress state only through color. The icons change visually, but accessible state text is not currently exposed.
 
----
-
 ## Localization
 
 Audio Player has no built-in translatable strings or localization messages. Your app supplies the player label, track metadata, button labels, transcript links, error messages, and other accessible text.
 
 `Time` always uses the locale-independent `m:ss / m:ss` format with ASCII digits and a slash separator; it has no locale or formatter prop. Icon names, `data-slot` values, and media-state identifiers are implementation details and must not be translated.
-
----
 
 ## Dependencies
 
@@ -494,13 +476,9 @@ export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
 
 The `any` conditional types may require the same targeted ESLint exceptions used by xvelte. Audio Player does not require public hooks, attachments, localization messages, or shared styles beyond the internal context module and dependencies listed above.
 
----
-
 ## Credits
 
 Audio Player is adapted from the [more-shadcn-svelte Audio component](https://more-shadcn.noair.fun/docs/components/audio). Its state, composition, icons, styling, types, and imports have been modified to follow xvelte conventions.
-
----
 
 ## File organization
 

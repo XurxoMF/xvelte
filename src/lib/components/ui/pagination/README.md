@@ -20,8 +20,6 @@ This component wraps Bits UI pagination with xvelte styling, localized control l
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component through its public `index.ts`:
@@ -36,8 +34,6 @@ The component exports:
 
 - Components: `Root`, `Content`, `Item`, `Link`, `Ellipsis`, `Previous`, and `Next`.
 - Types: `RootProps`, `ContentProps`, `ItemProps`, `LinkProps`, `EllipsisProps`, `PreviousProps`, and `NextProps`.
-
----
 
 ## Anatomy
 
@@ -72,8 +68,6 @@ The component exports:
 ```
 
 `Previous`, `Next`, and `Link` must be descendants of `Root` because Bits UI provides their state through context. `Content` and `Item` are semantic layout elements and may be replaced only if the replacement preserves the list structure.
-
----
 
 ## Basic usage
 
@@ -118,8 +112,6 @@ The component exports:
 ```
 
 `count` is the total number of records, not the number of pages. The root derives the total page count from `count / perPage`.
-
----
 
 ## Examples
 
@@ -219,8 +211,6 @@ The root also exposes a one-based `range`:
 
 Handle an empty collection separately: with `count={0}`, Bits UI keeps page 1 and reports a range whose end is 0.
 
----
-
 ## Public API
 
 The component `index.ts` and its exported types are the source of truth. The tables below document xvelte defaults and adaptations; inherited primitive options are summarized rather than duplicated.
@@ -288,8 +278,6 @@ Their standard rendering is intentionally fixed to a localized accessible name, 
 
 `EllipsisProps` extends Svelte `HTMLAttributes<HTMLSpanElement>` with a bindable `ref` and omits `children`. It renders the fixed ellipsis icon and forwards remaining `span` attributes. The whole marker is `aria-hidden="true"` because it is visual context rather than an interactive control.
 
----
-
 ## Styling and DOM contract
 
 Stable xvelte hooks:
@@ -308,8 +296,6 @@ Stable xvelte hooks:
 
 The root centers a full-width flex container. `Content` is a horizontal flex list with a small gap. Links, previous, and next reuse the Button component variants: active links use `outline`, other controls use `ghost`, and all use icon sizing. Every local `class` value is merged with `cn()` so later Tailwind utilities can override defaults.
 
----
-
 ## Accessibility
 
 - `Root` renders a navigation landmark with the localized accessible name “Pagination”.
@@ -322,8 +308,6 @@ The root centers a full-width flex container. `Content` is a horizontal flex lis
 - Keep pagination near the content it controls. If a page change replaces results without navigation, move focus or announce the update when the surrounding experience needs that feedback.
 
 See [Bits UI Pagination](https://www.bits-ui.com/docs/components/pagination) for the underlying keyboard and focus implementation.
-
----
 
 ## Localization
 
@@ -341,8 +325,6 @@ The component uses these Paraglide messages from `messages/en.json`:
 The ellipsis hidden text is included for visual parity but is not announced because the enclosing marker is `aria-hidden`. Bits UI currently creates the individual page-button label as English “Page N”; this wrapper does not expose a separate override for that generated label.
 
 Any result summary, loading message, empty state, or custom link content belongs to the app and must be translated there.
-
----
 
 ## Dependencies
 
@@ -462,13 +444,9 @@ Configure Paraglide so `$lib/paraglide/messages.js` is generated and add the six
 
 No shared attachment, hook, context file, font, keyframe, or additional xvelte component is required.
 
----
-
 ## Credits
 
 Adapted from the [shadcn-svelte Pagination component](https://www.shadcn-svelte.com/docs/components/pagination).
-
----
 
 ## File organization
 

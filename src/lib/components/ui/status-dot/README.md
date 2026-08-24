@@ -20,8 +20,6 @@ Use Status Dot beside text that explains availability, health, severity, or conn
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -32,8 +30,6 @@ Use Status Dot beside text that explains availability, health, severity, or conn
 
 `index.ts` exports `Root`, `rootVariants`, `RootProps`, `RootVariants`, and `RootSizes`.
 
----
-
 ## Anatomy
 
 The root wraps the visible dot and, when enabled, a second absolute pulse layer:
@@ -43,8 +39,6 @@ The root wraps the visible dot and, when enabled, a second absolute pulse layer:
 ```
 
 The component accepts no dedicated text prop; place explanatory text beside it.
-
----
 
 ## Basic usage
 
@@ -58,8 +52,6 @@ The component accepts no dedicated text prop; place explanatory text beside it.
 	<span>Service operational</span>
 </span>
 ```
-
----
 
 ## Examples
 
@@ -101,8 +93,6 @@ Prefer visible labels in real interfaces; the accessible labels above only demon
 
 Use the exported helper only when another element intentionally needs the exact Status Dot variant classes.
 
----
-
 ## Public API
 
 ### `StatusDot.Root`
@@ -123,8 +113,6 @@ All remaining native `<span>` attributes and handlers are forwarded. Children ar
 
 `rootVariants({ variant, size })` is a Tailwind Variants function. `RootVariants` and `RootSizes` expose its two option types for wrappers and app code.
 
----
-
 ## Styling and DOM contract
 
 - Stable root hook: `data-slot="status-dot"`.
@@ -137,21 +125,15 @@ All remaining native `<span>` attributes and handlers are forwarded. Children ar
 
 The nested spans have no stable `data-slot`. Target the root or exported variant helper instead of depending on child position.
 
----
-
 ## Accessibility
 
 Status Dot has no default role or accessible name. Pair it with visible text and normally mark the dot `aria-hidden="true"`. If the state changes dynamically, put `role="status"` or an appropriate live region on the surrounding text, not on an unexplained color marker.
 
 Pulse is visual only. Respect reduced-motion needs in the app, for example with `class="motion-reduce:[&>span]:animate-none"`, and never make the pulse the only indication of change.
 
----
-
 ## Localization
 
 Status Dot contains no built-in copy and requires no localization messages. The app supplies and translates every visible status and accessible label.
-
----
 
 ## Dependencies
 
@@ -221,13 +203,9 @@ status-dot/
 
 Status Dot requires no icon, other xvelte component, hook, attachment, context, localization setup, shared style, image, font, or network service.
 
----
-
 ## Credits
 
 The component is adapted from [more-shadcn-svelte Status Dot](https://more-shadcn.noair.fun/docs/components/status-dot).
-
----
 
 ## File organization
 

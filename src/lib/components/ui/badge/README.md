@@ -20,8 +20,6 @@ Use Badge for brief, secondary information that benefits from a visually distinc
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import the component from its public `index.ts` entry point:
 ```
 
 Badge's `index.ts` exports `Root`, the `RootProps` and `RootVariants` types, and the `rootVariants` styling function.
-
----
 
 ## Anatomy
 
@@ -52,8 +48,6 @@ Without a truthy `href`, `Root` renders a `span`. With a non-empty `href`, it re
 
 The exported `rootVariants` function makes the same visual variants available when another element or component must own the markup.
 
----
-
 ## Basic usage
 
 ```svelte
@@ -69,8 +63,6 @@ The exported `rootVariants` function makes the same visual variants available wh
 ```
 
 Choose a variant for visual hierarchy, not as the only way to communicate meaning. The text should remain understandable without its color.
-
----
 
 ## Examples
 
@@ -130,8 +122,6 @@ Use `rootVariants` when semantic markup other than Badge's `span` or anchor must
 
 The function returns only a class string. It does not add `data-slot`, select an element, forward a ref, or provide button/link behavior. Add those concerns at the usage site.
 
----
-
 ## Public API
 
 ### `Badge.Root`
@@ -164,8 +154,6 @@ rootVariants({ variant: "outline" });
 | `class`   | Tailwind Variants class input                                                                                               | `undefined` | Appends classes supplied by your app to the result. |
 
 `RootVariants` is the exported variant-value type, while `RootProps` is the complete component props type. Use `index.ts`, the exported types, and `rootVariants` as the source of truth for the public API.
-
----
 
 ## Styling and DOM contract
 
@@ -201,8 +189,6 @@ Variant behavior:
 
 Every interactive variant inherits the required global three-pixel, 50%-opacity `ring` focus treatment; the component adds only its `aria-invalid` styling. Classes passed by your app are merged last through `cn`; when copying the component, keep Tailwind Merge so conflicting utility overrides remain predictable.
 
----
-
 ## Accessibility
 
 Badge supplies visual styling but no role, accessible name, announcements, or keyboard behavior beyond the semantics of its rendered element.
@@ -215,15 +201,11 @@ Badge supplies visual styling but no role, accessible name, announcements, or ke
 - Decorative icons should use `aria-hidden="true"`. When an icon conveys unique meaning, provide accessible text rather than relying on the SVG alone.
 - Avoid applying live-region roles to static badges. If a count or status must be announced when it changes, manage a suitably worded and intentionally scoped live region in application code.
 
----
-
 ## Localization
 
 Badge contains no built-in user-facing copy and uses no localization messages. Your app supplies all label text, link names, count formatting, hidden descriptions, and status announcements.
 
 Keep translated content concise enough for a single-line pill, but do not abbreviate away its meaning. Do not translate the technical variant names or `data-slot`/`data-icon` values.
-
----
 
 ## Dependencies
 
@@ -329,13 +311,9 @@ Your global stylesheet must import Tailwind, define the dark variant, and expose
 
 No Bits UI package, `tw-animate-css` import, keyframe, custom radius variable, icon export from `$lib/icons`, other xvelte component, hook, attachment, context module, localization message, or shared component stylesheet is required. Icons are optional content supplied by your app and bring their own dependency.
 
----
-
 ## Credits
 
 Badge is adapted from the [shadcn-svelte Badge](https://www.shadcn-svelte.com/docs/components/badge). Its export names and local usage conventions have been aligned with xvelte.
-
----
 
 ## File organization
 

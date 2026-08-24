@@ -20,8 +20,6 @@ Use Button to trigger an immediate action, submit or reset a form, open an inter
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import the component from its public `index.ts` entry point:
 ```
 
 Button's `index.ts` exports `Root`, the `RootProps`, `RootVariants`, and `RootSizes` types, and the `rootVariants` styling function.
-
----
 
 ## Anatomy
 
@@ -56,8 +52,6 @@ Button has one public component part and always renders a native `button`:
 
 Use the exported `rootVariants` function when another semantic element, such as an anchor, must look like a button.
 
----
-
 ## Basic usage
 
 ```svelte
@@ -73,8 +67,6 @@ Use the exported `rootVariants` function when another semantic element, such as 
 ```
 
 The component forwards native button events and attributes. It does not add loading, confirmation, toggle, or asynchronous state; your app manages those behaviors.
-
----
 
 ## Examples
 
@@ -190,8 +182,6 @@ The local component has no `href` prop and never changes its native element. App
 
 The function supplies classes only. Your app must provide the correct element, attributes, navigation behavior, and any additional class merging.
 
----
-
 ## Public API
 
 ### `Button.Root`
@@ -264,8 +254,6 @@ rootVariants({ variant: "secondary", size: "sm" });
 
 The function does not render an element, add `data-slot`, merge a ref, or provide disabled/navigation behavior. Use `index.ts`, the exported types, and this function as the source of truth for the public API.
 
----
-
 ## Styling and DOM contract
 
 Button uses Tailwind Variants and semantic theme tokens. It exposes no component-specific CSS variables.
@@ -288,8 +276,6 @@ The stable `group/button` class namespace lets your app style descendants based 
 
 Classes supplied through `class` are merged after generated classes using `cn`, so conflicting Tailwind utilities normally favor your values. The active transform, descendant selectors, and state variants may require equally specific selectors when overriding them.
 
----
-
 ## Accessibility
 
 Button relies on native button semantics and interaction. It adds styling for common ARIA states but does not manage those states.
@@ -306,15 +292,11 @@ Button relies on native button semantics and interaction. It adds styling for co
 
 Keyboard activation, disabled behavior, focus order, and form submission are supplied by the native button. There are no custom shortcuts.
 
----
-
 ## Localization
 
 Button contains no built-in user-facing copy and uses no localization messages. Your app supplies visible labels, icon-only accessible names, loading text, error descriptions, confirmation copy, and dynamic state announcements.
 
 Allow enough width for translated labels or override the default `whitespace-nowrap` only when wrapping is intentionally supported by the surrounding layout. Do not translate the technical variant names, size names, or `data-slot`/`data-icon` values.
-
----
 
 ## Dependencies
 
@@ -437,13 +419,9 @@ The application remains responsible for applying its `.dark` class, normally thr
 
 No Bits UI package, `tw-animate-css` import, animation, keyframe, other xvelte component, hook, attachment, context module, localization message, or shared component stylesheet is required. Button Group is an optional composition: Button merely reacts when an ancestor exposes `data-slot="button-group"`.
 
----
-
 ## Credits
 
 Button is adapted from the [shadcn-svelte Button](https://www.shadcn-svelte.com/docs/components/button). Its element contract, dimensions, variants, exports, and local interaction details have been adapted for xvelte.
-
----
 
 ## File organization
 

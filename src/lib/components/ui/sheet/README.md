@@ -20,8 +20,6 @@ Use Sheet for secondary tasks or navigation that should remain connected to the 
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -31,8 +29,6 @@ Use Sheet for secondary tasks or navigation that should remain connected to the 
 ```
 
 `index.ts` exports `Root`, `Trigger`, `Portal`, `Overlay`, `Content`, `Close`, `Header`, `Footer`, `Title`, and `Description`, together with matching props types. It also exports the `ContentSides` type through `ContentProps`' source module only indirectly; `ContentSides` is not re-exported by `index.ts`, so applications should normally infer `side` from `ContentProps`.
-
----
 
 ## Anatomy
 
@@ -53,8 +49,6 @@ Use Sheet for secondary tasks or navigation that should remain connected to the 
 ```
 
 Content automatically renders Portal and Overlay, then creates its required panel content and optional close button. Do not wrap Content in a second Portal or add a second Overlay for normal use.
-
----
 
 ## Basic usage
 
@@ -87,8 +81,6 @@ Content automatically renders Portal and Overlay, then creates its required pane
 ```
 
 The default side is right. `Header` and `Footer` provide spacing but do not submit or associate forms automatically.
-
----
 
 ## Examples
 
@@ -192,8 +184,6 @@ Portal target behavior is inherited from Bits UI. The local Content and Overlay 
 
 Non-modal mode changes focus and outside interaction. The local overlay still renders; hide or restyle it through `data-slot="sheet-overlay"` if a non-modal visual treatment requires it.
 
----
-
 ## Public API
 
 Sheet wraps the installed stable `bits-ui@2.18.1` Dialog primitive. The tables document local adaptations and important inherited options; see the complete [Bits UI Dialog API](https://bits-ui.com/docs/components/dialog#api-reference). The component's `index.ts`, exported types, and source are the source of truth.
@@ -233,8 +223,6 @@ Content forwards native div attributes and important Dialog options such as esca
 
 Header and Footer are layout helpers only. They do not add dialog semantics or button behavior.
 
----
-
 ## Styling and DOM contract
 
 | Part        | Stable `data-slot`           | Local behavior                                                                   |
@@ -251,15 +239,11 @@ Header and Footer are layout helpers only. They do not add dialog semantics or b
 
 Bits UI supplies `data-state="open|closed"` and dialog relationship attributes. Every styled part merges `class` with `cn()`. Content's `side` is local and becomes `data-side`; it is not a Bits UI positioning prop.
 
----
-
 ## Accessibility
 
 Bits UI provides dialog semantics, focus trapping in modal mode, escape dismissal, outside interaction, focus restoration, and Title/Description relationships. Every Content needs a meaningful Title. Include Description when extra context helps; visually hide either with `sr-only` rather than omitting required semantics.
 
 The generated close button uses the localized accessible name “Close”. If `showCloseButton={false}`, ensure another reachable Close control exists unless dismissal through escape/outside interaction is intentionally sufficient. Do not place focus behind a modal sheet or override dialog roles and generated IDs.
-
----
 
 ## Localization
 
@@ -268,8 +252,6 @@ The generated close button uses the localized accessible name “Close”. If `s
 | `amber_fox_glide` | `Close`       | Screen-reader text in the generated close button. |
 
 Title, Description, panel content, action labels, and custom close text are supplied and translated by the app.
-
----
 
 ## Dependencies
 
@@ -398,13 +380,9 @@ sheet/
 
 Sheet requires no hook, attachment, local context file, shared style, image, font, or network service. Bits UI owns its internal dialog context.
 
----
-
 ## Credits
 
 The component structure and styling are adapted from [shadcn-svelte Sheet](https://www.shadcn-svelte.com/docs/components/sheet).
-
----
 
 ## File organization
 

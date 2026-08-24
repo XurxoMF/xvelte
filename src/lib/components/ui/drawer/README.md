@@ -20,8 +20,6 @@ Use Drawer for compact forms, filters, navigation, details, and mobile or tablet
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import all parts from the component's public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import all parts from the component's public `index.ts` entry point:
 ```
 
 Drawer's `index.ts` exports `Root`, `NestedRoot`, `Trigger`, `Portal`, `Overlay`, `Content`, `Header`, `Title`, `Description`, `Footer`, and `Close`, together with the corresponding `RootProps`, `NestedProps`, `TriggerProps`, `PortalProps`, `OverlayProps`, `ContentProps`, `HeaderProps`, `TitleProps`, `DescriptionProps`, `FooterProps`, and `CloseProps` types.
-
----
 
 ## Anatomy
 
@@ -62,8 +58,6 @@ Compose a Trigger and Content below one Root:
 Content automatically renders Portal and Overlay. Do not wrap ordinary Content in another Portal or add a second Overlay. Unlike Dialog, Drawer does not generate any close button; include a clearly labeled Close in the content.
 
 Header and Footer are native layout containers. Root and NestedRoot own state and gestures, while Trigger, Content, Overlay, Title, Description, Close, and Portal adapt Vaul Svelte's legacy component API to local Svelte 5 usage.
-
----
 
 ## Basic usage
 
@@ -97,8 +91,6 @@ Header and Footer are native layout containers. Root and NestedRoot own state an
 ```
 
 Trigger and Close render native buttons with `type="button"` but have no local visual styles. Closing does not save, validate, or submit anything by itself; connect application behavior to the appropriate controls.
-
----
 
 ## Examples
 
@@ -255,8 +247,6 @@ NestedRoot must be rendered below an outer Root and coordinates drag and scaling
 
 Using NestedRoot outside Root throws an error. Prefer NestedRoot rather than manually setting `nested` on an ordinary Root because it installs the parent coordination callbacks.
 
----
-
 ## Public API
 
 Drawer wraps `vaul-svelte` 0.3.2, which internally uses a legacy Bits UI/Melt dialog API. The tables summarize local behavior and the important installed options; consult the [Vaul Svelte repository](https://github.com/huntabyte/vaul-svelte) for background, but treat this component's `index.ts`, exported types, installed package source, and local wrappers as the source of truth.
@@ -408,8 +398,6 @@ Type: `CloseProps`, based on installed Vaul Close props after replacing legacy `
 
 Remaining compatible native button attributes and legacy events are forwarded. Close renders `type="button"`, adds `data-slot="drawer-close"`, and invokes Vaul's animated close routine. Its inherited `asChild` path is unsupported.
 
----
-
 ## Styling and DOM contract
 
 Drawer combines local Tailwind classes with Vaul Svelte's component-scoped global CSS, inline transforms, and dependency-owned attributes. It exposes no xvelte-specific CSS variables.
@@ -434,8 +422,6 @@ Styled parts merge `class` with `cn`, so later Tailwind utilities can replace co
 
 Bottom and top drawers span horizontally, stop at `80vh`, and receive edge-specific rounded corners and borders. Left and right drawers use `75%` viewport width and cap at `sm:max-w-sm`. Overlay and Content share `z-50`. Overlay uses hard-coded `black/10`; Content uses semantic popover colors. Vaul's built-in drawer transform and overlay-opacity transitions last `500ms`, while its close-state bookkeeping includes separate internal timing.
 
----
-
 ## Accessibility
 
 Vaul Svelte's legacy Bits/Melt dialog layer supplies modal dialog semantics, Trigger expanded state, native button behavior, Title and Description relationships, focus containment, outside-click handling, Escape handling, body scroll locking, and hidden/visible state. Title defaults to a real `h2`.
@@ -452,15 +438,11 @@ App responsibilities:
 
 `dismissible={false}` prevents outside-click and natural swipe dismissal in the installed runtime, but Escape and an explicit Close still close the drawer. There is no reliable local prop for disabling Vaul's document-level Escape handler; always design Escape as an available exit.
 
----
-
 ## Localization
 
 Drawer contains no built-in human-readable copy and does not use Paraglide messages. The app supplies and translates Trigger text, Title, Description, Close labels, form labels, action labels, instructions, progress, errors, and all drawer body content.
 
 Direction names, state values, snap-point values, `data-*` attributes, CSS variables, and internal class names are implementation values and must not be translated.
-
----
 
 ## Dependencies
 
@@ -583,13 +565,9 @@ or set `shouldScaleBackground={false}` on each Root and NestedRoot that should n
 
 Drawer requires no other xvelte component, icon export, hook, attachment, localization message, Paraglide setup, custom context file, shared component stylesheet, or external asset. Vaul Svelte owns its internal contexts, legacy Bits/Melt integration, gesture state, document listeners, and scroll lock.
 
----
-
 ## Credits
 
 Drawer is adapted from [shadcn-svelte's Drawer component](https://www.shadcn-svelte.com/docs/components/drawer). Local xvelte API adaptations, defaults, composition, styling, dependencies, Vaul version constraints, and documented limitations take precedence.
-
----
 
 ## File organization
 

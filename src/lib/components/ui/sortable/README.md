@@ -19,8 +19,6 @@ Use Sortable for one ordered collection whose visual design and application data
 - [Dependencies](#dependencies)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -32,8 +30,6 @@ Use Sortable for one ordered collection whose visual design and application data
 ```
 
 The component exports `Root`, `Item`, `DragHandle`, and `orderItems`, plus the public `RootProps`, `ItemProps`, `DragHandleProps`, `SortableItemId`, `SortableOrder`, and `SortableItemState` types.
-
----
 
 ## Anatomy
 
@@ -49,8 +45,6 @@ Declare Items directly inside Root. Every movable Item needs an explicit descend
 ```
 
 Each Item renders its own element and registers its ID and lifecycle state with the nearest Root, like the other declarative xvelte components. Root coordinates `svelte-dnd-action` and writes provisional and final IDs to `order`; no `items` prop or item-rendering snippet is needed.
-
----
 
 ## Basic usage
 
@@ -92,8 +86,6 @@ Initialize `order` from persisted IDs, bind it to Root, and use `orderItems` to 
 `order` is live, not drop-only state. Whenever the active Item reaches a new provisional position, Root writes that exact current ID sequence to the binding and then calls `onDragging`. Reading `order` inside `onDragging` therefore returns the same provisional order currently displayed, even though the Item has not been dropped yet. When the pointer is released, or a keyboard drag is completed, Root commits the final sequence and only then calls `onDragEnd` once. `onDragEnd` observes the completed interaction; it does not perform or enable the reordering.
 
 The effect runs for initial normalization and every provisional move. Use `onDragEnd` instead when persistence should happen only once after a completed interaction, or when it needs the active Item snapshot. Always spread every delegated DragHandle prop because it contains the attachment that connects the handle to the drag-and-drop action.
-
----
 
 ## Examples
 
@@ -143,8 +135,6 @@ Root and every rendered Item expose `data-disabled="true"`. The dependency preve
 ```
 
 Spread every supplied prop on the delegated element to preserve its ref attachment and stable state attributes.
-
----
 
 ## Public API
 
@@ -217,8 +207,6 @@ type SortableItemState = {
 
 Snapshots contain only ordering metadata. Keep labels, records, and other application payload in app state and map them by `id`.
 
----
-
 ## Styling and DOM contract
 
 Root and Item are headless. DragHandle provides the collection's standard compact ghost Button by default.
@@ -235,8 +223,6 @@ Root and Item default to `div`, and Item may delegate its element. DragHandle de
 
 The component requires no semantic color, CSS variable, global keyframe, or shared stylesheet.
 
----
-
 ## Accessibility
 
 `svelte-dnd-action` provides pointer and keyboard dragging plus screen-reader announcements. Press Space or Enter on a focused handle to pick up or drop an Item, and use the arrow keys while it is picked up to change its position.
@@ -250,8 +236,6 @@ The component requires no semantic color, CSS variable, global keyframe, or shar
 
 When Root is disabled, the dependency prevents starting a drag. The app should also communicate that state visually.
 
----
-
 ## Localization
 
 DragHandle uses one Paraglide message from `messages/en.json`:
@@ -261,8 +245,6 @@ DragHandle uses one Paraglide message from `messages/en.json`:
 | `merry_finch_drag` | `Drag to reorder` | Default DragHandle accessible label |
 
 Override `aria-label` for item-specific copy. Item content, persistence messages, and alternative movement controls belong to the app and use its localization system.
-
----
 
 ## Dependencies
 
@@ -319,8 +301,6 @@ Configure Paraglide so `$lib/paraglide/messages.js` is generated and add the mes
 ### Global styles
 
 Sortable adds no component-specific stylesheet, variable, keyframe, or font. Its default DragHandle uses Button's semantic colors and focus styles, so copy and configure Button first.
-
----
 
 ## File organization
 

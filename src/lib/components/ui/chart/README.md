@@ -24,8 +24,6 @@ This project uses stable `layerchart@2.1.0`. Consult the [LayerChart v2 document
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the local presentation components from their public `index.ts` entry point and chart primitives directly from LayerChart:
@@ -39,8 +37,6 @@ Import the local presentation components from their public `index.ts` entry poin
 ```
 
 Chart's `index.ts` exports `Container`, `Tooltip`, and `Style`, their props types, configuration and tooltip types, context helpers, `getPayloadConfigFromPayload`, and `THEMES`.
-
----
 
 ## How xvelte and LayerChart fit together
 
@@ -58,8 +54,6 @@ Chart.Container (xvelte)
 `Chart.Container` supplies xvelte's configuration and theme variables. LayerChart supplies the chart engine, data accessors, scales, SVG/Canvas/HTML layers, marks, layout, interaction state, legend, and tooltip positioning.
 
 Choose a simplified LayerChart component such as `BarChart`, `LineChart`, `AreaChart`, `ScatterChart`, or `PieChart` for common visualizations. Use LayerChart's composable `Chart` and primitives when the visualization needs a custom structure. Refer to the [LayerChart v2 component catalog](https://www.layerchart.com/docs/components) instead of expecting those options on xvelte's `Chart.Container`.
-
----
 
 ## Basic usage
 
@@ -112,8 +106,6 @@ Choose a simplified LayerChart component such as `BarChart`, `LineChart`, `AreaC
 ```
 
 The keys in `chartConfig`, the LayerChart `series` keys, and the generated variables such as `--color-desktop` must describe the same series. LayerChart v2 automatically chooses a suitable scale for categorical month values; add an explicit scale only when the visualization needs different behavior.
-
----
 
 ## Examples
 
@@ -252,8 +244,6 @@ Container also works with LayerChart's base `Chart`, layers, axes, and marks:
 
 Treat this as an architectural example and verify individual props against the [LayerChart v2 Chart API](https://www.layerchart.com/docs/components/Chart) and [component catalog](https://www.layerchart.com/docs/components), because xvelte does not redefine their types or behavior.
 
----
-
 ## Chart configuration
 
 `ChartConfig` is a record keyed by series or data identity:
@@ -290,8 +280,6 @@ const series = [{ key: "desktop", color: "var(--color-desktop)" }];
 Keys become part of CSS custom-property names. Prefer stable CSS-safe identifiers such as `desktop`, `mobile`, or `net_revenue`; avoid spaces and punctuation that would produce invalid custom properties.
 
 The config is reactive through `Chart.Container`. Updating a color, theme, label, or icon updates the local context and regenerates the scoped style content.
-
----
 
 ## Public API
 
@@ -378,8 +366,6 @@ The xvelte `getChartContext` helper is different from LayerChart's helper with t
 
 Use `index.ts` and the exported props types as the source of truth for the local API.
 
----
-
 ## Tooltip behavior
 
 - Tooltip must render inside both `Chart.Container` and a LayerChart chart that provides tooltip context. Missing either context causes an error.
@@ -390,8 +376,6 @@ Use `index.ts` and the exported props types as the source of truth for the local
 - Default headings and values call `toLocaleString(getLocale())` with the active Paraglide locale. Use `formatter` for currency, units, percentages, custom date styles, or time zones.
 - A falsey formatted heading such as an empty string or numeric zero is not rendered by the current local template.
 - LayerChart v2 owns tooltip hit testing and placement. Configure modes such as band, bisect, quadtree, or manual interaction on the LayerChart component; see the [LayerChart v2 tooltip guide](https://www.layerchart.com/docs/guides/tooltip).
-
----
 
 ## Styling and DOM contract
 
@@ -417,8 +401,6 @@ Container intentionally adjusts LayerChart's `.lc-*` classes:
 
 These selectors target LayerChart v2's class contract. Recheck them when upgrading LayerChart, especially across major versions. The [LayerChart v1-to-v2 migration guide](https://www.layerchart.com/docs/guides/migrations/v1-to-v2) explains the major architecture and class/API changes relevant to older examples.
 
----
-
 ## Accessibility
 
 Charts require both a visual treatment and an equivalent way to understand the data.
@@ -434,15 +416,11 @@ Charts require both a visual treatment and an equivalent way to understand the d
 
 Do not add `role="img"` around interactive controls. For a purely static chart, an appropriately named image role may be useful, but a labelled figure plus accessible data usually communicates more information.
 
----
-
 ## Localization
 
 Chart contains no built-in human-readable strings and does not require Paraglide messages. Config labels, captions, axis ticks, legend text, units, custom tooltip labels, and accessible summaries are supplied by the app and should follow its localization conventions.
 
 The built-in Tooltip calls `toLocaleString(getLocale())` for default headings and values, so dates and numbers follow the active Paraglide locale. Use `labelFormatter`, the `formatter` snippet, `Intl.NumberFormat`, or `Intl.DateTimeFormat` when the app requires a currency, unit, notation, date style, or time zone.
-
----
 
 ## Dependencies
 
@@ -542,13 +520,9 @@ The app remains responsible for applying its `.dark` class, normally through roo
 
 Chart requires no other xvelte UI component, icon export, hook, attachment, context outside its own folder, localization message, `tw-animate-css` import, or global keyframe. The generated Paraglide runtime is required. Keep `chart-context.ts` and `chart-utils.ts` with the component because Container and Tooltip import them directly.
 
----
-
 ## Credits
 
 Chart is adapted from the [shadcn-svelte Chart](https://www.shadcn-svelte.com/docs/components/chart). Its presentation layer has been adapted to stable LayerChart 2.1.0, xvelte's native context conventions, local theme tokens, utility imports, tooltip behavior, and public props types.
-
----
 
 ## File organization
 

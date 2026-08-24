@@ -21,8 +21,6 @@ Use Card for self-contained summaries, settings, forms, products, events, and ot
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts` entry point:
@@ -34,8 +32,6 @@ Import the component from its public `index.ts` entry point:
 ```
 
 Card's `index.ts` exports `Root`, `Header`, `Title`, `Description`, `Action`, `Content`, and `Footer`. It also exports a matching props type for every component.
-
----
 
 ## Anatomy
 
@@ -68,8 +64,6 @@ Root
 
 The parts do not require a Svelte context and can technically render independently, but their spacing and group selectors are designed to work together inside `Card.Root`.
 
----
-
 ## Basic usage
 
 ```svelte
@@ -90,8 +84,6 @@ The parts do not require a Svelte context and can technically render independent
 ```
 
 Card does not set its own width. Use `class` to place it in the surrounding layout and constrain it when necessary.
-
----
 
 ## Examples
 
@@ -202,8 +194,6 @@ A direct image placed first removes Root's top padding, and the built-in image s
 
 Adding `border-b` to Header automatically adds matching bottom padding: `1rem` for the default size and `0.75rem` for a small card.
 
----
-
 ## Public API
 
 Card is implemented with native HTML elements and does not wrap a third-party primitive. Every part forwards its native attributes, event handlers, `children`, bindable `ref`, and `class`.
@@ -242,8 +232,6 @@ All part types are based on the native attributes for their listed element. Thei
 
 Use `index.ts` and the exported props types as the source of truth for the local API.
 
----
-
 ## Layout behavior
 
 - Root is a vertical flex container with a default `1rem` gap and vertical padding. `size="sm"` reduces both to `0.75rem`.
@@ -254,8 +242,6 @@ Use `index.ts` and the exported props types as the source of truth for the local
 - Root clips overflow. Menus, tooltips, and popovers that must extend outside the card should render through a portal or be placed where clipping is not a problem.
 
 Unlike the current shadcn-svelte Card, the local implementation does not expose or read a `--card-spacing` CSS variable. Customize local spacing with `size` and `class`, and treat the component source as the authority when adapting upstream examples.
-
----
 
 ## Styling and DOM contract
 
@@ -275,8 +261,6 @@ Root also exposes `data-size="default"` or `data-size="sm"`. Descendants use the
 
 `class` is merged with Tailwind Merge, so ordinary conflicting utilities can replace local ones. Some structural selectors react to descendants or classes—such as Footer presence, a leading image, `data-slot="card-action"`, and `border-b`—and should be preserved when the matching behavior is wanted.
 
----
-
 ## Accessibility
 
 Card is a visual composition helper, not an accessibility primitive. It intentionally adds no role, keyboard handling, focus management, or accessible name.
@@ -290,13 +274,9 @@ Card is a visual composition helper, not an accessibility primitive. It intentio
 
 The local colors come from semantic theme tokens; verify text, muted text, focus indicators, and action contrast in every supported theme.
 
----
-
 ## Localization
 
 Card contains no built-in human-readable text and does not require Paraglide messages. Titles, descriptions, actions, image alternatives, and content are supplied by the app and should follow its localization conventions.
-
----
 
 ## Dependencies
 
@@ -382,13 +362,9 @@ The app remains responsible for applying its `.dark` class when dark theme value
 
 Card requires no icon export, UI component, hook, attachment, context file, localization message, shared component stylesheet, animation package, or global keyframe. Components shown inside Card examples have their own installation requirements; follow each component's README when you use them.
 
----
-
 ## Credits
 
 Card is adapted from the [shadcn-svelte Card](https://www.shadcn-svelte.com/docs/components/card). Its composition has been adapted to xvelte's local size option, spacing, footer treatment, styling, props types, and import conventions.
-
----
 
 ## File organization
 

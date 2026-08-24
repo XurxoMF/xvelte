@@ -20,8 +20,6 @@ Use Select when the option list needs custom styling or richer composition. Use 
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -33,8 +31,6 @@ Use Select when the option list needs custom styling or richer composition. Use 
 `index.ts` exports `Root`, `Trigger`, `Content`, `Item`, `Group`, `GroupHeading`, `Label`, `Separator`, `ScrollUpButton`, `ScrollDownButton`, and `Portal`, together with a matching props type for every part.
 
 The local component does not export a `Value` part. The app renders placeholder or selected text inside Trigger.
-
----
 
 ## Anatomy
 
@@ -51,8 +47,6 @@ The local component does not export a `Value` part. The app renders placeholder 
 ```
 
 Content creates Portal, the positioned primitive content, both scroll buttons, and Viewport internally. Item creates its selection indicator and text wrapper. Use `GroupHeading` for a heading tied to Bits UI group semantics; `Label` is a plain styled `<div>` for visual labels only.
-
----
 
 ## Basic usage
 
@@ -81,8 +75,6 @@ Content creates Portal, the positioned primitive content, both scroll buttons, a
 ```
 
 Passing the same `items` array to Root enables closed-trigger typeahead and form autofill for single selection. It does not render options; Item components are still required.
-
----
 
 ## Examples
 
@@ -182,8 +174,6 @@ With `allowDeselect`, choosing the current item again clears a single value.
 
 The local Item keeps its own check indicator and text wrapper. Its snippet receives `selected` and `highlighted` from Bits UI.
 
----
-
 ## Public API
 
 Select wraps the installed stable `bits-ui@2.18.1` primitive. The tables document every local part and adaptation while summarizing inherited behavior; see the complete [Bits UI Select API](https://bits-ui.com/docs/components/select#api-reference). The component's `index.ts`, exported types, and source are the source of truth.
@@ -254,8 +244,6 @@ Content also inherits Bits UI floating-position options such as `side`, `align`,
 | `ScrollUpButton` — `ScrollUpButtonProps`     | Bits UI scroll control with `delay(tick)`, `ref`, and native div attributes; custom snippets are removed and `ChevronUpIcon` is fixed. |
 | `ScrollDownButton` — `ScrollDownButtonProps` | Same API and adaptation, with fixed `ChevronDownIcon`.                                                                                 |
 
----
-
 ## Styling and DOM contract
 
 | Part           | Stable `data-slot`                                     | Noteworthy local hooks                                                    |
@@ -273,23 +261,17 @@ Bits UI's internal Viewport has no local slot but receives anchor-derived `--bit
 
 Every styled part merges `class` with `cn()`. Root and Portal have no visual class. Do not target private Viewport markup when a public Content or Item hook is sufficient.
 
----
-
 ## Accessibility
 
 Bits UI supplies trigger/listbox semantics, active descendant handling, selection state, typeahead, keyboard navigation, escape/outside dismissal, and focus restoration. Trigger needs an accessible name even when visible placeholder text is present. `GroupHeading` should identify grouped options; `Label` is only presentational.
 
 Do not place interactive controls inside Item. Keep every value stable and unique, provide an accurate `label` for typeahead when rendered content contains extra markup, and ensure disabled state is apparent in text when its reason matters. Test single and multiple selection with keyboard and assistive technology.
 
----
-
 ## Localization
 
 Select contains no built-in human-readable copy and requires no localization messages. The app supplies and translates Trigger placeholder/summary text, option labels, group headings, disabled explanations, and validation messages.
 
 The `value` strings submitted to forms are implementation values and normally remain untranslated; `label` and visible children are user-facing.
-
----
 
 ## Dependencies
 
@@ -446,13 +428,9 @@ select/
 
 Select requires no hook, attachment, local context file, localization setup, shared style, image, font, or network service. Bits UI owns its internal context and portal behavior.
 
----
-
 ## Credits
 
 The component structure and styling are adapted from [shadcn-svelte Select](https://www.shadcn-svelte.com/docs/components/select).
-
----
 
 ## File organization
 

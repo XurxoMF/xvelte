@@ -20,8 +20,6 @@ Use Hold Button as an additional guard for deliberate pointer actions such as de
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts`:
@@ -33,8 +31,6 @@ Import the component from its public `index.ts`:
 ```
 
 `index.ts` exports `Root`, `RootProps`, and the `HoldDirection` union.
-
----
 
 ## Anatomy
 
@@ -50,8 +46,6 @@ The rendered button contains two internal layers:
 2. A relative content layer that renders the required `children` snippet above the fill.
 
 The app supplies the label and performs the guarded action in `onComplete`. Do not put that action in `onclick`: a native click can occur when the button is released even if the required hold did not complete, and keyboard activation calls `onclick` without starting the hold timer.
-
----
 
 ## Basic usage
 
@@ -74,8 +68,6 @@ The app supplies the label and performs the guarded action in `onComplete`. Do n
 ```
 
 Press and hold with the mouse or touch. Releasing early cancels the timer and retracts the fill. Completion calls `onComplete` once, keeps the full overlay visible for approximately 200 ms, then resets it for another hold.
-
----
 
 ## Examples
 
@@ -198,8 +190,6 @@ Mouse and touch handlers can observe the gesture without replacing its main inte
 
 The four handlers above run after Hold Button's corresponding internal logic. Do not pass `onmouseleave`: because of the current native-prop forwarding order, it replaces the internal mouse-leave cancellation handler instead of composing with it.
 
----
-
 ## Public API
 
 Hold Button wraps the local Button component. The table documents every Hold Button-owned prop and the inherited Button options most relevant to normal use. Follow the Button component's README for its complete variants, sizes, native attributes, form behavior, styling, and dependencies. Hold Button's `index.ts`, exported types, and local source are the source of truth.
@@ -254,8 +244,6 @@ The component stores its timers internally but does not clear them when it is de
 
 After completion, further starts and cancellations are ignored for about 200 ms. The visual reset then uses a 100 ms transition. No public prop, binding, event, or data attribute exposes holding percentage, active state, or completed state.
 
----
-
 ## Styling and DOM contract
 
 The root is the local Button's native `button` with `relative`, `overflow-hidden`, and `select-none` added to the inherited variant/size classes.
@@ -279,8 +267,6 @@ Neither internal layer has a public `data-slot`. Targeting its exact element ord
 
 Caller `class` values flow through Hold Button's `cn` call and then Button's variant merging, so later conflicting Tailwind utilities can replace ordinary root defaults. Inline transform and transition styles on the fill are not overridable through Root's class.
 
----
-
 ## Accessibility
 
 The rendered element retains native button semantics, focus, disabled behavior, and accessible naming from its children. The hold gesture itself is pointer-only:
@@ -298,15 +284,11 @@ Do not supply `onclick` for the guarded action. Native mouse release and keyboar
 
 Inherited Button focus, invalid, pressed, and expanded styling does not create those behaviors. Follow the Button README for the complete native and ARIA obligations.
 
----
-
 ## Localization
 
 Hold Button has no built-in user-facing copy and imports no localization messages. The app supplies and translates the required children, hold instruction, accessible name, alternative keyboard action, completion status, error feedback, and any duration text.
 
 `fillColor`, `from`, variant names, size names, event names, and `data-slot` are technical values and are not translated. Prefer a localized human duration such as “Hold for 1.5 seconds” rather than exposing raw milliseconds.
-
----
 
 ## Dependencies
 
@@ -424,13 +406,9 @@ The values below are xvelte's defaults and may be replaced while preserving thei
 
 The app owns dark-mode activation. Hold Button requires no `tw-animate-css` import, component-specific CSS, keyframe, icon export, localization message, hook, attachment, context file, image, font, network service, or additional layout rule.
 
----
-
 ## Credits
 
 Adapted from [more-shadcn-svelte's Hold Button](https://more-shadcn.noair.fun/docs/components/hold-button). The local xvelte Button dependency, API, event forwarding, timing, styling, accessibility limitations, and behavior documented here are the source of truth.
-
----
 
 ## File organization
 

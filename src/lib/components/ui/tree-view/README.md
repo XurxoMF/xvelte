@@ -20,8 +20,6 @@ Use Tree View for compact file or hierarchical resource browsing. Do not treat i
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -31,8 +29,6 @@ Use Tree View for compact file or hierarchical resource browsing. Do not treat i
 ```
 
 `index.ts` exports `Root`, `Folder`, `File`, `RootProps`, `FolderProps`, and `FileProps`.
-
----
 
 ## Anatomy
 
@@ -45,8 +41,6 @@ Use Tree View for compact file or hierarchical resource browsing. Do not treat i
 ```
 
 Folder may contain Files or nested Folders. Root and folders do not accept a data model; the app composes the hierarchy directly.
-
----
 
 ## Basic usage
 
@@ -67,8 +61,6 @@ Folder may contain Files or nested Folders. Root and folders do not accept a dat
 ```
 
 Files are native buttons with `type="button"` by default. Folder defaults to open in the local implementation.
-
----
 
 ## Examples
 
@@ -116,8 +108,6 @@ Folder icon receives `name` and current `open`; File icon receives `name`. Custo
 
 Selection is application state; the component adds no selected prop or keyboard selection model.
 
----
-
 ## Public API
 
 Tree View is local code that composes native markup and xvelte Collapsible. The component's `index.ts`, exported types, and source are the source of truth.
@@ -150,8 +140,6 @@ Folder does not expose a ref or general native attributes. Its Trigger has `role
 
 `FileProps` currently includes a `children` snippet through its public type, but `tree-view-file.svelte` does not render it. Use `name` and `icon`; do not rely on File children until the implementation is changed.
 
----
-
 ## Styling and DOM contract
 
 | Part           | Stable hook                            | Local styling                               |
@@ -163,21 +151,15 @@ Folder does not expose a ref or general native attributes. Its Trigger has `role
 
 Default icons are 1rem. Folder's `class` affects only its trigger. File and Root classes merge through `cn()`. Collapsible contributes open/closed state attributes and behavior documented in its README.
 
----
-
 ## Accessibility
 
 Root, Folder Trigger, Folder Content, and File declare `tree`, `treeitem`, and `group` roles, and Collapsible supplies folder disclosure state. However, the local component does not implement the complete ARIA tree keyboard pattern: there is no roving tabindex, Arrow Up/Down navigation between visible nodes, Arrow Right/Left hierarchy navigation, Home/End, or typeahead.
 
 Files and folders remain individually Tab-reachable native buttons. For a strict tree widget, add the missing focus/navigation model before use. Give Root an accessible label, keep file names unique enough in context, and express selection with ARIA plus visible state rather than color alone.
 
----
-
 ## Localization
 
 Tree View contains no built-in copy and requires no localization messages. The app supplies and translates file/folder names, tree labels, actions, selection status, empty states, and errors. File paths or identifiers may remain implementation values when not presented to people.
-
----
 
 ## Dependencies
 
@@ -267,13 +249,9 @@ tree-view/
 
 Tree View needs no hook, attachment, local context file, localization setup, shared style, image, font, or network service. Collapsible owns its state context.
 
----
-
 ## Credits
 
 The component structure is adapted from [shadcn-svelte-extras Tree View](https://www.shadcn-svelte-extras.com/docs/components/tree-view), with the local defaults and limitations documented above.
-
----
 
 ## File organization
 

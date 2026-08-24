@@ -20,8 +20,6 @@ Use Dialog when people must interact with content without leaving the current pa
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import all parts from the component's public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import all parts from the component's public `index.ts` entry point:
 ```
 
 Dialog's `index.ts` exports `Root`, `Trigger`, `Portal`, `Overlay`, `Content`, `Header`, `Title`, `Description`, `Footer`, and `Close`, together with the corresponding `RootProps`, `TriggerProps`, `PortalProps`, `OverlayProps`, `ContentProps`, `HeaderProps`, `TitleProps`, `DescriptionProps`, `FooterProps`, and `CloseProps` types.
-
----
 
 ## Anatomy
 
@@ -63,8 +59,6 @@ Compose a trigger and modal content below one Root:
 Content automatically renders Portal, Overlay, and a top-right icon Close. Do not wrap ordinary Content in another Portal or add a second Overlay. Set `showCloseButton={false}` only when the dialog provides another clear way to close, and pass portal configuration through `portalProps`.
 
 Header and Footer are native layout containers. Title, Description, Trigger, Close, Content, Overlay, Portal, and Root wrap Bits UI primitives.
-
----
 
 ## Basic usage
 
@@ -105,8 +99,6 @@ Header and Footer are native layout containers. Title, Description, Trigger, Clo
 ```
 
 Trigger and the public Close are behavior components without local visual styles, so the example applies Button's exported classes. The automatic top-right close button remains available. Application code owns form state, validation, saving, pending feedback, and errors.
-
----
 
 ## Examples
 
@@ -260,8 +252,6 @@ Trigger renders a button by default. Its `child` snippet can delegate behavior t
 
 Spread every supplied prop onto the delegated element so its ref, expanded state, controls relationship, disabled state, and event handling remain connected. Avoid nested interactive elements.
 
----
-
 ## Public API
 
 Parts backed by Bits UI forward compatible Bits UI and native element props unless a local adaptation below states otherwise. The tables summarize local behavior and important inherited options; use the complete [Bits UI Dialog API reference](https://www.bits-ui.com/docs/components/dialog#api-reference) for dependency-owned details.
@@ -411,8 +401,6 @@ Remaining compatible native `div` attributes are forwarded. Overlay adds `data-s
 
 The component's `index.ts`, exported types, and local source are the source of truth for the public API.
 
----
-
 ## Styling and DOM contract
 
 Dialog uses semantic Tailwind tokens, `tw-animate-css`, local `data-slot` hooks, and dependency-owned Bits UI state and nesting attributes. It exposes no xvelte-specific CSS variables.
@@ -436,8 +424,6 @@ Styled parts merge `class` with `cn`, allowing app Tailwind classes to replace c
 
 Overlay uses `bg-black/10` rather than a semantic background token and adds backdrop blur when the browser supports it. Content is centered, limited to the viewport minus `2rem`, and capped at `sm:max-w-sm`. Footer extends through Content's padding with negative margins. Content and Overlay animate for `100ms`; Content fades and scales, while Overlay fades.
 
----
-
 ## Accessibility
 
 Bits UI supplies `role="dialog"`, `aria-modal="true"`, title and description relationships, focus trapping and looping, initial focus, focus restoration, Escape handling, outside-interaction dismissal, text-selection containment, scroll locking, nested-dialog coordination, and Trigger expanded/controls state.
@@ -454,8 +440,6 @@ App responsibilities:
 
 The SVG inside the top-right button ignores pointer events through Button's icon rules; the button itself remains interactive and receives its accessible name from the adjacent screen-reader-only message. The public Close has no built-in label because the app supplies its children.
 
----
-
 ## Localization
 
 Dialog uses one reusable-library message from `messages/en.json`:
@@ -467,8 +451,6 @@ Dialog uses one reusable-library message from `messages/en.json`:
 There is no prop for overriding this built-in label. Add translations for the same message ID or adapt the two local message calls when integrating another localization system.
 
 Your app supplies and translates Trigger text, Title, Description, form labels, public Close labels, action labels, validation, progress, errors, and all other dialog body content. Do not translate `data-slot`, state, variant, or behavior values.
-
----
 
 ## Dependencies
 
@@ -625,13 +607,9 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define dark and
 
 `tw-animate-css` supplies the enter, exit, fade, and zoom utilities. No Dialog-specific keyframe, hook, attachment, context file, shared component stylesheet, or external asset must be copied. Bits UI owns the dialog context, focus and dismissal layers, presence state, and scroll lock.
 
----
-
 ## Credits
 
 Dialog is adapted from [shadcn-svelte's Dialog component](https://www.shadcn-svelte.com/docs/components/dialog). Local xvelte composition, API, built-in close controls, localization, dependencies, styling, and behavior documented here take precedence.
-
----
 
 ## File organization
 

@@ -20,8 +20,6 @@ Use Input Group when a field needs a unit, domain, result count, action, status,
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import every public part through the component's `index.ts`:
@@ -35,8 +33,6 @@ Import every public part through the component's `index.ts`:
 `index.ts` exports `Root`, `Addon`, `Button`, `Input`, `Text`, and `Textarea`; their corresponding props types; the `ButtonSizes` type; and the `buttonVariants` styling helper.
 
 `AddonAligns` and `addonVariants` exist in the Addon implementation but are not exported from the component's public `index.ts`. Use `AddonProps` and the documented `align` values instead of importing private files.
-
----
 
 ## Anatomy
 
@@ -70,8 +66,6 @@ Root's selectors expect Input, Textarea, and Addon to be direct children. Addons
 
 Use one primary Input or Textarea per Root. Root has `role="group"`, but it does not label the control, combine values, manage form state, or provide component context.
 
----
-
 ## Basic usage
 
 This example binds the field value while presenting a non-editable URL scheme:
@@ -97,8 +91,6 @@ This example binds the field value while presenting a non-editable URL scheme:
 ```
 
 Clicking an Addon outside a descendant `button` focuses the first `input` found in Addon's parent. Text is presentational and is not included in the submitted value, so this example submits only the contents of `domain`.
-
----
 
 ## Examples
 
@@ -233,8 +225,6 @@ The built-in convenience handler is intentionally narrow:
 
 Keep non-button interactive elements outside Addon. If supplying `onclick`, reproduce any desired focus behavior explicitly.
 
----
-
 ## Public API
 
 Input Group is built from native elements plus the local Button, Input, and Textarea components. Its `index.ts`, exported types and helper, and local source are the source of truth.
@@ -351,8 +341,6 @@ Type: `TextProps`, based on native `HTMLAttributes<HTMLSpanElement>` with a bind
 
 Text renders a plain `span`, forwards native attributes, and does not set `data-slot`, a role, or an accessible relationship. It prevents pointer events on descendant SVGs and supplies a default size when they do not already have a `size-*` class.
 
----
-
 ## Styling and DOM contract
 
 Stable local hooks and elements:
@@ -383,8 +371,6 @@ All public parts that accept `class` merge through `cn`, directly or through the
 
 Input Group defines no CSS variable, animation, keyframe, context, or shared stylesheet. Radius calculations read the global `--radius` token.
 
----
-
 ## Accessibility
 
 Root and Addon are generic grouped containers. Input, Textarea, and Button retain their native semantics, but the component does not create labels, descriptions, errors, or relationships automatically.
@@ -401,15 +387,11 @@ Root and Addon are generic grouped containers. Input, Textarea, and Button retai
 
 Avoid excessive controls inside one group. Use a toolbar, menu, or adjacent action area when several buttons would make the field difficult to understand or navigate.
 
----
-
 ## Localization
 
 Input Group has no built-in user-facing copy and imports no localization messages. The app supplies and translates field labels, placeholders, Addon text, Button labels, units, counts, statuses, instructions, errors, and accessible names.
 
 Allow enough width for translated prefixes, suffixes, buttons, and block Addons. Do not translate technical alignment values, size/variant names, form attribute values, `data-slot`, or `data-align`.
-
----
 
 ## Dependencies
 
@@ -562,13 +544,9 @@ The global stylesheet must load Tailwind, define the dark variant, and expose th
 
 The app owns dark-mode activation. Input Group requires no Bits UI package, `tw-animate-css` import, base-layer rule, animation, keyframe, icon export from `src/lib/icons.ts`, localization message, hook, attachment, context file, image, font, network service, or additional shared stylesheet.
 
----
-
 ## Credits
 
 Adapted from [shadcn-svelte's Input Group](https://www.shadcn-svelte.com/docs/components/input-group). The local exports, wrapper behavior, sizes, alignments, focus helper, direct-child selectors, theme values, and source are the source of truth.
-
----
 
 ## File organization
 

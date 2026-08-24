@@ -20,8 +20,6 @@ Use Point Picker for map coordinates, audio parameters, image positions, color p
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component through its public `index.ts`:
@@ -39,8 +37,6 @@ The component exports:
 
 The indicator component and coordinate helpers remain internal.
 
----
-
 ## Anatomy
 
 Point Picker has one public part. Place any visual layer inside Root. Root derives its aspect ratio from the configured axis spans, so the default `0–100` ranges produce a square:
@@ -52,8 +48,6 @@ Point Picker has one public part. Place any visual layer inside Root. Root deriv
 ```
 
 Root places `children` below its grid, crosshair, cursor, and value indicators. The background wrapper has `pointer-events: none`, allowing Root to own dragging across the complete surface. Use it for visual content rather than nested buttons, links, or other controls.
-
----
 
 ## Basic usage
 
@@ -76,8 +70,6 @@ Root places `children` below its grid, crosshair, cursor, and value indicators. 
 ```
 
 The default range for both axes is `0` to `100`, the default origin is the top-left corner, and grid lines use 10-coordinate intervals. Horizontal movement increases `x` from left to right and vertical movement increases `y` from top to bottom. Equal axis spans make the surface square, while different spans make it rectangular without changing the visual scale of a coordinate unit.
-
----
 
 ## Examples
 
@@ -222,8 +214,6 @@ The complete cursor wrapper is decorative and uses `aria-hidden="true"`. Expose 
 
 Disabled Root is removed from the tab order, ignores pointer interaction, and exposes `aria-disabled="true"`.
 
----
-
 ## Public API
 
 The component's `index.ts` and exported types are the source of truth.
@@ -314,8 +304,6 @@ The selected corner displays both axis minima. Increasing X moves away from the 
 
 Every handled key prevents the browser default, clamps the result, calls `onValueChange`, and then calls `onValueCommit`.
 
----
-
 ## Styling and DOM contract
 
 Root defaults to `width: 100%` and applies an inline aspect ratio of `(maxX - minX) / (maxY - minY)`. This keeps one coordinate unit at the same visual scale on both axes: equal spans produce a square, `160 × 90` produces `16:9`, and `360 × 180` produces `2:1`. If either span is zero, Root falls back to `1:1`. Constrain the width with `max-width` when needed and avoid setting both width and height, which would override the ratio. Root clips overflow, disables touch scrolling and text selection during interaction, and shows a semantic focus ring.
@@ -339,8 +327,6 @@ Root classes are merged with `cn()`. The derived aspect ratio plus grid, crossha
 
 The component uses the semantic `background`, `primary`, `primary-foreground`, `muted-foreground`, `border`, and `ring` color tokens. It has no component-specific CSS variables, keyframes, stable class names, or external animation hooks.
 
----
-
 ## Accessibility
 
 Root uses `role="application"` because the same focused surface handles two coordinate axes with a custom keyboard model.
@@ -357,8 +343,6 @@ Root uses `role="application"` because the same focused surface handles two coor
 
 Point Picker does not expose slider roles or `aria-valuenow` because it controls a two-dimensional point. Prefer two separate Sliders when each axis must be exposed and operated as an independent standard range input.
 
----
-
 ## Localization
 
 Point Picker uses one Paraglide message from `messages/en.json`:
@@ -370,8 +354,6 @@ Point Picker uses one Paraglide message from `messages/en.json`:
 Pass `label` to provide context-specific accessible copy. The default numeric formatter is not locale-aware; use `formatValue` with `Intl.NumberFormat` and translated units or labels when the visible value must follow the active locale.
 
 Background content, adjacent instructions, and external value summaries belong to your app and must use its localization system.
-
----
 
 ## Dependencies
 
@@ -481,13 +463,9 @@ Define the dark values only when your app supports a dark theme. Point Picker re
 
 Configure Paraglide so `$lib/paraglide/messages.js` is generated and add the message listed in [Localization](#localization) to `messages/en.json`. Its exact key and value are already shown there and are not duplicated here.
 
----
-
 ## Credits
 
 Point Picker is adapted from the [Svelte Audio UI XY Pad](https://svelte-audio-ui.vercel.app/docs/ui/xy-pad). The original audio-oriented component was substantially simplified and modified in xvelte to provide generic coordinate ranges, arbitrary visual content, optional indicators, a custom cursor, local accessibility behavior, and use cases such as maps and image positioning.
-
----
 
 ## File organization
 

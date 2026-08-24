@@ -20,8 +20,6 @@ Use Calendar when people need to choose dates from a visual month grid. Do not u
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import the component from its public `index.ts` entry point:
 ```
 
 Calendar's `index.ts` exports `Root`, `Months`, `Month`, `Nav`, `PrevButton`, `NextButton`, `Header`, `Caption`, `Heading`, `MonthSelect`, `YearSelect`, `Grid`, `GridHead`, `GridBody`, `GridRow`, `HeadCell`, `Cell`, and `Day`. It also exports a matching props type for every component.
-
----
 
 ## Anatomy
 
@@ -62,8 +58,6 @@ Root
 
 Unlike the underlying Bits UI root, the local `Root` does not accept `children` or `child`; it always owns this composition. Use the `day` snippet for supported day-content customization. The other exported components are available for advanced composition with a Bits UI Calendar root, or for maintaining the built-in structure.
 
----
-
 ## Basic usage
 
 ```svelte
@@ -81,8 +75,6 @@ Unlike the underlying Bits UI root, the local `Root` does not accept `children` 
 ```
 
 Calendar values are `DateValue` objects from `@internationalized/date`, not JavaScript `Date` objects or date strings. Use methods such as `toString()` for ISO-style storage and `toDate(timeZone)` when a native `Date` is required.
-
----
 
 ## Examples
 
@@ -176,8 +168,6 @@ The snippet receives the `DateValue` and whether it belongs to an adjacent month
 
 `readonly` keeps navigation and focus available but prevents selection. `disabled` prevents focus and selection across the calendar.
 
----
-
 ## Public API
 
 Calendar wraps Bits UI 2.18.1. The tables below document the local options and the most useful inherited options; see the complete [Bits UI Calendar API reference](https://www.bits-ui.com/docs/components/calendar#api-reference) for native attributes and advanced primitive details.
@@ -258,8 +248,6 @@ These props are aliases of their matching Bits UI component props, including `ch
 
 Use `index.ts` and the exported props types as the source of truth for the local API.
 
----
-
 ## Styling and DOM contract
 
 Calendar uses semantic Tailwind tokens and two root-scoped CSS variables:
@@ -302,8 +290,6 @@ Notable local styling behavior:
 - Month/year selects use transparent native selects over styled visual labels, preserving native selection behavior.
 - Classes supplied by your app are merged after local classes with `cn`, so conflicting Tailwind utilities normally favor your values.
 
----
-
 ## Accessibility
 
 Bits UI supplies the calendar grid semantics, labels, focus management, and date-selection behavior. The local wrappers preserve those attributes and use native selects for dropdown captions.
@@ -319,8 +305,6 @@ Bits UI supplies the calendar grid semantics, labels, focus management, and date
 - Month/year dropdowns contain real native selects. Do not remove the invisible select or make the visible `aria-hidden` label interactive.
 - Do not communicate today, selected, disabled, or unavailable state only through color. The default markup exposes state attributes and unavailable styling includes a line-through; add visible help when the distinction matters.
 
----
-
 ## Localization
 
 Calendar has no Paraglide message keys, but Root uses `getLocale()` from the generated Paraglide runtime as its default `locale`. Date text is generated from `locale`, `calendarLabel`, `monthFormat`, `yearFormat`, and `weekdayFormat`. Bits UI currently supplies three English defaults directly: `"Event"` for `calendarLabel`, plus `"Previous"` and `"Next"` for the navigation buttons.
@@ -334,8 +318,6 @@ Calendar has no Paraglide message keys, but Root uses `getLocale()` from the gen
 | `weekdayFormat` | `short`       | Weekday source strings; the built-in header displays their first two characters. |
 
 Always pass a translated `calendarLabel`. The current previous/next labels cannot be overridden through the local `Root`; changing them requires adapting the navigation wrappers or using an advanced custom composition. Translate any surrounding instructions, selected-date summaries, error messages, event descriptions, and empty states in your app. Do not translate `data-*` values, selection types, caption-layout values, or other technical identifiers.
-
----
 
 ## Dependencies
 
@@ -487,13 +469,9 @@ The app remains responsible for applying its `.dark` class, normally through roo
 
 No `tw-animate-css` import, animation, keyframe, Paraglide message, shared component stylesheet, or additional icon is required. The generated Paraglide runtime is required for the default locale. Popover, Date Picker, Calendar Range, form fields, and date summaries shown in larger compositions have their own installation requirements; follow each component's README when you use them.
 
----
-
 ## Credits
 
 Calendar is adapted from the [shadcn-svelte Calendar](https://www.shadcn-svelte.com/docs/components/calendar). Its complete built-in composition, caption behavior, local Button integration, icon facade, sizing, and styles have been adapted for xvelte.
-
----
 
 ## File organization
 

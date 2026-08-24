@@ -20,8 +20,6 @@ Use Collapsible for optional details, advanced settings, compact metadata, or a 
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import the component from its public `index.ts` entry point:
 ```
 
 Collapsible's `index.ts` exports `Root`, `Trigger`, and `Content`, together with the `RootProps`, `TriggerProps`, and `ContentProps` types.
-
----
 
 ## Anatomy
 
@@ -48,8 +44,6 @@ Compose the public parts beneath one root:
 ```
 
 `Root` owns and shares the open state. `Trigger` renders the button that changes it, and `Content` renders or hides the associated panel. A root may contain other visible content outside `Content`; only the content part is collapsed.
-
----
 
 ## Basic usage
 
@@ -68,8 +62,6 @@ Compose the public parts beneath one root:
 ```
 
 The root starts closed. Bits UI automatically connects the trigger and content with `aria-expanded`, `aria-controls`, generated IDs, and matching state attributes.
-
----
 
 ## Examples
 
@@ -165,8 +157,6 @@ All public parts expose `data-state="open|closed"`, so the trigger and panel can
 
 These Tailwind classes are application styling, not built-in xvelte styles.
 
----
-
 ## Public API
 
 The local props types are aliases of the corresponding Bits UI props and add no xvelte-specific options. The tables summarize the important behavior; use the [Bits UI Collapsible API reference](https://www.bits-ui.com/docs/components/collapsible#api-reference) for the complete inherited API.
@@ -216,8 +206,6 @@ Closed content is normally removed from the DOM after its presence cycle. `force
 
 The component's `index.ts`, exported props types, and installed Bits UI version are the source of truth for the public API.
 
----
-
 ## Styling and DOM contract
 
 Collapsible is intentionally unstyled. xvelte adds only stable `data-slot` attributes and does not merge classes, define variants, consume semantic theme tokens, or add transitions.
@@ -238,8 +226,6 @@ Bits UI additionally supplies dependency-owned hooks:
 
 Classes and styles are forwarded directly to the default primitive element. Because xvelte supplies no classes, there is no `cn()` conflict resolution. Do not override `data-slot`, primitive IDs, ARIA relationships, `hidden`, or the dimension variables unless replacing their behavior deliberately.
 
----
-
 ## Accessibility
 
 Bits UI supplies disclosure semantics and keyboard behavior. The default trigger is a button connected to its panel through `aria-controls` and reports its state through `aria-expanded`.
@@ -253,13 +239,9 @@ Bits UI supplies disclosure semantics and keyboard behavior. The default trigger
 - Use `hiddenUntilFound` for content that should be searchable while collapsed, but do not rely on it as the only route to essential information because browser support varies.
 - Do not communicate open state only through animation, rotation, or color; the trigger needs understandable text or an accessible name.
 
----
-
 ## Localization
 
 Collapsible has no built-in user-facing copy and requires no localization messages. Your app supplies and translates trigger labels, panel content, state-dependent text, descriptions, and icon-only accessible names. The values of `data-state`, `data-slot`, IDs, and CSS variables are technical details and are not translated.
-
----
 
 ## Dependencies
 
@@ -280,13 +262,9 @@ No Tailwind CSS installation, global stylesheet import, semantic variable, `@the
 
 The Svelte transition example uses the framework's built-in `svelte/transition` module and requires no additional package. If the app adds Tailwind classes, icons, or an xvelte Button to its own trigger presentation, install and configure those application choices separately by following their component guides.
 
----
-
 ## Credits
 
 Collapsible is adapted from the [shadcn-svelte Collapsible component](https://www.shadcn-svelte.com/docs/components/collapsible).
-
----
 
 ## File organization
 

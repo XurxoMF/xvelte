@@ -18,8 +18,6 @@ A responsive segmented IPv4 address input with four equal-width numeric octets, 
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -30,8 +28,6 @@ A responsive segmented IPv4 address input with four equal-width numeric octets, 
 
 The component's `index.ts` exports `Root`, the `RootProps` and `IPv4Segments` types, and the `isValidIPv4` and `safeParseIPv4` helpers. Individual segments are internal implementation details and are not exported.
 
----
-
 ## Anatomy
 
 `Root` renders four internal text inputs, three visible separators, and a visually hidden input that carries the joined value for native form submission.
@@ -41,8 +37,6 @@ The component's `index.ts` exports `Root`, the `RootProps` and `IPv4Segments` ty
 ```
 
 `Root` owns and coordinates every segment automatically. Each octet receives an equal share of the available editable width, so the component follows the width supplied by its parent or `class`.
-
----
 
 ## Basic usage
 
@@ -59,8 +53,6 @@ The component's `index.ts` exports `Root`, the `RootProps` and `IPv4Segments` ty
 
 <p>{valid ? `Address: ${address}` : "Enter a complete IPv4 address."}</p>
 ```
-
----
 
 ## Examples
 
@@ -84,8 +76,6 @@ The visible and bound value uses the selected separator. Parsing also accepts do
 ```
 
 `safeParseIPv4` returns four normalized segments and replaces invalid or missing octets with `null`. It is tolerant input normalization, not a substitute for `isValidIPv4` when completeness matters.
-
----
 
 ## Public API
 
@@ -115,8 +105,6 @@ Remaining native `div` attributes are forwarded to the visible root. `name` and 
 | `safeParseIPv4` | `(value: string \| undefined) => IPv4Segments \| undefined` | Parses dots, spaces, or underscores without throwing.      |
 | `isValidIPv4`   | `(value: string \| null \| undefined) => boolean`           | Checks for exactly four numeric octets from 0 through 255. |
 
----
-
 ## Styling and DOM contract
 
 | Element           | Stable `data-slot`   |
@@ -127,8 +115,6 @@ Remaining native `div` attributes are forwarded to the visible root. `name` and 
 
 The historical slot names remain stable even though the component folder is named `input-ipv4`. The root exposes `aria-invalid`, uses semantic theme colors, and applies the Input component's `focus-within` treatment: a `ring` border and three-pixel, 50%-opacity halo without a contrasting ring offset. It fills its available width. Its four internal segments use `flex: 1 1 0%` with `min-width: 0`, so each receives one quarter of the editable width after the fixed separators and padding. The public `class` prop styles the root; segment classes are internal. Segment inputs also use the local `hide-ramp` class to suppress WebKit number controls.
 
----
-
 ## Accessibility
 
 - Give the root an accessible name with `aria-label` or `aria-labelledby`; the component does not render a label.
@@ -137,13 +123,9 @@ The historical slot names remain stable even though the component folder is name
 - Do not remove visible focus styles or replace the coordinated keyboard handlers when using `Root`.
 - Pair validation messages with the root through `aria-describedby` when they provide information not already visible.
 
----
-
 ## Localization
 
 Input IPv4 has no built-in user-facing copy. Your app supplies and translates its label, placeholder, instructions, and validation messages. The separator and `data-slot` values are technical values and are not translated.
-
----
 
 ## Dependencies
 
@@ -226,13 +208,9 @@ Add the required semantic tokens and mappings to the global Tailwind stylesheet.
 
 No icon export, localization message, animation import, keyframe, font, image, network service, or additional shared file is required. The app owns dark-mode activation.
 
----
-
 ## Credits
 
 The original IPv4 input was adapted from [shadcn-svelte-extras](https://www.shadcn-svelte-extras.com/components/ipv4address-input). xvelte's local exports, helpers, responsive segment layout, styling, and behavior are the documented implementation.
-
----
 
 ## File organization
 

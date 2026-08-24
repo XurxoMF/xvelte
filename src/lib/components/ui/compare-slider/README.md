@@ -20,8 +20,6 @@ Use Compare Slider to compare two aligned images, designs, maps, or visual state
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import all parts from the component's public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import all parts from the component's public `index.ts` entry point:
 ```
 
 Compare Slider's `index.ts` exports `Root`, `Item`, and `Handle`, together with the `RootProps`, `ItemProps`, `HandleProps`, and `Orientation` types.
-
----
 
 ## Anatomy
 
@@ -51,8 +47,6 @@ Place two Items and one Handle beneath Root, in that order:
 The first Item is the full-size base. The second Item is clipped at the current position and must follow the first in the DOM so it paints above it. At `value={0}` none of the second visual is revealed; at `value={100}` it is fully revealed. Handle draws the divider above both items and follows the same shared position.
 
 Root has no built-in dimensions. Give it a width and height or an aspect ratio, and make both visuals fill the available area. Item and Handle read the nearest Compare Slider context and must remain below Root.
-
----
 
 ## Basic usage
 
@@ -75,8 +69,6 @@ Root has no built-in dimensions. Give it a width and height or an aspect ratio, 
 ```
 
 The visuals must use the same dimensions, crop, and subject alignment for the comparison to be meaningful. `draggable={false}` prevents native image dragging from competing with the slider's pointer capture.
-
----
 
 ## Examples
 
@@ -156,8 +148,6 @@ Labels belong inside each Item so they remain on the corresponding visual:
 
 Translate these labels in the app. Keep Item descendants non-interactive: pointer presses anywhere inside Root start repositioning and dragging the comparison.
 
----
-
 ## Public API
 
 ### `CompareSlider.Root`
@@ -224,8 +214,6 @@ type Orientation = "horizontal" | "vertical";
 
 The component's `index.ts`, exported types, and local source are the source of truth for the public API.
 
----
-
 ## Styling and DOM contract
 
 Compare Slider uses Tailwind utilities, three semantic theme tokens, a shared CSS custom property, and fixed functional shadow/border colors. It has no required stylesheet outside the global Tailwind theme setup.
@@ -241,8 +229,6 @@ Root writes `--pos: <value>%` inline. Item and Handle read it through Tailwind's
 There is no default width, height, aspect ratio, image object-fit, caption, or label placement. Supply these through Root class and child content. Root inherits the surrounding radius and receives the standard three-pixel, 50%-opacity semantic `ring` treatment from the required global `*:focus-visible` rule. It clips everything through `overflow-hidden`, so focusable descendants and overlays extending outside its bounds are unsuitable.
 
 The accent divider and thumb use semantic colors. The thumb also uses a low-opacity black border and a fixed black drop shadow so it remains visible over varied imagery; these are local implementation colors rather than theme variables.
-
----
 
 ## Accessibility
 
@@ -261,15 +247,11 @@ Do not describe this implementation as fully accessible without addressing those
 
 Supply meaningful alternative text or nearby captions for both visuals. Because both Item children remain in the accessibility tree even when one is visually clipped, write labels that explain the two states without relying on the reveal percentage or visual position alone. Avoid interactive descendants because Root treats pointer presses anywhere inside it as slider interaction.
 
----
-
 ## Localization
 
 Compare Slider contains no built-in human-readable copy and does not use Paraglide messages. Apps provide and translate image alternative text, captions, visible before/after labels, instructions, and any displayed percentage.
 
 The current Root cannot receive an app-supplied localized accessible name through its public API. Add that capability to the reusable component before relying on it in an accessible localized interface.
-
----
 
 ## Dependencies
 
@@ -381,13 +363,9 @@ Define equivalent values in the app's dark selector when it supports dark mode. 
 
 Compare Slider requires no other xvelte UI component, hook, attachment, localization message, Paraglide setup, or Bits UI primitive. The media files and their delivery strategy belong to the app.
 
----
-
 ## Credits
 
 Compare Slider is adapted from [more-shadcn-svelte's Compare Slider](https://more-shadcn.noair.fun/docs/components/compare-slider). Local xvelte API, interaction, styling, dependencies, accessibility notes, and limitations documented here take precedence.
-
----
 
 ## File organization
 

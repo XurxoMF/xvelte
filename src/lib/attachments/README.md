@@ -11,8 +11,6 @@ Use an attachment when behavior belongs to an existing element and must be insta
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Installation
 
 Copy `src/lib/attachments/shortcut.ts` to the same path in your project. Install Svelte as a development dependency if the project does not already provide it:
@@ -29,8 +27,6 @@ pnpm add -D svelte
 ```
 
 `shortcut` uses the Svelte 5 [`Attachment`](https://svelte.dev/docs/svelte/svelte-attachments) type and is intended for `{@attach ...}`. It requires no CSS, theme variables, icons, `$lib/utils` helpers, xvelte components, hooks, localization messages, or additional files.
-
----
 
 ## shortcut
 
@@ -226,13 +222,9 @@ The attachment does not announce that an action ran, move focus, or manage the a
 
 The Svelte package and copy command are covered under Installation. No runtime package beyond Svelte, global CSS, theme variables, icons, `$lib/utils` exports, UI components, hooks, contexts, attachments, or localization setup are required.
 
----
-
 ## Credits
 
 `shortcut` is adapted from the [Shortcut action in shadcn-svelte-extras](https://shadcn-svelte-extras.com/docs/actions/shortcut). The API and exact matching behavior documented here describe the local xvelte attachment.
-
----
 
 ## File organization
 

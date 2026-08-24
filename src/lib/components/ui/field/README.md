@@ -20,8 +20,6 @@ Use Field to organize accessible form controls without coupling their values or 
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import all parts from the component's public `index.ts` entry point:
@@ -35,8 +33,6 @@ Import all parts from the component's public `index.ts` entry point:
 Field's `index.ts` exports `Field`, `Set`, `Legend`, `Group`, `Content`, `Label`, `Title`, `Description`, `Separator`, and `Error`. The main wrapper is therefore rendered as `Field.Field`, not `Field.Root`.
 
 The same entry point exports `RootProps`, `FieldSetProps`, `LegendProps`, `GroupProps`, `ContentProps`, `LabelProps`, `TitleProps`, `DescriptionProps`, `SeparatorProps`, and `ErrorProps`, together with the `rootVariants` styling function.
-
----
 
 ## Anatomy
 
@@ -54,8 +50,6 @@ A single control normally uses Field, Label, the app's control, and optional Des
 Group stacks related Field instances. Set and Legend create a native fieldset and legend for a related set of controls. Content keeps a label/title and description together beside controls in horizontal layouts. Separator visually divides sections.
 
 Field does not render an input, select, textarea, checkbox, radio, switch, or button. Compose it with native controls or the appropriate xvelte control component.
-
----
 
 ## Basic usage
 
@@ -81,8 +75,6 @@ Field does not render an input, select, textarea, checkbox, radio, switch, or bu
 ```
 
 `for` and `id` create the label relationship. `aria-describedby` associates helper text with the control; visual proximity alone does not create that relationship.
-
----
 
 ## Examples
 
@@ -260,8 +252,6 @@ The exported `rootVariants` function applies the same layout to app-owned markup
 
 This reuses classes only. It does not add `role="group"`, `data-slot="field"`, `data-orientation`, or a bindable reference.
 
----
-
 ## Public API
 
 Most parts are native elements and forward their compatible attributes and events. Their shared props are:
@@ -394,8 +384,6 @@ const className = rootVariants({
 
 The underlying source declares a `RootOrientations` helper type, but the component's `index.ts` does not currently re-export it. Use `RootProps["orientation"]` when a public orientation type is needed. The component's `index.ts`, exported types, and `rootVariants` are the source of truth for the public API.
 
----
-
 ## Styling and DOM contract
 
 Field uses Tailwind utilities, semantic theme tokens, named groups, a named container, stable slot attributes, and app-supplied invalid, disabled, and checked attributes. It exposes no component-specific CSS variables or animations.
@@ -424,8 +412,6 @@ Important state contracts:
 
 Classes supplied to every part are merged after local classes through `cn`. Most native props are spread after local slot/state attributes and can override them; preserve the documented hooks when styling or composing fields.
 
----
-
 ## Accessibility
 
 Field supplies some native structure but does not automatically create a complete accessible relationship between controls and supporting text.
@@ -445,8 +431,6 @@ App responsibilities:
 
 Field.Field sets `role="group"` by default. When it contains several controls that need a shared accessible name, prefer Set/Legend or provide an explicit `aria-label`/`aria-labelledby`. The component adds no keyboard behavior; controls retain their native or component-provided interaction.
 
----
-
 ## Localization
 
 Field contains no built-in human-readable copy and does not use Paraglide messages. The app supplies and translates labels, legends, descriptions, errors, button text, placeholders, selection summaries, and accessible names.
@@ -454,8 +438,6 @@ Field contains no built-in human-readable copy and does not use Paraglide messag
 Horizontal and responsive layouts may need more width for translated text. Content can flex, Description uses normal wrapping and text balancing in horizontal fields, and Group uses container queries rather than the viewport. Test long translations at the actual container widths and override orientation, gaps, or widths when needed.
 
 The technical values of `orientation`, `variant`, `data-slot`, `data-invalid`, `data-disabled`, and `data-checked` are not translated.
-
----
 
 ## Dependencies
 
@@ -559,13 +541,9 @@ Field, Label, and Separator import no icons. No icon package or `$lib/icons` exp
 
 Field requires no hook, attachment, context file, localization message, Paraglide setup, external asset, or browser API. Validation state, form submission, value bindings, IDs, ARIA relationships, and translated copy belong to the app or its chosen form library.
 
----
-
 ## Credits
 
 Field is adapted from [shadcn-svelte's Field component](https://www.shadcn-svelte.com/docs/components/field). Local xvelte exports, structure, responsive behavior, validation contract, dependencies, styling, and limitations documented here take precedence.
-
----
 
 ## File organization
 

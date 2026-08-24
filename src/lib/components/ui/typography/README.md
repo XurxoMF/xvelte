@@ -19,8 +19,6 @@ Use Typography to apply the xvelte text scale to authored content without repeat
 - [Dependencies](#dependencies)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -30,8 +28,6 @@ Use Typography to apply the xvelte text scale to authored content without repeat
 ```
 
 `index.ts` exports `H1`, `H2`, `H3`, `H4`, `H5`, `H6`, `P`, `Leading`, `Link`, `Blockquote`, and `InlineCode`, together with a matching props type for every part.
-
----
 
 ## Anatomy
 
@@ -44,8 +40,6 @@ Typography parts are independent native elements rather than a required compound
 ```
 
 Choose the part for its HTML meaning first and its visual size second.
-
----
 
 ## Basic usage
 
@@ -64,8 +58,6 @@ Choose the part for its HTML meaning first and its visual size second.
 	</Typography.P>
 </article>
 ```
-
----
 
 ## Examples
 
@@ -105,8 +97,6 @@ Add a visible citation in surrounding content when attribution matters; the `cit
 
 Tell users when a link opens a new context if that behavior would be unexpected.
 
----
-
 ## Public API
 
 Typography is original xvelte code built from native HTML. Every part accepts the corresponding Svelte element attributes, a `children` snippet, `class`, and bindable `ref`. The component's `index.ts`, exported types, and source are the source of truth.
@@ -127,15 +117,11 @@ Typography is original xvelte code built from native HTML. Every part accepts th
 
 All native attributes and handlers are forwarded. Classes merge through `cn()` after defaults. Heading props use the common `HTMLAttributes<HTMLHeadingElement>` type; each rendered tag remains fixed by its component.
 
----
-
 ## Styling and DOM contract
 
 Typography currently adds no `data-slot` attributes, state attributes, internal wrappers, or stable custom classes. The rendered native tag and exported component name are the public styling boundary.
 
 Semantic tokens are `primary`, `muted`, `muted-foreground`, and `border`. Class merging lets callers replace type size, weight, color, spacing, or decoration. No automatic vertical rhythm is added between sibling components; the app controls surrounding spacing.
-
----
 
 ## Accessibility
 
@@ -143,13 +129,9 @@ Native semantics are preserved. Keep exactly one appropriate page-level H1 in or
 
 Link must have an `href` and descriptive content. InlineCode is for short code fragments; wrap longer code in a semantic `<pre>` or the xvelte Code component. Color and typography do not replace semantic structure.
 
----
-
 ## Localization
 
 Typography contains no built-in copy and requires no localization messages. All rendered text, link labels, quotation attribution, and code fragments are supplied by the app and translated when appropriate.
-
----
 
 ## Dependencies
 
@@ -236,8 +218,6 @@ typography/
 ```
 
 Typography needs no other xvelte component, hook, attachment, context, localization setup, shared style, image, font file, or network service.
-
----
 
 ## File organization
 

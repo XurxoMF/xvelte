@@ -20,8 +20,6 @@ Use Tabs when several peer panels share one context and only one should be visib
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -31,8 +29,6 @@ Use Tabs when several peer panels share one context and only one should be visib
 ```
 
 `index.ts` exports `Root`, `List`, `Trigger`, `Content`, `RootProps`, `ListProps`, `ListVariants`, `TriggerProps`, `ContentProps`, and the `listVariants` styling helper.
-
----
 
 ## Anatomy
 
@@ -48,8 +44,6 @@ Use Tabs when several peer panels share one context and only one should be visib
 ```
 
 Every Trigger value must match one Content value. List contains only tab triggers; panels are siblings of List inside Root.
-
----
 
 ## Basic usage
 
@@ -72,8 +66,6 @@ Every Trigger value must match one Content value. List contains only tab trigger
 ```
 
 The local Root defaults to an empty value, so provide or bind an initial value when one panel should start selected.
-
----
 
 ## Examples
 
@@ -127,8 +119,6 @@ Vertical orientation changes Root layout, List direction, Trigger alignment, act
 
 Manual mode moves focus with arrow keys without changing the panel until activation. Disabled triggers are skipped.
 
----
-
 ## Public API
 
 Tabs wraps the installed stable `bits-ui@2.18.1` primitive. The tables describe local additions and important inherited behavior; see the complete [Bits UI Tabs API](https://bits-ui.com/docs/components/tabs#api-reference). The component's `index.ts`, exported types/helper, and source are the source of truth.
@@ -160,8 +150,6 @@ Root forwards native div attributes and merges class after local flex/orientatio
 
 `listVariants({ variant })` returns the same local List classes. `ListVariants` exposes its option type for wrappers. Callers normally use the `variant` prop rather than invoking the helper directly.
 
----
-
 ## Styling and DOM contract
 
 | Part    | Stable hook                                                | State                                                                                       |
@@ -173,21 +161,15 @@ Root forwards native div attributes and merges class after local flex/orientatio
 
 Styled parts merge class with `cn()`. Trigger and focusable Content receive the shared three-pixel, 50%-opacity semantic `ring` halo from the required global `*:focus-visible` rule. The Trigger's active underline is an internal pseudo-element rather than a separate DOM node.
 
----
-
 ## Accessibility
 
 Bits UI supplies tablist, tab, and tabpanel roles; IDs and relationships; roving focus; disabled state; and orientation-aware keyboard navigation. List needs an accessible label when surrounding context does not name the tab set.
 
 Keep Trigger labels concise and unique. In automatic mode, panel changes must be fast enough not to delay focus navigation. Do not put unrelated interactive controls inside List, and avoid nesting tab sets without clear labels.
 
----
-
 ## Localization
 
 Tabs contains no built-in copy and requires no localization messages. The app supplies and translates tab labels, panel content, accessible labels, empty states, and disabled explanations. Values are stable implementation identifiers and should not be translated.
-
----
 
 ## Dependencies
 
@@ -292,13 +274,9 @@ tabs/
 
 Tabs needs no icon, other xvelte component, hook, attachment, context file, localization setup, shared style, image, font, or network service. Bits UI owns internal context.
 
----
-
 ## Credits
 
 The local component structure and variants are adapted from [shadcn-svelte Tabs](https://www.shadcn-svelte.com/docs/components/tabs). The repeated Table of Contents URL supplied with this task does not match the local Tabs implementation.
-
----
 
 ## File organization
 

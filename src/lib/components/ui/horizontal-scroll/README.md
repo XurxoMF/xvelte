@@ -20,8 +20,6 @@ Use Horizontal Scroll for card rows, media shelves, tag filters, timelines, or o
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component through its public `index.ts`:
@@ -33,8 +31,6 @@ Import the component through its public `index.ts`:
 ```
 
 `index.ts` exports `Root` and its `RootProps` type.
-
----
 
 ## Anatomy
 
@@ -51,8 +47,6 @@ Horizontal Scroll has one public part. Place content directly inside Root and pr
 Root renders one native `div` with `display: flex` and horizontal overflow. There is no internal viewport, content wrapper, button, or external scrolling primitive.
 
 The browser only creates horizontal overflow when the children are wider than Root. Flex items shrink by default, so fixed-width cards normally need `shrink-0`, a suitable `min-width`, or another layout rule that preserves their width.
-
----
 
 ## Basic usage
 
@@ -83,8 +77,6 @@ This complete example renders an accessible, labeled row of project cards:
 When the pointer is over an overflowing Root, a wheel event with vertical movement is prevented from scrolling the page and updates the horizontal target instead. The component then eases `scrollLeft` toward that target with `requestAnimationFrame`.
 
 Touch, keyboard, and trackpad input that the browser handles natively can still use the element's ordinary horizontal overflow. The component's custom animation only processes non-zero `deltaY` wheel input.
-
----
 
 ## Examples
 
@@ -173,8 +165,6 @@ The local defaults hide scrollbars with inline and scoped CSS. A caller `style` 
 
 This does not override the component's scoped WebKit scrollbar rule, so a visible cross-browser scrollbar requires adapting the component stylesheet. If a visible scrollbar is an application requirement, make that behavior explicit and test every supported browser.
 
----
-
 ## Public API
 
 Horizontal Scroll is implemented with a native `div` and has no external primitive API. The component's `index.ts`, exported types, and local source are the source of truth.
@@ -226,8 +216,6 @@ The component accepts any JavaScript number without clamping or finite-value che
 
 Changing `sensitivity` affects subsequent wheel events. Changing `damping` while an animation is active affects subsequent frames.
 
----
-
 ## Styling and DOM contract
 
 Root renders one native `div` with these local defaults:
@@ -250,8 +238,6 @@ The component defines no semantic color token, CSS variable, keyframe, named ani
 
 The hidden scrollbar is an intentional local behavior, but the exact scoped selector and inline legacy declaration are implementation details. Prefer the stable `data-slot` for app styling and testing.
 
----
-
 ## Accessibility
 
 Root is a generic `div`. It does not add a landmark role, accessible name, focusability, keyboard controls, navigation buttons, item semantics, active-item state, or screen-reader announcements.
@@ -268,15 +254,11 @@ The custom easing does not respond to `prefers-reduced-motion`. Use native overf
 
 The algorithm writes positive `scrollLeft` values and has no explicit RTL normalization. Test before using it in a right-to-left scrolling interface because browser `scrollLeft` conventions differ.
 
----
-
 ## Localization
 
 Horizontal Scroll has no built-in user-facing copy and imports no localization messages. The app supplies and translates region names, item content, instructions, navigation labels, empty states, and any status text.
 
 `sensitivity`, `damping`, DOM event names, CSS classes, and `data-slot` are technical values and are not translated.
-
----
 
 ## Dependencies
 
@@ -343,13 +325,9 @@ The application stylesheet only needs to load Tailwind:
 
 Horizontal Scroll uses no global semantic token, theme mapping, custom variant, keyframe, animation import, shared class, or additional layout rule. It also requires no `tw-animate-css`, icon export from `src/lib/icons.ts`, localization message, image, font, or network service.
 
----
-
 ## Credits
 
 Adapted from [more-shadcn-svelte's Horizontal Scroll](https://more-shadcn.noair.fun/docs/components/horizontal-scroll). The local xvelte props, animation algorithm, forwarding behavior, styling, accessibility limitations, and source are the source of truth.
-
----
 
 ## File organization
 

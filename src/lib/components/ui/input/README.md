@@ -20,8 +20,6 @@ Use Input for ordinary form fields whose behavior is provided by the native `inp
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component through its public `index.ts`:
@@ -33,8 +31,6 @@ Import the component through its public `index.ts`:
 ```
 
 `index.ts` exports `Root`, `RootProps`, and the `RootTypes` input-type alias.
-
----
 
 ## Anatomy
 
@@ -51,8 +47,6 @@ The component has two internal render branches:
 2. Every other type renders the same styled input with bindable `value` but no public `files` value.
 
 There is no wrapper, internal label, description, error message, icon, prefix, or suffix. The app composes those elements and connects them through native IDs and ARIA attributes.
-
----
 
 ## Basic usage
 
@@ -74,8 +68,6 @@ Use a visible label, an appropriate input type, and browser autocomplete metadat
 ```
 
 When `type` is omitted, the native browser default is `text`. `bind:value` synchronizes the app variable with Svelte's native input binding behavior; the resulting value type depends on the selected native input type.
-
----
 
 ## Examples
 
@@ -196,8 +188,6 @@ Although the native type union accepts `checkbox` and `radio`, this component's 
 
 Use the xvelte Checkbox and Radio Group components for normal selection controls. If a native checkbox or radio is intentionally required, manage it with forwarded native state and change handlers rather than expecting `bind:checked` or `bind:group` on `Input.Root`.
 
----
-
 ## Public API
 
 Input wraps a native HTML `input` and has no external primitive API. It accepts the standard Svelte `HTMLInputAttributes` except that the `type="file"` branch is modeled separately for `files`. See [MDN's input reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input) for native browser behavior. The component's `index.ts`, exported types, and local source are the source of truth.
@@ -241,8 +231,6 @@ At runtime the component selects its file branch only when `type === "file"`. Br
 
 For file inputs, browser security rules prevent assigning an arbitrary local path through `value`. Read selected files from `files` and let the browser own the displayed filename text.
 
----
-
 ## Styling and DOM contract
 
 Root always renders one native `input`. Its default stable hook is:
@@ -268,8 +256,6 @@ Root merges caller classes with `cn`. Later conflicting Tailwind utilities can r
 
 The component exposes no CSS variable, animation, keyframe, variant function, size prop, or additional DOM state. Browser-owned pseudo-classes and validity states remain available to app styles.
 
----
-
 ## Accessibility
 
 Input retains native semantics, keyboard behavior, browser validation, form participation, autofill, and platform input experiences. The app remains responsible for configuring them correctly:
@@ -285,8 +271,6 @@ Input retains native semantics, keyboard behavior, browser validation, form part
 
 Use purpose-built Checkbox and Radio Group components for choice controls because their checked state, grouping, labels, and visual geometry differ from a text field. Use Input Group when icons, buttons, prefixes, suffixes, or inline help must share the field's visual container.
 
----
-
 ## Localization
 
 Input has no built-in user-facing copy and imports no localization messages. The app supplies and translates labels, placeholders, descriptions, errors, format hints, units, file requirements, and surrounding button text.
@@ -294,8 +278,6 @@ Input has no built-in user-facing copy and imports no localization messages. The
 Native browser strings inside date, time, color, number, and file controls are provided by the browser and operating system. Their language and formatting follow the user's environment and input attributes rather than xvelte messages.
 
 Input type names, autocomplete tokens, validation attributes, event names, and `data-slot` are technical identifiers and are not translated.
-
----
 
 ## Dependencies
 
@@ -396,13 +378,9 @@ The global stylesheet must load Tailwind, define the dark variant, and expose th
 
 The app owns dark-mode activation. Input requires the base-layer `*:focus-visible` rule shown above, but no `tw-animate-css` import, component-specific CSS variable, keyframe, icon export from `src/lib/icons.ts`, localization message, image, font, network service, or additional layout rule.
 
----
-
 ## Credits
 
 Adapted from [shadcn-svelte's Input](https://www.shadcn-svelte.com/docs/components/input). The local namespace export, file binding, type definitions, customizable slot, dimensions, theme values, and source are the source of truth.
-
----
 
 ## File organization
 

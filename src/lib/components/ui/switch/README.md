@@ -20,8 +20,6 @@ Use Switch for settings that take effect immediately. Use Checkbox for independe
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -32,8 +30,6 @@ Use Switch for settings that take effect immediately. Use Checkbox for independe
 
 `index.ts` exports `Root` and `RootProps`.
 
----
-
 ## Anatomy
 
 Root renders the complete switch and owns its thumb:
@@ -43,8 +39,6 @@ Root renders the complete switch and owns its thumb:
 ```
 
 The local wrapper removes Bits UI's `children` and `child` snippets, so the internal Thumb cannot be replaced through the public API. Place label and description content beside the Root.
-
----
 
 ## Basic usage
 
@@ -62,8 +56,6 @@ The local wrapper removes Bits UI's `children` and `child` snippets, so the inte
 ```
 
 The surrounding label gives the button an accessible name and a larger pointer target.
-
----
 
 ## Examples
 
@@ -120,8 +112,6 @@ Bits UI creates its hidden form input only when `name` is present. As with nativ
 
 Explain disabled and invalid states with adjacent translated text; styling alone is not sufficient.
 
----
-
 ## Public API
 
 `RootProps` is based on the installed stable `bits-ui@2.18.1` `Switch.RootProps`, removes `children` and `child`, and adds the local `size`. See the complete [Bits UI Switch API](https://bits-ui.com/docs/components/switch#api-reference) for primitive and native button details. The component's `index.ts`, exported type, and source are the source of truth.
@@ -139,8 +129,6 @@ Explain disabled and invalid states with adjacent translated text; styling alone
 
 Native `<button>` attributes and ARIA attributes are forwarded. Root owns the Thumb and does not accept custom content.
 
----
-
 ## Styling and DOM contract
 
 | Element | Stable hook                          | Local behavior                                                                          |
@@ -152,21 +140,15 @@ Bits UI supplies `data-state="checked|unchecked"`, `data-checked`, `data-uncheck
 
 The local RTL transform is driven by the primitive's state attributes. Test custom size overrides in both text directions because thumb translation assumes the built-in dimensions.
 
----
-
 ## Accessibility
 
 Bits UI renders a keyboard-operable switch button and exposes checked state through switch semantics. Space toggles the focused control. Every switch needs an accessible name from a wrapping label, associated `<label for>`, `aria-label`, or `aria-labelledby`.
 
 Use a description for consequences or constraints, preserve visible focus styling, and do not put unrelated interactive controls inside a label that wraps the switch. Disabled switches remain discoverable but cannot be changed; explain why when the reason is not obvious.
 
----
-
 ## Localization
 
 Switch contains no built-in copy and requires no localization messages. The app supplies and translates labels, descriptions, validation messages, and disabled explanations.
-
----
 
 ## Dependencies
 
@@ -281,13 +263,9 @@ switch/
 
 Switch requires no icon, other xvelte component, hook, attachment, context, localization setup, shared style, image, font, or network service.
 
----
-
 ## Credits
 
 The component structure and styling are adapted from [shadcn-svelte Switch](https://www.shadcn-svelte.com/docs/components/switch).
-
----
 
 ## File organization
 

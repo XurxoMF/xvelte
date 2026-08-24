@@ -65,3 +65,13 @@
 		</div>
 	</section>
 </main>
+
+<style>
+	.docs-grid-mask {
+		background-image:
+			linear-gradient(to right, color-mix(in oklab, var(--primary) 10%, transparent) 1px, transparent 1px),
+			linear-gradient(to bottom, color-mix(in oklab, var(--primary) 10%, transparent) 1px, transparent 1px);
+		background-size: 42px 42px;
+		mask-image: linear-gradient(to bottom right, black, transparent 80%);
+	}
+</style>

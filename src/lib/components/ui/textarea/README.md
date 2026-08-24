@@ -20,8 +20,6 @@ Use Textarea for free-form text that may span multiple lines. Use Input for shor
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -32,8 +30,6 @@ Use Textarea for free-form text that may span multiple lines. Use Input for shor
 
 `index.ts` exports `Root` and `RootProps`.
 
----
-
 ## Anatomy
 
 Textarea renders one native element and accepts no child content:
@@ -43,8 +39,6 @@ Textarea renders one native element and accepts no child content:
 ```
 
 Use `value` or `bind:value` for content; text placed between component tags is unsupported.
-
----
 
 ## Basic usage
 
@@ -58,8 +52,6 @@ Use `value` or `bind:value` for content; text placed between component tags is u
 <label for="message">Message</label>
 <Textarea.Root id="message" name="message" bind:value={message} placeholder="Write your message" />
 ```
-
----
 
 ## Examples
 
@@ -105,8 +97,6 @@ The default `field-sizing-content` allows the control to grow with content where
 
 Most applications should keep the default slot; wrapper components may use a role-specific value.
 
----
-
 ## Public API
 
 `RootProps` is Svelte's `HTMLTextareaAttributes` with children removed and a bindable element `ref`. The component's `index.ts` and exported type are the source of truth.
@@ -120,8 +110,6 @@ Most applications should keep the default slot; wrapper components may use a rol
 
 All remaining native attributes and handlers—including `name`, `rows`, `cols`, `required`, `readonly`, `disabled`, `minlength`, `maxlength`, `autocomplete`, `placeholder`, `oninput`, and form attributes—are forwarded.
 
----
-
 ## Styling and DOM contract
 
 - Default stable hook: `data-slot="textarea"`; callers may override it.
@@ -132,21 +120,15 @@ All remaining native attributes and handlers—including `name`, `rows`, `cols`,
 
 There are no internal elements or dependency-owned state attributes.
 
----
-
 ## Accessibility
 
 Textarea is a native control and preserves browser keyboard, selection, form, resize, validation, and assistive behavior. Every field needs a visible associated label or an equivalent accessible name. Connect descriptions and errors with `aria-describedby`, and set `aria-invalid` only when invalid.
 
 Do not use placeholder text as the only label. Ensure content expansion does not push essential controls out of reach, and preserve a usable manual resize option when users may need more space.
 
----
-
 ## Localization
 
 Textarea contains no built-in copy and requires no localization messages. The app supplies and translates labels, placeholders, descriptions, counters, validation messages, and entered defaults.
-
----
 
 ## Dependencies
 
@@ -235,13 +217,9 @@ textarea/
 
 Textarea needs no icon, other xvelte component, hook, attachment, context, localization setup, shared style, image, font, or network service.
 
----
-
 ## Credits
 
 The component styling is adapted from [shadcn-svelte Textarea](https://www.shadcn-svelte.com/docs/components/textarea).
-
----
 
 ## File organization
 

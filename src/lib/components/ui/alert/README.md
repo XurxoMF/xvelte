@@ -20,8 +20,6 @@ Use an alert for concise information that deserves attention in the current cont
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import the component from its public `index.ts` entry point:
 ```
 
 Alert's `index.ts` exports `Root`, `Title`, `Description`, and `Action`, together with the `RootProps`, `RootVariants`, `TitleProps`, `DescriptionProps`, and `ActionProps` types. It also exports the `rootVariants` styling helper.
-
----
 
 ## Anatomy
 
@@ -51,8 +47,6 @@ Compose the public parts inside `Root`:
 
 `Title`, `Description`, and `Action` are optional native `div` wrappers. Place an optional icon component as a direct child of `Root` before the text so its rendered `svg` activates the icon-aware grid. `Action` is absolutely positioned in the top-right corner; it does not add a button, dismiss the alert, or manage state.
 
----
-
 ## Basic usage
 
 ```svelte
@@ -67,8 +61,6 @@ Compose the public parts inside `Root`:
 ```
 
 Use `Title` for the concise message and `Description` for supporting detail. Either part may be omitted when the remaining content is sufficient on its own.
-
----
 
 ## Examples
 
@@ -140,8 +132,6 @@ Native attributes are forwarded after the local defaults. Override the live-regi
 </Alert.Root>
 ```
 
----
-
 ## Public API
 
 All parts render native `div` elements and forward their applicable `HTMLAttributes<HTMLDivElement>`. The tables document the complete xvelte-owned API and its non-obvious behavior.
@@ -203,8 +193,6 @@ Prefer `Alert.Root` for rendered alerts. Use `rootVariants` only when another lo
 
 Use `index.ts`, the exported props and variant types, and `rootVariants` as the source of truth for the public API. Native Svelte element types determine the remaining forwarded attributes.
 
----
-
 ## Styling and DOM contract
 
 Alert uses semantic Tailwind color tokens and Tailwind Variants. It has no animation, transition, dependency-owned state attributes, or CSS variables of its own.
@@ -222,8 +210,6 @@ The root's direct-child selectors size unclassed SVGs to `1rem`, align them with
 
 Classes passed to each part are merged after its local classes with `cn`, so Tailwind conflicts favor classes from your app. Native attributes are also forwarded, but preserve the stable `data-slot` values because local cross-part selectors depend on them.
 
----
-
 ## Accessibility
 
 Alert is a presentational composition around native elements; it has no keyboard interactions or focus management of its own.
@@ -235,13 +221,9 @@ Alert is a presentational composition around native elements; it has no keyboard
 - Interactive children of `Action` need their own accessible names, focus indicators, disabled behavior, and event handling. Inserting an alert should not unexpectedly move focus to its action.
 - Keep descriptions concise. For blocking decisions or confirmation flows, use a dialog instead of an alert callout.
 
----
-
 ## Localization
 
 Alert has no built-in user-facing copy or localization messages. Your app supplies and translates all titles, descriptions, action labels, and accessible icon names. Do not translate the technical `default`/`danger` variant names or `data-slot` values.
-
----
 
 ## Dependencies
 
@@ -348,13 +330,9 @@ export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
 
 Alert does not require other xvelte components, hooks, attachments, context modules, localization messages, shared styles, or `tw-animate-css`.
 
----
-
 ## Credits
 
 Alert is adapted from the [shadcn-svelte Alert](https://www.shadcn-svelte.com/docs/components/alert). Its implementation has been modified to follow xvelte's local API, action, variant, styling, utility, and import conventions.
-
----
 
 ## File organization
 

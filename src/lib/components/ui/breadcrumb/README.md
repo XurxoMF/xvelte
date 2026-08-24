@@ -20,8 +20,6 @@ Use Breadcrumb on nested sites or applications where people benefit from underst
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import the component from its public `index.ts` entry point:
 ```
 
 Breadcrumb's `index.ts` exports `Root`, `List`, `Item`, `Link`, `Page`, `Separator`, and `Ellipsis`, together with the `RootProps`, `ListProps`, `ItemProps`, `LinkProps`, `PageProps`, `SeparatorProps`, and `EllipsisProps` types.
-
----
 
 ## Anatomy
 
@@ -57,8 +53,6 @@ A complete breadcrumb follows this hierarchy:
 ```
 
 `Root` renders the navigation landmark, `List` the ordered path, and each `Item` one location. Place a `Separator` between items, never inside a link. Use `Page` for the current location instead of linking the page to itself.
-
----
 
 ## Basic usage
 
@@ -85,8 +79,6 @@ A complete breadcrumb follows this hierarchy:
 ```
 
 The root supplies a localized “Breadcrumb” accessible label. Links use native anchor behavior, separators are hidden from assistive technology, and the final page exposes `aria-current="page"`.
-
----
 
 ## Examples
 
@@ -170,8 +162,6 @@ Applications with more than one breadcrumb landmark should give each one a disti
 ```
 
 Forwarded props are applied after the built-in label, so `aria-label` overrides the localized default.
-
----
 
 ## Public API
 
@@ -272,8 +262,6 @@ Ellipsis always renders `EllipsisIcon` plus an internal screen-reader-only local
 
 Use `index.ts` and the exported props types as the source of truth for the public API.
 
----
-
 ## Styling and DOM contract
 
 Breadcrumb uses semantic Tailwind colors and exposes no variants or CSS variables of its own. Classes passed to its parts are merged after local classes with `cn`, so conflicting Tailwind utilities normally favor the classes from your app.
@@ -292,8 +280,6 @@ Breadcrumb uses semantic Tailwind colors and exposes no variants or CSS variable
 
 The link's delegated `props` contain the stable hook, but the custom component must spread them for the hook and styles to reach the DOM. Forwarded props are spread last across the implementation, so overriding `data-slot` or required ARIA values can break the documented contract.
 
----
-
 ## Accessibility
 
 The default structure follows the expected breadcrumb pattern: a labeled `nav`, an ordered list of locations, native links for ancestors, a current-page marker, and hidden visual separators.
@@ -309,8 +295,6 @@ The default structure follows the expected breadcrumb pattern: a labeled `nav`, 
 
 Breadcrumb adds no custom keyboard behavior; navigation uses native links and any separately composed interactive components.
 
----
-
 ## Localization
 
 Breadcrumb uses two reusable-library messages from `messages/en.json`:
@@ -323,8 +307,6 @@ Breadcrumb uses two reusable-library messages from `messages/en.json`:
 Your app supplies all visible location names, custom landmark labels, menu labels, omitted-location controls, and route-specific copy. Translate them through your app's localization system.
 
 Do not translate URLs, `data-slot` values, ARIA tokens, or internal message IDs.
-
----
 
 ## Dependencies
 
@@ -398,13 +380,9 @@ Your global stylesheet must import Tailwind and expose the two semantic colors u
 
 No Bits UI package, `tw-animate-css` import, custom dark variant, animation, keyframe, radius token, other xvelte component, hook, attachment, context module, or shared component stylesheet is required. Dropdowns, disclosures, and router-specific link components shown in advanced examples are optional and only need to be installed if your app uses them.
 
----
-
 ## Credits
 
 Breadcrumb is adapted from the [shadcn-svelte Breadcrumb](https://www.shadcn-svelte.com/docs/components/breadcrumb). Its icon facade, localization, public names, and local link delegation have been aligned with xvelte.
-
----
 
 ## File organization
 

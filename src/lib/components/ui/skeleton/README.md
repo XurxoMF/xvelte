@@ -20,8 +20,6 @@ Use Skeleton when the final layout is known and a temporary shape reduces percei
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -32,8 +30,6 @@ Use Skeleton when the final layout is known and a temporary shape reduces percei
 
 `index.ts` exports `Root` and `RootProps`.
 
----
-
 ## Anatomy
 
 Skeleton renders one empty `<div>` and does not accept children:
@@ -41,8 +37,6 @@ Skeleton renders one empty `<div>` and does not accept children:
 ```svelte
 <Skeleton.Root class="h-4 w-40" />
 ```
-
----
 
 ## Basic usage
 
@@ -59,8 +53,6 @@ Skeleton renders one empty `<div>` and does not accept children:
 	</div>
 </div>
 ```
-
----
 
 ## Examples
 
@@ -87,8 +79,6 @@ Put loading semantics on the surrounding region. The individual visual blocks sh
 
 Tailwind's reduced-motion variant can disable the pulse when the app wants stricter motion behavior.
 
----
-
 ## Public API
 
 `RootProps` is the native Svelte `HTMLAttributes<HTMLDivElement>` type with `children` removed and a bindable element `ref`. The component's `index.ts` and exported type are the source of truth.
@@ -100,8 +90,6 @@ Tailwind's reduced-motion variant can disable the pulse when the app wants stric
 
 All remaining native `<div>` attributes and handlers are forwarded. Child content is unsupported because the component is an empty loading shape.
 
----
-
 ## Styling and DOM contract
 
 - Stable hook: `data-slot="skeleton"`.
@@ -111,21 +99,15 @@ All remaining native `<div>` attributes and handlers are forwarded. Child conten
 
 Skeleton owns no state attributes or internal elements.
 
----
-
 ## Accessibility
 
 Skeleton is visual and has no role or accessible name. Mark a group of placeholders `aria-hidden="true"` and put `aria-busy="true"` plus an appropriate accessible name or status message on the loading region. Remove `aria-busy` when real content arrives.
 
 Do not expose every rectangle to a screen reader and do not rely on animation as the only indication that loading is underway.
 
----
-
 ## Localization
 
 Skeleton contains no text and requires no localization messages. Any loading label or status on the surrounding region belongs to the app and must be translated there.
-
----
 
 ## Dependencies
 
@@ -197,13 +179,9 @@ skeleton/
 
 Skeleton requires no icon, other xvelte component, hook, attachment, context, localization setup, shared style, image, font, or network service.
 
----
-
 ## Credits
 
 The component is adapted from [shadcn-svelte Skeleton](https://www.shadcn-svelte.com/docs/components/skeleton).
-
----
 
 ## File organization
 

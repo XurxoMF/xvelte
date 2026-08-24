@@ -20,8 +20,6 @@ Use Input Phone when a form must accept numbers from multiple countries. Prefer 
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import all public parts through the component `index.ts`:
@@ -39,8 +37,6 @@ The component exports:
 - State types: `InputPhoneCountry`, `InputPhoneDetails`, `InputPhoneValidationError`, and `CountryCode`.
 
 The context state and its flag loader remain internal.
-
----
 
 ## Anatomy
 
@@ -65,8 +61,6 @@ The standard joined composition places both controls inside Button Group:
 ```
 
 `Input` and `CountrySelector` must be descendants of the same `Root`. Root owns `value`, `valid`, `country`, and `details`, so neither child exposes a competing value or country binding.
-
----
 
 ## Basic usage
 
@@ -98,8 +92,6 @@ The standard joined composition places both controls inside Button Group:
 ```
 
 `value` is normalized to an E.164-shaped string as someone types. Check `valid` before storing or submitting it because incomplete numbers may still produce a normalized partial value.
-
----
 
 ## Examples
 
@@ -216,8 +208,6 @@ Input keeps native event handlers even though its value is managed by Root:
 
 Root state updates before the custom Input `oninput` callback. Blur formatting runs before the custom `onblur` callback. The native `onchange` handler is forwarded unchanged.
 
----
-
 ## Public API
 
 The component `index.ts` and its exported types are the source of truth.
@@ -307,8 +297,6 @@ The selected trigger displays its flag and calling code. The popup searches acro
 
 See the [libphonenumber-js documentation](https://gitlab.com/catamphetamine/libphonenumber-js) for dependency-owned parsing and validation behavior.
 
----
-
 ## Styling and DOM contract
 
 | Part              | Element                 | Stable hooks                                                        |
@@ -326,8 +314,6 @@ CountrySelector reuses the complete Combobox trigger, content, filtering, item, 
 
 Flags are fixed 3:2 SVGs. The first flag request lazily imports and caches the `country-flag-icons/string/3x2` collection; no flag network request occurs at interaction time.
 
----
-
 ## Accessibility
 
 - Input is a native `type="tel"` control and forwards `id`, ARIA attributes, form metadata, and native events. Associate it with a persistent visible label.
@@ -341,8 +327,6 @@ Flags are fixed 3:2 SVGs. The first flag request lazily imports and caches the `
 - Connect validation help with `aria-describedby` and render text for `details.error` or app-owned validation. Do not rely on border color alone.
 
 Keep Input and CountrySelector in a logical DOM order even when CSS changes their visual order.
-
----
 
 ## Localization
 
@@ -358,8 +342,6 @@ Input Phone uses these Paraglide messages from `messages/en.json`:
 Root uses the active Paraglide locale for country names and sorting by default. Pass `locale` to override it for one Input Phone. The app supplies and translates Input placeholders, visible field labels, instructions, validation messages, and value summaries.
 
 `searchPlaceholder`, `emptyText`, and `aria-label` override the corresponding built-in selector copy.
-
----
 
 ## Dependencies
 
@@ -554,13 +536,9 @@ No `svelte-tel-input` stylesheet, Input Phone keyframe, or component-specific CS
 
 Configure Paraglide so `$lib/paraglide/messages.js` and `$lib/paraglide/runtime.js` are generated, and add the four entries listed in [Localization](#localization) to `messages/en.json`. Root imports `getLocale()` from the runtime for its default country-name locale. The exact message keys and values are already shown above and are not duplicated here.
 
----
-
 ## Credits
 
 The original visual direction comes from the [shadcn-svelte-extras Phone Input component](https://shadcn-svelte-extras.com/docs/components/phone-input). The composable Root/context API and direct libphonenumber-js integration are local xvelte adaptations.
-
----
 
 ## File organization
 

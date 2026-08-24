@@ -20,8 +20,6 @@ Use Knob for compact continuous controls such as gain, intensity, balance, or ef
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component through its public `index.ts` entry point:
@@ -34,8 +32,6 @@ Import the component through its public `index.ts` entry point:
 
 Knob's `index.ts` exports `Root` and the `RootProps` type.
 
----
-
 ## Anatomy
 
 Knob is a single public component:
@@ -45,8 +41,6 @@ Knob is a single public component:
 ```
 
 It renders an outer layout `div`, an optional visible label, an inner focusable element with `role="slider"`, an SVG progress arc, a rotating indicator, and a visible numeric value. The SVG and indicator are internal implementation details rather than public component parts.
-
----
 
 ## Basic usage
 
@@ -63,8 +57,6 @@ It renders an outer layout `div`, an optional visible label, an inner focusable 
 ```
 
 Drag upward to increase the value and downward to decrease it. The same control works with the keyboard when focused.
-
----
 
 ## Examples
 
@@ -133,8 +125,6 @@ Use finite bounds with `min < max` and a positive finite `step`. Step snapping i
 
 A disabled Knob is removed from the tab order, ignores dragging, keyboard input, and double clicks, exposes `aria-disabled="true"`, and uses reduced-opacity styling.
 
----
-
 ## Public API
 
 The component's `index.ts`, exported `RootProps`, and local source are the source of truth.
@@ -174,8 +164,6 @@ Externally assigned values are not rewritten. The arc and rotation clamp their v
 
 Dragging changes half of the complete range for each vertical distance equal to `size`. A full-range change therefore takes approximately twice the configured size in vertical pixels. The callback may run repeatedly with the same snapped value during a drag.
 
----
-
 ## Styling and DOM contract
 
 The outer wrapper has the stable `data-slot="knob"`. Internal markup currently contains:
@@ -193,8 +181,6 @@ The component uses semantic `primary`, `secondary`, `muted`, `muted-foreground`,
 Disabled state adds reduced opacity and slight grayscale. The slider cursor is a vertical-resize cursor when enabled and `not-allowed` when disabled.
 
 The enabled slider receives the standard three-pixel, 50%-opacity semantic `ring` treatment from the required global `*:focus-visible` rule.
-
----
 
 ## Accessibility
 
@@ -216,8 +202,6 @@ Keyboard behavior:
 - Double click is an optional pointer convenience; ensure the same reset can be understood or performed another way when reset is important.
 - The displayed value is not a native form control and is not submitted with a form. Mirror the bound value into application form state or a named input when needed.
 
----
-
 ## Localization
 
 Knob uses one Paraglide message:
@@ -229,8 +213,6 @@ Knob uses one Paraglide message:
 The public `label` prop overrides that fallback and also renders visible text above the control. Translate the label in application code because it should describe the specific setting, such as “Volume” or “Gain”. Your app also owns translated units, instructions, reset guidance, validation, and surrounding output text.
 
 Numbers are rendered with JavaScript's default string conversion; the component does not apply locale-aware number formatting. Numeric values, CSS colors, `data-slot`, and ARIA attribute names are technical values and are not translated.
-
----
 
 ## Dependencies
 
@@ -341,13 +323,9 @@ The global stylesheet must load Tailwind and expose the semantic colors used by 
 
 The app owns dark-mode activation. Knob requires no `tw-animate-css` import, keyframe, component-specific global CSS variable, `src/lib/icons.ts` export, font, network service, or additional layout rule. The component uses browser mouse, touch, and window event APIs directly and needs no additional package for them.
 
----
-
 ## Credits
 
 Knob is adapted from [more-shadcn-svelte's Knob component](https://more-shadcn.noair.fun/docs/components/knob). The local xvelte API, localization, interaction behavior, styling, and limitations documented here are the source of truth.
-
----
 
 ## File organization
 

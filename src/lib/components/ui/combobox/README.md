@@ -19,8 +19,6 @@ Use Combobox when a long or searchable option list would be cumbersome in a nati
 - [Dependencies](#dependencies)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import all component parts from the component's public `index.ts` entry point:
@@ -32,8 +30,6 @@ Import all component parts from the component's public `index.ts` entry point:
 ```
 
 The component's `index.ts` exports `Root`, `Trigger`, `Content`, `Input`, `List`, `Group`, `Item`, and `Empty`, together with all corresponding props types. It also exports the `ComboboxType`, `ValueMap`, `ComboboxState`, and `ComboboxContextState` types and the advanced `setComboboxContext` and `getComboboxContext` helpers.
-
----
 
 ## Anatomy
 
@@ -59,8 +55,6 @@ Compose the public parts below one root:
 `Root` owns selection and open state. `Trigger` opens the Popover and displays content supplied by the app. `Content` creates the anchored panel and internal Command root. `Input` filters items by their `value`; `List` is the scrollable results area; `Group` optionally labels related items; `Item` selects its string value; and `Empty` appears when filtering produces no matches.
 
 Keep every state-aware part under the same `Root`. `Trigger` and `Item` read the nearest Combobox context during component initialization and fail when rendered without one.
-
----
 
 ## Basic usage
 
@@ -98,8 +92,6 @@ Keep every state-aware part under the same `Root`. `Trigger` and `Item` read the
 ```
 
 The bound value stores the selected item's `value`, not its rendered label. Selecting the current item again clears the single selection to an empty string. Selecting any single item closes the popup and restores focus to the trigger.
-
----
 
 ## Examples
 
@@ -213,8 +205,6 @@ Validate required selection and accepted values on submission.
 ```
 
 `size` changes only the local trigger height and radius. Width remains `w-full` unless `class` overrides it.
-
----
 
 ## Public API
 
@@ -334,8 +324,6 @@ These helpers are intended for custom Combobox roots or parts that extend the pr
 
 The component's `index.ts`, exported types, and local source are the source of truth for the public API. The [Bits UI Command documentation](https://www.bits-ui.com/docs/components/command) and [Popover documentation](https://www.bits-ui.com/docs/components/popover) describe dependency behavior, not additional Combobox props.
 
----
-
 ## Styling and DOM contract
 
 Combobox uses Tailwind utilities, semantic theme tokens, Bits UI state attributes, and the styles of its required Button, Popover, Command, and Input Group components. It exposes no component-specific CSS variables.
@@ -355,8 +343,6 @@ Combobox uses Tailwind utilities, semantic theme tokens, Bits UI state attribute
 
 The trigger's app-supplied `class` is merged after its local styles. Classes on the other public parts are passed into required wrappers and merged according to those components. Do not replace the documented slot values: descendant selectors use `combobox-content` to remove the Input Group's focus ring inside the popup.
 
----
-
 ## Accessibility
 
 `Trigger` is a native button with `role="combobox"`, an `aria-expanded` value synchronized with open state, and Popover-provided relationship attributes. Its rendered children should always provide a clear accessible name; a placeholder such as “Select a framework” is preferable to an empty trigger. Pass an explicit `aria-label` when the visible summary is only a count or otherwise ambiguous.
@@ -375,8 +361,6 @@ Consumer responsibilities:
 
 The current wrapper does not expose disabled items, input labeling attributes, open state, or focus hooks. If those are required, extend the reusable API rather than relying on private implementation elements.
 
----
-
 ## Localization
 
 Combobox uses Paraglide for its default search placeholder. Keep this message in `messages/en.json` and translate it in every supported locale:
@@ -388,8 +372,6 @@ Combobox uses Paraglide for its default search placeholder. Keep this message in
 Apps supply and translate trigger placeholders, selected-value summaries, group headings, item labels, empty results, labels, validation errors, and form actions. `Input.placeholder` overrides the built-in message.
 
 Copying the complete required Command and Dialog folders also requires their existing `eager_panda_seek`, `frost_lime_drift`, and `amber_fox_glide` messages. They are used by optional exports in those folders rather than by the standard Combobox composition; follow the Command and Dialog README localization sections for their values and overrides.
-
----
 
 ## Dependencies
 
@@ -592,8 +574,6 @@ The global stylesheet must import Tailwind and `tw-animate-css`, provide the hid
 ```
 
 `tw-animate-css` supplies the Popover and Dialog animation utilities; no Combobox-specific keyframe must be copied. The app remains responsible for applying its `.dark` class when dark mode is supported.
-
----
 
 ## File organization
 

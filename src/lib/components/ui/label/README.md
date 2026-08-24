@@ -20,8 +20,6 @@ Use Label for inputs, checkboxes, radio controls, selects, textareas, and other 
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component through its public `index.ts` entry point:
@@ -34,8 +32,6 @@ Import the component through its public `index.ts` entry point:
 
 Label's `index.ts` exports `Root` and the `RootProps` type.
 
----
-
 ## Anatomy
 
 Associate Label and a control by matching the label's `for` with the control's `id`:
@@ -46,8 +42,6 @@ Associate Label and a control by matching the label's `for` with the control's `
 ```
 
 The component renders a native `label` unless the inherited `child` snippet replaces it. Label does not render a control, description, required marker, validation message, or surrounding field layout.
-
----
 
 ## Basic usage
 
@@ -63,8 +57,6 @@ The component renders a native `label` unless the inherited `child` snippet repl
 ```
 
 Clicking the label focuses or activates its associated control through native browser behavior.
-
----
 
 ## Examples
 
@@ -123,8 +115,6 @@ Set the control's actual disabled state as well. `data-disabled` only activates 
 
 Keep the control's native `required` state authoritative. A visual marker alone does not communicate the requirement to every user.
 
----
-
 ## Public API
 
 Type: `RootProps`, an alias of `LabelPrimitive.RootProps`. Label forwards the Bits UI primitive API and native label attributes. The component's `index.ts`, exported type, and installed stable Bits UI version are the source of truth.
@@ -156,8 +146,6 @@ The `child` snippet receives a `props` object containing the merged native attri
 
 Use the default rendering unless delegation is genuinely needed. Rendering a non-label element removes the native `for` association unless the replacement provides equivalent accessible behavior.
 
----
-
 ## Styling and DOM contract
 
 Stable xvelte hooks:
@@ -178,8 +166,6 @@ The peer path adds a not-allowed cursor and reduced opacity. The group path adds
 
 The public `class` is merged with the local classes through `cn()`, so later conflicting Tailwind utilities normally win. When `child` is used, the class and both data attributes move to the delegated element if its snippet spreads `props`.
 
----
-
 ## Accessibility
 
 Bits UI preserves native label semantics and prevents unwanted text selection during repeated clicking. The browser owns focus and activation of the associated control.
@@ -192,15 +178,11 @@ Bits UI preserves native label semantics and prevents unwanted text selection du
 - Required markers, help text, and errors need their own semantics. Apply `required` or `aria-required` to the control and connect descriptions or errors with the appropriate ARIA attributes.
 - When using `child`, preserve a native label whenever possible and spread every supplied prop.
 
----
-
 ## Localization
 
 Label has no built-in user-facing copy and imports no localization messages. Your app supplies and translates label text, required or optional indicators, units, instructions, descriptions, and validation messages.
 
 The `for`, `id`, `data-slot`, and Bits UI data attributes are technical identifiers and are not translated. Keep translated label wording concise while preserving the meaning of the associated control.
-
----
 
 ## Dependencies
 
@@ -261,13 +243,9 @@ Label's local styles use Tailwind utilities without semantic color variables, da
 
 Label requires no `tw-animate-css` import, semantic CSS variable, `@theme` mapping, base-layer rule, keyframe, icon export from `src/lib/icons.ts`, localization message, other xvelte component, hook, attachment, context, image, font, network service, or additional layout rule.
 
----
-
 ## Credits
 
 Label is adapted from [shadcn-svelte's Label component](https://www.shadcn-svelte.com/docs/components/label) and wraps [Bits UI Label](https://www.bits-ui.com/docs/components/label). The local xvelte import, styling hooks, classes, and behavior documented here are the source of truth.
-
----
 
 ## File organization
 

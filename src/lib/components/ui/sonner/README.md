@@ -20,8 +20,6 @@ Use Sonner for brief asynchronous feedback that does not block the current task,
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component and toast runtime from the local entry point:
@@ -34,8 +32,6 @@ Import the component and toast runtime from the local entry point:
 
 `index.ts` exports `Root`, `RootProps`, and `toast`. The local `toast` wrapper forwards the callable API and all installed helpers, so application code does not import `svelte-sonner` directly.
 
----
-
 ## Anatomy
 
 Render one Root near the application's top-level layout:
@@ -45,8 +41,6 @@ Render one Root near the application's top-level layout:
 ```
 
 The component renders the package Toaster with local theme variables and icon snippets. Individual toasts are created from any descendant or application module with `Sonner.toast()`, `Sonner.toast.success()`, `Sonner.toast.error()`, and the other forwarded helpers.
-
----
 
 ## Basic usage
 
@@ -78,8 +72,6 @@ From a page or component:
 ```
 
 Keep one Toaster mounted. Calling `toast` does not require passing the Root through context.
-
----
 
 ## Examples
 
@@ -146,8 +138,6 @@ The local loading icon spins automatically. Promise copy should describe the ope
 
 Reuse the ID to update the same notification instead of stacking each lifecycle state.
 
----
-
 ## Public API
 
 `RootProps` equals the installed `svelte-sonner@1.1.1` `ToasterProps`. The local Root fixes the icon snippets, defaults `theme` from `mode.current`, supplies theme CSS variables, and adds subtle semantic status borders before forwarding caller props. Caller `toastOptions.classes` are merged after the local status classes, so each status class can be intentionally replaced; other forwarded props can override `theme`, `class`, `style`, or icon snippets.
@@ -196,8 +186,6 @@ The exported `toast` callable forwards directly to the installed `svelte-sonner`
 
 Arguments, return values, generic component support, options, and helper behavior remain those of the installed package. Import this wrapper from `$lib/components/ui/sonner` instead of importing `svelte-sonner` in application code.
 
----
-
 ## Styling and DOM contract
 
 The local Root supplies:
@@ -212,23 +200,17 @@ The local Root supplies:
 
 There is no local `data-slot`. Toast markup, state attributes, swipe variables, and per-part classes are owned by `svelte-sonner`. Use its `toastOptions.classes` API instead of depending on undocumented nested selectors. Passing `class`, `style`, or icon props to Root replaces the local value because props are forwarded last.
 
----
-
 ## Accessibility
 
 `svelte-sonner` manages live announcements, focus hotkeys, dismissal, pause behavior, actions, and close controls. Keep toast titles concise, avoid repeatedly announcing high-frequency background events, and do not move focus into ordinary informational toasts.
 
 Actions must have clear labels and remain possible elsewhere when the consequence is important. A toast that disappears must not be the only place to find an error or required instruction. Translate `containerAriaLabel` and `closeButtonAriaLabel` when the app language is not English.
 
----
-
 ## Localization
 
 The local wrapper adds no Paraglide messages. All toast titles, descriptions, action labels, and promise states are supplied and translated by the app.
 
 `svelte-sonner` defaults `containerAriaLabel` to `Notifications` and `closeButtonAriaLabel` to `Close toast`. Override both props with translated text for localized applications.
-
----
 
 ## Dependencies
 
@@ -325,13 +307,9 @@ sonner/
 
 Sonner requires no other xvelte component, hook, attachment, context, localization setup, shared style, image, font, or network service.
 
----
-
 ## Credits
 
 The local wrapper is adapted from [shadcn-svelte Sonner](https://www.shadcn-svelte.com/docs/components/sonner).
-
----
 
 ## File organization
 

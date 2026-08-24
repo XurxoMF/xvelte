@@ -20,8 +20,6 @@ Use Input OTP for short codes sent through an independent channel or generated b
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import all public parts through the component's `index.ts`:
@@ -39,8 +37,6 @@ Bits UI's pattern constants are package exports rather than xvelte exports. Impo
 ```ts
 import { REGEXP_ONLY_DIGITS, REGEXP_ONLY_CHARS, REGEXP_ONLY_DIGITS_AND_CHARS } from "bits-ui";
 ```
-
----
 
 ## Anatomy
 
@@ -85,8 +81,6 @@ Bits UI Root container
 
 The visual Slots are not independent form controls. Bits UI stretches one transparent native input over the visual content, manages its selection, and derives `cell.char`, `cell.isActive`, and `cell.hasFakeCaret` for each Slot.
 
----
-
 ## Basic usage
 
 Give the real input an ID through `inputId`, associate a visible label with it, and constrain the accepted characters explicitly:
@@ -124,8 +118,6 @@ Give the real input an ID through `inputId`, associate a visible label with it, 
 `maxlength` determines both the accepted value length and the number of generated cells. It is required by the installed public type even though Bits UI has an internal runtime fallback of `6`.
 
 `inputmode="numeric"` only requests a numeric-oriented keyboard; it does not reject letters from a physical keyboard or paste. Use `pattern` when the value must contain only a specific character set.
-
----
 
 ## Examples
 
@@ -277,8 +269,6 @@ Root forwards `aria-invalid` to the real input for assistive technology. The loc
 
 Setting `aria-invalid` only on Root does not activate Group's `has-aria-invalid` selector because the real input is a sibling of the visual Group, not its descendant.
 
----
-
 ## Public API
 
 Input OTP wraps the installed stable Bits UI Pin Input primitive. The tables document every local adaptation and the inherited options most relevant to ordinary use; see the [Bits UI Pin Input API](https://bits-ui.com/docs/components/pin-input) for the complete primitive API. Input OTP's `index.ts`, exported types, and local source are the source of truth.
@@ -362,8 +352,6 @@ Separator renders a `div` with `role="separator"` and `data-slot="input-otp-sepa
 
 The default MinusIcon comes from the shared xvelte icon facade. It receives a `1rem` size unless it already has a `size-*` class.
 
----
-
 ## Styling and DOM contract
 
 The component combines xvelte hooks with Bits UI's generated structure:
@@ -394,8 +382,6 @@ Bits UI owns additional implementation details, including:
 
 All local parts with a `class` prop merge through `cn`, allowing later conflicting Tailwind utilities to replace ordinary defaults. High-specificity state, first/last, descendant, ARIA, and data-attribute selectors may require equally specific overrides.
 
----
-
 ## Accessibility
 
 Bits UI presents one real native input instead of several independent one-character fields. This preserves ordinary typing, selection, paste, mobile keyboards, browser one-time-code autofill, form submission, focus, and screen-reader interaction while the visual cells mirror the value.
@@ -417,15 +403,11 @@ The local caret animation does not include a reduced-motion override. Disable or
 
 Disabled Root disables the real input and dims the complete outer container through `has-disabled:opacity-50`; visual Slots are generic elements and are not individually disabled.
 
----
-
 ## Localization
 
 Input OTP has no built-in user-facing copy and imports no localization messages. The app supplies and translates labels, delivery-channel descriptions, resend instructions, expiry messages, errors, loading states, action labels, and recovery guidance.
 
 The browser or operating system owns one-time-code autofill prompts and virtual keyboard presentation. Input mode, autocomplete, pattern, `data-*`, and form values are technical identifiers and are not translated.
-
----
 
 ## Dependencies
 
@@ -533,13 +515,9 @@ The global stylesheet must load Tailwind and `tw-animate-css`, define the dark v
 
 Input OTP requires no base-layer rule, custom data-state variant, additional keyframe, localization message, or layout CSS. Bits UI injects its own required runtime styles for the transparent input as described in [Styling and DOM contract](#styling-and-dom-contract).
 
----
-
 ## Credits
 
 Adapted from [shadcn-svelte's Input OTP](https://www.shadcn-svelte.com/docs/components/input-otp). Bits UI is the runtime dependency and is documented separately in [Public API](#public-api).
-
----
 
 ## File organization
 

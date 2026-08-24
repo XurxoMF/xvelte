@@ -20,8 +20,6 @@ Use Aspect Ratio when the ratio is part of the layout and the available width de
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts` entry point:
@@ -34,8 +32,6 @@ Import the component from its public `index.ts` entry point:
 
 Aspect Ratio's `index.ts` exports `Root` and its `RootProps` type.
 
----
-
 ## Anatomy
 
 Aspect Ratio has one public part:
@@ -47,8 +43,6 @@ Aspect Ratio has one public part:
 ```
 
 The component creates a full-width outer sizing wrapper and an absolutely positioned inner element that fills the calculated area. Public attributes, `class`, `children`, `data-slot`, and `ref` apply to the inner element.
-
----
 
 ## Basic usage
 
@@ -65,8 +59,6 @@ The component creates a full-width outer sizing wrapper and an absolutely positi
 ```
 
 The parent controls the available width. Make media fill the inner element with styles such as `size-full object-cover` when cropping is appropriate.
-
----
 
 ## Examples
 
@@ -93,8 +85,6 @@ The wrapper controls layout only; native media behavior and accessible labeling 
 </AspectRatio.Root>
 ```
 
----
-
 ## Public API
 
 ### `AspectRatio.Root`
@@ -113,8 +103,6 @@ Native attributes such as `id`, `style`, and `aria-*` are also forwarded to the 
 
 Use `index.ts` and the exported `RootProps` type as the source of truth for the local API. The installed Bits UI type defines all inherited options.
 
----
-
 ## Styling and DOM contract
 
 The outer Bits UI wrapper uses `position: relative`, `width: 100%`, and percentage bottom padding derived from `ratio`. The default inner element is absolutely positioned on all four edges.
@@ -126,8 +114,6 @@ The outer Bits UI wrapper uses `position: relative`, `width: 100%`, and percenta
 
 Aspect Ratio defines no local variants, semantic color tokens, animations, CSS variables, or state attributes. Style the child explicitly to fill, crop, contain, or center its content. Treat the outer sizing wrapper as dependency-owned because it has no xvelte `data-slot`.
 
----
-
 ## Accessibility
 
 Aspect Ratio is layout-only and adds no role, accessible name, keyboard behavior, or focus management.
@@ -137,13 +123,9 @@ Aspect Ratio is layout-only and adds no role, accessible name, keyboard behavior
 - Do not encode meaning only through cropping or visual placement.
 - Ensure delegated elements receive every prop supplied by the `child` snippet so layout and references continue to work.
 
----
-
 ## Localization
 
 Aspect Ratio has no built-in user-facing copy or localization messages. Your app supplies all child content, alternative text, captions, titles, and accessible labels. Do not translate the technical `data-slot` value or ratio.
-
----
 
 ## Dependencies
 
@@ -162,13 +144,9 @@ pnpm add bits-ui
 
 This component has no development-only package dependency. The examples use Tailwind utilities, but the component itself does not require Tailwind CSS, `tw-animate-css`, theme variables, `layout.css` imports, keyframes, semantic icon exports, `$lib/utils`, other xvelte components, hooks, attachments, context modules, localization messages, or shared styles.
 
----
-
 ## Credits
 
 Aspect Ratio is adapted from the [shadcn-svelte Aspect Ratio](https://www.shadcn-svelte.com/docs/components/aspect-ratio). Its public naming and import path have been aligned with xvelte conventions.
-
----
 
 ## File organization
 

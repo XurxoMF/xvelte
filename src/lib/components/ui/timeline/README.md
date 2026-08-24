@@ -20,8 +20,6 @@ Use Timeline for chronological histories, activity feeds, release notes, or proc
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -31,8 +29,6 @@ Use Timeline for chronological histories, activity feeds, release notes, or proc
 ```
 
 `index.ts` exports `Root`, `Item`, `Separator`, `Content`, `Title`, `Date`, and `Description`, together with a matching props type for each part.
-
----
 
 ## Anatomy
 
@@ -50,8 +46,6 @@ Use Timeline for chronological histories, activity feeds, release notes, or proc
 ```
 
 Root draws the continuous line. Separator sits over it and renders a small primary dot unless custom children are supplied.
-
----
 
 ## Basic usage
 
@@ -80,8 +74,6 @@ Root draws the continuous line. Separator sits over it and renders a small prima
 ```
 
 Root and Item are divs, so add list roles when the events should be exposed as a list.
-
----
 
 ## Examples
 
@@ -120,8 +112,6 @@ Custom children completely replace the default inner dot. Keep decorative marker
 
 State is app-owned; Timeline adds no active or completed props.
 
----
-
 ## Public API
 
 Timeline is local native markup. Each props type accepts the corresponding native attributes, `children`, a mergeable `class`, and bindable `ref`. The component's `index.ts`, exported types, and source are the source of truth.
@@ -138,15 +128,11 @@ Timeline is local native markup. Each props type accepts the corresponding nativ
 
 All remaining native attributes and handlers are forwarded. Classes merge after local defaults with `cn()`.
 
----
-
 ## Styling and DOM contract
 
 Stable hooks are `data-slot="timeline"`, `timeline-item`, `timeline-separator`, `timeline-content`, `timeline-date`, `timeline-title`, and `timeline-description`.
 
 The continuous line and default inner dot have no separate slots. The line uses `border`, while the marker uses `background`, `border`, `primary`, and shadow styling. Root is fixed to a left-aligned vertical layout; alternate axes require app CSS or a future component API.
-
----
 
 ## Accessibility
 
@@ -154,13 +140,9 @@ The local composition is visual and does not add list semantics automatically. U
 
 Use native `<time datetime>` for machine-readable dates. Decorative separators and icons should be hidden from assistive technology, and state such as current/completed must also be expressed in text or ARIA rather than color alone.
 
----
-
 ## Localization
 
 Timeline contains no built-in copy and requires no localization messages. The app supplies and translates titles, descriptions, relative-date wording, accessible labels, and date/time formatting.
-
----
 
 ## Dependencies
 
@@ -242,13 +224,9 @@ timeline/
 
 Timeline needs no icon, other xvelte component, hook, attachment, context, localization setup, shared style, image, font, or network service.
 
----
-
 ## Credits
 
 The component structure and presentation are adapted from [more-shadcn-svelte Timeline](https://more-shadcn.noair.fun/docs/components/timeline).
-
----
 
 ## File organization
 

@@ -18,8 +18,6 @@ A guided-tour overlay that highlights elements by DOM ID, positions step content
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts` entry point:
@@ -32,8 +30,6 @@ Import the component from its public `index.ts` entry point:
 ```
 
 Walkthrough's `index.ts` exports `Root` and the `RootProps`, `Step`, and `WalkthroughContext` types.
-
----
 
 ## Anatomy
 
@@ -50,8 +46,6 @@ Each `Step.target` points to an existing element's `id` without a leading `#`:
 ```
 
 The internal content and spotlight components are implementation details and are not exported.
-
----
 
 ## Basic usage
 
@@ -87,8 +81,6 @@ The internal content and spotlight components are implementation details and are
 ```
 
 Render `Root` while every referenced target can be found in the document. A missing target leaves the content at its initial position and the spotlight at its previous or empty rectangle.
-
----
 
 ## Examples
 
@@ -142,8 +134,6 @@ Custom copy belongs to your app and must be translated there. Calling `close` pr
 
 Keep a non-empty `steps` array while opening the walkthrough. Changes that make the current index invalid are not clamped automatically.
 
----
-
 ## Public API
 
 ### `Walkthrough.Root`
@@ -192,8 +182,6 @@ type Step = {
 
 The context setters and getters are internal and are not exported by the component's `index.ts`.
 
----
-
 ## Styling and DOM contract
 
 Stable local hooks are:
@@ -209,8 +197,6 @@ The default card uses `popover`, `popover-foreground`, `muted-foreground`, and `
 
 The spotlight has `pointer-events-none`, so it dims the page but does not block interaction with background content.
 
----
-
 ## Accessibility
 
 The positioned content wrapper uses `role="dialog"`, but the current implementation does not provide `aria-modal`, associate the dialog with its visible title or description, move or trap focus, restore focus, close on Escape, or hide background content from assistive technology. The spotlight also leaves background elements interactive.
@@ -220,8 +206,6 @@ The default close button contains only an icon and has no accessible name. Back,
 These limitations mean the current component is appropriate only where the walkthrough is supplementary and users can still understand and operate the page without it. For a strict modal tour, update the implementation with focus management, Escape handling, an accessible close name, and dialog labeling before using it. Custom content can add a visibly labelled close control, but cannot add attributes to the outer dialog through the current public API.
 
 Smooth automatic scrolling follows the browser and user's motion settings; the component does not provide its own reduced-motion switch.
-
----
 
 ## Localization
 
@@ -235,8 +219,6 @@ The default content uses these Paraglide messages from `messages/en.json`:
 | `young_elm_next`    | `Next`        | None.                                  |
 
 `Step.title` and `Step.description` come from your app and must already be translated for the active locale. A custom `children` snippet replaces all default visible copy, so it also owns its translations. The default icon-only close action currently has no localized accessible label.
-
----
 
 ## Dependencies
 
@@ -307,13 +289,9 @@ Add the four message IDs listed under Localization to `messages/en.json`, then g
 
 Walkthrough does not directly import `$lib/utils`; the required Button component does. Follow Button's README for the exact `cn` helper and its full theme requirements. No other xvelte component, hook, attachment, shared stylesheet, animation package, or context outside this component folder is required. Copy every source file listed under File organization; `walkthrough-context.ts` is required internal code even though its helpers are not public exports.
 
----
-
 ## Credits
 
 The component is adapted from [More Shadcn's Walkthrough component](https://more-shadcn.noair.fun/docs/components/walkthrough). The local xvelte API, behavior, and limitations documented here are defined by this repository's implementation.
-
----
 
 ## File organization
 

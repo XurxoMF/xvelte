@@ -20,8 +20,6 @@ Use a checkbox when each choice can be turned on or off independently, such as a
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts` entry point:
@@ -34,8 +32,6 @@ Import the component from its public `index.ts` entry point:
 
 Checkbox's `index.ts` exports `Root` and the `RootProps` type.
 
----
-
 ## Anatomy
 
 Checkbox is a single-part component:
@@ -47,8 +43,6 @@ Checkbox is a single-part component:
 `Root` renders the interactive checkbox button and creates its indicator internally. A check icon represents the checked state and a minus icon represents the indeterminate state. The indicator cannot be replaced through a child snippet in the local xvelte API.
 
 Associate every checkbox with visible label text, either by matching `id` and `for` attributes or by wrapping the checkbox and its text in one `<label>`.
-
----
 
 ## Basic usage
 
@@ -70,8 +64,6 @@ Associate every checkbox with visible label text, either by matching `id` and `f
 ```
 
 Binding `checked` keeps application state synchronized with user interaction. Supplying `name` also makes Bits UI render the hidden native input used for form submission and validation.
-
----
 
 ## Examples
 
@@ -164,8 +156,6 @@ Use `indeterminate` for a mixed collection, such as a “select all” checkbox 
 
 Keep `checked` and `indeterminate` synchronized with the collection they represent. If both are `true`, the local indicator displays the check icon because checked state has priority in the component's rendering logic.
 
----
-
 ## Public API
 
 `RootProps` is based on `CheckboxPrimitive.RootProps`, with the primitive's `children` and `child` render props deliberately removed. The table documents the most important local and inherited options; use the [Bits UI Checkbox API reference](https://www.bits-ui.com/docs/components/checkbox#api-reference) for the complete inherited API.
@@ -191,8 +181,6 @@ The visible indicator is fixed by xvelte: `children` and Bits UI's `child` rende
 
 The component's `index.ts` and exported `RootProps` type are the source of truth for the public API.
 
----
-
 ## Styling and DOM contract
 
 Stable xvelte hooks:
@@ -208,8 +196,6 @@ Bits UI supplies `role="checkbox"`, `aria-checked`, `aria-required`, `aria-reado
 
 Classes passed through `class` are merged with local classes using `cn()`, so later conflicting Tailwind utilities can customize size, color, radius, and spacing. Preserve focus, disabled, invalid, and state selectors when replacing the complete class list.
 
----
-
 ## Accessibility
 
 Bits UI provides checkbox semantics, ARIA state, Space-key interaction, disabled and read-only behavior, and form integration. xvelte preserves those attributes and adds visible focus and validation styles.
@@ -223,13 +209,9 @@ Bits UI provides checkbox semantics, ARIA state, Space-key interaction, disabled
 - Do not put other interactive elements inside a wrapping checkbox label, including the large card pattern shown above.
 - Do not use independent checkboxes for mutually exclusive options; use a radio group instead.
 
----
-
 ## Localization
 
 Checkbox has no built-in user-facing copy and requires no localization messages. Your app supplies and translates labels, descriptions, validation messages, and any text that reports the current selection. Icon names, form values, and state attributes are technical values and are not translated.
-
----
 
 ## Dependencies
 
@@ -338,13 +320,9 @@ export type WithoutChildrenOrChild<T> = WithoutChildren<WithoutChild<T>>;
 
 No other xvelte component, hook, attachment, context module, localization message, or shared style file is required. The examples deliberately use native HTML labels, so they remain complete without copying the separate Label component.
 
----
-
 ## Credits
 
 Checkbox is adapted from the [shadcn-svelte Checkbox component](https://www.shadcn-svelte.com/docs/components/checkbox). Its interaction and state behavior are provided by the `bits-ui` dependency listed above.
-
----
 
 ## File organization
 

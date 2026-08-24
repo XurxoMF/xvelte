@@ -20,8 +20,6 @@ Use Empty when a successfully loaded area has no content to display and people m
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import all parts from the component's public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import all parts from the component's public `index.ts` entry point:
 ```
 
 Empty's `index.ts` exports `Root`, `Header`, `Media`, `Title`, `Description`, and `Content`, together with the `RootProps`, `HeaderProps`, `MediaProps`, `MediaVariants`, `TitleProps`, `DescriptionProps`, and `ContentProps` types. It also exports the `mediaVariants` styling function.
-
----
 
 ## Anatomy
 
@@ -60,8 +56,6 @@ Compose a header and optional action content beneath one Root:
 Root centers the complete state. Header groups Media, Title, and Description with a narrower readable width. Content groups actions, forms, or supporting links below the explanation. Media can render an icon-sized surface or any app-provided image, avatar, illustration, or other visual.
 
 Every part renders a native `div`. The component does not enforce this composition, create headings, announce state changes, or add action behavior.
-
----
 
 ## Basic usage
 
@@ -91,8 +85,6 @@ Every part renders a native `div`. The component does not enforce this compositi
 ```
 
 Root includes `border-dashed` but no border-width utility, so the dashed outline becomes visible only after adding a class such as `border`. Root also uses `flex-1`; its final height depends on the surrounding layout. Add `min-h-*`, `h-full`, or another size class when the empty state must occupy a specific area.
-
----
 
 ## Examples
 
@@ -184,8 +176,6 @@ Use the exported `mediaVariants` function when app-owned markup needs the same p
 
 This reuses only Media's classes. It does not add `data-slot`, `data-variant`, a bindable element reference, or any Empty composition behavior.
 
----
-
 ## Public API
 
 All component parts render native `div` elements and forward compatible native attributes and events. Their props use the same base shape:
@@ -258,8 +248,6 @@ const className = mediaVariants({
 
 `MediaVariants` is the exported variant union. The component's `index.ts`, exported types, and `mediaVariants` are the source of truth for the public API.
 
----
-
 ## Styling and DOM contract
 
 Empty uses Tailwind utilities and semantic theme tokens. It exposes no component-specific CSS variables, state attributes, animations, or dependency-owned DOM.
@@ -283,8 +271,6 @@ Stable presentation details include:
 
 Every part merges `class` with `cn`, so later conflicting utilities supplied by the app normally replace local Tailwind utilities. Native `style` and other attributes are forwarded independently.
 
----
-
 ## Accessibility
 
 Empty adds layout only. It does not provide a landmark, status role, heading, live region, focus management, or accessible name.
@@ -302,15 +288,11 @@ App responsibilities:
 
 The component has no keyboard interaction of its own. Keyboard and disabled behavior come entirely from controls placed inside it.
 
----
-
 ## Localization
 
 Empty contains no built-in human-readable copy and does not use Paraglide messages. The app supplies and translates titles, descriptions, action labels, link text, image alternative text, accessible names, status announcements, and any dynamic values.
 
 The layout uses centered text and `text-balance`, with `max-w-sm` on Header and Content. Test longer translations and override width, alignment, or balancing classes when a locale needs more space. The technical values of `variant`, `data-slot`, and `data-variant` are not translated.
-
----
 
 ## Dependencies
 
@@ -400,13 +382,9 @@ Empty imports no icon and does not require an icon package or `$lib/icons` expor
 
 Empty requires no other xvelte component, hook, attachment, context file, localization message, Paraglide setup, shared style, external asset, or browser API. Buttons, avatars, input groups, illustrations, and popup containers are optional app compositions; copy each component and follow its README only when it is used.
 
----
-
 ## Credits
 
 Empty is adapted from [shadcn-svelte's Empty component](https://www.shadcn-svelte.com/docs/components/empty). Local xvelte structure, exports, styling, dependencies, semantics, and limitations documented here take precedence.
-
----
 
 ## File organization
 

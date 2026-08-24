@@ -20,8 +20,6 @@ Use Color Picker when an app needs a visible, compact color editor. Do not use i
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import the component from its public `index.ts` entry point:
 ```
 
 Color Picker's `index.ts` exports `Root` together with the `RootProps` and `ColorFormat` types. It does not export the internal conversion or parsing helpers.
-
----
 
 ## Anatomy
 
@@ -52,8 +48,6 @@ Color Picker is a single component rather than a set of composable parts:
 
 The format selector opens a Popover containing a Command list when more than one entry is passed to `formats`. These controls are internal implementation details; their state and individual props are not exposed by Color Picker.
 
----
-
 ## Basic usage
 
 ```svelte
@@ -70,8 +64,6 @@ The format selector opens a Popover containing a Command list when more than one
 ```
 
 Dragging a visual control, typing a supported value, or choosing another output format updates `color`. Changes made to `color` by the parent are parsed back into the picker while no drag is active.
-
----
 
 ## Examples
 
@@ -141,8 +133,6 @@ The current `formats` prop only decides whether the selector is interactive: arr
 
 Do not use `formats` as a format allowlist. To force one format today, initialize `value` in that syntax and remove or adapt the format selector in `color-picker-root.svelte`.
 
----
-
 ## Public API
 
 ### `ColorPicker.Root`
@@ -178,8 +168,6 @@ HEX output is uppercase. RGB channels and HSL percentages are rounded to integer
 
 The parser ignores an unsupported non-`#` value rather than changing the current color. Its hexadecimal branch is permissive for unsupported lengths and invalid digits, so validate untrusted strings before assigning them. The component's `index.ts`, exported types, and local source are the source of truth for the public API.
 
----
-
 ## Styling and DOM contract
 
 Color Picker uses Tailwind utilities, semantic theme tokens, inline color gradients, and a small embedded checkerboard image. It exposes no component-specific CSS variables.
@@ -195,8 +183,6 @@ The white/black saturation overlays and rainbow hue gradient are functional colo
 The three keyboard-focusable color controls receive their three-pixel, 50%-opacity semantic `ring` treatment from the required global `*:focus-visible` rule.
 
 The internal Popover uses Bits UI positioning variables and open/closed state attributes through the local Popover wrapper. See the [Bits UI Popover documentation](https://www.bits-ui.com/docs/components/popover) for those dependency-owned behaviors and the [Bits UI Command documentation](https://www.bits-ui.com/docs/components/command) for the format list's selection and keyboard behavior.
-
----
 
 ## Accessibility
 
@@ -214,8 +200,6 @@ Mouse dragging and touch dragging are supported, and `touch-none` prevents nativ
 
 Place visible instructions near the picker when its format or accepted syntax may be unfamiliar, validate the submitted string independently, and do not rely on the color swatch alone to communicate the selected value.
 
----
-
 ## Localization
 
 Color Picker uses one Paraglide message for built-in human-readable copy. Keep this entry in `messages/en.json` and translate it in every supported locale:
@@ -225,8 +209,6 @@ Color Picker uses one Paraglide message for built-in human-readable copy. Keep t
 | `pearl_bison_color` | `Saturation and Brightness` | Accessible name of the two-dimensional color field. |
 
 The technical acronyms `HEX`, `RGB`, `HSL`, and `OKLCH` are not localized. The component has no public copy override. Apps supply and translate surrounding labels, help text, validation errors, and form actions.
-
----
 
 ## Dependencies
 
@@ -416,13 +398,9 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define the dark
 
 `tw-animate-css` supplies the Popover and Dialog animation utilities; no component-specific keyframe must be copied. The app remains responsible for applying its `.dark` class when dark mode is supported.
 
----
-
 ## Credits
 
 Color Picker is adapted from [more-shadcn-svelte's Color Picker](https://more-shadcn.noair.fun/docs/components/color-picker). Local xvelte behavior, API, dependencies, styling, parsing, and limitations are documented here.
-
----
 
 ## File organization
 

@@ -20,8 +20,6 @@ Use an accordion when several sections are equally important but do not need to 
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import the component from its public `index.ts` entry point:
 ```
 
 Accordion's `index.ts` also exports the `RootProps`, `ItemProps`, `TriggerProps`, and `ContentProps` types.
-
----
 
 ## Anatomy
 
@@ -50,8 +46,6 @@ Compose the public parts in this order:
 ```
 
 `Trigger` creates the Bits UI header internally, so xvelte does not expose a separate `Header` part. Each `Item` must contain a `Trigger` and its corresponding `Content`.
-
----
 
 ## Basic usage
 
@@ -78,8 +72,6 @@ Compose the public parts in this order:
 ```
 
 `type="single"` allows one open item. Use `type="multiple"` when several items may remain open.
-
----
 
 ## Examples
 
@@ -148,8 +140,6 @@ Set `hiddenUntilFound` on `Content` when closed content should remain discoverab
 </Accordion.Root>
 ```
 
----
-
 ## Public API
 
 The components forward the applicable Bits UI primitive props and native element attributes. The tables below document the xvelte-owned surface and behavior; use the [Bits UI Accordion API reference](https://www.bits-ui.com/docs/components/accordion#api-reference) for the complete inherited API.
@@ -207,8 +197,6 @@ Type: `ContentProps`, which forwards the Bits UI content props but deliberately 
 
 Native `div` attributes and other inherited props are applied to the outer Bits UI element. Because `class` is consumed by the inner wrapper, use the stable data slot to target the outer element when necessary.
 
----
-
 ## Styling and DOM contract
 
 The component uses semantic Tailwind tokens and `tw-animate-css`. Opening and closing content is animated using the height exposed by Bits UI as `--bits-accordion-content-height`.
@@ -225,8 +213,6 @@ Stable xvelte hooks:
 
 Bits UI also supplies state, orientation, disabled, and ARIA attributes. Prefer those attributes and the xvelte hooks above when styling state. Classes supplied to any public part are merged with its local styles, subject to the `Content` placement described in its API section.
 
----
-
 ## Accessibility
 
 Bits UI provides the disclosure relationships, expanded state, disabled state, focus management, and keyboard navigation. xvelte adds the header wrapper automatically through `Trigger`.
@@ -238,13 +224,9 @@ Bits UI provides the disclosure relationships, expanded state, disabled state, f
 - Preserve visible focus styles and the primitive-provided attributes when adding classes.
 - Content that must always be perceived or compared should not be placed only inside collapsed items.
 
----
-
 ## Localization
 
 Accordion has no built-in user-facing copy. Your app supplies and translates all trigger labels and content. Internal icon and state values are technical details and are not translated.
-
----
 
 ## Dependencies
 
@@ -328,13 +310,9 @@ export type WithoutChild<T> = T extends { child?: any | undefined } ? Omit<T, "c
 
 The `any` in the conditional utility may require the same targeted ESLint exception used by xvelte. Accordion does not require hooks, attachments, context modules, localization messages, or other xvelte components.
 
----
-
 ## Credits
 
 Accordion is adapted from the [shadcn-svelte Accordion](https://shadcn-svelte.com/docs/components/accordion). Its implementation has been modified to follow xvelte's local API, icon, styling, and import conventions.
-
----
 
 ## File organization
 

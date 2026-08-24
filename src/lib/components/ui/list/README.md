@@ -19,8 +19,6 @@ Use List for prose, instructions, rankings, requirements, and other content whos
 - [Dependencies](#dependencies)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the components through the public `index.ts` entry point:
@@ -32,8 +30,6 @@ Import the components through the public `index.ts` entry point:
 ```
 
 List's `index.ts` exports `Root`, `Item`, the `RootProps` and `ItemProps` component types, the `RootVariants` and `RootSpacings` option types, and the `rootVariants` styling function.
-
----
 
 ## Anatomy
 
@@ -47,8 +43,6 @@ Root contains one or more Items:
 ```
 
 Root renders `ul` for `variant="unordered"` and `ol` for `variant="ordered"`. Item always renders `li`. The components do not create Items from data automatically.
-
----
 
 ## Basic usage
 
@@ -65,8 +59,6 @@ Root renders `ul` for `variant="unordered"` and `ol` for `variant="ordered"`. It
 ```
 
 Root defaults to `variant="unordered"`. Use the ordered variant when sequence, rank, or progression changes the meaning.
-
----
 
 ## Examples
 
@@ -206,8 +198,6 @@ Do not place a nested `ol` or `ul` directly beside an Item; it belongs inside th
 
 Data iteration belongs to the app. Use a stable key when entries can change.
 
----
-
 ## Public API
 
 The components are native element wrappers. They expose no callbacks, application state, controlled values, or custom child delegation. The component's `index.ts` and exported types are the source of truth.
@@ -255,8 +245,6 @@ Type: `ItemProps`, based on `HTMLLiAttributes`.
 
 Remaining `li` attributes and event handlers are forwarded. Item does not inspect its parent or validate that it belongs to a list.
 
----
-
 ## Styling and DOM contract
 
 Stable xvelte hooks:
@@ -281,8 +269,6 @@ The selector does not style deeper Items; every nested Root supplies its own spa
 
 Every public `class` prop is merged through `cn()`, so later conflicting Tailwind utilities normally win. Use the stable slots and data attributes when custom styling depends on the selected variant or spacing.
 
----
-
 ## Accessibility
 
 List relies on native `ol`, `ul`, and `li` semantics and adds no custom ARIA behavior.
@@ -296,15 +282,11 @@ List relies on native `ol`, `ul`, and `li` semantics and adds no custom ARIA beh
 - Marker style alone must not carry information that is absent from the item text.
 - Changing `variant` replaces the semantic root element. Avoid changing it while a user is interacting with content inside the list.
 
----
-
 ## Localization
 
 List has no built-in user-facing copy and imports no localization messages. Your app supplies and translates every Item, list label, heading, instruction, and accessible name.
 
 Ordered numbering and unordered marker shapes come from CSS and the browser. Logical indentation follows the document's text direction automatically. Variant names, spacing names, native attributes, and `data-*` values are technical identifiers and are not translated.
-
----
 
 ## Dependencies
 
@@ -371,8 +353,6 @@ The components use Tailwind utilities without semantic color variables, dark-mod
 ```
 
 List requires no `tw-animate-css` import, semantic CSS variable, `@theme` mapping, keyframe, icon export from `src/lib/icons.ts`, localization message, image, font, browser API, network service, or additional layout rule.
-
----
 
 ## File organization
 

@@ -20,8 +20,6 @@ Use Item for records, resources, notifications, settings summaries, menus, and s
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the complete component through its public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import the complete component through its public `index.ts` entry point:
 ```
 
 Item's `index.ts` exports `Root`, `Group`, `Separator`, `Header`, `Footer`, `Content`, `Title`, `Description`, `Actions`, and `Media`. It also exports every corresponding props type, the `RootSizes`, `RootVariants`, and `MediaVariants` types, and the `rootVariants` and `mediaVariants` styling helpers.
-
----
 
 ## Anatomy
 
@@ -58,8 +54,6 @@ Compose only the parts needed by the content. A complete item can use this struc
 
 `Header` and `Footer` occupy the full row. `Media`, `Content`, and `Actions` form the main flexible row. `Group` arranges several roots vertically, while `Separator` draws a divider between them.
 
----
-
 ## Basic usage
 
 ```svelte
@@ -80,8 +74,6 @@ Compose only the parts needed by the content. A complete item can use this struc
 ```
 
 Actions are ordinary child content. Item does not impose a button implementation or click behavior.
-
----
 
 ## Examples
 
@@ -167,8 +159,6 @@ Set `decorative` on visual dividers inside Group so they do not add a non-list r
 	</Item.Footer>
 </Item.Root>
 ```
-
----
 
 ## Public API
 
@@ -301,8 +291,6 @@ Type: `MediaProps`, based on native `div` attributes.
 
 Media aligns itself to the start when the item contains a Description. Image dimensions shrink for explicit `sm` and `xs` root sizes. `mediaVariants` is the exported Tailwind Variants function, and `MediaVariants` is its public variant-value type.
 
----
-
 ## Styling and DOM contract
 
 Stable xvelte hooks:
@@ -324,8 +312,6 @@ Root also exposes the stable `group/item` Tailwind group name, and Group exposes
 
 When Root delegates through `child`, its classes and data attributes move to the rendered child element. Anchor roots receive local hover styling; all delegated focusable elements receive the local focus-visible border and ring.
 
----
-
 ## Accessibility
 
 Item supplies layout, not complete content semantics.
@@ -339,13 +325,9 @@ Item supplies layout, not complete content semantics.
 - Preserve the root's focus-visible styles when rendering an interactive child.
 - Separator inherits Bits UI's decorative and semantic behavior. Set `decorative` for a purely visual divider; retain its semantic default only when the boundary itself carries meaning.
 
----
-
 ## Localization
 
 Item has no built-in user-facing copy. Your app supplies and translates titles, descriptions, action labels, image alternatives, accessible names, and any header or footer content. Variant names, size names, roles, and `data-*` values are technical values and are not translated.
-
----
 
 ## Dependencies
 
@@ -445,13 +427,9 @@ The global stylesheet must load Tailwind and expose the semantic colors and radi
 
 The app owns dark-mode activation. Item requires no icon export from `src/lib/icons.ts`, localization message, hook, attachment, context, animation import, keyframe, image, font, network service, or additional layout rule. Icons, avatars, images, buttons, dropdowns, and other content shown inside Item are optional compositions; install and follow their own component guides only when using them.
 
----
-
 ## Credits
 
 Item is adapted from [shadcn-svelte's Item component](https://www.shadcn-svelte.com/docs/components/item). The local xvelte implementation, exports, variant behavior, styling hooks, and limitations documented here are the source of truth.
-
----
 
 ## File organization
 

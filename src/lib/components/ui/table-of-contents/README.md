@@ -20,8 +20,6 @@ Use Table of Contents for long structured articles or documentation. Do not add 
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the renderer and hook separately from their public locations:
@@ -35,8 +33,6 @@ Import the renderer and hook separately from their public locations:
 
 The component's `index.ts` exports `Root` and `RootProps`. The hook file exports `UseToc`, `Heading`, `HeadingKind`, `INDEX_ATTRIBUTE`, and `TOC_IGNORE_ATTRIBUTE`.
 
----
-
 ## Anatomy
 
 `UseToc` observes one content container and produces the hierarchy consumed by Root:
@@ -49,8 +45,6 @@ TableOfContents.Root toc={hook.current}
 ```
 
 Root recursively renders itself for `Heading.children`. `isChild` controls indentation and is normally used only by that internal recursion.
-
----
 
 ## Basic usage
 
@@ -85,8 +79,6 @@ Root recursively renders itself for `Heading.children`. `isChild` controls inden
 ```
 
 Only headings with an `id` become links. All headings still appear as text.
-
----
 
 ## Examples
 
@@ -142,8 +134,6 @@ The root class merges onto each recursive Root only when passed there; internall
 
 Manual construction is browser-only because `Heading.ref` is a real DOM element. Prefer UseToc for normal use.
 
----
-
 ## Public API
 
 The component and hook are local xvelte code. The component's `index.ts`, exported `RootProps`, and public hook file are the source of truth.
@@ -189,8 +179,6 @@ INDEX_ATTRIBUTE = "data-toc-index";
 TOC_IGNORE_ATTRIBUTE = "data-toc-ignore";
 ```
 
----
-
 ## Styling and DOM contract
 
 - Root hook: `data-slot="table-of-contents"` on every recursive `<ul>`.
@@ -203,8 +191,6 @@ TOC_IGNORE_ATTRIBUTE = "data-toc-ignore";
 
 Root classes pass through `cn()`. Items and links do not expose separate props or slots.
 
----
-
 ## Accessibility
 
 Wrap Root in a labelled `<nav>` as shown. Every link target needs a stable unique ID, and the document must maintain a meaningful heading hierarchy independently of the generated navigation.
@@ -213,13 +199,9 @@ The current recursive implementation renders each child `<ul>` as a sibling imme
 
 Active styling is visual only and does not set `aria-current`. Smooth scrolling, focus movement, URL history behavior, and sticky positioning remain app/browser responsibilities.
 
----
-
 ## Localization
 
 Table of Contents and UseToc contain no built-in copy and require no localization messages. Labels are copied directly from rendered heading `innerText`, so translated document headings automatically produce translated entries. The surrounding navigation label must be translated by the app.
-
----
 
 ## Dependencies
 
@@ -431,13 +413,9 @@ table-of-contents/
 
 The hook requires a browser DOM and observers; instantiate it during component initialization and assign its element after mount through reactive binding. No icon, other xvelte component, attachment, context, localization setup, shared style, image, font, or network service is required.
 
----
-
 ## Credits
 
 The component and hook design are adapted from [shadcn-svelte-extras Table of Contents](https://www.shadcn-svelte-extras.com/docs/components/toc).
-
----
 
 ## File organization
 

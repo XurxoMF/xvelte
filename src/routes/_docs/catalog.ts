@@ -15,13 +15,7 @@ const componentReadmes = import.meta.glob("/src/lib/components/ui/*/README.md", 
 	query: "?raw"
 }) as Record<string, string>;
 
-const hooksReadme = import.meta.glob("/src/lib/hooks/README.md", {
-	eager: true,
-	import: "default",
-	query: "?raw"
-}) as Record<string, string>;
-
-const attachmentsReadme = import.meta.glob("/src/lib/attachments/README.md", {
+const sharedReadmes = import.meta.glob("/src/lib/{hooks,attachments}/README.md", {
 	eager: true,
 	import: "default",
 	query: "?raw"
@@ -53,6 +47,35 @@ function metadata(markdown: string, fallbackTitle: string) {
 	return { title, description };
 }
 
+function promoteSectionHeadings(markdown: string) {
+	let fence: { marker: "`" | "~"; length: number } | undefined;
+
+	// Shared README sections become standalone pages, but fenced examples must keep their source headings verbatim.
+	return markdown
+		.split("\n")
+		.map((line) => {
+			const fenceMatch = line.match(/^ {0,3}(`{3,}|~{3,})(.*)$/);
+
+			if (fenceMatch) {
+				const sequence = fenceMatch[1] ?? "";
+				const marker = sequence.startsWith("`") ? "`" : "~";
+
+				if (!fence) {
+					fence = { marker, length: sequence.length };
+				} else if (marker === fence.marker && sequence.length >= fence.length && fenceMatch[2]?.trim() === "") {
+					fence = undefined;
+				}
+
+				return line;
+			}
+
+			if (fence) return line;
+
+			return line.replace(/^( {0,3})#{3,6}(?=\s|$)/, (heading) => heading.slice(0, -1));
+		})
+		.join("\n");
+}
+
 function section(markdown: string, heading: string) {
 	const marker = `## ${heading}`;
 	const start = markdown.indexOf(marker);
@@ -61,7 +84,42 @@ function section(markdown: string, heading: string) {
 	const bodyStart = start + marker.length;
 	const nextHeading = markdown.slice(bodyStart).search(/^## /m);
 	const body = nextHeading === -1 ? markdown.slice(bodyStart) : markdown.slice(bodyStart, bodyStart + nextHeading);
-	return `# ${heading}\n${body.trim()}\n`;
+	return `# ${heading}\n${promoteSectionHeadings(body.trim())}\n`;
+}
+
+function slugFromTitle(title: string) {
+	return title
+		.replace(/([a-z0-9])([A-Z])/g, "$1-$2")
+		.replace(/([A-Z])([A-Z][a-z])/g, "$1-$2")
+		.replace(/[^a-zA-Z0-9]+/g, "-")
+		.replace(/^-|-$/g, "")
+		.toLowerCase();
+}
+
+function sharedReadmeUnits(kind: "hook" | "attachment", directory: "hooks" | "attachments"): DocUnit[] {
+	const readmePath = `/src/lib/${directory}/README.md`;
+	const readme = sharedReadmes[readmePath];
+
+	if (!readme) throw new Error(`Missing shared documentation file: ${readmePath}`);
+
+	const headings = [...readme.matchAll(/^##\s+(.+)$/gm)].map((match) => match[1]?.trim()).filter((heading) => heading !== undefined);
+	const installationIndex = headings.indexOf("Installation");
+	const creditsIndex = headings.indexOf("Credits");
+
+	if (installationIndex === -1 || creditsIndex <= installationIndex + 1) {
+		throw new Error(`${readmePath} must place at least one public unit section between "## Installation" and "## Credits"`);
+	}
+
+	return headings
+		.slice(installationIndex + 1, creditsIndex)
+		.map((heading) => {
+			const slug = slugFromTitle(heading);
+			const markdown = section(readme, heading);
+			const { title, description } = metadata(markdown, heading);
+
+			return { kind, slug, title, description, href: `/${directory}/${slug}`, markdown };
+		})
+		.sort((a, b) => a.title.localeCompare(b.title));
 }
 
 export const components: DocUnit[] = Object.entries(componentReadmes)
@@ -75,33 +133,8 @@ export const components: DocUnit[] = Object.entries(componentReadmes)
 	})
 	.sort((a, b) => a.title.localeCompare(b.title));
 
-const hookSource = Object.values(hooksReadme)[0] ?? "";
-const hookDefinitions = [
-	{ slug: "is-mobile", heading: "IsMobile" },
-	{ slug: "use-frecency", heading: "UseFrecency" },
-	{ slug: "use-ramp", heading: "useRamp" },
-	{ slug: "use-toc", heading: "UseToc" }
-];
-
-export const hooks: DocUnit[] = hookDefinitions.map(({ slug, heading }) => {
-	const markdown = section(hookSource, heading);
-	const { title, description } = metadata(markdown, heading);
-	return { kind: "hook", slug, title, description, href: `/hooks/${slug}`, markdown };
-});
-
-const attachmentSource = section(Object.values(attachmentsReadme)[0] ?? "", "shortcut");
-const attachmentMeta = metadata(attachmentSource, "shortcut");
-
-export const attachments: DocUnit[] = [
-	{
-		kind: "attachment",
-		slug: "shortcut",
-		title: attachmentMeta.title,
-		description: attachmentMeta.description,
-		href: "/attachments/shortcut",
-		markdown: attachmentSource
-	}
-];
+export const hooks = sharedReadmeUnits("hook", "hooks");
+export const attachments = sharedReadmeUnits("attachment", "attachments");
 
 export const units = [...components, ...hooks, ...attachments];
 

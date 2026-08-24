@@ -20,8 +20,6 @@ Use Command for command palettes, searchable action lists, launchers, and other 
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import all parts from the component's public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import all parts from the component's public `index.ts` entry point:
 ```
 
 Command's `index.ts` exports `Root`, `Dialog`, `Input`, `List`, `Group`, `Item`, `LinkItem`, `Empty`, `Loading`, `Separator`, and `Shortcut`. It also exports `RootApi` and the props type for every public part.
-
----
 
 ## Anatomy
 
@@ -64,8 +60,6 @@ Compose a search input and result list beneath one root:
 
 The local wrapper intentionally does not export the lower-level Bits UI `Viewport`, `GroupHeading`, or `GroupItems` parts. `List` accepts results directly, while `Group.heading` and `Group.children` create the other two structures internally.
 
----
-
 ## Basic usage
 
 ```svelte
@@ -93,8 +87,6 @@ The local wrapper intentionally does not export the lower-level Bits UI `Viewpor
 ```
 
 Give every item a stable, unique `value`. That value drives filtering, ranking, selection, and `Root.value`; `onSelect` is the appropriate place to run the associated action.
-
----
 
 ## Examples
 
@@ -250,8 +242,6 @@ Bind the local `api` prop when custom navigation needs the installed Bits UI met
 
 Use `bind:ref` instead when the app needs the rendered root `div`. `Command.Dialog` exposes the Command root's `ref` and `value`, but its public type does not expose `api`.
 
----
-
 ## Public API
 
 Every primitive-based part forwards the remaining compatible Bits UI and native element props unless a local adaptation below says otherwise. The tables summarize local behavior and the inherited options most important in normal use; see the exact [Bits UI Command API reference](https://www.bits-ui.com/docs/components/command#api-reference) for the complete primitive API.
@@ -398,8 +388,6 @@ Type: `ShortcutProps`, based on native `span` attributes with a bindable referen
 
 Remaining native `span` attributes are forwarded. Shortcut has no keyboard registration or primitive behavior; use it only to describe a shortcut implemented elsewhere.
 
----
-
 ## Styling and DOM contract
 
 Command uses Tailwind utilities, semantic theme tokens, local slots, Bits UI state attributes, and required Dialog and Input Group styles. It exposes no xvelte-specific CSS variables.
@@ -424,8 +412,6 @@ Bits UI supplies dependency-owned attributes including `data-command-root`, `dat
 
 When Command Input receives keyboard focus, its Input Group wrapper uses the same `ring` border and three-pixel, 50%-opacity halo as the standalone Input component.
 
----
-
 ## Accessibility
 
 Bits UI provides the command menu's roles, active-descendant relationships, item state, filtering visibility, arrow-key navigation, Home/End behavior, selection, optional looping, and VIM-style bindings. Disabled items are skipped. `Dialog` adds modal focus management, Escape handling, scroll locking, outside interaction behavior, an overlay, and screen-reader title and description through the required Dialog component.
@@ -443,8 +429,6 @@ Apps remain responsible for:
 
 The current local Item check remains visually hidden because its `data-checked` selector does not match Bits UI's `data-selected` state. The selected row styling and ARIA state still identify the current item. Prefer the dedicated Combobox component when the interface represents persistent selection.
 
----
-
 ## Localization
 
 The standard non-dialog parts contain no built-in app-facing copy. Apps provide and translate Root labels, Input placeholders and labels, List labels, group headings, items, empty/loading states, and shortcut descriptions.
@@ -458,8 +442,6 @@ The standard non-dialog parts contain no built-in app-facing copy. Apps provide 
 | `amber_fox_glide`  | `Close`                          | Dialog close icon accessible name and optional button. |
 
 Override the first two with `Dialog.title` and `Dialog.description`. The close message has no Command-level override. Bits UI currently supplies `Suggestions...` as List's fallback accessible label and `Loading...` as Loading's fixed accessible label. Pass a translated `aria-label` to List instead of relying on its fallback; the current Loading wrapper does not provide a reliable localization override for the dependency-owned label.
-
----
 
 ## Dependencies
 
@@ -653,13 +635,9 @@ The global stylesheet must import Tailwind and `tw-animate-css`, provide the hid
 
 `tw-animate-css` supplies the Dialog animation utilities; no Command-specific keyframe must be copied. The app remains responsible for applying its `.dark` class when dark mode is supported.
 
----
-
 ## Credits
 
 Command is adapted from [shadcn-svelte's Command component](https://www.shadcn-svelte.com/docs/components/command). Local xvelte styling, exports, localization, dependencies, and behavior documented here take precedence.
-
----
 
 ## File organization
 

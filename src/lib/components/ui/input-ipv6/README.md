@@ -17,8 +17,6 @@ A responsive segmented IPv6 address input with eight equal-width hexadecimal hex
 - [Dependencies](#dependencies)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -29,8 +27,6 @@ A responsive segmented IPv6 address input with eight equal-width hexadecimal hex
 
 The component's `index.ts` exports `Root`, the `RootProps` and `IPv6Segments` types, and the `isValidIPv6` and `safeParseIPv6` helpers. Individual segments are internal implementation details and are not exported.
 
----
-
 ## Anatomy
 
 `Root` renders eight internal text inputs, seven visible separators, and a visually hidden input that carries the joined value for native form submission.
@@ -40,8 +36,6 @@ The component's `index.ts` exports `Root`, the `RootProps` and `IPv6Segments` ty
 ```
 
 `Root` owns and coordinates every segment automatically. Each hextet receives an equal share of the available editable width, so the component follows the width supplied by its parent or `class`.
-
----
 
 ## Basic usage
 
@@ -58,8 +52,6 @@ The component's `index.ts` exports `Root`, the `RootProps` and `IPv6Segments` ty
 
 <p>{valid ? `Address: ${address}` : "Enter a complete IPv6 address."}</p>
 ```
-
----
 
 ## Examples
 
@@ -83,8 +75,6 @@ Pasting a valid compressed address expands it to eight hextets. A valid dotted I
 ```
 
 `safeParseIPv6` expands complete compressed input and preserves positions for partial expanded input. Use `isValidIPv6` when a complete address is required.
-
----
 
 ## Public API
 
@@ -114,8 +104,6 @@ Remaining native `div` attributes are forwarded to the visible root. `name` and 
 | `safeParseIPv6` | `(value: string \| undefined) => IPv6Segments \| undefined` | Parses partial, expanded, compressed, and IPv4-mapped input without throwing. |
 | `isValidIPv6`   | `(value: string \| null \| undefined) => boolean`           | Validates a complete expanded, compressed, or IPv4-mapped address.            |
 
----
-
 ## Styling and DOM contract
 
 | Element           | Stable `data-slot`   |
@@ -126,8 +114,6 @@ Remaining native `div` attributes are forwarded to the visible root. `name` and 
 
 The historical slot names remain stable even though the component folder is named `input-ipv6`. The root exposes `aria-invalid`, uses semantic theme colors, and applies the Input component's `focus-within` treatment: a `ring` border and three-pixel, 50%-opacity halo without a contrasting ring offset. It fills its available width. Its eight internal segments use `flex: 1 1 0%` with `min-width: 0`, so each receives one eighth of the editable width after the fixed separators and padding. The public `class` prop styles the root; segment classes are internal.
 
----
-
 ## Accessibility
 
 - Give the root an accessible name with `aria-label` or `aria-labelledby`; the component does not render a label.
@@ -136,13 +122,9 @@ The historical slot names remain stable even though the component folder is name
 - Do not remove visible focus styles or replace the coordinated keyboard handlers when using `Root`.
 - Associate additional validation guidance through `aria-describedby` when needed.
 
----
-
 ## Localization
 
 Input IPv6 has no built-in user-facing copy. Your app supplies and translates its label, placeholder, instructions, and validation messages. Hexadecimal digits, separators, and `data-slot` values are technical values and are not translated.
-
----
 
 ## Dependencies
 
@@ -224,8 +206,6 @@ Add the required semantic tokens and mappings to the global Tailwind stylesheet.
 ```
 
 No icon export, localization message, animation import, keyframe, font, image, network service, or additional shared file is required. The app owns dark-mode activation.
-
----
 
 ## File organization
 

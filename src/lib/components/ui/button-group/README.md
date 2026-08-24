@@ -20,8 +20,6 @@ Use Button Group for related actions or compact combinations of buttons, inputs,
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import Button Group and the controls composed inside it from their public barrels:
@@ -34,8 +32,6 @@ Import Button Group and the controls composed inside it from their public barrel
 ```
 
 Button Group's `index.ts` exports `Root`, `Text`, and `Separator`, the `RootProps`, `RootOrientations`, `TextProps`, and `SeparatorProps` types, and the `rootVariants` styling function.
-
----
 
 ## Anatomy
 
@@ -61,8 +57,6 @@ Compose controls as direct children of `Root` so its selectors can join them:
 
 Direct children need a `data-slot` attribute for the root's edge, border, and radius selectors. xvelte controls already expose stable slots. For native elements, add a `data-slot` and compatible border/radius styles yourself.
 
----
-
 ## Basic usage
 
 ```svelte
@@ -79,8 +73,6 @@ Direct children need a `data-slot` attribute for the root's edge, border, and ra
 ```
 
 The root supplies `role="group"` and connected layout only. Each button keeps its native focus, keyboard, event, and disabled behavior.
-
----
 
 ## Examples
 
@@ -179,8 +171,6 @@ Directly nested groups receive a gap instead of being visually fused into one un
 
 Each nested root remains a separate `role="group"` and should have its own accessible name when the distinction is meaningful.
 
----
-
 ## Public API
 
 ### `ButtonGroup.Root`
@@ -255,8 +245,6 @@ rootVariants({ orientation: "vertical" });
 
 The function returns classes only. It does not render a group, add its role or data attributes, bind a ref, or manage children. Use `index.ts`, the exported types, and this function as the source of truth for the public API.
 
----
-
 ## Styling and DOM contract
 
 Button Group uses Tailwind Variants, semantic tokens, and structural selectors. It exposes no component-specific CSS variables.
@@ -282,8 +270,6 @@ Classes supplied by your app are merged after local classes with `cn`, so confli
 
 The root's selectors depend on stable direct-child `data-slot` values. Wrapping a control in an un-slotted element prevents that control from joining visually unless the wrapper itself carries the intended slot and styles.
 
----
-
 ## Accessibility
 
 Button Group provides `role="group"` but intentionally leaves every control's native semantics and interaction intact.
@@ -300,15 +286,11 @@ Button Group provides `role="group"` but intentionally leaves every control's na
 
 Focus indication comes from each child component. The root only raises a `:focus-visible` child to prevent overlapping borders from obscuring its ring.
 
----
-
 ## Localization
 
 Button Group contains no built-in user-facing copy and uses no localization messages. Your app supplies button labels, group names, text segments, input labels/placeholders, menu copy, and accessible descriptions.
 
 Horizontal groups may need more width for translated labels. Allow wrapping outside the group, switch to vertical orientation, or revise the layout rather than truncating essential action names. Do not translate the technical orientation names, roles, or `data-slot`/`data-orientation` values.
-
----
 
 ## Dependencies
 
@@ -392,13 +374,9 @@ The base border rule supplies the default color for `Text`'s unqualified `border
 
 No `@custom-variant dark`, icon package/export from `$lib/icons`, `tw-animate-css` import, animation, keyframe, hook, attachment, custom context module, localization message, or shared component stylesheet is required. Button, Input, Select, dropdown, popover, or other controls placed inside the group may add their own packages, tokens, icons, and configuration; follow each component's README.
 
----
-
 ## Credits
 
 Button Group is adapted from the [shadcn-svelte Button Group](https://www.shadcn-svelte.com/docs/components/button-group). Its public exports, dimensions, component composition, and local structural behavior have been aligned with xvelte.
-
----
 
 ## File organization
 

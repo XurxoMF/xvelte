@@ -4,7 +4,6 @@
 	import { page } from "$app/state";
 
 	import "./layout.css";
-	import "./custom.css";
 
 	import { attachments, components, hooks } from "./_docs/catalog";
 
@@ -22,10 +21,22 @@
 	let { children } = $props();
 
 	const appIcon = asset("/favicon.png");
+	const categories = [
+		{ href: "/components", label: "Components", units: components },
+		{ href: "/hooks", label: "Hooks", units: hooks },
+		{ href: "/attachments", label: "Attachments", units: attachments }
+	];
 
 	let query = $state("");
-
-	let filteredComponents = $derived(components.filter((unit) => unit.title.toLowerCase().includes(query.toLowerCase().trim())));
+	let normalizedQuery = $derived(query.toLowerCase().trim());
+	let filteredCategories = $derived(
+		categories
+			.map((category) => ({
+				...category,
+				units: category.units.filter((unit) => unit.title.toLowerCase().includes(normalizedQuery))
+			}))
+			.filter((category) => category.units.length > 0)
+	);
 
 	let currentPath = $derived(page.url.pathname);
 </script>
@@ -52,9 +63,9 @@
 				</a>
 
 				<label class="relative block">
-					<span class="sr-only">Filter components</span>
+					<span class="sr-only">Filter documentation</span>
 					<SearchIcon class="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
-					<Sidebar.Input bind:value={query} type="search" placeholder="Filter components…" class="pl-8" />
+					<Sidebar.Input bind:value={query} type="search" placeholder="Filter documentation…" class="pl-8" />
 				</label>
 			</Sidebar.Header>
 
@@ -63,11 +74,14 @@
 					<Sidebar.GroupLabel>Explore</Sidebar.GroupLabel>
 					<Sidebar.GroupContent>
 						<Sidebar.Menu>
-							{#each [{ href: "/components", label: "Components", count: components.length }, { href: "/hooks", label: "Hooks", count: hooks.length }, { href: "/attachments", label: "Attachments", count: attachments.length }] as item (item.href)}
+							{#each categories as category (category.href)}
 								<Sidebar.MenuItem>
-									<Sidebar.MenuButton isActive={currentPath === item.href} tooltipContent={item.label}>
-										{#snippet child({ props })}<a href={resolve(item.href as Pathname)} {...props}
-												><span>{item.label}</span><span class="ml-auto text-xs text-muted-foreground">{item.count}</span></a
+									<Sidebar.MenuButton
+										isActive={currentPath === category.href || currentPath.startsWith(`${category.href}/`)}
+										tooltipContent={category.label}
+									>
+										{#snippet child({ props })}<a href={resolve(category.href as Pathname)} {...props}
+												><span>{category.label}</span><span class="ml-auto text-xs text-muted-foreground">{category.units.length}</span></a
 											>{/snippet}
 									</Sidebar.MenuButton>
 								</Sidebar.MenuItem>
@@ -76,24 +90,26 @@
 					</Sidebar.GroupContent>
 				</Sidebar.Group>
 
-				<Sidebar.Group>
-					<Sidebar.GroupLabel>{query ? "Results" : "Components"}</Sidebar.GroupLabel>
-					<Sidebar.GroupContent>
-						<Sidebar.Menu>
-							{#each filteredComponents as unit (unit.slug)}
-								<Sidebar.MenuItem>
-									<Sidebar.MenuButton isActive={currentPath === unit.href} tooltipContent={unit.title}>
-										{#snippet child({ props })}<a
-												href={resolve(unit.href as Pathname)}
-												aria-current={currentPath === unit.href ? "page" : undefined}
-												{...props}>{unit.title}</a
-											>{/snippet}
-									</Sidebar.MenuButton>
-								</Sidebar.MenuItem>
-							{/each}
-						</Sidebar.Menu>
-					</Sidebar.GroupContent>
-				</Sidebar.Group>
+				{#each filteredCategories as category (category.href)}
+					<Sidebar.Group>
+						<Sidebar.GroupLabel>{category.label}</Sidebar.GroupLabel>
+						<Sidebar.GroupContent>
+							<Sidebar.Menu>
+								{#each category.units as unit (unit.href)}
+									<Sidebar.MenuItem>
+										<Sidebar.MenuButton isActive={currentPath === unit.href} tooltipContent={unit.title}>
+											{#snippet child({ props })}<a
+													href={resolve(unit.href as Pathname)}
+													aria-current={currentPath === unit.href ? "page" : undefined}
+													{...props}>{unit.title}</a
+												>{/snippet}
+										</Sidebar.MenuButton>
+									</Sidebar.MenuItem>
+								{/each}
+							</Sidebar.Menu>
+						</Sidebar.GroupContent>
+					</Sidebar.Group>
+				{/each}
 			</Sidebar.Content>
 
 			<Sidebar.Footer id="sidebar-footer" class="border-t px-4 py-3">

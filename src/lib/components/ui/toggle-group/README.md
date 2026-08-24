@@ -20,8 +20,6 @@ Use Toggle Group for compact related options such as text alignment or formattin
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -31,8 +29,6 @@ Use Toggle Group for compact related options such as text alignment or formattin
 ```
 
 `index.ts` exports `Root`, `Item`, `RootProps`, `ItemProps`, `ToggleVariants`, `ToggleSizes`, `ToggleGroupContext`, `getToggleGroupContext`, and `setToggleGroupContext`.
-
----
 
 ## Anatomy
 
@@ -45,8 +41,6 @@ Use Toggle Group for compact related options such as text alignment or formattin
 ```
 
 Root is required: it supplies Bits UI selection/focus state and the local variant, size, spacing, and orientation context consumed by Item.
-
----
 
 ## Basic usage
 
@@ -65,8 +59,6 @@ Root is required: it supplies Bits UI selection/focus state and the local varian
 ```
 
 Single mode uses a string. Choosing the current item follows Bits UI's single-group behavior and may clear the value when the primitive permits deselection.
-
----
 
 ## Examples
 
@@ -116,8 +108,6 @@ Vertical orientation changes layout, connected corners/borders, and arrow-key na
 <ToggleGroup.Item value="restricted" disabled>Restricted</ToggleGroup.Item>
 ```
 
----
-
 ## Public API
 
 Toggle Group wraps the installed stable `bits-ui@2.18.1` primitive and reuses xvelte Toggle variants. See the complete [Bits UI Toggle Group API](https://bits-ui.com/docs/components/toggle-group#api-reference). The component's `index.ts`, exported types/context helpers, and source are the source of truth.
@@ -162,15 +152,11 @@ Root context intentionally wins over Item `variant` and `size`, keeping the grou
 
 `ToggleVariants` and `ToggleSizes` mirror xvelte Toggle's exported helper types.
 
----
-
 ## Styling and DOM contract
 
 Root exposes `data-slot="toggle-group"`, `data-variant`, `data-size`, `data-spacing`, `group/toggle-group`, and inline `--gap`. Item exposes `data-slot="toggle-group-item"`, the same local data values, and Bits UI `data-state="on|off"`.
 
 Zero-spacing selectors join borders and radii according to orientation. Non-zero spacing uses `gap-[--spacing(var(--gap))]`. Item combines connected-group classes with `Toggle.rootVariants()` and merges caller class last.
-
----
 
 ## Accessibility
 
@@ -178,13 +164,9 @@ Bits UI supplies group and pressed-button semantics, single/multiple selection, 
 
 Keep values unique and stable. Do not use visual pressed color alone, remove focus indicators, or mix unrelated actions into one group. Delegated child elements must spread every supplied prop.
 
----
-
 ## Localization
 
 Toggle Group contains no built-in copy and requires no localization messages. The app supplies and translates group labels, item labels, accessible names, state explanations, and disabled reasons. Item values remain stable implementation identifiers.
-
----
 
 ## Dependencies
 
@@ -290,13 +272,9 @@ toggle-group/
 
 Toggle Group needs no icon, hook, attachment, localization setup, shared style, image, font, or network service. Its required native context file is colocated above.
 
----
-
 ## Credits
 
 The component structure, variants, and spacing behavior are adapted from [shadcn-svelte Toggle Group](https://www.shadcn-svelte.com/docs/components/toggle-group).
-
----
 
 ## File organization
 

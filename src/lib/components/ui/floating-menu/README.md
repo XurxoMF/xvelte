@@ -19,8 +19,6 @@ Use Floating Menu for canvas controls, map tools, media actions, preview control
 - [Dependencies](#dependencies)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import both public parts from the component's `index.ts`:
@@ -32,8 +30,6 @@ Import both public parts from the component's `index.ts`:
 ```
 
 `index.ts` exports `Root` and `Group`, their `RootProps` and `GroupProps` types, and the `RootPositions` and `RootOrientations` unions.
-
----
 
 ## Anatomy
 
@@ -54,8 +50,6 @@ Place one or more Group components inside Root. Root positions the complete coll
 Root uses `position: absolute`. Its nearest positioned ancestor establishes the coordinate system, so an ordinary in-content menu normally needs a wrapper with `position: relative`. Without one, the menu may position itself relative to an unexpected ancestor or the initial containing block.
 
 Group must remain a descendant of Root when it should inherit Root's orientation and positional alignment. Root may contain several sibling groups or other app content.
-
----
 
 ## Basic usage
 
@@ -90,8 +84,6 @@ This example creates a labeled action group in the bottom-right corner of a prev
 ```
 
 The component only handles placement and grouping. The app owns button behavior, disabled states, labels, tooltips, active state, and any selection logic.
-
----
 
 ## Examples
 
@@ -199,8 +191,6 @@ Group classes are merged after the defaults, so theme and shape utilities can be
 
 Keep the custom Group inside a Root if it should inherit orientation and alignment.
 
----
-
 ## Public API
 
 Floating Menu is implemented with native `div` elements and has no external primitive API. The component's `index.ts`, exported types, and local source are the source of truth.
@@ -260,8 +250,6 @@ Group uses `justify-start` for left-anchored positions, `justify-end` for right-
 
 Group renders no role. Add `role="group"` and an accessible name when its controls form a meaningful related set.
 
----
-
 ## Styling and DOM contract
 
 Root is an absolute, wrapping flex container with `z-20`, `m-3`, `gap-1`, and the stable named group class `group/floating-menu-root`. The `position` prop selects edge utilities through `data-position`, while `orientation` selects `flex-row` or `flex-col` through `data-orientation`.
@@ -281,8 +269,6 @@ The literal implementation class `group-group-data-` on Group has no documented 
 
 The component defines no animation, transition lifecycle, CSS variable, keyframe, attachment, context, or shared component stylesheet. It relies on the global position and orientation variants listed in [Dependencies](#dependencies).
 
----
-
 ## Accessibility
 
 Floating Menu is layout-only. Root and Group render generic `div` elements and do not add menu semantics, focus management, roving tabindex, keyboard shortcuts, active state, tooltips, or accessible names.
@@ -297,15 +283,11 @@ Floating Menu is layout-only. Root and Group render generic `div` elements and d
 
 Do not assign `role="menu"` unless the app also implements the complete menu keyboard and focus pattern. For actual popup or context-menu behavior, use the corresponding accessible xvelte component.
 
----
-
 ## Localization
 
 Floating Menu has no built-in user-facing copy and imports no localization messages. The app supplies and translates button labels, accessible names, tooltips, status text, and any other content rendered inside Root or Group.
 
 Position and orientation strings, `data-*` values, class names, and `data-slot` values are implementation identifiers and are not translated.
-
----
 
 ## Dependencies
 
@@ -468,8 +450,6 @@ For the default absolute positioning, the app must provide a containing block:
 ```
 
 The containing block needs usable dimensions, and `overflow-hidden` will clip the menu if it extends outside those bounds. This is app layout rather than shared CSS and should be chosen per use case.
-
----
 
 ## File organization
 

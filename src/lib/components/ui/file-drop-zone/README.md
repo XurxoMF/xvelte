@@ -20,8 +20,6 @@ Use File Drop Zone when an app needs immediate client-side file handling or uplo
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import every public part from the component's `index.ts`:
@@ -33,8 +31,6 @@ Import every public part from the component's `index.ts`:
 ```
 
 `index.ts` exports `Root`, `Trigger`, and `DragOverlay`. It also exports `RootProps`, `TriggerProps`, `DragOverlayProps`, `FileRejectedReason`, the `BYTE`, `KILOBYTE`, `MEGABYTE`, and `GIGABYTE` decimal-size constants, the `ACCEPT_IMAGE`, `ACCEPT_VIDEO`, and `ACCEPT_AUDIO` accept patterns, and `displaySize`.
-
----
 
 ## Anatomy
 
@@ -50,8 +46,6 @@ Place every interactive part inside one Root:
 Root renders the hidden native file input and provides validation/upload state to its descendants. Trigger is a label connected to that input and doubles as a drop target. DragOverlay listens for file drags across the window and, while active, renders a full-page drop target through a Bits UI Portal.
 
 Trigger and DragOverlay require a parent Root. Root can contain either or both parts, and ordinary app content may be placed alongside them.
-
----
 
 ## Basic usage
 
@@ -102,8 +96,6 @@ Keep `fileCount` synchronized with files already accepted by the app when using 
 ```
 
 `onUpload` is awaited and receives all files that passed validation in one array. While it is pending, the native input and every drop/paste path using the same Root are disabled. The component restores its internal state in a `finally` block, but upload errors are not caught; handle expected failures inside `onUpload`.
-
----
 
 ## Examples
 
@@ -201,8 +193,6 @@ Validation stops at the first failing rule for each file: maximum byte size, the
 
 When a browser supplies an empty MIME type, the validator compares the filename directly with each pattern. Include explicit extensions such as `.pdf` when those files must remain acceptable even without MIME metadata; a wildcard such as `image/*` cannot match an empty type by itself.
 
----
-
 ## Public API
 
 File Drop Zone owns its validation and event behavior. Bits UI is used only for snippet helper types and DragOverlay's Portal; see the [Bits UI Portal API](https://bits-ui.com/docs/utilities/portal) for the complete inherited Portal options. The component's `index.ts`, exported types, and local source are the source of truth.
@@ -291,8 +281,6 @@ These strings are programmatic reason identifiers, not built-in visible copy. Tr
 
 `displaySize(bytes)` chooses the largest supported decimal unit, rounds to zero fractional digits with `toFixed(0)`, and returns a label in B, KB, MB, or GB. It does not use binary KiB/MiB units or locale-aware number formatting.
 
----
-
 ## Styling and DOM contract
 
 Stable xvelte hooks:
@@ -308,8 +296,6 @@ Trigger's `class` is merged with `cn`. Its default child interface is rendered o
 DragOverlay's `class` is also merged with `cn`. The default uses a fixed full-viewport layout, translucent background, optional backdrop blur, `animate-in`, and `fade-in-0`. It is conditionally mounted rather than hidden with a persistent state attribute.
 
 Root does not accept a `class` prop because its input must remain hidden. The component defines no CSS variable, keyframe, attachment, or shared component stylesheet.
-
----
 
 ## Accessibility
 
@@ -328,8 +314,6 @@ DragOverlay is a visual drop target, not a modal dialog: it does not trap focus,
 
 The component does not announce accepted files, rejected files, upload progress, or upload failure. Render an `aria-live` status or `role="alert"` in the app when that feedback is important. Do not expose the raw English `FileRejectedReason` identifiers directly in a localized interface.
 
----
-
 ## Localization
 
 The default Trigger and DragOverlay use these Paraglide messages:
@@ -345,8 +329,6 @@ The default Trigger and DragOverlay use these Paraglide messages:
 `count` comes from `maxFiles`. `size` comes from `displaySize(maxFileSize)` and therefore uses the fixed B/KB/MB/GB abbreviations.
 
 Providing Trigger or DragOverlay children replaces their built-in visible copy. The app supplies and translates upload progress, accepted-file lists, rejection feedback, errors, custom prompts, and keyboard-control labels. `FileRejectedReason` values remain technical identifiers.
-
----
 
 ## Dependencies
 
@@ -708,13 +690,9 @@ The default interface uses `background`, `foreground`, `accent`, `muted-foregrou
 
 `tw-animate-css` supplies DragOverlay's `animate-in` and `fade-in-0` utilities. No component-specific keyframe, custom CSS variable, attachment, hook, image, font, network service, or layout rule is required. The app owns dark-mode activation.
 
----
-
 ## Credits
 
 Adapted from [shadcn-svelte-extras' File Drop Zone](https://shadcn-svelte-extras.com/docs/components/file-drop-zone). The local xvelte API, validation, paste capture, DragOverlay, localization, styling, and behavior documented here are the source of truth.
-
----
 
 ## File organization
 

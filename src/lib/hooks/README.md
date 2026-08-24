@@ -7,14 +7,12 @@ Use only the hook needed by your feature. Some hooks depend on browser APIs and 
 ## Contents
 
 - [Installation](#installation)
-- [IsMobile](#ismobile)
-- [UseFrecency](#usefrecency)
+- [isMobile](#ismobile)
+- [useFrecency](#usefrecency)
 - [useRamp](#useramp)
-- [UseToc](#usetoc)
+- [useToc](#usetoc)
 - [Credits](#credits)
 - [File organization](#file-organization)
-
----
 
 ## Installation
 
@@ -38,9 +36,7 @@ Omit `runed` when you do not copy `use-frecency.svelte.ts`. `IsMobile` extends S
 
 These hooks require no Tailwind CSS, global stylesheet values, icons, `$lib/utils` helpers, attachments, localization messages, or generated files. `UseToc` can be used with the xvelte Table of Contents component, but that component is optional.
 
----
-
-## IsMobile
+## isMobile
 
 `IsMobile` is a reactive media-query class that reports whether the viewport is narrower than a configurable breakpoint. Use it when JavaScript behavior or component composition genuinely changes by viewport. Prefer CSS media or container queries when only presentation changes, particularly in server-rendered pages.
 
@@ -135,9 +131,7 @@ During server-side rendering the viewport is unknown. Because `IsMobile` does no
 
 `IsMobile` requires only Svelte 5.7 or newer and the single `is-mobile.svelte.ts` file. The shared installation command is under Installation. It requires no Runed package, browser storage, CSS, icons, xvelte components, other hooks, attachments, or localization configuration.
 
----
-
-## UseFrecency
+## useFrecency
 
 `UseFrecency` stores how often and how recently string keys were used, then returns them ordered by a time-decayed score. Use it to rank command items, recent destinations, search choices, or other stable identifiers. Do not store private content in the keys or use the ranking as a precise analytics system.
 
@@ -293,8 +287,6 @@ Do not place sensitive user content in storage keys. Treat persisted preferences
 
 Copy `use-frecency.svelte.ts` and install `runed` plus Svelte using the shared commands under Installation. No CSS, icons, `$lib/utils` exports, xvelte components, hooks, attachments, or localization setup are required. Storage behavior comes from Runed's `PersistedState`; no separate storage file must be copied.
 
----
-
 ## useRamp
 
 `useRamp` repeats an increment after an initial delay and gradually shortens the interval while an interaction remains active. Use it to build press-and-hold steppers, scrub controls, or other repeated adjustments. It supplies timing and state only; the consuming control owns pointer, keyboard, disabled, focus, and labeling behavior.
@@ -436,9 +428,7 @@ Labels, values, units, validation, and feedback are supplied and translated by t
 
 `useRamp` requires only Svelte 5 runes and `use-ramp.svelte.ts`. The shared installation command is under Installation. It requires no Runed package, CSS, icons, `$lib/utils` exports, xvelte components, other hooks, attachments, contexts, or localization setup.
 
----
-
-## UseToc
+## useToc
 
 `UseToc` builds a reactive nested hierarchy from the headings inside one element and marks an intersecting heading as active. Use it to power an “On this page” navigation for browser-rendered content. It observes DOM structure and visibility; it does not render the navigation, generate heading IDs, scroll links, or manage history.
 
@@ -603,8 +593,6 @@ Copy `use-toc.svelte.ts` and install Svelte using the shared command under Insta
 
 No Runed package, CSS, theme variables, icons, `$lib/utils` exports, attachments, contexts, or localization setup are required. To use the optional visual renderer, copy `$lib/components/ui/table-of-contents` and follow that component's README for its own installation and API.
 
----
-
 ## Credits
 
 - `IsMobile` is adapted from the responsive helper used by [shadcn-svelte's Sidebar](https://www.shadcn-svelte.com/docs/components/sidebar).
@@ -613,8 +601,6 @@ No Runed package, CSS, theme variables, icons, `$lib/utils` exports, attachments
 - `UseToc` is adapted from [shadcn-svelte-extras UseToc](https://shadcn-svelte-extras.com/docs/hooks/use-toc).
 
 The APIs, algorithms, behavior, and limitations in this guide describe the local xvelte implementations.
-
----
 
 ## File organization
 

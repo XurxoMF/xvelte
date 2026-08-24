@@ -20,8 +20,6 @@ Use Star Rating when people assign or review a bounded preference score. Use Sli
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -31,8 +29,6 @@ Use Star Rating when people assign or review a bounded preference score. Use Sli
 ```
 
 `index.ts` exports `Root`, `Star`, `RootProps`, and `StarProps`.
-
----
 
 ## Anatomy
 
@@ -49,8 +45,6 @@ Root provides an `items` array to its child snippet. Render one Star for each it
 ```
 
 `state` is `active`, `partial`, or `inactive`. Passing the Root-provided state keeps the local icon fill synchronized with Bits UI's value and hover preview.
-
----
 
 ## Basic usage
 
@@ -75,8 +69,6 @@ Root provides an `items` array to its child snippet. Render one Star for each it
 ```
 
 The default maximum is five and the default value is zero.
-
----
 
 ## Examples
 
@@ -152,8 +144,6 @@ Root creates `max` item descriptors; do not hard-code a different number of Star
 
 Bits UI renders the hidden input only when `name` is provided.
 
----
-
 ## Public API
 
 Star Rating wraps the installed stable `bits-ui@2.18.1` Rating Group. The tables describe the local parts and important inherited behavior; see the complete [Bits UI Rating Group API](https://bits-ui.com/docs/components/rating-group#api-reference). The component's `index.ts`, exported types, and source are the source of truth.
@@ -195,8 +185,6 @@ Type: `StarProps`, based on Bits UI `RatingGroupItemProps` with required local v
 
 Star forwards native `<div>` attributes and Bits UI's `child`/`children` options through rest props, but the local component already renders its icon content as the primitive's normal children. Treat custom primitive snippets as advanced and test that they do not replace the required star visuals.
 
----
-
 ## Styling and DOM contract
 
 | Part | Stable hook                    | Local styling                                                                       |
@@ -208,23 +196,17 @@ Each Star renders one full outline icon and two mirrored half-star icons. `activ
 
 Root and Star classes pass through `cn()`. Internal SVG layers have no public slot; customize their inherited color and the Star container rather than targeting vendor path markup.
 
----
-
 ## Accessibility
 
 Bits UI supplies rating-group semantics, numeric value attributes, item focus and selection, orientation-aware arrow navigation, read-only and disabled behavior, and form integration. Give Root an accessible name with visible text, `aria-label`, or `aria-labelledby`.
 
 Translate `aria-valuetext`: the dependency's default sentence is English. Do not use stars without a numeric or textual explanation when the score must be interpreted precisely. Keep focus rings visible and do not pass mismatched `index` or `state` values to Star.
 
----
-
 ## Localization
 
 The local components contain no Paraglide messages. Bits UI's default `aria-valuetext` is equivalent to `"{value} out of {max}"`; pass a translated string-producing function for non-English interfaces.
 
 The app also supplies and translates visible labels, review counts, scale explanations, validation errors, and submit actions.
-
----
 
 ## Dependencies
 
@@ -309,13 +291,9 @@ star-rating/
 
 Star Rating requires no other xvelte component, hook, attachment, context, localization setup, shared style, image, font, or network service. Bits UI owns its internal rating context.
 
----
-
 ## Credits
 
 The component structure and star presentation are adapted from [shadcn-svelte-extras Star Rating](https://shadcn-svelte-extras.com/docs/components/star-rating).
-
----
 
 ## File organization
 

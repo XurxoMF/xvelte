@@ -20,8 +20,6 @@ Use Slider when people benefit from adjusting a value spatially, such as volume,
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -31,8 +29,6 @@ Use Slider when people benefit from adjusting a value spatially, such as volume,
 ```
 
 `index.ts` exports `Root` and `RootProps`.
-
----
 
 ## Anatomy
 
@@ -48,8 +44,6 @@ Root
 
 The local wrapper removes Bits UI's `children` and `child` snippets, so callers cannot replace these internal parts.
 
----
-
 ## Basic usage
 
 ```svelte
@@ -64,8 +58,6 @@ The local wrapper removes Bits UI's `children` and `child` snippets, so callers 
 ```
 
 `type="single"` uses a number. The label and `aria-label` describe the control because Slider does not render its own text.
-
----
 
 ## Examples
 
@@ -124,8 +116,6 @@ The vertical root uses the available parent height and has a local minimum heigh
 
 Use `onValueChange` for responsive previews and `onValueCommit` for persistence or other expensive work after the interaction ends.
 
----
-
 ## Public API
 
 `RootProps` is based on the installed stable `bits-ui@2.18.1` `Slider.RootProps`, removes `children` and `child`, and adds `bufferValue`. The table covers every local option and important inherited behavior; see the complete [Bits UI Slider API](https://bits-ui.com/docs/components/slider#api-reference). The component's `index.ts`, exported type, and source are the source of truth.
@@ -150,8 +140,6 @@ Use `onValueChange` for responsive previews and `onValueCommit` for persistence 
 
 Native `<span>` attributes and ARIA attributes are forwarded to the Bits UI Root. Custom internal children are unsupported.
 
----
-
 ## Styling and DOM contract
 
 | Element | Stable local hook           | Important styling                                                                 |
@@ -164,21 +152,15 @@ Native `<span>` attributes and ARIA attributes are forwarded to the Bits UI Root
 
 Bits UI supplies `data-orientation`, `data-disabled`, values, ARIA range attributes, and interaction styles. Root `class` uses `cn()`. Internal parts do not expose separate class props; use stable slots if app-level CSS customization is necessary.
 
----
-
 ## Accessibility
 
 Bits UI gives every thumb slider semantics, current/minimum/maximum values, pointer and keyboard behavior, focus management, orientation, and disabled state. Supply an accessible name with a visible `<label>`, `aria-label`, or `aria-labelledby`; multi-thumb sliders need context that makes each boundary understandable.
 
 Arrow keys adjust by the configured step, while the underlying primitive supports standard slider keyboard controls such as Home, End, Page Up, and Page Down. Keep visible focus rings and adequate surrounding space for the enlarged thumb hit area. `bufferValue` is not announced; expose buffered progress separately if users need that information.
 
----
-
 ## Localization
 
 Slider has no built-in copy and requires no localization messages. The app supplies and translates labels, formatted values, units, range boundary descriptions, and any buffered-status text.
-
----
 
 ## Dependencies
 
@@ -283,13 +265,9 @@ slider/
 
 Slider requires no icon, other xvelte component, hook, attachment, context, localization setup, shared style, image, font, or network service.
 
----
-
 ## Credits
 
 The component structure and styling are adapted from [shadcn-svelte Slider](https://www.shadcn-svelte.com/docs/components/slider).
-
----
 
 ## File organization
 

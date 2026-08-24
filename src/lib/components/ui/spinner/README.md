@@ -20,8 +20,6 @@ Use Spinner for short indeterminate waits near the control or region being updat
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -32,8 +30,6 @@ Use Spinner for short indeterminate waits near the control or region being updat
 
 `index.ts` exports `Root` and `RootProps`.
 
----
-
 ## Anatomy
 
 Spinner is a single semantic icon:
@@ -43,8 +39,6 @@ Spinner is a single semantic icon:
 ```
 
 It renders `LoaderIcon` from `$lib/icons` rather than importing an icon library directly.
-
----
 
 ## Basic usage
 
@@ -60,8 +54,6 @@ It renders `LoaderIcon` from `$lib/icons` rather than importing an icon library 
 ```
 
 The icon already has `role="status"` and the localized accessible label `Loading`. When adjacent visible text communicates the same state, override the icon label or hide the duplicate announcement as appropriate.
-
----
 
 ## Examples
 
@@ -90,8 +82,6 @@ The visible button text supplies the status, so the decorative spinner is hidden
 
 Use this only when another element already exposes the loading state.
 
----
-
 ## Public API
 
 `RootProps` equals Svelte's native `SVGAttributes<SVGSVGElement>`. The component's `index.ts` and exported type are the source of truth.
@@ -107,8 +97,6 @@ Use this only when another element already exposes the loading state.
 
 All remaining SVG attributes and event handlers are forwarded to `LoaderIcon`. Spinner does not expose a bindable `ref` and accepts no children.
 
----
-
 ## Styling and DOM contract
 
 - Default classes: `size-4 animate-spin`.
@@ -118,15 +106,11 @@ All remaining SVG attributes and event handlers are forwarded to `LoaderIcon`. S
 
 The SVG structure and vendor-specific attributes belong to the configured `LoaderIcon`; use the semantic export rather than styling internal SVG paths.
 
----
-
 ## Accessibility
 
 Spinner defaults to a named status. Use an action-specific `aria-label` when plain “Loading” lacks context. If visible text or a parent live region already announces the same operation, set `aria-hidden="true"` on Spinner to prevent duplicate output.
 
 Add `aria-busy="true"` to the region whose contents are changing and restore it when loading ends. The spinner does not disable controls, manage focus, or announce completion.
-
----
 
 ## Localization
 
@@ -135,8 +119,6 @@ Add `aria-busy="true"` to the region whose contents are changing and restore it 
 | `lucky_cedar_load` | `Loading`     | Default `aria-label`. |
 
 Override `aria-label` for contextual loading copy. The app translates visible status text separately.
-
----
 
 ## Dependencies
 
@@ -197,13 +179,9 @@ spinner/
 
 Spinner requires no other xvelte component, hook, attachment, context, semantic theme variable, shared style, image, font, or network service.
 
----
-
 ## Credits
 
 The component is adapted from [shadcn-svelte Spinner](https://www.shadcn-svelte.com/docs/components/spinner).
-
----
 
 ## File organization
 

@@ -20,8 +20,6 @@ Use Tooltip to explain unfamiliar icon controls or provide short optional contex
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -31,8 +29,6 @@ Use Tooltip to explain unfamiliar icon controls or provide short optional contex
 ```
 
 `index.ts` exports `Provider`, `Root`, `Trigger`, `Content`, and `Portal`, together with a matching props type for every part. Root and Trigger types support the optional Bits UI payload generic.
-
----
 
 ## Anatomy
 
@@ -48,8 +44,6 @@ Mount Provider once around the application or tooltip region:
 ```
 
 Content creates Portal and Arrow internally. Do not add a second Portal or Arrow for normal use.
-
----
 
 ## Basic usage
 
@@ -77,8 +71,6 @@ In a descendant component:
 ```
 
 The trigger remains independently named because tooltip content is supplemental and may not always be announced as its label.
-
----
 
 ## Examples
 
@@ -127,8 +119,6 @@ Disabling Portal renders content inline; verify clipping and stacking contexts. 
 
 The local Provider defaults to zero delay when no value is supplied, overriding Bits UI's 700ms primitive default. Applications often set a deliberate global delay.
 
----
-
 ## Public API
 
 Tooltip wraps the installed stable `bits-ui@2.18.1` primitive. The tables document local defaults/additions and important inherited behavior; see the complete [Bits UI Tooltip API](https://bits-ui.com/docs/components/tooltip#api-reference). The component's `index.ts`, exported types, and source are the source of truth.
@@ -171,8 +161,6 @@ Root renders no element.
 
 Content always appends the local Arrow after caller children. Advanced primitive `child` delegation must retain the supplied floating props and be tested with that arrow composition.
 
----
-
 ## Styling and DOM contract
 
 - Trigger: `data-slot="tooltip-trigger"`; otherwise unstyled.
@@ -181,21 +169,15 @@ Content always appends the local Arrow after caller children. Advanced primitive
 
 Bits UI owns open state, side, trigger/content IDs, and positioning variables. Content `class` and Arrow classes pass through `cn()`. Portal has no local hook.
 
----
-
 ## Accessibility
 
 Bits UI connects Trigger and Content, opens for keyboard focus and hover, closes on escape/blur/pointer departure according to settings, and coordinates Provider behavior. The trigger must still communicate its primary action without relying solely on tooltip text.
 
 Keep content brief and non-interactive. Tooltips are not a replacement for labels, descriptions that must always be available, or popovers containing buttons/links. Test hover, keyboard focus, touch, zoom, and reduced-motion behavior.
 
----
-
 ## Localization
 
 Tooltip contains no built-in copy and requires no localization messages. The app supplies and translates tooltip content, trigger labels, shortcut names, and any accessible descriptions.
-
----
 
 ## Dependencies
 
@@ -289,13 +271,9 @@ tooltip/
 
 Tooltip needs no icon, other xvelte component, hook, attachment, local context file, localization setup, shared style, image, font, or network service. Bits UI owns internal Provider/Root context.
 
----
-
 ## Credits
 
 The component structure, styling, and arrow treatment are adapted from [shadcn-svelte Tooltip](https://www.shadcn-svelte.com/docs/components/tooltip).
-
----
 
 ## File organization
 

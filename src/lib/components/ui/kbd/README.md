@@ -20,8 +20,6 @@ Use Kbd in instructions, menus, buttons, tooltips, command palettes, and help co
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component through its public `index.ts` entry point:
@@ -33,8 +31,6 @@ Import the component through its public `index.ts` entry point:
 ```
 
 Kbd's `index.ts` exports `Key`, `Group`, and their `KeyProps` and `GroupProps` types. Unlike the upstream shadcn-svelte component, the local xvelte API names the individual key `Key`, not `Root`.
-
----
 
 ## Anatomy
 
@@ -56,8 +52,6 @@ Use Group for a shortcut made from multiple keys and optional visible separators
 
 Both parts render semantic `kbd` elements. A Group containing Keys represents a complete input sequence whose nested Keys represent its individual inputs.
 
----
-
 ## Basic usage
 
 ```svelte
@@ -71,8 +65,6 @@ Both parts render semantic `kbd` elements. A Group containing Keys represents a 
 ```
 
 Kbd only displays the instruction. The dialog or application must implement the corresponding keyboard behavior separately.
-
----
 
 ## Examples
 
@@ -136,8 +128,6 @@ The button's visible text already communicates the action, so the decorative sho
 
 Detect the platform in application code when needed. Kbd does not choose platform-specific modifier names automatically.
 
----
-
 ## Public API
 
 Both public parts forward native attributes for the semantic `kbd` element. The component's `index.ts` and exported types are the source of truth.
@@ -166,8 +156,6 @@ Type: `GroupProps`, based on native `HTMLAttributes<HTMLElement>`.
 
 All remaining native attributes are forwarded. Group does not parse its children, insert `+` characters, normalize modifier order, or select labels for the current operating system.
 
----
-
 ## Styling and DOM contract
 
 Stable xvelte hooks:
@@ -183,8 +171,6 @@ SVG elements inside Key receive a `size-3` default unless their class already co
 
 Group only controls inline alignment and a small gap. Classes supplied to either part are merged with `cn()`, so later conflicting Tailwind utilities normally win.
 
----
-
 ## Accessibility
 
 - Both parts use the native `kbd` element, which semantically represents user input such as a keyboard key or shortcut.
@@ -195,15 +181,11 @@ Group only controls inline alignment and a small gap. Classes supplied to either
 - When a shortcut is only a redundant hint inside a clearly named button, it may be hidden from assistive technology. Do not hide it when it contains instructions unavailable elsewhere.
 - Do not advertise a shortcut that the application has not implemented.
 
----
-
 ## Localization
 
 Kbd has no built-in user-facing copy. Your app supplies and translates surrounding instructions, accessible names, and textual key names such as “Control”, “Shift”, “Enter”, or “Escape”.
 
 Key symbols and labels often vary by operating system, keyboard layout, language, and product convention. Select those values in application code; Kbd does not detect the platform or localize shortcut notation. The `data-slot` values are technical identifiers and are not translated.
-
----
 
 ## Dependencies
 
@@ -291,13 +273,9 @@ The global stylesheet must load Tailwind, define xvelte's dark selector for the 
 
 The app owns dark-mode activation. Kbd requires no icon export from `src/lib/icons.ts`, localization message, shared style, animation import, keyframe, CSS variable beyond those shown above, image, font, network service, or additional layout rule.
 
----
-
 ## Credits
 
 Kbd is adapted from [shadcn-svelte's Kbd component](https://www.shadcn-svelte.com/docs/components/kbd). The local xvelte names, exports, styling, and behavior documented here are the source of truth.
-
----
 
 ## File organization
 

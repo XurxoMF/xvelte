@@ -20,8 +20,6 @@ Use Scroll Area for bounded panels whose custom scrollbar must match the interfa
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 ```svelte
@@ -31,8 +29,6 @@ Use Scroll Area for bounded panels whose custom scrollbar must match the interfa
 ```
 
 `index.ts` exports `Root`, `Scrollbar`, `RootProps`, and `ScrollbarProps`.
-
----
 
 ## Anatomy
 
@@ -54,8 +50,6 @@ Root
 
 `Scrollbar` is exported for advanced composition, but Root already creates it. Do not add a second scrollbar of the same orientation inside Root.
 
----
-
 ## Basic usage
 
 ```svelte
@@ -76,8 +70,6 @@ Root
 ```
 
 The root needs a constrained width or height on the scrolling axis; otherwise its content expands and no scrollbar is needed.
-
----
 
 ## Examples
 
@@ -139,8 +131,6 @@ Use two-axis scrolling only when the content cannot reasonably reflow.
 
 The local class props configure the generated vertical and horizontal scrollbar separately.
 
----
-
 ## Public API
 
 Scroll Area wraps the installed stable `bits-ui@2.18.1` primitive. The tables describe local additions and important inherited options; see the complete [Bits UI Scroll Area API](https://bits-ui.com/docs/components/scroll-area#api-reference). The component's `index.ts`, exported types, and source are the source of truth.
@@ -176,8 +166,6 @@ Type: `ScrollbarProps`, based on Bits UI `ScrollArea.ScrollbarProps` with the ad
 
 Scrollbar forwards native `<div>` attributes. Root's normal composition passes no custom children.
 
----
-
 ## Styling and DOM contract
 
 | Element   | Stable local hook                   | Styling                                                                           |
@@ -191,21 +179,15 @@ The Scrollbar also receives local `data-orientation`; Bits UI adds dependency-ow
 
 Root and Scrollbar `class` props use `cn()`. The viewport does not expose a class prop; style it through its stable slot. `scrollbarXClasses` and `scrollbarYClasses` are merged by the generated Scrollbar.
 
----
-
 ## Accessibility
 
 Bits UI preserves native wheel, trackpad, touch, and keyboard scrolling on the viewport while providing custom scrollbar controls. Keep the viewport focus outline, ensure a constrained region has a useful accessible name when its purpose is not evident, and avoid trapping keyboard users inside nested scroll areas.
 
 Content semantics remain unchanged inside the viewport. Use headings, lists, tables, and landmarks normally. Do not hide essential content solely because the custom scrollbar is visually subtle, and test horizontal scrolling in both LTR and RTL layouts.
 
----
-
 ## Localization
 
 Scroll Area contains no built-in human-readable copy and requires no localization messages. The app supplies and translates content and any optional accessible label on the scrolling region.
-
----
 
 ## Dependencies
 
@@ -293,13 +275,9 @@ scroll-area/
 
 Scroll Area requires no icon, other xvelte component, hook, attachment, context, localization setup, shared style, image, font, or network service.
 
----
-
 ## Credits
 
 The component structure and styling are adapted from [shadcn-svelte Scroll Area](https://www.shadcn-svelte.com/docs/components/scroll-area).
-
----
 
 ## File organization
 

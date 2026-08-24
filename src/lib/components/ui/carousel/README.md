@@ -21,8 +21,6 @@ Use Carousel for a short, ordered collection of related items when viewing one o
 - [Credits](#credits)
 - [File organization](#file-organization)
 
----
-
 ## Import
 
 Import the component from its public `index.ts` entry point:
@@ -34,8 +32,6 @@ Import the component from its public `index.ts` entry point:
 ```
 
 Carousel's `index.ts` exports `Root`, `Content`, `Item`, `Previous`, and `Next`, their matching props types, Embla-related types, and the `getEmblaContext` and `setEmblaContext` helpers.
-
----
 
 ## Anatomy
 
@@ -69,8 +65,6 @@ Root (region and positioning wrapper)
 
 Keep `Item` components as direct children of `Content`. Previous and Next belong outside Content so they are not clipped or dragged with the slides.
 
----
-
 ## Basic usage
 
 ```svelte
@@ -95,8 +89,6 @@ Keep `Item` components as direct children of `Content`. Previous and Next belong
 ```
 
 Each item occupies the complete viewport by default. Root needs a specific accessible name because its built-in role description identifies the widget type but not its content.
-
----
 
 ## Examples
 
@@ -281,8 +273,6 @@ Pass initialized Embla plugins through `plugins`:
 
 `embla-carousel-autoplay` is optional and required only for this example. Other plugins follow the same pattern; see the [Embla Carousel plugins guide](https://www.embla-carousel.com/docs/v8/plugins).
 
----
-
 ## Public API
 
 Carousel wraps Embla Carousel 8.6.0. The tables below document the local API and defaults; use the [Embla Carousel documentation](https://www.embla-carousel.com/docs/v8/get-started/svelte) for the complete engine API.
@@ -361,8 +351,6 @@ Previous and Next handle ArrowLeft and ArrowRight while either button is focused
 
 Use `index.ts` and the exported props types as the source of truth for the local API.
 
----
-
 ## Embla behavior
 
 - Content initializes Embla in the browser through the `embla-carousel-svelte` action and cleans it up when the component unmounts.
@@ -372,8 +360,6 @@ Use `index.ts` and the exported props types as the source of truth for the local
 - Navigation buttons call `scrollPrev()` and `scrollNext()` and become disabled when Embla cannot move in that direction. Looping carousels normally keep both directions available.
 - Changing slide width changes how many items are visible. It does not by itself change how many slides advance; use Embla's `slidesToScroll` option for grouped movement.
 - Plugins are separate packages and are not included automatically with `embla-carousel-svelte`.
-
----
 
 ## Styling and DOM contract
 
@@ -393,8 +379,6 @@ Horizontal Content uses `-ms-4`, and Items use `ps-4`; these logical properties 
 
 Previous and Next sit `3rem` outside Root by default. Ensure the surrounding layout leaves room for them, or override their positions through `class`. The viewport clips slides but not these sibling controls.
 
----
-
 ## Accessibility
 
 - Root uses `role="region"` and the localized `aria-roledescription="carousel"`. Supply a meaningful `aria-label` or `aria-labelledby` for the collection.
@@ -408,8 +392,6 @@ Previous and Next sit `3rem` outside Root by default. Ensure the surrounding lay
 
 Test dragging, touch scrolling, focus order, navigation disabled states, keyboard behavior, responsive slide widths, and reduced motion in the final layout.
 
----
-
 ## Localization
 
 Carousel uses Paraglide messages for built-in accessible descriptions and navigation text. Keep these entries in `messages/en.json` and provide translations for every supported locale:
@@ -422,8 +404,6 @@ Carousel uses Paraglide messages for built-in accessible descriptions and naviga
 | `crisp_hare_forward`   | `Next slide`     | Next button screen-reader text.     |
 
 Slide labels, counters, autoplay controls, titles, descriptions, and all slide content belong to the app and should follow its localization conventions.
-
----
 
 ## Dependencies
 
@@ -549,13 +529,9 @@ The app remains responsible for applying its `.dark` class, normally through roo
 
 No `tw-animate-css` import, global keyframe, shared component stylesheet, or additional icon is required. Optional Embla plugins are separate packages; add only those used by the app and follow their official documentation.
 
----
-
 ## Credits
 
 Carousel is adapted from the [shadcn-svelte Carousel](https://www.shadcn-svelte.com/docs/components/carousel). Its composition has been adapted to xvelte's local props types, context conventions, semantic icon facade, localization, and Button styles.
-
----
 
 ## File organization
 

@@ -6,6 +6,7 @@
 	import * as Markdown from "$lib/components/ui/markdown";
 	import * as Tabs from "$lib/components/ui/tabs";
 	import * as Typography from "$lib/components/ui/typography";
+	import * as Breadcrumb from "$lib/components/ui/breadcrumb";
 	import { parseMarkdown, type MarkdownAst } from "$lib/hooks/use-markdown.svelte";
 
 	import type { DocKind } from "./catalog";
@@ -54,13 +55,21 @@
 
 {#if unit}
 	<div class="mx-auto max-w-[90%] px-5 py-10 sm:px-8 sm:py-14">
-		<nav aria-label="Breadcrumb" class="mb-8 flex items-center gap-2 text-sm text-muted-foreground">
-			<a
-				href={resolve(`/${kind === "component" ? "components" : kind === "hook" ? "hooks" : "attachments"}` as Pathname)}
-				class="hover:text-foreground">{kind === "component" ? "Components" : kind === "hook" ? "Hooks" : "Attachments"}</a
-			>
-			<span aria-hidden="true">/</span><span class="text-foreground">{unit.title}</span>
-		</nav>
+		<Breadcrumb.Root class="mb-8">
+			<Breadcrumb.List>
+				<Breadcrumb.Item>
+					<Breadcrumb.Link href={resolve(`/${kind === "component" ? "components" : kind === "hook" ? "hooks" : "attachments"}` as Pathname)}
+						>{kind === "component" ? "Components" : kind === "hook" ? "Hooks" : "Attachments"}</Breadcrumb.Link
+					>
+				</Breadcrumb.Item>
+
+				<Breadcrumb.Separator />
+
+				<Breadcrumb.Item>
+					<Breadcrumb.Page>{unit.title}</Breadcrumb.Page>
+				</Breadcrumb.Item>
+			</Breadcrumb.List>
+		</Breadcrumb.Root>
 
 		{#each segments as segment, index (`${index}-${segment.example?.name ?? "markdown"}`)}
 			<Typography.Prose>

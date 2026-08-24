@@ -100,7 +100,7 @@ All remaining SVG attributes and event handlers are forwarded to `LoaderIcon`. S
 ## Styling and DOM contract
 
 - Default classes: `size-4 animate-spin`.
-- No `data-slot` is currently added because the rendered element is the icon component itself.
+- The rendered icon exposes `data-slot="spinner"`.
 - `class` is merged with `cn()`, allowing callers to replace size or animation utilities.
 - Color defaults to the inherited `currentColor` behavior of the backing icon.
 

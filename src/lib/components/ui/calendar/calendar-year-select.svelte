@@ -13,7 +13,10 @@
 	let { ref = $bindable(null), class: className, value, ...restProps }: YearSelectProps = $props();
 </script>
 
-<span class={cn("relative flex rounded-md border border-input shadow-xs has-focus:border-ring has-focus:ring-3 has-focus:ring-ring/50", className)}>
+<span
+	data-slot="calendar-year-select"
+	class={cn("relative flex rounded-md border border-input shadow-xs has-focus:border-ring has-focus:ring-3 has-focus:ring-ring/50", className)}
+>
 	<CalendarPrimitive.YearSelect bind:ref class="absolute inset-0 opacity-0 dark:bg-popover dark:text-popover-foreground" {...restProps}>
 		{#snippet child({ props, yearItems, selectedYearItem })}
 			<select {...props} {value}>

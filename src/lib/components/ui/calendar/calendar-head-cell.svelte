@@ -10,4 +10,9 @@
 	let { ref = $bindable(null), class: className, ...restProps }: HeadCellProps = $props();
 </script>
 
-<CalendarPrimitive.HeadCell bind:ref class={cn("w-1/7 rounded-md text-[0.8rem] font-normal text-muted-foreground", className)} {...restProps} />
+<CalendarPrimitive.HeadCell
+	bind:ref
+	data-slot="calendar-head-cell"
+	class={cn("w-1/7 rounded-md text-[0.8rem] font-normal text-muted-foreground", className)}
+	{...restProps}
+/>

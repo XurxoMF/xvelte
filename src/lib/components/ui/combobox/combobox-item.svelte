@@ -21,6 +21,7 @@
 </script>
 
 <Command.Item
+	data-slot="combobox-item"
 	{value}
 	onSelect={() => ctx.selectItem(value)}
 	class={cn(

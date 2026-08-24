@@ -15,6 +15,7 @@
 
 <PaginationPrimitive.PrevButton
 	bind:ref
+	data-slot="pagination-previous"
 	aria-label={m.urban_deer_previous()}
 	class={cn(Button.rootVariants({ variant: "ghost", size: "icon" }), className)}
 	{...restProps}

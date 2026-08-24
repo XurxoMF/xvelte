@@ -162,7 +162,7 @@ Stable xvelte hooks:
 
 | Part    | Element | `data-slot` |
 | ------- | ------- | ----------- |
-| `Key`   | `kbd`   | `kbd`       |
+| `Key`   | `kbd`   | `kbd-key`   |
 | `Group` | `kbd`   | `kbd-group` |
 
 Key uses semantic `muted`, `muted-foreground`, and `background` colors. Its default dimensions are `h-5`, `min-w-5`, and content-width with compact horizontal padding. It deliberately disables text selection and pointer events because it is presentational, not interactive.

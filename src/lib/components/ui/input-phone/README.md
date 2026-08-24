@@ -299,12 +299,12 @@ See the [libphonenumber-js documentation](https://gitlab.com/catamphetamine/libp
 
 ## Styling and DOM contract
 
-| Part              | Element                 | Stable hooks                                                        |
-| ----------------- | ----------------------- | ------------------------------------------------------------------- |
-| `Root`            | `div`                   | `data-slot="input-phone"`                                           |
-| `Input`           | native `input`          | `data-slot="input"`, `data-input-phone-input`                       |
-| `CountrySelector` | Combobox trigger button | `data-slot="combobox-trigger"`, `data-input-phone-country-selector` |
-| Flag              | `span`                  | `data-slot="input-phone-flag"`                                      |
+| Part              | Element                 | Stable hooks                                                                    |
+| ----------------- | ----------------------- | ------------------------------------------------------------------------------- |
+| `Root`            | `div`                   | `data-slot="input-phone"`                                                       |
+| `Input`           | native `input`          | `data-slot="input-phone-input"`, `data-input-phone-input`                       |
+| `CountrySelector` | Combobox trigger button | `data-slot="input-phone-country-selector"`, `data-input-phone-country-selector` |
+| Flag              | `span`                  | `data-slot="input-phone-flag"`                                                  |
 
 Root uses `contents` by default and therefore has no layout box. A caller display class such as `flex` or `grid` overrides it through `cn()`.
 

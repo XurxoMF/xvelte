@@ -119,7 +119,7 @@ All native attributes and handlers are forwarded. Classes merge through `cn()` a
 
 ## Styling and DOM contract
 
-Typography currently adds no `data-slot` attributes, state attributes, internal wrappers, or stable custom classes. The rendered native tag and exported component name are the public styling boundary.
+Every part adds a stable slot matching its exported role: `typography-h1` through `typography-h6`, `typography-p`, `typography-leading`, `typography-link`, `typography-blockquote`, and `typography-inline-code`. Typography adds no state attributes, internal wrappers, or stable custom classes; the slot and rendered native tag are the public styling boundaries.
 
 Semantic tokens are `primary`, `muted`, `muted-foreground`, and `border`. Class merging lets callers replace type size, weight, color, spacing, or decoration. No automatic vertical rhythm is added between sibling components; the app controls surrounding spacing.
 

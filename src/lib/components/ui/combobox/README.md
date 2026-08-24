@@ -328,16 +328,16 @@ The component's `index.ts`, exported types, and local source are the source of t
 
 Combobox uses Tailwind utilities, semantic theme tokens, Bits UI state attributes, and the styles of its required Button, Popover, Command, and Input Group components. It exposes no component-specific CSS variables.
 
-| Part      | Rendered structure                                | Stable xvelte hook or class                                                 |
-| --------- | ------------------------------------------------- | --------------------------------------------------------------------------- |
-| `Root`    | No element; creates Popover and Combobox contexts | None                                                                        |
-| `Trigger` | Button delegated through Popover Trigger          | `data-slot="combobox-trigger"`, `data-size`                                 |
-| `Content` | Portaled Popover content containing Command root  | `data-slot="combobox-content"`; inner `data-slot="command"`                 |
-| `Input`   | Command input inside an Input Group               | `data-slot="command-input-wrapper"`, `command-input`, and Input Group hooks |
-| `List`    | Command list                                      | `data-slot="command-list"`                                                  |
-| `Group`   | Command group and optional group heading          | `data-slot="command-group"`                                                 |
-| `Item`    | Command item and trailing indicator               | `data-slot="command-item"`                                                  |
-| `Empty`   | Command empty state                               | `data-slot="command-empty"`                                                 |
+| Part      | Rendered structure                                | Stable xvelte hook or class                                      |
+| --------- | ------------------------------------------------- | ---------------------------------------------------------------- |
+| `Root`    | No element; creates Popover and Combobox contexts | None                                                             |
+| `Trigger` | Button delegated through Popover Trigger          | `data-slot="combobox-trigger"`, `data-size`                      |
+| `Content` | Portaled Popover content containing Command root  | `data-slot="combobox-content"`; inner `data-slot="command"`      |
+| `Input`   | Command input inside an Input Group               | `data-slot="combobox-input"`, plus Command and Input Group hooks |
+| `List`    | Command list                                      | `data-slot="combobox-list"`                                      |
+| `Group`   | Command group and optional group heading          | `data-slot="combobox-group"`                                     |
+| `Item`    | Command item and trailing indicator               | `data-slot="combobox-item"`                                      |
+| `Empty`   | Command empty state                               | `data-slot="combobox-empty"`                                     |
 
 `Content` uses `w-(--bits-popover-anchor-width)`, so its normal width follows the trigger's measured anchor width and never drops below `9rem`. `class` can override that width. `--bits-popover-anchor-width`, positioning transforms, `data-state`, `data-side`, Command selection attributes, ARIA relationships, and generated IDs are dependency-owned and may follow the installed stable Bits UI version.
 

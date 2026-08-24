@@ -10,4 +10,4 @@
 	let { placeholder = m.harbor_wren_pause(), class: className }: InputProps = $props();
 </script>
 
-<Command.Input {placeholder} class={cn(className)} />
+<Command.Input data-slot="combobox-input" {placeholder} class={cn(className)} />

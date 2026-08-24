@@ -12,6 +12,6 @@
 	let { ref = $bindable(null), class: className, children, ...restProps }: BlockquoteProps = $props();
 </script>
 
-<blockquote class={cn("border-s-2 ps-6 italic", className)} bind:this={ref} {...restProps}>
+<blockquote data-slot="typography-blockquote" class={cn("border-s-2 ps-6 italic", className)} bind:this={ref} {...restProps}>
 	{@render children?.()}
 </blockquote>

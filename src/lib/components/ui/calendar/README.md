@@ -269,7 +269,13 @@ Root is compact by default. Add `w-full` to make it fill its container; months g
 <Calendar.Root type="single" class="w-full rounded-lg border" />
 ```
 
-The local components do not add xvelte `data-slot` attributes. Bits UI supplies dependency-owned selectors instead:
+The local components expose stable `data-slot` hooks on every rendered part:
+
+- Structure: `calendar`, `calendar-header`, `calendar-heading`, `calendar-nav`, `calendar-months`, and `calendar-month`.
+- Grid: `calendar-grid`, `calendar-grid-head`, `calendar-grid-body`, `calendar-grid-row`, `calendar-head-cell`, `calendar-cell`, and `calendar-day`.
+- Controls: `calendar-prev-button`, `calendar-next-button`, `calendar-month-select`, and `calendar-year-select`.
+
+`Caption` is a headless composition of the select parts or formatted text and therefore has no element of its own. Bits UI additionally supplies dependency-owned selectors:
 
 - Root/header/heading/navigation/grid parts: `data-calendar-*` attributes.
 - Day and cell state: `data-selected`, `data-today`, `data-disabled`, `data-unavailable`, `data-outside-month`, `data-focused`, and `data-value`.

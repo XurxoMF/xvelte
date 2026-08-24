@@ -56,6 +56,7 @@
 	bind:ref
 	bind:value
 	bind:placeholder
+	data-slot="calendar-range"
 	{weekdayFormat}
 	{disableDaysOutsideMonth}
 	class={cn(

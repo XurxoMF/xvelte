@@ -30,6 +30,6 @@
 	let { ref = $bindable(null), class: className, children, type = "button", variant = "ghost", size = "xs", ...restProps }: ButtonProps = $props();
 </script>
 
-<Button.Root bind:ref {type} data-size={size} {variant} class={cn(buttonVariants({ size }), className)} {...restProps}>
+<Button.Root bind:ref {type} data-slot="input-group-button" data-size={size} {variant} class={cn(buttonVariants({ size }), className)} {...restProps}>
 	{@render children?.()}
 </Button.Root>

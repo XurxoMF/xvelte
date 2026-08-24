@@ -42,7 +42,7 @@
 	bind:ref
 	type="tel"
 	value={ctx.inputValue}
-	data-slot="input"
+	data-slot="input-phone-input"
 	data-input-phone-input
 	{autocomplete}
 	{inputmode}

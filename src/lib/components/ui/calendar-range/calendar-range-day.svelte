@@ -12,6 +12,7 @@
 
 <RangeCalendarPrimitive.Day
 	bind:ref
+	data-slot="calendar-range-day"
 	class={cn(
 		"flex h-(--cell-size) w-full min-w-(--cell-size) flex-col items-center justify-center gap-1 rounded-(--cell-radius) p-0 leading-none font-normal whitespace-nowrap select-none",
 		"not-data-selected:hover:bg-accent/50 not-data-selected:hover:text-accent-foreground",

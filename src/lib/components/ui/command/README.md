@@ -368,7 +368,7 @@ Empty forwards optional children, child delegation, bindable `ref`, `class`, `fo
 
 Type: `LoadingProps`, matching Bits UI Command Loading props.
 
-Loading forwards `progress` (`0`–`100`), optional children, child delegation, bindable `ref`, `class`, and compatible native `div` attributes directly to Bits UI. It adds no local styles or `data-slot`. Bits UI renders `role="progressbar"`, the value range, and a fixed `aria-label="Loading..."`; supply visible loading copy and expose request failure separately.
+Loading forwards `progress` (`0`–`100`), optional children, child delegation, bindable `ref`, `class`, and compatible native `div` attributes directly to Bits UI. It adds `data-slot="command-loading"` but no local styles. Bits UI renders `role="progressbar"`, the value range, and a fixed `aria-label="Loading..."`; supply visible loading copy and expose request failure separately.
 
 ### `Command.Separator`
 
@@ -402,7 +402,7 @@ Command uses Tailwind utilities, semantic theme tokens, local slots, Bits UI sta
 | `Item`      | `data-slot="command-item"`; includes a trailing selection indicator                                                |
 | `LinkItem`  | `data-slot="command-item"`                                                                                         |
 | `Empty`     | `data-slot="command-empty"`                                                                                        |
-| `Loading`   | No local slot; Bits UI attributes only                                                                             |
+| `Loading`   | `data-slot="command-loading"`                                                                                      |
 | `Separator` | `data-slot="command-separator"`                                                                                    |
 | `Shortcut`  | `data-slot="command-shortcut"`                                                                                     |
 

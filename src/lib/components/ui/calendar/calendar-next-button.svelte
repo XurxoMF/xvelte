@@ -21,6 +21,7 @@
 
 <CalendarPrimitive.NextButton
 	bind:ref
+	data-slot="calendar-next-button"
 	class={cn(Button.rootVariants({ variant }), "size-(--cell-size) bg-transparent p-0 select-none disabled:opacity-50 rtl:rotate-180", className)}
 	{...restProps}
 >

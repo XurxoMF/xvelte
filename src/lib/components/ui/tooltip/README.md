@@ -165,6 +165,7 @@ Content always appends the local Arrow after caller children. Advanced primitive
 
 - Trigger: `data-slot="tooltip-trigger"`; otherwise unstyled.
 - Content: `data-slot="tooltip-content"`; foreground background, background-colored text, maximum width, compact padding, rounded corners, side/open/closed animation, and `--bits-tooltip-content-transform-origin`.
+- A descendant Kbd `Key` with `data-slot="kbd-key"` receives compact inset spacing and stacking adjustments for the tooltip surface.
 - Arrow: internal delegated div with semantic foreground fill/background, border-free diamond shape, and dependency-owned `data-side`; `arrowClasses` merges last.
 
 Bits UI owns open state, side, trigger/content IDs, and positioning variables. Content `class` and Arrow classes pass through `cn()`. Portal has no local hook.

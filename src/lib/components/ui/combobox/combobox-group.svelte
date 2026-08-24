@@ -15,6 +15,6 @@
 	let { heading, class: className, children }: GroupProps = $props();
 </script>
 
-<Command.Group {heading} class={cn("scroll-my-1 p-1", className)}>
+<Command.Group data-slot="combobox-group" {heading} class={cn("scroll-my-1 p-1", className)}>
 	{@render children()}
 </Command.Group>

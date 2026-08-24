@@ -10,4 +10,4 @@
 	let { ref = $bindable(null), class: className, ...restProps }: HeadingProps = $props();
 </script>
 
-<CalendarPrimitive.Heading bind:ref class={cn("px-(--cell-size) text-sm font-medium", className)} {...restProps} />
+<CalendarPrimitive.Heading bind:ref data-slot="calendar-heading" class={cn("px-(--cell-size) text-sm font-medium", className)} {...restProps} />

@@ -14,6 +14,7 @@
 </script>
 
 <Sonner
+	data-slot="sonner"
 	theme={mode.current}
 	class="toaster group"
 	style="--normal-bg: var(--color-popover); --normal-text: var(--color-popover-foreground); --normal-border: var(--color-border); --error-bg: color-mix(in oklab, var(--color-danger) 10%, var(--color-popover)); --error-text: var(--color-danger); --error-border: color-mix(in oklab, var(--color-danger) 30%, var(--color-border)); --warning-bg: color-mix(in oklab, var(--color-warning) 10%, var(--color-popover)); --warning-text: var(--color-warning); --warning-border: color-mix(in oklab, var(--color-warning) 30%, var(--color-border)); --success-bg: color-mix(in oklab, var(--color-success) 10%, var(--color-popover)); --success-text: var(--color-success); --success-border: color-mix(in oklab, var(--color-success) 30%, var(--color-border)); --info-bg: color-mix(in oklab, var(--color-info) 10%, var(--color-popover)); --info-text: var(--color-info); --info-border: color-mix(in oklab, var(--color-info) 30%, var(--color-border));"

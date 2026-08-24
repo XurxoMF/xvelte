@@ -14,4 +14,4 @@
 	let { class: className, children }: EmptyProps = $props();
 </script>
 
-<Command.Empty class={cn(className)}>{@render children()}</Command.Empty>
+<Command.Empty data-slot="combobox-empty" class={cn(className)}>{@render children()}</Command.Empty>

@@ -381,12 +381,14 @@ Use `index.ts` and the exported props types as the source of truth for the local
 
 Chart.Container exposes:
 
-| Selector                  | Element         | Purpose                                                                      |
-| ------------------------- | --------------- | ---------------------------------------------------------------------------- |
-| `[data-slot="chart"]`     | Root `div`      | Public chart container, sizing, theme scope, and LayerChart style overrides. |
-| `[data-chart="chart-ID"]` | Same root `div` | Unique selector used by generated series color variables.                    |
+| Selector                      | Element           | Purpose                                                                      |
+| ----------------------------- | ----------------- | ---------------------------------------------------------------------------- |
+| `[data-slot="chart"]`         | Root `div`        | Public chart container, sizing, theme scope, and LayerChart style overrides. |
+| `[data-chart="chart-ID"]`     | Same root `div`   | Unique selector used by generated series color variables.                    |
+| `[data-slot="chart-style"]`   | Generated `style` | Series color variables scoped to the matching chart ID.                      |
+| `[data-slot="chart-tooltip"]` | Tooltip `div`     | Public tooltip content and layout.                                           |
 
-Chart.Tooltip does not currently expose a `data-slot`; target it through a supplied `class` or a wrapper when additional styling is required.
+`Style` renders only when the configuration contains explicit series colors, so its slot is conditional.
 
 Container intentionally adjusts LayerChart's `.lc-*` classes:
 

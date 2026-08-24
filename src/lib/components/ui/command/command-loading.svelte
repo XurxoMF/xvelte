@@ -8,4 +8,4 @@
 	let { ref = $bindable(null), ...restProps }: LoadingProps = $props();
 </script>
 
-<CommandPrimitive.Loading bind:ref {...restProps} />
+<CommandPrimitive.Loading bind:ref data-slot="command-loading" {...restProps} />

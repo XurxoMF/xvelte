@@ -34,7 +34,7 @@
 
 {#if themeContents}
 	{#key id}
-		<svelte:element this={"style"}>
+		<svelte:element this={"style"} data-slot="chart-style">
 			{themeContents}
 		</svelte:element>
 	{/key}

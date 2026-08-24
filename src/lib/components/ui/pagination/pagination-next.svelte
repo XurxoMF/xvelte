@@ -15,6 +15,7 @@
 
 <PaginationPrimitive.NextButton
 	bind:ref
+	data-slot="pagination-next"
 	aria-label={m.vivid_pine_next()}
 	class={cn(Button.rootVariants({ variant: "ghost", size: "icon" }), className)}
 	{...restProps}

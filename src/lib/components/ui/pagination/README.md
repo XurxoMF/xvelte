@@ -282,17 +282,17 @@ Their standard rendering is intentionally fixed to a localized accessible name, 
 
 Stable xvelte hooks:
 
-| Part       | Element             | Stable hooks                                       |
-| ---------- | ------------------- | -------------------------------------------------- |
-| `Root`     | `div` by default    | `data-slot="pagination"`                           |
-| `Content`  | `ul`                | `data-slot="pagination-content"`                   |
-| `Item`     | `li`                | `data-slot="pagination-item"`                      |
-| `Link`     | `button` by default | `data-slot="pagination-link"`, `data-active`       |
-| `Ellipsis` | `span`              | `data-slot="pagination-ellipsis"`                  |
-| `Previous` | `button` by default | No local stable hook; contains screen-reader text. |
-| `Next`     | `button` by default | No local stable hook; contains screen-reader text. |
+| Part       | Element             | Stable hooks                                                    |
+| ---------- | ------------------- | --------------------------------------------------------------- |
+| `Root`     | `div` by default    | `data-slot="pagination"`                                        |
+| `Content`  | `ul`                | `data-slot="pagination-content"`                                |
+| `Item`     | `li`                | `data-slot="pagination-item"`                                   |
+| `Link`     | `button` by default | `data-slot="pagination-link"`, `data-active`                    |
+| `Ellipsis` | `span`              | `data-slot="pagination-ellipsis"`                               |
+| `Previous` | `button` by default | `data-slot="pagination-previous"`; contains screen-reader text. |
+| `Next`     | `button` by default | `data-slot="pagination-next"`; contains screen-reader text.     |
 
-`Previous` and `Next` do not define local `data-slot` attributes. Bits UI currently adds `data-pagination-root`, `data-pagination-page`, `data-pagination-prev-button`, `data-pagination-next-button`, `data-orientation`, `data-value`, and `data-selected`. Treat those as dependency-owned behavior and confirm them against the installed Bits UI version before relying on them as a long-term xvelte contract.
+Bits UI additionally adds `data-pagination-root`, `data-pagination-page`, `data-pagination-prev-button`, `data-pagination-next-button`, `data-orientation`, `data-value`, and `data-selected`. Treat those as dependency-owned behavior and confirm them against the installed Bits UI version before relying on them as a long-term xvelte contract.
 
 The root centers a full-width flex container. `Content` is a horizontal flex list with a small gap. Links, previous, and next reuse the Button component variants: active links use `outline`, other controls use `ghost`, and all use icon sizing. Every local `class` value is merged with `cn()` so later Tailwind utilities can override defaults.
 

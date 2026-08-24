@@ -12,6 +12,6 @@
 	let { ref = $bindable(null), class: className, children, ...restProps }: LeadingProps = $props();
 </script>
 
-<p class={cn("text-xl text-muted-foreground", className)} bind:this={ref} {...restProps}>
+<p data-slot="typography-leading" class={cn("text-xl text-muted-foreground", className)} bind:this={ref} {...restProps}>
 	{@render children?.()}
 </p>

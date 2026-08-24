@@ -12,6 +12,6 @@
 	let { ref = $bindable(null), class: className, children, ...restProps }: H5Props = $props();
 </script>
 
-<h5 class={cn("scroll-m-20 text-lg font-semibold tracking-tight", className)} bind:this={ref} {...restProps}>
+<h5 data-slot="typography-h5" class={cn("scroll-m-20 text-lg font-semibold tracking-tight", className)} bind:this={ref} {...restProps}>
 	{@render children?.()}
 </h5>

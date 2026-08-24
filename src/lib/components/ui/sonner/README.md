@@ -198,7 +198,7 @@ The local Root supplies:
 - A subtle 30%-opacity semantic border on success, error, warning, and information toasts, including when `richColors` is disabled. Override the corresponding `toastOptions.classes` status key to replace it.
 - Semantic `LoaderIcon`, `AlertSuccessIcon`, `AlertErrorIcon`, `AlertInfoIcon`, and `AlertWarningIcon` snippets, each sized to 1rem. Status icons use their matching semantic text color, while the loader spins with the normal toast color.
 
-There is no local `data-slot`. Toast markup, state attributes, swipe variables, and per-part classes are owned by `svelte-sonner`. Use its `toastOptions.classes` API instead of depending on undocumented nested selectors. Passing `class`, `style`, or icon props to Root replaces the local value because props are forwarded last.
+Root adds `data-slot="sonner"` to the rendered toaster. Toast markup, state attributes, swipe variables, and per-part classes are owned by `svelte-sonner`; use its `toastOptions.classes` API instead of depending on undocumented nested selectors. Passing `class`, `style`, icon props, or `data-slot` to Root replaces the local value because props are forwarded last.
 
 ## Accessibility
 

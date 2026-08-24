@@ -75,6 +75,7 @@
 <Combobox.Root bind:value={selectedValue} onchange={selectCountry}>
 	<Combobox.Trigger
 		{...triggerProps}
+		data-slot="input-phone-country-selector"
 		aria-label={ariaLabel ?? defaultLabel}
 		disabled={ctx.disabled}
 		data-input-phone-country-selector=""

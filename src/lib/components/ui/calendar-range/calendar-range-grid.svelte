@@ -12,6 +12,7 @@
 
 <RangeCalendarPrimitive.Grid
 	bind:ref
+	data-slot="calendar-range-grid"
 	class={cn("mt-4 w-full table-fixed border-separate border-spacing-x-0 border-spacing-y-1", className)}
 	{...restProps}
 />

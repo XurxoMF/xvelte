@@ -22,6 +22,7 @@
 </script>
 
 <LoaderIcon
+	data-slot="spinner"
 	{role}
 	name={name === null ? undefined : name}
 	color={color === null ? undefined : color}

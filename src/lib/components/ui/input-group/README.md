@@ -339,7 +339,7 @@ Type: `TextProps`, based on native `HTMLAttributes<HTMLSpanElement>` with a bind
 | `children` | `Snippet`             | `undefined` | Renders a unit, scheme, count, status, shortcut, icon, or other concise supporting content. |
 | `class`    | `string`              | `undefined` | Merged after flex, gap, text size/color, and descendant SVG classes.                        |
 
-Text renders a plain `span`, forwards native attributes, and does not set `data-slot`, a role, or an accessible relationship. It prevents pointer events on descendant SVGs and supplies a default size when they do not already have a `size-*` class.
+Text renders a plain `span`, forwards native attributes, and adds `data-slot="input-group-text"` without adding a role or accessible relationship. It prevents pointer events on descendant SVGs and supplies a default size when they do not already have a `size-*` class.
 
 ## Styling and DOM contract
 
@@ -349,10 +349,10 @@ Stable local hooks and elements:
 | -------- | -------------------------------------------------------------- | ----------------- |
 | Root     | `data-slot="input-group"`, `role="group"`, `group/input-group` | Native `div`      |
 | Addon    | `data-slot="input-group-addon"`, `data-align`, `role="group"`  | Native `div`      |
-| Button   | `data-slot="button"` from Button, plus local `data-size`       | Native `button`   |
+| Button   | `data-slot="input-group-button"`, plus local `data-size`       | Native `button`   |
 | Input    | `data-slot="input-group-control"`                              | Native `input`    |
 | Textarea | `data-slot="input-group-control"`                              | Native `textarea` |
-| Text     | No local stable slot                                           | Native `span`     |
+| Text     | `data-slot="input-group-text"`                                 | Native `span`     |
 
 Root is a relative, full-width, minimum-width-zero flex container with a default height of `2rem`, semantic input border, large radius, and no direct background in light mode. It becomes column-oriented and auto-height for block Addons, and auto-height for a direct Textarea.
 

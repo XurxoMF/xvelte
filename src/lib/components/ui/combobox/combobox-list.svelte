@@ -14,6 +14,6 @@
 	let { class: className, children }: ListProps = $props();
 </script>
 
-<Command.List class={cn("w-full scroll-my-1 p-1", className)}>
+<Command.List data-slot="combobox-list" class={cn("w-full scroll-my-1 p-1", className)}>
 	{@render children()}
 </Command.List>

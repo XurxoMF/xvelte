@@ -12,6 +12,6 @@
 	let { ref = $bindable(null), class: className, children, ...restProps }: PProps = $props();
 </script>
 
-<p class={cn("leading-7", className)} bind:this={ref} {...restProps}>
+<p data-slot="typography-p" class={cn("leading-7", className)} bind:this={ref} {...restProps}>
 	{@render children?.()}
 </p>

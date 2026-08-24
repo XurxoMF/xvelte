@@ -8,4 +8,4 @@
 	let { ref = $bindable(null), ...restProps }: GridBodyProps = $props();
 </script>
 
-<RangeCalendarPrimitive.GridBody bind:ref {...restProps} />
+<RangeCalendarPrimitive.GridBody bind:ref data-slot="calendar-range-grid-body" {...restProps} />

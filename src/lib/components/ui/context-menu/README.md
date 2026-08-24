@@ -1,6 +1,6 @@
 # Context Menu
 
-A contextual action menu opened at a pointer location with right-click or long press. It supports regular and destructive actions, disabled states, nested submenus, grouped content, checkbox and radio choices, shortcut hints, controlled open state, portals, collision-aware positioning, and complete Bits UI keyboard navigation.
+A contextual action menu opened at a pointer location with right-click or long press. It supports regular and dangerous actions, disabled states, nested submenus, grouped content, checkbox and radio choices, shortcut hints, controlled open state, portals, collision-aware positioning, and complete Bits UI keyboard navigation.
 
 Use Context Menu for optional actions that apply to a specific surface or item. Keep important and frequently used actions visible elsewhere, because context menus are less discoverable and may be difficult to invoke with some input methods.
 
@@ -92,12 +92,12 @@ Use `GroupHeading` within `Group` when a heading should label that group semanti
 
 		<ContextMenu.Item disabled>Share</ContextMenu.Item>
 		<ContextMenu.Separator />
-		<ContextMenu.Item variant="destructive" onSelect={deleteFile}>Delete</ContextMenu.Item>
+		<ContextMenu.Item variant="danger" onSelect={deleteFile}>Delete</ContextMenu.Item>
 	</ContextMenu.Content>
 </ContextMenu.Root>
 ```
 
-`onSelect` receives the selection event. Destructive styling does not add confirmation or undo behavior; implement those safeguards in the app.
+`onSelect` receives the selection event. Danger styling does not add confirmation or undo behavior; implement those safeguards in the app.
 
 ---
 
@@ -275,19 +275,19 @@ Content forwards Bits UI positioning, collision, focus, escape, outside-interact
 
 Type: `ItemProps`, matching Bits UI Item props plus two local presentation options.
 
-| Prop                 | Type                         | Default     | xvelte behavior                                                                           |
-| -------------------- | ---------------------------- | ----------- | ----------------------------------------------------------------------------------------- |
-| `inset`              | `boolean`                    | `undefined` | Writes `data-inset` and aligns content with indicator-bearing items.                      |
-| `variant`            | `"default" \| "destructive"` | `"default"` | Writes `data-variant` and applies destructive foreground and focus surface when selected. |
-| `disabled`           | `boolean`                    | `false`     | Prevents interaction and applies dependency-owned disabled state styling.                 |
-| `textValue`          | `string`                     | `undefined` | Supplies typeahead text when rendered content is complex.                                 |
-| `onSelect`           | `(event: Event) => void`     | `undefined` | Runs on selection. Call `event.preventDefault()` to prevent normal selection behavior.    |
-| `closeOnSelect`      | `boolean`                    | `true`      | Controls whether selecting the item closes the menu.                                      |
-| `ref`                | `HTMLDivElement \| null`     | `null`      | Bindable default item reference.                                                          |
-| `class`              | `string`                     | `undefined` | Merged after local item, focus, disabled, inset, destructive, and descendant icon styles. |
-| `children` / `child` | Bits UI snippets             | `undefined` | Render content or delegate the item while preserving menu semantics and interaction.      |
+| Prop                 | Type                     | Default     | xvelte behavior                                                                        |
+| -------------------- | ------------------------ | ----------- | -------------------------------------------------------------------------------------- |
+| `inset`              | `boolean`                | `undefined` | Writes `data-inset` and aligns content with indicator-bearing items.                   |
+| `variant`            | `"default" \| "danger"`  | `"default"` | Writes `data-variant` and applies danger foreground and focus surface when selected.   |
+| `disabled`           | `boolean`                | `false`     | Prevents interaction and applies dependency-owned disabled state styling.              |
+| `textValue`          | `string`                 | `undefined` | Supplies typeahead text when rendered content is complex.                              |
+| `onSelect`           | `(event: Event) => void` | `undefined` | Runs on selection. Call `event.preventDefault()` to prevent normal selection behavior. |
+| `closeOnSelect`      | `boolean`                | `true`      | Controls whether selecting the item closes the menu.                                   |
+| `ref`                | `HTMLDivElement \| null` | `null`      | Bindable default item reference.                                                       |
+| `class`              | `string`                 | `undefined` | Merged after local item, focus, disabled, inset, danger, and descendant icon styles.   |
+| `children` / `child` | Bits UI snippets         | `undefined` | Render content or delegate the item while preserving menu semantics and interaction.   |
 
-Remaining compatible `div` attributes are forwarded. Destructive is visual intent only and has no confirmation behavior.
+Remaining compatible `div` attributes are forwarded. Danger is visual intent only and has no confirmation behavior.
 
 ### `ContextMenu.CheckboxItem`
 
@@ -420,7 +420,7 @@ App responsibilities:
 - Use Item for actions, CheckboxItem for independent settings, and RadioGroup/RadioItem for one-of-many choices.
 - Use `GroupHeading` rather than visual Label when a heading must label a group for assistive technology.
 - Implement every shortcut shown by Shortcut and avoid conflicts with browser or assistive-technology commands.
-- Add confirmation or undo for destructive actions; `variant="destructive"` changes presentation only.
+- Add confirmation or undo for dangerous actions; `variant="danger"` changes presentation only.
 - Supply `textValue` for items whose complex rendered content does not produce useful typeahead text.
 - Test long press without blocking scrolling or other expected touch gestures on the chosen trigger surface.
 
@@ -430,7 +430,7 @@ The local CheckboxItem does not visually distinguish indeterminate from unchecke
 
 ## Localization
 
-Context Menu contains no built-in human-readable copy and does not use Paraglide messages. Apps supply and translate trigger instructions, item labels, group headings, visual labels, checkbox/radio copy, submenu labels, shortcut descriptions, destructive confirmations, and any supporting help text.
+Context Menu contains no built-in human-readable copy and does not use Paraglide messages. Apps supply and translate trigger instructions, item labels, group headings, visual labels, checkbox/radio copy, submenu labels, shortcut descriptions, danger confirmations, and any supporting help text.
 
 The right-chevron is an icon rather than text, and Bits UI derives direction behavior from `Root.dir`. Shortcut symbols such as `⌘` are platform-specific presentation, not translated interaction; render the appropriate localized or platform-specific hint and implement the matching command in the app.
 
@@ -507,9 +507,9 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define dark and
 	--popover: oklch(1 0 0);
 	--popover-foreground: oklch(0.147 0.004 49.25);
 	--muted-foreground: oklch(0.553 0.013 58.071);
-	--accent: oklch(0.841 0.238 128.85);
-	--accent-foreground: oklch(0.405 0.101 131.063);
-	--destructive: oklch(0.577 0.245 27.325);
+	--accent: oklch(0.95 0.035 350);
+	--accent-foreground: oklch(0.35 0.12 350);
+	--danger: oklch(0.577 0.245 27.325);
 	--border: oklch(0.923 0.003 48.717);
 	--ring: oklch(0.709 0.01 56.259);
 	--radius: 0.45rem;
@@ -520,9 +520,9 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define dark and
 	--popover: oklch(0.216 0.006 56.043);
 	--popover-foreground: oklch(0.985 0.001 106.423);
 	--muted-foreground: oklch(0.709 0.01 56.259);
-	--accent: oklch(0.768 0.233 130.85);
-	--accent-foreground: oklch(0.405 0.101 131.063);
-	--destructive: oklch(0.704 0.191 22.216);
+	--accent: oklch(0.3 0.07 350);
+	--accent-foreground: oklch(0.97 0.02 350);
+	--danger: oklch(0.704 0.191 22.216);
 	--border: oklch(1 0 0 / 10%);
 	--ring: oklch(0.553 0.013 58.071);
 }
@@ -534,7 +534,7 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define dark and
 	--color-muted-foreground: var(--muted-foreground);
 	--color-accent: var(--accent);
 	--color-accent-foreground: var(--accent-foreground);
-	--color-destructive: var(--destructive);
+	--color-danger: var(--danger);
 	--color-border: var(--border);
 	--color-ring: var(--ring);
 	--radius-md: calc(var(--radius) * 0.8);
@@ -591,7 +591,7 @@ Context Menu is adapted from [shadcn-svelte's Context Menu component](https://ww
 | `context-menu-trigger.svelte`       | Default or delegated trigger surface, disabled state, right-click/long-press handling, and anchor.         |
 | `context-menu-portal.svelte`        | Portal configuration and rendering.                                                                        |
 | `context-menu-content.svelte`       | Automatically portaled root content, floating behavior, surface styles, and animations.                    |
-| `context-menu-item.svelte`          | Standard selectable action with inset and destructive variants.                                            |
+| `context-menu-item.svelte`          | Standard selectable action with inset and danger variants.                                                 |
 | `context-menu-checkbox-item.svelte` | Bindable checked/indeterminate action and local checked indicator.                                         |
 | `context-menu-radio-group.svelte`   | Bindable one-of-many selection context.                                                                    |
 | `context-menu-radio-item.svelte`    | Radio option, checked snippet state, and local checked indicator.                                          |

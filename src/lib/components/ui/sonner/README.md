@@ -150,7 +150,7 @@ Reuse the ID to update the same notification instead of stacking each lifecycle 
 
 ## Public API
 
-`RootProps` equals the installed `svelte-sonner@1.1.1` `ToasterProps`. The local Root fixes the icon snippets, defaults `theme` from `mode.current`, and supplies theme CSS variables before forwarding caller props. Because forwarded props are applied last, callers can intentionally override `theme`, `class`, `style`, or icon snippets.
+`RootProps` equals the installed `svelte-sonner@1.1.1` `ToasterProps`. The local Root fixes the icon snippets, defaults `theme` from `mode.current`, supplies theme CSS variables, and adds subtle semantic status borders before forwarding caller props. Caller `toastOptions.classes` are merged after the local status classes, so each status class can be intentionally replaced; other forwarded props can override `theme`, `class`, `style`, or icon snippets.
 
 The table summarizes the commonly used options; see the complete [svelte-sonner documentation](https://svelte-sonner.vercel.app/) and [package source](https://github.com/wobsoriano/svelte-sonner). The component's `index.ts`, exported `RootProps` and `toast`, and installed package types are the source of truth.
 
@@ -166,7 +166,7 @@ The table summarizes the commonly used options; see the complete [svelte-sonner 
 | `richColors`              | `boolean`                                    | `false`                     | Uses stronger success/error colors.                                 |
 | `invert`                  | `boolean`                                    | `false`                     | Inverts toast theme relative to the selected mode.                  |
 | `closeButton`             | `boolean`                                    | `false`                     | Shows a close control on all toasts.                                |
-| `toastOptions`            | `ToastOptions`                               | `{}`                        | Default class, style, duration, close button, and per-part classes. |
+| `toastOptions`            | `ToastOptions`                               | Semantic status borders     | Default class, style, duration, close button, and per-part classes. |
 | `hotkey`                  | `string[]`                                   | Alt/Option + T              | Moves focus to the toaster region.                                  |
 | `dir`                     | `"ltr" \| "rtl" \| "auto"`                   | `"auto"`                    | Text and swipe direction.                                           |
 | `swipeDirections`         | `("top" \| "right" \| "bottom" \| "left")[]` | All directions              | Allowed dismiss gestures.                                           |
@@ -206,7 +206,9 @@ The local Root supplies:
 - `--normal-bg: var(--color-popover)`.
 - `--normal-text: var(--color-popover-foreground)`.
 - `--normal-border: var(--color-border)`.
-- Semantic `LoaderIcon`, `AlertSuccessIcon`, `AlertErrorIcon`, `AlertInfoIcon`, and `AlertWarningIcon` snippets, each sized to 1rem; the loader also spins.
+- Success, error, warning, and information background, text, and border variables derived from the matching xvelte semantic color tokens. These replace Sonner's built-in rich-color palette while preserving its toast types.
+- A subtle 30%-opacity semantic border on success, error, warning, and information toasts, including when `richColors` is disabled. Override the corresponding `toastOptions.classes` status key to replace it.
+- Semantic `LoaderIcon`, `AlertSuccessIcon`, `AlertErrorIcon`, `AlertInfoIcon`, and `AlertWarningIcon` snippets, each sized to 1rem. Status icons use their matching semantic text color, while the loader spins with the normal toast color.
 
 There is no local `data-slot`. Toast markup, state attributes, swipe variables, and per-part classes are owned by `svelte-sonner`. Use its `toastOptions.classes` API instead of depending on undocumented nested selectors. Passing `class`, `style`, or icon props to Root replaces the local value because props are forwarded last.
 
@@ -269,22 +271,34 @@ export { default as LoaderIcon } from "@tabler/icons-svelte/icons/loader";
 	--popover: oklch(1 0 0);
 	--popover-foreground: oklch(0.147 0.004 49.25);
 	--border: oklch(0.923 0.003 48.717);
+	--danger: oklch(0.577 0.245 27.325);
+	--warning: oklch(0.555 0.163 48.998);
+	--success: oklch(0.527 0.154 150.069);
+	--info: oklch(0.546 0.245 262.881);
 }
 
 .dark {
 	--popover: oklch(0.216 0.006 56.043);
 	--popover-foreground: oklch(0.985 0.001 106.423);
 	--border: oklch(1 0 0 / 10%);
+	--danger: oklch(0.704 0.191 22.216);
+	--warning: oklch(0.828 0.189 84.429);
+	--success: oklch(0.723 0.219 149.579);
+	--info: oklch(0.707 0.165 254.624);
 }
 
 @theme inline {
 	--color-popover: var(--popover);
 	--color-popover-foreground: var(--popover-foreground);
 	--color-border: var(--border);
+	--color-danger: var(--danger);
+	--color-warning: var(--warning);
+	--color-success: var(--success);
+	--color-info: var(--info);
 }
 ```
 
-The values may be replaced by the app's theme. The package supplies its own toast styles; no xvelte keyframe, custom variant, font, or shared utility is required.
+The values may be replaced by the app's theme. Root maps them to Sonner's `--error-*`, `--warning-*`, `--success-*`, and `--info-*` variables with `color-mix()` for the tinted surfaces and borders. The package supplies its own toast styles; no xvelte keyframe, custom variant, font, or shared utility is required.
 
 ### Mode integration
 

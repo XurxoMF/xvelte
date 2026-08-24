@@ -23,7 +23,7 @@
 
 			<DropdownMenu.Item disabled>Share</DropdownMenu.Item>
 			<DropdownMenu.Separator />
-			<DropdownMenu.Item variant="destructive" onSelect={deleteFile}>Delete</DropdownMenu.Item>
+			<DropdownMenu.Item variant="danger" onSelect={deleteFile}>Delete</DropdownMenu.Item>
 		</DropdownMenu.Content>
 	</DropdownMenu.Root>
 </div>

@@ -19,7 +19,7 @@
 		</Button.Root>
 
 		<Button.Root
-			variant="outline"
+			variant="success"
 			onclick={() => Sonner.toast.success("Changes saved", { description: "Your workspace preferences are now up to date." })}
 		>
 			<AlertSuccessIcon data-icon="inline-start" />
@@ -27,7 +27,7 @@
 		</Button.Root>
 
 		<Button.Root
-			variant="outline"
+			variant="info"
 			onclick={() => Sonner.toast.info("New version available", { description: "Refresh when you are ready to use the latest features." })}
 		>
 			<AlertInfoIcon data-icon="inline-start" />
@@ -35,17 +35,14 @@
 		</Button.Root>
 
 		<Button.Root
-			variant="outline"
+			variant="warning"
 			onclick={() => Sonner.toast.warning("Storage almost full", { description: "Remove unused files to keep uploads working." })}
 		>
 			<AlertWarningIcon data-icon="inline-start" />
 			Warning
 		</Button.Root>
 
-		<Button.Root
-			variant="destructive"
-			onclick={() => Sonner.toast.error("Could not publish", { description: "Check your connection and try again." })}
-		>
+		<Button.Root variant="danger" onclick={() => Sonner.toast.error("Could not publish", { description: "Check your connection and try again." })}>
 			<AlertErrorIcon data-icon="inline-start" />
 			Error
 		</Button.Root>

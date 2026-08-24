@@ -35,7 +35,7 @@
 </script>
 
 {#if hasContent}
-	<div bind:this={ref} role="alert" data-slot="field-error" class={cn("text-sm font-normal text-destructive", className)} {...restProps}>
+	<div bind:this={ref} role="alert" data-slot="field-error" class={cn("text-sm font-normal text-danger", className)} {...restProps}>
 		{#if children}
 			{@render children()}
 		{:else if singleErrorMessage}

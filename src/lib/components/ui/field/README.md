@@ -290,7 +290,7 @@ Orientation behavior:
 - `horizontal` uses a centered row, lets a direct Label flex, and aligns to the start when Content is present.
 - `responsive` begins with the vertical rules and switches to the horizontal rules at the named Field.Group container's `@md` threshold.
 
-Set `data-invalid="true"` to activate the local destructive text color and `data-disabled="true"` to activate descendant Field Label and Title opacity. These attributes are styling hooks only: Field does not validate values, disable descendants, or set ARIA state.
+Set `data-invalid="true"` to activate the local danger text color and `data-disabled="true"` to activate descendant Field Label and Title opacity. These attributes are styling hooks only: Field does not validate values, disable descendants, or set ARIA state.
 
 ### `Field.Set`
 
@@ -375,7 +375,7 @@ Type: `ErrorProps`, based on native `div` attributes with custom content options
 | `children` | `Snippet`                     | `undefined` | Custom error content; takes precedence over `errors`.                           |
 | `errors`   | `Array<{ message?: string }>` | `undefined` | Renders one message directly or several meaningful messages as a bulleted list. |
 | `ref`      | `HTMLDivElement \| null`      | `null`      | Bindable only while the conditional error wrapper is rendered.                  |
-| `class`    | `string`                      | `undefined` | Merged after small destructive-text styles.                                     |
+| `class`    | `string`                      | `undefined` | Merged after small danger-text styles.                                          |
 
 Error renders nothing for no content, an empty array, or one error without a message. One message is rendered directly. More than one array entry creates a list and omits entries without a message; because rendering is based on the original array length, an array containing several blank errors can still produce an empty alert wrapper.
 
@@ -416,7 +416,7 @@ Field uses Tailwind utilities, semantic theme tokens, named groups, a named cont
 
 Important state contracts:
 
-- `data-invalid="true"` belongs on Field for destructive text styling; `aria-invalid="true"` belongs on the actual invalid control.
+- `data-invalid="true"` belongs on Field for danger text styling; `aria-invalid="true"` belongs on the actual invalid control.
 - `data-disabled="true"` on Field dims descendant Label and Title, but each form control still needs its real disabled state.
 - A checked descendant with the project's `data-checked` contract activates Label's choice-card colors.
 - `orientation="responsive"` depends on the named container created by an ancestor Field.Group.
@@ -434,7 +434,7 @@ App responsibilities:
 
 - Match each Label's `for` with the labeled control's unique `id`, or use a valid wrapping-label composition.
 - Give descriptions and errors stable IDs and reference them from the control's `aria-describedby` or `aria-errormessage` as appropriate.
-- Set `aria-invalid="true"` on invalid controls and `data-invalid="true"` on Field when the local destructive styling is wanted.
+- Set `aria-invalid="true"` on invalid controls and `data-invalid="true"` on Field when the local danger styling is wanted.
 - Disable the actual controls. `data-disabled` changes descendant presentation only; Set's native `disabled` prop does disable most descendant form controls according to browser behavior.
 - Use Set and Legend for semantically related checkbox or radio questions. Keep Legend as the fieldset's first meaningful child.
 - Use Title only for presentational headings. It shares Label's slot for layout but does not label a control.
@@ -515,7 +515,7 @@ The global stylesheet must import Tailwind, define the dark and checked-state va
 :root {
 	--primary: oklch(0.841 0.238 128.85);
 	--muted-foreground: oklch(0.553 0.013 58.071);
-	--destructive: oklch(0.577 0.245 27.325);
+	--danger: oklch(0.577 0.245 27.325);
 	--border: oklch(0.923 0.003 48.717);
 	--radius: 0.45rem;
 }
@@ -523,14 +523,14 @@ The global stylesheet must import Tailwind, define the dark and checked-state va
 .dark {
 	--primary: oklch(0.768 0.233 130.85);
 	--muted-foreground: oklch(0.709 0.01 56.259);
-	--destructive: oklch(0.704 0.191 22.216);
+	--danger: oklch(0.704 0.191 22.216);
 	--border: oklch(1 0 0 / 10%);
 }
 
 @theme inline {
 	--color-primary: var(--primary);
 	--color-muted-foreground: var(--muted-foreground);
-	--color-destructive: var(--destructive);
+	--color-danger: var(--danger);
 	--color-border: var(--border);
 	--radius-lg: var(--radius);
 }

@@ -422,7 +422,7 @@ Pagination itself has no animation, font, or component-specific global CSS. Its 
 	--foreground: oklch(0.145 0 0);
 	--muted: oklch(0.97 0 0);
 	--muted-foreground: oklch(0.556 0 0);
-	--destructive: oklch(0.577 0.245 27.325);
+	--danger: oklch(0.577 0.245 27.325);
 	--border: oklch(0.922 0 0);
 	--input: oklch(0.922 0 0);
 	--ring: oklch(0.708 0 0);
@@ -434,7 +434,7 @@ Pagination itself has no animation, font, or component-specific global CSS. Its 
 	--foreground: oklch(0.985 0 0);
 	--muted: oklch(0.269 0 0);
 	--muted-foreground: oklch(0.708 0 0);
-	--destructive: oklch(0.704 0.191 22.216);
+	--danger: oklch(0.704 0.191 22.216);
 	--border: oklch(1 0 0 / 10%);
 	--input: oklch(1 0 0 / 15%);
 	--ring: oklch(0.556 0 0);
@@ -445,7 +445,7 @@ Pagination itself has no animation, font, or component-specific global CSS. Its 
 	--color-foreground: var(--foreground);
 	--color-muted: var(--muted);
 	--color-muted-foreground: var(--muted-foreground);
-	--color-destructive: var(--destructive);
+	--color-danger: var(--danger);
 	--color-border: var(--border);
 	--color-input: var(--input);
 	--color-ring: var(--ring);

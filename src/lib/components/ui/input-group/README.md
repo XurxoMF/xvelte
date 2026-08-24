@@ -166,7 +166,7 @@ Addon clicking does not focus Textarea because the local handler searches only f
 
 ### Invalid state and error description
 
-Place `aria-invalid` on the actual control. Root detects it and moves the destructive border and ring to the shared container:
+Place `aria-invalid` on the actual control. Root detects it and moves the danger border and ring to the shared container:
 
 ```svelte
 <script lang="ts">
@@ -196,7 +196,7 @@ Place `aria-invalid` on the actual control. Root detects it and moves the destru
 	</InputGroup.Root>
 
 	{#if invalid}
-		<p id="amount-error" class="text-sm text-destructive">Amount cannot be negative.</p>
+		<p id="amount-error" class="text-sm text-danger">Amount cannot be negative.</p>
 	{/if}
 </div>
 ```
@@ -371,7 +371,7 @@ Root is a relative, full-width, minimum-width-zero flex container with a default
 Descendant-driven state:
 
 - A focused descendant control with `data-slot="input-group-control"` moves the semantic focus border and three-pixel ring to Root.
-- Any descendant matching `[data-slot][aria-invalid=true]` gives Root the destructive border and ring.
+- Any descendant matching `[data-slot][aria-invalid=true]` gives Root the danger border and ring.
 - Any disabled descendant gives Root an input-tinted background and 50% opacity.
 - Addon has a separate opacity selector for an ancestor carrying the exact attribute `data-disabled="true"`; Root does not set this attribute or disable descendants automatically.
 - Inside `data-slot="combobox-content"`, focus-within preserves the inherited border and removes Root's ring.
@@ -514,7 +514,7 @@ The global stylesheet must load Tailwind, define the dark variant, and expose th
 	--secondary-foreground: oklch(0.21 0.006 285.885);
 	--muted: oklch(0.97 0.001 106.424);
 	--muted-foreground: oklch(0.553 0.013 58.071);
-	--destructive: oklch(0.577 0.245 27.325);
+	--danger: oklch(0.577 0.245 27.325);
 	--border: oklch(0.923 0.003 48.717);
 	--input: oklch(0.923 0.003 48.717);
 	--ring: oklch(0.709 0.01 56.259);
@@ -530,7 +530,7 @@ The global stylesheet must load Tailwind, define the dark variant, and expose th
 	--secondary-foreground: oklch(0.985 0 0);
 	--muted: oklch(0.268 0.007 34.298);
 	--muted-foreground: oklch(0.709 0.01 56.259);
-	--destructive: oklch(0.704 0.191 22.216);
+	--danger: oklch(0.704 0.191 22.216);
 	--border: oklch(1 0 0 / 10%);
 	--input: oklch(1 0 0 / 15%);
 	--ring: oklch(0.553 0.013 58.071);
@@ -545,7 +545,7 @@ The global stylesheet must load Tailwind, define the dark variant, and expose th
 	--color-secondary-foreground: var(--secondary-foreground);
 	--color-muted: var(--muted);
 	--color-muted-foreground: var(--muted-foreground);
-	--color-destructive: var(--destructive);
+	--color-danger: var(--danger);
 	--color-border: var(--border);
 	--color-input: var(--input);
 	--color-ring: var(--ring);

@@ -363,7 +363,7 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define the dark
 	--primary-foreground: oklch(0.405 0.101 131.063);
 	--muted: oklch(0.97 0.001 106.424);
 	--accent: oklch(0.841 0.238 128.85);
-	--destructive: oklch(0.577 0.245 27.325);
+	--danger: oklch(0.577 0.245 27.325);
 	--border: oklch(0.923 0.003 48.717);
 	--ring: oklch(0.709 0.01 56.259);
 	--radius: 0.45rem;
@@ -376,7 +376,7 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define the dark
 	--primary-foreground: oklch(0.405 0.101 131.063);
 	--muted: oklch(0.268 0.007 34.298);
 	--accent: oklch(0.768 0.233 130.85);
-	--destructive: oklch(0.704 0.191 22.216);
+	--danger: oklch(0.704 0.191 22.216);
 	--border: oklch(1 0 0 / 10%);
 	--ring: oklch(0.553 0.013 58.071);
 }
@@ -388,7 +388,7 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define the dark
 	--color-primary-foreground: var(--primary-foreground);
 	--color-muted: var(--muted);
 	--color-accent: var(--accent);
-	--color-destructive: var(--destructive);
+	--color-danger: var(--danger);
 	--color-border: var(--border);
 	--color-ring: var(--ring);
 	--radius-md: calc(var(--radius) * 0.8);

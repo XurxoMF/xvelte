@@ -1,6 +1,6 @@
 # Dropdown Menu
 
-An accessible action menu opened from a button. It supports regular and destructive items, disabled states, grouped content, independent and grouped checkboxes, radio choices, nested submenus, shortcut hints, controlled open state, portals, collision-aware positioning, and complete keyboard navigation through Bits UI.
+An accessible action menu opened from a button. It supports regular and danger items, disabled states, grouped content, independent and grouped checkboxes, radio choices, nested submenus, shortcut hints, controlled open state, portals, collision-aware positioning, and complete keyboard navigation through Bits UI.
 
 Use Dropdown Menu for secondary actions and compact settings associated with a visible trigger. Keep important or frequently used actions visible elsewhere, and use Select rather than a menu when choosing one value is the primary form task.
 
@@ -90,12 +90,12 @@ Use GroupHeading inside Group when a heading should label that group semanticall
 
 		<DropdownMenu.Item disabled>Share</DropdownMenu.Item>
 		<DropdownMenu.Separator />
-		<DropdownMenu.Item variant="destructive" onSelect={deleteFile}>Delete</DropdownMenu.Item>
+		<DropdownMenu.Item variant="danger" onSelect={deleteFile}>Delete</DropdownMenu.Item>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
 ```
 
-`onSelect` receives the selection event, and an enabled Item closes the menu by default. Destructive styling does not add confirmation or undo behavior; implement those safeguards in the app.
+`onSelect` receives the selection event, and an enabled Item closes the menu by default. Danger styling does not add confirmation or undo behavior; implement those safeguards in the app.
 
 ---
 
@@ -322,19 +322,19 @@ The default width uses Bits UI's `--bits-dropdown-menu-anchor-width`, with a min
 
 Type: `ItemProps`, matching Bits UI Item props plus local presentation options.
 
-| Prop                 | Type                         | Default     | xvelte behavior                                                                           |
-| -------------------- | ---------------------------- | ----------- | ----------------------------------------------------------------------------------------- |
-| `inset`              | `boolean`                    | `undefined` | Writes `data-inset` and aligns content with indicator-bearing rows.                       |
-| `variant`            | `"default" \| "destructive"` | `"default"` | Writes `data-variant` and applies destructive foreground and focus styling when selected. |
-| `disabled`           | `boolean`                    | `false`     | Prevents interaction and activates dependency-owned disabled state styling.               |
-| `textValue`          | `string`                     | `undefined` | Supplies typeahead text when rendered content is complex.                                 |
-| `onSelect`           | `(event: Event) => void`     | `undefined` | Runs on selection. Call `event.preventDefault()` to prevent normal selection behavior.    |
-| `closeOnSelect`      | `boolean`                    | `true`      | Controls whether selecting the item closes the menu.                                      |
-| `ref`                | `HTMLElement \| null`        | `null`      | Bindable element reference; the default rendered element is a `div`.                      |
-| `class`              | `string`                     | `undefined` | Merged after local item, focus, disabled, inset, destructive, and descendant icon styles. |
-| `children` / `child` | Bits UI snippets             | `undefined` | Render content or delegate the item while preserving menu behavior.                       |
+| Prop                 | Type                     | Default     | xvelte behavior                                                                        |
+| -------------------- | ------------------------ | ----------- | -------------------------------------------------------------------------------------- |
+| `inset`              | `boolean`                | `undefined` | Writes `data-inset` and aligns content with indicator-bearing rows.                    |
+| `variant`            | `"default" \| "danger"`  | `"default"` | Writes `data-variant` and applies danger foreground and focus styling when selected.   |
+| `disabled`           | `boolean`                | `false`     | Prevents interaction and activates dependency-owned disabled state styling.            |
+| `textValue`          | `string`                 | `undefined` | Supplies typeahead text when rendered content is complex.                              |
+| `onSelect`           | `(event: Event) => void` | `undefined` | Runs on selection. Call `event.preventDefault()` to prevent normal selection behavior. |
+| `closeOnSelect`      | `boolean`                | `true`      | Controls whether selecting the item closes the menu.                                   |
+| `ref`                | `HTMLElement \| null`    | `null`      | Bindable element reference; the default rendered element is a `div`.                   |
+| `class`              | `string`                 | `undefined` | Merged after local item, focus, disabled, inset, danger, and descendant icon styles.   |
+| `children` / `child` | Bits UI snippets         | `undefined` | Render content or delegate the item while preserving menu behavior.                    |
 
-Remaining compatible native `div` attributes are forwarded. Destructive is visual intent only and has no confirmation behavior.
+Remaining compatible native `div` attributes are forwarded. Danger is visual intent only and has no confirmation behavior.
 
 ### `DropdownMenu.CheckboxGroup`
 
@@ -473,7 +473,7 @@ App responsibilities:
 - Use GroupHeading rather than visual Label when a heading must label a Group for assistive technology.
 - Supply `textValue` when complex item content does not produce useful typeahead text.
 - Implement every shortcut shown by Shortcut and avoid conflicts with browser or assistive-technology commands.
-- Add confirmation or undo for destructive actions; `variant="destructive"` changes presentation only.
+- Add confirmation or undo for dangerous actions; `variant="danger"` changes presentation only.
 - Spread every supplied prop when delegating Trigger, Item, Group, GroupHeading, Separator, SubTrigger, SubContent, or other supported parts.
 
 The indicators are hidden from pointer interaction and selection state is supplied semantically by Bits UI. CheckboxItem visually distinguishes checked, unchecked, and indeterminate states.
@@ -482,7 +482,7 @@ The indicators are hidden from pointer interaction and selection state is suppli
 
 ## Localization
 
-Dropdown Menu contains no built-in human-readable copy and does not use Paraglide messages. The app supplies and translates Trigger text, item labels, group headings, visual labels, checkbox/radio copy, submenu labels, shortcut descriptions, destructive confirmations, and any supporting instructions.
+Dropdown Menu contains no built-in human-readable copy and does not use Paraglide messages. The app supplies and translates Trigger text, item labels, group headings, visual labels, checkbox/radio copy, submenu labels, shortcut descriptions, danger confirmations, and any supporting instructions.
 
 The right-chevron, check, and minus symbols are icons rather than text. Shortcut symbols such as `⌘` are platform-specific presentation, not translated interaction; render the appropriate localized or platform-specific hint and implement the matching command in the app.
 
@@ -560,9 +560,9 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define dark and
 	--popover: oklch(1 0 0);
 	--popover-foreground: oklch(0.147 0.004 49.25);
 	--muted-foreground: oklch(0.553 0.013 58.071);
-	--accent: oklch(0.841 0.238 128.85);
-	--accent-foreground: oklch(0.405 0.101 131.063);
-	--destructive: oklch(0.577 0.245 27.325);
+	--accent: oklch(0.95 0.035 350);
+	--accent-foreground: oklch(0.35 0.12 350);
+	--danger: oklch(0.577 0.245 27.325);
 	--border: oklch(0.923 0.003 48.717);
 	--ring: oklch(0.709 0.01 56.259);
 	--radius: 0.45rem;
@@ -573,9 +573,9 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define dark and
 	--popover: oklch(0.216 0.006 56.043);
 	--popover-foreground: oklch(0.985 0.001 106.423);
 	--muted-foreground: oklch(0.709 0.01 56.259);
-	--accent: oklch(0.768 0.233 130.85);
-	--accent-foreground: oklch(0.405 0.101 131.063);
-	--destructive: oklch(0.704 0.191 22.216);
+	--accent: oklch(0.3 0.07 350);
+	--accent-foreground: oklch(0.97 0.02 350);
+	--danger: oklch(0.704 0.191 22.216);
 	--border: oklch(1 0 0 / 10%);
 	--ring: oklch(0.553 0.013 58.071);
 }
@@ -587,7 +587,7 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define dark and
 	--color-muted-foreground: var(--muted-foreground);
 	--color-accent: var(--accent);
 	--color-accent-foreground: var(--accent-foreground);
-	--color-destructive: var(--destructive);
+	--color-danger: var(--danger);
 	--color-border: var(--border);
 	--color-ring: var(--ring);
 	--radius-sm: calc(var(--radius) * 0.6);
@@ -645,7 +645,7 @@ Dropdown Menu is adapted from [shadcn-svelte's Dropdown Menu component](https://
 | `dropdown-menu-trigger.svelte`        | Unstyled default or delegated button trigger and positioning anchor.                                         |
 | `dropdown-menu-portal.svelte`         | Portal target and inline-rendering configuration.                                                            |
 | `dropdown-menu-content.svelte`        | Automatic Portal, local alignment/offset defaults, floating behavior, anchor width, surface, and animations. |
-| `dropdown-menu-item.svelte`           | Standard selectable action with inset and destructive variants.                                              |
+| `dropdown-menu-item.svelte`           | Standard selectable action with inset and danger variants.                                                   |
 | `dropdown-menu-checkbox-group.svelte` | Bindable array selection for grouped CheckboxItems.                                                          |
 | `dropdown-menu-checkbox-item.svelte`  | Bindable checked/indeterminate action with local check/minus indicator.                                      |
 | `dropdown-menu-radio-group.svelte`    | Bindable one-of-many selection context.                                                                      |

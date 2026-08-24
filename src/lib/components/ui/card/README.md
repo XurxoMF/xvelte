@@ -161,7 +161,7 @@ Small cards reduce the root gap and vertical padding, section insets, header bor
 
 	<Card.Footer class="justify-end gap-2">
 		<Button.Root variant="outline">Cancel</Button.Root>
-		<Button.Root variant="destructive">Delete</Button.Root>
+		<Button.Root variant="danger">Delete</Button.Root>
 	</Card.Footer>
 </Card.Root>
 ```

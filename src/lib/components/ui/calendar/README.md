@@ -429,7 +429,7 @@ Your global stylesheet must import Tailwind, define the dark variant, and expose
 	--muted-foreground: oklch(0.553 0.013 58.071);
 	--accent: oklch(0.841 0.238 128.85);
 	--accent-foreground: oklch(0.405 0.101 131.063);
-	--destructive: oklch(0.577 0.245 27.325);
+	--danger: oklch(0.577 0.245 27.325);
 	--border: oklch(0.923 0.003 48.717);
 	--input: oklch(0.923 0.003 48.717);
 	--ring: oklch(0.709 0.01 56.259);
@@ -449,7 +449,7 @@ Your global stylesheet must import Tailwind, define the dark variant, and expose
 	--muted-foreground: oklch(0.709 0.01 56.259);
 	--accent: oklch(0.768 0.233 130.85);
 	--accent-foreground: oklch(0.405 0.101 131.063);
-	--destructive: oklch(0.704 0.191 22.216);
+	--danger: oklch(0.704 0.191 22.216);
 	--border: oklch(1 0 0 / 10%);
 	--input: oklch(1 0 0 / 15%);
 	--ring: oklch(0.553 0.013 58.071);
@@ -468,7 +468,7 @@ Your global stylesheet must import Tailwind, define the dark variant, and expose
 	--color-muted-foreground: var(--muted-foreground);
 	--color-accent: var(--accent);
 	--color-accent-foreground: var(--accent-foreground);
-	--color-destructive: var(--destructive);
+	--color-danger: var(--danger);
 	--color-border: var(--border);
 	--color-input: var(--input);
 	--color-ring: var(--ring);

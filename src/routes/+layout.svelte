@@ -31,7 +31,7 @@
 </script>
 
 <ModeWatcher />
-<Sonner.Root />
+<Sonner.Root closeButton position="top-right" richColors />
 
 <Tooltip.Provider delayDuration={500}>
 	<Sidebar.Provider class="relative" style="--sidebar-width: 17rem;">

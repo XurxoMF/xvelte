@@ -272,7 +272,7 @@ Root forwards `aria-invalid` to the real input for assistive technology. The loc
 	{/snippet}
 </InputOTP.Root>
 
-<p id="code-error" class="text-sm text-destructive">The code has expired. Request a new one.</p>
+<p id="code-error" class="text-sm text-danger">The code has expired. Request a new one.</p>
 ```
 
 Setting `aria-invalid` only on Root does not activate Group's `has-aria-invalid` selector because the real input is a sibling of the visual Group, not its descendant.
@@ -341,7 +341,7 @@ Type: `SlotProps`, equal to Bits UI's `PinInput.CellProps`.
 | `cell`         | `PinInputCell`        | Required    | Reactive descriptor supplying `char`, `isActive`, and `hasFakeCaret`.                                  |
 | `ref`          | `HTMLElement \| null` | `null`      | Bindable rendered visual cell reference.                                                               |
 | `class`        | `string`              | `undefined` | Merged after the local dimensions, connected borders, radius, active, invalid, dark, and caret layout. |
-| `aria-invalid` | ARIA boolean          | `undefined` | Activates local destructive cell styling and Group's descendant-invalid styling.                       |
+| `aria-invalid` | ARIA boolean          | `undefined` | Activates local danger cell styling and Group's descendant-invalid styling.                            |
 | `child`        | Bits UI child snippet | `undefined` | Delegates the Cell element; the custom element must spread every supplied primitive prop.              |
 
 In normal composition Slot always renders `cell.char` and, when `cell.hasFakeCaret` is true, the local blinking caret. A delegated `child` replaces Bits UI's default Cell branch and therefore bypasses that normal local visual content; recreate the character and caret deliberately if using this advanced inherited option.
@@ -381,7 +381,7 @@ Root's class is applied to the outer Bits UI container, while native input attri
 
 Group lays Slots in a row. Each Slot is a `2rem` square with connected semantic input borders: top, bottom, and end borders on every cell; an additional start border and start radius on the first cell; and an end radius on the last cell.
 
-An active Slot receives `z-10`, a semantic ring border, and a three-pixel focus ring. Invalid Slots use destructive border/ring colors. Dark mode adds an input-tinted Slot background.
+An active Slot receives `z-10`, a semantic ring border, and a three-pixel focus ring. Invalid Slots use danger border/ring colors. Dark mode adds an input-tinted Slot background.
 
 The local fake caret is an absolute, pointer-transparent overlay. Its inner one-pixel line uses `animate-caret-blink`, `bg-foreground`, and `duration-1000`; `tw-animate-css` supplies the animation and caret keyframes.
 
@@ -507,7 +507,7 @@ The global stylesheet must load Tailwind and `tw-animate-css`, define the dark v
 
 :root {
 	--foreground: oklch(0.147 0.004 49.25);
-	--destructive: oklch(0.577 0.245 27.325);
+	--danger: oklch(0.577 0.245 27.325);
 	--input: oklch(0.923 0.003 48.717);
 	--ring: oklch(0.709 0.01 56.259);
 	--radius: 0.45rem;
@@ -515,14 +515,14 @@ The global stylesheet must load Tailwind and `tw-animate-css`, define the dark v
 
 .dark {
 	--foreground: oklch(0.985 0.001 106.423);
-	--destructive: oklch(0.704 0.191 22.216);
+	--danger: oklch(0.704 0.191 22.216);
 	--input: oklch(1 0 0 / 15%);
 	--ring: oklch(0.553 0.013 58.071);
 }
 
 @theme inline {
 	--color-foreground: var(--foreground);
-	--color-destructive: var(--destructive);
+	--color-danger: var(--danger);
 	--color-input: var(--input);
 	--color-ring: var(--ring);
 	--radius-lg: var(--radius);

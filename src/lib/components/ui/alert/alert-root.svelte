@@ -10,7 +10,11 @@
 		variants: {
 			variant: {
 				default: "bg-card text-card-foreground",
-				destructive: "text-destructive bg-card *:data-[slot=alert-description]:text-destructive/90 *:[svg]:text-current"
+				danger: "bg-card text-danger *:data-[slot=alert-description]:text-danger/90 *:[svg]:text-current",
+				warning: "bg-card text-warning *:data-[slot=alert-description]:text-warning/90 *:[svg]:text-current",
+				success: "bg-card text-success *:data-[slot=alert-description]:text-success/90 *:[svg]:text-current",
+				info: "bg-card text-info *:data-[slot=alert-description]:text-info/90 *:[svg]:text-current",
+				important: "bg-card text-important *:data-[slot=alert-description]:text-important/90 *:[svg]:text-current"
 			}
 		},
 		defaultVariants: {

@@ -148,7 +148,7 @@ Keep the dialog open while work is pending or after an error, then close it expl
 		</Dialog.Header>
 
 		<!-- Settings fields -->
-		{#if error}<p role="alert" class="text-sm text-destructive">{error}</p>{/if}
+		{#if error}<p role="alert" class="text-sm text-danger">{error}</p>{/if}
 
 		<Dialog.Footer>
 			<Dialog.Close disabled={saving}>Cancel</Dialog.Close>
@@ -450,7 +450,7 @@ App responsibilities:
 - Label every form control and present validation or asynchronous errors accessibly. Dialog does not manage form state or submission.
 - Avoid nesting interactive elements when delegating Trigger or Close, and spread every supplied primitive prop.
 - Avoid disabling focus trapping, scroll locking, Escape dismissal, or focus restoration unless the replacement behavior has been tested with keyboard and assistive technology.
-- Do not use ordinary Dialog for a destructive decision that requires an explicit response; use Alert Dialog.
+- Do not use ordinary Dialog for a dangerous decision that requires an explicit response; use Alert Dialog.
 
 The SVG inside the top-right button ignores pointer events through Button's icon rules; the button itself remains interactive and receives its accessible name from the adjacent screen-reader-only message. The public Close has no built-in label because the app supplies its children.
 
@@ -562,7 +562,7 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define dark and
 	--primary-foreground: oklch(0.405 0.101 131.063);
 	--muted: oklch(0.97 0.001 106.424);
 	--muted-foreground: oklch(0.553 0.013 58.071);
-	--destructive: oklch(0.577 0.245 27.325);
+	--danger: oklch(0.577 0.245 27.325);
 	--border: oklch(0.923 0.003 48.717);
 	--input: oklch(0.923 0.003 48.717);
 	--ring: oklch(0.709 0.01 56.259);
@@ -578,7 +578,7 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define dark and
 	--primary-foreground: oklch(0.405 0.101 131.063);
 	--muted: oklch(0.268 0.007 34.298);
 	--muted-foreground: oklch(0.709 0.01 56.259);
-	--destructive: oklch(0.704 0.191 22.216);
+	--danger: oklch(0.704 0.191 22.216);
 	--border: oklch(1 0 0 / 10%);
 	--input: oklch(1 0 0 / 15%);
 	--ring: oklch(0.553 0.013 58.071);
@@ -593,7 +593,7 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define dark and
 	--color-primary-foreground: var(--primary-foreground);
 	--color-muted: var(--muted);
 	--color-muted-foreground: var(--muted-foreground);
-	--color-destructive: var(--destructive);
+	--color-danger: var(--danger);
 	--color-border: var(--border);
 	--color-input: var(--input);
 	--color-ring: var(--ring);

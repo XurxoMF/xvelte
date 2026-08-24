@@ -401,7 +401,7 @@ Hover Card's `data-open:` and `data-closed:` animation utilities require the xve
 }
 ```
 
-Audio Player and its required Button and Hover Card components use `background`, `foreground`, `card`, `card-foreground`, `popover`, `popover-foreground`, `primary`, `primary-foreground`, `secondary`, `secondary-foreground`, `muted`, `muted-foreground`, `destructive`, `border`, `input`, and `ring`, plus the shared radius scale. Your theme must define and expose all of them:
+Audio Player and its required Button and Hover Card components use `background`, `foreground`, `card`, `card-foreground`, `popover`, `popover-foreground`, `primary`, `primary-foreground`, `secondary`, `secondary-foreground`, `muted`, `muted-foreground`, `danger`, `border`, `input`, and `ring`, plus the shared radius scale. Your theme must define and expose all of them:
 
 ```css
 :root {
@@ -417,7 +417,7 @@ Audio Player and its required Button and Hover Card components use `background`,
 	--secondary-foreground: oklch(0.21 0.006 285.885);
 	--muted: oklch(0.97 0.001 106.424);
 	--muted-foreground: oklch(0.553 0.013 58.071);
-	--destructive: oklch(0.577 0.245 27.325);
+	--danger: oklch(0.577 0.245 27.325);
 	--border: oklch(0.923 0.003 48.717);
 	--input: oklch(0.923 0.003 48.717);
 	--ring: oklch(0.709 0.01 56.259);
@@ -437,7 +437,7 @@ Audio Player and its required Button and Hover Card components use `background`,
 	--color-secondary-foreground: var(--secondary-foreground);
 	--color-muted: var(--muted);
 	--color-muted-foreground: var(--muted-foreground);
-	--color-destructive: var(--destructive);
+	--color-danger: var(--danger);
 	--color-border: var(--border);
 	--color-input: var(--input);
 	--color-ring: var(--ring);

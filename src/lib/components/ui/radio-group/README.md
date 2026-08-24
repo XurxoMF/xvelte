@@ -285,7 +285,7 @@ Bits UI additionally supplies dependency-owned hooks:
 - Item: `data-radio-group-item`, `data-value`, `data-orientation`, `data-state="checked|unchecked"`, `data-disabled`, and `data-readonly`.
 - ARIA and native attributes include `role="radiogroup"`, `role="radio"`, `aria-checked`, disabled state, generated IDs, and roving `tabindex` values.
 
-Item's checked styles use xvelte's `data-checked:` custom Tailwind variant, which recognizes Bits UI's `data-state="checked"`. Checked Items use primary border, background, foreground, and the fixed `CircleIcon`; invalid state uses destructive border and ring utilities. A checked invalid Item restores a primary border while keeping the invalid ring.
+Item's checked styles use xvelte's `data-checked:` custom Tailwind variant, which recognizes Bits UI's `data-state="checked"`. Checked Items use primary border, background, foreground, and the fixed `CircleIcon`; invalid state uses danger border and ring utilities. A checked invalid Item restores a primary border while keeping the invalid ring.
 
 The Item's `::after` pseudo-element extends the pointer target by `0.75rem` horizontally and `0.5rem` vertically beyond the visible circle. Leave enough space between neighboring controls to avoid overlapping targets.
 
@@ -303,7 +303,7 @@ Bits UI supplies radiogroup/radio roles, checked state, required, disabled and r
 - Keep labels and any descriptions outside Item because the local Item API does not accept children.
 - Use `name` when the selection must participate in native form submission, and pair `required` with a visible validation message.
 - Use `disabled` for unavailable groups or options. Use `readonly` when the current choice should remain focusable and reviewable but cannot change.
-- When validation fails, apply `aria-invalid="true"` to Root for group semantics and to Items when the local destructive visual treatment is desired. Connect explanatory text with `aria-describedby`.
+- When validation fails, apply `aria-invalid="true"` to Root for group semantics and to Items when the local danger visual treatment is desired. Connect explanatory text with `aria-describedby`.
 - Do not use Radio Group for actions that execute immediately or for options where selecting zero or several values is meaningful.
 
 Visible label text, not the circle icon, provides each radio's accessible name. Preserve the primitive-generated props when delegating Root through `child`.
@@ -394,7 +394,7 @@ Load Tailwind CSS, configure the class-based dark variant, expose the checked-st
 :root {
 	--primary: oklch(0.841 0.238 128.85);
 	--primary-foreground: oklch(0.405 0.101 131.063);
-	--destructive: oklch(0.577 0.245 27.325);
+	--danger: oklch(0.577 0.245 27.325);
 	--input: oklch(0.923 0.003 48.717);
 	--ring: oklch(0.709 0.01 56.259);
 }
@@ -402,7 +402,7 @@ Load Tailwind CSS, configure the class-based dark variant, expose the checked-st
 .dark {
 	--primary: oklch(0.768 0.233 130.85);
 	--primary-foreground: oklch(0.405 0.101 131.063);
-	--destructive: oklch(0.704 0.191 22.216);
+	--danger: oklch(0.704 0.191 22.216);
 	--input: oklch(1 0 0 / 15%);
 	--ring: oklch(0.553 0.013 58.071);
 }
@@ -410,7 +410,7 @@ Load Tailwind CSS, configure the class-based dark variant, expose the checked-st
 @theme inline {
 	--color-primary: var(--primary);
 	--color-primary-foreground: var(--primary-foreground);
-	--color-destructive: var(--destructive);
+	--color-danger: var(--danger);
 	--color-input: var(--input);
 	--color-ring: var(--ring);
 }

@@ -83,7 +83,7 @@ Use `value` or `bind:value` for content; text placed between component tags is u
 	aria-describedby={error ? "feedback-error" : undefined}
 />
 {#if error}
-	<p id="feedback-error" class="text-sm text-destructive">{error}</p>
+	<p id="feedback-error" class="text-sm text-danger">{error}</p>
 {/if}
 ```
 
@@ -126,7 +126,7 @@ All remaining native attributes and handlers—including `name`, `rows`, `cols`,
 
 - Default stable hook: `data-slot="textarea"`; callers may override it.
 - Minimum height: 4rem; full width; content-based field sizing.
-- Semantic tokens: `input`, `muted-foreground`, `ring`, and `destructive`.
+- Semantic tokens: `input`, `muted-foreground`, `ring`, and `danger`.
 - States: native `disabled`, `focus-visible`, placeholder, `aria-invalid`, and dark theme classes.
 - Root `class` uses `cn()`, so later Tailwind utilities replace conflicting defaults.
 
@@ -179,7 +179,7 @@ No primitive or animation package is required.
 	--muted-foreground: oklch(0.553 0.013 58.071);
 	--input: oklch(0.923 0.003 48.717);
 	--ring: oklch(0.709 0.01 56.259);
-	--destructive: oklch(0.577 0.245 27.325);
+	--danger: oklch(0.577 0.245 27.325);
 	--radius: 0.45rem;
 }
 
@@ -187,14 +187,14 @@ No primitive or animation package is required.
 	--muted-foreground: oklch(0.709 0.01 56.259);
 	--input: oklch(1 0 0 / 15%);
 	--ring: oklch(0.553 0.013 58.071);
-	--destructive: oklch(0.704 0.191 22.216);
+	--danger: oklch(0.704 0.191 22.216);
 }
 
 @theme inline {
 	--color-muted-foreground: var(--muted-foreground);
 	--color-input: var(--input);
 	--color-ring: var(--ring);
-	--color-destructive: var(--destructive);
+	--color-danger: var(--danger);
 	--radius-lg: var(--radius);
 }
 

@@ -1,6 +1,6 @@
 # Menubar
 
-Menubar provides a persistent row of application menus, with keyboard navigation, nested submenus, checkable choices, radio groups, shortcuts, and destructive or disabled actions. Use it for command-oriented interfaces such as editors and desktop-style tools; use ordinary links or a navigation landmark for primary website navigation.
+Menubar provides a persistent row of application menus, with keyboard navigation, nested submenus, checkable choices, radio groups, shortcuts, and dangerous or disabled actions. Use it for command-oriented interfaces such as editors and desktop-style tools; use ordinary links or a navigation landmark for primary website navigation.
 
 <!-- xvelte-example: overview -->
 
@@ -196,14 +196,14 @@ The `CheckboxItem` child snippet does not receive state arguments. `RadioItem` c
 </Menubar.Root>
 ```
 
-### Destructive and inset actions
+### Danger and inset actions
 
 ```svelte
 <Menubar.Item inset>Duplicate</Menubar.Item>
-<Menubar.Item inset variant="destructive">Delete document</Menubar.Item>
+<Menubar.Item inset variant="danger">Delete document</Menubar.Item>
 ```
 
-`inset` aligns text with the labels of items that reserve space for a selection icon. A destructive style communicates risk but does not add confirmation; ask for confirmation before irreversible work when appropriate.
+`inset` aligns text with the labels of items that reserve space for a selection icon. A danger styling communicates risk but does not add confirmation; ask for confirmation before irreversible work when appropriate.
 
 ### Change or disable the portal
 
@@ -241,7 +241,7 @@ The tables below describe the local xvelte API and the most important inherited 
 
 | Component      | Local API                                                                                                                                                              | Important inherited API                                                                                                                   |
 | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `Item`         | `inset?: boolean`; `variant?: "default" \| "destructive"` (default `"default"`).                                                                                       | `disabled`, `textValue`, `onSelect`, `closeOnSelect` (default `true`), `ref`, `class`, `children`, and `child`.                           |
+| `Item`         | `inset?: boolean`; `variant?: "default" \| "danger"` (default `"default"`).                                                                                            | `disabled`, `textValue`, `onSelect`, `closeOnSelect` (default `true`), `ref`, `class`, `children`, and `child`.                           |
 | `CheckboxItem` | `inset?: boolean`; bindable `checked` and `indeterminate`, both defaulting to `false`; plain `children` snippet. A fixed check or minus icon renders before the label. | Item selection and disabled options. The local wrapper deliberately removes `child` and replaces the primitive state-aware child snippet. |
 | `RadioGroup`   | Bindable `value`, locally defaulting to `""`.                                                                                                                          | `onValueChange`, `ref`, `children`, and `child`.                                                                                          |
 | `RadioItem`    | `inset?: boolean`; required `value`; children receive `{ checked }`. A fixed check icon renders for the selected item.                                                 | Item selection and disabled options. The local wrapper removes primitive `child` delegation.                                              |
@@ -293,7 +293,7 @@ The stable xvelte selectors are:
 
 `Menu`, `Portal`, and `Sub` do not render a local `data-slot`. Bits UI owns interaction attributes such as `data-open`, `data-closed`, `data-disabled`, and positioned-content `data-side`; these are dependency behavior rather than renamed xvelte state.
 
-The component uses the `popover`, `foreground`, `accent`, `muted`, `destructive`, and `border` color families plus the shared radius scale. `Content` and `SubContent` use `tw-animate-css` utilities for opening, closing, fading, zooming, and directional movement.
+The component uses the `popover`, `foreground`, `accent`, `muted`, `danger`, and `border` color families plus the shared radius scale. `Content` and `SubContent` use `tw-animate-css` utilities for opening, closing, fading, zooming, and directional movement.
 
 Top-level Trigger and focused items receive the standard three-pixel, 50%-opacity semantic `ring` treatment from the required global `*:focus-visible` rule. Items inside an open menu additionally retain the conventional accent-background highlight used by the roving-focus menu pattern.
 
@@ -317,7 +317,7 @@ Application responsibilities:
 - Give every trigger and item concise, meaningful visible text. Use `textValue` when custom visual content would otherwise make typeahead unreliable.
 - Use `Group` and `GroupHeading` for meaningful groups. `Label` is only presentational.
 - Keep `Shortcut` text consistent with the actual shortcut registered by the application and with the user's platform.
-- Do not rely on color alone for dangerous actions. The `destructive` variant changes styling but does not add a warning or confirmation flow.
+- Do not rely on color alone for dangerous actions. The `danger` variant changes styling but does not add a warning or confirmation flow.
 - Preserve primitive focus and state attributes when overriding classes or using `child` delegation.
 - If right-to-left chevron mirroring is required, provide and test an app-specific adaptation.
 
@@ -368,11 +368,11 @@ Import Tailwind and the animation utilities, then provide the semantic variables
 	--foreground: oklch(0.147 0.004 49.25);
 	--popover: oklch(1 0 0);
 	--popover-foreground: oklch(0.147 0.004 49.25);
-	--accent: oklch(0.841 0.238 128.85);
-	--accent-foreground: oklch(0.405 0.101 131.063);
+	--accent: oklch(0.95 0.035 350);
+	--accent-foreground: oklch(0.35 0.12 350);
 	--muted: oklch(0.97 0.001 106.424);
 	--muted-foreground: oklch(0.553 0.013 58.071);
-	--destructive: oklch(0.577 0.245 27.325);
+	--danger: oklch(0.577 0.245 27.325);
 	--border: oklch(0.923 0.003 48.717);
 	--ring: oklch(0.709 0.01 56.259);
 }
@@ -381,11 +381,11 @@ Import Tailwind and the animation utilities, then provide the semantic variables
 	--foreground: oklch(0.985 0.001 106.423);
 	--popover: oklch(0.216 0.006 56.043);
 	--popover-foreground: oklch(0.985 0.001 106.423);
-	--accent: oklch(0.768 0.233 130.85);
-	--accent-foreground: oklch(0.405 0.101 131.063);
+	--accent: oklch(0.3 0.07 350);
+	--accent-foreground: oklch(0.97 0.02 350);
 	--muted: oklch(0.268 0.007 34.298);
 	--muted-foreground: oklch(0.709 0.01 56.259);
-	--destructive: oklch(0.704 0.191 22.216);
+	--danger: oklch(0.704 0.191 22.216);
 	--border: oklch(1 0 0 / 10%);
 	--ring: oklch(0.553 0.013 58.071);
 }
@@ -401,7 +401,7 @@ Import Tailwind and the animation utilities, then provide the semantic variables
 	--color-accent-foreground: var(--accent-foreground);
 	--color-muted: var(--muted);
 	--color-muted-foreground: var(--muted-foreground);
-	--color-destructive: var(--destructive);
+	--color-danger: var(--danger);
 	--color-border: var(--border);
 	--color-ring: var(--ring);
 }
@@ -483,7 +483,7 @@ The local component is adapted from [shadcn-svelte's Menubar](https://www.shadcn
 | `menubar-trigger.svelte`       | Top-level menu trigger.                                       |
 | `menubar-content.svelte`       | Portaled top-level menu panel and local positioning defaults. |
 | `menubar-portal.svelte`        | Public portal wrapper.                                        |
-| `menubar-item.svelte`          | Standard and destructive action item.                         |
+| `menubar-item.svelte`          | Standard and dangerous action item.                           |
 | `menubar-checkbox-item.svelte` | Independently checkable item and state icon.                  |
 | `menubar-radio-group.svelte`   | Single-choice value container.                                |
 | `menubar-radio-item.svelte`    | Radio choice and selected icon.                               |

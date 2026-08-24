@@ -129,7 +129,7 @@ Native button attributes and handlers are forwarded. `RootVariants` and `RootSiz
 - Bits UI state: `data-state="on|off"` and `aria-pressed`.
 - Variants: transparent default or `border-input` outline.
 - Pressed/hover background: semantic `muted`.
-- Focus and invalid treatment: `ring` and `destructive`.
+- Focus and invalid treatment: `ring` and `danger`.
 - Root class merges after `rootVariants()` through `cn()`.
 
 Icon sizing targets descendant SVG elements unless they already have a `size-*` class. `data-icon="inline-start|inline-end"` on an icon or wrapper adjusts text padding.
@@ -182,7 +182,7 @@ No animation or icon package is required by Toggle itself.
 	--muted: oklch(0.97 0.001 106.424);
 	--input: oklch(0.923 0.003 48.717);
 	--ring: oklch(0.709 0.01 56.259);
-	--destructive: oklch(0.577 0.245 27.325);
+	--danger: oklch(0.577 0.245 27.325);
 	--radius: 0.45rem;
 }
 
@@ -191,7 +191,7 @@ No animation or icon package is required by Toggle itself.
 	--muted: oklch(0.268 0.007 34.298);
 	--input: oklch(1 0 0 / 15%);
 	--ring: oklch(0.553 0.013 58.071);
-	--destructive: oklch(0.704 0.191 22.216);
+	--danger: oklch(0.704 0.191 22.216);
 }
 
 @theme inline {
@@ -199,7 +199,7 @@ No animation or icon package is required by Toggle itself.
 	--color-muted: var(--muted);
 	--color-input: var(--input);
 	--color-ring: var(--ring);
-	--color-destructive: var(--destructive);
+	--color-danger: var(--danger);
 	--radius-md: calc(var(--radius) * 0.8);
 	--radius-lg: var(--radius);
 }

@@ -106,7 +106,7 @@ When `type` is omitted, the native browser default is `text`. `bind:value` synch
 	/>
 
 	{#if invalid}
-		<p id="username-error" class="text-sm text-destructive">Enter at least three characters.</p>
+		<p id="username-error" class="text-sm text-danger">Enter at least three characters.</p>
 	{/if}
 </div>
 ```
@@ -260,7 +260,7 @@ Local styling provides:
 - Semantic placeholder and file-selector text.
 - A visible semantic focus border and three-pixel ring.
 - Pointer blocking, not-allowed cursor, input-tinted background, and reduced opacity when disabled.
-- Destructive border and ring styling when `aria-invalid` is truthy.
+- Danger border and ring styling when `aria-invalid` is truthy.
 - Dark-mode input backgrounds and adjusted invalid colors.
 - Native file-selector button layout through `file:*` Tailwind variants.
 
@@ -364,7 +364,7 @@ The global stylesheet must load Tailwind, define the dark variant, and expose th
 :root {
 	--foreground: oklch(0.147 0.004 49.25);
 	--muted-foreground: oklch(0.553 0.013 58.071);
-	--destructive: oklch(0.577 0.245 27.325);
+	--danger: oklch(0.577 0.245 27.325);
 	--input: oklch(0.923 0.003 48.717);
 	--ring: oklch(0.709 0.01 56.259);
 	--radius: 0.45rem;
@@ -373,7 +373,7 @@ The global stylesheet must load Tailwind, define the dark variant, and expose th
 .dark {
 	--foreground: oklch(0.985 0.001 106.423);
 	--muted-foreground: oklch(0.709 0.01 56.259);
-	--destructive: oklch(0.704 0.191 22.216);
+	--danger: oklch(0.704 0.191 22.216);
 	--input: oklch(1 0 0 / 15%);
 	--ring: oklch(0.553 0.013 58.071);
 }
@@ -381,7 +381,7 @@ The global stylesheet must load Tailwind, define the dark variant, and expose th
 @theme inline {
 	--color-foreground: var(--foreground);
 	--color-muted-foreground: var(--muted-foreground);
-	--color-destructive: var(--destructive);
+	--color-danger: var(--danger);
 	--color-input: var(--input);
 	--color-ring: var(--ring);
 	--radius-lg: var(--radius);

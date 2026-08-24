@@ -201,7 +201,7 @@ No animation package is required.
 	--primary-foreground: oklch(0.405 0.101 131.063);
 	--input: oklch(0.923 0.003 48.717);
 	--ring: oklch(0.709 0.01 56.259);
-	--destructive: oklch(0.577 0.245 27.325);
+	--danger: oklch(0.577 0.245 27.325);
 }
 
 .dark {
@@ -210,7 +210,7 @@ No animation package is required.
 	--primary-foreground: oklch(0.405 0.101 131.063);
 	--input: oklch(1 0 0 / 15%);
 	--ring: oklch(0.553 0.013 58.071);
-	--destructive: oklch(0.704 0.191 22.216);
+	--danger: oklch(0.704 0.191 22.216);
 }
 
 @theme inline {
@@ -219,7 +219,7 @@ No animation package is required.
 	--color-primary-foreground: var(--primary-foreground);
 	--color-input: var(--input);
 	--color-ring: var(--ring);
-	--color-destructive: var(--destructive);
+	--color-danger: var(--danger);
 }
 
 @custom-variant data-checked {

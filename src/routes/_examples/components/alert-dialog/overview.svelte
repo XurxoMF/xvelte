@@ -16,7 +16,7 @@
 
 			<AlertDialog.Footer>
 				<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-				<AlertDialog.Action variant="destructive">Delete project</AlertDialog.Action>
+				<AlertDialog.Action variant="danger">Delete project</AlertDialog.Action>
 			</AlertDialog.Footer>
 		</AlertDialog.Content>
 	</AlertDialog.Root>

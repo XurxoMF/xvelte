@@ -23,6 +23,6 @@
 
 		<ContextMenu.Item disabled>Share</ContextMenu.Item>
 		<ContextMenu.Separator />
-		<ContextMenu.Item variant="destructive" onSelect={deleteFile}>Delete</ContextMenu.Item>
+		<ContextMenu.Item variant="danger" onSelect={deleteFile}>Delete</ContextMenu.Item>
 	</ContextMenu.Content>
 </ContextMenu.Root>

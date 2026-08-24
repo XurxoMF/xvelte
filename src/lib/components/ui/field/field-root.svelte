@@ -6,7 +6,7 @@
 	import { cn, type WithElementRef } from "$lib/utils";
 
 	export const rootVariants = tv({
-		base: "data-[invalid=true]:text-destructive gap-2 group/field flex w-full",
+		base: "data-[invalid=true]:text-danger gap-2 group/field flex w-full",
 		variants: {
 			orientation: {
 				vertical: "flex-col [&>*]:w-full [&>.sr-only]:w-auto",

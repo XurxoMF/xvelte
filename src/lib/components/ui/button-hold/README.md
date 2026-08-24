@@ -64,7 +64,7 @@ The app supplies the label and performs the guarded action in `onComplete`. Do n
 	let confirmed = $state(false);
 </script>
 
-<ButtonHold.Root duration={1500} variant="destructive" fillColor="bg-black/20" onComplete={() => (confirmed = true)}>
+<ButtonHold.Root duration={1500} variant="danger" fillColor="bg-black/20" onComplete={() => (confirmed = true)}>
 	Hold for 1.5 seconds to delete
 </ButtonHold.Root>
 
@@ -104,7 +104,7 @@ Hold Button forwards the local Button's `variant` and `size` props. `fillColor` 
 		Hold to approve
 	</ButtonHold.Root>
 
-	<ButtonHold.Root variant="destructive" from="bottom" fillColor="bg-black/20" duration={2500} onComplete={deleteAccount}>
+	<ButtonHold.Root variant="danger" from="bottom" fillColor="bg-black/20" duration={2500} onComplete={deleteAccount}>
 		Hold to delete account
 	</ButtonHold.Root>
 </div>
@@ -139,7 +139,7 @@ Choose a fill with enough contrast against both the selected Button variant and 
 
 <ButtonHold.Root
 	disabled={deleting}
-	variant="destructive"
+	variant="danger"
 	duration={2000}
 	onComplete={() => {
 		void deleteProject();
@@ -290,7 +290,7 @@ The rendered element retains native button semantics, focus, disabled behavior, 
 - The inline transition does not respond to `prefers-reduced-motion`.
 - Touch cancellation and assistive-technology gesture behavior are not handled comprehensively.
 
-Always provide a keyboard-accessible alternative for the same essential action, such as an ordinary button that opens an accessible confirmation dialog. Do not place the alternative inside Hold Button. A hold-only destructive action can prevent keyboard and assistive-technology users from completing the task.
+Always provide a keyboard-accessible alternative for the same essential action, such as an ordinary button that opens an accessible confirmation dialog. Do not place the alternative inside Hold Button. A hold-only dangerous action can prevent keyboard and assistive-technology users from completing the task.
 
 Use a concise label that explains both the action and the need to hold. Do not communicate purpose or completion using fill color alone. Render app-owned status or error feedback after `onComplete`, and use an appropriate live region when the result is not otherwise apparent.
 
@@ -384,7 +384,7 @@ The values below are xvelte's defaults and may be replaced while preserving thei
 	--secondary: oklch(0.967 0.001 286.375);
 	--secondary-foreground: oklch(0.21 0.006 285.885);
 	--muted: oklch(0.97 0.001 106.424);
-	--destructive: oklch(0.577 0.245 27.325);
+	--danger: oklch(0.577 0.245 27.325);
 	--border: oklch(0.923 0.003 48.717);
 	--input: oklch(0.923 0.003 48.717);
 	--ring: oklch(0.709 0.01 56.259);
@@ -399,7 +399,7 @@ The values below are xvelte's defaults and may be replaced while preserving thei
 	--secondary: oklch(0.274 0.006 286.033);
 	--secondary-foreground: oklch(0.985 0 0);
 	--muted: oklch(0.268 0.007 34.298);
-	--destructive: oklch(0.704 0.191 22.216);
+	--danger: oklch(0.704 0.191 22.216);
 	--border: oklch(1 0 0 / 10%);
 	--input: oklch(1 0 0 / 15%);
 	--ring: oklch(0.553 0.013 58.071);
@@ -413,7 +413,7 @@ The values below are xvelte's defaults and may be replaced while preserving thei
 	--color-secondary: var(--secondary);
 	--color-secondary-foreground: var(--secondary-foreground);
 	--color-muted: var(--muted);
-	--color-destructive: var(--destructive);
+	--color-danger: var(--danger);
 	--color-border: var(--border);
 	--color-input: var(--input);
 	--color-ring: var(--ring);

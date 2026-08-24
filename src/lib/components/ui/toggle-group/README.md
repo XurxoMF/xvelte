@@ -220,7 +220,7 @@ Use Toggle's semantic token code, then add the orientation variants required by 
 	--muted: oklch(0.97 0.001 106.424);
 	--input: oklch(0.923 0.003 48.717);
 	--ring: oklch(0.709 0.01 56.259);
-	--destructive: oklch(0.577 0.245 27.325);
+	--danger: oklch(0.577 0.245 27.325);
 	--radius: 0.45rem;
 }
 
@@ -229,7 +229,7 @@ Use Toggle's semantic token code, then add the orientation variants required by 
 	--muted: oklch(0.268 0.007 34.298);
 	--input: oklch(1 0 0 / 15%);
 	--ring: oklch(0.553 0.013 58.071);
-	--destructive: oklch(0.704 0.191 22.216);
+	--danger: oklch(0.704 0.191 22.216);
 }
 
 @theme inline {
@@ -237,7 +237,7 @@ Use Toggle's semantic token code, then add the orientation variants required by 
 	--color-muted: var(--muted);
 	--color-input: var(--input);
 	--color-ring: var(--ring);
-	--color-destructive: var(--destructive);
+	--color-danger: var(--danger);
 	--radius-md: calc(var(--radius) * 0.8);
 	--radius-lg: var(--radius);
 }

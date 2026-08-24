@@ -78,7 +78,7 @@
 	});
 </script>
 
-<WidgetGrid.Root columns={6} gap={12} onMoveEnd={saveLayout} onResizeEnd={saveLayout}>
+<WidgetGrid.Root columns={{ "2xl": 14, xl: 12, lg: 10, md: 8, sm: 6, xs: 4 }} gap={12} onMoveEnd={saveLayout} onResizeEnd={saveLayout}>
 	{#each renderedWidgets as widget (widget.id)}
 		<WidgetGrid.Item id={widget.id} x={widget.x} y={widget.y} width={widget.width} height={widget.height}>
 			<Card.Root class="size-full">

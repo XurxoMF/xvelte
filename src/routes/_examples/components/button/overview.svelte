@@ -9,7 +9,11 @@
 		<Button.Root variant="outline">Outline</Button.Root>
 		<Button.Root variant="secondary">Secondary</Button.Root>
 		<Button.Root variant="ghost">Ghost</Button.Root>
-		<Button.Root variant="destructive">Destructive</Button.Root>
+		<Button.Root variant="danger">Danger</Button.Root>
+		<Button.Root variant="warning">Warning</Button.Root>
+		<Button.Root variant="success">Success</Button.Root>
+		<Button.Root variant="info">Info</Button.Root>
+		<Button.Root variant="important">Important</Button.Root>
 		<Button.Root variant="link">Link</Button.Root>
 	</div>
 

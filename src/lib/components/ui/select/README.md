@@ -338,7 +338,7 @@ export { default as SelectorIcon } from "@tabler/icons-svelte/icons/selector";
 	--border: oklch(0.923 0.003 48.717);
 	--input: oklch(0.923 0.003 48.717);
 	--ring: oklch(0.709 0.01 56.259);
-	--destructive: oklch(0.577 0.245 27.325);
+	--danger: oklch(0.577 0.245 27.325);
 	--radius: 0.45rem;
 }
 
@@ -352,7 +352,7 @@ export { default as SelectorIcon } from "@tabler/icons-svelte/icons/selector";
 	--border: oklch(1 0 0 / 10%);
 	--input: oklch(1 0 0 / 15%);
 	--ring: oklch(0.553 0.013 58.071);
-	--destructive: oklch(0.704 0.191 22.216);
+	--danger: oklch(0.704 0.191 22.216);
 }
 
 @theme inline {
@@ -365,7 +365,7 @@ export { default as SelectorIcon } from "@tabler/icons-svelte/icons/selector";
 	--color-border: var(--border);
 	--color-input: var(--input);
 	--color-ring: var(--ring);
-	--color-destructive: var(--destructive);
+	--color-danger: var(--danger);
 	--radius-md: calc(var(--radius) * 0.8);
 	--radius-lg: var(--radius);
 }

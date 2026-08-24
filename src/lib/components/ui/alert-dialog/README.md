@@ -82,7 +82,7 @@ Unlike the underlying Bits UI anatomy, xvelte's `Content` automatically renders 
 
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-			<AlertDialog.Action variant="destructive">Delete project</AlertDialog.Action>
+			<AlertDialog.Action variant="danger">Delete project</AlertDialog.Action>
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>
@@ -119,7 +119,7 @@ Bind `open` when application code must open or close the dialog or wait for asyn
 </script>
 
 <AlertDialog.Root bind:open>
-	<AlertDialog.Trigger class={buttonVariants({ variant: "destructive" })}>Delete account</AlertDialog.Trigger>
+	<AlertDialog.Trigger class={buttonVariants({ variant: "danger" })}>Delete account</AlertDialog.Trigger>
 
 	<AlertDialog.Content>
 		<AlertDialog.Header>
@@ -129,7 +129,7 @@ Bind `open` when application code must open or close the dialog or wait for asyn
 
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel disabled={deleting}>Cancel</AlertDialog.Cancel>
-			<AlertDialog.Action variant="destructive" disabled={deleting} onclick={deleteAccount}>
+			<AlertDialog.Action variant="danger" disabled={deleting} onclick={deleteAccount}>
 				{deleting ? "Deleting…" : "Delete account"}
 			</AlertDialog.Action>
 		</AlertDialog.Footer>
@@ -164,7 +164,7 @@ Bind `open` when application code must open or close the dialog or wait for asyn
 
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Keep editing</AlertDialog.Cancel>
-			<AlertDialog.Action variant="destructive">Discard</AlertDialog.Action>
+			<AlertDialog.Action variant="danger">Discard</AlertDialog.Action>
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>
@@ -189,7 +189,7 @@ You provide any icons. `Media` sizes an SVG to `1.5rem` unless the SVG already h
 
 			<AlertDialog.Footer>
 				<AlertDialog.Cancel type="button">Cancel</AlertDialog.Cancel>
-				<AlertDialog.Action type="submit" variant="destructive">Delete project</AlertDialog.Action>
+				<AlertDialog.Action type="submit" variant="danger">Delete project</AlertDialog.Action>
 			</AlertDialog.Footer>
 		</AlertDialog.Content>
 	</AlertDialog.Root>
@@ -466,7 +466,7 @@ xvelte's `data-open:` and `data-closed:` utilities also depend on these custom v
 }
 ```
 
-Alert Dialog itself uses `popover`, `popover-foreground`, `foreground`, `muted`, and `muted-foreground`. Its required Button component additionally uses `background`, `primary`, `primary-foreground`, `secondary`, `secondary-foreground`, `destructive`, `border`, `input`, and `ring`, plus the shared radius scale. Your theme must define and expose all of them:
+Alert Dialog itself uses `popover`, `popover-foreground`, `foreground`, `muted`, and `muted-foreground`. Its required Button component additionally uses `background`, `primary`, `primary-foreground`, `secondary`, `secondary-foreground`, `danger`, `border`, `input`, and `ring`, plus the shared radius scale. Your theme must define and expose all of them:
 
 ```css
 :root {
@@ -480,7 +480,7 @@ Alert Dialog itself uses `popover`, `popover-foreground`, `foreground`, `muted`,
 	--secondary-foreground: oklch(0.21 0.006 285.885);
 	--muted: oklch(0.97 0.001 106.424);
 	--muted-foreground: oklch(0.553 0.013 58.071);
-	--destructive: oklch(0.577 0.245 27.325);
+	--danger: oklch(0.577 0.245 27.325);
 	--border: oklch(0.923 0.003 48.717);
 	--input: oklch(0.923 0.003 48.717);
 	--ring: oklch(0.709 0.01 56.259);
@@ -498,7 +498,7 @@ Alert Dialog itself uses `popover`, `popover-foreground`, `foreground`, `muted`,
 	--color-secondary-foreground: var(--secondary-foreground);
 	--color-muted: var(--muted);
 	--color-muted-foreground: var(--muted-foreground);
-	--color-destructive: var(--destructive);
+	--color-danger: var(--danger);
 	--color-border: var(--border);
 	--color-input: var(--input);
 	--color-ring: var(--ring);

@@ -7,14 +7,14 @@ Use this catalog for discovery only. Verify installed paths, then read the selec
 All component paths are relative to `src/lib/components/ui`.
 
 - `accordion`
-- `alert`
+- `alert` — static callouts with neutral, danger, warning, success, info, and important semantic tones
 - `alert-dialog`
 - `aspect-ratio`
 - `audio-player`
 - `avatar`
-- `badge`
+- `badge` — compact labels with neutral and semantic status variants
 - `breadcrumb`
-- `button`
+- `button` — native actions with neutral, danger, warning, success, info, and important variants
 - `button-group`
 - `button-hold`
 - `calendar`
@@ -68,7 +68,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `sidebar`
 - `skeleton`
 - `slider`
-- `sonner` — themed global toast renderer with a locally exported, fully forwarded toast runtime
+- `sonner` — themed global toast renderer whose state icons, subtle borders, and rich states use xvelte's danger, warning, success, and info tokens, with a locally exported, fully forwarded toast runtime
 - `sortable` — declarative drag-and-drop lists with internally updated bindable ID order, ordering helpers, optional lifecycle callbacks, stable drag-state attributes, and explicit handles
 - `spinner`
 - `star-rating`

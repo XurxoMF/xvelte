@@ -6,7 +6,7 @@
 </script>
 
 <div class="flex flex-col items-center justify-center gap-4">
-	<ButtonHold.Root duration={1500} variant="destructive" fillColor="bg-black/20" onComplete={() => (confirmed = true)}>
+	<ButtonHold.Root duration={1500} variant="danger" fillColor="bg-black/20" onComplete={() => (confirmed = true)}>
 		Hold for 1.5 seconds to delete
 	</ButtonHold.Root>
 

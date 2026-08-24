@@ -53,7 +53,7 @@
 </svelte:head>
 
 {#if unit}
-	<main class="mx-auto max-w-[90%] px-5 py-10 sm:px-8 sm:py-14">
+	<div class="mx-auto max-w-[90%] px-5 py-10 sm:px-8 sm:py-14">
 		<nav aria-label="Breadcrumb" class="mb-8 flex items-center gap-2 text-sm text-muted-foreground">
 			<a
 				href={resolve(`/${kind === "component" ? "components" : kind === "hook" ? "hooks" : "attachments"}` as Pathname)}
@@ -100,11 +100,11 @@
 				{/await}
 			{/if}
 		{/each}
-	</main>
+	</div>
 {:else}
-	<main class="mx-auto max-w-3xl px-5 py-20 sm:px-8">
+	<div class="mx-auto max-w-3xl px-5 py-20 sm:px-8">
 		<Typography.P class="text-primary">404</Typography.P>
 		<Typography.H1>Documentation not found</Typography.H1>
 		<Typography.P class="text-muted-foreground">This entry does not exist in the local xvelte catalog.</Typography.P>
-	</main>
+	</div>
 {/if}

@@ -1,8 +1,8 @@
 # Scroll Area
 
-An accessible custom-styled scrolling container built on Bits UI. It can render vertical, horizontal, or both scrollbars, exposes the viewport element for programmatic scrolling, and preserves native scrolling behavior while keeping scrollbar styling consistent.
+An accessible compound scrolling container built on Bits UI. Root owns primitive state, Viewport exposes the actual scrolling element, and fixed-axis scrollbar parts register themselves so Root can add the corner automatically when both axes are present.
 
-Use Scroll Area for bounded panels whose custom scrollbar must match the interface, such as side lists or horizontally scrolling galleries. Prefer the browser's normal page scroll for primary documents and avoid creating unnecessary nested scroll regions.
+Use Scroll Area for bounded panels whose custom scrollbar must match the interface, such as side lists, tables, or horizontally scrolling galleries. Prefer normal page scrolling for primary documents and avoid unnecessary nested scroll regions.
 
 <!-- xvelte-example: overview -->
 
@@ -20,6 +20,8 @@ Use Scroll Area for bounded panels whose custom scrollbar must match the interfa
 - [Credits](#credits)
 - [File organization](#file-organization)
 
+---
+
 ## Import
 
 ```svelte
@@ -28,27 +30,38 @@ Use Scroll Area for bounded panels whose custom scrollbar must match the interfa
 </script>
 ```
 
-`index.ts` exports `Root`, `Scrollbar`, `RootProps`, and `ScrollbarProps`.
+`index.ts` exports `Root`, `Viewport`, `ScrollbarVertical`, and `ScrollbarHorizontal`, together with their props types and the thumb props types.
+
+---
 
 ## Anatomy
 
-For normal use, render Root with content. It owns the viewport, requested scrollbars, thumbs, and corner:
+Add exactly the axes the interface needs:
 
 ```svelte
-<ScrollArea.Root orientation="vertical">Long content</ScrollArea.Root>
+<ScrollArea.Root>
+	<ScrollArea.Viewport>
+		<!-- Scrollable content -->
+	</ScrollArea.Viewport>
+
+	<ScrollArea.ScrollbarVertical />
+</ScrollArea.Root>
 ```
 
-The generated structure is:
+The complete two-axis structure is:
 
 ```text
 Root
 ├── Viewport
 │   └── app content
-├── Scrollbar → Thumb (according to orientation)
-└── Corner
+├── ScrollbarVertical → Thumb
+├── ScrollbarHorizontal → Thumb
+└── internal Corner
 ```
 
-`Scrollbar` is exported for advanced composition, but Root already creates it. Do not add a second scrollbar of the same orientation inside Root.
+Root and Viewport do not generate omitted scrollbars. Each scrollbar registers its fixed axis with the nearest Root during component initialization and unregisters when destroyed. Root renders its internal Corner only while at least one vertical and one horizontal scrollbar are registered.
+
+---
 
 ## Basic usage
 
@@ -60,76 +73,108 @@ Root
 </script>
 
 <ScrollArea.Root class="h-72 w-64 rounded-lg border">
-	<div class="space-y-2 p-4">
-		<h2 class="font-medium">Releases</h2>
-		{#each releases as release (release)}
-			<p class="text-sm">{release}</p>
-		{/each}
-	</div>
+	<ScrollArea.Viewport>
+		<div class="space-y-2 p-4">
+			<h2 class="font-medium">Releases</h2>
+			{#each releases as release (release)}
+				<p class="text-sm">{release}</p>
+			{/each}
+		</div>
+	</ScrollArea.Viewport>
+
+	<ScrollArea.ScrollbarVertical />
 </ScrollArea.Root>
 ```
 
-The root needs a constrained width or height on the scrolling axis; otherwise its content expands and no scrollbar is needed.
+Constrain Root on the scrolling axis; otherwise its content can expand and no scrollbar is needed.
+
+---
 
 ## Examples
 
 ### Horizontal scrolling
 
 ```svelte
-<ScrollArea.Root orientation="horizontal" class="w-96 rounded-lg border">
-	<div class="flex w-max gap-4 p-4">
-		{#each ["Overview", "Activity", "Analytics", "Exports", "Permissions", "History"] as section}
-			<div class="w-40 shrink-0 rounded-md bg-muted p-4">{section}</div>
-		{/each}
-	</div>
+<ScrollArea.Root class="w-96 rounded-lg border">
+	<ScrollArea.Viewport>
+		<div class="flex w-max gap-4 p-4">
+			{#each ["Overview", "Activity", "Analytics", "Exports", "Permissions", "History"] as section}
+				<div class="w-40 shrink-0 rounded-md bg-muted p-4">{section}</div>
+			{/each}
+		</div>
+	</ScrollArea.Viewport>
+
+	<ScrollArea.ScrollbarHorizontal />
 </ScrollArea.Root>
 ```
 
-Keep the inner content wider than the viewport and avoid wrapping when horizontal scrolling is intentional.
+Keep the inner content wider than Viewport and avoid wrapping when horizontal scrolling is intentional.
 
 ### Both axes
 
 ```svelte
-<ScrollArea.Root orientation="both" class="size-64 rounded-lg border">
-	<div class="h-[32rem] w-[42rem] p-4">
-		<p>A large canvas or table can scroll in both directions.</p>
-	</div>
+<ScrollArea.Root type="always" class="size-64 rounded-lg border">
+	<ScrollArea.Viewport class="bg-muted/20">
+		<div class="h-[32rem] w-[42rem] p-4">A large two-dimensional canvas.</div>
+	</ScrollArea.Viewport>
+
+	<ScrollArea.ScrollbarVertical class="w-3" thumbProps={{ class: "bg-primary" }} />
+	<ScrollArea.ScrollbarHorizontal class="h-3" thumbProps={{ class: "bg-primary" }} />
 </ScrollArea.Root>
 ```
 
-Use two-axis scrolling only when the content cannot reasonably reflow.
+The two scrollbar parts cause Root to add the primitive Corner automatically. Corner is intentionally internal and exposes no styling props.
+
+### Conditional axes
+
+```svelte
+<ScrollArea.Root class="size-72 rounded-lg border">
+	<ScrollArea.Viewport>Large dynamic content</ScrollArea.Viewport>
+
+	{#if showVertical}
+		<ScrollArea.ScrollbarVertical />
+	{/if}
+
+	{#if showHorizontal}
+		<ScrollArea.ScrollbarHorizontal />
+	{/if}
+</ScrollArea.Root>
+```
+
+Registration follows component lifetime, so Corner appears and disappears as the axes change. Multiple scrollbar instances on the same axis are counted independently.
 
 ### Programmatic viewport scrolling
 
 ```svelte
 <script lang="ts">
-	import * as ScrollArea from "$lib/components/ui/scroll-area";
-
-	let viewport = $state<HTMLElement | null>(null);
+	let viewport = $state<HTMLDivElement | null>(null);
 </script>
 
 <button type="button" onclick={() => viewport?.scrollTo({ top: viewport.scrollHeight, behavior: "smooth" })}>Scroll to latest</button>
 
-<ScrollArea.Root bind:viewportRef={viewport} class="mt-3 h-64 rounded-lg border">
-	<div class="space-y-3 p-4">
-		{#each messages as message (message.id)}
-			<p>{message.text}</p>
-		{/each}
-	</div>
+<ScrollArea.Root class="mt-3 h-64 rounded-lg border">
+	<ScrollArea.Viewport bind:ref={viewport}>Scrollable messages</ScrollArea.Viewport>
+	<ScrollArea.ScrollbarVertical />
 </ScrollArea.Root>
 ```
 
-`ref` points to the outer root; `viewportRef` points to the actual scrolling element.
+Viewport's bindable `ref` points to the actual scrolling element. Root's `ref` points to the outer primitive element.
 
-### Scrollbar behavior and classes
+### Bind a scrollbar and thumb
 
 ```svelte
-<ScrollArea.Root orientation="both" type="always" scrollbarYClasses="w-3" scrollbarXClasses="h-3" class="size-64 rounded-lg border">
-	<div class="size-[36rem] p-4">Scrollable content</div>
+<script lang="ts">
+	let scrollbar = $state<HTMLDivElement | null>(null);
+	let thumb = $state<HTMLDivElement | null>(null);
+</script>
+
+<ScrollArea.Root class="h-64">
+	<ScrollArea.Viewport>Scrollable content</ScrollArea.Viewport>
+	<ScrollArea.ScrollbarVertical bind:ref={scrollbar} bind:thumbRef={thumb} />
 </ScrollArea.Root>
 ```
 
-The local class props configure the generated vertical and horizontal scrollbar separately.
+---
 
 ## Public API
 
@@ -137,57 +182,83 @@ Scroll Area wraps the installed stable `bits-ui@2.18.1` primitive. The tables de
 
 ### `ScrollArea.Root`
 
-Type: `RootProps`, based on Bits UI `ScrollArea.RootProps` with the advanced root `child` snippet removed.
+Type: `RootProps`, based on Bits UI `ScrollArea.RootProps` with the advanced `child` snippet removed.
 
-| Prop                | Type                                        | Default       | Behavior                                                          |
-| ------------------- | ------------------------------------------- | ------------- | ----------------------------------------------------------------- |
-| `orientation`       | `"vertical" \| "horizontal" \| "both"`      | `"vertical"`  | Local option controlling which scrollbar components Root creates. |
-| `scrollbarXClasses` | `string`                                    | `""`          | Classes passed to the generated horizontal Scrollbar.             |
-| `scrollbarYClasses` | `string`                                    | `""`          | Classes passed to the generated vertical Scrollbar.               |
-| `viewportRef`       | `HTMLElement \| null`                       | `null`        | Bindable reference to the actual scrolling viewport.              |
-| `type`              | `"hover" \| "scroll" \| "auto" \| "always"` | `"hover"`     | Controls when Bits UI shows scrollbars.                           |
-| `scrollHideDelay`   | `number`                                    | `600`         | Milliseconds before a transient scrollbar hides.                  |
-| `dir`               | `"ltr" \| "rtl"`                            | App direction | Controls reading direction and horizontal behavior.               |
-| `children`          | `Snippet`                                   | —             | Content rendered inside the viewport.                             |
-| `ref`               | `HTMLDivElement \| null`                    | `null`        | Bindable outer Root element.                                      |
+| Prop              | Type                                        | Default       | Behavior                                                |
+| ----------------- | ------------------------------------------- | ------------- | ------------------------------------------------------- |
+| `type`            | `"hover" \| "scroll" \| "auto" \| "always"` | `"hover"`     | Controls when Bits UI shows registered scrollbar parts. |
+| `scrollHideDelay` | `number`                                    | `600`         | Delay before transient scrollbars hide.                 |
+| `dir`             | `"ltr" \| "rtl"`                            | App direction | Controls reading direction and horizontal behavior.     |
+| `children`        | `Snippet`                                   | —             | Manually composed Viewport and scrollbar parts.         |
+| `ref`             | `HTMLDivElement \| null`                    | `null`        | Bindable outer Root element.                            |
+| `class`           | `string`                                    | `undefined`   | Merged after the relative-positioning default.          |
 
-Root forwards native `<div>` attributes. Its `orientation` is an xvelte composition option and is not forwarded to the Bits UI Root; each generated Scrollbar receives the corresponding primitive orientation.
+Root forwards remaining native `div` attributes. It has no orientation prop: rendered scrollbar parts determine the active axes.
 
-### `ScrollArea.Scrollbar`
+### `ScrollArea.Viewport`
 
-Type: `ScrollbarProps`, based on Bits UI `ScrollArea.ScrollbarProps` with the advanced `child` snippet removed.
+Type: `ViewportProps`, based on Bits UI `ScrollArea.ViewportProps`.
 
-| Prop          | Type                         | Default              | Behavior                                                                         |
-| ------------- | ---------------------------- | -------------------- | -------------------------------------------------------------------------------- |
-| `orientation` | `"horizontal" \| "vertical"` | `"vertical"` locally | Selects axis, layout classes, and `data-orientation`.                            |
-| `forceMount`  | `boolean`                    | `false`              | Keeps the scrollbar mounted for external animation or measurement.               |
-| `children`    | `Snippet`                    | —                    | Optional content rendered before the built-in Thumb. Avoid adding another thumb. |
-| `ref`         | `HTMLDivElement \| null`     | `null`               | Bindable Scrollbar element.                                                      |
+| Prop       | Type                     | Default     | Behavior                                                          |
+| ---------- | ------------------------ | ----------- | ----------------------------------------------------------------- |
+| `children` | `Snippet`                | —           | Scrollable application content.                                   |
+| `ref`      | `HTMLDivElement \| null` | `null`      | Bindable actual scrolling element for measurement or native APIs. |
+| `class`    | `string`                 | `undefined` | Merged with full-size, inherited-radius, and transition classes.  |
 
-Scrollbar forwards native `<div>` attributes. Root's normal composition passes no custom children.
+Viewport forwards native `div` attributes and primitive-owned viewport behavior. Render it inside Root.
+
+### `ScrollArea.ScrollbarVertical`
+
+Type: `ScrollbarVerticalProps`, based on Bits UI `ScrollArea.ScrollbarProps` with `orientation`, `children`, and `child` removed.
+
+### `ScrollArea.ScrollbarHorizontal`
+
+Type: `ScrollbarHorizontalProps`, with the same contract as the vertical part and a fixed horizontal orientation.
+
+| Prop            | Type                     | Default | Behavior                                                       |
+| --------------- | ------------------------ | ------- | -------------------------------------------------------------- |
+| inherited props | Bits UI scrollbar props  | —       | Forwards native attributes, events, `forceMount`, and `class`. |
+| `ref`           | `HTMLDivElement \| null` | `null`  | Bindable fixed-axis Scrollbar element.                         |
+| `thumbRef`      | `HTMLDivElement \| null` | `null`  | Bindable built-in Thumb element.                               |
+| `thumbProps`    | axis thumb props         | `{}`    | Forwards attributes and merges `class` on the built-in Thumb.  |
+
+Both parts require the nearest ScrollArea Root, register during initialization, unregister during destruction, and own exactly one built-in Thumb. The fixed orientation cannot be overridden.
+
+`VerticalThumbProps` and `HorizontalThumbProps` are equivalent axis-specific aliases based on Bits UI `ThumbProps` with `ref`, `children`, and `child` removed.
+
+### Internal Corner and context
+
+Corner is not exported and accepts no xvelte props. Root renders it with `data-slot="scroll-area-corner"` only when the registration counts contain both axes. This derived behavior remains correct when conditional or duplicate scrollbar parts mount and unmount.
+
+---
 
 ## Styling and DOM contract
 
-| Element   | Stable local hook                   | Styling                                                                           |
-| --------- | ----------------------------------- | --------------------------------------------------------------------------------- |
-| Root      | `data-slot="scroll-area"`           | Relative positioning; caller supplies dimensions and borders.                     |
-| Viewport  | `data-slot="scroll-area-viewport"`  | Full size and inherited radius; global `*:focus-visible` supplies its focus ring. |
-| Scrollbar | `data-slot="scroll-area-scrollbar"` | 10-pixel axis thickness, one-pixel padding, touch selection disabled.             |
-| Thumb     | `data-slot="scroll-area-thumb"`     | Flexible rounded thumb using the `border` token.                                  |
+| Element              | Stable local hook                   | Styling                                                                           |
+| -------------------- | ----------------------------------- | --------------------------------------------------------------------------------- |
+| Root                 | `data-slot="scroll-area"`           | Relative container; caller normally supplies constrained dimensions.              |
+| Viewport             | `data-slot="scroll-area-viewport"`  | Full size and inherited radius; global `*:focus-visible` supplies its focus ring. |
+| Each axis Scrollbar  | `data-slot="scroll-area-scrollbar"` | 10-pixel axis thickness, one-pixel padding, touch selection disabled.             |
+| Each Thumb           | `data-slot="scroll-area-thumb"`     | Flexible rounded thumb using the `border` token.                                  |
+| Automatically Corner | `data-slot="scroll-area-corner"`    | Primitive-owned spacer with no public styling API.                                |
 
-The Scrollbar also receives local `data-orientation`; Bits UI adds dependency-owned state attributes such as orientation and visibility. Corner is generated by Bits UI but has no local slot or class.
+Scrollbar parts receive their fixed `data-orientation`. Root, Viewport, both scrollbar parts, and both Thumb instances merge caller classes at their corresponding element. Bits UI owns remaining visibility and state attributes.
 
-Root and Scrollbar `class` props use `cn()`. The viewport does not expose a class prop; style it through its stable slot. `scrollbarXClasses` and `scrollbarYClasses` are merged by the generated Scrollbar.
+---
 
 ## Accessibility
 
-Bits UI preserves native wheel, trackpad, touch, and keyboard scrolling on the viewport while providing custom scrollbar controls. Keep the viewport focus outline, ensure a constrained region has a useful accessible name when its purpose is not evident, and avoid trapping keyboard users inside nested scroll areas.
+Bits UI preserves native wheel, trackpad, touch, and keyboard scrolling on Viewport while providing custom scrollbar controls. Keep Viewport's focus outline, give a constrained region a useful accessible name when its purpose is not evident, and avoid trapping keyboard users inside nested scroll areas.
 
-Content semantics remain unchanged inside the viewport. Use headings, lists, tables, and landmarks normally. Do not hide essential content solely because the custom scrollbar is visually subtle, and test horizontal scrolling in both LTR and RTL layouts.
+Content semantics remain unchanged inside Viewport. Use headings, lists, tables, and landmarks normally. Omitting a scrollbar preserves native scrolling behavior but removes that visible custom control. Test horizontal scrolling in both LTR and RTL layouts.
+
+---
 
 ## Localization
 
 Scroll Area contains no built-in human-readable copy and requires no localization messages. The app supplies and translates content and any optional accessible label on the scrolling region.
+
+---
 
 ## Dependencies
 
@@ -235,20 +306,20 @@ No animation package is required.
 	}
 }
 
-@layer base {
-	*:focus-visible {
-		@apply border-ring ring-3 ring-ring/50 outline-none;
-	}
-}
-
 @custom-variant data-vertical {
 	&:where([data-orientation="vertical"]) {
 		@slot;
 	}
 }
+
+@layer base {
+	*:focus-visible {
+		@apply border-ring ring-3 ring-ring/50 outline-none;
+	}
+}
 ```
 
-The values may be replaced by the app's theme. No custom keyframe, variant, font, or layout rule is required.
+Theme values may be replaced while preserving the semantic names. No keyframe, font, or component-specific global stylesheet is required.
 
 ### Shared utilities
 
@@ -262,6 +333,64 @@ export function cn(...inputs: ClassValue[]) {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type WithoutChild<T> = T extends { child?: any | undefined } ? Omit<T, "child"> : T;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type WithoutChildren<T> = T extends { children?: any | undefined } ? Omit<T, "children"> : T;
+
+export type WithoutChildrenOrChild<T> = WithoutChildren<WithoutChild<T>>;
+```
+
+### Internal context
+
+Copy `scroll-area-context.svelte.ts` unchanged with the component:
+
+```ts
+import { createContext } from "svelte";
+
+/** Fixed axis owned by one Scroll Area scrollbar part. */
+export type ScrollbarOrientation = "vertical" | "horizontal";
+
+/** Tracks mounted scrollbar parts so Root can derive whether it needs a corner. */
+export class ScrollAreaContext {
+	#verticalScrollbars = $state(0);
+	#horizontalScrollbars = $state(0);
+
+	/** @returns Whether at least one scrollbar exists on each axis. */
+	get hasCorner() {
+		return this.#verticalScrollbars > 0 && this.#horizontalScrollbars > 0;
+	}
+
+	/**
+	 * Registers one mounted scrollbar part.
+	 *
+	 * @param orientation - Fixed axis rendered by the part.
+	 * @returns A cleanup function that unregisters that exact mount.
+	 */
+	registerScrollbar(orientation: ScrollbarOrientation) {
+		if (orientation === "vertical") this.#verticalScrollbars++;
+		else this.#horizontalScrollbars++;
+
+		let registered = true;
+
+		return () => {
+			if (!registered) return;
+			registered = false;
+
+			if (orientation === "vertical") this.#verticalScrollbars--;
+			else this.#horizontalScrollbars--;
+		};
+	}
+}
+
+const [getScrollAreaContext, provideScrollAreaContext] = createContext<ScrollAreaContext>();
+
+/** Creates and provides the state shared by one Scroll Area composition. */
+export function setScrollAreaContext() {
+	return provideScrollAreaContext(new ScrollAreaContext());
+}
+
+/** Returns the state from the nearest Scroll Area Root. */
+export { getScrollAreaContext };
 ```
 
 ### Component files and other integration
@@ -269,23 +398,33 @@ export type WithoutChild<T> = T extends { child?: any | undefined } ? Omit<T, "c
 ```text
 scroll-area/
 ├── index.ts
+├── scroll-area-context.svelte.ts
 ├── scroll-area-root.svelte
-└── scroll-area-scrollbar.svelte
+├── scroll-area-scrollbar-horizontal.svelte
+├── scroll-area-scrollbar-vertical.svelte
+└── scroll-area-viewport.svelte
 ```
 
-Scroll Area requires no icon, other xvelte component, hook, attachment, context, localization setup, shared style, image, font, or network service.
+Scroll Area requires no icon, other xvelte component, hook, attachment, localization setup, shared style, image, font, or network service.
+
+---
 
 ## Credits
 
 The component structure and styling are adapted from [shadcn-svelte Scroll Area](https://www.shadcn-svelte.com/docs/components/scroll-area).
 
+---
+
 ## File organization
 
-| File                           | Responsibility                                                                        |
-| ------------------------------ | ------------------------------------------------------------------------------------- |
-| `scroll-area-root.svelte`      | Root, viewport, orientation composition, scrollbar classes, corner, and viewport ref. |
-| `scroll-area-scrollbar.svelte` | Axis-specific scrollbar, built-in thumb, styles, props, and ref.                      |
-| `index.ts`                     | Public component parts and props types.                                               |
-| `README.md`                    | Usage, API, accessibility, styling, and installation guide.                           |
+| File                                      | Responsibility                                                                          |
+| ----------------------------------------- | --------------------------------------------------------------------------------------- |
+| `scroll-area-context.svelte.ts`           | Counts mounted axes and derives whether Root needs Corner.                              |
+| `scroll-area-root.svelte`                 | Owns Bits UI state, outer attributes, registration context, children, and Corner.       |
+| `scroll-area-viewport.svelte`             | Renders the actual scrolling element with public attributes, content, and bindable ref. |
+| `scroll-area-scrollbar-vertical.svelte`   | Registers and renders one vertical track with its built-in Thumb.                       |
+| `scroll-area-scrollbar-horizontal.svelte` | Registers and renders one horizontal track with its built-in Thumb.                     |
+| `index.ts`                                | Exports all public parts and their props types.                                         |
+| `README.md`                               | Documents composition, API, styling, dependencies, accessibility, and installation.     |
 
-The component's `index.ts` and exported types are the source of truth for the public API.
+The component's `index.ts`, exported types, and source are the source of truth for the public API.

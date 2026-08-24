@@ -17,6 +17,7 @@
 	import * as Tooltip from "$lib/components/ui/tooltip";
 	import * as Typography from "$lib/components/ui/typography";
 	import * as Sonner from "$lib/components/ui/sonner";
+	import * as ScrollArea from "$lib/components/ui/scroll-area";
 
 	let { children } = $props();
 
@@ -42,11 +43,12 @@
 </script>
 
 <ModeWatcher />
+
 <Sonner.Root closeButton position="top-right" richColors />
 
 <Tooltip.Provider delayDuration={500}>
-	<Sidebar.Provider class="relative" style="--sidebar-width: 17rem;">
-		<Sidebar.Root collapsible="offcanvas" class="border-r-0 bg-sidebar md:absolute">
+	<Sidebar.Provider class="relative">
+		<Sidebar.Root collapsible="offcanvas" variant="inset" class="border-r-0 bg-sidebar md:absolute">
 			<Sidebar.Header id="sidebar-header" class="gap-3 border-b px-4 py-4">
 				<a href={resolve("/")} class="group flex items-center gap-3" aria-label="xvelte home">
 					<img
@@ -115,18 +117,25 @@
 			<Sidebar.Footer id="sidebar-footer" class="border-t px-4 py-3">
 				<Typography.P class="text-muted-foreground">Built from the library it documents.</Typography.P>
 			</Sidebar.Footer>
+
 			<Sidebar.Rail />
 		</Sidebar.Root>
 
-		<Sidebar.Inset class="min-w-0 overflow-hidden bg-background">
-			<header class="flex h-14 shrink-0 items-center gap-3 border-b bg-background/90 px-4 backdrop-blur sm:px-6">
+		<Sidebar.Inset class="overflow-hidden bg-background" style="--header-height: calc(var(--spacing) * 16)">
+			<header class="flex h-(--header-height) shrink-0 items-center gap-3 border-b px-4 sm:px-6">
 				<Sidebar.Trigger />
 				<div class="h-4 w-px bg-border"></div>
 				<a href={resolve("/")} class="text-sm font-medium">Documentation</a>
 				<a href="https://github.com/XurxoMF/xvelte" class="ml-auto text-sm text-muted-foreground transition-colors hover:text-foreground">GitHub</a>
 			</header>
 
-			<div class="min-h-0 flex-1 overflow-y-auto">{@render children()}</div>
+			<ScrollArea.Root class="h-[calc(100%-var(--header-height))]">
+				<ScrollArea.Viewport>
+					{@render children()}
+				</ScrollArea.Viewport>
+
+				<ScrollArea.ScrollbarVertical />
+			</ScrollArea.Root>
 		</Sidebar.Inset>
 	</Sidebar.Provider>
 </Tooltip.Provider>

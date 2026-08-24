@@ -62,7 +62,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `qr-code`
 - `radio-group`
 - `resizable`
-- `scroll-area`
+- `scroll-area` — manually composed Root and Viewport with self-registering vertical and horizontal scrollbars plus an automatic two-axis corner
 - `select`
 - `separator`
 - `sheet`

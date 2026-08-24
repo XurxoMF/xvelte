@@ -14,7 +14,7 @@
 	/></svelte:head
 >
 
-<main>
+<div>
 	<section class="relative overflow-hidden border-b px-5 py-20 sm:px-8 sm:py-28">
 		<div class="docs-grid-mask pointer-events-none absolute inset-0"></div>
 		<div class="relative mx-auto max-w-5xl">
@@ -64,7 +64,7 @@
 			</div>
 		</div>
 	</section>
-</main>
+</div>
 
 <style>
 	.docs-grid-mask {

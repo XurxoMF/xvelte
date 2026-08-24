@@ -3,46 +3,24 @@
 
 	import type { WithoutChild } from "$lib/utils";
 
-	export type RootProps = WithoutChild<ScrollAreaPrimitive.RootProps> & {
-		orientation?: "vertical" | "horizontal" | "both" | undefined;
-		scrollbarXClasses?: string | undefined;
-		scrollbarYClasses?: string | undefined;
-		viewportRef?: HTMLElement | null | undefined;
-	};
+	/** Props for the Scroll Area state and outer container. */
+	export type RootProps = WithoutChild<ScrollAreaPrimitive.RootProps>;
 </script>
 
 <script lang="ts">
 	import { cn } from "$lib/utils";
 
-	import * as ScrollArea from ".";
+	import { setScrollAreaContext } from "./scroll-area-context.svelte";
 
-	let {
-		ref = $bindable(null),
-		viewportRef = $bindable(null),
-		class: className,
-		orientation = "vertical",
-		scrollbarXClasses = "",
-		scrollbarYClasses = "",
-		children,
-		...restProps
-	}: RootProps = $props();
+	let { ref = $bindable(null), class: className, children, ...restProps }: RootProps = $props();
+
+	const context = setScrollAreaContext();
 </script>
 
 <ScrollAreaPrimitive.Root bind:ref data-slot="scroll-area" class={cn("relative", className)} {...restProps}>
-	<ScrollAreaPrimitive.Viewport
-		bind:ref={viewportRef}
-		data-slot="scroll-area-viewport"
-		class="size-full rounded-[inherit] transition-[color,box-shadow]"
-	>
-		{@render children?.()}
-	</ScrollAreaPrimitive.Viewport>
+	{@render children?.()}
 
-	{#if orientation === "vertical" || orientation === "both"}
-		<ScrollArea.Scrollbar orientation="vertical" class={scrollbarYClasses} />
+	{#if context.hasCorner}
+		<ScrollAreaPrimitive.Corner data-slot="scroll-area-corner" />
 	{/if}
-
-	{#if orientation === "horizontal" || orientation === "both"}
-		<ScrollArea.Scrollbar orientation="horizontal" class={scrollbarXClasses} />
-	{/if}
-	<ScrollAreaPrimitive.Corner />
 </ScrollAreaPrimitive.Root>

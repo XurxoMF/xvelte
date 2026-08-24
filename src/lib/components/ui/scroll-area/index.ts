@@ -1,10 +1,18 @@
 import Root, { type RootProps } from "./scroll-area-root.svelte";
-import Scrollbar, { type ScrollbarProps } from "./scroll-area-scrollbar.svelte";
+import Viewport, { type ViewportProps } from "./scroll-area-viewport.svelte";
+import ScrollbarVertical, { type ScrollbarVerticalProps, type VerticalThumbProps } from "./scroll-area-scrollbar-vertical.svelte";
+import ScrollbarHorizontal, { type HorizontalThumbProps, type ScrollbarHorizontalProps } from "./scroll-area-scrollbar-horizontal.svelte";
 
 export {
 	Root,
-	Scrollbar,
+	Viewport,
+	ScrollbarVertical,
+	ScrollbarHorizontal,
 	//
 	type RootProps,
-	type ScrollbarProps
+	type ViewportProps,
+	type ScrollbarVerticalProps,
+	type ScrollbarHorizontalProps,
+	type VerticalThumbProps,
+	type HorizontalThumbProps
 };

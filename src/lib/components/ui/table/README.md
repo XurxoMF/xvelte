@@ -49,7 +49,7 @@ Use Table for genuinely tabular information whose rows and columns have meaningf
 </Table.Root>
 ```
 
-Root renders a native `<table>` inside an xvelte Scroll Area configured for horizontal scrolling. The remaining parts map directly to native table elements.
+Root renders a native `<table>` inside an explicitly composed xvelte Scroll Area Root, Viewport, and ScrollbarHorizontal. This composition remains internal to Table; the remaining public parts map directly to native table elements.
 
 ## Basic usage
 
@@ -157,17 +157,18 @@ All native attributes—including `scope`, `colspan`, `rowspan`, ARIA attributes
 
 ## Styling and DOM contract
 
-| Element        | Stable hook                                      |
-| -------------- | ------------------------------------------------ |
-| Scroll wrapper | `data-slot="table-container"` on ScrollArea.Root |
-| Table          | `data-slot="table"`                              |
-| Caption        | `data-slot="table-caption"`                      |
-| Header         | `data-slot="table-header"`                       |
-| Body           | `data-slot="table-body"`                         |
-| Footer         | `data-slot="table-footer"`                       |
-| Row            | `data-slot="table-row"`                          |
-| Head           | `data-slot="table-head"`                         |
-| Cell           | `data-slot="table-cell"`                         |
+| Element         | Stable hook                                      |
+| --------------- | ------------------------------------------------ |
+| Scroll wrapper  | `data-slot="table-container"` on ScrollArea.Root |
+| Scroll viewport | `data-slot="scroll-area-viewport"`               |
+| Table           | `data-slot="table"`                              |
+| Caption         | `data-slot="table-caption"`                      |
+| Header          | `data-slot="table-header"`                       |
+| Body            | `data-slot="table-body"`                         |
+| Footer          | `data-slot="table-footer"`                       |
+| Row             | `data-slot="table-row"`                          |
+| Head            | `data-slot="table-head"`                         |
+| Cell            | `data-slot="table-cell"`                         |
 
 Row recognizes `data-state="selected"`. The scroll container's viewport, scrollbar, and thumb hooks are documented by Scroll Area. Root exposes no direct prop for styling that outer container; use `data-slot="table-container"` in app-level CSS when necessary.
 
@@ -252,8 +253,11 @@ Copy Scroll Area and follow its README:
 ```text
 scroll-area/
 ├── index.ts
+├── scroll-area-context.svelte.ts
 ├── scroll-area-root.svelte
-└── scroll-area-scrollbar.svelte
+├── scroll-area-scrollbar-horizontal.svelte
+├── scroll-area-scrollbar-vertical.svelte
+└── scroll-area-viewport.svelte
 ```
 
 ### Component files and other integration

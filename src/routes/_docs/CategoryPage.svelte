@@ -10,7 +10,7 @@
 
 <svelte:head><title>{title} — xvelte</title></svelte:head>
 
-<main class="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
+<div class="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
 	<Typography.P class="text-primary">Library</Typography.P>
 	<Typography.H1>{title}</Typography.H1>
 	<Typography.P class="text-muted-foreground">{description}</Typography.P>
@@ -27,4 +27,4 @@
 			</a>
 		{/each}
 	</div>
-</main>
+</div>

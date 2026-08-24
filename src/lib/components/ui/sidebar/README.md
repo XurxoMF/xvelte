@@ -244,7 +244,7 @@ Type: `ProviderProps`, native `<div>` attributes plus:
 | `ref`          | `HTMLDivElement \| null`  | `null`  | Bindable wrapper element.                                                 |
 | `children`     | `Snippet`                 | —       | Sidebar Root and main Inset.                                              |
 
-Provider renders `data-slot="sidebar-wrapper"`, installs the global Ctrl/Cmd+B listener, sets context, writes desktop changes to a seven-day cookie, and uses full parent height.
+Provider renders `data-slot="sidebar-provider"`, installs the global Ctrl/Cmd+B listener, sets context, writes desktop changes to a seven-day cookie, and uses full parent height.
 
 #### `Sidebar.Root`
 
@@ -349,7 +349,7 @@ Changing these source constants changes collection-wide defaults. Provider expos
 
 ## Styling and DOM contract
 
-Every visible part has a stable `data-slot`: `sidebar-wrapper`, `sidebar`, `sidebar-gap`, `sidebar-container`, `sidebar-inner`, `sidebar-header`, `sidebar-content`, `sidebar-footer`, `sidebar-group`, `sidebar-group-label`, `sidebar-group-action`, `sidebar-group-content`, `sidebar-menu`, `sidebar-menu-item`, `sidebar-menu-button`, `sidebar-menu-action`, `sidebar-menu-badge`, `sidebar-menu-sub`, `sidebar-menu-sub-item`, `sidebar-menu-sub-button`, `sidebar-input`, `sidebar-separator`, `sidebar-trigger`, `sidebar-rail`, and `sidebar-inset`.
+Every visible part has a stable `data-slot`: `sidebar-provider`, `sidebar`, `sidebar-gap`, `sidebar-container`, `sidebar-inner`, `sidebar-header`, `sidebar-content`, `sidebar-footer`, `sidebar-group`, `sidebar-group-label`, `sidebar-group-action`, `sidebar-group-content`, `sidebar-menu`, `sidebar-menu-item`, `sidebar-menu-button`, `sidebar-menu-action`, `sidebar-menu-badge`, `sidebar-menu-sub`, `sidebar-menu-sub-item`, `sidebar-menu-sub-button`, `sidebar-input`, `sidebar-separator`, `sidebar-trigger`, `sidebar-rail`, and `sidebar-inset`.
 
 Most sidebar-specific parts also expose `data-sidebar` with the shorter role name. Desktop Root exposes stable state attributes:
 
@@ -358,7 +358,7 @@ Most sidebar-specific parts also expose `data-sidebar` with the shorter role nam
 - `data-variant="sidebar|floating|inset"`
 - `data-side="left|right"`
 
-Mobile Root exposes `data-mobile="true"`. MenuButton and MenuSubButton expose `data-size` and `data-active`. Step-specific named Tailwind groups and peers such as `group/sidebar-wrapper`, `group/menu-item`, and `peer/menu-button` coordinate sibling presentation and are part of the local styling contract.
+Mobile Root exposes `data-mobile="true"`. MenuButton and MenuSubButton expose `data-size` and `data-active`. Step-specific named Tailwind groups and peers such as `group/sidebar-provider`, `group/menu-item`, and `peer/menu-button` coordinate sibling presentation and are part of the local styling contract.
 
 Provider defines `--sidebar-width` and `--sidebar-width-icon`; mobile Content replaces `--sidebar-width`. Classes use `cn()` except delegated prop objects, whose class is already built with `cn()` before being passed, and Trigger, which forwards its `class` prop to Button. Root's desktop outer state wrapper has fixed classes while caller class targets the container.
 

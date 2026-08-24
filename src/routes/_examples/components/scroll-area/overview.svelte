@@ -6,10 +6,13 @@
 </script>
 
 <ScrollArea.Root class="h-72 w-full rounded-lg border">
-	<div class="space-y-2 p-4">
-		<Typography.H2>Releases</Typography.H2>
-		{#each releases as release (release)}
-			<Typography.P>{release}</Typography.P>
-		{/each}
-	</div>
+	<ScrollArea.Viewport>
+		<div class="space-y-2 p-4">
+			<Typography.H2>Releases</Typography.H2>
+			{#each releases as release (release)}
+				<Typography.P>{release}</Typography.P>
+			{/each}
+		</div>
+	</ScrollArea.Viewport>
+	<ScrollArea.ScrollbarVertical />
 </ScrollArea.Root>

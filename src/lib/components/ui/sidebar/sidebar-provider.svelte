@@ -41,10 +41,10 @@
 <svelte:window onkeydown={sidebar.handleShortcutKeydown} />
 
 <div
-	data-slot="sidebar-wrapper"
+	data-slot="sidebar-provider"
 	style="--sidebar-width: {Sidebar.SIDEBAR_WIDTH}; --sidebar-width-icon: {Sidebar.SIDEBAR_WIDTH_ICON}; {style}"
 	// Changed min-h-svh for h-full so it can fit inside containers
-	class={cn("group/sidebar-wrapper flex h-full w-full has-data-[variant=inset]:bg-sidebar", className)}
+	class={cn("group/sidebar-provider flex h-full w-full has-data-[variant=inset]:bg-sidebar", className)}
 	bind:this={ref}
 	{...restProps}
 >

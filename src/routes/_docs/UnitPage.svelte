@@ -17,7 +17,7 @@
 </svelte:head>
 
 {#if unit}
-	<main class="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-14">
+	<main class="mx-auto max-w-[90%] px-5 py-10 sm:px-8 sm:py-14">
 		<nav aria-label="Breadcrumb" class="mb-8 flex items-center gap-2 text-sm text-muted-foreground">
 			<a
 				href={resolve(`/${kind === "component" ? "components" : kind === "hook" ? "hooks" : "attachments"}` as Pathname)}

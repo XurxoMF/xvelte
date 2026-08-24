@@ -126,4 +126,6 @@
 	{/each}
 {/snippet}
 
-{@render renderBlocks(blocks)}
+<Typography.Prose>
+	{@render renderBlocks(blocks)}
+</Typography.Prose>

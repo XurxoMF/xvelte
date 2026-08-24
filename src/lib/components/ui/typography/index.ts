@@ -9,6 +9,7 @@ import Blockquote, { type BlockquoteProps } from "./typography-blockquote.svelte
 import InlineCode, { type InlineCodeProps } from "./typography-inline-code.svelte";
 import Leading, { type LeadingProps } from "./typography-leading.svelte";
 import Link, { type LinkProps } from "./typography-link.svelte";
+import Prose, { type ProseProps } from "./typography-prose.svelte";
 
 export {
 	H1,
@@ -22,6 +23,7 @@ export {
 	InlineCode,
 	Leading,
 	Link,
+	Prose,
 	//
 	type H1Props,
 	type H2Props,
@@ -33,5 +35,6 @@ export {
 	type BlockquoteProps,
 	type InlineCodeProps,
 	type LeadingProps,
-	type LinkProps
+	type LinkProps,
+	type ProseProps
 };

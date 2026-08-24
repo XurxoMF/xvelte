@@ -1,6 +1,6 @@
 # Typography
 
-A custom collection of styled native text elements for consistent headings, paragraphs, leading copy, links, block quotations, and inline code. Every part preserves its native semantics, accepts native attributes, merges classes, and exposes a bindable element reference.
+A custom collection of styled native text elements for consistent headings, paragraphs, leading copy, links, block quotations, and inline code, plus a simple Prose container for document rhythm. Every part preserves its native semantics, accepts native attributes, merges classes, and exposes a bindable element reference.
 
 Use Typography to apply the xvelte text scale to authored content without repeating utility classes. Keep heading levels in document order, use Link only for real navigation, and use Code for full syntax-highlighted blocks rather than InlineCode.
 
@@ -27,19 +27,21 @@ Use Typography to apply the xvelte text scale to authored content without repeat
 </script>
 ```
 
-`index.ts` exports `H1`, `H2`, `H3`, `H4`, `H5`, `H6`, `P`, `Leading`, `Link`, `Blockquote`, and `InlineCode`, together with a matching props type for every part.
+`index.ts` exports `Prose`, `H1`, `H2`, `H3`, `H4`, `H5`, `H6`, `P`, `Leading`, `Link`, `Blockquote`, and `InlineCode`, together with a matching props type for every part.
 
 ## Anatomy
 
-Typography parts are independent native elements rather than a required compound structure:
+Typography text parts remain independent native elements. Wrap document-like content in Prose when it should share a consistent vertical rhythm:
 
 ```svelte
-<Typography.H1>Page title</Typography.H1>
-<Typography.Leading>Short introduction.</Typography.Leading>
-<Typography.P>Body paragraph.</Typography.P>
+<Typography.Prose>
+	<Typography.H1>Page title</Typography.H1>
+	<Typography.Leading>Short introduction.</Typography.Leading>
+	<Typography.P>Body paragraph.</Typography.P>
+</Typography.Prose>
 ```
 
-Choose the part for its HTML meaning first and its visual size second.
+Prose is optional and renders a neutral `div`; choose every text part for its HTML meaning first and its visual size second.
 
 ## Basic usage
 
@@ -48,7 +50,7 @@ Choose the part for its HTML meaning first and its visual size second.
 	import * as Typography from "$lib/components/ui/typography";
 </script>
 
-<article class="space-y-4">
+<Typography.Prose>
 	<Typography.H1>Designing resilient interfaces</Typography.H1>
 	<Typography.Leading>A practical guide to predictable application layouts.</Typography.Leading>
 	<Typography.P>
@@ -56,7 +58,7 @@ Choose the part for its HTML meaning first and its visual size second.
 		<Typography.Link href="/guide">complete guide</Typography.Link>
 		for examples.
 	</Typography.P>
-</article>
+</Typography.Prose>
 ```
 
 ## Examples
@@ -103,6 +105,7 @@ Typography is original xvelte code built from native HTML. Every part accepts th
 
 | Part and type                    | Element      | Default classes                                                                     |
 | -------------------------------- | ------------ | ----------------------------------------------------------------------------------- |
+| `Prose` — `ProseProps`           | `div`        | Vertical flex layout, general one-rem gap, and extra spacing before later headings. |
 | `H1` — `H1Props`                 | `h1`         | Scroll margin, semibold, tight tracking, 2.25rem text and 3rem on large screens.    |
 | `H2` — `H2Props`                 | `h2`         | Scroll margin, 1.875rem semibold text, tight tracking, color transition.            |
 | `H3` — `H3Props`                 | `h3`         | Scroll margin, 1.5rem semibold text, tight tracking.                                |
@@ -115,13 +118,15 @@ Typography is original xvelte code built from native HTML. Every part accepts th
 | `Blockquote` — `BlockquoteProps` | `blockquote` | Logical start border, start padding, and italic text.                               |
 | `InlineCode` — `InlineCodeProps` | `code`       | Relative rounded muted background, compact padding, monospace, small semibold text. |
 
-All native attributes and handlers are forwarded. Classes merge through `cn()` after defaults. Heading props use the common `HTMLAttributes<HTMLHeadingElement>` type; each rendered tag remains fixed by its component.
+All native attributes and handlers are forwarded. Classes merge through `cn()` after defaults. Prose uses `HTMLAttributes<HTMLDivElement>`; heading props use the common `HTMLAttributes<HTMLHeadingElement>` type, and each rendered tag remains fixed by its component.
 
 ## Styling and DOM contract
 
-Every part adds a stable slot matching its exported role: `typography-h1` through `typography-h6`, `typography-p`, `typography-leading`, `typography-link`, `typography-blockquote`, and `typography-inline-code`. Typography adds no state attributes, internal wrappers, or stable custom classes; the slot and rendered native tag are the public styling boundaries.
+Every part adds a stable slot matching its exported role: `typography-prose`, `typography-h1` through `typography-h6`, `typography-p`, `typography-leading`, `typography-link`, `typography-blockquote`, and `typography-inline-code`. Typography adds no state attributes or stable custom classes; the slot and rendered native tag are the public styling boundaries.
 
-Semantic tokens are `primary`, `muted`, `muted-foreground`, and `border`. Class merging lets callers replace type size, weight, color, spacing, or decoration. No automatic vertical rhythm is added between sibling components; the app controls surrounding spacing.
+Prose uses `flex flex-col gap-4` as its general rhythm. A direct heading child whose slot starts with `typography-h` receives `mt-4` unless it is the first child; no other child type has a special spacing rule. This also spaces non-Typography blocks such as Code, List, Table, and Separator without coupling Prose to them. Typography parts used outside Prose add no surrounding vertical rhythm.
+
+Semantic tokens are `primary`, `muted`, `muted-foreground`, and `border`. Class merging lets callers replace type size, weight, color, spacing, or decoration.
 
 ## Accessibility
 
@@ -204,6 +209,7 @@ export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
 ```text
 typography/
 ├── index.ts
+├── typography-prose.svelte
 ├── typography-blockquote.svelte
 ├── typography-h1.svelte
 ├── typography-h2.svelte
@@ -223,6 +229,7 @@ Typography needs no other xvelte component, hook, attachment, context, localizat
 
 | File                            | Responsibility                                          |
 | ------------------------------- | ------------------------------------------------------- |
+| `typography-prose.svelte`       | General document gap and heading-specific rhythm.       |
 | `typography-h1.svelte`          | Level-one heading and its largest visual scale.         |
 | `typography-h2.svelte`          | Level-two heading and bottom-border treatment.          |
 | `typography-h3.svelte`          | Level-three heading presentation.                       |

@@ -84,7 +84,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `toggle-group`
 - `tooltip`
 - `tree-view`
-- `typography`
+- `typography` — semantic text primitives plus a simple Prose container for consistent document rhythm
 - `video`
 - `walkthrough`
 - `widget-grid` — responsive declarative dashboards with headless items, explicit drag, and one touch-friendly native resize handle per item

@@ -18,14 +18,10 @@ src/lib/components/ui/button/README.md
                 │
                 ▼
         _docs/UnitPage.svelte
-     selects the matching document
+   selects and segments the document
                 │
-                ▼
-        _docs/Document.svelte
-     finds xvelte-example comments
-                │
-                ├──► _examples/.../*.svelte   live preview + exact source
-                └──► Markdown.svelte          typed AST + xvelte components
+                ├──► Markdown.Root            parsed README sections
+                └──► _examples/.../*.svelte   live preview + exact source
 ```
 
 During `bun run build`, SvelteKit calls `entries()` and emits one HTML entry for every known slug, such as `build/components/button.html`. The `[slug]` folder avoids maintaining 82 nearly identical route files; it does not mean that the production site needs a server.
@@ -38,8 +34,8 @@ During `bun run build`, SvelteKit calls `entries()` and emits one HTML entry for
 - `_examples/components/<slug>/*.svelte`, `_examples/hooks/<slug>/*.svelte`, and `_examples/attachments/<slug>/*.svelte` are real, independently compiled previews.
 - An invisible `<!-- xvelte-example: overview -->` README comment places the matching `overview.svelte` preview at that exact position on the website.
 - `_docs/examples.ts` discovers both the compiled preview and its raw source. The Preview tab renders the component and the Code tab therefore always displays the exact same file.
-- `$lib/hooks/use-markdown.svelte.ts` parses repository Markdown into a standard mdast tree with CommonMark, GFM, heading IDs, and GitHub alert metadata.
-- `_docs/Markdown.svelte` composes the public `UseMarkdown` hook and `Markdown.Root` renderer instead of injecting parser-generated HTML. Markdown code fences use Shiki's lazy language registry and treat unknown languages as plain text.
+- `UnitPage.svelte` finds preview markers, parses each remaining README section through `parseMarkdown`, and passes its mdast directly to `Markdown.Root` instead of injecting parser-generated HTML.
+- Markdown code fences use Code's lazy Shiki language registry and treat unknown languages as plain text.
 - The sidebar renders separate Components, Hooks, and Attachments groups from `_docs/catalog.ts`; its search filters all three groups by title and hides groups without matches.
 - `layout.css` owns the reusable global theme and may only receive collection-wide theme changes. The landing page keeps its decorative grid mask in its own scoped `<style>` block; documentation content relies on the xvelte components' local styles.
 

@@ -1,42 +1,43 @@
 # Hooks
 
-Reactive helpers for viewport state, persisted frequency-and-recency ranking, accelerating repeated actions, and document tables of contents. Each hook is a standalone file imported directly from `$lib/hooks`; there is no shared `index.ts`.
+Reactive helpers for viewport state, persisted frequency-and-recency ranking, Markdown parsing, accelerating repeated actions, and document tables of contents. Each hook is a standalone file imported directly from `$lib/hooks`; there is no shared `index.ts`.
 
 Use only the hook needed by your feature. Some hooks depend on browser APIs and require explicit cleanup or careful server-rendering behavior, documented in their individual sections.
 
 ## Contents
 
 - [Installation](#installation)
-- [isMobile](#ismobile)
-- [useFrecency](#usefrecency)
-- [useRamp](#useramp)
-- [useToc](#usetoc)
+- [IsMobile](#ismobile)
+- [UseFrecency](#usefrecency)
+- [UseMarkdown](#usemarkdown)
+- [UseRamp](#useramp)
+- [UseToc](#usetoc)
 - [Credits](#credits)
 - [File organization](#file-organization)
 
 ## Installation
 
-Copy the required `.svelte.ts` files from `src/lib/hooks` to the same path in your project. All four hooks require Svelte 5; only `UseFrecency` requires Runed:
+Copy the required `.svelte.ts` files from `src/lib/hooks` to the same path in your project. All five hooks require Svelte 5; only `UseFrecency` requires Runed, while `UseMarkdown` requires the Markdown packages listed here:
 
 ```sh
 # Bun
-bun add runed
+bun add runed github-slugger mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm
 bun add -D svelte
 
 # npm
-npm install runed
+npm install runed github-slugger mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm
 npm install -D svelte
 
 # pnpm
-pnpm add runed
+pnpm add runed github-slugger mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm
 pnpm add -D svelte
 ```
 
-Omit `runed` when you do not copy `use-frecency.svelte.ts`. `IsMobile` extends Svelte's `MediaQuery`, available since Svelte 5.7. The repository currently develops against the stable Svelte and Runed versions declared in `package.json` and `bun.lock`.
+Omit `runed` when you do not copy `use-frecency.svelte.ts`, and omit the Markdown packages when you do not copy `use-markdown.svelte.ts`. `IsMobile` extends Svelte's `MediaQuery`, available since Svelte 5.7. The repository currently develops against the stable versions declared in `package.json` and `bun.lock`.
 
-These hooks require no Tailwind CSS, global stylesheet values, icons, `$lib/utils` helpers, attachments, localization messages, or generated files. `UseToc` can be used with the xvelte Table of Contents component, but that component is optional.
+These hooks require no Tailwind CSS, global stylesheet values, icons, `$lib/utils` helpers, attachments, localization messages, or generated files. `UseMarkdown` can be used with the xvelte Markdown component and `UseToc` with Table of Contents, but both renderers are optional.
 
-## isMobile
+## IsMobile
 
 `IsMobile` is a reactive media-query class that reports whether the viewport is narrower than a configurable breakpoint. Use it when JavaScript behavior or component composition genuinely changes by viewport. Prefer CSS media or container queries when only presentation changes, particularly in server-rendered pages.
 
@@ -131,7 +132,7 @@ During server-side rendering the viewport is unknown. Because `IsMobile` does no
 
 `IsMobile` requires only Svelte 5.7 or newer and the single `is-mobile.svelte.ts` file. The shared installation command is under Installation. It requires no Runed package, browser storage, CSS, icons, xvelte components, other hooks, attachments, or localization configuration.
 
-## useFrecency
+## UseFrecency
 
 `UseFrecency` stores how often and how recently string keys were used, then returns them ordered by a time-decayed score. Use it to rank command items, recent destinations, search choices, or other stable identifiers. Do not store private content in the keys or use the ranking as a precise analytics system.
 
@@ -287,7 +288,151 @@ Do not place sensitive user content in storage keys. Treat persisted preferences
 
 Copy `use-frecency.svelte.ts` and install `runed` plus Svelte using the shared commands under Installation. No CSS, icons, `$lib/utils` exports, xvelte components, hooks, attachments, or localization setup are required. Storage behavior comes from Runed's `PersistedState`; no separate storage file must be copied.
 
-## useRamp
+## UseMarkdown
+
+`UseMarkdown` reactively converts a replaceable Markdown string into a standard mdast tree. The same file exports the pure `parseMarkdown` function for static, server, build-time, or manually reactive use. Parsing follows CommonMark plus GitHub Flavored Markdown and adds only stable heading IDs and GitHub alert metadata to mdast's open `data` field.
+
+Use this hook when an application needs to inspect, transform, render, index, or derive navigation from Markdown rather than immediately generating HTML. It does not read files, fetch URLs, render components, highlight code, sanitize HTML, or observe headings in the DOM.
+
+<!-- xvelte-example: overview -->
+
+### Import
+
+```svelte
+<script lang="ts">
+	import { UseMarkdown, parseMarkdown, type MarkdownAlertKind, type MarkdownAst } from "$lib/hooks/use-markdown.svelte";
+</script>
+```
+
+The file exports `UseMarkdown`, `parseMarkdown`, `MarkdownAst`, and `MarkdownAlertKind`.
+
+### Basic usage
+
+```svelte
+<script lang="ts">
+	import { UseMarkdown } from "$lib/hooks/use-markdown.svelte";
+
+	let source = $state("# Overview");
+	const markdown = new UseMarkdown();
+
+	$effect(() => {
+		markdown.source = source;
+	});
+</script>
+
+<pre>{JSON.stringify(markdown.current, null, 2)}</pre>
+```
+
+Assigning `source` reparses the complete string and updates `current` reactively. The hook does not debounce rapid changes; add application-level debouncing for a live editor when required.
+
+For a static value, avoid creating reactive state:
+
+```ts
+const ast = parseMarkdown(readmeSource);
+```
+
+### Examples
+
+#### Render with xvelte Markdown
+
+```svelte
+<script lang="ts">
+	import * as Markdown from "$lib/components/ui/markdown";
+	import * as Typography from "$lib/components/ui/typography";
+</script>
+
+<Typography.Prose>
+	<Markdown.Root ast={markdown.current} />
+</Typography.Prose>
+```
+
+Markdown.Root is optional. Iterate over `current.children` when the application needs a custom renderer or transformation.
+
+#### Replace source loaded from a URL
+
+```ts
+const response = await fetch(documentUrl);
+if (!response.ok) throw new Error("Unable to load documentation");
+markdown.source = await response.text();
+```
+
+Fetching, authorization, caching, size limits, error handling, and trust policy belong to the app. The hook accepts only the resulting string.
+
+#### Heading IDs and alerts
+
+```md
+# Installation
+
+# Installation
+
+> [!WARNING]
+> Back up the database first.
+```
+
+The headings receive `data.headingId` values `installation` and `installation-1`. The blockquote remains a standard mdast `blockquote` but receives `data.alert="warning"`; its marker is removed from the first text node so renderers do not display it twice.
+
+### Public API
+
+#### `parseMarkdown(source)`
+
+```ts
+function parseMarkdown(source: string): MarkdownAst;
+```
+
+| Parameter | Type     | Behavior                                                                    |
+| --------- | -------- | --------------------------------------------------------------------------- |
+| `source`  | `string` | Parsed synchronously as CommonMark plus the configured official GFM syntax. |
+
+Each call creates a new mdast root and a new GitHub slugger, so duplicate heading suffixes are deterministic per document. The returned tree retains mdast source positions.
+
+#### `UseMarkdown`
+
+```ts
+const markdown = new UseMarkdown(source?);
+```
+
+| Member              | Type                   | Default    | Behavior                                                    |
+| ------------------- | ---------------------- | ---------- | ----------------------------------------------------------- |
+| `new UseMarkdown()` | `(source?: string)`    | `""`       | Creates the reactive parser with an optional initial value. |
+| `source`            | getter/setter `string` | `""`       | Current source; assignment causes a reactive reparse.       |
+| `current`           | readonly `MarkdownAst` | Empty root | Current standard mdast tree with xvelte metadata.           |
+
+#### Public types and metadata
+
+```ts
+type MarkdownAst = Root;
+
+type MarkdownAlertKind = "note" | "tip" | "important" | "warning" | "caution";
+```
+
+The hook augments mdast's public `Data` interface with two optional fields:
+
+| Field       | Type                | Nodes        | Purpose                                                   |
+| ----------- | ------------------- | ------------ | --------------------------------------------------------- |
+| `headingId` | `string`            | `heading`    | Unique GitHub-style slug derived from plain heading text. |
+| `alert`     | `MarkdownAlertKind` | `blockquote` | Parsed GitHub alert marker.                               |
+
+All other node shapes come directly from the [mdast specification](https://github.com/syntax-tree/mdast). Exact Markdown parsing behavior follows the [GitHub Flavored Markdown specification](https://github.github.com/gfm/).
+
+### Reactivity and lifecycle
+
+`parseMarkdown` is synchronous, deterministic, environment-independent, and non-reactive. `UseMarkdown.current` is a Svelte derived value over `source`; it requires no browser API, effect, cleanup, or `destroy()` call and is safe during SSR.
+
+Parsing work grows with the complete source. Avoid assigning on every keystroke for unusually large live documents without debouncing. Each parse returns new node objects; do not retain object identity across source replacements.
+
+### Accessibility and localization
+
+The hook renders no content and contains no human-readable copy. It preserves source text and structure without deciding semantics beyond the AST. Accessibility and localization belong to the chosen renderer and the Markdown source.
+
+GitHub alert keywords and generated IDs are technical syntax and are not translated. A renderer should localize visible alert titles, preserve heading levels, handle image alternatives, produce usable footnotes, and reject unsafe destinations or raw HTML according to its trust model.
+
+### Dependencies
+
+Copy `use-markdown.svelte.ts` and install `github-slugger`, `mdast-util-from-markdown`, `mdast-util-gfm`, and `micromark-extension-gfm` using the shared commands under Installation. `mdast-util-from-markdown` supplies the typed mdast root; the two GFM packages add GitHub extensions; `github-slugger` generates compatible unique heading IDs.
+
+The hook requires Svelte 5 only for the optional `UseMarkdown` class. The pure `parseMarkdown` function has no browser dependency. No Runed package, CSS, icons, `$lib/utils` exports, components, other hooks, attachments, localization setup, or generated files are required.
+
+## UseRamp
 
 `useRamp` repeats an increment after an initial delay and gradually shortens the interval while an interaction remains active. Use it to build press-and-hold steppers, scrub controls, or other repeated adjustments. It supplies timing and state only; the consuming control owns pointer, keyboard, disabled, focus, and labeling behavior.
 
@@ -428,7 +573,7 @@ Labels, values, units, validation, and feedback are supplied and translated by t
 
 `useRamp` requires only Svelte 5 runes and `use-ramp.svelte.ts`. The shared installation command is under Installation. It requires no Runed package, CSS, icons, `$lib/utils` exports, xvelte components, other hooks, attachments, contexts, or localization setup.
 
-## useToc
+## UseToc
 
 `UseToc` builds a reactive nested hierarchy from the headings inside one element and marks an intersecting heading as active. Use it to power an “On this page” navigation for browser-rendered content. It observes DOM structure and visibility; it does not render the navigation, generate heading IDs, scroll links, or manage history.
 
@@ -608,6 +753,7 @@ The APIs, algorithms, behavior, and limitations in this guide describe the local
 | ------------------------ | ------------------------------------------------------------------------------------------------------- |
 | `is-mobile.svelte.ts`    | Reactive below-breakpoint media query.                                                                  |
 | `use-frecency.svelte.ts` | Persisted usage metadata, scoring, ordering, limiting, and reset behavior.                              |
+| `use-markdown.svelte.ts` | CommonMark/GFM parsing, mdast types, GitHub alert metadata, stable heading IDs, and reactive source.    |
 | `use-ramp.svelte.ts`     | Accelerating timeout loop, continuation guard, controls, and reactive status.                           |
 | `use-toc.svelte.ts`      | Heading discovery, hierarchy construction, DOM observation, active state, types, and attribute exports. |
 | `README.md`              | Shared installation and complete guide for each hook.                                                   |

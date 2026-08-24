@@ -24,7 +24,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `carousel`
 - `chart`
 - `checkbox`
-- `code` — Shiki code blocks with caller-provided, on-demand language loaders
+- `code` — Shiki code blocks with automatic lazy loading for bundled languages and aliases, plus caller overrides for custom grammars
 - `collapsible`
 - `color-picker`
 - `combobox`
@@ -52,6 +52,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `knob`
 - `label`
 - `list` — semantic ordered and unordered lists with configurable spacing and reusable exported class variants
+- `markdown` — headless mdast renderer for CommonMark, GFM, GitHub alerts, xvelte components, and lazy Shiki languages
 - `menubar`
 - `navigation-menu`
 - `pagination`
@@ -101,6 +102,7 @@ Paths are relative to `src/lib/hooks`.
 
 - `is-mobile.svelte.ts`
 - `use-frecency.svelte.ts`
+- `use-markdown.svelte.ts` — pure and reactive CommonMark/GFM parsing to mdast with stable heading IDs and GitHub alert metadata
 - `use-ramp.svelte.ts`
 - `use-toc.svelte.ts`
 

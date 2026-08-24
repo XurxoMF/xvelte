@@ -36,7 +36,7 @@
 	/** Props for syntax-highlighted code loaded on demand. */
 	export type HighlightedRootProps = BaseRootProps & {
 		lang: string;
-		loadLanguage: LanguageLoader;
+		loadLanguage?: LanguageLoader | undefined;
 	};
 
 	/** Props accepted by the Code root. */
@@ -47,6 +47,7 @@
 	import { cn } from "$lib/utils";
 
 	import { setCodeContext } from "./code-context.svelte.js";
+	import { resolveLanguage } from "./shiki";
 
 	let {
 		ref = $bindable(null),
@@ -61,6 +62,8 @@
 		...restProps
 	}: RootProps = $props();
 
+	let resolvedLanguage = $derived(resolveLanguage(lang, loadLanguage));
+
 	const codeState = setCodeContext({
 		get code() {
 			return code.trimEnd();
@@ -72,10 +75,10 @@
 			return highlight;
 		},
 		get lang() {
-			return lang;
+			return resolvedLanguage.lang;
 		},
 		get loadLanguage() {
-			return loadLanguage;
+			return resolvedLanguage.loadLanguage;
 		}
 	});
 </script>

@@ -48,5 +48,13 @@
 	"purple_mink_carousel": "carousel",
 	"round_larch_slide": "slide",
 	"blue_heron_move": "Move widget",
-	"green_otter_resize_bottom_right": "Resize widget"
+	"green_otter_resize_bottom_right": "Resize widget",
+	"velvet_ibis_turn": "Note",
+	"solar_otter_rest": "Tip",
+	"misty_yak_glow": "Important",
+	"rapid_fern_bloom": "Warning",
+	"silent_coral_drift": "Caution",
+	"gentle_raven_wait": "TODO: Image component",
+	"lunar_badger_pause": "TODO: Footnotes component",
+	"amber_willow_hold": "TODO: Raw HTML renderer"
 }

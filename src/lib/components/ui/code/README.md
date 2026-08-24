@@ -1,6 +1,6 @@
 # Code
 
-A composable code block that highlights source with Shiki, loads each language grammar only when requested, supports light and dark themes, line numbers and highlighted lines, copying, visual variants, and expandable overflow.
+A composable code block that highlights source with Shiki, automatically resolves bundled languages and aliases, loads each grammar only when requested, and supports light and dark themes, line numbers and highlighted lines, copying, visual variants, and expandable overflow.
 
 Use Code for examples, documentation, configuration, commands, and other preformatted source. Use plain `<code>` for a short inline fragment, and do not use this client-rendered component when highlighted markup must be present in server-rendered HTML before JavaScript runs.
 
@@ -37,7 +37,7 @@ Code's `index.ts` exports `Root`, `CopyButton`, `Overflow`, their props types, `
 `Root` owns the source, language loading, highlighting, and shared context. Place `CopyButton` inside it so the button can copy the same source:
 
 ```svelte
-<Code.Root code={source} lang="typescript" loadLanguage={() => import("@shikijs/langs/typescript")}>
+<Code.Root code={source} lang="typescript">
 	<Code.CopyButton tabindex={0} />
 </Code.Root>
 ```
@@ -46,7 +46,7 @@ Wrap the root in `Overflow` when a long block should start collapsed:
 
 ```svelte
 <Code.Overflow>
-	<Code.Root code={source} lang="typescript" loadLanguage={() => import("@shikijs/langs/typescript")}>
+	<Code.Root code={source} lang="typescript">
 		<Code.CopyButton tabindex={0} />
 	</Code.Root>
 </Code.Overflow>
@@ -65,16 +65,16 @@ Wrap the root in `Overflow` when a long block should start collapsed:
 }`;
 </script>
 
-<Code.Root code={source} lang="typescript" loadLanguage={() => import("@shikijs/langs/typescript")} />
+<Code.Root code={source} lang="typescript" />
 ```
 
-The dynamic import creates a separate language chunk. The shared highlighter loads it on first use and reuses it for later TypeScript blocks. `code` remains required because it is the source passed to Shiki and copied by `CopyButton`.
+Code resolves `typescript` through Shiki's lazy bundled registry. The grammar remains a separate chunk, loads on first use, and is reused by later TypeScript blocks. `code` remains required because it is the source passed to Shiki and copied by `CopyButton`.
 
 ## Examples
 
-### Any Shiki language
+### Any bundled Shiki language
 
-Use the matching fine-grained import for any language in the [Shiki language catalog](https://shiki.style/languages):
+Pass any canonical name or alias from the [Shiki language catalog](https://shiki.style/languages):
 
 ```svelte
 <script lang="ts">
@@ -84,12 +84,22 @@ Use the matching fine-grained import for any language in the [Shiki language cat
 	return f"Hello, {name}!"`;
 </script>
 
-<Code.Root code={source} lang="python" loadLanguage={() => import("@shikijs/langs/python")}>
+<Code.Root code={source} lang="py">
 	<Code.CopyButton tabindex={0} />
 </Code.Root>
 ```
 
-`lang` must be a name or alias registered by the module returned from `loadLanguage`. A mismatch throws a descriptive runtime error. Do not build the import path from a runtime language string: explicit imports let the bundler include only the languages your app supports.
+Code normalizes `lang` to lowercase, resolves canonical names such as `python` and aliases such as `py`, and dynamically loads the matching grammar. Unknown identifiers safely fall back to plain text.
+
+### Custom grammar or override
+
+Pass `loadLanguage` only when the grammar is not in Shiki's bundled registry or the app needs to override its loader:
+
+```svelte
+<Code.Root code={source} lang="custom" loadLanguage={() => import("./custom-language")} />
+```
+
+The supplied loader takes precedence over the bundled registry. Its module must register the normalized `lang` name or alias; otherwise Code throws a descriptive runtime error.
 
 ### Plain text without a grammar
 
@@ -110,25 +120,18 @@ Omit both language props to use the default `text` mode:
 
 ### Switch languages dynamically
 
-Keep the available loaders in application code when a block can change language:
+Change only the language name and source; Code resolves each loader automatically:
 
 ```svelte
 <script lang="ts">
 	import * as Code from "$lib/components/ui/code";
 
 	const examples = {
-		typescript: {
-			code: `const answer: number = 42;`,
-			loadLanguage: () => import("@shikijs/langs/typescript")
-		},
-		python: {
-			code: `answer: int = 42`,
-			loadLanguage: () => import("@shikijs/langs/python")
-		}
+		typescript: `const answer: number = 42;`,
+		python: `answer: int = 42`
 	};
 
 	let lang = $state<keyof typeof examples>("typescript");
-	const current = $derived(examples[lang]);
 </script>
 
 <select bind:value={lang} aria-label="Code language">
@@ -136,7 +139,7 @@ Keep the available loaders in application code when a block can change language:
 	<option value="python">Python</option>
 </select>
 
-<Code.Root code={current.code} {lang} loadLanguage={current.loadLanguage} />
+<Code.Root code={examples[lang]} {lang} />
 ```
 
 Changing the language cancels the stale render result. A grammar that already finished loading remains cached in the shared highlighter.
@@ -146,9 +149,9 @@ Changing the language cancels the stale render result. A grammar that already fi
 Line positions are one-based. Pass individual lines or inclusive start/end pairs:
 
 ```svelte
-<Code.Root code={source} lang="svelte" loadLanguage={() => import("@shikijs/langs/svelte")} highlight={[2, [5, 7]]} />
+<Code.Root code={source} lang="svelte" highlight={[2, [5, 7]]} />
 
-<Code.Root code={source} lang="svelte" loadLanguage={() => import("@shikijs/langs/svelte")} hideLines />
+<Code.Root code={source} lang="svelte" hideLines />
 ```
 
 The first block highlights lines 2 and 5 through 7. Highlighting is visual only and does not change the copied source.
@@ -157,7 +160,7 @@ The first block highlights lines 2 and 5 through 7. Highlighting is visual only 
 
 ```svelte
 <Code.Overflow bind:collapsed>
-	<Code.Root code={longSource} lang="json" loadLanguage={() => import("@shikijs/langs/json")} variant="secondary">
+	<Code.Root code={longSource} lang="json" variant="secondary">
 		<Code.CopyButton tabindex={0} />
 	</Code.Root>
 </Code.Overflow>
@@ -168,7 +171,7 @@ The first block highlights lines 2 and 5 through 7. Highlighting is visual only 
 ### Copy result handling
 
 ```svelte
-<Code.Root code={source} lang="bash" loadLanguage={() => import("@shikijs/langs/bash")}>
+<Code.Root code={source} lang="bash">
 	<Code.CopyButton
 		tabindex={0}
 		onCopy={(status) => {
@@ -191,8 +194,8 @@ The callback receives `success` or `failure`. Use it to provide an accessible st
 | Prop             | Type                             | Default     | xvelte behavior                                                                                              |
 | ---------------- | -------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------ |
 | `code`           | `string`                         | Required    | Source passed to Shiki after trailing whitespace is removed with `trimEnd()`. Also supplied to `CopyButton`. |
-| `lang`           | `string`                         | `"text"`    | Shiki language name or alias. Non-plain languages require `loadLanguage`.                                    |
-| `loadLanguage`   | `LanguageLoader`                 | `undefined` | Dynamic import that registers `lang`; required except for the four plain-text identifiers.                   |
+| `lang`           | `string`                         | `"text"`    | Bundled Shiki language name or alias. Values are normalized; unknown identifiers use plain text.             |
+| `loadLanguage`   | `LanguageLoader`                 | `undefined` | Optional custom or overriding dynamic import. It takes precedence over the bundled registry.                 |
 | `variant`        | `"default" \| "secondary"`       | `"default"` | Selects the root border and surface treatment.                                                               |
 | `hideLines`      | `boolean`                        | `false`     | Omits generated CSS line numbers.                                                                            |
 | `highlight`      | `(number \| [number, number])[]` | `[]`        | Highlights one-based lines and inclusive ranges without changing the source.                                 |
@@ -201,19 +204,19 @@ The callback receives `success` or `failure`. Use it to provide an accessible st
 | `class`          | `string`                         | `undefined` | Merged after the selected `codeVariants` classes using `cn()`.                                               |
 | Native div props | Varies                           | —           | Remaining attributes and events are forwarded to the outer `div`.                                            |
 
-`PlainTextRootProps` permits `lang="text"`, `"plaintext"`, `"txt"`, or `"plain"` without a loader. `HighlightedRootProps` requires both a string `lang` and `loadLanguage`.
+`PlainTextRootProps` permits `lang="text"`, `"plaintext"`, `"txt"`, or `"plain"`. `HighlightedRootProps` requires a string `lang` and accepts an optional `loadLanguage` override.
 
 The highlighter uses the JavaScript regular-expression engine and fixed `github-light-default` and `github-dark-default` themes. Themes, transformers, the regex engine, and pre-rendering are not public props. Highlighting begins in a Svelte effect, so server-rendered HTML contains the root but not the generated code markup; it appears after client initialization.
 
 ### `LanguageLoader`
 
-`LanguageLoader` matches Shiki's fine-grained dynamic language imports:
+`LanguageLoader` matches Shiki's fine-grained dynamic language imports and is needed only for custom grammars or overrides:
 
 ```ts
 const loadRust: Code.LanguageLoader = () => import("@shikijs/langs/rust");
 ```
 
-The module may register embedded grammars together with its main language. Loads are deduplicated by `lang`; failures are removed from the cache so a later render can retry.
+The module may register embedded grammars together with its main language. Caller loaders take precedence over Shiki's bundled registry. Loads are deduplicated by normalized `lang`; failures are removed from the cache so a later render can retry.
 
 ### `Code.CopyButton`
 
@@ -286,7 +289,7 @@ Shiki generates semantic `<pre><code>` markup and escapes the source before xvel
 - CSS line numbers and highlighted backgrounds are presentational. Do not rely on them alone to communicate an instruction, error, or code review result.
 - Long lines scroll horizontally. Avoid forcing wrapping when whitespace and indentation are meaningful.
 - The initial server-rendered root is empty because highlighting runs after client initialization. Use a server-side Shiki integration when code must be available without JavaScript or indexed in its highlighted form.
-- When accepting user-selected language names, map them to an allowlisted loader. Do not construct arbitrary import paths from untrusted input.
+- User-selected language names are matched only against Shiki's fixed bundled registries; Code never constructs an import path from the input. Keep custom loaders defined in application code.
 
 ## Localization
 
@@ -395,13 +398,13 @@ export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
 
 ### Internal language loader
 
-Copy `src/lib/components/ui/code/shiki.ts` with the component. It owns the zero-language singleton, language cache, runtime validation, JavaScript regex engine, and two theme imports. Its complete contents are:
+Copy `src/lib/components/ui/code/shiki.ts` with the component. It owns automatic bundled-name and alias resolution, custom-loader precedence, the zero-language singleton, language cache, runtime validation, JavaScript regex engine, and two theme imports. Its complete contents are:
 
 ```ts
 // Follows the best practices established in https://shiki.matsu.io/guide/best-performance
 import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
 import { createHighlighterCore } from "shiki/core";
-import type { bundledLanguages } from "shiki/langs";
+import { bundledLanguages, bundledLanguagesAlias } from "shiki/langs";
 
 /** Dynamically imports one Shiki language and its embedded grammars. */
 export type LanguageLoader = (typeof bundledLanguages)[keyof typeof bundledLanguages];
@@ -411,6 +414,34 @@ export type PlainTextLanguage = "text" | "plaintext" | "txt" | "plain";
 
 const plainTextLanguages = new Set<PlainTextLanguage>(["text", "plaintext", "txt", "plain"]);
 const languageLoads = new Map<string, Promise<void>>();
+
+/** A normalized language plus the optional grammar loader required by Code context. */
+export type ResolvedLanguage = {
+	lang: string;
+	loadLanguage?: LanguageLoader | undefined;
+};
+
+/** Finds one language in Shiki's canonical or alias registries. */
+function bundledLanguageLoader(lang: string): LanguageLoader | undefined {
+	if (lang in bundledLanguages) return bundledLanguages[lang as keyof typeof bundledLanguages];
+	if (lang in bundledLanguagesAlias) return bundledLanguagesAlias[lang as keyof typeof bundledLanguagesAlias];
+	return undefined;
+}
+
+/**
+ * Resolves a language name to a custom loader or Shiki's lazy bundled registry.
+ *
+ * @param language - Requested Shiki language name, alias, or plain-text identifier.
+ * @param loadLanguage - Optional caller loader that takes precedence over the bundled registry.
+ * @returns A normalized highlighted language, or text when the identifier is empty or unknown.
+ */
+export function resolveLanguage(language?: string | null | undefined, loadLanguage?: LanguageLoader | undefined): ResolvedLanguage {
+	const lang = language?.trim().toLowerCase() || "text";
+	if (plainTextLanguages.has(lang as PlainTextLanguage)) return { lang: "text" };
+
+	const resolvedLoader = loadLanguage ?? bundledLanguageLoader(lang);
+	return resolvedLoader ? { lang, loadLanguage: resolvedLoader } : { lang: "text" };
+}
 
 /** A highlighter instance containing only the two xvelte themes until a component requests a language. */
 export const highlighter = createHighlighterCore({
@@ -423,7 +454,7 @@ export const highlighter = createHighlighterCore({
  * Returns the shared highlighter after loading the requested grammar once.
  *
  * @param lang - Shiki language name or alias used to highlight the code.
- * @param loadLanguage - Dynamic import for the requested language. Plain-text identifiers do not require one.
+ * @param loadLanguage - Resolved dynamic import for the requested language. Plain text does not require one.
  * @returns The shared highlighter with the requested grammar available.
  */
 export async function getHighlighter(lang: string, loadLanguage?: LanguageLoader | undefined) {
@@ -433,7 +464,7 @@ export async function getHighlighter(lang: string, loadLanguage?: LanguageLoader
 	if (instance.getLoadedLanguages().includes(lang)) return instance;
 
 	if (!loadLanguage) {
-		throw new Error(`Code.Root requires loadLanguage to highlight "${lang}".`);
+		throw new Error(`Code.Root could not resolve a loader for "${lang}".`);
 	}
 
 	let loading = languageLoads.get(lang);
@@ -606,7 +637,7 @@ No hook, attachment, external context library, global shared style, WebAssembly 
 
 ## Credits
 
-Code is adapted from the [shadcn-svelte-extras Code component](https://shadcn-svelte-extras.com/docs/components/code). The local on-demand language API and cache differ from the source component's fixed language configuration.
+Code is adapted from the [shadcn-svelte-extras Code component](https://shadcn-svelte-extras.com/docs/components/code). The local automatic language registry, optional custom-loader API, and cache differ from the source component's fixed language configuration.
 
 ## File organization
 
@@ -616,7 +647,7 @@ Code is adapted from the [shadcn-svelte-extras Code component](https://shadcn-sv
 | `code-copy-button.svelte` | Copies the root source and renders copy, success, or failure icons.                                   |
 | `code-overflow.svelte`    | Collapses long blocks and renders the gradient and Expand button.                                     |
 | `code-context.svelte.ts`  | Loads and renders reactive source while sharing it with nested parts.                                 |
-| `shiki.ts`                | Creates the theme-only singleton and loads requested language grammars once.                          |
+| `shiki.ts`                | Resolves bundled names and aliases, creates the theme-only singleton, and loads each grammar once.    |
 | `index.ts`                | Exports all public components, types, and the variant function.                                       |
 | `README.md`               | Documents composition, dynamic languages, API, behavior, and installation requirements.               |
 

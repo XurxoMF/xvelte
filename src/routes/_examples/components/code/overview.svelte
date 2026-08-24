@@ -6,4 +6,4 @@
 }`;
 </script>
 
-<Code.Root code={source} lang="typescript" loadLanguage={() => import("@shikijs/langs/typescript")} />
+<Code.Root code={source} lang="typescript" />

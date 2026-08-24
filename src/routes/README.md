@@ -38,8 +38,8 @@ During `bun run build`, SvelteKit calls `entries()` and emits one HTML entry for
 - `_examples/components/<slug>/*.svelte`, `_examples/hooks/<slug>/*.svelte`, and `_examples/attachments/<slug>/*.svelte` are real, independently compiled previews.
 - An invisible `<!-- xvelte-example: overview -->` README comment places the matching `overview.svelte` preview at that exact position on the website.
 - `_docs/examples.ts` discovers both the compiled preview and its raw source. The Preview tab renders the component and the Code tab therefore always displays the exact same file.
-- `_docs/markdown.ts` parses trusted repository Markdown into a typed block and inline AST without adding a runtime Markdown dependency.
-- `_docs/Markdown.svelte` renders that AST with the public Typography, Code, List, Table, and Separator components instead of injecting parser-generated HTML. Its explicit Shiki loader map covers every language used by the current README files and treats unknown languages as plain text.
+- `$lib/hooks/use-markdown.svelte.ts` parses repository Markdown into a standard mdast tree with CommonMark, GFM, heading IDs, and GitHub alert metadata.
+- `_docs/Markdown.svelte` composes the public `UseMarkdown` hook and `Markdown.Root` renderer instead of injecting parser-generated HTML. Markdown code fences use Shiki's lazy language registry and treat unknown languages as plain text.
 - The sidebar renders separate Components, Hooks, and Attachments groups from `_docs/catalog.ts`; its search filters all three groups by title and hides groups without matches.
 - `layout.css` owns the reusable global theme and may only receive collection-wide theme changes. The landing page keeps its decorative grid mask in its own scoped `<style>` block; documentation content relies on the xvelte components' local styles.
 
@@ -54,7 +54,7 @@ For a new component:
 3. Add at least one focused preview under `_examples/components/<slug>`.
 4. Place `<!-- xvelte-example: <filename-without-extension> -->` at the desired position in the component README.
 
-For a new hook or attachment, add its source file and a matching camelCase `##` section between `Installation` and `Credits` in the shared README. For example, `use-viewport.svelte.ts` or `use-viewport.ts` matches `## useViewport`. The catalog, navigation, category index, and static route entry discover it automatically. Create the matching `_examples/<category>/<slug>` file and place the same invisible comment in that unit's README section when it has an interactive preview.
+For a new hook, add its source file and a matching PascalCase `##` section between `Installation` and `Credits` in the shared README. For example, `use-viewport.svelte.ts` matches `## UseViewport`. Attachments keep a camelCase section matching their exported attachment name. The catalog converts either title to the kebab-case source slug, so navigation, the category index, and the static route entry discover it automatically. Create the matching `_examples/<category>/<slug>` file and place the same invisible comment in that unit's README section when it has an interactive preview.
 
 After route changes, run:
 

@@ -1,18 +1,21 @@
 <script lang="ts">
-	import type { Pathname } from "$app/types";
 	import { resolve } from "$app/paths";
+
+	import type { Pathname } from "$app/types";
+	import type { DocKind } from "./catalog";
+	import type { DocExample } from "./examples";
+	import type { MarkdownAst } from "$lib/hooks/use-markdown.svelte";
+
+	import { getUnit } from "./catalog";
+	import { getExample } from "./examples";
+
+	import { parseMarkdown } from "$lib/hooks/use-markdown.svelte";
 
 	import * as Code from "$lib/components/ui/code";
 	import * as Markdown from "$lib/components/ui/markdown";
 	import * as Tabs from "$lib/components/ui/tabs";
 	import * as Typography from "$lib/components/ui/typography";
 	import * as Breadcrumb from "$lib/components/ui/breadcrumb";
-	import { parseMarkdown, type MarkdownAst } from "$lib/hooks/use-markdown.svelte";
-
-	import type { DocKind } from "./catalog";
-	import { getUnit } from "./catalog";
-	import type { DocExample } from "./examples";
-	import { getExample } from "./examples";
 
 	type DocumentSegment = {
 		ast: MarkdownAst;

@@ -1,4 +1,6 @@
-import Root, { type ErrorCorrection, type RootProps } from "./qr-code-root.svelte";
+import type { ErrorCorrection, RootProps } from "./qr-code-root.svelte";
+
+import Root from "./qr-code-root.svelte";
 
 export {
 	Root,

@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-
 	import type { WithElementRef } from "$lib/utils";
 
 	export type ContentProps = WithElementRef<HTMLAttributes<HTMLDivElement>>;
@@ -9,9 +8,9 @@
 <script lang="ts">
 	import emblaCarouselSvelte from "embla-carousel-svelte";
 
-	import { cn } from "$lib/utils";
-
 	import * as Carousel from ".";
+
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: ContentProps = $props();
 

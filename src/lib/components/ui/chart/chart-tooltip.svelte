@@ -1,7 +1,6 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
-
 	import type { WithElementRef, WithoutChildren } from "$lib/utils";
 
 	import * as Chart from ".";
@@ -36,6 +35,7 @@
 	import { getChartContext, Tooltip as TooltipPrimitive } from "layerchart";
 
 	import { getLocale } from "$lib/paraglide/runtime";
+
 	import { cn } from "$lib/utils";
 
 	/** @param value - Tooltip value converted to display text by default. */

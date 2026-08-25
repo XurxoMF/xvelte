@@ -10,6 +10,7 @@
 
 <script lang="ts">
 	import { ChevronRightIcon } from "$lib/icons";
+
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children, variant = "ghost", ...restProps }: NextButtonProps = $props();

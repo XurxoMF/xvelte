@@ -1,19 +1,20 @@
 <script lang="ts" module>
 	import type { WithoutChildren } from "bits-ui";
 
-	import type { RootProps as ButtonProps } from "$lib/components/ui/button";
+	import * as Button from "$lib/components/ui/button";
 
 	/** Props for the audio player's mute button and volume slider. */
-	export type VolumeProps = WithoutChildren<ButtonProps>;
+	export type VolumeProps = WithoutChildren<Button.RootProps>;
 </script>
 
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
-	import * as Slider from "$lib/components/ui/slider";
+	import { getAudioPlayerContext } from "./audio-player-context.svelte";
+
 	import { VolumeIcon, VolumeLowIcon, VolumeMutedIcon } from "$lib/icons";
+
 	import { cn } from "$lib/utils";
 
-	import { getAudioPlayerContext } from "./audio-player-context.svelte";
+	import * as Slider from "$lib/components/ui/slider";
 
 	let { ref = $bindable(null), class: className, onclick, onkeydown, ...restProps }: VolumeProps = $props();
 	const ctx = getAudioPlayerContext();

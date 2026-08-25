@@ -1,17 +1,15 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
 
-	import type { RootProps as ButtonProps } from "$lib/components/ui/button";
+	import * as Button from "$lib/components/ui/button";
 
-	export type PreviousProps = Omit<ButtonProps, "children"> & {
+	export type PreviousProps = Omit<Button.RootProps, "children"> & {
 		child?: Snippet<[{ props: Record<string, unknown> }]> | undefined;
 		children?: Snippet | undefined;
 	};
 </script>
 
 <script lang="ts">
-	import { Root as Button } from "$lib/components/ui/button";
-
 	import { getStepperContext } from "./stepper-context.svelte.js";
 
 	let { disabled = false, onclick, child, children, variant = "outline", size = "default", ...restProps }: PreviousProps = $props();
@@ -37,7 +35,7 @@
 {#if child}
 	{@render child({ props: buttonProps })}
 {:else}
-	<Button {...buttonProps}>
+	<Button.Root {...buttonProps}>
 		{@render children?.()}
-	</Button>
+	</Button.Root>
 {/if}

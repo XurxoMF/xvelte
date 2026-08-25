@@ -1,7 +1,7 @@
 <script lang="ts" module>
-	import type { ComponentProps, Snippet } from "svelte";
-
 	import { Drawer as DrawerPrimitive } from "vaul-svelte";
+
+	import type { ComponentProps, Snippet } from "svelte";
 
 	type PrimitiveTriggerProps = ComponentProps<InstanceType<typeof DrawerPrimitive.Trigger>>;
 	export type TriggerProps = Omit<PrimitiveTriggerProps, "el"> & {

@@ -1,4 +1,5 @@
 // Follows the best practices established in https://shiki.matsu.io/guide/best-performance
+// Follows the best practices established in https://shiki.matsu.io/guide/best-performance
 import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
 import { createHighlighterCore } from "shiki/core";
 import { bundledLanguages, bundledLanguagesAlias } from "shiki/langs";

@@ -1,8 +1,8 @@
 <script lang="ts" module>
+	import { tv } from "tailwind-variants";
+
 	import type { HTMLAnchorAttributes } from "svelte/elements";
-
-	import { type VariantProps, tv } from "tailwind-variants";
-
+	import type { VariantProps } from "tailwind-variants";
 	import type { WithElementRef } from "$lib/utils";
 
 	export const rootVariants = tv({

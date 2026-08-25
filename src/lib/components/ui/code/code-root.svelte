@@ -1,10 +1,11 @@
 <script lang="ts" module>
+	import { tv } from "tailwind-variants";
+
 	import type { WithChildren, WithoutChildren } from "bits-ui";
-	import { type VariantProps, tv } from "tailwind-variants";
-
-	import type { RootProps as ScrollAreaRootProps } from "$lib/components/ui/scroll-area";
-
+	import type { VariantProps } from "tailwind-variants";
 	import type { LanguageLoader, PlainTextLanguage } from "./shiki";
+
+	import * as ScrollArea from "$lib/components/ui/scroll-area";
 
 	export const codeVariants = tv({
 		base: "not-prose relative h-full max-h-[650px] overflow-hidden rounded-lg border",
@@ -40,15 +41,14 @@
 	};
 
 	/** Props accepted by the Code root. */
-	export type RootProps = (PlainTextRootProps | HighlightedRootProps) & WithoutChildren<ScrollAreaRootProps>;
+	export type RootProps = (PlainTextRootProps | HighlightedRootProps) & WithoutChildren<ScrollArea.RootProps>;
 </script>
 
 <script lang="ts">
-	import * as ScrollArea from "$lib/components/ui/scroll-area";
-	import { cn } from "$lib/utils";
-
 	import { setCodeContext } from "./code-context.svelte.js";
 	import { resolveLanguage } from "./shiki";
+
+	import { cn } from "$lib/utils";
 
 	let {
 		ref = $bindable(null),

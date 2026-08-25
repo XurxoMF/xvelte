@@ -1,8 +1,14 @@
-import Container, { type ContainerProps } from "./chart-container.svelte";
-import Tooltip, { type TooltipProps } from "./chart-tooltip.svelte";
-import Style, { type StyleProps } from "./chart-style.svelte";
-import { type ChartContextValue, getChartContext, setChartContext } from "./chart-context";
-import { type ChartConfig, type ExtractSnippetParams, type TooltipPayload, getPayloadConfigFromPayload, THEMES } from "./chart-utils";
+import type { ContainerProps } from "./chart-container.svelte";
+import type { TooltipProps } from "./chart-tooltip.svelte";
+import type { StyleProps } from "./chart-style.svelte";
+import type { ChartContextValue } from "./chart-context";
+import type { ChartConfig, ExtractSnippetParams, TooltipPayload } from "./chart-utils";
+
+import Container from "./chart-container.svelte";
+import Tooltip from "./chart-tooltip.svelte";
+import Style from "./chart-style.svelte";
+import { getChartContext, setChartContext } from "./chart-context";
+import { getPayloadConfigFromPayload, THEMES } from "./chart-utils";
 
 export {
 	Container,

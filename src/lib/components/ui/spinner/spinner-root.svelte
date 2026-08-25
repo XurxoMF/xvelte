@@ -6,7 +6,9 @@
 
 <script lang="ts">
 	import { LoaderIcon } from "$lib/icons";
+
 	import * as m from "$lib/paraglide/messages.js";
+
 	import { cn } from "$lib/utils";
 
 	let {

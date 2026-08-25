@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	import type { Definition, PhrasingContent, RootContent } from "mdast";
-
 	import type { MarkdownAlertKind, MarkdownAst } from "$lib/hooks/use-markdown.svelte";
 
 	/** Props for the headless mdast-to-xvelte renderer. */
@@ -20,7 +19,9 @@
 	import type { Node, Parent } from "unist";
 
 	import { AlertErrorIcon, AlertInfoIcon, AlertSuccessIcon, AlertWarningIcon } from "$lib/icons";
+
 	import * as m from "$lib/paraglide/messages.js";
+
 	import * as Alert from "$lib/components/ui/alert";
 	import * as Checkbox from "$lib/components/ui/checkbox";
 	import * as Code from "$lib/components/ui/code";

@@ -1,5 +1,4 @@
 import type { Component } from "svelte";
-
 import type { DocKind } from "./catalog";
 
 export type DocExample = {

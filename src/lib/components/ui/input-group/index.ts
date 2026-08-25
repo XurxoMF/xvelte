@@ -1,9 +1,16 @@
-import Root, { type RootProps } from "./input-group-root.svelte";
-import Addon, { type AddonProps } from "./input-group-addon.svelte";
-import Button, { type ButtonProps, type ButtonSizes, buttonVariants } from "./input-group-button.svelte";
-import Input, { type InputProps } from "./input-group-input.svelte";
-import Text, { type TextProps } from "./input-group-text.svelte";
-import Textarea, { type TextareaProps } from "./input-group-textarea.svelte";
+import type { RootProps } from "./input-group-root.svelte";
+import type { AddonProps } from "./input-group-addon.svelte";
+import type { ButtonProps, ButtonSizes } from "./input-group-button.svelte";
+import type { InputProps } from "./input-group-input.svelte";
+import type { TextProps } from "./input-group-text.svelte";
+import type { TextareaProps } from "./input-group-textarea.svelte";
+
+import Root from "./input-group-root.svelte";
+import Addon from "./input-group-addon.svelte";
+import Button, { buttonVariants } from "./input-group-button.svelte";
+import Input from "./input-group-input.svelte";
+import Text from "./input-group-text.svelte";
+import Textarea from "./input-group-textarea.svelte";
 
 export {
 	Root,

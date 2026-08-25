@@ -1,7 +1,8 @@
 <script lang="ts">
+	import { UseToc } from "$lib/hooks/use-toc.svelte";
+
 	import * as TableOfContents from "$lib/components/ui/table-of-contents";
 	import * as Typography from "$lib/components/ui/typography";
-	import { UseToc } from "$lib/hooks/use-toc.svelte";
 
 	const headings = new UseToc();
 	let article = $state<HTMLElement>();

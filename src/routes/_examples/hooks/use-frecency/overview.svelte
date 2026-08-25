@@ -1,7 +1,8 @@
 <script lang="ts">
+	import { UseFrecency } from "$lib/hooks/use-frecency.svelte";
+
 	import * as Button from "$lib/components/ui/button";
 	import * as Typography from "$lib/components/ui/typography";
-	import { UseFrecency } from "$lib/hooks/use-frecency.svelte";
 
 	const recentProjects = new UseFrecency("recent-projects", {}, { maxItems: 5 });
 	const projects = [

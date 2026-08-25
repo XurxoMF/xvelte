@@ -1,4 +1,6 @@
-import Root, { rootVariants, type RootVariants, type RootProps } from "./badge-root.svelte";
+import type { RootVariants, RootProps } from "./badge-root.svelte";
+
+import Root, { rootVariants } from "./badge-root.svelte";
 
 export {
 	Root,

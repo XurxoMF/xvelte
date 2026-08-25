@@ -6,6 +6,7 @@
 
 <script lang="ts">
 	import { ChevronDownIcon } from "$lib/icons";
+
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: TriggerProps = $props();

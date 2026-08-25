@@ -1,8 +1,7 @@
 <script lang="ts" module>
-	import type { Snippet } from "svelte";
-
 	import { Dialog as SheetPrimitive } from "bits-ui";
 
+	import type { Snippet } from "svelte";
 	import type { WithoutChildrenOrChild } from "$lib/utils";
 
 	import * as Sheet from ".";
@@ -18,9 +17,12 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
 	import { CloseIcon } from "$lib/icons";
+
 	import * as m from "$lib/paraglide/messages.js";
+
+	import { cn } from "$lib/utils";
+
 	import * as Button from "$lib/components/ui/button";
 
 	let {

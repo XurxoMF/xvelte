@@ -1,5 +1,8 @@
-import Key, { type KeyProps } from "./kbd-key.svelte";
-import Group, { type GroupProps } from "./kbd-group.svelte";
+import type { KeyProps } from "./kbd-key.svelte";
+import type { GroupProps } from "./kbd-group.svelte";
+
+import Key from "./kbd-key.svelte";
+import Group from "./kbd-group.svelte";
 
 export {
 	Key,

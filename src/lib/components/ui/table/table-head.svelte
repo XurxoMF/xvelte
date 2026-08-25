@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	import type { HTMLThAttributes } from "svelte/elements";
-
 	import type { WithElementRef } from "$lib/utils";
 
 	export type HeadProps = WithElementRef<HTMLThAttributes>;

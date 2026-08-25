@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-
 	import type { WithElementRef } from "$lib/utils";
 
 	export type RootPositions = "bottom-right" | "top-left" | "top" | "top-right" | "right" | "bottom" | "bottom-left" | "left";

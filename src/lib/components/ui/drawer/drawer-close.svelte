@@ -1,7 +1,7 @@
 <script lang="ts" module>
-	import type { Snippet } from "svelte";
-
 	import { Drawer as DrawerPrimitive } from "vaul-svelte";
+
+	import type { Snippet } from "svelte";
 
 	export type CloseProps = Omit<DrawerPrimitive.CloseProps, "el"> & {
 		ref?: HTMLButtonElement | undefined;

@@ -1,7 +1,6 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
 	import type { Snippet } from "svelte";
-
 	import type { WithElementRef } from "$lib/utils";
 
 	export type TextProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {

@@ -1,10 +1,18 @@
-import Root, { type RootProps } from "./timeline-root.svelte";
-import Item, { type ItemProps } from "./timeline-item.svelte";
-import Separator, { type SeparatorProps } from "./timeline-separator.svelte";
-import Content, { type ContentProps } from "./timeline-content.svelte";
-import Title, { type TitleProps } from "./timeline-title.svelte";
-import Date, { type DateProps } from "./timeline-date.svelte";
-import Description, { type DescriptionProps } from "./timeline-description.svelte";
+import type { RootProps } from "./timeline-root.svelte";
+import type { ItemProps } from "./timeline-item.svelte";
+import type { SeparatorProps } from "./timeline-separator.svelte";
+import type { ContentProps } from "./timeline-content.svelte";
+import type { TitleProps } from "./timeline-title.svelte";
+import type { DateProps } from "./timeline-date.svelte";
+import type { DescriptionProps } from "./timeline-description.svelte";
+
+import Root from "./timeline-root.svelte";
+import Item from "./timeline-item.svelte";
+import Separator from "./timeline-separator.svelte";
+import Content from "./timeline-content.svelte";
+import Title from "./timeline-title.svelte";
+import Date from "./timeline-date.svelte";
+import Description from "./timeline-description.svelte";
 
 export {
 	Root,

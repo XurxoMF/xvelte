@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { getLocalTimeZone, today } from "@internationalized/date";
+
 	import type { DateRange } from "bits-ui";
 
 	import * as Field from "$lib/components/ui/field";

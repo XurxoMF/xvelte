@@ -1,7 +1,9 @@
 <script lang="ts">
-	import type { Pathname } from "$app/types";
 	import { resolve } from "$app/paths";
+
+	import type { Pathname } from "$app/types";
 	import type { DocUnit } from "./catalog";
+
 	import * as Card from "$lib/components/ui/card";
 	import * as Typography from "$lib/components/ui/typography";
 

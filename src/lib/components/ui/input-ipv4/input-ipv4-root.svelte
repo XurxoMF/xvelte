@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-
 	import type { WithElementRef } from "$lib/utils";
 
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
@@ -13,9 +12,9 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
-
 	import { isNumber, isValidIPv4, safeParseIPv4 } from "./input-ipv4-utils";
+
+	import { cn } from "$lib/utils";
 
 	type PartialOctet = number | string | null;
 	type PartialOctets = [PartialOctet, PartialOctet, PartialOctet, PartialOctet];

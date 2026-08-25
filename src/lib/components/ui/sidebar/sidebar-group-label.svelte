@@ -1,7 +1,6 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
-
 	import type { WithElementRef } from "$lib/utils";
 
 	export type GroupLabelProps = WithElementRef<HTMLAttributes<HTMLElement>> & {

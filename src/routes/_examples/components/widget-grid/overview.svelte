@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 
-	import type { WidgetGridItemState } from "$lib/components/ui/widget-grid";
-
 	import * as WidgetGrid from "$lib/components/ui/widget-grid";
 	import * as Card from "$lib/components/ui/card";
 
@@ -19,12 +17,12 @@
 		{ id: "activity-2", title: "Recent activity 2", description: "No new events 2." }
 	];
 
-	const initialLayout: WidgetGridItemState[] = [
+	const initialLayout: WidgetGrid.WidgetGridItemState[] = [
 		{ id: "activity-1", x: 0, y: 0, width: 2, height: 2 },
 		{ id: "activity-2", x: 2, y: 0, width: 3, height: 3 }
 	];
 
-	let layout = $state<WidgetGridItemState[]>(initialLayout.map((item) => ({ ...item })));
+	let layout = $state<WidgetGrid.WidgetGridItemState[]>(initialLayout.map((item) => ({ ...item })));
 
 	const renderedWidgets = $derived(
 		widgets.map((widget) => ({
@@ -58,7 +56,7 @@
 		});
 	}
 
-	function saveLayout(_state: WidgetGridItemState, states: WidgetGridItemState[]) {
+	function saveLayout(_state: WidgetGrid.WidgetGridItemState, states: WidgetGrid.WidgetGridItemState[]) {
 		layout = states.map(({ id, x, y, width, height }) => ({ id, x, y, width, height }));
 
 		try {

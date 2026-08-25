@@ -1,6 +1,8 @@
 <script lang="ts" module>
-	import { tv, type VariantProps } from "tailwind-variants";
+	import { tv } from "tailwind-variants";
 	import { Tabs as TabsPrimitive } from "bits-ui";
+
+	import type { VariantProps } from "tailwind-variants";
 
 	import { cn } from "$lib/utils";
 

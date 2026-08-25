@@ -6,8 +6,11 @@
 
 <script lang="ts">
 	import { ChevronLeftIcon } from "$lib/icons";
+
 	import * as m from "$lib/paraglide/messages.js";
+
 	import { cn } from "$lib/utils";
+
 	import * as Button from "$lib/components/ui/button";
 
 	let { ref = $bindable(null), class: className, ...restProps }: PreviousProps = $props();

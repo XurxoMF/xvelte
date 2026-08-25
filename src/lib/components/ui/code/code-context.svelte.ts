@@ -1,7 +1,8 @@
 import { createContext } from "svelte";
-import type { HighlighterCore } from "shiki";
 
+import type { HighlighterCore } from "shiki";
 import type { RootProps } from "./code-root.svelte";
+
 import { getHighlighter } from "./shiki";
 
 type CodeContextOptions = {

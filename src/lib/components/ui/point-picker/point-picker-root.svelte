@@ -1,10 +1,8 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
-
-	import type { WithElementRef } from "$lib/utils";
-
 	import type { Point, PointOrigin } from "./point-picker-utils";
+	import type { WithElementRef } from "$lib/utils";
 
 	/** Props accepted by the Point Picker Root component. */
 	export type RootProps = Omit<WithElementRef<HTMLAttributes<HTMLDivElement>>, "children"> & {
@@ -34,10 +32,13 @@
 </script>
 
 <script lang="ts">
-	import * as m from "$lib/paraglide/messages.js";
-	import { cn } from "$lib/utils";
+	import type { RootEvent } from "./point-picker-utils";
 
-	import { clamp, getGridPositions, getKeyboardValue, quantize, type RootEvent } from "./point-picker-utils";
+	import { clamp, getGridPositions, getKeyboardValue, quantize } from "./point-picker-utils";
+
+	import * as m from "$lib/paraglide/messages.js";
+
+	import { cn } from "$lib/utils";
 
 	let {
 		ref = $bindable(null),

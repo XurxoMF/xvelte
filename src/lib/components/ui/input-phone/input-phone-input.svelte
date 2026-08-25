@@ -1,9 +1,9 @@
 <script lang="ts" module>
-	import type { RootProps as BaseInputProps } from "$lib/components/ui/input";
+	import * as Input from "$lib/components/ui/input";
 
 	/** Props for the context-controlled telephone input. */
 	export type InputProps = Omit<
-		BaseInputProps,
+		Input.RootProps,
 		"value" | "type" | "files" | "disabled" | "readonly" | "required" | "aria-invalid" | "data-slot" | "ref"
 	> & {
 		/** Bindable reference to the native telephone input. */
@@ -12,10 +12,9 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
-	import * as Input from "$lib/components/ui/input";
-
 	import { getInputPhoneContext } from "./input-phone-context.svelte";
+
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, autocomplete = "tel", inputmode = "tel", oninput, onblur, ...restProps }: InputProps = $props();
 

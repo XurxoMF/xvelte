@@ -1,18 +1,19 @@
 <script lang="ts" module>
 	import type { HTMLLabelAttributes } from "svelte/elements";
-
 	import type { WithChildren } from "bits-ui";
 
 	export type TriggerProps = WithChildren<{ ref?: HTMLLabelElement | null | undefined }> & Omit<HTMLLabelAttributes, "for">;
 </script>
 
 <script lang="ts">
-	import { UploadIcon } from "$lib/icons";
-	import * as m from "$lib/paraglide/messages.js";
-	import { cn } from "$lib/utils";
-
 	import { getFileDropZoneContext } from "./file-drop-zone-context.svelte.js";
 	import { displaySize } from "./file-drop-zone-utils";
+
+	import { UploadIcon } from "$lib/icons";
+
+	import * as m from "$lib/paraglide/messages.js";
+
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children, ondragover, ondrop, ...restProps }: TriggerProps = $props();
 

@@ -1,21 +1,40 @@
-import Root, { type RootProps } from "./calendar-range-root.svelte";
-import Cell, { type CellProps } from "./calendar-range-cell.svelte";
-import Day, { type DayProps } from "./calendar-range-day.svelte";
-import Grid, { type GridProps } from "./calendar-range-grid.svelte";
-import Header, { type HeaderProps } from "./calendar-range-header.svelte";
-import Months, { type MonthsProps } from "./calendar-range-months.svelte";
-import GridRow, { type GridRowProps } from "./calendar-range-grid-row.svelte";
-import Heading, { type HeadingProps } from "./calendar-range-heading.svelte";
-import HeadCell, { type HeadCellProps } from "./calendar-range-head-cell.svelte";
-import NextButton, { type NextButtonProps } from "./calendar-range-next-button.svelte";
-import PrevButton, { type PrevButtonProps } from "./calendar-range-prev-button.svelte";
-import MonthSelect, { type MonthSelectProps } from "./calendar-range-month-select.svelte";
-import YearSelect, { type YearSelectProps } from "./calendar-range-year-select.svelte";
-import Caption, { type CaptionProps } from "./calendar-range-caption.svelte";
-import Nav, { type NavProps } from "./calendar-range-nav.svelte";
-import Month, { type MonthProps } from "./calendar-range-month.svelte";
-import GridBody, { type GridBodyProps } from "./calendar-range-grid-body.svelte";
-import GridHead, { type GridHeadProps } from "./calendar-range-grid-head.svelte";
+import type { RootProps } from "./calendar-range-root.svelte";
+import type { CellProps } from "./calendar-range-cell.svelte";
+import type { DayProps } from "./calendar-range-day.svelte";
+import type { GridProps } from "./calendar-range-grid.svelte";
+import type { HeaderProps } from "./calendar-range-header.svelte";
+import type { MonthsProps } from "./calendar-range-months.svelte";
+import type { GridRowProps } from "./calendar-range-grid-row.svelte";
+import type { HeadingProps } from "./calendar-range-heading.svelte";
+import type { HeadCellProps } from "./calendar-range-head-cell.svelte";
+import type { NextButtonProps } from "./calendar-range-next-button.svelte";
+import type { PrevButtonProps } from "./calendar-range-prev-button.svelte";
+import type { MonthSelectProps } from "./calendar-range-month-select.svelte";
+import type { YearSelectProps } from "./calendar-range-year-select.svelte";
+import type { CaptionProps } from "./calendar-range-caption.svelte";
+import type { NavProps } from "./calendar-range-nav.svelte";
+import type { MonthProps } from "./calendar-range-month.svelte";
+import type { GridBodyProps } from "./calendar-range-grid-body.svelte";
+import type { GridHeadProps } from "./calendar-range-grid-head.svelte";
+
+import Root from "./calendar-range-root.svelte";
+import Cell from "./calendar-range-cell.svelte";
+import Day from "./calendar-range-day.svelte";
+import Grid from "./calendar-range-grid.svelte";
+import Header from "./calendar-range-header.svelte";
+import Months from "./calendar-range-months.svelte";
+import GridRow from "./calendar-range-grid-row.svelte";
+import Heading from "./calendar-range-heading.svelte";
+import HeadCell from "./calendar-range-head-cell.svelte";
+import NextButton from "./calendar-range-next-button.svelte";
+import PrevButton from "./calendar-range-prev-button.svelte";
+import MonthSelect from "./calendar-range-month-select.svelte";
+import YearSelect from "./calendar-range-year-select.svelte";
+import Caption from "./calendar-range-caption.svelte";
+import Nav from "./calendar-range-nav.svelte";
+import Month from "./calendar-range-month.svelte";
+import GridBody from "./calendar-range-grid-body.svelte";
+import GridHead from "./calendar-range-grid-head.svelte";
 
 export {
 	Root,

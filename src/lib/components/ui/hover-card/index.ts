@@ -1,7 +1,12 @@
-import Root, { type RootProps } from "./hover-card-root.svelte";
-import Content, { type ContentProps } from "./hover-card-content.svelte";
-import Trigger, { type TriggerProps } from "./hover-card-trigger.svelte";
-import Portal, { type PortalProps } from "./hover-card-portal.svelte";
+import type { RootProps } from "./hover-card-root.svelte";
+import type { ContentProps } from "./hover-card-content.svelte";
+import type { TriggerProps } from "./hover-card-trigger.svelte";
+import type { PortalProps } from "./hover-card-portal.svelte";
+
+import Root from "./hover-card-root.svelte";
+import Content from "./hover-card-content.svelte";
+import Trigger from "./hover-card-trigger.svelte";
+import Portal from "./hover-card-portal.svelte";
 
 export {
 	Root,

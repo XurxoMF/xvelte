@@ -1,13 +1,24 @@
-import Root, { type RootProps, type RootSizes, type RootVariants, rootVariants } from "./item-root.svelte";
-import Group, { type GroupProps } from "./item-group.svelte";
-import Separator, { type SeparatorProps } from "./item-separator.svelte";
-import Header, { type HeaderProps } from "./item-header.svelte";
-import Footer, { type FooterProps } from "./item-footer.svelte";
-import Content, { type ContentProps } from "./item-content.svelte";
-import Title, { type TitleProps } from "./item-title.svelte";
-import Description, { type DescriptionProps } from "./item-description.svelte";
-import Actions, { type ActionsProps } from "./item-actions.svelte";
-import Media, { type MediaProps, type MediaVariants, mediaVariants } from "./item-media.svelte";
+import type { RootProps, RootSizes, RootVariants } from "./item-root.svelte";
+import type { GroupProps } from "./item-group.svelte";
+import type { SeparatorProps } from "./item-separator.svelte";
+import type { HeaderProps } from "./item-header.svelte";
+import type { FooterProps } from "./item-footer.svelte";
+import type { ContentProps } from "./item-content.svelte";
+import type { TitleProps } from "./item-title.svelte";
+import type { DescriptionProps } from "./item-description.svelte";
+import type { ActionsProps } from "./item-actions.svelte";
+import type { MediaProps, MediaVariants } from "./item-media.svelte";
+
+import Root, { rootVariants } from "./item-root.svelte";
+import Group from "./item-group.svelte";
+import Separator from "./item-separator.svelte";
+import Header from "./item-header.svelte";
+import Footer from "./item-footer.svelte";
+import Content from "./item-content.svelte";
+import Title from "./item-title.svelte";
+import Description from "./item-description.svelte";
+import Actions from "./item-actions.svelte";
+import Media, { mediaVariants } from "./item-media.svelte";
 
 export {
 	Root,

@@ -1,6 +1,5 @@
 import { createContext, tick } from "svelte";
 import { SvelteSet } from "svelte/reactivity";
-
 import { SHADOW_ITEM_MARKER_PROPERTY_NAME, SOURCES } from "svelte-dnd-action";
 
 import type { SortableItemId, SortableItemState, SortableOrder } from "./sortable-types";

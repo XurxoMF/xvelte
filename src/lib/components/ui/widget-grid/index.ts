@@ -1,7 +1,12 @@
-import Root, { type RootProps } from "./widget-grid-root.svelte";
-import Item, { type ItemProps } from "./widget-grid-item.svelte";
-import DragHandle, { type DragHandleProps } from "./widget-grid-drag-handle.svelte";
-import ResizeHandle, { type ResizeHandleProps } from "./widget-grid-resize-handle.svelte";
+import type { RootProps } from "./widget-grid-root.svelte";
+import type { ItemProps } from "./widget-grid-item.svelte";
+import type { DragHandleProps } from "./widget-grid-drag-handle.svelte";
+import type { ResizeHandleProps } from "./widget-grid-resize-handle.svelte";
+
+import Root from "./widget-grid-root.svelte";
+import Item from "./widget-grid-item.svelte";
+import DragHandle from "./widget-grid-drag-handle.svelte";
+import ResizeHandle from "./widget-grid-resize-handle.svelte";
 
 export {
 	Root,

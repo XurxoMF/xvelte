@@ -16,12 +16,15 @@
 <script lang="ts">
 	import { createAttachmentKey } from "svelte/attachments";
 
-	import { ResizeHandleIcon } from "$lib/icons";
-	import * as m from "$lib/paraglide/messages.js";
-	import { cn } from "$lib/utils";
-	import * as Button from "$lib/components/ui/button";
-
 	import { getWidgetGridItemContext } from "./widget-grid-context.svelte";
+
+	import { ResizeHandleIcon } from "$lib/icons";
+
+	import * as m from "$lib/paraglide/messages.js";
+
+	import { cn } from "$lib/utils";
+
+	import * as Button from "$lib/components/ui/button";
 
 	let { ref = $bindable(null), class: className, child, children, "aria-label": ariaLabel, ...restProps }: ResizeHandleProps = $props();
 	const item = getWidgetGridItemContext();

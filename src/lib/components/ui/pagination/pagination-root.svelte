@@ -6,6 +6,7 @@
 
 <script lang="ts">
 	import * as m from "$lib/paraglide/messages.js";
+
 	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, count = 0, perPage = 10, page = $bindable(1), siblingCount = 1, ...restProps }: RootProps = $props();

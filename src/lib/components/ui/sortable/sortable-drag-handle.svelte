@@ -15,15 +15,17 @@
 
 <script lang="ts">
 	import { createAttachmentKey } from "svelte/attachments";
-
 	import { dragHandle } from "svelte-dnd-action";
 
-	import { DragHandleIcon } from "$lib/icons";
-	import * as m from "$lib/paraglide/messages.js";
-	import { cn } from "$lib/utils";
-	import * as Button from "$lib/components/ui/button";
-
 	import { getSortableItemContext } from "./sortable-context.svelte";
+
+	import { DragHandleIcon } from "$lib/icons";
+
+	import * as m from "$lib/paraglide/messages.js";
+
+	import { cn } from "$lib/utils";
+
+	import * as Button from "$lib/components/ui/button";
 
 	let {
 		ref = $bindable(null),

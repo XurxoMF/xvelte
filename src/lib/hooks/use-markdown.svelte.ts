@@ -2,6 +2,7 @@ import GithubSlugger from "github-slugger";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { gfmFromMarkdown } from "mdast-util-gfm";
 import { gfm } from "micromark-extension-gfm";
+
 import type { Blockquote, Heading, Root } from "mdast";
 import type { Node, Parent } from "unist";
 

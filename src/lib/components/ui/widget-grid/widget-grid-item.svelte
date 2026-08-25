@@ -1,10 +1,10 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
-
-	import { cn, type WithElementRef } from "$lib/utils";
-
 	import type { WidgetGridItemState } from "./widget-grid-types";
+	import type { WithElementRef } from "$lib/utils";
+
+	import { cn } from "$lib/utils";
 
 	/** Props for one declaratively registered WidgetGrid item. */
 	export type ItemProps = Omit<WithElementRef<HTMLAttributes<HTMLDivElement>>, "children" | "id"> &

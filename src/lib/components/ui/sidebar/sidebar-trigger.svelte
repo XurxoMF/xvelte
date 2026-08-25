@@ -7,11 +7,13 @@
 </script>
 
 <script lang="ts">
-	import { SidebarIcon } from "$lib/icons";
-	import * as m from "$lib/paraglide/messages.js";
-	import * as Tooltip from "$lib/components/ui/tooltip";
-
 	import * as Sidebar from ".";
+
+	import { SidebarIcon } from "$lib/icons";
+
+	import * as m from "$lib/paraglide/messages.js";
+
+	import * as Tooltip from "$lib/components/ui/tooltip";
 
 	let { ref = $bindable(null), class: className, onclick, ...restProps }: TriggerProps = $props();
 

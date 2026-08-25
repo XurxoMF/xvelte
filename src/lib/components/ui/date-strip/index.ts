@@ -1,5 +1,8 @@
-import Root, { type RootProps } from "./date-strip-root.svelte";
-import Item, { type ItemProps } from "./date-strip-item.svelte";
+import type { RootProps } from "./date-strip-root.svelte";
+import type { ItemProps } from "./date-strip-item.svelte";
+
+import Root from "./date-strip-root.svelte";
+import Item from "./date-strip-item.svelte";
 
 export {
 	Root,

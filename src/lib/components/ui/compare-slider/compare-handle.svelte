@@ -5,10 +5,11 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { getCompareContext } from "./compare-slider-context";
+
 	import { DragHandleIcon, DragHorizontalIcon } from "$lib/icons";
 
-	import { getCompareContext } from "./compare-slider-context";
+	import { cn } from "$lib/utils";
 
 	let { class: className, children }: HandleProps = $props();
 

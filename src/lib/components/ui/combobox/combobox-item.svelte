@@ -9,11 +9,13 @@
 </script>
 
 <script lang="ts">
-	import { CheckIcon } from "$lib/icons";
-	import { cn } from "$lib/utils";
-	import * as Command from "$lib/components/ui/command";
-
 	import { getComboboxContext } from "./combobox-context.svelte";
+
+	import { CheckIcon } from "$lib/icons";
+
+	import { cn } from "$lib/utils";
+
+	import * as Command from "$lib/components/ui/command";
 
 	let { value, class: className, children }: ItemProps = $props();
 

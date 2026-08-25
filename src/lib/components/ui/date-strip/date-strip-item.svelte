@@ -8,10 +8,11 @@
 	import { getLocalTimeZone, isToday } from "@internationalized/date";
 	import { DateFormatter } from "@internationalized/date";
 
-	import { cn } from "$lib/utils";
-	import * as Button from "$lib/components/ui/button";
-
 	import { getDateStripContext } from "./date-strip-context";
+
+	import { cn } from "$lib/utils";
+
+	import * as Button from "$lib/components/ui/button";
 
 	let { date, class: className }: ItemProps = $props();
 

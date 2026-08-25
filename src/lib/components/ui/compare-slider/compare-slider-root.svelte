@@ -6,9 +6,9 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
-
 	import { setCompareContext } from "./compare-slider-context";
+
+	import { cn } from "$lib/utils";
 
 	let { value = $bindable(50), orientation = "horizontal", class: className, children }: RootProps = $props();
 

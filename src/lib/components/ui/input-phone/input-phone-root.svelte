@@ -1,10 +1,8 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
 	import type { CountryCode } from "libphonenumber-js/min";
-
-	import type { WithElementRef } from "$lib/utils";
-
 	import type { InputPhoneCountry, InputPhoneDetails } from "./input-phone-context.svelte";
+	import type { WithElementRef } from "$lib/utils";
 
 	/** Props for the composable Input Phone state provider. */
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
@@ -34,10 +32,11 @@
 </script>
 
 <script lang="ts">
-	import { getLocale } from "$lib/paraglide/runtime";
-	import { cn } from "$lib/utils";
-
 	import { createInputPhoneCountries, InputPhoneState, setInputPhoneContext } from "./input-phone-context.svelte";
+
+	import { getLocale } from "$lib/paraglide/runtime";
+
+	import { cn } from "$lib/utils";
 
 	let {
 		ref = $bindable(null),

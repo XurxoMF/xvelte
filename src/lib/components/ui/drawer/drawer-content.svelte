@@ -1,8 +1,7 @@
 <script lang="ts" module>
-	import type { Snippet } from "svelte";
-
 	import { Drawer as DrawerPrimitive } from "vaul-svelte";
 
+	import type { Snippet } from "svelte";
 	import type { WithoutChildrenOrChild } from "$lib/utils";
 
 	import * as Drawer from ".";

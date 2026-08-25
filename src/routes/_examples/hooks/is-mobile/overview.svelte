@@ -1,6 +1,7 @@
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
 	import { IsMobile } from "$lib/hooks/is-mobile.svelte";
+
+	import * as Button from "$lib/components/ui/button";
 
 	const mobile = new IsMobile();
 </script>

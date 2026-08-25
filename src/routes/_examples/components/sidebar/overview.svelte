@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { EllipsisIcon, FileIcon, FolderIcon, FolderOpenIcon, PlusIcon, PreferencesIcon, SearchIcon, StarIcon } from "$lib/icons";
+
 	import * as Sidebar from "$lib/components/ui/sidebar";
 	import * as Tooltip from "$lib/components/ui/tooltip";
 	import * as Typography from "$lib/components/ui/typography";

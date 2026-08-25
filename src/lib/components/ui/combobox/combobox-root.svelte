@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
-
 	import type { ComboboxType, ValueMap } from "./combobox-context.svelte";
 
 	export type RootProps<T extends ComboboxType> = {
@@ -14,9 +13,9 @@
 <script lang="ts" generics="T extends ComboboxType = 'single'">
 	import { untrack } from "svelte";
 
-	import * as Popover from "$lib/components/ui/popover";
-
 	import { setComboboxContext } from "./combobox-context.svelte";
+
+	import * as Popover from "$lib/components/ui/popover";
 
 	let { type = "single" as T, value = $bindable(), onchange, children }: RootProps<T> = $props();
 

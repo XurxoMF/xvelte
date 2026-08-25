@@ -1,7 +1,11 @@
-import CopyButton, { type CopyButtonProps } from "./code-copy-button.svelte";
-import Root, { codeVariants, type CodeVariant, type HighlightedRootProps, type PlainTextRootProps, type RootProps } from "./code-root.svelte";
-import Overflow, { type OverflowProps } from "./code-overflow.svelte";
+import type { CopyButtonProps } from "./code-copy-button.svelte";
+import type { CodeVariant, HighlightedRootProps, PlainTextRootProps, RootProps } from "./code-root.svelte";
+import type { OverflowProps } from "./code-overflow.svelte";
 import type { LanguageLoader, PlainTextLanguage } from "./shiki";
+
+import CopyButton from "./code-copy-button.svelte";
+import Root, { codeVariants } from "./code-root.svelte";
+import Overflow from "./code-overflow.svelte";
 
 export {
 	Root,

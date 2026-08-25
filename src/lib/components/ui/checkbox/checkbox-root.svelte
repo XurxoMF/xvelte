@@ -7,8 +7,9 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
 	import { CheckIcon, MinusIcon } from "$lib/icons";
+
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), checked = $bindable(false), indeterminate = $bindable(false), class: className, ...restProps }: RootProps = $props();
 </script>

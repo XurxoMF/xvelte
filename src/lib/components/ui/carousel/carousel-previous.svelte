@@ -7,11 +7,13 @@
 </script>
 
 <script lang="ts">
-	import { ChevronLeftIcon } from "$lib/icons";
-	import * as m from "$lib/paraglide/messages.js";
-	import { cn } from "$lib/utils";
-
 	import * as Carousel from ".";
+
+	import { ChevronLeftIcon } from "$lib/icons";
+
+	import * as m from "$lib/paraglide/messages.js";
+
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, variant = "outline", size = "icon-sm", ...restProps }: PreviousProps = $props();
 

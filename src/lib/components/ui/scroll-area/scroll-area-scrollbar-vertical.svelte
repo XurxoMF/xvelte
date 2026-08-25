@@ -18,9 +18,9 @@
 <script lang="ts">
 	import { onDestroy } from "svelte";
 
-	import { cn } from "$lib/utils";
-
 	import { getScrollAreaContext } from "./scroll-area-context.svelte";
+
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), thumbRef = $bindable(null), class: className, thumbProps = {}, ...restProps }: ScrollbarVerticalProps = $props();
 

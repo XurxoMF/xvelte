@@ -7,9 +7,9 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
-
 	import * as NavigationMenu from ".";
+
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, viewport = true, children, ...restProps }: RootProps = $props();
 </script>

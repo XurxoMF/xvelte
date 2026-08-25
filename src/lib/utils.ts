@@ -1,6 +1,8 @@
-import { clsx, type ClassValue } from "clsx";
+import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { SvelteSet } from "svelte/reactivity";
+
+import type { ClassValue } from "clsx";
 
 /**
  * Merges class values and resolves conflicting Tailwind utilities in favor of the last value.

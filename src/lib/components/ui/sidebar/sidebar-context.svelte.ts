@@ -1,8 +1,8 @@
 import { createContext } from "svelte";
 
-import { IsMobile } from "$lib/hooks/is-mobile.svelte";
-
 import { SIDEBAR_KEYBOARD_SHORTCUT } from "./sidebar-constants";
+
+import { IsMobile } from "$lib/hooks/is-mobile.svelte";
 
 export type SidebarStateProps = {
 	/** Reactive desktop state owned by the provider. */

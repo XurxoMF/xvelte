@@ -1,8 +1,6 @@
 <script lang="ts" module>
 	import type { HTMLInputAttributes } from "svelte/elements";
-
 	import type { WithChildren } from "bits-ui";
-
 	import type { FileRejectedReason } from "./file-drop-zone-context.svelte.js";
 
 	type RootPropsWithoutHTML = WithChildren<{

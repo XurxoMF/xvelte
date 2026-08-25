@@ -9,8 +9,9 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
 	import { SelectorIcon } from "$lib/icons";
+
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children, size = "default", ...restProps }: TriggerProps = $props();
 </script>

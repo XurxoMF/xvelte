@@ -1,17 +1,16 @@
 <script lang="ts">
-	import type { Pathname } from "$app/types";
 	import { asset, resolve } from "$app/paths";
 	import { page } from "$app/state";
+	import { ModeWatcher } from "mode-watcher";
+
+	import type { Pathname } from "$app/types";
 
 	import "./layout.css";
-
 	import { attachments, components, hooks } from "./_docs/catalog";
-
-	import { locales, localizeHref } from "$lib/paraglide/runtime";
 
 	import { SearchIcon } from "$lib/icons";
 
-	import { ModeWatcher } from "mode-watcher";
+	import { locales, localizeHref } from "$lib/paraglide/runtime";
 
 	import * as Sidebar from "$lib/components/ui/sidebar";
 	import * as Tooltip from "$lib/components/ui/tooltip";

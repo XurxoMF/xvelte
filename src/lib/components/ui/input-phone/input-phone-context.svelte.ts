@@ -1,14 +1,8 @@
 import { createContext } from "svelte";
 import { hasFlag } from "country-flag-icons";
-import {
-	AsYouType,
-	getCountries,
-	getCountryCallingCode,
-	parsePhoneNumberFromString,
-	validatePhoneNumberLength,
-	type CountryCode,
-	type ValidatePhoneNumberLengthResult
-} from "libphonenumber-js/min";
+import { AsYouType, getCountries, getCountryCallingCode, parsePhoneNumberFromString, validatePhoneNumberLength } from "libphonenumber-js/min";
+
+import type { CountryCode, ValidatePhoneNumberLengthResult } from "libphonenumber-js/min";
 
 /** Country metadata rendered by the Input Phone country selector. */
 export type InputPhoneCountry = {

@@ -1,10 +1,11 @@
 <script lang="ts" module>
+	import { tv } from "tailwind-variants";
+
 	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
-
-	import { tv, type VariantProps } from "tailwind-variants";
-
+	import type { VariantProps } from "tailwind-variants";
 	import type { WithElementRef, WithoutChildrenOrChild } from "$lib/utils";
+
 	import * as Tooltip from "$lib/components/ui/tooltip";
 
 	export const menuButtonVariants = tv({
@@ -43,9 +44,9 @@
 <script lang="ts">
 	import { mergeProps } from "bits-ui";
 
-	import { cn } from "$lib/utils";
-
 	import * as Sidebar from ".";
+
+	import { cn } from "$lib/utils";
 
 	let {
 		ref = $bindable(null),

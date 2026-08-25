@@ -1,15 +1,14 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-
 	import type { WithElementRef } from "$lib/utils";
 
 	export type SeparatorProps = WithElementRef<HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
-
 	import { getStepperItemContext } from "./stepper-context.svelte.js";
+
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: SeparatorProps = $props();
 

@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-
 	import type { WithElementRef } from "$lib/utils";
 
 	export type ItemProps = WithElementRef<Omit<HTMLAttributes<HTMLDivElement>, "id">, HTMLDivElement> & {
@@ -11,9 +10,9 @@
 <script lang="ts">
 	import { untrack } from "svelte";
 
-	import { cn } from "$lib/utils";
-
 	import { setStepperItemContext } from "./stepper-context.svelte.js";
+
+	import { cn } from "$lib/utils";
 
 	const uid = $props.id();
 

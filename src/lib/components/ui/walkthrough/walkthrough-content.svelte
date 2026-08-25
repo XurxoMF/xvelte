@@ -1,13 +1,19 @@
 <script lang="ts">
-	import { arrow, autoUpdate, computePosition, flip, offset, shift, type Placement } from "@floating-ui/dom";
-	import { onDestroy, untrack, type Snippet } from "svelte";
+	import { arrow, autoUpdate, computePosition, flip, offset, shift } from "@floating-ui/dom";
+	import { onDestroy, untrack } from "svelte";
 	import { fade } from "svelte/transition";
 
-	import * as Button from "$lib/components/ui/button";
+	import type { Placement } from "@floating-ui/dom";
+	import type { Snippet } from "svelte";
+	import type { WalkthroughContext } from "./walkthrough-context";
+
+	import { getWalkthroughContext } from "./walkthrough-context";
+
 	import { CloseIcon } from "$lib/icons";
+
 	import * as m from "$lib/paraglide/messages.js";
 
-	import { getWalkthroughContext, type WalkthroughContext } from "./walkthrough-context";
+	import * as Button from "$lib/components/ui/button";
 
 	let {
 		targetId,

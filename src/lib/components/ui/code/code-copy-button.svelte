@@ -1,11 +1,11 @@
 <script lang="ts" module>
 	import type { HTMLButtonAttributes } from "svelte/elements";
-
-	import type { RootProps as ButtonProps } from "$lib/components/ui/button";
 	import type { WithElementRef } from "$lib/utils";
 
+	import * as Button from "$lib/components/ui/button";
+
 	export type CopyButtonProps = WithElementRef<HTMLButtonAttributes, HTMLButtonElement> &
-		Pick<ButtonProps, "size" | "variant"> & {
+		Pick<Button.RootProps, "size" | "variant"> & {
 			animationDuration?: number | undefined;
 			onCopy?: ((status: "success" | "failure") => void) | undefined;
 		};
@@ -15,12 +15,13 @@
 	import { onDestroy } from "svelte";
 	import { scale } from "svelte/transition";
 
-	import { CheckIcon, CloseIcon, CopyIcon } from "$lib/icons";
-	import * as m from "$lib/paraglide/messages.js";
-	import { cn } from "$lib/utils";
-	import { Root as Button } from "$lib/components/ui/button";
-
 	import { getCodeContext } from "./code-context.svelte.js";
+
+	import { CheckIcon, CloseIcon, CopyIcon } from "$lib/icons";
+
+	import * as m from "$lib/paraglide/messages.js";
+
+	import { cn } from "$lib/utils";
 
 	let {
 		ref = $bindable(null),
@@ -54,7 +55,7 @@
 	}
 </script>
 
-<Button
+<Button.Root
 	bind:ref
 	data-slot="code-copy-button"
 	class={cn("absolute top-2 right-2", className)}
@@ -72,4 +73,4 @@
 	{:else}
 		<span in:scale={{ duration: animationDuration }}><CopyIcon /></span>
 	{/if}
-</Button>
+</Button.Root>

@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
-
 	import type { DateValue } from "@internationalized/date";
 
 	export type RootProps = {
@@ -18,12 +17,15 @@
 <script lang="ts">
 	import { getLocalTimeZone, today, startOfWeek } from "@internationalized/date";
 
-	import { getLocale } from "$lib/paraglide/runtime";
-	import { cn } from "$lib/utils";
-	import * as Button from "$lib/components/ui/button";
+	import { setDateStripContext } from "./date-strip-context";
+
 	import { ChevronLeftIcon, ChevronRightIcon } from "$lib/icons";
 
-	import { setDateStripContext } from "./date-strip-context";
+	import { getLocale } from "$lib/paraglide/runtime";
+
+	import { cn } from "$lib/utils";
+
+	import * as Button from "$lib/components/ui/button";
 
 	let {
 		value = $bindable(),

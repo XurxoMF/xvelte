@@ -1,7 +1,12 @@
-import Root, { rootVariants, type RootProps, type RootVariants } from "./alert-root.svelte";
-import Description, { type DescriptionProps } from "./alert-description.svelte";
-import Title, { type TitleProps } from "./alert-title.svelte";
-import Action, { type ActionProps } from "./alert-action.svelte";
+import type { RootProps, RootVariants } from "./alert-root.svelte";
+import type { DescriptionProps } from "./alert-description.svelte";
+import type { TitleProps } from "./alert-title.svelte";
+import type { ActionProps } from "./alert-action.svelte";
+
+import Root, { rootVariants } from "./alert-root.svelte";
+import Description from "./alert-description.svelte";
+import Title from "./alert-title.svelte";
+import Action from "./alert-action.svelte";
 
 export {
 	Root,

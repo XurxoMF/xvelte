@@ -1,8 +1,8 @@
 <script lang="ts" module>
+	import { tv } from "tailwind-variants";
+
 	import type { HTMLAttributes, HTMLOlAttributes } from "svelte/elements";
-
-	import { tv, type VariantProps } from "tailwind-variants";
-
+	import type { VariantProps } from "tailwind-variants";
 	import type { WithElementRef } from "$lib/utils";
 
 	/** Builds the Root indentation, marker, spacing, and caller-supplied classes. */

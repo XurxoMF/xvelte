@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	import type { HTMLTdAttributes } from "svelte/elements";
-
 	import type { WithElementRef } from "$lib/utils";
 
 	export type CellProps = WithElementRef<HTMLTdAttributes>;

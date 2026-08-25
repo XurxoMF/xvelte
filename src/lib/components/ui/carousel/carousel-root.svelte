@@ -9,8 +9,9 @@
 <script lang="ts">
 	import { untrack } from "svelte";
 
-	import { cn } from "$lib/utils";
 	import * as m from "$lib/paraglide/messages.js";
+
+	import { cn } from "$lib/utils";
 
 	let {
 		ref = $bindable(null),

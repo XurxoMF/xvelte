@@ -1,10 +1,10 @@
 import { createContext } from "svelte";
 
-import type { RootSizes, RootVariants } from "$lib/components/ui/toggle";
+import * as Toggle from "$lib/components/ui/toggle";
 
 export type ToggleGroupContext = {
-	variant?: RootVariants | undefined;
-	size?: RootSizes | undefined;
+	variant?: Toggle.RootVariants | undefined;
+	size?: Toggle.RootSizes | undefined;
 	spacing?: number | undefined;
 	orientation?: "horizontal" | "vertical" | undefined;
 };

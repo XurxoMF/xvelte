@@ -4,7 +4,9 @@
 
 <script lang="ts">
 	import * as m from "$lib/paraglide/messages.js";
+
 	import { cn } from "$lib/utils";
+
 	import * as Command from "$lib/components/ui/command";
 
 	let { placeholder = m.harbor_wren_pause(), class: className }: InputProps = $props();

@@ -20,7 +20,8 @@ If a selected unit has no guide yet, inspect its barrel, public types, and imple
 ## Build with public APIs
 
 - Prefer the smallest set of existing units that satisfies the task.
-- Import compound UI components through their directory barrel, such as `import * as Dialog from "$lib/components/ui/dialog"`, and render public parts as `Dialog.Root`, `Dialog.Trigger`, and `Dialog.Content`.
+- Import every xvelte UI component through its directory entry point as a namespace, even when only a type, variant, or helper is needed. Use forms such as `import * as Dialog from "$lib/components/ui/dialog"` and refer to exports as `Dialog.Root`, `Dialog.RootProps`, or `Dialog.rootVariants`; never destructure a component import.
+- Group imports in this order with one blank line between non-empty groups: installed/framework value imports; type-only imports; local files, styles, and assets; icons; Paraglide; utilities; hooks; attachments; components. Split mixed value/type declarations, except xvelte component namespaces, which always remain normal namespace imports.
 - Import shared utilities only from `$lib/utils` and semantic icons only from `$lib/icons`.
 - Use documented props, snippets, bindings, callbacks, attachments, and hooks. Do not import private implementation files from another unit.
 - Compose components or add application-local wrappers before extending shared primitives.

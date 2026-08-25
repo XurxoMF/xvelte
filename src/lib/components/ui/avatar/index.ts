@@ -1,9 +1,16 @@
-import Root, { type RootProps } from "./avatar-root.svelte";
-import Image, { type ImageProps } from "./avatar-image.svelte";
-import Fallback, { type FallbackProps } from "./avatar-fallback.svelte";
-import Badge, { type BadgeProps } from "./avatar-badge.svelte";
-import Group, { type GroupProps } from "./avatar-group.svelte";
-import GroupCount, { type GroupCountProps } from "./avatar-group-count.svelte";
+import type { RootProps } from "./avatar-root.svelte";
+import type { ImageProps } from "./avatar-image.svelte";
+import type { FallbackProps } from "./avatar-fallback.svelte";
+import type { BadgeProps } from "./avatar-badge.svelte";
+import type { GroupProps } from "./avatar-group.svelte";
+import type { GroupCountProps } from "./avatar-group-count.svelte";
+
+import Root from "./avatar-root.svelte";
+import Image from "./avatar-image.svelte";
+import Fallback from "./avatar-fallback.svelte";
+import Badge from "./avatar-badge.svelte";
+import Group from "./avatar-group.svelte";
+import GroupCount from "./avatar-group-count.svelte";
 
 export {
 	Root,

@@ -1,7 +1,8 @@
 <script lang="ts">
+	import { UseMarkdown } from "$lib/hooks/use-markdown.svelte";
+
 	import * as Code from "$lib/components/ui/code";
 	import * as Textarea from "$lib/components/ui/textarea";
-	import { UseMarkdown } from "$lib/hooks/use-markdown.svelte";
 
 	let source = $state(`# Release notes
 

@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-
 	import type { WithElementRef } from "$lib/utils";
 
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
@@ -19,6 +18,7 @@
 
 <script lang="ts">
 	import * as m from "$lib/paraglide/messages.js";
+
 	import { cn } from "$lib/utils";
 
 	let {

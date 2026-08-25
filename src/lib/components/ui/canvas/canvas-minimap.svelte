@@ -1,9 +1,7 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-
-	import type { WithElementRef } from "$lib/utils";
-
 	import type { CanvasPosition } from "./canvas-controls.svelte";
+	import type { WithElementRef } from "$lib/utils";
 
 	/** Props for the fixed overview map of canvas nodes and viewport. */
 	export type MinimapProps = WithElementRef<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
@@ -18,10 +16,11 @@
 <script lang="ts">
 	import { Portal } from "bits-ui";
 
-	import * as m from "$lib/paraglide/messages.js";
-	import { cn } from "$lib/utils";
-
 	import { getCanvasContext, nodeBounds } from "./canvas-context.svelte.js";
+
+	import * as m from "$lib/paraglide/messages.js";
+
+	import { cn } from "$lib/utils";
 
 	let {
 		ref = $bindable(null),

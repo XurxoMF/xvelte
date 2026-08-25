@@ -7,9 +7,9 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
-
 	import { setToggleGroupContext } from "./toggle-group-context";
+
+	import { cn } from "$lib/utils";
 
 	let {
 		ref = $bindable(null),

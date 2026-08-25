@@ -1,7 +1,11 @@
-import Root, { type RootProps } from "./input-phone-root.svelte";
-import Input, { type InputProps } from "./input-phone-input.svelte";
-import CountrySelector, { type CountrySelectorProps } from "./input-phone-country-selector.svelte";
+import type { RootProps } from "./input-phone-root.svelte";
+import type { InputProps } from "./input-phone-input.svelte";
+import type { CountrySelectorProps } from "./input-phone-country-selector.svelte";
 import type { InputPhoneCountry, InputPhoneDetails, InputPhoneValidationError } from "./input-phone-context.svelte";
+
+import Root from "./input-phone-root.svelte";
+import Input from "./input-phone-input.svelte";
+import CountrySelector from "./input-phone-country-selector.svelte";
 
 export {
 	Root,

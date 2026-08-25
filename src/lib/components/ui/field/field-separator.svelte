@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-
 	import type { WithElementRef } from "$lib/utils";
+
 	import * as Separator from "$lib/components/ui/separator";
 
 	export type SeparatorProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {

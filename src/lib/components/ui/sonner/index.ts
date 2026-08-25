@@ -1,6 +1,8 @@
 import { toast as sonnerToast } from "svelte-sonner";
 
-import Root, { type RootProps } from "./sonner-root.svelte";
+import type { RootProps } from "./sonner-root.svelte";
+
+import Root from "./sonner-root.svelte";
 
 /**
  * Creates and manages notifications through xvelte while forwarding the complete installed `svelte-sonner` toast API.

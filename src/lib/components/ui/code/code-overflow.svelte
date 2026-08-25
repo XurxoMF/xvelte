@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-
 	import type { WithChildren, WithoutChildren } from "bits-ui";
 
 	export type OverflowProps = WithChildren<{
@@ -12,8 +11,10 @@
 
 <script lang="ts">
 	import * as m from "$lib/paraglide/messages.js";
+
 	import { cn } from "$lib/utils";
-	import { Root as Button } from "$lib/components/ui/button";
+
+	import * as Button from "$lib/components/ui/button";
 
 	let { ref = $bindable(null), collapsed = $bindable(true), class: className, children, ...restProps }: OverflowProps = $props();
 
@@ -79,8 +80,8 @@
 		<div class="absolute bottom-0 left-0 z-10 h-full w-full bg-linear-to-t from-background to-transparent"></div>
 	{/if}
 	{#if collapsed}
-		<Button variant="secondary" size="sm" class="absolute bottom-2 left-1/2 z-20 w-fit -translate-x-1/2" onclick={() => (collapsed = false)}>
+		<Button.Root variant="secondary" size="sm" class="absolute bottom-2 left-1/2 z-20 w-fit -translate-x-1/2" onclick={() => (collapsed = false)}>
 			{m.deep_lotus_expand()}
-		</Button>
+		</Button.Root>
 	{/if}
 </div>

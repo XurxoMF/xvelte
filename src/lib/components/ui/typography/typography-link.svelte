@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	import type { HTMLAnchorAttributes } from "svelte/elements";
-
 	import type { WithElementRef } from "$lib/utils";
 
 	export type LinkProps = WithElementRef<HTMLAnchorAttributes>;

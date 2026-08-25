@@ -1,7 +1,7 @@
-import type { EmblaCarouselSvelteType, default as emblaCarouselSvelte } from "embla-carousel-svelte";
 import { createContext } from "svelte";
-import type { HTMLAttributes } from "svelte/elements";
 
+import type { EmblaCarouselSvelteType, default as emblaCarouselSvelte } from "embla-carousel-svelte";
+import type { HTMLAttributes } from "svelte/elements";
 import type { WithElementRef } from "$lib/utils";
 
 export type CarouselAPI =

@@ -1,12 +1,13 @@
 <script lang="ts">
-	import { rootVariants as buttonVariants } from "$lib/components/ui/button";
-	import * as AlertDialog from "$lib/components/ui/alert-dialog";
 	import { cn } from "$lib/utils";
+
+	import * as Button from "$lib/components/ui/button";
+	import * as AlertDialog from "$lib/components/ui/alert-dialog";
 </script>
 
 <div class="flex items-center justify-center">
 	<AlertDialog.Root>
-		<AlertDialog.Trigger class={cn(buttonVariants({ variant: "outline" }))}>Delete project</AlertDialog.Trigger>
+		<AlertDialog.Trigger class={cn(Button.rootVariants({ variant: "outline" }))}>Delete project</AlertDialog.Trigger>
 
 		<AlertDialog.Content>
 			<AlertDialog.Header>

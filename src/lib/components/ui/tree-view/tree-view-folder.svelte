@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
-
 	import type { WithChildren } from "bits-ui";
 
 	export type FolderProps = WithChildren<{
@@ -12,9 +11,11 @@
 </script>
 
 <script lang="ts">
-	import * as Collapsible from "$lib/components/ui/collapsible";
 	import { FolderIcon, FolderOpenIcon } from "$lib/icons";
+
 	import { cn } from "$lib/utils";
+
+	import * as Collapsible from "$lib/components/ui/collapsible";
 
 	let { name, open = $bindable(true), class: className, icon, children }: FolderProps = $props();
 </script>

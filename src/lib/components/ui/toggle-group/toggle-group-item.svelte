@@ -1,5 +1,6 @@
 <script lang="ts" module>
 	import { ToggleGroup as ToggleGroupPrimitive } from "bits-ui";
+
 	import type { VariantProps } from "tailwind-variants";
 
 	import * as Toggle from "$lib/components/ui/toggle";
@@ -14,9 +15,9 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
-
 	import * as ToggleGroup from ".";
+
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), value = $bindable(), class: className, size, variant, ...restProps }: ItemProps = $props();
 

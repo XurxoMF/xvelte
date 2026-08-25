@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
-
 	import type { Step, WalkthroughContext } from "./walkthrough-context";
 
 	export type RootProps = {

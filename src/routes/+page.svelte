@@ -1,8 +1,11 @@
 <script lang="ts">
-	import type { Pathname } from "$app/types";
 	import { resolve } from "$app/paths";
+
+	import type { Pathname } from "$app/types";
+
 	import { attachments, components, hooks } from "./_docs/catalog";
-	import { rootVariants } from "$lib/components/ui/button";
+
+	import * as Button from "$lib/components/ui/button";
 	import * as Card from "$lib/components/ui/card";
 	import * as Typography from "$lib/components/ui/typography";
 </script>
@@ -25,8 +28,8 @@
 				starting from zero.
 			</Typography.P>
 			<div class="mt-8 flex flex-wrap gap-3">
-				<a href={resolve("/components")} class={rootVariants({ size: "lg" })}>Browse components</a>
-				<a href={resolve("/components/button")} class={rootVariants({ variant: "outline", size: "lg" })}>Start with Button</a>
+				<a href={resolve("/components")} class={Button.rootVariants({ size: "lg" })}>Browse components</a>
+				<a href={resolve("/components/button")} class={Button.rootVariants({ variant: "outline", size: "lg" })}>Start with Button</a>
 			</div>
 		</div>
 	</section>

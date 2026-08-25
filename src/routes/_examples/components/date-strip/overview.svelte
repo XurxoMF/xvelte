@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { getLocalTimeZone, today, type DateValue } from "@internationalized/date";
+	import { getLocalTimeZone, today } from "@internationalized/date";
+
+	import type { DateValue } from "@internationalized/date";
 
 	import * as DateStrip from "$lib/components/ui/date-strip";
 	import * as Field from "$lib/components/ui/field";

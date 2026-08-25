@@ -7,8 +7,9 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
 	import { CheckIcon } from "$lib/icons";
+
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children: childrenProp, ...restProps }: RadioItemProps = $props();
 </script>

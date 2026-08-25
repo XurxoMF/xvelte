@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-
 	import type { WithElementRef } from "$lib/utils";
 
 	/** Props for the responsive Sidebar root. */
@@ -14,11 +13,13 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
-	import * as m from "$lib/paraglide/messages.js";
-	import * as Sheet from "$lib/components/ui/sheet";
-
 	import * as Sidebar from ".";
+
+	import * as m from "$lib/paraglide/messages.js";
+
+	import { cn } from "$lib/utils";
+
+	import * as Sheet from "$lib/components/ui/sheet";
 
 	let {
 		ref = $bindable(null),

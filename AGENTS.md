@@ -21,12 +21,22 @@
 
 - Place imports according to their Svelte scope: imports used only by exported module-level types, variants, or helpers belong in `<script module>`; imports used only by instance logic or markup belong in the regular `<script>`; imports shared by both belong in `<script module>`, whose bindings are available to the instance.
 - Split mixed import declarations when their imported symbols belong to different scopes instead of moving implementation-only symbols into `<script module>`.
+- Separate every non-empty import group with exactly one blank line and order groups as follows:
+  1.  Value imports from Svelte/framework modules, Node built-ins, and installed packages such as `svelte`, `bits-ui`, or `shiki`.
+  2.  Type-only imports from any source except xvelte component namespaces.
+  3.  Local files, other standalone `$lib` modules, stylesheets, fonts, and other assets.
+  4.  `$lib/icons`.
+  5.  `$lib/paraglide`.
+  6.  `$lib/utils`.
+  7.  `$lib/hooks`.
+  8.  `$lib/attachments`.
+  9.  `$lib/components`.
+- Preserve the existing order inside each group unless dependencies between side-effect imports require a specific order.
 - Always import shared utilities through `$lib/utils`; never use a relative path to `utils` or add `.js` to that alias.
 - Import icons only from `$lib/icons`, using library-neutral names such as `SidebarIcon`, not vendor names such as `LayoutSidebar`.
-- Import UI components through their directory barrel: `import * as Dialog from "$lib/components/ui/dialog"`.
-- When one compound component renders another public part from the same directory, prefer its `.` barrel namespace over a direct relative component import.
-- Group imports in this order: Svelte/framework types, third-party packages, blank line, `$lib` imports, blank line, local imports.
-- Use `import type` whenever an import is type-only.
+- Import every public xvelte component through its directory `index.ts` as a namespace, including type-only or helper-only usage: `import * as Dialog from "$lib/components/ui/dialog"`. Refer to every export through that namespace, such as `Dialog.Root`, `Dialog.RootProps`, or `Dialog.rootVariants`; do not destructure component imports or use direct component aliases.
+- When one compound component renders another public part from the same directory, prefer its `.` namespace over a direct relative component import.
+- Split mixed value/type declarations so non-component `import type` declarations remain in their own group. Component namespaces remain normal namespace imports even when only their types are referenced.
 
 ## Component conventions
 

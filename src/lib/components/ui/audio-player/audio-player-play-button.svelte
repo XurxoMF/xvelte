@@ -1,17 +1,17 @@
 <script lang="ts" module>
 	import type { WithoutChildren } from "bits-ui";
 
-	import type { RootProps as ButtonProps } from "$lib/components/ui/button";
+	import * as Button from "$lib/components/ui/button";
 
-	export type PlayButtonProps = WithoutChildren<ButtonProps>;
+	export type PlayButtonProps = WithoutChildren<Button.RootProps>;
 </script>
 
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
-	import { PauseIcon, PlayIcon } from "$lib/icons";
-	import { cn } from "$lib/utils";
-
 	import { getAudioPlayerContext } from "./audio-player-context.svelte";
+
+	import { PauseIcon, PlayIcon } from "$lib/icons";
+
+	import { cn } from "$lib/utils";
 
 	let { class: className, ...restProps }: PlayButtonProps = $props();
 	const ctx = getAudioPlayerContext();

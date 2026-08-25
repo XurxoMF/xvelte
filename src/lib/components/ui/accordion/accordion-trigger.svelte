@@ -9,8 +9,9 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
 	import { ChevronDownIcon, ChevronUpIcon } from "$lib/icons";
+
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, level = 3, children, ...restProps }: TriggerProps = $props();
 </script>

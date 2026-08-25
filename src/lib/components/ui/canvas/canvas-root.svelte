@@ -1,10 +1,8 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
-
-	import type { WithElementRef, WithoutChildren } from "$lib/utils";
-
 	import type { CanvasPoint } from "./canvas-context.svelte.js";
+	import type { WithElementRef, WithoutChildren } from "$lib/utils";
 
 	/** Background pattern rendered by the canvas viewport. */
 	export type CanvasGrid = "dots" | "lines" | "none";
@@ -32,10 +30,13 @@
 <script lang="ts">
 	import { untrack } from "svelte";
 
-	import * as m from "$lib/paraglide/messages.js";
-	import { cn } from "$lib/utils";
+	import type { CanvasRect } from "./canvas-context.svelte.js";
 
-	import { clamp, nodeBounds, setCanvasContext, type CanvasRect } from "./canvas-context.svelte.js";
+	import { clamp, nodeBounds, setCanvasContext } from "./canvas-context.svelte.js";
+
+	import * as m from "$lib/paraglide/messages.js";
+
+	import { cn } from "$lib/utils";
 
 	let {
 		ref = $bindable(null),

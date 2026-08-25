@@ -8,6 +8,7 @@
 
 <script lang="ts">
 	import { cn } from "$lib/utils";
+
 	import * as Button from "$lib/components/ui/button";
 
 	let { ref = $bindable(null), class: className, isActive, page, children, ...restProps }: LinkProps = $props();

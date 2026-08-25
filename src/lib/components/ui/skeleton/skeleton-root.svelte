@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-
 	import type { WithElementRef, WithoutChildren } from "$lib/utils";
 
 	export type RootProps = WithoutChildren<WithElementRef<HTMLAttributes<HTMLDivElement>>>;

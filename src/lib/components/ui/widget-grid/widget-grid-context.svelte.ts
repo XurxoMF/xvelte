@@ -1,13 +1,10 @@
 import { createContext } from "svelte";
 import { SvelteSet } from "svelte/reactivity";
 
-import {
-	WidgetGridAdapter,
-	type WidgetGridAdapterInteraction,
-	type WidgetGridAdapterItem,
-	type WidgetGridAdapterOptions
-} from "./widget-grid-adapter";
+import type { WidgetGridAdapterInteraction, WidgetGridAdapterItem, WidgetGridAdapterOptions } from "./widget-grid-adapter";
 import type { WidgetGridItemState } from "./widget-grid-types";
+
+import { WidgetGridAdapter } from "./widget-grid-adapter";
 
 type ItemLifecycleCallbacks = {
 	readonly onMoveStart: ((state: WidgetGridItemState) => void) | undefined;

@@ -9,8 +9,9 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
 	import { ChevronRightIcon } from "$lib/icons";
+
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, inset = undefined, children, ...restProps }: SubTriggerProps = $props();
 </script>

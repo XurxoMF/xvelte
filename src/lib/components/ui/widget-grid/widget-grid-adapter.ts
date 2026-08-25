@@ -1,5 +1,4 @@
 import type { GridItemHTMLElement, GridStack, GridStackWidget } from "gridstack";
-
 import type { WidgetGridItemState, WidgetGridMode } from "./widget-grid-types";
 
 const BREAKPOINT_WIDTHS = {

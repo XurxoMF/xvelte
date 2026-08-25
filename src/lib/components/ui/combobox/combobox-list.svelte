@@ -9,6 +9,7 @@
 
 <script lang="ts">
 	import { cn } from "$lib/utils";
+
 	import * as Command from "$lib/components/ui/command";
 
 	let { class: className, children }: ListProps = $props();

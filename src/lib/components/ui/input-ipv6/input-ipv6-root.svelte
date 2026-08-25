@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-
 	import type { WithElementRef } from "$lib/utils";
 
 	/** Props for the root IPv6 input and its form value. */
@@ -14,9 +13,11 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import type { IPv6Segments } from "./input-ipv6-utils";
 
-	import { isHexDigit, isValidIPv6, safeParseIPv6, type IPv6Segments } from "./input-ipv6-utils";
+	import { isHexDigit, isValidIPv6, safeParseIPv6 } from "./input-ipv6-utils";
+
+	import { cn } from "$lib/utils";
 
 	let {
 		separator = ":",

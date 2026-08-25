@@ -1,10 +1,8 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
-
-	import type { WithElementRef, WithoutChildren } from "$lib/utils";
-
 	import type { WidgetGridBreakpoint, WidgetGridItemState, WidgetGridMode } from "./widget-grid-types";
+	import type { WithElementRef, WithoutChildren } from "$lib/utils";
 
 	/** Props for the responsive WidgetGrid layout root. */
 	export type RootProps = WithoutChildren<WithElementRef<HTMLAttributes<HTMLDivElement>>> & {
@@ -39,12 +37,11 @@
 
 <script lang="ts">
 	import { createAttachmentKey } from "svelte/attachments";
-
 	import "gridstack/dist/gridstack.css";
 
-	import { cn } from "$lib/utils";
-
 	import { setWidgetGridContext } from "./widget-grid-context.svelte";
+
+	import { cn } from "$lib/utils";
 
 	let {
 		ref = $bindable(null),

@@ -1,10 +1,8 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
-
-	import type { WithElementRef, WithoutChildren } from "$lib/utils";
-
 	import type { CanvasPoint } from "./canvas-context.svelte.js";
+	import type { WithElementRef, WithoutChildren } from "$lib/utils";
 
 	/** Props for a positioned and optionally draggable canvas node. */
 	export type NodeProps = WithElementRef<WithoutChildren<HTMLAttributes<HTMLDivElement>>, HTMLDivElement> & {
@@ -26,9 +24,9 @@
 <script lang="ts">
 	import { onDestroy } from "svelte";
 
-	import { cn } from "$lib/utils";
-
 	import { getCanvasContext, snapTo } from "./canvas-context.svelte.js";
+
+	import { cn } from "$lib/utils";
 
 	const uid = $props.id();
 	let {

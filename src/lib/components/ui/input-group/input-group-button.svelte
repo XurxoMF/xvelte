@@ -1,7 +1,10 @@
 <script lang="ts" module>
-	import { tv, type VariantProps } from "tailwind-variants";
+	import { tv } from "tailwind-variants";
+
+	import type { VariantProps } from "tailwind-variants";
 
 	import { cn } from "$lib/utils";
+
 	import * as Button from "$lib/components/ui/button";
 
 	export const buttonVariants = tv({

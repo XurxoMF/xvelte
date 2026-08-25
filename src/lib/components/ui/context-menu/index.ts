@@ -1,19 +1,36 @@
-import Root, { type RootProps } from "./context-menu-root.svelte";
-import Sub, { type SubProps } from "./context-menu-sub.svelte";
-import Portal, { type PortalProps } from "./context-menu-portal.svelte";
-import Trigger, { type TriggerProps } from "./context-menu-trigger.svelte";
-import Group, { type GroupProps } from "./context-menu-group.svelte";
-import RadioGroup, { type RadioGroupProps } from "./context-menu-radio-group.svelte";
-import Item, { type ItemProps } from "./context-menu-item.svelte";
-import GroupHeading, { type GroupHeadingProps } from "./context-menu-group-heading.svelte";
-import Content, { type ContentProps } from "./context-menu-content.svelte";
-import Shortcut, { type ShortcutProps } from "./context-menu-shortcut.svelte";
-import RadioItem, { type RadioItemProps } from "./context-menu-radio-item.svelte";
-import Separator, { type SeparatorProps } from "./context-menu-separator.svelte";
-import SubContent, { type SubContentProps } from "./context-menu-sub-content.svelte";
-import SubTrigger, { type SubTriggerProps } from "./context-menu-sub-trigger.svelte";
-import CheckboxItem, { type CheckboxItemProps } from "./context-menu-checkbox-item.svelte";
-import Label, { type LabelProps } from "./context-menu-label.svelte";
+import type { RootProps } from "./context-menu-root.svelte";
+import type { SubProps } from "./context-menu-sub.svelte";
+import type { PortalProps } from "./context-menu-portal.svelte";
+import type { TriggerProps } from "./context-menu-trigger.svelte";
+import type { GroupProps } from "./context-menu-group.svelte";
+import type { RadioGroupProps } from "./context-menu-radio-group.svelte";
+import type { ItemProps } from "./context-menu-item.svelte";
+import type { GroupHeadingProps } from "./context-menu-group-heading.svelte";
+import type { ContentProps } from "./context-menu-content.svelte";
+import type { ShortcutProps } from "./context-menu-shortcut.svelte";
+import type { RadioItemProps } from "./context-menu-radio-item.svelte";
+import type { SeparatorProps } from "./context-menu-separator.svelte";
+import type { SubContentProps } from "./context-menu-sub-content.svelte";
+import type { SubTriggerProps } from "./context-menu-sub-trigger.svelte";
+import type { CheckboxItemProps } from "./context-menu-checkbox-item.svelte";
+import type { LabelProps } from "./context-menu-label.svelte";
+
+import Root from "./context-menu-root.svelte";
+import Sub from "./context-menu-sub.svelte";
+import Portal from "./context-menu-portal.svelte";
+import Trigger from "./context-menu-trigger.svelte";
+import Group from "./context-menu-group.svelte";
+import RadioGroup from "./context-menu-radio-group.svelte";
+import Item from "./context-menu-item.svelte";
+import GroupHeading from "./context-menu-group-heading.svelte";
+import Content from "./context-menu-content.svelte";
+import Shortcut from "./context-menu-shortcut.svelte";
+import RadioItem from "./context-menu-radio-item.svelte";
+import Separator from "./context-menu-separator.svelte";
+import SubContent from "./context-menu-sub-content.svelte";
+import SubTrigger from "./context-menu-sub-trigger.svelte";
+import CheckboxItem from "./context-menu-checkbox-item.svelte";
+import Label from "./context-menu-label.svelte";
 
 export {
 	Root,

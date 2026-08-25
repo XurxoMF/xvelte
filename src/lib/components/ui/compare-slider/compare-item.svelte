@@ -5,9 +5,9 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
-
 	import { getCompareContext } from "./compare-slider-context";
+
+	import { cn } from "$lib/utils";
 
 	let { target = "first", class: className, children }: ItemProps = $props();
 

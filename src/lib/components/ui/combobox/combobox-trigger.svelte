@@ -11,11 +11,13 @@
 </script>
 
 <script lang="ts">
-	import { SelectorIcon } from "$lib/icons";
-	import { cn } from "$lib/utils";
-	import * as Button from "$lib/components/ui/button";
-
 	import { getComboboxContext } from "./combobox-context.svelte";
+
+	import { SelectorIcon } from "$lib/icons";
+
+	import { cn } from "$lib/utils";
+
+	import * as Button from "$lib/components/ui/button";
 
 	let { class: className, children, size = "default", ...restProps }: TriggerProps = $props();
 

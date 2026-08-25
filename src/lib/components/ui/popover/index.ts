@@ -1,11 +1,20 @@
-import Root, { type RootProps } from "./popover-root.svelte";
-import Close, { type CloseProps } from "./popover-close.svelte";
-import Content, { type ContentProps } from "./popover-content.svelte";
-import Description, { type DescriptionProps } from "./popover-description.svelte";
-import Header, { type HeaderProps } from "./popover-header.svelte";
-import Title, { type TitleProps } from "./popover-title.svelte";
-import Trigger, { type TriggerProps } from "./popover-trigger.svelte";
-import Portal, { type PortalProps } from "./popover-portal.svelte";
+import type { RootProps } from "./popover-root.svelte";
+import type { CloseProps } from "./popover-close.svelte";
+import type { ContentProps } from "./popover-content.svelte";
+import type { DescriptionProps } from "./popover-description.svelte";
+import type { HeaderProps } from "./popover-header.svelte";
+import type { TitleProps } from "./popover-title.svelte";
+import type { TriggerProps } from "./popover-trigger.svelte";
+import type { PortalProps } from "./popover-portal.svelte";
+
+import Root from "./popover-root.svelte";
+import Close from "./popover-close.svelte";
+import Content from "./popover-content.svelte";
+import Description from "./popover-description.svelte";
+import Header from "./popover-header.svelte";
+import Title from "./popover-title.svelte";
+import Trigger from "./popover-trigger.svelte";
+import Portal from "./popover-portal.svelte";
 
 export {
 	Root,

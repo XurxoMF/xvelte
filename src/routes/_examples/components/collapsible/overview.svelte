@@ -1,8 +1,8 @@
 <script lang="ts">
+	import { ChevronDownIcon } from "$lib/icons";
+
 	import * as Collapsible from "$lib/components/ui/collapsible";
 	import * as Button from "$lib/components/ui/button";
-
-	import { ChevronDownIcon } from "$lib/icons";
 </script>
 
 <div class="flex items-center justify-center">

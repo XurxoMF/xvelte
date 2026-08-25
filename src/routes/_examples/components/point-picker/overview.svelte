@@ -1,10 +1,8 @@
 <script lang="ts">
-	import type { Point } from "$lib/components/ui/point-picker";
-
 	import * as Field from "$lib/components/ui/field";
 	import * as PointPicker from "$lib/components/ui/point-picker";
 
-	let value = $state<Point>({ x: 80, y: 45 });
+	let value = $state<PointPicker.Point>({ x: 80, y: 45 });
 </script>
 
 <Field.Field>

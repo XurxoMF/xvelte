@@ -1,10 +1,8 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
-
-	import type { WithElementRef } from "$lib/utils";
-
 	import type { SortableItemState } from "./sortable-types";
+	import type { WithElementRef } from "$lib/utils";
 
 	/** Props for one declaratively registered sortable item. */
 	export type ItemProps = Omit<WithElementRef<HTMLAttributes<HTMLDivElement>>, "children" | "id"> & {

@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	import type { HTMLOlAttributes } from "svelte/elements";
-
 	import type { WithElementRef } from "$lib/utils";
 
 	export type ListProps = WithElementRef<HTMLOlAttributes>;

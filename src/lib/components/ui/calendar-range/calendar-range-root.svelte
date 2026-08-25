@@ -1,10 +1,10 @@
 <script lang="ts" module>
-	import type { Snippet } from "svelte";
-
 	import { RangeCalendar as RangeCalendarPrimitive } from "bits-ui";
-	import type { DateValue } from "@internationalized/date";
 
+	import type { Snippet } from "svelte";
+	import type { DateValue } from "@internationalized/date";
 	import type { WithoutChildrenOrChild } from "$lib/utils";
+
 	import * as Button from "$lib/components/ui/button";
 
 	export type RootProps = WithoutChildrenOrChild<RangeCalendarPrimitive.RootProps> & {
@@ -21,10 +21,11 @@
 <script lang="ts">
 	import { isEqualMonth } from "@internationalized/date";
 
-	import { getLocale } from "$lib/paraglide/runtime";
-	import { cn } from "$lib/utils";
-
 	import * as CalendarRange from ".";
+
+	import { getLocale } from "$lib/paraglide/runtime";
+
+	import { cn } from "$lib/utils";
 
 	let {
 		ref = $bindable(null),

@@ -8,9 +8,9 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
-
 	import { setScrollAreaContext } from "./scroll-area-context.svelte";
+
+	import { cn } from "$lib/utils";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: RootProps = $props();
 

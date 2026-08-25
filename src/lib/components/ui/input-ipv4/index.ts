@@ -1,5 +1,8 @@
-import Root, { type RootProps } from "./input-ipv4-root.svelte";
-import { isValidIPv4, safeParseIPv4, type IPv4Segments } from "./input-ipv4-utils";
+import type { RootProps } from "./input-ipv4-root.svelte";
+import type { IPv4Segments } from "./input-ipv4-utils";
+
+import Root from "./input-ipv4-root.svelte";
+import { isValidIPv4, safeParseIPv4 } from "./input-ipv4-utils";
 
 export {
 	Root,

@@ -1,4 +1,6 @@
-import Root, { type RootProps } from "./knob-root.svelte";
+import type { RootProps } from "./knob-root.svelte";
+
+import Root from "./knob-root.svelte";
 
 export {
 	Root,

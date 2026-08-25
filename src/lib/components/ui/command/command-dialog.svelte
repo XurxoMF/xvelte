@@ -1,8 +1,6 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
-
 	import type { Command as CommandPrimitive, Dialog as DialogPrimitive } from "bits-ui";
-
 	import type { WithoutChildrenOrChild } from "$lib/utils";
 
 	export type DialogProps = WithoutChildrenOrChild<DialogPrimitive.RootProps> &
@@ -17,11 +15,13 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
-	import * as m from "$lib/paraglide/messages.js";
-	import * as Dialog from "$lib/components/ui/dialog";
-
 	import * as Command from ".";
+
+	import * as m from "$lib/paraglide/messages.js";
+
+	import { cn } from "$lib/utils";
+
+	import * as Dialog from "$lib/components/ui/dialog";
 
 	let {
 		open = $bindable(false),

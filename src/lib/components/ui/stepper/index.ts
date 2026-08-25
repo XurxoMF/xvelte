@@ -1,13 +1,24 @@
-import Root, { type RootProps } from "./stepper-root.svelte";
-import Nav, { type NavProps } from "./stepper-nav.svelte";
-import Item, { type ItemProps } from "./stepper-item.svelte";
-import Trigger, { type TriggerProps } from "./stepper-trigger.svelte";
-import Indicator, { type IndicatorProps } from "./stepper-indicator.svelte";
-import Separator, { type SeparatorProps } from "./stepper-separator.svelte";
-import Title, { type TitleProps } from "./stepper-title.svelte";
-import Description, { type DescriptionProps } from "./stepper-description.svelte";
-import Next, { type NextProps } from "./stepper-next.svelte";
-import Previous, { type PreviousProps } from "./stepper-previous.svelte";
+import type { RootProps } from "./stepper-root.svelte";
+import type { NavProps } from "./stepper-nav.svelte";
+import type { ItemProps } from "./stepper-item.svelte";
+import type { TriggerProps } from "./stepper-trigger.svelte";
+import type { IndicatorProps } from "./stepper-indicator.svelte";
+import type { SeparatorProps } from "./stepper-separator.svelte";
+import type { TitleProps } from "./stepper-title.svelte";
+import type { DescriptionProps } from "./stepper-description.svelte";
+import type { NextProps } from "./stepper-next.svelte";
+import type { PreviousProps } from "./stepper-previous.svelte";
+
+import Root from "./stepper-root.svelte";
+import Nav from "./stepper-nav.svelte";
+import Item from "./stepper-item.svelte";
+import Trigger from "./stepper-trigger.svelte";
+import Indicator from "./stepper-indicator.svelte";
+import Separator from "./stepper-separator.svelte";
+import Title from "./stepper-title.svelte";
+import Description from "./stepper-description.svelte";
+import Next from "./stepper-next.svelte";
+import Previous from "./stepper-previous.svelte";
 
 export {
 	Root,

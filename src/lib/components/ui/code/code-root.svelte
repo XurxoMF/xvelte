@@ -1,13 +1,13 @@
 <script lang="ts" module>
-	import type { HTMLAttributes } from "svelte/elements";
-
 	import type { WithChildren, WithoutChildren } from "bits-ui";
 	import { type VariantProps, tv } from "tailwind-variants";
+
+	import type { RootProps as ScrollAreaRootProps } from "$lib/components/ui/scroll-area";
 
 	import type { LanguageLoader, PlainTextLanguage } from "./shiki";
 
 	export const codeVariants = tv({
-		base: "not-prose relative h-full overflow-auto rounded-lg border",
+		base: "not-prose relative h-full max-h-[650px] overflow-hidden rounded-lg border",
 		variants: {
 			variant: {
 				default: "border-border bg-card",
@@ -40,10 +40,11 @@
 	};
 
 	/** Props accepted by the Code root. */
-	export type RootProps = (PlainTextRootProps | HighlightedRootProps) & WithoutChildren<HTMLAttributes<HTMLDivElement>>;
+	export type RootProps = (PlainTextRootProps | HighlightedRootProps) & WithoutChildren<ScrollAreaRootProps>;
 </script>
 
 <script lang="ts">
+	import * as ScrollArea from "$lib/components/ui/scroll-area";
 	import { cn } from "$lib/utils";
 
 	import { setCodeContext } from "./code-context.svelte.js";
@@ -83,11 +84,17 @@
 	});
 </script>
 
-<div {...restProps} bind:this={ref} data-slot="code" class={cn(codeVariants({ variant }), className)}>
-	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-	{@html codeState.highlighted}
+<ScrollArea.Root {...restProps} bind:ref data-slot="code" class={cn(codeVariants({ variant }), className)}>
+	<ScrollArea.Viewport class="max-h-[inherit]">
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html codeState.highlighted}
+	</ScrollArea.Viewport>
+
 	{@render children?.()}
-</div>
+
+	<ScrollArea.ScrollbarVertical />
+	<ScrollArea.ScrollbarHorizontal />
+</ScrollArea.Root>
 
 <style>
 	:global(.dark) {
@@ -108,9 +115,9 @@
 		line-height: 1.25rem;
 	}
 
-	:global(pre.shiki:not([data-code-overflow] *):not([data-code-overflow])) {
-		overflow-y: visible;
-		max-height: min(100%, 650px);
+	:global([data-code-overflow] [data-slot="code"]),
+	:global([data-code-overflow] [data-slot="scroll-area-viewport"]) {
+		max-height: none;
 	}
 
 	:global(pre.shiki code) {

@@ -24,7 +24,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `carousel`
 - `chart`
 - `checkbox`
-- `code` — Shiki code blocks with automatic lazy loading for bundled languages and aliases, plus caller overrides for custom grammars
+- `code` — Shiki code blocks with lazy-loaded languages, custom Scroll Area controls on both axes, fixed copy actions, and expandable overflow
 - `collapsible`
 - `color-picker`
 - `combobox`

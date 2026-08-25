@@ -1,6 +1,6 @@
 # Code
 
-A composable code block that highlights source with Shiki, automatically resolves bundled languages and aliases, loads each grammar only when requested, and supports light and dark themes, line numbers and highlighted lines, copying, visual variants, and expandable overflow.
+A composable code block that highlights source with Shiki, automatically resolves bundled languages and aliases, loads each grammar only when requested, and supports light and dark themes, line numbers and highlighted lines, two-axis Scroll Area controls, copying, visual variants, and expandable overflow.
 
 Use Code for examples, documentation, configuration, commands, and other preformatted source. Use plain `<code>` for a short inline fragment, and do not use this client-rendered component when highlighted markup must be present in server-rendered HTML before JavaScript runs.
 
@@ -34,13 +34,15 @@ Code's `index.ts` exports `Root`, `CopyButton`, `Overflow`, their props types, `
 
 ## Anatomy
 
-`Root` owns the source, language loading, highlighting, and shared context. Place `CopyButton` inside it so the button can copy the same source:
+`Root` owns the source, language loading, highlighting, Scroll Area, and shared context. Place `CopyButton` inside it so the button can copy the same source:
 
 ```svelte
 <Code.Root code={source} lang="typescript">
 	<Code.CopyButton tabindex={0} />
 </Code.Root>
 ```
+
+`Root` renders Scroll Area's outer root, its viewport, and both scrollbar axes. Highlighted code lives inside the viewport, while `children` render directly under the Scroll Area root so positioned controls such as `CopyButton` remain fixed when code scrolls.
 
 Wrap the root in `Overflow` when a long block should start collapsed:
 
@@ -189,20 +191,20 @@ The callback receives `success` or `failure`. Use it to provide an accessible st
 
 ### `Code.Root`
 
-`RootProps` is the union of `PlainTextRootProps` and `HighlightedRootProps`, combined with native `div` attributes.
+`RootProps` is the union of `PlainTextRootProps` and `HighlightedRootProps`, combined with Scroll Area Root props.
 
-| Prop             | Type                             | Default     | xvelte behavior                                                                                              |
-| ---------------- | -------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------ |
-| `code`           | `string`                         | Required    | Source passed to Shiki after trailing whitespace is removed with `trimEnd()`. Also supplied to `CopyButton`. |
-| `lang`           | `string`                         | `"text"`    | Bundled Shiki language name or alias. Values are normalized; unknown identifiers use plain text.             |
-| `loadLanguage`   | `LanguageLoader`                 | `undefined` | Optional custom or overriding dynamic import. It takes precedence over the bundled registry.                 |
-| `variant`        | `"default" \| "secondary"`       | `"default"` | Selects the root border and surface treatment.                                                               |
-| `hideLines`      | `boolean`                        | `false`     | Omits generated CSS line numbers.                                                                            |
-| `highlight`      | `(number \| [number, number])[]` | `[]`        | Highlights one-based lines and inclusive ranges without changing the source.                                 |
-| `children`       | `Snippet`                        | `undefined` | Renders after Shiki's generated `<pre>`, normally for `CopyButton` or another positioned overlay.            |
-| `ref`            | `HTMLDivElement \| null`         | `null`      | Bindable reference to the outer `div`, not Shiki's generated `pre`.                                          |
-| `class`          | `string`                         | `undefined` | Merged after the selected `codeVariants` classes using `cn()`.                                               |
-| Native div props | Varies                           | —           | Remaining attributes and events are forwarded to the outer `div`.                                            |
+| Prop              | Type                             | Default     | xvelte behavior                                                                                              |
+| ----------------- | -------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------ |
+| `code`            | `string`                         | Required    | Source passed to Shiki after trailing whitespace is removed with `trimEnd()`. Also supplied to `CopyButton`. |
+| `lang`            | `string`                         | `"text"`    | Bundled Shiki language name or alias. Values are normalized; unknown identifiers use plain text.             |
+| `loadLanguage`    | `LanguageLoader`                 | `undefined` | Optional custom or overriding dynamic import. It takes precedence over the bundled registry.                 |
+| `variant`         | `"default" \| "secondary"`       | `"default"` | Selects the root border and surface treatment.                                                               |
+| `hideLines`       | `boolean`                        | `false`     | Omits generated CSS line numbers.                                                                            |
+| `highlight`       | `(number \| [number, number])[]` | `[]`        | Highlights one-based lines and inclusive ranges without changing the source.                                 |
+| `children`        | `Snippet`                        | `undefined` | Renders outside the viewport under the outer root, normally for `CopyButton` or another positioned overlay.  |
+| `ref`             | `HTMLDivElement \| null`         | `null`      | Bindable reference to the outer Scroll Area root, not its viewport or Shiki's generated `pre`.               |
+| `class`           | `string`                         | `undefined` | Merged after the selected `codeVariants` classes using `cn()`.                                               |
+| Scroll Area props | Varies                           | —           | Remaining Root attributes, events, direction, and scrollbar visibility settings are forwarded.               |
 
 `PlainTextRootProps` permits `lang="text"`, `"plaintext"`, `"txt"`, or `"plain"`. `HighlightedRootProps` requires a string `lang` and accepts an optional `loadLanguage` override.
 
@@ -238,14 +240,15 @@ The button copies `Root`'s raw trimmed source through `navigator.clipboard.write
 
 ### `Code.Overflow`
 
-| Prop             | Type      | Default     | xvelte behavior                                                                         |
-| ---------------- | --------- | ----------- | --------------------------------------------------------------------------------------- |
-| `collapsed`      | `boolean` | `true`      | Bindable. Limits height, displays a gradient, and renders the Expand button while true. |
-| `children`       | `Snippet` | `undefined` | Renders the code block before the overlay and Expand button.                            |
-| `class`          | `string`  | `undefined` | Merged with the relative positioning and overflow classes.                              |
-| Native div props | Varies    | —           | Remaining native `div` attributes and events are forwarded.                             |
+| Prop             | Type                     | Default     | xvelte behavior                                                                         |
+| ---------------- | ------------------------ | ----------- | --------------------------------------------------------------------------------------- |
+| `collapsed`      | `boolean`                | `true`      | Bindable. Limits height, displays a gradient, and renders the Expand button while true. |
+| `children`       | `Snippet`                | `undefined` | Renders the code block before the overlay and Expand button.                            |
+| `ref`            | `HTMLDivElement \| null` | `null`      | Bindable reference to the outer overflow container.                                     |
+| `class`          | `string`                 | `undefined` | Merged with the relative positioning and overflow classes.                              |
+| Native div props | Varies                   | —           | Remaining native `div` attributes and events are forwarded.                             |
 
-Clicking Expand sets `collapsed` to `false`. There is no built-in way to set it back to `true`, no height prop, and no public props for the internal overlay or Button.
+Clicking Expand sets `collapsed` to `false`. While collapsed, Overflow temporarily removes the nested Scroll Area viewport and `CopyButton` from sequential keyboard focus, including when their `tabindex` changes after mounting. It restores their previous values when expanded. There is no built-in way to set it back to `true`, no height prop, and no public props for the internal overlay or Expand Button.
 
 ### `codeVariants`
 
@@ -265,16 +268,20 @@ Stable xvelte hooks:
 
 | Part                 | Stable hook                                                         | Notable behavior                                        |
 | -------------------- | ------------------------------------------------------------------- | ------------------------------------------------------- |
-| `Root`               | `data-slot="code"`                                                  | Relative scrolling container and context owner.         |
+| `Root`               | `data-slot="code"`                                                  | Relative Scroll Area root and context owner.            |
 | `CopyButton`         | `data-slot="code-copy-button"`                                      | Absolutely positioned in the top-right corner.          |
 | `Overflow`           | `data-slot="code-overflow"`, `data-code-overflow`, `data-collapsed` | Controls clipping, gradient, and the expanded state.    |
+| Scroll viewport      | `data-slot="scroll-area-viewport"`                                  | Owns native scrolling and its conditional tab stop.     |
+| Scrollbars           | `data-slot="scroll-area-scrollbar"`                                 | Bits UI vertical and horizontal scrollbar controls.     |
+| Scrollbar thumbs     | `data-slot="scroll-area-thumb"`                                     | Draggable controls inside each visible scrollbar.       |
+| Scroll corner        | `data-slot="scroll-area-corner"`                                    | Appears automatically when both axes are registered.    |
 | Generated code block | `.shiki`, `.line`                                                   | Shiki's `<pre><code>` markup and individual line spans. |
 | Numbered block       | `.line-numbers`                                                     | Enables CSS counters for one-based line numbers.        |
 | Highlighted line     | `.line--highlighted`                                                | Applies the semantic secondary background.              |
 
 `Root` removes Shiki's inline background style so the selected xvelte variant controls the surface. Shiki still writes token colors and dark-theme custom properties. Under a `.dark` ancestor, local CSS switches token color, font style, font weight, and text decoration to the `--shiki-dark-*` values.
 
-Generated blocks scroll horizontally, use a grid of full-width line spans, and normally have a maximum height of 650 pixels with vertical scrolling. That maximum is removed when the block is inside `Overflow`, which owns the collapsed height instead. Line numbers are generated with CSS counters and are not part of `code` or clipboard output.
+Generated blocks use a grid of full-width line spans. Scroll Area's viewport provides horizontal and vertical scrolling, with the outer root normally limited to 650 pixels. That maximum is removed when the block is inside `Overflow`, which owns the collapsed height instead. The copy button is a sibling of the viewport, so it stays pinned to the root while code scrolls. Line numbers are generated with CSS counters and are not part of `code` or clipboard output.
 
 Classes supplied to public parts are merged with `cn()`. Root classes can override its variant and sizing utilities; CopyButton and Overflow classes can override their positioning. Preserve the stable hooks and Shiki class names when replacing local styles.
 
@@ -285,7 +292,7 @@ Shiki generates semantic `<pre><code>` markup and escapes the source before xvel
 - Add nearby visible context, such as a heading, caption, or paragraph, when the purpose or language is not obvious.
 - `CopyButton` has the localized accessible name “Copy code”, but its local default `tabindex="-1"` removes it from sequential keyboard focus. Pass `tabindex={0}` unless intentionally exposing copying only as a pointer convenience.
 - Copy success and failure are represented only by icon changes. Use `onCopy` with an `aria-live` status when the result must be announced.
-- The Expand button is a normal keyboard-accessible Button with localized text. Expanded content cannot be collapsed through the built-in UI.
+- The Expand button is a normal keyboard-accessible Button with localized text. While collapsed, the hidden Scroll Area viewport and Copy button are skipped during sequential keyboard navigation; their previous tab order is restored after expansion. Expanded content cannot be collapsed through the built-in UI.
 - CSS line numbers and highlighted backgrounds are presentational. Do not rely on them alone to communicate an instruction, error, or code review result.
 - Long lines scroll horizontally. Avoid forcing wrapping when whitespace and indentation are meaningful.
 - The initial server-rendered root is empty because highlighting runs after client initialization. Use a server-side Shiki integration when code must be available without JavaScript or indexed in its highlighted form.
@@ -330,6 +337,8 @@ Use matching stable versions of `shiki`, `@shikijs/langs`, and `@shikijs/themes`
 - `src/lib/components/ui/button/index.ts`
 
 Follow the Button component's README to install its complete API, styling, and theme requirements. `Root` itself can render without Button when neither `CopyButton` nor `Overflow` is used.
+
+`Root` requires the complete `src/lib/components/ui/scroll-area` folder. Follow the Scroll Area component's README to install its Root, Viewport, fixed-axis scrollbars, internal context, styling, and Bits UI dependency.
 
 ### Global styles
 
@@ -641,14 +650,14 @@ Code is adapted from the [shadcn-svelte-extras Code component](https://shadcn-sv
 
 ## File organization
 
-| File                      | Responsibility                                                                                        |
-| ------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `code-root.svelte`        | Renders the outer container and Shiki markup, defines variants, provides context, and owns local CSS. |
-| `code-copy-button.svelte` | Copies the root source and renders copy, success, or failure icons.                                   |
-| `code-overflow.svelte`    | Collapses long blocks and renders the gradient and Expand button.                                     |
-| `code-context.svelte.ts`  | Loads and renders reactive source while sharing it with nested parts.                                 |
-| `shiki.ts`                | Resolves bundled names and aliases, creates the theme-only singleton, and loads each grammar once.    |
-| `index.ts`                | Exports all public components, types, and the variant function.                                       |
-| `README.md`               | Documents composition, dynamic languages, API, behavior, and installation requirements.               |
+| File                      | Responsibility                                                                                     |
+| ------------------------- | -------------------------------------------------------------------------------------------------- |
+| `code-root.svelte`        | Composes Scroll Area around Shiki markup, defines variants, provides context, and owns local CSS.  |
+| `code-copy-button.svelte` | Copies the root source and renders copy, success, or failure icons.                                |
+| `code-overflow.svelte`    | Collapses long blocks, manages hidden tab stops, and renders the gradient and Expand button.       |
+| `code-context.svelte.ts`  | Loads and renders reactive source while sharing it with nested parts.                              |
+| `shiki.ts`                | Resolves bundled names and aliases, creates the theme-only singleton, and loads each grammar once. |
+| `index.ts`                | Exports all public components, types, and the variant function.                                    |
+| `README.md`               | Documents composition, dynamic languages, API, behavior, and installation requirements.            |
 
 The component's `index.ts` and exported types are the source of truth for the public API. `code-context.svelte.ts` and the runtime helpers in `shiki.ts` are internal implementation files; only the types re-exported by `index.ts` are public.

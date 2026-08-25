@@ -4,6 +4,7 @@
 	import type { WithChildren, WithoutChildren } from "bits-ui";
 
 	export type OverflowProps = WithChildren<{
+		ref?: HTMLDivElement | null | undefined;
 		collapsed?: boolean | undefined;
 	}> &
 		WithoutChildren<HTMLAttributes<HTMLDivElement>>;
@@ -14,11 +15,60 @@
 	import { cn } from "$lib/utils";
 	import { Root as Button } from "$lib/components/ui/button";
 
-	let { collapsed = $bindable(true), class: className, children, ...restProps }: OverflowProps = $props();
+	let { ref = $bindable(null), collapsed = $bindable(true), class: className, children, ...restProps }: OverflowProps = $props();
+
+	const managedTabindexes: [element: HTMLElement, tabindex: string | null][] = [];
+
+	/** Removes collapsed code controls from sequential keyboard focus while remembering their latest tabindex. */
+	function suppressInternalTabindexes() {
+		if (!ref) return;
+
+		for (const element of ref.querySelectorAll<HTMLElement>('[data-slot="scroll-area-viewport"], [data-slot="code-copy-button"]')) {
+			const tabindex = element.getAttribute("tabindex");
+
+			if (tabindex === "-1") continue;
+
+			const managedTabindex = managedTabindexes.find(([managedElement]) => managedElement === element);
+
+			if (managedTabindex) managedTabindex[1] = tabindex;
+			else managedTabindexes.push([element, tabindex]);
+
+			element.setAttribute("tabindex", "-1");
+		}
+	}
+
+	/** Restores the tabindex values owned by descendants before Overflow suppressed them. */
+	function restoreInternalTabindexes() {
+		for (const [element, tabindex] of managedTabindexes) {
+			if (tabindex === null) element.removeAttribute("tabindex");
+			else element.setAttribute("tabindex", tabindex);
+		}
+
+		managedTabindexes.length = 0;
+	}
+
+	$effect(() => {
+		if (!ref || !collapsed) {
+			restoreInternalTabindexes();
+			return;
+		}
+
+		suppressInternalTabindexes();
+
+		// Bits UI updates Viewport's tabindex when overflow changes, and Shiki renders asynchronously.
+		const observer = new MutationObserver(suppressInternalTabindexes);
+		observer.observe(ref, { subtree: true, childList: true, attributes: true, attributeFilter: ["tabindex"] });
+
+		return () => {
+			observer.disconnect();
+			restoreInternalTabindexes();
+		};
+	});
 </script>
 
 <div
 	{...restProps}
+	bind:this={ref}
 	data-slot="code-overflow"
 	data-code-overflow
 	data-collapsed={collapsed}

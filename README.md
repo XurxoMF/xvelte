@@ -51,9 +51,9 @@ The collection supports both SvelteKit applications and websites, although many 
 - Admin panels and dashboards
 - Internal tools
 - Websites with reusable interactive UI
-- Interfaces with sidebars, fixed bars, and internally scrollable content
+- Interfaces with sidebars, fixed bars, and either document or internally scrollable content
 
-The base app layout assumes that `html` and `body` have a fixed height and use `overflow: hidden`. Consequently, scrolling normally belongs to an internal container rather than `window`. For example, content inside `Sidebar.Inset` should use a scrollable container, and scrolling code should call `scrollTo()` on that element instead of `window.scrollTo()`.
+The preview app uses native document scrolling so SvelteKit navigation, URL fragments, `window.scrollTo()`, and browser scroll restoration work normally. Its primary Sidebar uses `position="viewport"` to remain fixed while `Sidebar.Inset` grows with page content. Embedded shells, dialogs, and component previews can keep their own bounded scrolling by using the default `position="container"` and a definite parent height.
 
 ## Organization
 
@@ -216,7 +216,7 @@ Examples of local adaptations include:
 - Semantic icon imports through a single facade
 - Accessibility fixes and localized human-readable defaults
 - Tailwind class and generated-output warning fixes
-- A sidebar adapted to fit inside containers instead of relying on viewport-fixed positioning
+- A sidebar with selectable container-bound and viewport-fixed positioning
 - A contextual combobox API in which items update the root selection directly
 - Additional typography, list, floating-menu, canvas, file-drop-zone, and other reusable parts
 
@@ -231,7 +231,7 @@ When updating from an upstream source, local behavior and conventions take prece
 - There is no installation script, component registry, or CLI.
 - Releases are the stable installation source; `main` may contain unpublished work.
 - Some reusable parts are intentionally tailored to my own requirements.
-- The default app layout uses fixed-height pages with internal scrolling.
+- The preview app uses native document scrolling; bounded component previews may use internal scrolling.
 - Review dependencies when copying only part of the collection.
 - Consult upstream documentation where relevant, while accounting for local modifications.
 

@@ -66,7 +66,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `select`
 - `separator`
 - `sheet`
-- `sidebar`
+- `sidebar` — responsive container-bound or viewport-fixed application navigation with off-canvas, icon-collapse, and inset layout modes
 - `skeleton`
 - `slider`
 - `sonner` — themed global toast renderer whose state icons, subtle borders, and rich states use xvelte's danger, warning, success, and info tokens, with a locally exported, fully forwarded toast runtime

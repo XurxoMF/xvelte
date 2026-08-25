@@ -3,10 +3,13 @@
 
 	import type { WithElementRef } from "$lib/utils";
 
+	/** Props for the responsive Sidebar root. */
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
 		side?: "left" | "right" | undefined;
 		variant?: "sidebar" | "floating" | "inset" | undefined;
 		collapsible?: "offcanvas" | "icon" | "none" | undefined;
+		/** Whether the desktop sidebar is sized by its container or anchored to the viewport. */
+		position?: "container" | "viewport" | undefined;
 	};
 </script>
 
@@ -22,6 +25,7 @@
 		side = "left",
 		variant = "sidebar",
 		collapsible = "offcanvas",
+		position = "container",
 		class: className,
 		children,
 		...restProps
@@ -31,7 +35,12 @@
 </script>
 
 {#if collapsible === "none"}
-	<div class={cn("flex h-full w-(--sidebar-width) flex-col bg-sidebar text-sidebar-foreground", className)} bind:this={ref} {...restProps}>
+	<div
+		class={cn("flex h-full w-(--sidebar-width) flex-col bg-sidebar text-sidebar-foreground", className)}
+		data-position={position}
+		bind:this={ref}
+		{...restProps}
+	>
 		{@render children?.()}
 	</div>
 {:else if sidebar.isMobile}
@@ -41,6 +50,7 @@
 			data-sidebar="sidebar"
 			data-slot="sidebar"
 			data-mobile="true"
+			data-position={position}
 			class={cn("w-(--sidebar-width) bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden", className)}
 			style="--sidebar-width: {Sidebar.SIDEBAR_WIDTH_MOBILE};"
 			{side}
@@ -62,6 +72,7 @@
 		data-collapsible={sidebar.state === "collapsed" ? collapsible : ""}
 		data-variant={variant}
 		data-side={side}
+		data-position={position}
 		data-slot="sidebar"
 	>
 		<!-- This is what handles the sidebar gap on desktop -->
@@ -78,9 +89,9 @@
 		></div>
 		<div
 			data-slot="sidebar-container"
-			// Changed h-svh for h-full so it can fit inside containers and removed fixed so it doesn't position itself outside containers
 			class={cn(
-				"inset-y-0 z-10 hidden h-full w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex",
+				"inset-y-0 z-10 hidden w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex",
+				position === "viewport" ? "fixed h-svh" : "h-full",
 				side === "left"
 					? "inset-s-0 group-data-[collapsible=offcanvas]:-inset-s-(--sidebar-width)"
 					: "inset-e-0 group-data-[collapsible=offcanvas]:-inset-e-(--sidebar-width)",

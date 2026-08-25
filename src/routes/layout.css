@@ -137,11 +137,11 @@
 	}
 
 	body {
-		@apply h-full w-full overflow-hidden bg-background text-foreground;
+		@apply min-h-svh w-full bg-background text-foreground;
 	}
 
 	html {
-		@apply h-screen w-screen overflow-hidden font-sans;
+		@apply min-h-full w-full font-sans;
 	}
 }
 

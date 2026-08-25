@@ -17,7 +17,6 @@
 	import * as Tooltip from "$lib/components/ui/tooltip";
 	import * as Typography from "$lib/components/ui/typography";
 	import * as Sonner from "$lib/components/ui/sonner";
-	import * as ScrollArea from "$lib/components/ui/scroll-area";
 
 	let { children } = $props();
 
@@ -48,7 +47,7 @@
 
 <Tooltip.Provider delayDuration={500}>
 	<Sidebar.Provider class="relative">
-		<Sidebar.Root collapsible="offcanvas" variant="inset" class="border-r-0 bg-sidebar md:absolute">
+		<Sidebar.Root position="viewport" collapsible="offcanvas" variant="inset" class="border-r-0 bg-sidebar">
 			<Sidebar.Header id="sidebar-header" class="gap-3 border-b px-4 py-4">
 				<a href={resolve("/")} class="group flex items-center gap-3" aria-label="xvelte home">
 					<img
@@ -121,21 +120,17 @@
 			<Sidebar.Rail />
 		</Sidebar.Root>
 
-		<Sidebar.Inset class="overflow-hidden bg-background" style="--header-height: calc(var(--spacing) * 16)">
-			<header class="flex h-(--header-height) shrink-0 items-center gap-3 border-b px-4 sm:px-6">
+		<Sidebar.Inset class="bg-background" style="--header-height: calc(var(--spacing) * 16)">
+			<header
+				class="sticky top-0 z-10 flex h-(--header-height) shrink-0 items-center gap-3 border-b bg-background px-4 sm:px-6 md:top-2 md:rounded-t-xl"
+			>
 				<Sidebar.Trigger />
 				<div class="h-4 w-px bg-border"></div>
 				<a href={resolve("/")} class="text-sm font-medium">Documentation</a>
 				<a href="https://github.com/XurxoMF/xvelte" class="ml-auto text-sm text-muted-foreground transition-colors hover:text-foreground">GitHub</a>
 			</header>
 
-			<ScrollArea.Root class="h-[calc(100%-var(--header-height))]">
-				<ScrollArea.Viewport>
-					{@render children()}
-				</ScrollArea.Viewport>
-
-				<ScrollArea.ScrollbarVertical />
-			</ScrollArea.Root>
+			{@render children()}
 		</Sidebar.Inset>
 	</Sidebar.Provider>
 </Tooltip.Provider>

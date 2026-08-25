@@ -1,6 +1,6 @@
 # Sidebar
 
-A responsive, composable application sidebar with desktop off-canvas or icon collapse modes, a mobile Sheet presentation, persisted desktop state, keyboard and pointer toggles, themed menu parts, nested navigation, actions, badges, tooltips, and inset page layout support.
+A responsive, composable application sidebar with container-bound and viewport-fixed positioning, desktop off-canvas or icon collapse modes, a mobile Sheet presentation, persisted desktop state, keyboard and pointer toggles, themed menu parts, nested navigation, actions, badges, tooltips, and inset page layout support.
 
 Use Sidebar for persistent application navigation or tools that share the available layout with main content. Do not use it for a small contextual menu, ordinary document table of contents, or content that should remain in the normal responsive flow without independent collapse state.
 
@@ -50,7 +50,7 @@ Provider
     └── Trigger + main application content
 ```
 
-On viewports below 768 pixels, Root renders its contents inside Sheet. On desktop it reserves a layout gap and renders the sidebar container beside Inset. The project is designed for fixed-height application shells, so Provider uses `h-full`; an ancestor must provide the height.
+On viewports below 768 pixels, Root renders its contents inside Sheet. On desktop it reserves a layout gap and renders the sidebar container beside Inset. The default `position="container"` uses its parent's height for embedded shells, dialogs, and previews. `position="viewport"` fixes the desktop sidebar to the viewport and lets Provider and Inset grow with document content.
 
 ## Basic usage
 
@@ -144,6 +144,23 @@ Provider does not read the cookie itself. When initial server-rendered state sho
 - `none` renders a fixed-width ordinary flex sidebar and ignores Provider collapse state.
 - `floating` adds outer padding, rounded corners, shadow, and ring.
 - `inset` is designed to accompany `Sidebar.Inset` and gives the main area its inset card treatment.
+
+### Viewport-fixed application shell
+
+Use viewport positioning for the primary application sidebar when the document should own page scrolling:
+
+```svelte
+<Sidebar.Provider>
+	<Sidebar.Root position="viewport" collapsible="offcanvas" variant="inset">…</Sidebar.Root>
+
+	<Sidebar.Inset>
+		<header class="sticky top-2">…</header>
+		{@render children()}
+	</Sidebar.Inset>
+</Sidebar.Provider>
+```
+
+Do not wrap the main page content in a fixed-height overflow container or ScrollArea in this mode. Native document scrolling preserves `window.scrollTo()`, URL fragments, and SvelteKit/browser scroll restoration. The mobile presentation remains the same Sheet used by container positioning.
 
 ### Custom widths
 
@@ -244,19 +261,20 @@ Type: `ProviderProps`, native `<div>` attributes plus:
 | `ref`          | `HTMLDivElement \| null`  | `null`  | Bindable wrapper element.                                                 |
 | `children`     | `Snippet`                 | —       | Sidebar Root and main Inset.                                              |
 
-Provider renders `data-slot="sidebar-provider"`, installs the global Ctrl/Cmd+B listener, sets context, writes desktop changes to a seven-day cookie, and uses full parent height.
+Provider renders `data-slot="sidebar-provider"`, installs the global Ctrl/Cmd+B listener, sets context, and writes desktop changes to a seven-day cookie. It uses full parent height normally; when it contains a desktop Root with `data-position="viewport"`, it switches to automatic height with a minimum small-viewport height.
 
 #### `Sidebar.Root`
 
 Type: `RootProps`, native `<div>` attributes plus:
 
-| Prop          | Type                                 | Default       | Behavior                                                                                                   |
-| ------------- | ------------------------------------ | ------------- | ---------------------------------------------------------------------------------------------------------- |
-| `side`        | `"left" \| "right"`                  | `"left"`      | Chooses edge, borders, off-canvas direction, and Rail cursor.                                              |
-| `variant`     | `"sidebar" \| "floating" \| "inset"` | `"sidebar"`   | Chooses plain, floating, or inset desktop presentation.                                                    |
-| `collapsible` | `"offcanvas" \| "icon" \| "none"`    | `"offcanvas"` | Chooses desktop collapse behavior or disables collapse.                                                    |
-| `ref`         | `HTMLDivElement \| null`             | `null`        | Points to the fixed sidebar div, mobile Sheet.Content, or desktop outer state wrapper depending on branch. |
-| `children`    | `Snippet`                            | —             | Sidebar Header/Content/Footer/Rail composition.                                                            |
+| Prop          | Type                                 | Default       | Behavior                                                                                                        |
+| ------------- | ------------------------------------ | ------------- | --------------------------------------------------------------------------------------------------------------- |
+| `side`        | `"left" \| "right"`                  | `"left"`      | Chooses edge, borders, off-canvas direction, and Rail cursor.                                                   |
+| `variant`     | `"sidebar" \| "floating" \| "inset"` | `"sidebar"`   | Chooses plain, floating, or inset desktop presentation.                                                         |
+| `collapsible` | `"offcanvas" \| "icon" \| "none"`    | `"offcanvas"` | Chooses desktop collapse behavior or disables collapse.                                                         |
+| `position`    | `"container" \| "viewport"`          | `"container"` | Keeps the desktop container at parent height or fixes it to the viewport with `h-svh`.                          |
+| `ref`         | `HTMLDivElement \| null`             | `null`        | Points to mobile Sheet.Content, the desktop sidebar container, or the non-collapsible root depending on branch. |
+| `children`    | `Snippet`                            | —             | Sidebar Header/Content/Footer/Rail composition.                                                                 |
 
 On desktop, caller `class` and remaining native attributes apply to the inner sidebar container, while state attributes live on its outer wrapper. In the non-collapsible branch they apply directly to the only div. On mobile, class applies to Sheet.Content and remaining props are passed through the Sheet Root boundary; do not depend on arbitrary native div attributes landing on the mobile panel.
 
@@ -357,10 +375,11 @@ Most sidebar-specific parts also expose `data-sidebar` with the shorter role nam
 - `data-collapsible="offcanvas|icon|"`
 - `data-variant="sidebar|floating|inset"`
 - `data-side="left|right"`
+- `data-position="container|viewport"`
 
 Mobile Root exposes `data-mobile="true"`. MenuButton and MenuSubButton expose `data-size` and `data-active`. Step-specific named Tailwind groups and peers such as `group/sidebar-provider`, `group/menu-item`, and `peer/menu-button` coordinate sibling presentation and are part of the local styling contract.
 
-Provider defines `--sidebar-width` and `--sidebar-width-icon`; mobile Content replaces `--sidebar-width`. Classes use `cn()` except delegated prop objects, whose class is already built with `cn()` before being passed, and Trigger, which forwards its `class` prop to Button. Root's desktop outer state wrapper has fixed classes while caller class targets the container.
+Provider defines `--sidebar-width` and `--sidebar-width-icon`; mobile Content replaces `--sidebar-width`. A descendant desktop Root with `data-position="viewport"` changes Provider from `h-full` to `h-auto min-h-svh`. The matching desktop sidebar container uses `fixed h-svh`; container positioning retains `h-full` without `fixed`. Inset uses a viewport-height minimum, reduced by its one-rem vertical margin for the inset variant. Classes use `cn()` except delegated prop objects, whose class is already built with `cn()` before being passed, and Trigger, which forwards its `class` prop to Button. Root's desktop outer state wrapper has fixed classes while caller class targets the container.
 
 Keyboard-focusable labels, actions, menu buttons, and submenu buttons receive the shared three-pixel, 50%-opacity `ring` halo from the required global `*:focus-visible` rule.
 
@@ -620,17 +639,17 @@ sidebar/
 └── sidebar-trigger.svelte
 ```
 
-No public attachment, image, font, or network service is required. Give Provider a parent with a definite height.
+No public attachment, image, font, or network service is required. Give Provider a parent with a definite height when using the default container positioning. Viewport positioning supplies its own viewport minimum and is intended to grow with document content.
 
 ## Credits
 
-The component structure and design are adapted from [shadcn-svelte Sidebar](https://www.shadcn-svelte.com/docs/components/sidebar). Local responsive state, fixed-container layout, context conventions, and public exports define this implementation.
+The component structure and design are adapted from [shadcn-svelte Sidebar](https://www.shadcn-svelte.com/docs/components/sidebar). Local responsive state, selectable container or viewport positioning, context conventions, and public exports define this implementation.
 
 ## File organization
 
 | File or group                                                              | Responsibility                                                                                                          |
 | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `sidebar-provider.svelte`                                                  | Shared state provider, desktop binding/callback/cookie, shortcut listener, width variables, and full-height wrapper.    |
+| `sidebar-provider.svelte`                                                  | Shared state provider, desktop binding/callback/cookie, shortcut listener, width variables, and position-aware height.  |
 | `sidebar-context.svelte.ts`                                                | Desktop/mobile responsive state, derived collapse state, context access, shortcut, and toggle actions.                  |
 | `sidebar-constants.ts`                                                     | Cookie, width, and keyboard defaults.                                                                                   |
 | `sidebar-root.svelte`                                                      | Non-collapsible, mobile Sheet, and desktop gap/container rendering branches.                                            |
@@ -644,7 +663,7 @@ The component structure and design are adapted from [shadcn-svelte Sidebar](http
 | `sidebar-separator.svelte`                                                 | Sidebar-styled xvelte Separator wrapper.                                                                                |
 | `sidebar-trigger.svelte`                                                   | Keyboard-reachable Button toggle, icon, tooltip, and localized label.                                                   |
 | `sidebar-rail.svelte`                                                      | Pointer edge toggle and collapse cursor treatment.                                                                      |
-| `sidebar-inset.svelte`                                                     | Main application region and inset-variant styling.                                                                      |
+| `sidebar-inset.svelte`                                                     | Main application region plus position-aware height and inset-variant styling.                                           |
 | `index.ts`                                                                 | Every public component, type, state helper, and constant.                                                               |
 | `README.md`                                                                | Composition, examples, complete API, responsive behavior, accessibility, localization, styling, and installation guide. |
 

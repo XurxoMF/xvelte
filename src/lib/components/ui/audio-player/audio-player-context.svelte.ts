@@ -8,6 +8,7 @@ export class AudioPlayerState {
 	currentTime = $state(0);
 	volume = $state(1);
 	muted = $state(false);
+	lastVolume = $state(1);
 
 	/** Whether native playback is currently running. */
 	isPlaying = $derived(!this.paused);
@@ -40,15 +41,31 @@ export class AudioPlayerState {
 
 	/** @param volume - Native audio volume between 0 and 1. */
 	setVolume(volume: number) {
+		const nextVolume = Math.max(0, Math.min(1, volume));
+		this.volume = nextVolume;
+		this.muted = nextVolume === 0;
+
+		if (nextVolume > 0) this.lastVolume = nextVolume;
 		if (!this.audio) return;
 
-		this.audio.volume = volume;
-		this.volume = volume;
+		this.audio.volume = nextVolume;
+		this.audio.muted = this.muted;
 	}
 
 	/** Toggles the native muted state without discarding the chosen volume. */
 	toggleMute() {
-		this.muted = !this.muted;
+		if (this.muted || this.volume === 0) {
+			this.volume = this.lastVolume > 0 ? this.lastVolume : 1;
+			this.muted = false;
+		} else {
+			this.lastVolume = this.volume;
+			this.muted = true;
+		}
+
+		if (!this.audio) return;
+
+		this.audio.volume = this.volume;
+		this.audio.muted = this.muted;
 	}
 }
 

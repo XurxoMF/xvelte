@@ -10,7 +10,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `alert` — static callouts with neutral, danger, warning, success, info, and important semantic tones
 - `alert-dialog`
 - `aspect-ratio`
-- `audio-player`
+- `audio-player` — composable native audio playback with seek/time controls, Slider-based volume, semantic volume states, and one-point keyboard adjustment
 - `avatar`
 - `badge` — compact labels with neutral and semantic status variants
 - `breadcrumb`
@@ -86,7 +86,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `tooltip`
 - `tree-view`
 - `typography` — semantic text primitives plus a simple Prose container for consistent document rhythm
-- `video`
+- `video-player` — self-contained captioned video playback with focus-aware controls, Slider-based volume, semantic volume states, and one-point keyboard adjustment
 - `walkthrough`
 - `widget-grid` — responsive declarative dashboards with headless items, explicit drag, and one touch-friendly native resize handle per item
 

@@ -120,10 +120,8 @@
 			<Sidebar.Rail />
 		</Sidebar.Root>
 
-		<Sidebar.Inset class="bg-background" style="--header-height: calc(var(--spacing) * 16)">
-			<header
-				class="sticky top-0 z-10 flex h-(--header-height) shrink-0 items-center gap-3 border-b bg-background px-4 sm:px-6 md:top-2 md:rounded-t-xl"
-			>
+		<Sidebar.Inset style="--header-height: calc(var(--spacing) * 16)">
+			<header class="flex h-(--header-height) shrink-0 items-center gap-3 border-b px-4 sm:px-6">
 				<Sidebar.Trigger />
 				<div class="h-4 w-px bg-border"></div>
 				<a href={resolve("/")} class="text-sm font-medium">Documentation</a>

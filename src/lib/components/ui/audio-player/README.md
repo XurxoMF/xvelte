@@ -116,7 +116,7 @@ Any content may be composed around the public controls:
 </AudioPlayer.Root>
 ```
 
-Do not replace the controls' `onclick` handlers through forwarded props: doing so overrides the internal play/pause or mute action. Add separate controls or extend the public component when application callbacks are required.
+`Volume` composes caller-provided `onclick` and `onkeydown` callbacks after its internal mute and arrow-key behavior. `PlayButton` still owns its `onclick`; add a separate control or extend that component when an application callback is required.
 
 ### Multiple independent players
 
@@ -146,12 +146,12 @@ Audio Player's public API consists only of the five components and their props t
 
 Type: `RootProps`, based on native `div` attributes with a required audio source and bindable outer reference.
 
-| Prop       | Type                     | Default     | xvelte behavior                                                                              |
-| ---------- | ------------------------ | ----------- | -------------------------------------------------------------------------------------------- |
-| `src`      | `string`                 | Required    | Passed to the internal native `<audio>` element.                                             |
-| `children` | `Snippet`                | `undefined` | Renders after the native audio element and receives no snippet parameters.                   |
-| `ref`      | `HTMLDivElement \| null` | `null`      | Bindable reference to the outer player `div`; the native audio element is not exposed.       |
-| `class`    | `string`                 | `undefined` | Merged with the local card surface, border, radius, shadow, text color, and overflow styles. |
+| Prop       | Type                     | Default     | xvelte behavior                                                                        |
+| ---------- | ------------------------ | ----------- | -------------------------------------------------------------------------------------- |
+| `src`      | `string`                 | Required    | Passed to the internal native `<audio>` element.                                       |
+| `children` | `Snippet`                | `undefined` | Renders after the native audio element and receives no snippet parameters.             |
+| `ref`      | `HTMLDivElement \| null` | `null`      | Bindable reference to the outer player `div`; the native audio element is not exposed. |
+| `class`    | `string`                 | `undefined` | Merged with the local card surface, border, radius, shadow, and text color.            |
 
 Native `div` attributes are forwarded to the outer element. The internal `<audio>` receives only `src` plus internal bindings for `paused`, `currentTime`, `duration`, `volume`, and `muted`; props for `preload`, `crossorigin`, `loop`, autoplay, `<source>`, `<track>`, media events, or a native-audio ref are not part of the current public API.
 
@@ -205,27 +205,32 @@ Type: `VolumeProps`, the xvelte Button root props without `children`.
 | `ref`     | `HTMLButtonElement \| null` | `null`      | Forwarded bindable reference to the internal Button root.                           |
 | `class`   | `string`                    | `undefined` | Merged with the local size, muted foreground, and foreground hover styles.          |
 
-Clicking toggles the native muted state without discarding the selected volume. The icon represents muted/zero, low, or high volume. Hovering or keyboard-focusing the control opens a Hover Card immediately; it contains an invisible vertical range input from `0` to `1` with a `0.01` step. Changing the range updates volume but does not unmute an already muted player.
+Clicking toggles the native muted state without discarding the selected volume. The icon represents muted/zero, low, or high volume. Hover or `focus-within` reveals a local panel containing the xvelte Slider in a vertical `0` to `100` scale with a step of `1`. Changing the Slider to a positive value unmutes playback.
 
-The component accepts no `children`, accessible label, volume callback, panel props, range-input props, or range ref beyond the forwarded Button attributes. Overriding `onclick` or `data-slot` can break its control behavior or stable hook.
+While the mute button has focus, `ArrowUp` raises volume and `ArrowDown` lowers it by one percentage point. Raising volume from mute starts at 1%; lowering it to zero mutes playback. The button exposes `aria-pressed` for the current mute state and composes caller-provided `onclick` and `onkeydown` callbacks after its internal behavior.
+
+The component accepts no `children`, built-in accessible label, panel props, Slider props, or Slider ref beyond the forwarded Button attributes. Its stable button slot and internal event behavior take precedence over forwarded props.
 
 Use `index.ts` and the exported props types as the source of truth for the public API. Button's exported types define the inherited control props.
 
 ## Styling and DOM contract
 
-Audio Player uses semantic Tailwind tokens, the xvelte Button and Hover Card styles, `tw-animate-css` for the volume panel, and native audio state. It exposes no public CSS variables or variants of its own.
+Audio Player uses semantic Tailwind tokens, the xvelte Button and Slider styles, and native audio state. It exposes no public CSS variables or variants of its own.
 
 Stable xvelte hooks:
 
-| Part         | `data-slot`                | Notable DOM behavior                                                                    |
-| ------------ | -------------------------- | --------------------------------------------------------------------------------------- |
-| `Root`       | `audio-player`             | Outer card `div`; contains an unstyled native `<audio>` followed by your app's content. |
-| `PlayButton` | `audio-player-play-button` | xvelte Button with an internal play or pause SVG.                                       |
-| `Slider`     | `audio-player-slider`      | Visual track `div` containing progress and an invisible horizontal range input.         |
-| `Time`       | `audio-player-time`        | Generated `span` with tabular elapsed and duration text.                                |
-| `Volume`     | `audio-player-volume`      | xvelte Button wrapped by Hover Card and paired with a portalled vertical panel.         |
+| Part         | `data-slot`                   | Notable DOM behavior                                                               |
+| ------------ | ----------------------------- | ---------------------------------------------------------------------------------- |
+| `Root`       | `audio-player`                | Outer card `div`; keeps overflow visible for the local volume panel.               |
+| `PlayButton` | `audio-player-play-button`    | xvelte Button with an internal play or pause SVG.                                  |
+| `Slider`     | `audio-player-slider`         | Visual track `div` containing progress and an invisible horizontal range input.    |
+| `Time`       | `audio-player-time`           | Generated `span` with tabular elapsed and duration text.                           |
+| `Volume`     | `audio-player-volume`         | xvelte Button that toggles mute and controls a locally positioned vertical Slider. |
+| Volume wrap  | `audio-player-volume-control` | Hover/focus-within wrapper that keeps the volume panel visible during interaction. |
 
-The internal progress bar, native audio element, seek input, volume bar, and volume input do not have xvelte `data-slot` hooks. Volume additionally renders the public Hover Card hooks `hover-card-trigger` and `hover-card-content` from that dependency.
+The internal progress bar, native audio element, and seek input do not have xvelte `data-slot` hooks. Volume additionally renders Slider's stable track, range, and thumb hooks.
+
+The seek track mirrors keyboard focus from its transparent native input with the shared semantic ring. The volume button receives the normal Button focus treatment, and Slider owns the volume thumb's standard focus-visible ring.
 
 Classes passed to the component parts are merged after their local classes with `cn`, so conflicting Tailwind utilities favor classes from your app. The play and volume Button props are forwarded after local defaults; preserve their internal events and stable slots.
 
@@ -235,10 +240,10 @@ The native audio element is not exposed with browser controls, so the custom con
 
 - Give `Root` an appropriate group or region label that identifies the track, podcast, or recording.
 - `PlayButton` and `Volume` are icon-only buttons without built-in accessible names. Always provide `aria-label`. The current public state does not let your app switch the play button label between “Play” and “Pause”, so a combined label such as “Play or pause [track]” is the available fallback without changing the component.
-- The seek and volume range inputs currently have no accessible names, and their props are not public. An `aria-label` placed on `Slider` labels only its outer `div`, not the input. This cannot be corrected through the current public API.
-- The volume range is rendered inside a Hover Card/Link Preview whose content removes descendants from the tab order. It is therefore not a complete keyboard-accessible volume control. The mute button remains keyboard operable when labeled.
-- `Volume` currently places its Button inside the default anchor rendered by `HoverCard.Trigger`, producing nested interactive semantics. This composition should be changed to render-delegate the trigger directly to the button before claiming full conformance.
-- Because of these range-control limitations, extend the components to expose labeled input props or use native `<audio controls>` before treating this player as WCAG-complete in production.
+- The seek range input currently has no accessible name, and its props are not public. An `aria-label` placed on the public `AudioPlayer.Slider` labels only its outer `div`, not the input. This cannot be corrected through the current API.
+- The volume Slider is in the normal tab sequence and the local panel remains open while focus moves from the mute button to its thumb. The current Slider wrapper does not expose thumb props, so the thumb cannot yet receive its own accessible name through `Volume`.
+- The focused mute button also supports `ArrowUp` and `ArrowDown`, and its `aria-pressed` state communicates whether mute is active.
+- Because the seek control remains unnamed, extend it or use native `<audio controls>` before treating this player as WCAG-complete in production.
 - `Time` updates frequently. Avoid `aria-live` on it unless announcements are intentionally throttled; continuous elapsed-time announcements are disruptive.
 - Provide a transcript for spoken content and captions or an equivalent synchronized alternative when the audio accompanies visual media. The current `Root` cannot render `<track>` inside its internal audio element.
 - Do not communicate playing, muted, or progress state only through color. The icons change visually, but accessible state text is not currently exposed.
@@ -256,15 +261,15 @@ Audio Player expects a Svelte 5 project using Tailwind CSS 4. Install its runtim
 ```sh
 # bun
 bun add bits-ui @tabler/icons-svelte tailwind-variants clsx tailwind-merge
-bun add -D tailwindcss tw-animate-css
+bun add -D tailwindcss
 
 # npm
 npm install bits-ui @tabler/icons-svelte tailwind-variants clsx tailwind-merge
-npm install -D tailwindcss tw-animate-css
+npm install -D tailwindcss
 
 # pnpm
 pnpm add bits-ui @tabler/icons-svelte tailwind-variants clsx tailwind-merge
-pnpm add -D tailwindcss tw-animate-css
+pnpm add -D tailwindcss
 ```
 
 The player uses the browser's native `HTMLAudioElement` and media events; no separate audio playback package is required.
@@ -274,9 +279,9 @@ The player uses the browser's native `HTMLAudioElement` and media events; no sep
 Copy these complete UI components with Audio Player:
 
 - `$lib/components/ui/button`, used by `PlayButton` and `Volume`: copy `src/lib/components/ui/button/button-root.svelte` and `src/lib/components/ui/button/index.ts`.
-- `$lib/components/ui/hover-card`, used by `Volume` for its portalled vertical volume panel: copy `src/lib/components/ui/hover-card/hover-card-root.svelte`, `src/lib/components/ui/hover-card/hover-card-trigger.svelte`, `src/lib/components/ui/hover-card/hover-card-content.svelte`, `src/lib/components/ui/hover-card/hover-card-portal.svelte`, and `src/lib/components/ui/hover-card/index.ts`.
+- `$lib/components/ui/slider`, used by `Volume`: copy `src/lib/components/ui/slider/slider-root.svelte` and `src/lib/components/ui/slider/index.ts`.
 
-Copy those component files unchanged. Their `index.ts` exports and types are the source of truth; follow each component's README to install any additional dependencies. Hover Card is backed by Bits UI's Link Preview primitive.
+Copy those component files unchanged. Their `index.ts` exports and types are the source of truth; follow each component's README to install any additional dependencies. Slider is backed by a Bits UI primitive.
 
 Create `src/lib/components/ui/audio-player/audio-player-context.svelte.ts` with these complete contents. The component needs this internal file, but your app should not import it directly:
 
@@ -291,6 +296,7 @@ export class AudioPlayerState {
 	currentTime = $state(0);
 	volume = $state(1);
 	muted = $state(false);
+	lastVolume = $state(1);
 
 	/** Whether native playback is currently running. */
 	isPlaying = $derived(!this.paused);
@@ -323,15 +329,31 @@ export class AudioPlayerState {
 
 	/** @param volume - Native audio volume between 0 and 1. */
 	setVolume(volume: number) {
+		const nextVolume = Math.max(0, Math.min(1, volume));
+		this.volume = nextVolume;
+		this.muted = nextVolume === 0;
+
+		if (nextVolume > 0) this.lastVolume = nextVolume;
 		if (!this.audio) return;
 
-		this.audio.volume = volume;
-		this.volume = volume;
+		this.audio.volume = nextVolume;
+		this.audio.muted = this.muted;
 	}
 
 	/** Toggles the native muted state without discarding the chosen volume. */
 	toggleMute() {
-		this.muted = !this.muted;
+		if (this.muted || this.volume === 0) {
+			this.volume = this.lastVolume > 0 ? this.lastVolume : 1;
+			this.muted = false;
+		} else {
+			this.lastVolume = this.volume;
+			this.muted = true;
+		}
+
+		if (!this.audio) return;
+
+		this.audio.volume = this.volume;
+		this.audio.muted = this.muted;
 	}
 }
 
@@ -352,38 +374,42 @@ export function getAudioPlayerContext() {
 }
 ```
 
-No other xvelte component or internal module is required.
+No other xvelte component or internal module beyond the Button, Slider, and context file listed here is required.
 
 ### Global CSS
 
-The application stylesheet, `src/routes/layout.css` in xvelte, must load Tailwind CSS and `tw-animate-css`:
+The application stylesheet, `src/routes/layout.css` in xvelte, must load Tailwind CSS:
 
 ```css
 @import "tailwindcss";
-@import "tw-animate-css";
 ```
 
-Hover Card's `data-open:` and `data-closed:` animation utilities require the xvelte custom variants. The project also uses a class-based dark variant:
+Button uses the class-based dark variant. Slider requires the disabled and orientation variants:
 
 ```css
 @custom-variant dark (&:is(.dark *));
 
-@custom-variant data-open {
-	&:where([data-state="open"]),
-	&:where([data-open]:not([data-open="false"])) {
+@custom-variant data-disabled {
+	&:where([data-disabled="true"]),
+	&:where([data-disabled]:not([data-disabled="false"])) {
 		@slot;
 	}
 }
 
-@custom-variant data-closed {
-	&:where([data-state="closed"]),
-	&:where([data-closed]:not([data-closed="false"])) {
+@custom-variant data-horizontal {
+	&:where([data-orientation="horizontal"]) {
+		@slot;
+	}
+}
+
+@custom-variant data-vertical {
+	&:where([data-orientation="vertical"]) {
 		@slot;
 	}
 }
 ```
 
-Audio Player and its required Button and Hover Card components use `background`, `foreground`, `card`, `card-foreground`, `popover`, `popover-foreground`, `primary`, `primary-foreground`, `secondary`, `secondary-foreground`, `muted`, `muted-foreground`, `danger`, `border`, `input`, and `ring`, plus the shared radius scale. Your theme must define and expose all of them:
+Audio Player and its required Button and Slider components use `background`, `foreground`, `card`, `card-foreground`, `popover`, `popover-foreground`, `primary`, `primary-foreground`, `secondary`, `secondary-foreground`, `muted`, `muted-foreground`, `danger`, `border`, `input`, and `ring`, plus the shared radius scale. Your theme must define and expose all of them:
 
 ```css
 :root {
@@ -430,12 +456,16 @@ Audio Player and its required Button and Hover Card components use `background`,
 
 @layer base {
 	* {
-		@apply border-border outline-ring/50;
+		@apply border-border;
+	}
+
+	*:focus-visible {
+		@apply rounded-sm border-ring ring-3 ring-ring/50 outline-none;
 	}
 }
 ```
 
-Define equivalent values inside `.dark` if the application supports a dark theme. The values above are xvelte's light defaults and may be replaced while preserving the semantic variable and `@theme` names. No audio-player-specific CSS variables or keyframes need to be copied; `tw-animate-css` supplies Hover Card's enter, exit, fade, zoom, and slide utilities.
+Define equivalent values inside `.dark` if the application supports a dark theme. The values above are xvelte's light defaults and may be replaced while preserving the semantic variable and `@theme` names. No audio-player-specific CSS variable, keyframe, animation import, font, or layout rule is required.
 
 ### Icons
 
@@ -444,7 +474,7 @@ The player imports five semantic names from `$lib/icons`. The icon facade must c
 ```ts
 export { default as PauseIcon } from "@tabler/icons-svelte/icons/player-pause";
 export { default as PlayIcon } from "@tabler/icons-svelte/icons/player-play";
-export { default as VolumeHighIcon } from "@tabler/icons-svelte/icons/volume-3";
+export { default as VolumeIcon } from "@tabler/icons-svelte/icons/volume";
 export { default as VolumeLowIcon } from "@tabler/icons-svelte/icons/volume-2";
 export { default as VolumeMutedIcon } from "@tabler/icons-svelte/icons/volume-off";
 ```
@@ -453,7 +483,7 @@ Keep these aliases in the shared facade instead of importing Tabler directly fro
 
 ### Shared utilities
 
-The player, Button, and Hover Card components import `cn`, `WithElementRef`, and `WithoutChildrenOrChild` from `$lib/utils`. `PlayButton` and `Volume` additionally use Bits UI's `WithoutChildren` helper. Add these exact local definitions to `src/lib/utils.ts` when they are not already present:
+The player, Button, and Slider components import `cn`, `WithElementRef`, and `WithoutChildrenOrChild` from `$lib/utils`. `PlayButton` and `Volume` additionally use Bits UI's `WithoutChildren` helper. Add these exact local definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -486,10 +516,10 @@ Audio Player is adapted from the [more-shadcn-svelte Audio component](https://mo
 | --------------------------------- | -------------------------------------------------------------------------------------- |
 | `audio-player-root.svelte`        | Owns the native audio element, provides context, and renders the outer player surface. |
 | `audio-player-play-button.svelte` | Toggles native playback and renders the current play or pause icon.                    |
-| `audio-player-slider.svelte`      | Displays playback progress and seeks through the native audio timeline.                |
+| `audio-player-slider.svelte`      | Displays playback progress, mirrors seek focus, and seeks through the native timeline. |
 | `audio-player-time.svelte`        | Formats and renders current time and duration.                                         |
-| `audio-player-volume.svelte`      | Toggles mute and exposes a Hover Card with a vertical native volume input.             |
+| `audio-player-volume.svelte`      | Toggles mute, handles arrow keys, and exposes a focus-aware vertical Slider panel.     |
 | `audio-player-context.svelte.ts`  | Owns internal reactive media state and actions shared by descendant controls.          |
 | `index.ts`                        | Exports every public component part and props type.                                    |
 
-Use `index.ts` and the exported props types as the source of truth for the public API. The context module is private. If this guide and the implementation disagree, verify the installed Button, Hover Card, Bits UI, and browser media APIs and update this guide with the code change.
+Use `index.ts` and the exported props types as the source of truth for the public API. The context module is private. If this guide and the implementation disagree, verify the installed Button, Slider, Bits UI, and browser media APIs and update this guide with the code change.

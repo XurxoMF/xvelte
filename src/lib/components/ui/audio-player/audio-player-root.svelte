@@ -18,7 +18,7 @@
 
 <div
 	bind:this={ref}
-	class={cn("relative overflow-hidden rounded-xl border bg-card text-card-foreground shadow-sm", className)}
+	class={cn("relative rounded-xl border bg-card text-card-foreground shadow-sm", className)}
 	data-slot="audio-player"
 	{...restProps}
 >

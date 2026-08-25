@@ -1,4 +1,4 @@
-# Video
+# Video Player
 
 A self-contained video player with a poster, WebVTT captions, custom playback and volume controls, buffering feedback, autoplay handling, and fullscreen support. Use it when the local visual treatment and compact API fit the experience. Prefer a native `<video controls>` element or a more complete player when you need broad media-format handling, keyboard shortcuts, configurable tracks, or production-ready accessible controls without modifying this component.
 
@@ -24,18 +24,18 @@ Import the component from its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Video from "$lib/components/ui/video";
+	import * as VideoPlayer from "$lib/components/ui/video-player";
 </script>
 ```
 
-Video's `index.ts` exports `Root` and the `RootProps` type.
+Video Player's `index.ts` exports `Root` and the `RootProps` type.
 
 ## Anatomy
 
-Video has one public part:
+Video Player has one public part:
 
 ```svelte
-<Video.Root src="/videos/launch.mp4" captions="/captions/launch.en.vtt" />
+<VideoPlayer.Root src="/videos/launch.mp4" captions="/captions/launch.en.vtt" />
 ```
 
 `Root` renders a fixed-aspect container, a native `<video>` without native controls, one default captions track, and local overlays for loading, play/pause, volume, time, and fullscreen.
@@ -44,10 +44,10 @@ Video has one public part:
 
 ```svelte
 <script lang="ts">
-	import * as Video from "$lib/components/ui/video";
+	import * as VideoPlayer from "$lib/components/ui/video-player";
 </script>
 
-<Video.Root src="/videos/product-tour.mp4" poster="/images/product-tour-poster.webp" captions="/captions/product-tour.en.vtt" />
+<VideoPlayer.Root src="/videos/product-tour.mp4" poster="/images/product-tour-poster.webp" captions="/captions/product-tour.en.vtt" />
 ```
 
 Place the media, poster, and WebVTT file in your app's static assets or provide URLs that the browser can load.
@@ -59,7 +59,7 @@ Place the media, poster, and WebVTT file in your app's static assets or provide 
 Browsers generally require autoplaying media to start muted. The component retries a rejected autoplay request after muting the video, but setting `muted` communicates the intended behavior clearly:
 
 ```svelte
-<Video.Root src="/videos/ambient-loop.mp4" poster="/images/ambient-loop.webp" captions="/captions/ambient-loop.en.vtt" autoplay muted loop />
+<VideoPlayer.Root src="/videos/ambient-loop.mp4" poster="/images/ambient-loop.webp" captions="/captions/ambient-loop.en.vtt" autoplay muted loop />
 ```
 
 `muted` initializes the player only when the component mounts. Changing that prop later does not update the internal mute state.
@@ -69,7 +69,7 @@ Browsers generally require autoplaying media to start muted. The component retri
 The player fills the available width and keeps a 16:9 aspect ratio. Override local presentation through `class`:
 
 ```svelte
-<Video.Root
+<VideoPlayer.Root
 	src="/videos/interview.mp4"
 	poster="/images/interview.webp"
 	captions="/captions/interview.en.vtt"
@@ -81,7 +81,7 @@ The built-in `min-w-75` class may cause horizontal overflow in containers narrow
 
 ## Public API
 
-### `Video.Root`
+### `VideoPlayer.Root`
 
 Type: `RootProps`. This is a purpose-built API and is not based on native video or div attributes.
 
@@ -101,8 +101,9 @@ The component does not expose `ref`, `children`, `controls`, `preload`, `playsin
 
 - Clicking the video or play overlays toggles playback.
 - Controls appear on pointer movement, remain visible while paused, and hide after 2.5 seconds while playing.
-- The progress range updates `currentTime`; the volume range uses steps of `0.05`.
-- Unmuting restores the last non-zero volume.
+- The progress range updates `currentTime`; the volume control uses xvelte Slider on a `0` to `100` scale with a step of `1`.
+- Unmuting restores the last non-zero volume. Moving the Slider above zero also unmutes playback.
+- While the mute button is focused, `ArrowUp` and `ArrowDown` change volume by one percentage point; raising it from mute starts at 1%.
 - The time display uses `m:ss` and does not show hours.
 - The fullscreen button requests fullscreen on the root container. Fullscreen state is not synchronized through a `fullscreenchange` listener, so browser- or keyboard-initiated exits can leave its icon stale.
 - There is no media error state; a failed source can leave the loading overlay visible.
@@ -111,13 +112,15 @@ The component does not expose `ref`, `children`, `controls`, `preload`, `playsin
 
 The stable local hook is:
 
-| Element          | Hook                |
-| ---------------- | ------------------- |
-| Player container | `data-slot="video"` |
+| Element          | Hook                       |
+| ---------------- | -------------------------- |
+| Player container | `data-slot="video-player"` |
 
-The root uses `aspect-video`, full width, `min-w-75`, a black background, `rounded-xl`, and `shadow-lg`. Internal controls deliberately use black and white overlays rather than semantic theme surfaces. Icon buttons receive the shared three-pixel, 50%-opacity semantic `ring` halo from the required global `*:focus-visible` rule.
+The root uses `aspect-video`, full width, `min-w-75`, a black background, `rounded-xl`, and `shadow-lg`. Internal controls deliberately use black and white overlays rather than semantic theme surfaces. Bottom icon buttons and the volume thumb override the global semantic ring with a white 50%-opacity halo that remains legible over video. The full-size play overlay moves that halo to its visible circular control instead of outlining the entire player.
 
-`class` applies only to the root container. Internal loading, control, slider, and icon elements have no public `data-slot` hooks. Component-scoped CSS hides the native thumbs of the transparent range inputs; visible tracks and thumbs are separate decorative elements.
+`class` applies only to the root container. Internal loading, control, slider, and icon elements have no video-specific public `data-slot` hooks. The volume control exposes Slider's stable track, range, and thumb hooks. Component-scoped CSS hides the native thumb of the transparent progress range; its visual track mirrors keyboard focus with a white ring.
+
+Hidden controls ignore pointer input, become visible when keyboard focus enters them, and expand the volume Slider on both hover and `focus-within`.
 
 The player uses `cn`, so later conflicting Tailwind utilities passed through `class` win where `tailwind-merge` recognizes the conflict.
 
@@ -129,8 +132,8 @@ The current component has significant accessibility limitations:
 
 - The root uses `role="application"`, which can change a screen reader's normal browsing behavior.
 - Play, mute, and fullscreen buttons are icon-only and have no built-in accessible names.
-- The progress and volume ranges have no labels.
-- There are no media keyboard shortcuts beyond the browser behavior available when an individual native control receives focus.
+- The progress range has no label. The volume Slider is keyboard operable, but the current Slider wrapper does not expose thumb props for an accessible name.
+- The volume button supports `ArrowUp` and `ArrowDown` while focused. The progress range retains its native keyboard behavior; there are no player-wide media shortcuts.
 - The native `controls` attribute is not exposed.
 
 Because the purpose-built API cannot add the missing labels or native video attributes, do not use the current component as the only production media control for an accessibility-critical experience without updating its implementation. Decorative icons should remain hidden from assistive technology once accessible button names are added.
@@ -147,15 +150,15 @@ Install the runtime packages first and Tailwind CSS as a development dependency:
 
 ```sh
 # Bun
-bun add @tabler/icons-svelte clsx tailwind-merge
+bun add bits-ui @tabler/icons-svelte clsx tailwind-merge
 bun add -D tailwindcss
 
 # npm
-npm install @tabler/icons-svelte clsx tailwind-merge
+npm install bits-ui @tabler/icons-svelte clsx tailwind-merge
 npm install -D tailwindcss
 
 # pnpm
-pnpm add @tabler/icons-svelte clsx tailwind-merge
+pnpm add bits-ui @tabler/icons-svelte clsx tailwind-merge
 pnpm add -D tailwindcss
 ```
 
@@ -187,11 +190,12 @@ export { default as FullscreenIcon } from "@tabler/icons-svelte/icons/maximize";
 export { default as LoaderIcon } from "@tabler/icons-svelte/icons/loader";
 export { default as PauseIcon } from "@tabler/icons-svelte/icons/player-pause";
 export { default as PlayIcon } from "@tabler/icons-svelte/icons/player-play";
-export { default as VolumeHighIcon } from "@tabler/icons-svelte/icons/volume-3";
+export { default as VolumeIcon } from "@tabler/icons-svelte/icons/volume";
+export { default as VolumeLowIcon } from "@tabler/icons-svelte/icons/volume-2";
 export { default as VolumeMutedIcon } from "@tabler/icons-svelte/icons/volume-off";
 ```
 
-Video requires the `cn` helper from `$lib/utils`:
+Video Player requires the `cn` helper from `$lib/utils`:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -202,18 +206,18 @@ export function cn(...inputs: ClassValue[]) {
 }
 ```
 
-No other xvelte components, hooks, attachments, contexts, shared styles, animation package, or localization runtime are required. Copy both source files listed under File organization and provide the media, poster when used, and captions assets from your app.
+Copy the complete `$lib/components/ui/slider` folder and follow its README to install its Bits UI primitive, global variants, and shared utility types. Video Player requires no other xvelte component, hook, attachment, context, shared style, animation package, or localization runtime. Copy both Video Player source files listed under File organization and provide the media, poster when used, and captions assets from your app.
 
 ## Credits
 
-The player is adapted from [More Shadcn's Video component](https://more-shadcn.noair.fun/docs/components/video). The API and behavior documented here describe the local xvelte implementation.
+The player is adapted from [More Shadcn's Video component](https://more-shadcn.noair.fun/docs/components/video). The API and behavior documented here describe the local xvelte Video Player implementation.
 
 ## File organization
 
-| File                | Responsibility                                                       |
-| ------------------- | -------------------------------------------------------------------- |
-| `video-root.svelte` | Player state, native media element, controls, styling, and behavior. |
-| `index.ts`          | Public component and type exports.                                   |
-| `README.md`         | Installation and usage guide.                                        |
+| File                       | Responsibility                                                                      |
+| -------------------------- | ----------------------------------------------------------------------------------- |
+| `video-player-root.svelte` | Player state, native media element, Slider volume, controls, styling, and behavior. |
+| `index.ts`                 | Public component and type exports.                                                  |
+| `README.md`                | Installation and usage guide.                                                       |
 
 The component's `index.ts` and exported `RootProps` type are the source of truth for the public API.

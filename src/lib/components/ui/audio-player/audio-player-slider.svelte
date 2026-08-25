@@ -17,7 +17,12 @@
 	let progress = $derived(ctx.duration > 0 ? (ctx.currentTime / ctx.duration) * 100 : 0);
 </script>
 
-<div bind:this={ref} class={cn("relative h-1.5 w-full overflow-hidden bg-secondary", className)} data-slot="audio-player-slider" {...restProps}>
+<div
+	bind:this={ref}
+	class={cn("relative h-1.5 w-full overflow-hidden rounded-full bg-secondary has-focus-visible:ring-3 has-focus-visible:ring-ring/50", className)}
+	data-slot="audio-player-slider"
+	{...restProps}
+>
 	<div class="absolute top-0 left-0 h-full bg-primary" style="width: {progress}%"></div>
 	<input
 		type="range"

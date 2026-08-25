@@ -44,7 +44,6 @@ export { default as SkipBackIcon } from "@tabler/icons-svelte/icons/player-track
 export { default as SkipForwardIcon } from "@tabler/icons-svelte/icons/player-track-next";
 export { default as TrackIcon } from "@tabler/icons-svelte/icons/music";
 export { default as UploadIcon } from "@tabler/icons-svelte/icons/upload";
-export { default as VolumeHighIcon } from "@tabler/icons-svelte/icons/volume-3";
 export { default as VolumeIcon } from "@tabler/icons-svelte/icons/volume";
 export { default as VolumeLowIcon } from "@tabler/icons-svelte/icons/volume-2";
 export { default as VolumeMutedIcon } from "@tabler/icons-svelte/icons/volume-off";

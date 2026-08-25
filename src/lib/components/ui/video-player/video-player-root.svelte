@@ -1,11 +1,19 @@
 <script lang="ts" module>
+	/** Props for the self-contained video player. */
 	export type RootProps = {
+		/** Media URL loaded by the native video element. */
 		src: string;
+		/** URL for the default WebVTT captions track. */
 		captions: string;
+		/** Poster image shown before playback begins. */
 		poster?: string | undefined;
+		/** Classes merged onto the player container. */
 		class?: string | undefined;
+		/** Whether playback should be requested after mounting. */
 		autoplay?: boolean | undefined;
+		/** Whether native playback should loop. */
 		loop?: boolean | undefined;
+		/** Whether playback should start muted. */
 		muted?: boolean | undefined;
 	};
 </script>
@@ -13,7 +21,8 @@
 <script lang="ts">
 	import { onMount, untrack } from "svelte";
 
-	import { ExitFullscreenIcon, FullscreenIcon, LoaderIcon, PauseIcon, PlayIcon, VolumeHighIcon, VolumeMutedIcon } from "$lib/icons";
+	import * as Slider from "$lib/components/ui/slider";
+	import { ExitFullscreenIcon, FullscreenIcon, LoaderIcon, PauseIcon, PlayIcon, VolumeIcon, VolumeLowIcon, VolumeMutedIcon } from "$lib/icons";
 	import { cn } from "$lib/utils";
 
 	let { src, poster, class: className, autoplay = false, loop = false, muted = false, captions }: RootProps = $props();
@@ -29,6 +38,7 @@
 	let controlsTimeout: ReturnType<typeof setTimeout>;
 	let isLoading = $state(true);
 	let lastVolume = $state(1);
+	let effectiveVolume = $derived(isMuted ? 0 : volume);
 
 	/** Toggles playback on the native video element. */
 	function togglePlay() {
@@ -62,18 +72,19 @@
 		duration = video.duration;
 	}
 
-	/** @param val - Next volume between 0 and 1. */
-	function handleVolumeChange(val: number) {
-		const newVolume = val;
+	/** @param value - Next volume percentage between 0 and 100. */
+	function handleVolumeChange(value: number) {
+		const newVolume = Math.max(0, Math.min(1, value / 100));
 		volume = newVolume;
 		video.volume = newVolume;
 		isMuted = newVolume === 0;
+		video.muted = isMuted;
 		if (newVolume > 0) lastVolume = newVolume;
 	}
 
 	/** Toggles mute while remembering the last audible volume. */
 	function toggleMute() {
-		if (isMuted) {
+		if (isMuted || volume === 0) {
 			isMuted = false;
 			volume = lastVolume > 0 ? lastVolume : 1;
 			video.muted = false;
@@ -81,10 +92,21 @@
 		} else {
 			isMuted = true;
 			lastVolume = volume;
-			volume = 0;
 			video.muted = true;
-			video.volume = 0;
 		}
+	}
+
+	/** Adjusts volume by one percentage point from the currently audible level. */
+	function adjustVolume(direction: 1 | -1) {
+		handleVolumeChange(Math.round(effectiveVolume * 100) + direction);
+	}
+
+	/** Handles volume changes from the arrow keys while the mute button is focused. */
+	function handleVolumeKeydown(event: KeyboardEvent) {
+		if (event.key !== "ArrowUp" && event.key !== "ArrowDown") return;
+
+		event.preventDefault();
+		adjustVolume(event.key === "ArrowUp" ? 1 : -1);
 	}
 
 	/** Enters or exits fullscreen for the video container. */
@@ -144,7 +166,7 @@
 </script>
 
 <div
-	data-slot="video"
+	data-slot="video-player"
 	class={cn("group relative flex aspect-video w-full min-w-75 items-center justify-center overflow-hidden rounded-xl bg-black shadow-lg", className)}
 	onmousemove={handleMouseMove}
 	onmouseleave={() => isPlaying && (showControls = false)}
@@ -174,9 +196,13 @@
 	{/if}
 
 	{#if !isPlaying && !isLoading}
-		<button onclick={togglePlay} class="absolute inset-0 flex items-center justify-center bg-black/10 transition-opacity hover:bg-black/20">
+		<button
+			type="button"
+			onclick={togglePlay}
+			class="group/play absolute inset-0 flex items-center justify-center bg-black/10 transition-opacity hover:bg-black/20 focus-visible:rounded-none focus-visible:ring-0"
+		>
 			<div
-				class="flex h-16 w-16 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-transform hover:scale-110"
+				class="flex size-16 items-center justify-center rounded-full bg-white/10 text-white ring-white/50 backdrop-blur-sm transition-[transform,box-shadow] group-hover/play:scale-110 group-focus-visible/play:ring-3"
 			>
 				<PlayIcon class="ml-1 h-8 w-8 fill-white" />
 			</div>
@@ -186,11 +212,11 @@
 	<div
 		class={cn(
 			"absolute right-0 bottom-0 left-0 bg-linear-to-t from-black/80 via-black/40 to-transparent px-4 pt-12 pb-4 transition-opacity duration-300",
-			showControls ? "opacity-100" : "opacity-0"
+			showControls ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0 focus-within:pointer-events-auto focus-within:opacity-100"
 		)}
 	>
 		<!-- The invisible native range sits above the visual track and thumb. -->
-		<div class="group/slider relative mb-4 flex h-4 w-full items-center">
+		<div class="group/slider relative mb-4 flex h-4 w-full items-center rounded-sm has-focus-visible:ring-3 has-focus-visible:ring-white/50">
 			<input
 				type="range"
 				min="0"
@@ -218,7 +244,11 @@
 		<!-- Playback and volume controls stay grouped opposite fullscreen. -->
 		<div class="flex items-center justify-between gap-4">
 			<div class="flex items-center gap-4">
-				<button onclick={togglePlay} class="rounded-md text-white/90 transition-colors hover:text-white">
+				<button
+					type="button"
+					onclick={togglePlay}
+					class="flex size-8 items-center justify-center rounded-md text-white/90 transition-colors hover:bg-white/10 hover:text-white focus-visible:border-white/50 focus-visible:bg-white/10 focus-visible:ring-white/50"
+				>
 					{#if isPlaying}
 						<PauseIcon class="h-5 w-5 fill-white/90" />
 					{:else}
@@ -226,39 +256,35 @@
 					{/if}
 				</button>
 
-				<div class="group/volume flex items-center gap-2">
-					<button onclick={toggleMute} class="rounded-md text-white/90 transition-colors hover:text-white">
-						{#if isMuted || volume === 0}
+				<div class="group/volume flex items-center gap-1">
+					<button
+						type="button"
+						onclick={toggleMute}
+						onkeydown={handleVolumeKeydown}
+						aria-pressed={isMuted}
+						class="flex size-8 items-center justify-center rounded-md text-white/90 transition-colors hover:bg-white/10 hover:text-white focus-visible:border-white/50 focus-visible:bg-white/10 focus-visible:ring-white/50"
+					>
+						{#if effectiveVolume === 0}
 							<VolumeMutedIcon class="h-5 w-5" />
+						{:else if effectiveVolume < 0.5}
+							<VolumeLowIcon class="h-5 w-5" />
 						{:else}
-							<VolumeHighIcon class="h-5 w-5" />
+							<VolumeIcon class="h-5 w-5" />
 						{/if}
 					</button>
 
-					<div class="flex h-10 w-0 items-center justify-center overflow-hidden p-2 transition-all duration-300 group-hover/volume:w-20">
-						<div class="group/slider relative flex h-4 w-full items-center">
-							<input
-								type="range"
-								min={0}
-								max={1}
-								step={0.05}
-								bind:value={volume}
-								oninput={(e) => {
-									const el = e.currentTarget as HTMLInputElement;
-									handleVolumeChange(parseFloat(el.value));
-								}}
-								class="absolute z-20 h-full w-full cursor-pointer opacity-0"
-							/>
-
-							<div class="absolute h-1 w-full rounded-full bg-white/20 transition-all group-hover/slider:h-1.5"></div>
-
-							<div class="absolute h-1 rounded-full bg-white group-hover/slider:h-1.5" style="width: {(volume / 1) * 100}%"></div>
-
-							<div
-								class="absolute h-3 w-3 rounded-full bg-white opacity-0 shadow transition-opacity group-hover/slider:opacity-100"
-								style="left: {(volume / 1) * 100}%; transform: translateX(-50%)"
-							></div>
-						</div>
+					<div
+						class="flex h-10 w-0 items-center justify-center overflow-hidden px-2 transition-[width] duration-300 group-focus-within/volume:w-24 group-hover/volume:w-24"
+					>
+						<Slider.Root
+							type="single"
+							value={effectiveVolume * 100}
+							onValueChange={handleVolumeChange}
+							min={0}
+							max={100}
+							step={1}
+							class="**:data-[slot=slider-range]:bg-white **:data-[slot=slider-thumb]:border-white **:data-[slot=slider-thumb]:ring-white/50 **:data-[slot=slider-track]:bg-white/20"
+						/>
 					</div>
 				</div>
 
@@ -267,7 +293,11 @@
 				</div>
 			</div>
 
-			<button onclick={toggleFullscreen} class="rounded-md text-white/90 transition-colors hover:text-white">
+			<button
+				type="button"
+				onclick={toggleFullscreen}
+				class="flex size-8 items-center justify-center rounded-md text-white/90 transition-colors hover:bg-white/10 hover:text-white focus-visible:border-white/50 focus-visible:bg-white/10 focus-visible:ring-white/50"
+			>
 				{#if isFullscreen}
 					<ExitFullscreenIcon class="h-5 w-5" />
 				{:else}

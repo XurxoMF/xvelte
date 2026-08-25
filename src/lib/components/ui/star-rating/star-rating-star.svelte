@@ -11,7 +11,7 @@
 	import { RatingGroup } from "bits-ui";
 
 	import { cn } from "$lib/utils";
-	import { StarHalfIcon, StarIcon } from "$lib/icons";
+	import { StarIcon } from "$lib/icons";
 
 	let { index, state, class: className, ...restProps }: StarProps = $props();
 </script>
@@ -28,15 +28,11 @@
 				"fill-current": state === "active"
 			})}
 		/>
-		<StarHalfIcon
-			class={cn("absolute top-0 left-0 size-full fill-transparent transition-all group-data-[state=active]/item:fill-current", {
-				"ltr:fill-current": state === "partial"
-			})}
-		/>
-		<StarHalfIcon
-			class={cn("absolute top-0 right-0 size-full scale-x-[-1] fill-transparent transition-all group-data-[state=active]/item:fill-current", {
-				"rtl:fill-current": state === "partial"
-			})}
-		/>
+		{#if state === "partial"}
+			<StarIcon
+				aria-hidden="true"
+				class="absolute inset-0 size-full fill-current stroke-transparent [clip-path:inset(0_50%_0_0)] rtl:[clip-path:inset(0_0_0_50%)]"
+			/>
+		{/if}
 	</div>
 </RatingGroup.Item>

@@ -192,7 +192,7 @@ Star forwards native `<div>` attributes and Bits UI's `child`/`children` options
 | Root | `data-slot="star-rating"`      | `group`, row flex, 0.25rem gap, rounded outline container.                          |
 | Star | `data-slot="star-rating-star"` | 1.25rem square and semantic primary color; the global focus rule supplies its halo. |
 
-Each Star renders one full outline icon and two mirrored half-star icons. `active` fills the full icon; `partial` fills the direction-appropriate half. Bits UI supplies dependency-owned `data-state` and disabled/ARIA state.
+Each Star renders one full outline icon. `active` fills that icon; `partial` overlays a stroke-free copy clipped to the direction-appropriate half, avoiding a visible center seam. Bits UI supplies dependency-owned `data-state` and disabled/ARIA state.
 
 Root and Star classes pass through `cn()`. Internal SVG layers have no public slot; customize their inherited color and the Star container rather than targeting vendor path markup.
 
@@ -231,7 +231,6 @@ No animation package is required.
 ### Icon facade
 
 ```ts
-export { default as StarHalfIcon } from "@tabler/icons-svelte/icons/star-half";
 export { default as StarIcon } from "@tabler/icons-svelte/icons/star";
 ```
 

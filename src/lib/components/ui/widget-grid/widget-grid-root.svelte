@@ -140,6 +140,7 @@
 
 <div {...rootProps}>
 	{@render children?.()}
+	<span data-slot="widget-grid-announcement" class="sr-only" aria-live="polite" aria-atomic="true">{grid.announcement}</span>
 </div>
 
 <style>

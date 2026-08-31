@@ -33,6 +33,9 @@ export type WidgetGridAdapterItem = {
 /** Lifecycle kinds emitted by the adapter after translating engine interactions. */
 export type WidgetGridAdapterInteraction = "moveStart" | "moving" | "moveEnd" | "resizeStart" | "resizing" | "resizeEnd";
 
+/** Keyboard interaction controlled by one explicit WidgetGrid handle. */
+export type WidgetGridKeyboardInteraction = "move" | "resize";
+
 /** Adapter callbacks implemented by the context state. */
 export type WidgetGridAdapterCallbacks = {
 	/** Publishes one translated lifecycle event and the current complete snapshot. */
@@ -176,6 +179,71 @@ export class WidgetGridAdapter {
 		this.#syncItemInteraction(item);
 	}
 
+	/**
+	 * Starts one keyboard move or resize using the same public lifecycle as pointer interaction.
+	 *
+	 * @param item - Item controlled by the focused handle.
+	 * @param kind - Move or resize interaction to begin.
+	 * @returns The initial resolved state used for Escape cancellation, or `undefined` when interaction is unavailable.
+	 */
+	startKeyboardInteraction(item: WidgetGridAdapterItem, kind: WidgetGridKeyboardInteraction) {
+		const element = item.element;
+		if (!this.#grid || !element || !this.#canKeyboardInteract(item, kind)) return;
+		const initialState = this.#readState(item);
+		this.#emit(kind === "move" ? "moveStart" : "resizeStart", element);
+		return initialState;
+	}
+
+	/**
+	 * Applies one cell-sized keyboard change through GridStack collision and constraint handling.
+	 *
+	 * @param item - Active keyboard-controlled item.
+	 * @param kind - Active move or resize interaction.
+	 * @param horizontal - Horizontal arrow delta: `-1`, `0`, or `1`.
+	 * @param vertical - Vertical arrow delta: `-1`, `0`, or `1`.
+	 * @returns The resolved state when the layout changed, otherwise `undefined`.
+	 */
+	stepKeyboardInteraction(item: WidgetGridAdapterItem, kind: WidgetGridKeyboardInteraction, horizontal: number, vertical: number) {
+		const grid = this.#grid;
+		const element = item.element as GridItemHTMLElement | null;
+		const node = element?.gridstackNode;
+		if (!grid || !element || !node || !this.#canKeyboardInteract(item, kind)) return;
+
+		const before = this.#readState(item);
+		if (kind === "move") {
+			grid.update(element, { x: Math.max(0, (node.x ?? 0) + horizontal), y: Math.max(0, (node.y ?? 0) + vertical) });
+		} else {
+			grid.update(element, { w: Math.max(1, (node.w ?? 1) + horizontal), h: Math.max(1, (node.h ?? 1) + vertical) });
+		}
+
+		const after = this.#readState(item);
+		if (before.x === after.x && before.y === after.y && before.width === after.width && before.height === after.height) return;
+		this.#emit(kind === "move" ? "moving" : "resizing", element);
+		return after;
+	}
+
+	/**
+	 * Commits or cancels one keyboard interaction and publishes its end lifecycle.
+	 *
+	 * @param item - Active keyboard-controlled item.
+	 * @param kind - Active move or resize interaction.
+	 * @param initialState - Initial state to restore when cancelling, or `undefined` to commit.
+	 * @returns Final resolved state after commit or restoration.
+	 */
+	finishKeyboardInteraction(item: WidgetGridAdapterItem, kind: WidgetGridKeyboardInteraction, initialState?: WidgetGridItemState | undefined) {
+		const grid = this.#grid;
+		const element = item.element as GridItemHTMLElement | null;
+		if (!grid || !element?.gridstackNode) return;
+
+		if (initialState) {
+			grid.update(element, { x: initialState.x, y: initialState.y, w: initialState.width, h: initialState.height });
+			this.#emit(kind === "move" ? "moving" : "resizing", element);
+		}
+
+		this.#emit(kind === "move" ? "moveEnd" : "resizeEnd", element);
+		return this.#readState(item);
+	}
+
 	/** @returns A translated snapshot of every registered item in current DOM order. */
 	snapshot() {
 		const orderedElements = this.#root ? Array.from(this.#root.children) : [];
@@ -235,6 +303,11 @@ export class WidgetGridAdapter {
 	#canResize(item: WidgetGridAdapterItem) {
 		const state = item.state;
 		return !this.options.disabled && state.static !== true && (state.resizable ?? this.options.resizable) && item.resizeHandleCount === 1;
+	}
+
+	/** @param item - Item tested for the requested keyboard interaction. */
+	#canKeyboardInteract(item: WidgetGridAdapterItem, kind: WidgetGridKeyboardInteraction) {
+		return kind === "move" ? this.#canMove(item) : this.#canResize(item);
 	}
 
 	/** Registers translated native GridStack drag and resize events. */

@@ -88,7 +88,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `typography` — semantic text primitives plus a simple Prose container for consistent document rhythm
 - `video-player` — self-contained captioned video playback with focus-aware controls, Slider-based volume, semantic volume states, and one-point keyboard adjustment
 - `walkthrough`
-- `widget-grid` — responsive declarative dashboards with headless items, explicit drag, and one touch-friendly native resize handle per item
+- `widget-grid` — responsive declarative dashboards with headless items, collision-aware pointer and keyboard movement, and pointer and keyboard resizing
 
 ## Attachments
 

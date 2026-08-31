@@ -1,10 +1,17 @@
 import { createContext } from "svelte";
 import { SvelteSet } from "svelte/reactivity";
 
-import type { WidgetGridAdapterInteraction, WidgetGridAdapterItem, WidgetGridAdapterOptions } from "./widget-grid-adapter";
+import type {
+	WidgetGridAdapterInteraction,
+	WidgetGridAdapterItem,
+	WidgetGridAdapterOptions,
+	WidgetGridKeyboardInteraction
+} from "./widget-grid-adapter";
 import type { WidgetGridItemState } from "./widget-grid-types";
 
 import { WidgetGridAdapter } from "./widget-grid-adapter";
+
+import * as m from "$lib/paraglide/messages.js";
 
 type ItemLifecycleCallbacks = {
 	readonly onMoveStart: ((state: WidgetGridItemState) => void) | undefined;
@@ -33,6 +40,7 @@ type WidgetGridItemOptions = ItemLifecycleCallbacks & {
 /** Coordinates declarative items, handles, interaction state, and the internal layout adapter. */
 export class WidgetGridContext {
 	items = $state<WidgetGridItemContext[]>([]);
+	announcement = $state("");
 	readonly adapter: WidgetGridAdapter;
 
 	/** @param options - Reactive Root values and lifecycle callbacks. */
@@ -122,9 +130,11 @@ export class WidgetGridItemContext implements WidgetGridAdapterItem {
 	content = $state<HTMLElement | null>(null);
 	moving = $state(false);
 	resizing = $state(false);
+	keyboardInteraction = $state<WidgetGridKeyboardInteraction>();
 	dragHandles = new SvelteSet<HTMLElement>();
 	resizeHandle = $state<HTMLElement | null>(null);
 	#unregisterItem: (() => void) | undefined;
+	#keyboardInitialState: WidgetGridItemState | undefined;
 
 	/**
 	 * @param grid - Nearest WidgetGrid Root state.
@@ -242,6 +252,56 @@ export class WidgetGridItemContext implements WidgetGridAdapterItem {
 			this.resizeHandle = null;
 			this.grid.adapter.resizeHandleChanged(this);
 		};
+	}
+
+	/**
+	 * Starts or commits the requested keyboard interaction.
+	 *
+	 * @param kind - Move or resize interaction controlled by the focused handle.
+	 */
+	toggleKeyboardInteraction(kind: WidgetGridKeyboardInteraction) {
+		if (this.keyboardInteraction === kind) {
+			this.finishKeyboardInteraction(false);
+			return;
+		}
+		if (this.keyboardInteraction) this.finishKeyboardInteraction(false);
+
+		const initialState = this.grid.adapter.startKeyboardInteraction(this, kind);
+		if (!initialState) return;
+		this.#keyboardInitialState = initialState;
+		this.keyboardInteraction = kind;
+		this.grid.announcement = kind === "move" ? m.cobalt_badger_move_keys() : m.dusky_tern_resize_keys();
+	}
+
+	/**
+	 * Applies one arrow-key cell change and announces its resolved state.
+	 *
+	 * @param kind - Active move or resize interaction.
+	 * @param horizontal - Horizontal arrow delta.
+	 * @param vertical - Vertical arrow delta.
+	 */
+	stepKeyboardInteraction(kind: WidgetGridKeyboardInteraction, horizontal: number, vertical: number) {
+		if (this.keyboardInteraction !== kind) return;
+		const state = this.grid.adapter.stepKeyboardInteraction(this, kind, horizontal, vertical);
+		if (!state) return;
+		this.grid.announcement =
+			kind === "move"
+				? m.ember_fox_position({ column: (state.x ?? 0) + 1, row: (state.y ?? 0) + 1 })
+				: m.frosty_owl_dimensions({ width: state.width ?? 1, height: state.height ?? 1 });
+	}
+
+	/**
+	 * Ends the active keyboard interaction, optionally restoring its initial layout.
+	 *
+	 * @param cancel - Whether Escape cancellation should restore the initial state.
+	 */
+	finishKeyboardInteraction(cancel: boolean) {
+		const kind = this.keyboardInteraction;
+		if (!kind) return;
+		this.grid.adapter.finishKeyboardInteraction(this, kind, cancel ? this.#keyboardInitialState : undefined);
+		this.keyboardInteraction = undefined;
+		this.#keyboardInitialState = undefined;
+		this.grid.announcement = cancel ? m.quiet_puma_layout_cancel() : m.mossy_lark_layout_done();
 	}
 
 	/**

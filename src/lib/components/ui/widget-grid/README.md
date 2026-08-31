@@ -1,6 +1,6 @@
 # WidgetGrid
 
-WidgetGrid is a dynamic dashboard layout for arbitrary Svelte content. It registers declarative items, positions them on a responsive cell grid, resolves collisions, supports explicit drag and one touch-friendly resize handle per item, and reports complete layout snapshots for persistence. Use it for dashboards and customizable workspaces; do not use it when ordinary document flow or a simple sortable list communicates the content more clearly.
+WidgetGrid is a dynamic dashboard layout for arbitrary Svelte content. It registers declarative items, positions them on a responsive cell grid, resolves collisions, supports pointer and keyboard movement through an explicit DragHandle, supports pointer and keyboard resizing through one ResizeHandle per item, and reports complete layout snapshots for persistence. Use it for dashboards and customizable workspaces; do not use it when ordinary document flow or a simple sortable list communicates the content more clearly.
 
 <!-- xvelte-example: overview -->
 
@@ -17,6 +17,8 @@ WidgetGrid is a dynamic dashboard layout for arbitrary Svelte content. It regist
 - [Dependencies](#dependencies)
 - [File organization](#file-organization)
 
+---
+
 ## Import
 
 Import every public part through the component's `index.ts`:
@@ -30,6 +32,8 @@ Import every public part through the component's `index.ts`:
 ```
 
 The component exports `Root`, `Item`, `DragHandle`, and `ResizeHandle`. It also exports `RootProps`, `ItemProps`, `DragHandleProps`, `ResizeHandleProps`, `WidgetGridItemState`, `WidgetGridBreakpoint`, and `WidgetGridMode`.
+
+---
 
 ## Anatomy
 
@@ -46,6 +50,8 @@ Declare Items directly under Root. Each movable Item needs a DragHandle, and eac
 ```
 
 Item registers with its nearest Root when mounted and unregisters when destroyed. Handles register with their nearest Item. Root does not accept an item array and does not know the app's widget types or payloads.
+
+---
 
 ## Basic usage
 
@@ -66,7 +72,9 @@ Item is headless: its default `div` has no visual or layout classes. Add the sur
 </WidgetGrid.Root>
 ```
 
-Drag interaction never falls back to the complete Item. Removing or conditionally hiding DragHandle makes that Item non-draggable. Resize interaction requires one ResizeHandle and never falls back to invisible borders.
+Movement never falls back to the complete Item. Removing or conditionally hiding DragHandle makes that Item non-movable by pointer or keyboard. Resize interaction requires one ResizeHandle and never falls back to invisible borders.
+
+---
 
 ## Examples
 
@@ -125,6 +133,26 @@ Delegate rendering for a custom visual. The supplied inline structural style pre
 ```
 
 Always spread every supplied prop. Use WidgetGrid's `class` prop when you want its class to be merged with the structural utilities.
+
+### Keyboard movement and resizing
+
+Focus the appropriate handle, then use the same pick-up and drop pattern as Sortable:
+
+1. Press Enter or Space to start.
+2. Use the arrow keys to change the layout one cell at a time.
+3. Press Enter or Space again to commit, or Escape to restore the initial position or size.
+
+DragHandle maps Left and Right to the horizontal grid coordinate and Up and Down to the vertical coordinate. ResizeHandle controls its bottom-right corner: Right and Down grow by one column or row, while Left and Up shrink by one column or row. Moving focus away commits the current change.
+
+```svelte
+<WidgetGrid.Item id="sales" x={0} y={0} width={4} height={2}>
+	<WidgetGrid.DragHandle aria-label="Move Sales widget" />
+	<p>Sales</p>
+	<WidgetGrid.ResizeHandle aria-label="Resize Sales widget" />
+</WidgetGrid.Item>
+```
+
+Keyboard changes go through GridStack's public update API, so current columns, collisions, minimums, maximums, static state, and enabled settings still apply. A polite built-in live region announces the interaction instructions, resolved one-based position or size, and completion or cancellation.
 
 ### Responsive columns and gap
 
@@ -212,7 +240,7 @@ Root receives the directly affected state plus a current snapshot of every regis
 </WidgetGrid.Root>
 ```
 
-The engine is the temporary source of truth during a direct interaction. External prop changes update a mounted Item without remounting, while unchanged app props do not overwrite an active drag or resize.
+The engine is the temporary source of truth during a direct pointer or keyboard interaction. External prop changes update a mounted Item without remounting, while unchanged app props do not overwrite an active move or resize. Keyboard interaction invokes the same start, progress, and end callbacks as pointer interaction; Escape reports the restored state through the progress and end callbacks.
 
 ### Dynamic items
 
@@ -239,6 +267,8 @@ The engine is the temporary source of truth during a direct interaction. Externa
 
 Adding, removing, and reordering keyed Items needs no Root reinitialization. DragHandle may appear conditionally. Mount the single ResizeHandle together with its Item so GridStack can bind its native resizer directly to that element. Item generates a hydration-stable local ID when `id` is omitted, but persistent layouts should always provide an app-owned stable ID.
 
+---
+
 ## Public API
 
 WidgetGrid uses GridStack internally, but no GridStack type, option name, class, node, or event is public. The [official GridStack API](https://gridstackjs.com/doc/html/classes/GridStack.html) describes dependency-owned collision behavior. WidgetGrid's `index.ts`, exported types, and source are the source of truth for the xvelte API.
@@ -250,7 +280,7 @@ WidgetGrid uses GridStack internally, but no GridStack type, option name, class,
 | `columns`       | `number \| Partial<Record<WidgetGridBreakpoint, number>>` | `12`      | Fixed or Root-width-responsive column count.                                                       |
 | `gap`           | `number`                                                  | `16`      | Uniform horizontal and vertical pixel gap.                                                         |
 | `mode`          | `"stack" \| "free"`                                       | `"stack"` | Compacts holes or preserves positions as robustly as the collision engine allows.                  |
-| `disabled`      | `boolean`                                                 | `false`   | Disables all manual movement and resizing.                                                         |
+| `disabled`      | `boolean`                                                 | `false`   | Disables all pointer and keyboard movement and resizing.                                           |
 | `draggable`     | `boolean`                                                 | `true`    | Global drag default; an Item override and an explicit DragHandle are still respected.              |
 | `resizable`     | `boolean`                                                 | `true`    | Global resize default; an Item override and exactly one explicit ResizeHandle are still respected. |
 | `onMoveStart`   | `(state, states) => void`                                 | —         | Reports the affected state and complete snapshot when movement starts.                             |
@@ -295,7 +325,7 @@ Item forwards compatible native `div` attributes to its visible default or deleg
 | `ref`        | `HTMLElement \| null`  | `null`                    | Bindable rendered handle.                                                                    |
 | `class`      | `string`               | —                         | Merged with grab cursor and touch behavior.                                                  |
 
-The default element is `Button.Root` with `variant="ghost"`, `size="icon-sm"`, and `type="button"`. Remaining compatible native attributes are forwarded. Without a mounted DragHandle, the Item cannot be manually dragged even when Root and Item enable dragging.
+The default element is `Button.Root` with `variant="ghost"`, `size="icon-sm"`, and `type="button"`. Remaining compatible native attributes are forwarded. Without a mounted DragHandle, the Item cannot be moved manually even when Root and Item enable dragging. The handle exposes `aria-pressed`, `aria-keyshortcuts`, and `data-keyboard-active="true"` while its keyboard movement mode is active.
 
 ### `WidgetGrid.ResizeHandle`
 
@@ -307,7 +337,7 @@ The default element is `Button.Root` with `variant="ghost"`, `size="icon-sm"`, a
 | `ref`        | `HTMLElement \| null`  | `null`                      | Bindable rendered handle.                                                                 |
 | `class`      | `string`               | —                           | Merged with bottom-right placement, resize cursor, and extended pointer-target utilities. |
 
-Render at most one ResizeHandle per Item. It always controls the bottom-right corner through GridStack's native resizer. The default element is `Button.Root` with `variant="ghost"`, `size="icon-sm"`, `type="button"`, a resize icon, and an invisible extension that increases its pointer target to 44 pixels. Root `disabled`, Item `resizable={false}`, and Item `static` disable the native Button and its resize interaction.
+Render at most one ResizeHandle per Item. It always controls the bottom-right corner through GridStack's native pointer resizer and through direction-matched keyboard changes. The default element is `Button.Root` with `variant="ghost"`, `size="icon-sm"`, `type="button"`, a resize icon, and an invisible extension that increases its pointer target to 44 pixels. Root `disabled`, Item `resizable={false}`, and Item `static` disable the native Button and both interaction modes. The handle exposes `aria-pressed`, `aria-keyshortcuts`, and `data-keyboard-active="true"` while keyboard resizing is active.
 
 ### Public state types
 
@@ -333,6 +363,8 @@ type WidgetGridMode = "stack" | "free";
 
 Lifecycle snapshots always contain resolved `x`, `y`, `width`, and `height`, even when the corresponding input coordinates were omitted for automatic placement.
 
+---
+
 ## Styling and DOM contract
 
 | Part         | Stable hook                             | Default element                        |
@@ -342,7 +374,9 @@ Lifecycle snapshots always contain resolved `x`, `y`, `width`, and `height`, eve
 | DragHandle   | `data-slot="widget-grid-drag-handle"`   | xvelte ghost Button                    |
 | ResizeHandle | `data-slot="widget-grid-resize-handle"` | xvelte ghost Button                    |
 
-Root exposes `data-moving`, `data-resizing`, and `data-disabled` as `"true"` only while active. Item exposes `data-moving`, `data-resizing`, `data-disabled`, and `data-static` the same way. Both handles expose `data-disabled`.
+Root also contains an internal `data-slot="widget-grid-announcement"` polite live region. It is visually hidden and must not be used as an app styling or content hook.
+
+Root exposes `data-moving`, `data-resizing`, and `data-disabled` as `"true"` only while active. Item exposes `data-moving`, `data-resizing`, `data-disabled`, and `data-static` the same way. Both handles expose `data-disabled` and `data-keyboard-active`; their `aria-pressed` values expose inactive and active keyboard modes.
 
 Root is visually transparent and adds only the structural class needed by the internal layout engine. Its private content wrapper clips overflow so absolute handles and full-size delegated elements do not create a second scrollbar around Item; add an app-owned scrolling region inside Item when its content must scroll. During movement or resizing, Root overrides GridStack's private placeholder with the semantic `muted` background and the local `rounded-md` radius (`calc(var(--radius) * 0.8)`) so its occupied cells remain visible in both color modes. Private direct-child wrappers receive engine-owned classes, coordinate attributes, inline positioning, and animation state; these are implementation details and must not be selected from app CSS. The public Item remains nested inside those wrappers.
 
@@ -350,26 +384,40 @@ Root and Item are headless. Without `child`, Item renders a `div`; with `child`,
 
 WidgetGrid imports GridStack's structural stylesheet inside Root. Apps do not add GridStack classes, attributes, wrappers, or stylesheet imports themselves.
 
+---
+
 ## Accessibility
 
-- Default DragHandle is a native `button` with `type="button"`, disabled propagation, focus styling from Button, and localized accessible name.
-- The default ResizeHandle is a native Button with Button's focus styling, disabled behavior, and a 44-pixel extended pointer target. Delegated replacements receive the equivalent role, tab stop, accessible name, disabled state, and southeast resize cursor. Pointer dragging and resizing are the interaction mechanisms supplied in this version; provide ordinary move/resize controls when keyboard-only layout editing is required.
+- Default DragHandle is a native `button` with `type="button"`, disabled propagation, focus styling from Button, a localized accessible name, and pointer plus keyboard movement.
+- The default ResizeHandle is a native Button with Button's focus styling, disabled behavior, a 44-pixel extended pointer target, and pointer plus keyboard resizing. Delegated replacements receive the equivalent role, tab stop, accessible name, disabled state, keyboard state, shortcuts, and southeast resize cursor.
+- Enter or Space starts and commits the focused handle's keyboard mode. Arrow keys change one cell, Escape cancels, and moving focus away commits. Keep focus visible throughout the interaction.
+- Root's polite live region announces localized instructions, resolved positions or dimensions, completion, and cancellation. Coordinates are announced one-based even though public state uses zero-based `x` and `y`.
 - Override handle labels with widget-specific text when the generic default would make several controls indistinguishable.
 - Keep interactive buttons, links, fields, and menus outside a DragHandle. The handle should describe moving, not perform another action.
 - `static` and disabled values remove handles from the tab order and prevent pointer interaction.
 - Item is a headless container, not a landmark or heading. Add app-owned semantics and labelled regions only where the content structure requires them.
 - Collision movement is spatial. Persist and announce important layout changes in app code when users need confirmation beyond the visible animation.
 
+---
+
 ## Localization
 
 WidgetGrid uses these Paraglide messages from `messages/en.json`:
 
-| Message ID                        | English value   | Used by                                |
-| --------------------------------- | --------------- | -------------------------------------- |
-| `blue_heron_move`                 | `Move widget`   | Default DragHandle accessible label.   |
-| `green_otter_resize_bottom_right` | `Resize widget` | Default ResizeHandle accessible label. |
+| Message ID                        | English value                                                                               | Used by                                |
+| --------------------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------- |
+| `blue_heron_move`                 | `Move widget`                                                                               | Default DragHandle accessible label.   |
+| `green_otter_resize_bottom_right` | `Resize widget`                                                                             | Default ResizeHandle accessible label. |
+| `cobalt_badger_move_keys`         | `Moving widget. Use arrow keys to move, Enter or Space to finish, or Escape to cancel.`     | Keyboard movement instructions.        |
+| `dusky_tern_resize_keys`          | `Resizing widget. Use arrow keys to resize, Enter or Space to finish, or Escape to cancel.` | Keyboard resize instructions.          |
+| `ember_fox_position`              | `Widget moved to column {column}, row {row}.`                                               | Resolved one-based keyboard position.  |
+| `frosty_owl_dimensions`           | `Widget resized to {width} columns by {height} rows.`                                       | Resolved keyboard dimensions.          |
+| `mossy_lark_layout_done`          | `Widget layout change complete.`                                                            | Keyboard commit result.                |
+| `quiet_puma_layout_cancel`        | `Widget layout change cancelled.`                                                           | Escape cancellation result.            |
 
 Override `aria-label` for contextual names. Widget content, empty states, persistence feedback, and alternative layout controls are app-supplied and use the app's localization system.
+
+---
 
 ## Dependencies
 
@@ -447,16 +495,18 @@ Root imports all GridStack-specific structural CSS, prevents its private Item wr
 
 WidgetGrid adds no component-specific CSS variable, global class, keyframe, animation import, or font. The app remains responsible for light/dark theme activation.
 
+---
+
 ## File organization
 
 | File                               | Responsibility                                                                                            |
 | ---------------------------------- | --------------------------------------------------------------------------------------------------------- |
 | `widget-grid-root.svelte`          | Root props, transparent structural DOM, responsive engine lifecycle, state attributes, and callbacks.     |
 | `widget-grid-item.svelte`          | Headless Item wrapper, declarative registration, reactive state, private engine wrappers, and delegation. |
-| `widget-grid-drag-handle.svelte`   | Required explicit drag registration, default ghost Button, grip icon, label, and delegation.              |
-| `widget-grid-resize-handle.svelte` | Single native bottom-right ghost Button, extended pointer target, resize icon, label, and delegation.     |
-| `widget-grid-context.svelte.ts`    | Native Svelte contexts, item and handle registries, reactive interaction state, and callback routing.     |
-| `widget-grid-adapter.ts`           | Private GridStack translation, responsive columns, native interactions, collision updates, and snapshots. |
+| `widget-grid-drag-handle.svelte`   | Explicit pointer and keyboard movement, default ghost Button, grip icon, label, and delegation.           |
+| `widget-grid-resize-handle.svelte` | Bottom-right pointer and keyboard resizing, extended target, ghost Button, icon, label, and delegation.   |
+| `widget-grid-context.svelte.ts`    | Contexts, handle registries, keyboard state and announcements, reactive interaction state, and callbacks. |
+| `widget-grid-adapter.ts`           | GridStack translation, responsive columns, pointer and keyboard updates, collisions, and snapshots.       |
 | `widget-grid-types.ts`             | Public engine-independent item, breakpoint, and mode types.                                               |
 | `index.ts`                         | Public components and exported props and state types.                                                     |
 | `README.md`                        | Installation, composition, examples, API, styling, accessibility, localization, and dependencies.         |

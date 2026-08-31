@@ -56,7 +56,7 @@ Compose a trigger and modal content below one Root:
 </Dialog.Root>
 ```
 
-Content automatically renders Portal, Overlay, and a top-right icon Close. Do not wrap ordinary Content in another Portal or add a second Overlay. Set `showCloseButton={false}` only when the dialog provides another clear way to close, and pass portal configuration through `portalProps`.
+Content automatically renders Portal, Overlay, and a top-right icon Close. Do not wrap ordinary Content in another Portal or add a second Overlay. Set `showOverlay={false}` when a compound component supplies its own backdrop, set `showCloseButton={false}` only when the dialog provides another clear way to close, and pass portal configuration through `portalProps`.
 
 Header and Footer are native layout containers. Title, Description, Trigger, Close, Content, Overlay, Portal, and Root wrap Bits UI primitives.
 
@@ -285,11 +285,12 @@ Remaining compatible native button attributes and events are forwarded. Trigger 
 
 ### `Dialog.Content`
 
-Type: `ContentProps`, based on Bits UI Content after replacing its render snippets and adding local portal and close-button options.
+Type: `ContentProps`, based on Bits UI Content after replacing its render snippets and adding local portal, overlay, and close-button options.
 
 | Prop                      | Type                                 | Default     | xvelte behavior                                                                                                         |
 | ------------------------- | ------------------------------------ | ----------- | ----------------------------------------------------------------------------------------------------------------------- |
 | `portalProps`             | Portal props without children        | `undefined` | Passed to the Portal that always wraps Overlay and Content.                                                             |
+| `showOverlay`             | `boolean`                            | `true`      | Renders the automatic Overlay. Set it to `false` only when the composition provides its own backdrop or needs none.     |
 | `showCloseButton`         | `boolean`                            | `true`      | Adds a top-right ghost Button with CloseIcon and a localized screen-reader label.                                       |
 | `children`                | `Snippet`                            | required    | Renders the modal body without exposing the primitive's `open` snippet value.                                           |
 | `forceMount`              | `boolean`                            | `false`     | Keeps Content mounted for app-managed presence or transition handling.                                                  |
@@ -307,7 +308,7 @@ Type: `ContentProps`, based on Bits UI Content after replacing its render snippe
 
 Content forwards remaining compatible native `div`, presence, text-selection, scroll-lock, and layer props. Bits UI render delegation (`child`) and the stateful `{ open }` children snippet are intentionally unavailable. The inherited `restoreScrollDelay` prop remains in the type, but Bits UI applies it only on the removed delegated-child path, so it has no effect with this local Content.
 
-The internal Overlay receives no public props. Style it through its stable `data-slot` selector, or change the component if its behavior must differ. The standalone Overlay does not replace the automatic one and would create a second overlay in ordinary composition.
+The internal Overlay receives no public props. Style it through its stable `data-slot` selector. For a structurally different backdrop, set `showOverlay={false}` and compose the public Overlay or another modal backdrop under the same Root. The standalone Overlay creates a second overlay when the automatic one remains enabled.
 
 ### `Dialog.Header`
 
@@ -397,7 +398,7 @@ Type: `OverlayProps`, matching Bits UI Dialog Overlay props.
 | `ref`        | `HTMLElement \| null`          | `null`      | Bindable element reference; the default rendered element is a `div`.                            |
 | `class`      | `string`                       | `undefined` | Merged after fixed coverage, isolation, stacking, translucent black background, blur, and fade. |
 
-Remaining compatible native `div` attributes are forwarded. Overlay adds `data-slot="dialog-overlay"`. Content creates an unconfigured Overlay automatically, so this export is mainly useful for additional low-level compositions and must not be added beside ordinary Content.
+Remaining compatible native `div` attributes are forwarded. Overlay adds `data-slot="dialog-overlay"`. Content creates an unconfigured Overlay while `showOverlay` is `true`, so this export is mainly useful for additional low-level compositions and must not be added beside an enabled automatic Overlay.
 
 The component's `index.ts`, exported types, and local source are the source of truth for the public API.
 
@@ -409,7 +410,7 @@ Dialog uses semantic Tailwind tokens, `tw-animate-css`, local `data-slot` hooks,
 | -------------------------- | ------------------------------------------------------------- |
 | `Root`, `Portal`           | No rendered wrapper                                           |
 | `Trigger`                  | `data-slot="dialog-trigger"`; no local visual styles          |
-| Automatic/internal Overlay | `data-slot="dialog-overlay"`; fixed at `z-50`                 |
+| Automatic/internal Overlay | `data-slot="dialog-overlay"`; fixed at `z-50` when enabled    |
 | `Content`                  | `data-slot="dialog-content"`; fixed at `z-50`                 |
 | `Header`                   | `data-slot="dialog-header"`                                   |
 | `Title`                    | `data-slot="dialog-title"`                                    |
@@ -613,19 +614,19 @@ Dialog is adapted from [shadcn-svelte's Dialog component](https://www.shadcn-sve
 
 ## File organization
 
-| File                        | Responsibility                                                                                                  |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `dialog-root.svelte`        | Bindable open state, callbacks, and shared Bits UI dialog state.                                                |
-| `dialog-trigger.svelte`     | Unstyled default or delegated trigger with local button-type default.                                           |
-| `dialog-portal.svelte`      | Portal target and inline-rendering configuration.                                                               |
-| `dialog-overlay.svelte`     | Fixed translucent, blurred, animated backdrop.                                                                  |
-| `dialog-content.svelte`     | Automatic Portal and Overlay, modal positioning and animation, body snippet, and optional localized icon close. |
-| `dialog-header.svelte`      | Native vertical layout for Title, Description, and other header content.                                        |
-| `dialog-title.svelte`       | Accessible heading relationship and local title typography.                                                     |
-| `dialog-description.svelte` | Accessible description relationship, muted text, and direct-link styles.                                        |
-| `dialog-footer.svelte`      | Responsive action layout and optional localized outline Close button.                                           |
-| `dialog-close.svelte`       | Unstyled default or delegated close behavior with local button-type default.                                    |
-| `index.ts`                  | Public component and props-type exports.                                                                        |
-| `README.md`                 | Installation, composition, examples, API, styling, accessibility, localization, dependencies, and credits.      |
+| File                        | Responsibility                                                                                                        |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `dialog-root.svelte`        | Bindable open state, callbacks, and shared Bits UI dialog state.                                                      |
+| `dialog-trigger.svelte`     | Unstyled default or delegated trigger with local button-type default.                                                 |
+| `dialog-portal.svelte`      | Portal target and inline-rendering configuration.                                                                     |
+| `dialog-overlay.svelte`     | Fixed translucent, blurred, animated backdrop.                                                                        |
+| `dialog-content.svelte`     | Automatic Portal, optional Overlay, modal positioning and animation, body snippet, and optional localized icon close. |
+| `dialog-header.svelte`      | Native vertical layout for Title, Description, and other header content.                                              |
+| `dialog-title.svelte`       | Accessible heading relationship and local title typography.                                                           |
+| `dialog-description.svelte` | Accessible description relationship, muted text, and direct-link styles.                                              |
+| `dialog-footer.svelte`      | Responsive action layout and optional localized outline Close button.                                                 |
+| `dialog-close.svelte`       | Unstyled default or delegated close behavior with local button-type default.                                          |
+| `index.ts`                  | Public component and props-type exports.                                                                              |
+| `README.md`                 | Installation, composition, examples, API, styling, accessibility, localization, dependencies, and credits.            |
 
 Treat `index.ts`, its exported types, and the local component source as the source of truth for the public API.

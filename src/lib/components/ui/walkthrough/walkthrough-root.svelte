@@ -8,6 +8,7 @@
 		onComplete?: (() => void) | undefined;
 		children?: Snippet<[WalkthroughContext]> | undefined;
 		padding?: number | undefined;
+		showOverlay?: boolean | undefined;
 	};
 </script>
 
@@ -16,7 +17,9 @@
 	import { setWalkthroughContext } from "./walkthrough-context";
 	import WalkthroughSpotlight from "./walkthrough-spotlight.svelte";
 
-	let { steps = [], open = $bindable(false), onComplete, children, padding }: RootProps = $props();
+	import * as Dialog from "$lib/components/ui/dialog";
+
+	let { steps = [], open = $bindable(false), onComplete, children, padding, showOverlay = true }: RootProps = $props();
 
 	let currentStepIndex = $state(0);
 	let highlightRect = $state({ top: 0, left: 0, width: 0, height: 0 });
@@ -68,14 +71,23 @@
 	});
 </script>
 
-<WalkthroughSpotlight {open} top={highlightRect.top} left={highlightRect.left} width={highlightRect.width} height={highlightRect.height} />
-
-{#if open && currentStep}
-	<WalkthroughContent
-		targetId={currentStep.target}
-		placement={currentStep.position}
-		onUpdateRect={(rect) => (highlightRect = rect)}
-		contentSnippet={children}
-		{padding}
+<Dialog.Root bind:open>
+	<WalkthroughSpotlight
+		{open}
+		{showOverlay}
+		top={highlightRect.top}
+		left={highlightRect.left}
+		width={highlightRect.width}
+		height={highlightRect.height}
 	/>
-{/if}
+
+	{#if currentStep}
+		<WalkthroughContent
+			targetId={currentStep.target}
+			placement={currentStep.position}
+			onUpdateRect={(rect) => (highlightRect = rect)}
+			contentSnippet={children}
+			{padding}
+		/>
+	{/if}
+</Dialog.Root>

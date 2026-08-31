@@ -32,7 +32,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `compare-slider`
 - `context-menu`
 - `date-strip` — compact paginated date selection with locale-aware week starts and labels from the active Paraglide locale
-- `dialog`
+- `dialog` — modal content with managed focus, dismissal, optional automatic overlay, and optional generated close controls
 - `drawer`
 - `dropdown-menu`
 - `empty`
@@ -87,7 +87,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `tree-view`
 - `typography` — semantic text primitives plus a simple Prose container for consistent document rhythm
 - `video-player` — self-contained captioned video playback with focus-aware controls, Slider-based volume, semantic volume states, and one-point keyboard adjustment
-- `walkthrough`
+- `walkthrough` — Dialog-backed modal guided tours with optional highlighted-target overlay, responsive floating placement, and keyboard navigation
 - `widget-grid` — responsive declarative dashboards with headless items, collision-aware pointer and keyboard movement, and pointer and keyboard resizing
 
 ## Attachments

@@ -1,6 +1,6 @@
 # Walkthrough
 
-A guided-tour overlay that highlights elements by DOM ID, positions step content around each target, scrolls off-screen targets into view, and exposes navigation state to custom content. Use it for short contextual tours whose targets already exist in the page. Do not use it as a modal, a guaranteed interaction blocker, or a substitute for persistent help content.
+A Dialog-backed guided tour that highlights elements by DOM ID, positions step content around each target, scrolls off-screen targets into view, manages modal keyboard focus, and exposes navigation state to custom content. Use it for short contextual tours whose targets already exist in the page. Do not use it as a substitute for persistent help content or when people must keep interacting with the highlighted page while reading a step.
 
 <!-- xvelte-example: overview -->
 
@@ -18,6 +18,8 @@ A guided-tour overlay that highlights elements by DOM ID, positions step content
 - [Credits](#credits)
 - [File organization](#file-organization)
 
+---
+
 ## Import
 
 Import the component from its public `index.ts` entry point:
@@ -31,9 +33,11 @@ Import the component from its public `index.ts` entry point:
 
 Walkthrough's `index.ts` exports `Root` and the `RootProps`, `Step`, and `WalkthroughContext` types.
 
+---
+
 ## Anatomy
 
-Walkthrough exposes only its root. The root owns the spotlight, floating content, step state, and context:
+Walkthrough exposes only its root. The root owns the spotlight, floating content, step state, and context while composing Dialog internally for modal behavior:
 
 ```svelte
 <Walkthrough.Root {steps} bind:open />
@@ -45,7 +49,9 @@ Each `Step.target` points to an existing element's `id` without a leading `#`:
 <section id="profile-settings">...</section>
 ```
 
-The internal content and spotlight components are implementation details and are not exported.
+The internal content, modal overlay, and spotlight components are implementation details and are not exported.
+
+---
 
 ## Basic usage
 
@@ -80,7 +86,9 @@ The internal content and spotlight components are implementation details and are
 <Walkthrough.Root {steps} bind:open onComplete={() => console.info("Tour completed")} />
 ```
 
-Render `Root` while every referenced target can be found in the document. A missing target leaves the content at its initial position and the spotlight at its previous or empty rectangle.
+Render `Root` while every referenced target can be found in the document. A missing target leaves the content at its initial position and the spotlight at its previous or empty rectangle. Opening the walkthrough moves focus into its dialog and makes the obscured page unavailable to pointer and keyboard interaction until the walkthrough closes.
+
+---
 
 ## Examples
 
@@ -94,9 +102,19 @@ Render `Root` while every referenced target can be found in the document. A miss
 
 Use `position: "top"`, `"bottom"`, `"left"`, or `"right"` on individual steps. The default is `"bottom"`.
 
+### Without the visual overlay
+
+Hide the dimming layer and highlighted rectangle while retaining Dialog's modal semantics, focus management, transparent pointer blocker, and floating step content:
+
+```svelte
+<Walkthrough.Root {steps} bind:open showOverlay={false} />
+```
+
+The Dialog overlay is always disabled inside Walkthrough, so enabling `showOverlay` renders only the specialized Walkthrough layer with its highlighted opening. Disabling it removes that visual treatment but keeps an invisible full-screen blocker so background controls cannot be activated while the dialog is modal.
+
 ### Custom walkthrough content
 
-The `children` snippet replaces the complete default card while preserving positioning and the outer `role="dialog"` wrapper. It receives the current context:
+The `children` snippet replaces the complete default card while preserving positioning, modal semantics, focus capture, Escape handling, and focus restoration. It receives the current context:
 
 ```svelte
 <Walkthrough.Root {steps} bind:open>
@@ -120,7 +138,7 @@ The `children` snippet replaces the complete default card while preserving posit
 </Walkthrough.Root>
 ```
 
-Custom copy belongs to your app and must be translated there. Calling `close` preserves the current index, so reopening resumes the same step. Calling `next` on the final step completes the tour, closes it, resets to the first step after 300ms, and then invokes `onComplete`.
+Custom copy belongs to your app and must be translated there. Include at least one visible close control in custom content. Dialog moves focus to the first suitable custom control when opening and keeps subsequent keyboard navigation inside the content. Calling `close` preserves the current index, so reopening resumes the same step. Calling `next` on the final step completes the tour, closes it, resets to the first step after 300ms, and then invokes `onComplete`.
 
 ### Controlled visibility
 
@@ -134,19 +152,22 @@ Custom copy belongs to your app and must be translated there. Calling `close` pr
 
 Keep a non-empty `steps` array while opening the walkthrough. Changes that make the current index invalid are not clamped automatically.
 
+---
+
 ## Public API
 
 ### `Walkthrough.Root`
 
 Type: `RootProps`.
 
-| Prop         | Type                            | Default     | xvelte behavior                                                                                                               |
-| ------------ | ------------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `steps`      | `Step[]`                        | `[]`        | Ordered tour definitions. Although the exported type requires it, the implementation falls back to an empty array.            |
-| `open`       | `boolean`                       | `false`     | Required bindable visibility state. Closing does not reset progress; completing does.                                         |
-| `padding`    | `number`                        | `0`         | Expands every side of the measured spotlight rectangle in CSS pixels.                                                         |
-| `onComplete` | `() => void`                    | `undefined` | Runs about 300ms after finishing the last step, after the index resets. It does not run when the tour is merely closed.       |
-| `children`   | `Snippet<[WalkthroughContext]>` | `undefined` | Replaces the default card and receives navigation state and actions. It does not replace the outer positioned dialog wrapper. |
+| Prop          | Type                            | Default     | xvelte behavior                                                                                                               |
+| ------------- | ------------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `steps`       | `Step[]`                        | `[]`        | Ordered tour definitions. Although the exported type requires it, the implementation falls back to an empty array.            |
+| `open`        | `boolean`                       | `false`     | Required bindable visibility state. Closing does not reset progress; completing does.                                         |
+| `padding`     | `number`                        | `0`         | Expands every side of the measured spotlight rectangle in CSS pixels.                                                         |
+| `showOverlay` | `boolean`                       | `true`      | Shows the specialized dimming and highlighted opening. A transparent modal pointer blocker remains when this is `false`.      |
+| `onComplete`  | `() => void`                    | `undefined` | Runs about 300ms after finishing the last step, after the index resets. It does not run when the tour is merely closed.       |
+| `children`    | `Snippet<[WalkthroughContext]>` | `undefined` | Replaces the default card and receives navigation state and actions. It does not replace the outer positioned dialog wrapper. |
 
 `Root` does not render a DOM wrapper of its own and does not expose `class`, `ref`, native attributes, current-step binding, or a direct reset action. Its `index.ts` and exported types are the source of truth.
 
@@ -182,43 +203,58 @@ type Step = {
 
 The context setters and getters are internal and are not exported by the component's `index.ts`.
 
+---
+
 ## Styling and DOM contract
 
 Stable local hooks are:
 
 | Internal element           | Hook                                |
 | -------------------------- | ----------------------------------- |
+| Full-screen modal blocker  | `data-slot="walkthrough-overlay"`   |
 | Dimmed highlight rectangle | `data-slot="walkthrough-spotlight"` |
-| Positioned content wrapper | `data-slot="walkthrough-content"`   |
+| Positioned dialog wrapper  | `data-slot="walkthrough-content"`   |
 
-The content wrapper uses fixed positioning, `z-9999`, a 200ms Svelte fade, and Floating UI's `offset(12)`, `flip()`, and `shift({ padding: 10 })` middleware. The spotlight uses `z-9998`, a 300ms fade, a 500ms geometry transition, a fixed 6px radius, and a fixed `rgba(0, 0, 0, 0.7)` overlay shadow.
+The portalled Dialog content wrapper uses fixed positioning, `z-9999`, Dialog's open/closed fade, and Floating UI's `offset(12)`, `flip()`, and `shift({ padding: 10 })` middleware. The full-viewport Walkthrough blocker uses `z-9998`, prevents pointer interaction with the page, and owns the 300ms fade. When `showOverlay` is enabled, its nested spotlight uses a 500ms geometry transition, a fixed 6px radius, and a fixed `rgba(0, 0, 0, 0.7)` shadow that dims everything outside the highlighted rectangle. Walkthrough disables Dialog.Content's ordinary uniform overlay to avoid duplicate visual layers.
 
 The default card uses `popover`, `popover-foreground`, `muted-foreground`, and `border` theme tokens and a fixed width of 21.875rem (`w-87.5`). Its action controls come from the Button component. There is no public `class` prop; use the `children` snippet when you need a different card structure or presentation.
 
-The spotlight has `pointer-events-none`, so it dims the page but does not block interaction with background content.
+The spotlight itself has `pointer-events-none`, while its full-screen blocker always receives pointer events while the walkthrough is open. With `showOverlay={false}`, the blocker remains transparent and the `walkthrough-spotlight` element is not rendered.
+
+---
 
 ## Accessibility
 
-The positioned content wrapper uses `role="dialog"`, but the current implementation does not provide `aria-modal`, associate the dialog with its visible title or description, move or trap focus, restore focus, close on Escape, or hide background content from assistive technology. The spotlight also leaves background elements interactive.
+The positioned content composes Dialog.Content and inherits Bits UI's modal semantics, focus scope, and dismissible layer. It follows these keyboard and focus rules:
 
-The default close button contains only an icon and has no accessible name. Back, Next, and Finish buttons do have visible text. Highlighted targets keep their existing semantics and must remain accessible independently of the tour.
+- Opening moves focus directly to the default Next or Finish button. Dialog chooses the initial focus target for custom content.
+- `Tab` and `Shift+Tab` cycle through controls inside the current step through Dialog's focus scope. Focus attempts outside the modal are contained by Bits UI.
+- Every default-card step change returns focus to its Next or Finish button. The dialog's title and description remain associated through ARIA and are announced with the focused action.
+- `Escape`, the close button, external `open={false}`, and completion close the dialog. Focus returns to the element that was focused before opening when it still exists.
+- The dialog exposes `aria-modal="true"`. Default content uses visible Dialog Title and Description parts; custom content receives screen-reader-only Dialog Title and Description parts from the current step.
+- The icon-only close Button has the localized accessible name `Close walkthrough`, and its decorative icon is hidden from assistive technology. Back, Next, and Finish use their visible text as their accessible names.
 
-These limitations mean the current component is appropriate only where the walkthrough is supplementary and users can still understand and operate the page without it. For a strict modal tour, update the implementation with focus management, Escape handling, an accessible close name, and dialog labeling before using it. Custom content can add a visibly labelled close control, but cannot add attributes to the outer dialog through the current public API.
+The full-screen blocker prevents background pointer input whether the visual overlay is shown or hidden, while Dialog's focus scope prevents keyboard focus from escaping. Highlighted targets keep their existing DOM semantics but are unavailable for interaction until the walkthrough closes. Include a visible close button and concise heading in custom content; all custom controls remain responsible for their own names and states.
 
 Smooth automatic scrolling follows the browser and user's motion settings; the component does not provide its own reduced-motion switch.
+
+---
 
 ## Localization
 
 The default content uses these Paraglide messages from `messages/en.json`:
 
-| Message ID          | English text  | Parameters                             |
-| ------------------- | ------------- | -------------------------------------- |
-| `dry_wolf_step`     | `Step {step}` | `step`: one-based current step number. |
-| `even_palm_back`    | `Back`        | None.                                  |
-| `flint_dove_finish` | `Finish`      | None.                                  |
-| `young_elm_next`    | `Next`        | None.                                  |
+| Message ID                      | English text        | Parameters                             |
+| ------------------------------- | ------------------- | -------------------------------------- |
+| `dry_wolf_step`                 | `Step {step}`       | `step`: one-based current step number. |
+| `even_palm_back`                | `Back`              | None.                                  |
+| `flint_dove_finish`             | `Finish`            | None.                                  |
+| `young_elm_next`                | `Next`              | None.                                  |
+| `silver_moth_close_walkthrough` | `Close walkthrough` | None.                                  |
 
-`Step.title` and `Step.description` come from your app and must already be translated for the active locale. A custom `children` snippet replaces all default visible copy, so it also owns its translations. The default icon-only close action currently has no localized accessible label.
+`Step.title` and `Step.description` come from your app and must already be translated for the active locale. A custom `children` snippet replaces all default visible copy and controls, so it owns their translations and accessible names. The built-in close label is used only by the default icon button.
+
+---
 
 ## Dependencies
 
@@ -226,19 +262,19 @@ Install all runtime packages and development tooling in one package-manager grou
 
 ```sh
 # Bun
-bun add @floating-ui/dom @tabler/icons-svelte clsx tailwind-merge tailwind-variants
-bun add -D @inlang/paraglide-js tailwindcss
+bun add @floating-ui/dom bits-ui @tabler/icons-svelte clsx tailwind-merge tailwind-variants
+bun add -D @inlang/paraglide-js tailwindcss tw-animate-css
 
 # npm
-npm install @floating-ui/dom @tabler/icons-svelte clsx tailwind-merge tailwind-variants
-npm install -D @inlang/paraglide-js tailwindcss
+npm install @floating-ui/dom bits-ui @tabler/icons-svelte clsx tailwind-merge tailwind-variants
+npm install -D @inlang/paraglide-js tailwindcss tw-animate-css
 
 # pnpm
-pnpm add @floating-ui/dom @tabler/icons-svelte clsx tailwind-merge tailwind-variants
-pnpm add -D @inlang/paraglide-js tailwindcss
+pnpm add @floating-ui/dom bits-ui @tabler/icons-svelte clsx tailwind-merge tailwind-variants
+pnpm add -D @inlang/paraglide-js tailwindcss tw-animate-css
 ```
 
-`@floating-ui/dom` measures targets and positions the content. Paraglide supplies the default navigation copy. The remaining runtime packages support the required Button component, icon facade, and shared class helper.
+`@floating-ui/dom` measures targets and positions the content. Bits UI supplies Dialog's modal semantics and focus behavior. Paraglide supplies the default navigation copy. The remaining packages support Dialog, Button, animation classes, the icon facade, and the shared class helper.
 
 Add the Tailwind import, dark-mode variant, semantic values, and mappings used directly by Walkthrough. These are sample xvelte values; replace them with your own theme while preserving the variable names:
 
@@ -279,29 +315,52 @@ src/lib/components/ui/button/
 
 Follow the Button component's README to install its complete API, theme tokens, and helper requirements.
 
+Copy the Dialog component from `$lib/components/ui/dialog`:
+
+```text
+src/lib/components/ui/dialog/
+├── dialog-close.svelte
+├── dialog-content.svelte
+├── dialog-description.svelte
+├── dialog-footer.svelte
+├── dialog-header.svelte
+├── dialog-overlay.svelte
+├── dialog-portal.svelte
+├── dialog-root.svelte
+├── dialog-title.svelte
+├── dialog-trigger.svelte
+└── index.ts
+```
+
+Follow the Dialog component's README to install its complete API, Bits UI dependency, animation styles, theme tokens, localization, and helper requirements. Walkthrough requires the `Dialog.Content.showOverlay` option documented there.
+
 Add this semantic icon export to `$lib/icons.ts`:
 
 ```ts
 export { default as CloseIcon } from "@tabler/icons-svelte/icons/x";
 ```
 
-Add the four message IDs listed under Localization to `messages/en.json`, then generate Paraglide's `$lib/paraglide/messages.js` output through your existing Paraglide setup. The message table is the complete required localization copy, so it is not duplicated here.
+Add the five message IDs listed under Localization to `messages/en.json`, then generate Paraglide's `$lib/paraglide/messages.js` output through your existing Paraglide setup. The message table is the complete required localization copy, so it is not duplicated here.
 
-Walkthrough does not directly import `$lib/utils`; the required Button component does. Follow Button's README for the exact `cn` helper and its full theme requirements. No other xvelte component, hook, attachment, shared stylesheet, animation package, or context outside this component folder is required. Copy every source file listed under File organization; `walkthrough-context.ts` is required internal code even though its helpers are not public exports.
+Walkthrough does not directly import `$lib/utils`; the required Dialog and Button components do. Follow their READMEs for the exact `cn` helper and full theme requirements. Dialog and Bits UI provide focus trapping, restoration, Escape handling, and ARIA relationships; the Walkthrough blocker prevents pointer interaction with the page and optionally provides the specialized dimming layer. No hook or attachment is required. Copy every source file listed under File organization; `walkthrough-context.ts` is required internal code even though its helpers are not public exports.
+
+---
 
 ## Credits
 
 The component is adapted from [More Shadcn's Walkthrough component](https://more-shadcn.noair.fun/docs/components/walkthrough). The local xvelte API, behavior, and limitations documented here are defined by this repository's implementation.
 
+---
+
 ## File organization
 
-| File                           | Responsibility                                                                           |
-| ------------------------------ | ---------------------------------------------------------------------------------------- |
-| `walkthrough-root.svelte`      | Public state, completion behavior, context setup, and coordination of internal elements. |
-| `walkthrough-content.svelte`   | Target lookup, scrolling, Floating UI positioning, and default or custom step content.   |
-| `walkthrough-spotlight.svelte` | Highlight rectangle and dimmed-page overlay.                                             |
-| `walkthrough-context.ts`       | Internal `Step` and context types plus native Svelte context helpers.                    |
-| `index.ts`                     | Public component and type exports.                                                       |
-| `README.md`                    | Installation and usage guide.                                                            |
+| File                           | Responsibility                                                                                   |
+| ------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `walkthrough-root.svelte`      | Public state, completion behavior, context setup, and coordination of internal elements.         |
+| `walkthrough-content.svelte`   | Dialog composition, target lookup, positioning, focus preference, and default or custom content. |
+| `walkthrough-spotlight.svelte` | Transparent modal blocker plus optional dimming shadow and animated highlight rectangle.         |
+| `walkthrough-context.ts`       | Internal `Step` and context types plus native Svelte context helpers.                            |
+| `index.ts`                     | Public component and type exports.                                                               |
+| `README.md`                    | Installation and usage guide.                                                                    |
 
 The component's `index.ts` and exported `RootProps`, `Step`, and `WalkthroughContext` types are the source of truth for the public API.

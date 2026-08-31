@@ -9,6 +9,7 @@
 	export type ContentProps = WithoutChildrenOrChild<DialogPrimitive.ContentProps> & {
 		portalProps?: WithoutChildrenOrChild<Dialog.PortalProps> | undefined;
 		children: Snippet;
+		showOverlay?: boolean | undefined;
 		showCloseButton?: boolean | undefined;
 	};
 </script>
@@ -22,11 +23,21 @@
 
 	import * as Button from "$lib/components/ui/button";
 
-	let { ref = $bindable(null), class: className, portalProps, children, showCloseButton = true, ...restProps }: ContentProps = $props();
+	let {
+		ref = $bindable(null),
+		class: className,
+		portalProps,
+		children,
+		showOverlay = true,
+		showCloseButton = true,
+		...restProps
+	}: ContentProps = $props();
 </script>
 
 <Dialog.Portal {...portalProps}>
-	<Dialog.Overlay />
+	{#if showOverlay}
+		<Dialog.Overlay />
+	{/if}
 	<DialogPrimitive.Content
 		bind:ref
 		data-slot="dialog-content"

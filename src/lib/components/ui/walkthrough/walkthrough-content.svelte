@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { arrow, autoUpdate, computePosition, flip, offset, shift } from "@floating-ui/dom";
-	import { onDestroy, untrack } from "svelte";
-	import { fade } from "svelte/transition";
+	import { tick, untrack } from "svelte";
 
 	import type { Placement } from "@floating-ui/dom";
 	import type { Snippet } from "svelte";
@@ -14,6 +13,7 @@
 	import * as m from "$lib/paraglide/messages.js";
 
 	import * as Button from "$lib/components/ui/button";
+	import * as Dialog from "$lib/components/ui/dialog";
 
 	let {
 		targetId,
@@ -31,9 +31,10 @@
 
 	const ctx = getWalkthroughContext();
 
-	let tooltipEl: HTMLElement;
-	let arrowEl = $state<HTMLElement>();
-	let cleanup: (() => void) | undefined;
+	let tooltipEl = $state<HTMLElement | null>(null);
+	let primaryActionEl = $state<HTMLElement | null>(null);
+	let arrowEl = $state<HTMLElement | null>(null);
+	let previouslyFocused: HTMLElement | null = null;
 
 	let actualPlacement = $state<Placement>(untrack(() => placement));
 
@@ -45,23 +46,47 @@
 	function updateSpotlight(el: HTMLElement) {
 		const rect = el.getBoundingClientRect();
 
-		const paddedWidth = rect.width + padding * 2;
-		const paddedHeight = rect.height + padding * 2;
-		const paddedTop = rect.top - padding;
-		const paddedLeft = rect.left - padding;
-
 		onUpdateRect({
-			top: paddedTop,
-			left: paddedLeft,
-			width: paddedWidth,
-			height: paddedHeight
+			top: rect.top - padding,
+			left: rect.left - padding,
+			width: rect.width + padding * 2,
+			height: rect.height + padding * 2
 		});
 	}
 
-	/** Finds the current target, reveals it if needed, and starts automatic tooltip positioning. */
-	function setupFloating() {
+	/** Places focus on the default primary action without moving the positioned card. */
+	function focusPrimaryAction() {
+		primaryActionEl?.focus({ preventScroll: true });
+	}
+
+	/**
+	 * Replaces Dialog's default opening focus only for the built-in walkthrough card.
+	 *
+	 * @param event - Bits UI's cancellable opening autofocus event.
+	 */
+	function handleOpenAutoFocus(event: Event) {
+		previouslyFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+		if (contentSnippet) return;
+		event.preventDefault();
+		void tick().then(focusPrimaryAction);
+	}
+
+	/**
+	 * Restores focus for controlled walkthroughs, which do not own a Dialog Trigger.
+	 *
+	 * @param event - Bits UI's cancellable closing autofocus event.
+	 */
+	function handleCloseAutoFocus(event: Event) {
+		if (!previouslyFocused?.isConnected) return;
+		event.preventDefault();
+		previouslyFocused.focus({ preventScroll: true });
+		previouslyFocused = null;
+	}
+
+	$effect(() => {
+		const contentEl = tooltipEl;
 		const targetEl = document.getElementById(targetId);
-		if (!targetEl || !tooltipEl) return;
+		if (!ctx.isOpen || !contentEl || !targetEl) return;
 
 		updateSpotlight(targetEl);
 
@@ -73,23 +98,21 @@
 			rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
 			rect.right <= (window.innerWidth || document.documentElement.clientWidth);
 
-		if (!isVisible) {
-			targetEl.scrollIntoView({ behavior: "smooth", block: "center" });
-		}
+		if (!isVisible) targetEl.scrollIntoView({ behavior: "smooth", block: "center" });
 
 		const middleware = [offset(12), flip(), shift({ padding: 10 })];
 		if (arrowEl) middleware.push(arrow({ element: arrowEl }));
 
 		// Recalculate both the spotlight and tooltip whenever layout or scroll position changes.
-		cleanup = autoUpdate(targetEl, tooltipEl, () => {
+		return autoUpdate(targetEl, contentEl, () => {
 			updateSpotlight(targetEl);
 
-			computePosition(targetEl, tooltipEl, {
+			void computePosition(targetEl, contentEl, {
 				placement,
 				middleware,
 				strategy: "fixed"
 			}).then(({ x, y, placement: finalPlacement, middlewareData }) => {
-				Object.assign(tooltipEl.style, {
+				Object.assign(contentEl.style, {
 					left: `${x}px`,
 					top: `${y}px`,
 					position: "fixed",
@@ -117,17 +140,15 @@
 				}
 			});
 		});
-	}
-
-	$effect(() => {
-		if (targetId) {
-			if (cleanup) cleanup();
-			setTimeout(setupFloating, 10);
-		}
 	});
 
-	onDestroy(() => {
-		if (cleanup) cleanup();
+	$effect(() => {
+		const stepIndex = ctx.currentStepIndex;
+		if (!ctx.isOpen || contentSnippet) return;
+
+		void tick().then(() => {
+			if (ctx.isOpen && ctx.currentStepIndex === stepIndex) focusPrimaryAction();
+		});
 	});
 
 	let arrowClasses = $derived.by(() => {
@@ -141,14 +162,21 @@
 	});
 </script>
 
-<div
-	bind:this={tooltipEl}
-	role="dialog"
-	class="fixed top-0 left-0 z-9999 w-max outline-none"
+<Dialog.Content
+	bind:ref={tooltipEl}
+	showOverlay={false}
+	showCloseButton={false}
+	preventScroll={false}
+	interactOutsideBehavior="ignore"
+	onOpenAutoFocus={handleOpenAutoFocus}
+	onCloseAutoFocus={handleCloseAutoFocus}
 	data-slot="walkthrough-content"
-	transition:fade={{ duration: 200 }}
+	class="fixed top-0 left-0 z-9999 block w-max max-w-none translate-x-0 translate-y-0 gap-0 rounded-none bg-transparent p-0 text-base text-inherit ring-0 duration-200 sm:max-w-none data-open:zoom-in-100 data-closed:zoom-out-100"
 >
 	{#if contentSnippet}
+		<Dialog.Title class="sr-only">{ctx.currentStep?.title}</Dialog.Title>
+		<Dialog.Description class="sr-only">{ctx.currentStep?.description}</Dialog.Description>
+
 		{@render contentSnippet(ctx)}
 	{:else}
 		<div class="relative w-87.5 rounded-lg border bg-popover text-popover-foreground shadow-xl">
@@ -157,14 +185,18 @@
 			<div class="p-4">
 				<div class="flex items-start justify-between gap-4">
 					<div class="space-y-1">
-						<h4 class="leading-none font-semibold">{ctx.currentStep?.title}</h4>
+						<Dialog.Title class="leading-none font-semibold">{ctx.currentStep?.title}</Dialog.Title>
 
-						<p class="text-sm text-muted-foreground">{ctx.currentStep?.description}</p>
+						<Dialog.Description>{ctx.currentStep?.description}</Dialog.Description>
 					</div>
 
-					<Button.Root variant="ghost" size="icon" class="-mt-1 -mr-2 h-6 w-6 shrink-0" onclick={ctx.close}>
-						<CloseIcon class="h-4 w-4" />
-					</Button.Root>
+					<Dialog.Close>
+						{#snippet child({ props })}
+							<Button.Root {...props} variant="ghost" size="icon" class="-mt-1 -mr-2 h-6 w-6 shrink-0" aria-label={m.silver_moth_close_walkthrough()}>
+								<CloseIcon class="h-4 w-4" aria-hidden="true" />
+							</Button.Root>
+						{/snippet}
+					</Dialog.Close>
 				</div>
 
 				<div class="flex items-center justify-between pt-4">
@@ -177,7 +209,7 @@
 							<Button.Root variant="outline" size="sm" onclick={ctx.prev}>{m.even_palm_back()}</Button.Root>
 						{/if}
 
-						<Button.Root size="sm" onclick={ctx.next}>
+						<Button.Root bind:ref={primaryActionEl} size="sm" onclick={ctx.next}>
 							{ctx.isLastStep ? m.flint_dove_finish() : m.young_elm_next()}
 						</Button.Root>
 					</div>
@@ -185,4 +217,4 @@
 			</div>
 		</div>
 	{/if}
-</div>
+</Dialog.Content>

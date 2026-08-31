@@ -1,6 +1,6 @@
 # Carousel
 
-An accessible carousel with touch dragging, mouse dragging, animated snapping, horizontal or vertical layouts, previous and next controls, Embla options, plugins, and programmatic navigation.
+An accessible carousel with touch dragging, mouse dragging, animated snapping, horizontal or vertical layouts, responsive inside-edge previous and next controls, Embla options, plugins, and programmatic navigation.
 
 Use Carousel for a short, ordered collection of related items when viewing one or a few items at a time helps people focus. Prefer a normal list or grid when every item should remain visible, easy to scan, searchable on the page, or compared at once.
 
@@ -21,6 +21,8 @@ Use Carousel for a short, ordered collection of related items when viewing one o
 - [Credits](#credits)
 - [File organization](#file-organization)
 
+---
+
 ## Import
 
 Import the component from its public `index.ts` entry point:
@@ -32,6 +34,8 @@ Import the component from its public `index.ts` entry point:
 ```
 
 Carousel's `index.ts` exports `Root`, `Content`, `Item`, `Previous`, and `Next`, their matching props types, Embla-related types, and the `getEmblaContext` and `setEmblaContext` helpers.
+
+---
 
 ## Anatomy
 
@@ -63,7 +67,9 @@ Root (region and positioning wrapper)
 └── Next
 ```
 
-Keep `Item` components as direct children of `Content`. Previous and Next belong outside Content so they are not clipped or dragged with the slides.
+Keep `Item` components as direct children of `Content`. Previous and Next belong outside Content so they are not clipped or dragged with the slides, but their absolute positioning overlays them inside Root's visible bounds.
+
+---
 
 ## Basic usage
 
@@ -88,7 +94,9 @@ Keep `Item` components as direct children of `Content`. Previous and Next belong
 </Carousel.Root>
 ```
 
-Each item occupies the complete viewport by default. Root needs a specific accessible name because its built-in role description identifies the widget type but not its content.
+Each item occupies the complete viewport by default. Root needs a specific accessible name because its built-in role description identifies the widget type but not its content. The navigation buttons stay inside the viewport edges at narrow widths.
+
+---
 
 ## Examples
 
@@ -151,7 +159,7 @@ For a vertical carousel, match Content's negative top margin with each Item's to
 </Carousel.Root>
 ```
 
-Vertical Content requires an explicit height. The navigation buttons move above and below the viewport and rotate their chevrons. Their keyboard handlers still use ArrowLeft and ArrowRight in the current local implementation.
+Vertical Content requires an explicit height. The navigation buttons overlay the inside of the upper and lower viewport edges and rotate their chevrons. Their keyboard handlers still use ArrowLeft and ArrowRight in the current local implementation.
 
 ### Looping and grouped slides
 
@@ -273,6 +281,8 @@ Pass initialized Embla plugins through `plugins`:
 
 `embla-carousel-autoplay` is optional and required only for this example. Other plugins follow the same pattern; see the [Embla Carousel plugins guide](https://www.embla-carousel.com/docs/v8/plugins).
 
+---
+
 ## Public API
 
 Carousel wraps Embla Carousel 8.6.0. The tables below document the local API and defaults; use the [Embla Carousel documentation](https://www.embla-carousel.com/docs/v8/get-started/svelte) for the complete engine API.
@@ -323,12 +333,12 @@ Native `div` attributes and handlers are forwarded. Each Item is an Embla slide,
 
 Types: `PreviousProps` and `NextProps`, based on local `Button.RootProps` with `children` removed.
 
-| Prop      | Type                        | Default     | Behavior                                                               |
-| --------- | --------------------------- | ----------- | ---------------------------------------------------------------------- |
-| `variant` | `Button.RootVariants`       | `"outline"` | Applies a local Button visual variant.                                 |
-| `size`    | `Button.RootSizes`          | `"icon-sm"` | Applies a local Button size.                                           |
-| `ref`     | `HTMLButtonElement \| null` | `null`      | Bindable navigation button.                                            |
-| `class`   | `string`                    | `undefined` | Merged with circular shape and orientation-aware absolute positioning. |
+| Prop      | Type                        | Default     | Behavior                                                                                     |
+| --------- | --------------------------- | ----------- | -------------------------------------------------------------------------------------------- |
+| `variant` | `Button.RootVariants`       | `"outline"` | Applies a local Button visual variant.                                                       |
+| `size`    | `Button.RootSizes`          | `"icon-sm"` | Applies a local Button size.                                                                 |
+| `ref`     | `HTMLButtonElement \| null` | `null`      | Bindable navigation button.                                                                  |
+| `class`   | `string`                    | `undefined` | Merged with circular shape, overlay stacking, and orientation-aware inside-edge positioning. |
 
 The buttons supply their own semantic chevron icons and localized screen-reader text, so custom `children` are intentionally unavailable. Their disabled state follows Embla's `canScrollPrev()` and `canScrollNext()` values. Remaining Button and native button props are forwarded; avoid overriding `onclick`, `onkeydown`, `disabled`, or `aria-disabled` unless replacing the built-in navigation behavior deliberately.
 
@@ -351,6 +361,8 @@ Previous and Next handle ArrowLeft and ArrowRight while either button is focused
 
 Use `index.ts` and the exported props types as the source of truth for the local API.
 
+---
+
 ## Embla behavior
 
 - Content initializes Embla in the browser through the `embla-carousel-svelte` action and cleans it up when the component unmounts.
@@ -360,6 +372,8 @@ Use `index.ts` and the exported props types as the source of truth for the local
 - Navigation buttons call `scrollPrev()` and `scrollNext()` and become disabled when Embla cannot move in that direction. Looping carousels normally keep both directions available.
 - Changing slide width changes how many items are visible. It does not by itself change how many slides advance; use Embla's `slidesToScroll` option for grouped movement.
 - Plugins are separate packages and are not included automatically with `embla-carousel-svelte`.
+
+---
 
 ## Styling and DOM contract
 
@@ -377,7 +391,9 @@ Carousel exposes stable selectors for its public elements and separate Embla sel
 
 Horizontal Content uses `-ms-4`, and Items use `ps-4`; these logical properties support left-to-right and right-to-left spacing. Vertical Content uses `-mt-4 flex-col`, and Items use `pt-4`.
 
-Previous and Next sit `3rem` outside Root by default. Ensure the surrounding layout leaves room for them, or override their positions through `class`. The viewport clips slides but not these sibling controls.
+Previous and Next overlay Root with `z-index: 10`. In horizontal mode they remain vertically centered and sit `0.5rem` inside the logical start and end edges, preserving LTR and RTL placement. In vertical mode they remain horizontally centered and sit `0.5rem` inside the top and bottom edges. The viewport clips slides but not these sibling controls; add suitable inset or padding to slide content when important controls or text would otherwise sit underneath them. App-supplied `class` values can still replace the default positions.
+
+---
 
 ## Accessibility
 
@@ -392,6 +408,8 @@ Previous and Next sit `3rem` outside Root by default. Ensure the surrounding lay
 
 Test dragging, touch scrolling, focus order, navigation disabled states, keyboard behavior, responsive slide widths, and reduced motion in the final layout.
 
+---
+
 ## Localization
 
 Carousel uses Paraglide messages for built-in accessible descriptions and navigation text. Keep these entries in `messages/en.json` and provide translations for every supported locale:
@@ -404,6 +422,8 @@ Carousel uses Paraglide messages for built-in accessible descriptions and naviga
 | `crisp_hare_forward`   | `Next slide`     | Next button screen-reader text.     |
 
 Slide labels, counters, autoplay controls, titles, descriptions, and all slide content belong to the app and should follow its localization conventions.
+
+---
 
 ## Dependencies
 
@@ -529,9 +549,13 @@ The app remains responsible for applying its `.dark` class, normally through roo
 
 No `tw-animate-css` import, global keyframe, shared component stylesheet, or additional icon is required. Optional Embla plugins are separate packages; add only those used by the app and follow their official documentation.
 
+---
+
 ## Credits
 
 Carousel is adapted from the [shadcn-svelte Carousel](https://www.shadcn-svelte.com/docs/components/carousel). Its composition has been adapted to xvelte's local props types, context conventions, semantic icon facade, localization, and Button styles.
+
+---
 
 ## File organization
 

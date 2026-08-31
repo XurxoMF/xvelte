@@ -3,6 +3,7 @@
 
 	import * as Button from "$lib/components/ui/button";
 
+	/** Props for the previous-slide navigation button. */
 	export type PreviousProps = WithoutChildren<Button.RootProps>;
 </script>
 
@@ -27,8 +28,8 @@
 	aria-disabled={!emblaCtx.canScrollPrev}
 	disabled={!emblaCtx.canScrollPrev}
 	class={cn(
-		"absolute touch-manipulation rounded-full",
-		emblaCtx.orientation === "horizontal" ? "inset-y-0 -inset-s-12 my-auto" : "inset-s-1/2 -top-12 -translate-x-1/2 rotate-90",
+		"absolute z-10 touch-manipulation rounded-full",
+		emblaCtx.orientation === "horizontal" ? "inset-y-0 inset-s-2 my-auto" : "inset-x-0 top-2 mx-auto rotate-90",
 		className
 	)}
 	onclick={emblaCtx.scrollPrev}

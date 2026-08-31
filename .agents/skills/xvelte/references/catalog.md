@@ -21,7 +21,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `calendar-range` — responsive date-range selection with evenly distributed weekday columns and multiple-month layouts
 - `canvas`
 - `card`
-- `carousel`
+- `carousel` — horizontal or vertical Embla carousel with responsive inside-edge navigation, touch and mouse dragging, plugins, and programmatic controls
 - `chart`
 - `checkbox`
 - `code` — Shiki code blocks with lazy-loaded languages, custom Scroll Area controls on both axes, fixed copy actions, and expandable overflow

@@ -1,21 +1,21 @@
 <script lang="ts" module>
-	import type { Snippet } from "svelte";
+	import type { WithoutChild } from "$lib/utils";
 
-	export type GroupProps = {
+	import * as Command from "$lib/components/ui/command";
+
+	/** Props for a grouped set of Combobox items. */
+	export type GroupProps = WithoutChild<Command.GroupProps> & {
+		/** Optional visible heading and fallback filtering value. */
 		heading?: string | undefined;
-		class?: string | undefined;
-		children: Snippet;
 	};
 </script>
 
 <script lang="ts">
 	import { cn } from "$lib/utils";
 
-	import * as Command from "$lib/components/ui/command";
-
-	let { heading, class: className, children }: GroupProps = $props();
+	let { ref = $bindable(null), heading, class: className, children, ...restProps }: GroupProps = $props();
 </script>
 
-<Command.Group data-slot="combobox-group" {heading} class={cn("scroll-my-1 p-1", className)}>
-	{@render children()}
+<Command.Group bind:ref data-slot="combobox-group" {heading} class={cn("scroll-my-1 p-1", className)} {...restProps}>
+	{@render children?.()}
 </Command.Group>

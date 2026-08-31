@@ -27,7 +27,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `code` — Shiki code blocks with lazy-loaded languages, custom Scroll Area controls on both axes, fixed copy actions, and expandable overflow
 - `collapsible`
 - `color-picker`
-- `combobox`
+- `combobox` — searchable single or multiple selection with controlled open state, configurable filtering and positioning, disabled options, separators, and loading content
 - `command`
 - `compare-slider`
 - `context-menu`

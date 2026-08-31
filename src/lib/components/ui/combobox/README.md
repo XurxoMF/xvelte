@@ -1,6 +1,6 @@
 # Combobox
 
-A searchable selection component that combines a button trigger, an anchored options popover, Command-based filtering, and visible selection indicators. It supports one selected string or multiple selected strings while leaving option labels and trigger content fully composable.
+A searchable selection component that combines a button trigger, an anchored options popover, configurable Command-based filtering, and visible selection indicators. It supports one selected string or multiple selected strings, controlled selection and open state, root-level disabling, configurable deselection and closing behavior, disabled options, loading states, separators, and custom positioning while leaving option labels and trigger content fully composable.
 
 Use Combobox when a long or searchable option list would be cumbersome in a native select, or when option rows need custom markup. Prefer a native select for short, simple lists and use Command directly for actions that do not represent a selected value.
 
@@ -19,6 +19,8 @@ Use Combobox when a long or searchable option list would be cumbersome in a nati
 - [Dependencies](#dependencies)
 - [File organization](#file-organization)
 
+---
+
 ## Import
 
 Import all component parts from the component's public `index.ts` entry point:
@@ -29,7 +31,9 @@ Import all component parts from the component's public `index.ts` entry point:
 </script>
 ```
 
-The component's `index.ts` exports `Root`, `Trigger`, `Content`, `Input`, `List`, `Group`, `Item`, and `Empty`, together with all corresponding props types. It also exports the `ComboboxType`, `ValueMap`, `ComboboxState`, and `ComboboxContextState` types and the advanced `setComboboxContext` and `getComboboxContext` helpers.
+The component's `index.ts` exports `Root`, `Trigger`, `Content`, `Input`, `List`, `Group`, `Item`, `Empty`, `Separator`, and `Loading`, together with all corresponding props types. It also exports the `ComboboxType`, `ValueMap`, `ComboboxOptions`, `ComboboxState`, and `ComboboxContextState` types and the advanced `setComboboxContext` and `getComboboxContext` helpers.
+
+---
 
 ## Anatomy
 
@@ -47,14 +51,18 @@ Compose the public parts below one root:
 			<Combobox.Group heading="Options">
 				<Combobox.Item value="option">Option</Combobox.Item>
 			</Combobox.Group>
+			<Combobox.Separator />
+			<Combobox.Loading>Loading more options...</Combobox.Loading>
 		</Combobox.List>
 	</Combobox.Content>
 </Combobox.Root>
 ```
 
-`Root` owns selection and open state. `Trigger` opens the Popover and displays content supplied by the app. `Content` creates the anchored panel and internal Command root. `Input` filters items by their `value`; `List` is the scrollable results area; `Group` optionally labels related items; `Item` selects its string value; and `Empty` appears when filtering produces no matches.
+`Root` owns selection, open, disabled, deselection, and close-on-selection state. `Trigger` opens the Popover and displays content supplied by the app. `Content` creates the anchored panel and internal Command root. `Input` filters items by their `value` and keywords; `List` is the scrollable results area; `Group` optionally labels related items; `Item` selects its string value; `Empty` appears when filtering produces no matches; and `Separator` and `Loading` provide optional list structure and progress content.
 
-Keep every state-aware part under the same `Root`. `Trigger` and `Item` read the nearest Combobox context during component initialization and fail when rendered without one.
+Keep every state-aware part under the same `Root`. `Trigger`, `Input`, and `Item` read the nearest Combobox context during component initialization and fail when rendered without one.
+
+---
 
 ## Basic usage
 
@@ -91,7 +99,9 @@ Keep every state-aware part under the same `Root`. `Trigger` and `Item` read the
 </Combobox.Root>
 ```
 
-The bound value stores the selected item's `value`, not its rendered label. Selecting the current item again clears the single selection to an empty string. Selecting any single item closes the popup and restores focus to the trigger.
+The bound value stores the selected item's `value`, not its rendered label. By default, selecting the current item again clears the single selection to an empty string. Selecting any single item closes the popup and restores focus to the trigger.
+
+---
 
 ## Examples
 
@@ -156,14 +166,74 @@ Use headings to make a larger result set easier to scan:
 
 Filtering is based on each item's `value`, not necessarily the visible children. Choose human-searchable values when labels contain terms people are likely to type.
 
+### Controlled open state and selection behavior
+
+Bind `open` to coordinate the popup with surrounding UI. Root callbacks report user and context-driven changes, while the completion callback runs after the Popover presence lifecycle finishes:
+
+```svelte
+<Combobox.Root
+	bind:open
+	bind:value={framework}
+	allowDeselect={false}
+	onOpenChange={(nextOpen) => console.info("Combobox open", nextOpen)}
+	onOpenChangeComplete={(nextOpen) => console.info("Transition complete", nextOpen)}
+>
+	<!-- Trigger and content -->
+</Combobox.Root>
+```
+
+`allowDeselect={false}` keeps the current single selection when its item is chosen again. `closeOnSelect` defaults to `true` in single mode and `false` in multiple mode; override it when a single-selection popup should remain open or a multiple-selection popup should close after every choice.
+
+### Disabled and searchable options
+
+Disable the complete component at Root or individual unavailable items at Item. `keywords` adds search terms without changing the stored value:
+
+```svelte
+<Combobox.Root bind:value={region} disabled={regionsUnavailable}>
+	<Combobox.Trigger>Select a region</Combobox.Trigger>
+
+	<Combobox.Content commandProps={{ loop: true }}>
+		<Combobox.Input aria-label="Search regions" bind:value={query} />
+
+		<Combobox.List>
+			<Combobox.Item value="north" keywords={["northern"]}>North</Combobox.Item>
+			<Combobox.Item value="south" keywords={["southern"]} disabled>South — unavailable</Combobox.Item>
+		</Combobox.List>
+	</Combobox.Content>
+</Combobox.Root>
+```
+
+`Input` forwards native input attributes and exposes bindable `value` and `ref`. `Content.commandProps` accepts Command Root options such as `loop`, `shouldFilter`, `filter`, `vimBindings`, and `onStateChange`.
+
+### Positioning, separators, and loading
+
+Content forwards the Popover positioning API and accepts `portalProps` through the local Popover wrapper:
+
+```svelte
+<Combobox.Content align="start" side="bottom" sideOffset={8} portalProps={{ disabled: true }}>
+	<Combobox.Input />
+
+	<Combobox.List>
+		<Combobox.Group heading="Suggested">
+			<!-- Items -->
+		</Combobox.Group>
+
+		<Combobox.Separator />
+		<Combobox.Loading progress={65}>Loading all regions...</Combobox.Loading>
+	</Combobox.List>
+</Combobox.Content>
+```
+
+Use `Loading` only while results are being fetched. Its `progress` value is between `0` and `100`; the app supplies and translates its visible or screen-reader copy.
+
 ### React to selection changes
 
-`onchange` runs after a selection made through `Item`. It does not run merely because a parent assigns a new bound value:
+`onValueChange` runs after a selection made through `Item` or the public context state. It does not run merely because a parent assigns a new bound value:
 
 ```svelte
 <Combobox.Root
 	bind:value={framework}
-	onchange={(nextValue) => {
+	onValueChange={(nextValue) => {
 		console.info("Framework selected", nextValue);
 	}}
 >
@@ -171,7 +241,7 @@ Filtering is based on each item's `value`, not necessarily the visible children.
 </Combobox.Root>
 ```
 
-Use the binding as the source of truth. The callback is useful for selection-specific side effects, but it should not duplicate the bound state.
+Use the binding as the source of truth. The callback is useful for selection-specific side effects, but it should not duplicate the bound state. The earlier `onchange` callback remains available as a compatibility alias and receives the same changes.
 
 ### Submit with a form
 
@@ -206,102 +276,136 @@ Validate required selection and accepted values on submission.
 
 `size` changes only the local trigger height and radius. Width remains `w-full` unless `class` overrides it.
 
+---
+
 ## Public API
 
 ### `Combobox.Root`
 
 Generic type: `RootProps<T extends ComboboxType>`, with `T` defaulting to `"single"`.
 
-| Prop       | Type                           | Default     | xvelte behavior                                                                                                                                 |
-| ---------- | ------------------------------ | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `type`     | `"single" \| "multiple"`       | `"single"`  | Selects string or string-array behavior. It is captured when the root initializes; changing it later does not reconfigure the existing context. |
-| `value`    | `ValueMap[T]`                  | `undefined` | Bindable selection. Use an initialized string for single mode and initialized string array for multiple mode.                                   |
-| `onchange` | `(value: ValueMap[T]) => void` | `undefined` | Runs after an item changes the selection. Parent assignments through the binding do not call it.                                                |
-| `children` | `Snippet`                      | required    | Renders the trigger, content, and any app-owned surrounding markup inside the internal Popover root.                                            |
+| Prop                   | Type                           | Default                           | xvelte behavior                                                                                                                                 |
+| ---------------------- | ------------------------------ | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`                 | `"single" \| "multiple"`       | `"single"`                        | Selects string or string-array behavior. It is captured when the root initializes; changing it later does not reconfigure the existing context. |
+| `value`                | `ValueMap[T]`                  | `undefined`                       | Bindable selection. Use an initialized string for single mode and initialized string array for multiple mode.                                   |
+| `open`                 | `boolean`                      | `false`                           | Bindable popup visibility shared with Trigger and context consumers.                                                                            |
+| `disabled`             | `boolean`                      | `false`                           | Disables the root Trigger, search Input, and every Item.                                                                                        |
+| `allowDeselect`        | `boolean`                      | `true`                            | Allows the selected single item to clear the value when selected again. It does not restrict clearing a multiple selection.                     |
+| `closeOnSelect`        | `boolean`                      | Single: `true`; multiple: `false` | Chooses whether any enabled item selection closes the popup and restores Trigger focus.                                                         |
+| `onValueChange`        | `(value: ValueMap[T]) => void` | `undefined`                       | Runs after context selection or clearing changes the value. Parent assignments through the binding do not call it.                              |
+| `onchange`             | `(value: ValueMap[T]) => void` | `undefined`                       | Compatibility alias for `onValueChange`; both callbacks run when both are supplied.                                                             |
+| `onOpenChange`         | `(open: boolean) => void`      | `undefined`                       | Runs when Popover interaction or the public context state changes popup visibility.                                                             |
+| `onOpenChangeComplete` | `(open: boolean) => void`      | `undefined`                       | Runs after the underlying Popover reports that its open or close presence lifecycle completed.                                                  |
+| `children`             | `Snippet`                      | required                          | Renders the trigger, content, and any app-owned surrounding markup inside the internal Popover root.                                            |
 
-`Root` renders no DOM element of its own. It does not expose the internal Popover's `open` binding, Popover options, a class, form props, disabled/read-only state, or a ref. Single selection of the current value writes `""`; multiple selection toggles values without reordering the remaining entries.
+`Root` renders no DOM element of its own. It has no class, form props, read-only state, or ref. Single selection of the current value writes `""` only when `allowDeselect` permits it; multiple selection toggles values without reordering the remaining entries. Assigning `value` or `open` directly through a parent binding does not invoke its matching callback.
 
 ### `Combobox.Trigger`
 
 Type: `TriggerProps`, extending the local Popover `TriggerProps` with required content and local sizing.
 
-| Prop       | Type                | Default     | xvelte behavior                                                                                                |
-| ---------- | ------------------- | ----------- | -------------------------------------------------------------------------------------------------------------- |
-| `children` | `Snippet`           | required    | Visible value summary or placeholder; it supplies the button's accessible name unless an ARIA label is passed. |
-| `size`     | `"sm" \| "default"` | `"default"` | Writes `data-size` and selects a 1.75rem or 2rem trigger height.                                               |
-| `class`    | `string`            | `undefined` | Merged after local combobox trigger styles.                                                                    |
+| Prop       | Type                  | Default     | xvelte behavior                                                                                                |
+| ---------- | --------------------- | ----------- | -------------------------------------------------------------------------------------------------------------- |
+| `children` | `Snippet`             | required    | Visible value summary or placeholder; it supplies the button's accessible name unless an ARIA label is passed. |
+| `size`     | `"sm" \| "default"`   | `"default"` | Writes `data-size` and selects a 1.75rem or 2rem trigger height.                                               |
+| `class`    | `string`              | `undefined` | Merged after local combobox trigger styles.                                                                    |
+| `ref`      | `HTMLElement \| null` | `null`      | Bindable delegated trigger reference; the rendered node is normally a native button.                           |
 
 Remaining Popover Trigger props, including supported button and ARIA attributes such as `disabled`, are forwarded through the Popover wrapper. The trigger always delegates to the xvelte Button with `variant="outline"`, adds the selector icon, sets `role="combobox"`, reflects popup state through `aria-expanded`, fills the available width, and stores its button reference for focus restoration. See the [Bits UI Popover Trigger API](https://www.bits-ui.com/docs/components/popover#trigger) for inherited primitive behavior.
 
-The internal open state and trigger ref are not bindable through this component's documented API. Avoid overriding its role or Popover-owned relationship attributes.
+Root-level `disabled` takes precedence over a false Trigger `disabled` prop. Avoid overriding its role or Popover-owned relationship attributes.
 
 ### `Combobox.Content`
 
 Type: `ContentProps`.
 
-| Prop       | Type      | Default     | xvelte behavior                                                                                                |
-| ---------- | --------- | ----------- | -------------------------------------------------------------------------------------------------------------- |
-| `children` | `Snippet` | required    | Renders Input, Empty, List, Group, and Item parts inside an internal Command root.                             |
-| `class`    | `string`  | `undefined` | Merged after anchored width, minimum width, overflow, surface, ring, shadow, and open/closed animation styles. |
+| Prop           | Type                                 | Default     | xvelte behavior                                                                                                |
+| -------------- | ------------------------------------ | ----------- | -------------------------------------------------------------------------------------------------------------- |
+| `children`     | `Snippet`                            | required    | Renders Input, Empty, List, Group, Item, Separator, and Loading parts inside an internal Command root.         |
+| `class`        | `string`                             | `undefined` | Merged after anchored width, minimum width, overflow, surface, ring, shadow, and open/closed animation styles. |
+| `ref`          | `HTMLDivElement \| null`             | `null`      | Bindable positioned-content reference.                                                                         |
+| `commandProps` | `Command.RootProps` without snippets | `undefined` | Configures the internal Command root; its class is merged after the local full-width and padding styles.       |
 
-Content does not forward Popover Content props. Its alignment and side offset therefore remain the local Popover defaults (`"center"` and `4`), and its portal, collision, focus, positioning, and interaction options cannot be changed through Combobox props.
+Content forwards the local Popover Content API, including `portalProps`, `sideOffset`, `align`, `side`, collision and sticky options, focus hooks, Escape and outside-interaction callbacks, and native div attributes. Its local Popover defaults remain `align="center"` and `sideOffset={4}`. `commandProps` supports filtering, keyboard-loop, pointer-selection, Vim-binding, grid, label, and state callbacks; snippets remain owned by Content. See the [Bits UI Command Root API](https://www.bits-ui.com/docs/components/command#root) and [Popover Content API](https://www.bits-ui.com/docs/components/popover#content).
 
 ### `Combobox.Input`
 
 Type: `InputProps`.
 
-| Prop          | Type     | Default       | xvelte behavior                                                                       |
-| ------------- | -------- | ------------- | ------------------------------------------------------------------------------------- |
-| `placeholder` | `string` | `"Search..."` | Placeholder passed to the internal Command input.                                     |
-| `class`       | `string` | `undefined`   | Merged into the actual Command input rather than its surrounding input-group wrapper. |
+| Prop          | Type                       | Default       | xvelte behavior                                                                       |
+| ------------- | -------------------------- | ------------- | ------------------------------------------------------------------------------------- |
+| `placeholder` | `string`                   | `"Search..."` | Placeholder passed to the internal Command input.                                     |
+| `value`       | `string`                   | `""`          | Bindable filtering query.                                                             |
+| `ref`         | `HTMLInputElement \| null` | `null`        | Bindable native input reference.                                                      |
+| `class`       | `string`                   | `undefined`   | Merged into the actual Command input rather than its surrounding input-group wrapper. |
 
-Input does not forward the rest of the Command Input API. It has no public `value` binding, ref, input event, disabled state, name, or additional native attributes. Command owns its filtering query internally.
+Input forwards the remaining Command Input and native input attributes, including `disabled`, ARIA labeling, input handlers, `name`, and `autocomplete`; its primitive `child` customization is removed so the xvelte input structure remains stable. Root-level `disabled` takes precedence over a false Input `disabled` prop.
 
 ### `Combobox.List`
 
 Type: `ListProps`.
 
-| Prop       | Type      | Default     | xvelte behavior                                             |
-| ---------- | --------- | ----------- | ----------------------------------------------------------- |
-| `children` | `Snippet` | required    | Renders groups or items in the Command result list.         |
-| `class`    | `string`  | `undefined` | Merged after the local full-width and scroll-margin styles. |
+| Prop       | Type                     | Default     | xvelte behavior                                             |
+| ---------- | ------------------------ | ----------- | ----------------------------------------------------------- |
+| `children` | `Snippet`                | required    | Renders groups or items in the Command result list.         |
+| `class`    | `string`                 | `undefined` | Merged after the local full-width and scroll-margin styles. |
+| `ref`      | `HTMLDivElement \| null` | `null`      | Bindable Command list reference.                            |
 
-List does not forward Command List props or expose its DOM ref. The required Command component supplies a maximum height of `18rem`, vertical scrolling, keyboard navigation, and its `no-scrollbar` utility.
+List forwards the remaining Command List and native div attributes. Its primitive `child` customization is removed. The required Command component supplies a maximum height of `18rem`, vertical scrolling, keyboard navigation, and its `no-scrollbar` utility.
 
 ### `Combobox.Group`
 
 Type: `GroupProps`.
 
-| Prop       | Type      | Default     | xvelte behavior                                                             |
-| ---------- | --------- | ----------- | --------------------------------------------------------------------------- |
-| `heading`  | `string`  | `undefined` | Optional visible heading and default filtering value for the Command group. |
-| `children` | `Snippet` | required    | Renders items in the group.                                                 |
-| `class`    | `string`  | `undefined` | Merged after local scroll-margin and padding styles.                        |
+| Prop         | Type                     | Default                 | xvelte behavior                                                             |
+| ------------ | ------------------------ | ----------------------- | --------------------------------------------------------------------------- |
+| `heading`    | `string`                 | `undefined`             | Optional visible heading and default filtering value for the Command group. |
+| `children`   | `Snippet`                | required                | Renders items in the group.                                                 |
+| `class`      | `string`                 | `undefined`             | Merged after local scroll-margin and padding styles.                        |
+| `value`      | `string`                 | Heading or generated ID | Explicit filtering value for the group.                                     |
+| `forceMount` | `boolean`                | `false`                 | Keeps the group mounted when filtering would hide it.                       |
+| `ref`        | `HTMLDivElement \| null` | `null`                  | Bindable Command group reference.                                           |
 
-Group does not forward the remaining Command Group props and has no public ref. Translate `heading` in the app.
+Group forwards the remaining Command Group and native div attributes while removing primitive `child` customization. Translate `heading` in the app.
 
 ### `Combobox.Item`
 
 Type: `ItemProps`.
 
-| Prop       | Type      | Default     | xvelte behavior                                                                                                                      |
-| ---------- | --------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `value`    | `string`  | required    | Searchable and selected value. In single mode it replaces or clears selection; in multiple mode it is toggled in the selected array. |
-| `children` | `Snippet` | required    | Visible option content rendered before the selection indicator.                                                                      |
-| `class`    | `string`  | `undefined` | Merged after local option layout, focus/highlight, disabled-state, typography, icon, and indicator-spacing styles.                   |
+| Prop         | Type                     | Default     | xvelte behavior                                                                                                                      |
+| ------------ | ------------------------ | ----------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `value`      | `string`                 | required    | Searchable and selected value. In single mode it replaces or clears selection; in multiple mode it is toggled in the selected array. |
+| `children`   | `Snippet`                | required    | Visible option content rendered before the selection indicator.                                                                      |
+| `class`      | `string`                 | `undefined` | Merged after local option layout, focus/highlight, disabled-state, typography, icon, and indicator-spacing styles.                   |
+| `disabled`   | `boolean`                | `false`     | Prevents pointer and keyboard selection; root-level disabled state takes precedence.                                                 |
+| `keywords`   | `string[]`               | `undefined` | Adds filtering terms without changing the stable selected value.                                                                     |
+| `forceMount` | `boolean`                | `false`     | Keeps the item mounted regardless of filtering.                                                                                      |
+| `onSelect`   | `() => void`             | `undefined` | Runs after the Combobox applies its selection behavior.                                                                              |
+| `ref`        | `HTMLDivElement \| null` | `null`      | Bindable Command item reference.                                                                                                     |
 
-Item does not forward the remaining Command Item props. In particular, it has no public `disabled`, `keywords`, ref, or custom `onSelect` prop. Values should be stable and unique within a root. The trailing check icon is rendered from Combobox context rather than Command's own checked state.
+Item forwards remaining native div attributes while removing primitive `child` customization. Values should be stable and unique within a root. The trailing check icon is rendered from Combobox context rather than Command's own checked state. `onSelect` is not called for disabled items.
 
 ### `Combobox.Empty`
 
 Type: `EmptyProps`.
 
-| Prop       | Type      | Default     | xvelte behavior                                            |
-| ---------- | --------- | ----------- | ---------------------------------------------------------- |
-| `children` | `Snippet` | required    | App-supplied empty result message.                         |
-| `class`    | `string`  | `undefined` | Merged with the Command Empty component's existing styles. |
+| Prop         | Type                     | Default     | xvelte behavior                                            |
+| ------------ | ------------------------ | ----------- | ---------------------------------------------------------- |
+| `children`   | `Snippet`                | required    | App-supplied empty result message.                         |
+| `class`      | `string`                 | `undefined` | Merged with the Command Empty component's existing styles. |
+| `forceMount` | `boolean`                | `false`     | Keeps the empty state mounted regardless of filtering.     |
+| `ref`        | `HTMLDivElement \| null` | `null`      | Bindable Command empty-state reference.                    |
 
-Empty does not forward the remaining Command Empty props or expose a ref. Translate its children in the app.
+Empty forwards the remaining Command Empty and native div attributes while removing primitive `child` customization. Translate its children in the app.
+
+### `Combobox.Separator` and `Combobox.Loading`
+
+| Part and type                  | Public API                                                                                                                                                                                   |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Separator` — `SeparatorProps` | Forwards the complete Command Separator API, including `forceMount`, bindable `ref`, native div attributes, and optional children. It replaces the inherited slot with `combobox-separator`. |
+| `Loading` — `LoadingProps`     | Forwards the complete Command Loading API, including `progress`, bindable `ref`, native div attributes, and optional children. It replaces the inherited slot with `combobox-loading`.       |
+
+Place these parts inside List or Group as appropriate. Loading supplies no built-in spinner or message.
 
 ### Selection and context types
 
@@ -314,44 +418,52 @@ type ValueMap = {
 };
 ```
 
-`ComboboxState<T>` is the public type of the state object returned by `setComboboxContext`. `ComboboxContextState` is its type-erased descendant view, exposing reactive `open`, `triggerRef`, `type`, and read-only `value` properties plus `toggle()`, `close()`, `isSelected(itemValue)`, and `selectItem(itemValue)` methods. The concrete class is exported as a type only and cannot be instantiated from `index.ts`.
+`ComboboxState<T>` is the public type of the state object returned by `setComboboxContext`. `ComboboxContextState` is its type-erased descendant view. It exposes reactive `value`, `open`, `triggerRef`, `type`, `disabled`, `allowDeselect`, and `closeOnSelect` properties plus `openPopup()`, `toggle()`, `close()`, `clear()`, `isSelected(itemValue)`, and `selectItem(itemValue)` methods. The concrete class is exported as a type only and cannot be instantiated from `index.ts`.
 
 ### Context helpers
 
-`setComboboxContext(options)` creates a state object and provides it to descendants. Its options object must expose a reactive `value` getter and setter plus a `readonly type`. `getComboboxContext()` returns the nearest provided state and must run while initializing a descendant component.
+`setComboboxContext(options)` creates a state object and provides it to descendants. Its exported `ComboboxOptions<T>` object must expose reactive `value` and `open` getters and setters, plus read-only `type`, `disabled`, `allowDeselect`, `closeOnSelect`, and optional `onOpenChange` properties. Use accessor properties for every reactive option. `getComboboxContext()` returns the nearest provided state and must run while initializing a descendant component.
 
-These helpers are intended for custom Combobox roots or parts that extend the provided composition. Normal usage should prefer `Root`, `Trigger`, and `Item`; calling `setComboboxContext` creates a separate context, and calling `getComboboxContext` outside a provider fails. `close()` updates the DOM and then returns focus to `triggerRef`.
+These helpers are intended for custom Combobox roots or parts that extend the provided composition. Normal usage should prefer `Root`, `Trigger`, and `Item`; calling `setComboboxContext` creates a separate context, and calling `getComboboxContext` outside a provider fails. `openPopup()` and `toggle()` do nothing while disabled. `clear()` respects disabled state and single-mode `allowDeselect`. `close()` updates the DOM and then returns focus to `triggerRef`.
 
 The component's `index.ts`, exported types, and local source are the source of truth for the public API. The [Bits UI Command documentation](https://www.bits-ui.com/docs/components/command) and [Popover documentation](https://www.bits-ui.com/docs/components/popover) describe dependency behavior, not additional Combobox props.
+
+---
 
 ## Styling and DOM contract
 
 Combobox uses Tailwind utilities, semantic theme tokens, Bits UI state attributes, and the styles of its required Button, Popover, Command, and Input Group components. It exposes no component-specific CSS variables.
 
-| Part      | Rendered structure                                | Stable xvelte hook or class                                      |
-| --------- | ------------------------------------------------- | ---------------------------------------------------------------- |
-| `Root`    | No element; creates Popover and Combobox contexts | None                                                             |
-| `Trigger` | Button delegated through Popover Trigger          | `data-slot="combobox-trigger"`, `data-size`                      |
-| `Content` | Portaled Popover content containing Command root  | `data-slot="combobox-content"`; inner `data-slot="command"`      |
-| `Input`   | Command input inside an Input Group               | `data-slot="combobox-input"`, plus Command and Input Group hooks |
-| `List`    | Command list                                      | `data-slot="combobox-list"`                                      |
-| `Group`   | Command group and optional group heading          | `data-slot="combobox-group"`                                     |
-| `Item`    | Command item and trailing indicator               | `data-slot="combobox-item"`                                      |
-| `Empty`   | Command empty state                               | `data-slot="combobox-empty"`                                     |
+| Part        | Rendered structure                                | Stable xvelte hook or class                                      |
+| ----------- | ------------------------------------------------- | ---------------------------------------------------------------- |
+| `Root`      | No element; creates Popover and Combobox contexts | None                                                             |
+| `Trigger`   | Button delegated through Popover Trigger          | `data-slot="combobox-trigger"`, `data-size`                      |
+| `Content`   | Portaled Popover content containing Command root  | `data-slot="combobox-content"`; inner `data-slot="command"`      |
+| `Input`     | Command input inside an Input Group               | `data-slot="combobox-input"`, plus Command and Input Group hooks |
+| `List`      | Command list                                      | `data-slot="combobox-list"`                                      |
+| `Group`     | Command group and optional group heading          | `data-slot="combobox-group"`                                     |
+| `Item`      | Command item and trailing indicator               | `data-slot="combobox-item"`                                      |
+| `Empty`     | Command empty state                               | `data-slot="combobox-empty"`                                     |
+| `Separator` | Command separator                                 | `data-slot="combobox-separator"`                                 |
+| `Loading`   | Command loading state                             | `data-slot="combobox-loading"`                                   |
 
-`Content` uses `w-(--bits-popover-anchor-width)`, so its normal width follows the trigger's measured anchor width and never drops below `9rem`. `class` can override that width. `--bits-popover-anchor-width`, positioning transforms, `data-state`, `data-side`, Command selection attributes, ARIA relationships, and generated IDs are dependency-owned and may follow the installed stable Bits UI version.
+`Content` uses `w-(--bits-popover-anchor-width)`, so its normal width follows the trigger's measured anchor width and never drops below `9rem`. `class` can override that width. `--bits-popover-anchor-width`, positioning transforms, `data-state`, `data-side`, Command selection attributes, disabled attributes, ARIA relationships, and generated IDs are dependency-owned and may follow the installed stable Bits UI version.
 
 The trigger's app-supplied `class` is merged after its local styles. Classes on the other public parts are passed into required wrappers and merged according to those components. Do not replace the documented slot values: descendant selectors use `combobox-content` to remove the Input Group's focus ring inside the popup.
+
+---
 
 ## Accessibility
 
 `Trigger` is a native button with `role="combobox"`, an `aria-expanded` value synchronized with open state, and Popover-provided relationship attributes. Its rendered children should always provide a clear accessible name; a placeholder such as “Select a framework” is preferable to an empty trigger. Pass an explicit `aria-label` when the visible summary is only a count or otherwise ambiguous.
 
-The required Popover and Command primitives provide button activation, Escape handling, focus management, query filtering, arrow-key result navigation, and item selection. Single selection closes the popup and explicitly restores focus to the trigger after Svelte's next DOM update. Multiple selection leaves the popup open so more items can be toggled. A visual check indicates every selected item.
+The required Popover and Command primitives provide button activation, Escape handling, focus management, query filtering, arrow-key result navigation, and item selection. By default, single selection closes the popup and explicitly restores focus to the trigger after Svelte's next DOM update, while multiple selection leaves it open. `closeOnSelect` can change either rule. A visual check indicates every selected item.
 
 Consumer responsibilities:
 
 - Supply meaningful, unique item values and visible option labels.
+- Supply an accessible label on Input through `aria-label`, `aria-labelledby`, or surrounding labeling when its placeholder alone is not sufficient.
+- Mark unavailable options with Item `disabled`, and use Root `disabled` when the complete field is unavailable.
 - Supply and translate an `Empty` message; do not leave filtered users with a blank popup.
 - Use `Group.heading` for meaningful groups rather than visual decoration alone.
 - Do not place interactive controls inside an Item's children because the entire row is one selectable command option.
@@ -359,7 +471,9 @@ Consumer responsibilities:
 - Mirror and validate values separately when the selection participates in a form.
 - Test screen reader announcements for custom option markup and custom trigger summaries.
 
-The current wrapper does not expose disabled items, input labeling attributes, open state, or focus hooks. If those are required, extend the reusable API rather than relying on private implementation elements.
+Combobox is still not a native form control and Root does not provide `name`, `required`, validity, or read-only behavior. Mirror its selection into hidden inputs and validate it separately when it participates in a form.
+
+---
 
 ## Localization
 
@@ -369,9 +483,11 @@ Combobox uses Paraglide for its default search placeholder. Keep this message in
 | ------------------- | ------------- | ------------------------------------- |
 | `harbor_wren_pause` | `Search...`   | Default `Combobox.Input` placeholder. |
 
-Apps supply and translate trigger placeholders, selected-value summaries, group headings, item labels, empty results, labels, validation errors, and form actions. `Input.placeholder` overrides the built-in message.
+Apps supply and translate trigger placeholders, selected-value summaries, group headings, item labels, empty results, loading content, labels, validation errors, and form actions. `Input.placeholder` overrides the built-in message. Separator has no human-readable copy.
 
 Copying the complete required Command and Dialog folders also requires their existing `eager_panda_seek`, `frost_lime_drift`, and `amber_fox_glide` messages. They are used by optional exports in those folders rather than by the standard Combobox composition; follow the Command and Dialog README localization sections for their values and overrides.
+
+---
 
 ## Dependencies
 
@@ -575,6 +691,8 @@ The global stylesheet must import Tailwind and `tw-animate-css`, provide the hid
 
 `tw-animate-css` supplies the Popover and Dialog animation utilities; no Combobox-specific keyframe must be copied. The app remains responsible for applying its `.dark` class when dark mode is supported.
 
+---
+
 ## File organization
 
 | File                         | Responsibility                                                                                        |
@@ -587,8 +705,10 @@ The global stylesheet must import Tailwind and `tw-animate-css`, provide the hid
 | `combobox-group.svelte`      | Optional visible group heading and item grouping.                                                     |
 | `combobox-item.svelte`       | Selectable value, selection behavior, state styling, and check indicator.                             |
 | `combobox-empty.svelte`      | Empty filtered-results content.                                                                       |
-| `combobox-context.svelte.ts` | Shared reactive selection, popup state, item toggling, and focus-restoration state.                   |
-| `index.ts`                   | Public components, props types, state types, value mapping, and context helper exports.               |
+| `combobox-separator.svelte`  | Optional forwarded Command separator with a Combobox-specific slot.                                   |
+| `combobox-loading.svelte`    | Optional forwarded Command loading state and progress metadata.                                       |
+| `combobox-context.svelte.ts` | Shared reactive selection, popup, disabled, deselection, closing, and focus-restoration state.        |
+| `index.ts`                   | Public components, props types, context option and state types, value mapping, and helper exports.    |
 | `README.md`                  | Installation, composition, examples, API, styling, accessibility, localization, and dependency guide. |
 
 Treat `index.ts`, its exported types, and the local component source as the source of truth for the public API.

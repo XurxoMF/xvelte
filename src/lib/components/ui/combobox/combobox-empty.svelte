@@ -1,18 +1,16 @@
 <script lang="ts" module>
-	import type { Snippet } from "svelte";
+	import type { WithoutChild } from "$lib/utils";
 
-	export type EmptyProps = {
-		class?: string | undefined;
-		children: Snippet;
-	};
+	import * as Command from "$lib/components/ui/command";
+
+	/** Props for the empty filtered-results state. */
+	export type EmptyProps = WithoutChild<Command.EmptyProps>;
 </script>
 
 <script lang="ts">
 	import { cn } from "$lib/utils";
 
-	import * as Command from "$lib/components/ui/command";
-
-	let { class: className, children }: EmptyProps = $props();
+	let { ref = $bindable(null), class: className, children, ...restProps }: EmptyProps = $props();
 </script>
 
-<Command.Empty data-slot="combobox-empty" class={cn(className)}>{@render children()}</Command.Empty>
+<Command.Empty bind:ref data-slot="combobox-empty" class={cn(className)} {...restProps}>{@render children?.()}</Command.Empty>

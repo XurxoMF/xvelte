@@ -3,9 +3,13 @@
 
 	import * as Popover from "$lib/components/ui/popover";
 
+	/** Props for the delegated button that opens the Combobox popup. */
 	export type TriggerProps = Popover.TriggerProps & {
+		/** Classes merged after the local trigger styles. */
 		class?: string | undefined;
+		/** Visible selection summary or placeholder. */
 		children: Snippet;
+		/** Local trigger height and radius. */
 		size?: "sm" | "default" | undefined;
 	};
 </script>
@@ -19,15 +23,20 @@
 
 	import * as Button from "$lib/components/ui/button";
 
-	let { class: className, children, size = "default", ...restProps }: TriggerProps = $props();
+	let { ref = $bindable(null), class: className, children, size = "default", disabled = false, ...restProps }: TriggerProps = $props();
 
 	const ctx = getComboboxContext();
+
+	$effect(() => {
+		ctx.triggerRef = ref;
+	});
 </script>
 
-<Popover.Trigger bind:ref={ctx.triggerRef} {...restProps}>
+<Popover.Trigger bind:ref disabled={ctx.disabled || disabled} {...restProps}>
 	{#snippet child({ props })}
 		<Button.Root
 			{...props}
+			disabled={ctx.disabled || disabled}
 			variant="outline"
 			data-slot="combobox-trigger"
 			data-size={size}

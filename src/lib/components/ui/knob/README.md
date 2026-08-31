@@ -1,6 +1,6 @@
 # Knob
 
-An accessible rotary-style value control for choosing a number within a range. It supports vertical mouse and touch dragging, arrow-key changes, Home and End navigation, double-click reset, configurable bounds and step size, a bindable value, custom sizing and color, and an optional visible label.
+An accessible rotary-style value control for choosing a number within a range. It supports vertical mouse and touch dragging without page scrolling, stepped mouse-wheel changes, arrow-key changes, Home and End navigation, double-click reset, configurable bounds and step size, a bindable value, custom sizing and color, and an optional visible label.
 
 Use Knob for compact continuous controls such as gain, intensity, balance, or effect parameters when a rotary visual matches the interface. Prefer Slider when a linear range is easier to understand, and use a native number input when exact text entry is the primary task.
 
@@ -20,6 +20,8 @@ Use Knob for compact continuous controls such as gain, intensity, balance, or ef
 - [Credits](#credits)
 - [File organization](#file-organization)
 
+---
+
 ## Import
 
 Import the component through its public `index.ts` entry point:
@@ -32,6 +34,8 @@ Import the component through its public `index.ts` entry point:
 
 Knob's `index.ts` exports `Root` and the `RootProps` type.
 
+---
+
 ## Anatomy
 
 Knob is a single public component:
@@ -41,6 +45,8 @@ Knob is a single public component:
 ```
 
 It renders an outer layout `div`, an optional visible label, an inner focusable element with `role="slider"`, an SVG progress arc, a rotating indicator, and a visible numeric value. The SVG and indicator are internal implementation details rather than public component parts.
+
+---
 
 ## Basic usage
 
@@ -56,7 +62,9 @@ It renders an outer layout `div`, an optional visible label, an inner focusable 
 <p>Current volume: {volume}%</p>
 ```
 
-Drag upward to increase the value and downward to decrease it. The same control works with the keyboard when focused.
+Drag upward to increase the value and downward to decrease it. Touch dragging stays dedicated to the control instead of scrolling the page. With a pointer over the knob, scroll upward to increase by one `step` and downward to decrease by one `step`; handled vertical wheel events do not scroll the page. The same control works with the keyboard when focused.
+
+---
 
 ## Examples
 
@@ -115,7 +123,7 @@ Use finite bounds with `min < max` and a positive finite `step`. Step snapping i
 <p>Last interaction: {lastUserValue} Hz</p>
 ```
 
-`onValueChange` runs for the component's drag, keyboard, and double-click updates. Assigning a new bound `value` from application code does not call it.
+`onValueChange` runs for the component's drag, wheel, keyboard, and double-click updates. Assigning a new bound `value` from application code does not call it.
 
 ### Disabled
 
@@ -123,7 +131,9 @@ Use finite bounds with `min < max` and a positive finite `step`. Step snapping i
 <Knob.Root label="Feedback" value={25} disabled />
 ```
 
-A disabled Knob is removed from the tab order, ignores dragging, keyboard input, and double clicks, exposes `aria-disabled="true"`, and uses reduced-opacity styling.
+A disabled Knob is removed from the tab order, ignores dragging, wheel, keyboard input, and double clicks, exposes `aria-disabled="true"`, and uses reduced-opacity styling. Wheel events over a disabled Knob remain available for normal page scrolling.
+
+---
 
 ## Public API
 
@@ -133,20 +143,20 @@ The component's `index.ts`, exported `RootProps`, and local source are the sourc
 
 Type: `RootProps`, based on native `div` attributes.
 
-| Prop            | Type                      | Default            | xvelte behavior                                                                    |
-| --------------- | ------------------------- | ------------------ | ---------------------------------------------------------------------------------- |
-| `value`         | `number`                  | `0`                | Bindable current value. Internal interactions snap and clamp it before assignment. |
-| `defaultValue`  | `number`                  | `undefined`        | Double-click reset target. Falls back to `min`; does not initialize `value`.       |
-| `min`           | `number`                  | `0`                | Minimum keyboard, drag, reset, and visual value.                                   |
-| `max`           | `number`                  | `100`              | Maximum keyboard, drag, reset, and visual value.                                   |
-| `step`          | `number`                  | `1`                | Increment used by arrow keys and zero-relative snapping.                           |
-| `label`         | `string`                  | `undefined`        | Visible uppercase label and accessible name for the slider.                        |
-| `size`          | `number`                  | `60`               | Slider diameter in CSS pixels and drag-sensitivity input.                          |
-| `color`         | `string`                  | `"var(--primary)"` | CSS color for the active arc and rotating indicator.                               |
-| `disabled`      | `boolean`                 | `false`            | Removes keyboard focus and blocks every value-changing interaction.                |
-| `onValueChange` | `(value: number) => void` | `undefined`        | Runs after an internal interaction updates `value`.                                |
-| `ref`           | `HTMLDivElement \| null`  | `null`             | Bindable reference to the outer layout element, not the slider element.            |
-| `class`         | `string`                  | `undefined`        | Merged after the outer layout and disabled-state classes.                          |
+| Prop            | Type                      | Default            | xvelte behavior                                                                                           |
+| --------------- | ------------------------- | ------------------ | --------------------------------------------------------------------------------------------------------- |
+| `value`         | `number`                  | `0`                | Bindable current value. Internal interactions snap and clamp it before assignment.                        |
+| `defaultValue`  | `number`                  | `undefined`        | Double-click reset target. Falls back to `min`; does not initialize `value`.                              |
+| `min`           | `number`                  | `0`                | Minimum keyboard, wheel, drag, reset, and visual value.                                                   |
+| `max`           | `number`                  | `100`              | Maximum keyboard, wheel, drag, reset, and visual value.                                                   |
+| `step`          | `number`                  | `1`                | Increment used by arrow keys, wheel input, and zero-relative snapping.                                    |
+| `label`         | `string`                  | `undefined`        | Visible uppercase label and accessible name for the slider.                                               |
+| `size`          | `number`                  | `60`               | Slider diameter in CSS pixels and drag-sensitivity input.                                                 |
+| `color`         | `string`                  | `"var(--primary)"` | CSS color for the active arc and rotating indicator.                                                      |
+| `disabled`      | `boolean`                 | `false`            | Removes keyboard focus and blocks every value-changing interaction without blocking page-wheel scrolling. |
+| `onValueChange` | `(value: number) => void` | `undefined`        | Runs after an internal interaction updates `value`.                                                       |
+| `ref`           | `HTMLDivElement \| null`  | `null`             | Bindable reference to the outer layout element, not the slider element.                                   |
+| `class`         | `string`                  | `undefined`        | Merged after the outer layout and disabled-state classes.                                                 |
 
 Remaining native `div` attributes are forwarded to the outer wrapper. They are not forwarded to the inner element with `role="slider"`; in particular, attributes such as `aria-describedby` on Root describe the wrapper rather than the slider.
 
@@ -164,6 +174,10 @@ Externally assigned values are not rewritten. The arc and rotation clamp their v
 
 Dragging changes half of the complete range for each vertical distance equal to `size`. A full-range change therefore takes approximately twice the configured size in vertical pixels. The callback may run repeatedly with the same snapped value during a drag.
 
+Each enabled vertical wheel event changes exactly one `step`, regardless of its `deltaY` magnitude or `deltaMode`: a negative delta increases and a positive delta decreases. The component prevents the handled event's default behavior even at `min` or `max`, so the page does not begin scrolling while the pointer remains over an enabled Knob. Purely horizontal wheel events and every wheel event over a disabled Knob remain native browser behavior.
+
+---
+
 ## Styling and DOM contract
 
 The outer wrapper has the stable `data-slot="knob"`. Internal markup currently contains:
@@ -178,9 +192,11 @@ Only `data-slot="knob"` is a stable xvelte styling hook. The internal elements d
 
 The component uses semantic `primary`, `secondary`, `muted`, `muted-foreground`, `foreground`, and `border` theme colors. Its active color is an inline style controlled by `color`; its geometry and rotation are also inline styles derived from `size` and `value`.
 
-Disabled state adds reduced opacity and slight grayscale. The slider cursor is a vertical-resize cursor when enabled and `not-allowed` when disabled.
+Disabled state adds reduced opacity and slight grayscale. The slider cursor is a vertical-resize cursor when enabled and `not-allowed` when disabled. The enabled interactive element applies `touch-action: none` through `touch-none`, preventing native panning and zoom gestures that begin on the knob while preserving page gestures elsewhere. Disabled state switches to `touch-action: auto`.
 
 The enabled slider receives the standard three-pixel, 50%-opacity semantic `ring` treatment from the required global `*:focus-visible` rule.
+
+---
 
 ## Accessibility
 
@@ -195,12 +211,22 @@ Keyboard behavior:
 | `Home`                     | Move to `min`.          |
 | `End`                      | Move to `max`.          |
 
+Pointer and touch behavior:
+
+- Mouse and touch dragging use vertical distance to adjust the value.
+- Touch gestures beginning on the knob are reserved for adjustment and do not pan or zoom the page.
+- Vertical wheel gestures over an enabled knob adjust one step and do not scroll the page.
+- Horizontal wheel gestures and wheel gestures over a disabled knob remain available to the browser.
+
+Consumer responsibilities:
+
 - Always pass a concise, translated `label` that identifies the controlled setting. Without it, the localized generic name “Knob” is used, which is rarely descriptive enough on its own.
 - Display units or context near the component when the raw number is ambiguous. The current API does not expose `aria-valuetext`, so prefer visible accompanying text for units and non-numeric meanings.
 - Preserve keyboard focus visibility and do not rely on dragging as the only instruction.
-- Touch interaction uses vertical movement but does not explicitly disable browser scrolling. Avoid placing the control where vertical page scrolling is likely to compete with adjustment, and test it on target touch devices.
 - Double click is an optional pointer convenience; ensure the same reset can be understood or performed another way when reset is important.
 - The displayed value is not a native form control and is not submitted with a form. Mirror the bound value into application form state or a named input when needed.
+
+---
 
 ## Localization
 
@@ -213,6 +239,8 @@ Knob uses one Paraglide message:
 The public `label` prop overrides that fallback and also renders visible text above the control. Translate the label in application code because it should describe the specific setting, such as “Volume” or “Gain”. Your app also owns translated units, instructions, reset guidance, validation, and surrounding output text.
 
 Numbers are rendered with JavaScript's default string conversion; the component does not apply locale-aware number formatting. Numeric values, CSS colors, `data-slot`, and ARIA attribute names are technical values and are not translated.
+
+---
 
 ## Dependencies
 
@@ -323,16 +351,20 @@ The global stylesheet must load Tailwind and expose the semantic colors used by 
 
 The app owns dark-mode activation. Knob requires no `tw-animate-css` import, keyframe, component-specific global CSS variable, `src/lib/icons.ts` export, font, network service, or additional layout rule. The component uses browser mouse, touch, and window event APIs directly and needs no additional package for them.
 
+---
+
 ## Credits
 
 Knob is adapted from [more-shadcn-svelte's Knob component](https://more-shadcn.noair.fun/docs/components/knob). The local xvelte API, localization, interaction behavior, styling, and limitations documented here are the source of truth.
 
+---
+
 ## File organization
 
-| File               | Responsibility                                                                            |
-| ------------------ | ----------------------------------------------------------------------------------------- |
-| `knob-root.svelte` | Range state, pointer and keyboard interaction, accessibility, SVG rendering, and styling. |
-| `index.ts`         | Public component and `RootProps` export.                                                  |
-| `README.md`        | Installation, API, behavior, accessibility, localization, and usage guide.                |
+| File               | Responsibility                                                                                        |
+| ------------------ | ----------------------------------------------------------------------------------------------------- |
+| `knob-root.svelte` | Range state, drag, touch, wheel, and keyboard interaction, accessibility, SVG rendering, and styling. |
+| `index.ts`         | Public component and `RootProps` export.                                                              |
+| `README.md`        | Installation, API, behavior, accessibility, localization, and usage guide.                            |
 
 The component's `index.ts` and exported `RootProps` are the source of truth for the public API.

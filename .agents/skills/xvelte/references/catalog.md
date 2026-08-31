@@ -49,7 +49,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `input-phone` — composable international phone state, searchable country flags and Paraglide-locale country names, formatting, and validation
 - `item`
 - `kbd`
-- `knob`
+- `knob` — compact rotary range control with page-safe touch dragging, stepped wheel input, keyboard navigation, and double-click reset
 - `label`
 - `list` — semantic ordered and unordered lists with configurable spacing and reusable exported class variants
 - `markdown` — headless mdast renderer for CommonMark, GFM, GitHub alerts, xvelte components, and lazy Shiki languages

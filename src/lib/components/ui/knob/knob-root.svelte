@@ -2,16 +2,27 @@
 	import type { HTMLAttributes } from "svelte/elements";
 	import type { WithElementRef } from "$lib/utils";
 
+	/** Props for the rotary Knob range control. */
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
+		/** Bindable current value. */
 		value?: number | undefined;
+		/** Double-click reset target. */
 		defaultValue?: number | undefined;
+		/** Minimum permitted internal value. */
 		min?: number | undefined;
+		/** Maximum permitted internal value. */
 		max?: number | undefined;
+		/** Increment used by snapping, wheel, and keyboard interaction. */
 		step?: number | undefined;
+		/** Visible label and accessible slider name. */
 		label?: string | undefined;
+		/** Diameter and drag-sensitivity input in CSS pixels. */
 		size?: number | undefined;
+		/** CSS color for the active arc and indicator. */
 		color?: string | undefined;
+		/** Whether every value-changing interaction is disabled. */
 		disabled?: boolean | undefined;
+		/** Callback invoked after an internal interaction updates the value. */
 		onValueChange?: ((value: number) => void) | undefined;
 	};
 </script>
@@ -96,6 +107,13 @@
 		event.preventDefault();
 		updateValue(next);
 	}
+
+	/** @param event - Vertical wheel event converted into one stepped value change. */
+	function handleWheel(event: WheelEvent) {
+		if (disabled || event.deltaY === 0) return;
+		event.preventDefault();
+		updateValue(value + (event.deltaY < 0 ? step : -step));
+	}
 </script>
 
 <div
@@ -113,7 +131,7 @@
 		aria-valuemax={max}
 		aria-valuenow={value}
 		aria-disabled={disabled}
-		class={cn("relative flex items-center justify-center rounded-full", disabled ? "cursor-not-allowed" : "cursor-ns-resize")}
+		class={cn("relative flex items-center justify-center rounded-full", disabled ? "cursor-not-allowed touch-auto" : "cursor-ns-resize touch-none")}
 		style="width: {size}px; height: {size}px;"
 		onmousedown={(event) => {
 			startDragging(event.clientY);
@@ -124,6 +142,8 @@
 		ontouchstart={(event) => startDragging(event.touches[0].clientY)}
 		ontouchmove={(event) => handleMove(event.touches[0].clientY)}
 		ontouchend={stopDragging}
+		ontouchcancel={stopDragging}
+		onwheel={handleWheel}
 		onkeydown={handleKeydown}
 	>
 		<svg class="absolute inset-0 size-full" viewBox="0 0 100 100" aria-hidden="true">

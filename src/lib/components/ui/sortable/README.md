@@ -181,7 +181,7 @@ Remaining native `div` props are forwarded to the visible Item element. IDs must
 | `child`      | `Snippet<[{ props }]>` | —                             | Replaces the default ghost Button; spread every supplied prop. |
 | `aria-label` | `string`               | Localized `"Drag to reorder"` | Accessible handle name.                                        |
 | `ref`        | `HTMLElement \| null`  | `null`                        | Bindable rendered handle element.                              |
-| `class`      | `ClassValue`           | —                             | Merged with the default grab-cursor classes.                   |
+| `class`      | `ClassValue`           | —                             | Merged with the move cursor and active grabbing feedback.      |
 
 Without `child`, DragHandle renders the same ghost `Button.Root` with `size="icon-sm"` and grip icon used by WidgetGrid. With `child`, it applies the behavior and state props to the user's element instead. Give each handle a contextual accessible name.
 
@@ -219,7 +219,7 @@ Root and Item are headless. DragHandle provides the collection's standard compac
 
 Boolean state attributes are present with value `"true"` and omitted otherwise. Root `data-dragging` means any registered Item is being dragged; Item `data-dragging` identifies the active Item, including its temporary pointer shadow.
 
-Root and Item default to `div`, and Item may delegate its element. DragHandle defaults to Button and merges `cursor-grab touch-none active:cursor-grabbing` with its `class`; delegated handles receive the same merged class and behavioral props. Root and Item classes are forwarded unchanged. `svelte-dnd-action` also applies temporary inline styles, ARIA attributes, tab stops, cloned drag elements, and shadow decoration; those are dependency-owned and are not stable styling hooks.
+Root and Item default to `div`, and Item may delegate its element. DragHandle defaults to Button and shows the four-direction `move` cursor while available, then `grabbing` while its Item is actively moving; delegated handles receive the same merged classes and behavioral props. The cursor utilities are important because `svelte-dnd-action` writes its own cursor inline. Root and Item classes are forwarded unchanged. The dependency also applies other temporary inline styles, ARIA attributes, tab stops, cloned drag elements, and shadow decoration; those are dependency-owned and are not stable styling hooks.
 
 The component requires no semantic color, CSS variable, global keyframe, or shared stylesheet.
 

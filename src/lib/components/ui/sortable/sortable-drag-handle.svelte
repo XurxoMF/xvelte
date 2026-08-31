@@ -128,7 +128,8 @@
 
 	const handleProps = $derived({
 		...restProps,
-		class: cn("cursor-grab touch-none active:cursor-grabbing", className),
+		// Important cursor utilities override the dependency's inline `grab` cursor while preserving active drag feedback.
+		class: cn("cursor-move! touch-none", item.dragging && "cursor-grabbing!", className),
 		role: "button",
 		tabindex: disabled ? -1 : 0,
 		"aria-label": ariaLabel,

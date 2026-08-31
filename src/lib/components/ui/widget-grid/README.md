@@ -323,7 +323,7 @@ Item forwards compatible native `div` attributes to its visible default or deleg
 | `children`   | `Snippet`              | Grip icon                 | Replaces only the default icon inside the ghost Button.                                      |
 | `child`      | `Snippet<[{ props }]>` | —                         | Replaces Button and icon while preserving registration, cursor, state, and accessible props. |
 | `ref`        | `HTMLElement \| null`  | `null`                    | Bindable rendered handle.                                                                    |
-| `class`      | `string`               | —                         | Merged with grab cursor and touch behavior.                                                  |
+| `class`      | `string`               | —                         | Merged with the move cursor, active grabbing feedback, and touch behavior.                   |
 
 The default element is `Button.Root` with `variant="ghost"`, `size="icon-sm"`, and `type="button"`. Remaining compatible native attributes are forwarded. Without a mounted DragHandle, the Item cannot be moved manually even when Root and Item enable dragging. The handle exposes `aria-pressed`, `aria-keyshortcuts`, and `data-keyboard-active="true"` while its keyboard movement mode is active.
 
@@ -380,7 +380,7 @@ Root exposes `data-moving`, `data-resizing`, and `data-disabled` as `"true"` onl
 
 Root is visually transparent and adds only the structural class needed by the internal layout engine. Its private content wrapper clips overflow so absolute handles and full-size delegated elements do not create a second scrollbar around Item; add an app-owned scrolling region inside Item when its content must scroll. During movement or resizing, Root overrides GridStack's private placeholder with the semantic `muted` background and the local `rounded-md` radius (`calc(var(--radius) * 0.8)`) so its occupied cells remain visible in both color modes. Private direct-child wrappers receive engine-owned classes, coordinate attributes, inline positioning, and animation state; these are implementation details and must not be selected from app CSS. The public Item remains nested inside those wrappers.
 
-Root and Item are headless. Without `child`, Item renders a `div`; with `child`, it renders only the delegated element. In both cases Item forwards its `class` unchanged and adds no visual, sizing, or positioning classes. DragHandle and ResizeHandle default to compact ghost Buttons and allow their complete visual elements to be replaced. Their public classes are merged with `cn`; ResizeHandle also passes essential placement and dimensions as inline style so delegated elements remain positioned when they replace the supplied class.
+Root and Item are headless. Without `child`, Item renders a `div`; with `child`, it renders only the delegated element. In both cases Item forwards its `class` unchanged and adds no visual, sizing, or positioning classes. DragHandle shows the four-direction `move` cursor while available and `grabbing` throughout active pointer or keyboard movement. ResizeHandle keeps its southeast resize cursor. Both handles default to compact ghost Buttons and allow their complete visual elements to be replaced; their public classes are merged with `cn`.
 
 WidgetGrid imports GridStack's structural stylesheet inside Root. Apps do not add GridStack classes, attributes, wrappers, or stylesheet imports themselves.
 

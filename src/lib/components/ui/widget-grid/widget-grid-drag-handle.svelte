@@ -99,7 +99,7 @@
 
 	const handleProps = $derived({
 		...restProps,
-		class: cn("cursor-grab touch-none active:cursor-grabbing", keyboardActive && "cursor-grabbing", className),
+		class: cn("cursor-move touch-none", item.moving && "cursor-grabbing", className),
 		role: "button",
 		tabindex: disabled ? -1 : 0,
 		"aria-label": ariaLabel,

@@ -34,6 +34,7 @@
 	<a
 		bind:this={ref}
 		data-slot="footnote-reference-link"
+		// eslint-disable-next-line svelte/no-navigation-without-resolve
 		{href}
 		aria-label={ariaLabel}
 		class={cn("font-medium text-primary no-underline hover:underline", className)}

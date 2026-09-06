@@ -334,7 +334,7 @@ footnote/
 └── footnote.md
 ```
 
-Footnote needs no other xvelte component, hook, attachment, context module, semantic icon export, shared component stylesheet, asset, font, browser API, or network service. A Markdown renderer may compose it, but Markdown is not a Footnote dependency.
+Footnote needs no other xvelte component, hook, attachment, context module, semantic icon export, shared component stylesheet, asset, font, browser API, or network service. xvelte Markdown composes it to render parsed GFM footnotes, but Markdown is not a Footnote dependency.
 
 ---
 

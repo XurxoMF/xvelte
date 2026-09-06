@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	import type { Definition, Image, ImageReference, PhrasingContent, RootContent } from "mdast";
+	import type { Definition, FootnoteDefinition, FootnoteReference, Image, ImageReference, PhrasingContent, RootContent } from "mdast";
 	import type { MarkdownAlertKind, MarkdownAst } from "$lib/hooks/use-markdown.svelte";
 
 	/** Props for the headless mdast-to-xvelte renderer. */
@@ -25,12 +25,41 @@
 	import * as Alert from "$lib/components/ui/alert";
 	import * as Checkbox from "$lib/components/ui/checkbox";
 	import * as Code from "$lib/components/ui/code";
+	import * as Footnote from "$lib/components/ui/footnote";
 	import * as List from "$lib/components/ui/list";
 	import * as Separator from "$lib/components/ui/separator";
 	import * as Table from "$lib/components/ui/table";
 	import * as Typography from "$lib/components/ui/typography";
 
 	let { ast, showCopyButton = true, leadingIntroduction = true }: RootProps = $props();
+	const rootId = $props.id();
+	const footnotePrefix = `${rootId}-footnote`;
+
+	/** Numbering and backlink metadata for one rendered footnote definition. */
+	type FootnoteEntry = {
+		/** Definition node associated with the first matching reference. */
+		definition: FootnoteDefinition;
+		/** One-based number assigned in first-reference order. */
+		number: number;
+		/** Total number of references that link to this definition. */
+		referenceCount: number;
+	};
+
+	/** Position assigned to one inline footnote-reference node. */
+	type FootnoteReferenceInfo = {
+		/** One-based number shared by all references to the same definition. */
+		number: number;
+		/** One-based occurrence of this particular reference. */
+		occurrence: number;
+	};
+
+	/** Prepared footnote data used by the inline and block renderers. */
+	type FootnoteModel = {
+		/** Referenced definitions in their first-reference order. */
+		entries: FootnoteEntry[];
+		/** Metadata keyed by the original inline reference-node identity. */
+		references: SvelteMap<FootnoteReference, FootnoteReferenceInfo>;
+	};
 
 	/** Returns whether a unist node owns child nodes. */
 	function isParent(node: Node): node is Parent {
@@ -53,6 +82,74 @@
 
 		if (isParent(node)) node.children.forEach((child) => collectDefinitions(child, definitions));
 		return definitions;
+	}
+
+	/**
+	 * Collects definitions and assigns footnote numbers in first-reference order.
+	 *
+	 * References inside a used definition are visited after the document body, while
+	 * unused definitions stay hidden and do not affect numbering.
+	 *
+	 * @param node mdast root or descendant to inspect.
+	 * @returns Referenced definitions and per-reference numbering metadata.
+	 */
+	function collectFootnotes(node: Node): FootnoteModel {
+		const definitions = new SvelteMap<string, FootnoteDefinition>();
+		const entries: FootnoteEntry[] = [];
+		const entriesByIdentifier = new SvelteMap<string, FootnoteEntry>();
+		const references = new SvelteMap<FootnoteReference, FootnoteReferenceInfo>();
+
+		/**
+		 * Collects every definition before references are resolved.
+		 *
+		 * @param current Current mdast node in the definition traversal.
+		 */
+		function collectDefinitionNodes(current: Node): void {
+			if (current.type === "footnoteDefinition") {
+				const definition = current as FootnoteDefinition;
+				definitions.set(definition.identifier, definition);
+			}
+
+			if (isParent(current)) current.children.forEach(collectDefinitionNodes);
+		}
+
+		/**
+		 * Registers references without descending into definitions at their source position.
+		 *
+		 * @param current Current mdast node in the reference traversal.
+		 */
+		function collectReferenceNodes(current: Node): void {
+			if (current.type === "footnoteDefinition") return;
+
+			if (current.type === "footnoteReference") {
+				const reference = current as FootnoteReference;
+				const definition = definitions.get(reference.identifier);
+				if (!definition) return;
+
+				let entry = entriesByIdentifier.get(reference.identifier);
+				if (!entry) {
+					entry = { definition, number: entries.length + 1, referenceCount: 0 };
+					entriesByIdentifier.set(reference.identifier, entry);
+					entries.push(entry);
+				}
+
+				entry.referenceCount += 1;
+				references.set(reference, { number: entry.number, occurrence: entry.referenceCount });
+				return;
+			}
+
+			if (isParent(current)) current.children.forEach(collectReferenceNodes);
+		}
+
+		collectDefinitionNodes(node);
+		collectReferenceNodes(node);
+
+		// The loop grows when a referenced definition introduces another referenced definition.
+		for (let index = 0; index < entries.length; index += 1) {
+			entries[index]?.definition.children.forEach(collectReferenceNodes);
+		}
+
+		return { entries, references };
 	}
 
 	/** Allows relative URLs and common navigation protocols while rejecting executable schemes. */
@@ -93,17 +190,39 @@
 		return leadingIntroduction && index === 1 && nodes[0]?.type === "heading" && nodes[0].depth === 1;
 	}
 
+	/**
+	 * Returns the stable definition ID for one numbered footnote in this renderer instance.
+	 *
+	 * @param number One-based rendered footnote number.
+	 * @returns Document-unique definition element ID.
+	 */
+	function footnoteItemId(number: number): string {
+		return `${footnotePrefix}-note-${number}`;
+	}
+
+	/**
+	 * Returns the stable reference ID for one occurrence in this renderer instance.
+	 *
+	 * @param number One-based rendered footnote number.
+	 * @param occurrence One-based occurrence of that footnote reference.
+	 * @returns Document-unique inline reference element ID.
+	 */
+	function footnoteReferenceId(number: number, occurrence: number): string {
+		return `${footnotePrefix}-reference-${number}-${occurrence}`;
+	}
+
 	let definitions = $derived(collectDefinitions(ast));
+	let footnotes = $derived(collectFootnotes(ast));
 </script>
 
-{#snippet Todo(kind: "footnote" | "html", inline = false)}
+{#snippet Todo(inline = false)}
 	{#if inline}
 		<span data-slot="markdown-todo" class="text-muted-foreground">
-			{kind === "footnote" ? m.lunar_badger_pause() : m.amber_willow_hold()}
+			{m.amber_willow_hold()}
 		</span>
 	{:else}
 		<Typography.P data-slot="markdown-todo" class="text-muted-foreground">
-			{kind === "footnote" ? m.lunar_badger_pause() : m.amber_willow_hold()}
+			{m.amber_willow_hold()}
 		</Typography.P>
 	{/if}
 {/snippet}
@@ -149,9 +268,18 @@
 		{:else if node.type === "image" || node.type === "imageReference"}
 			{@render renderImage(node)}
 		{:else if node.type === "footnoteReference"}
-			{@render Todo("footnote", true)}
+			{@const reference = footnotes.references.get(node)}
+			{#if reference}
+				<Footnote.Reference
+					id={footnoteReferenceId(reference.number, reference.occurrence)}
+					href={`#${footnoteItemId(reference.number)}`}
+					number={reference.number}
+				/>
+			{:else}
+				<span data-slot="markdown-unresolved-footnote">[^{node.label ?? node.identifier}]</span>
+			{/if}
 		{:else if node.type === "html"}
-			{@render Todo("html", true)}
+			{@render Todo(true)}
 		{/if}
 	{/each}
 {/snippet}
@@ -272,14 +400,34 @@
 			<Separator.Root decorative={false} />
 		{:else if node.type === "image" || node.type === "imageReference"}
 			{@render renderImage(node)}
-		{:else if node.type === "footnoteDefinition" || node.type === "footnoteReference"}
-			{@render Todo("footnote")}
+		{:else if node.type === "footnoteReference"}
+			<Typography.P>{@render renderInline([node])}</Typography.P>
 		{:else if node.type === "html"}
-			{@render Todo("html")}
-		{:else if node.type !== "definition" && node.type !== "yaml" && node.type !== "listItem" && node.type !== "tableRow" && node.type !== "tableCell"}
+			{@render Todo()}
+		{:else if node.type !== "definition" && node.type !== "footnoteDefinition" && node.type !== "yaml" && node.type !== "listItem" && node.type !== "tableRow" && node.type !== "tableCell"}
 			<Typography.P>{@render renderInline([node])}</Typography.P>
 		{/if}
 	{/each}
 {/snippet}
 
 {@render renderBlocks(ast.children)}
+
+{#if footnotes.entries.length > 0}
+	<Footnote.Root>
+		<Footnote.List>
+			{#each footnotes.entries as entry (entry.number)}
+				<Footnote.Item id={footnoteItemId(entry.number)}>
+					<div data-slot="markdown-footnote-content" class="flex flex-col gap-4">
+						{@render renderBlocks(entry.definition.children)}
+					</div>
+
+					<div data-slot="markdown-footnote-back-references" class="mt-1 flex flex-wrap">
+						{#each Array.from({ length: entry.referenceCount }).keys() as index (index)}
+							<Footnote.BackReference href={`#${footnoteReferenceId(entry.number, index + 1)}`} number={entry.number} occurrence={index + 1} />
+						{/each}
+					</div>
+				</Footnote.Item>
+			{/each}
+		</Footnote.List>
+	</Footnote.Root>
+{/if}

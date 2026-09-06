@@ -6,7 +6,7 @@
 
 	const markdown = new UseMarkdown(`# Release notes
 
-A reusable document rendered with **xvelte components**.
+A reusable document rendered with **xvelte components**.[^renderer]
 
 ![xvelte icon][xvelte-icon]
 
@@ -17,7 +17,10 @@ A reusable document rendered with **xvelte components**.
 
 - [x] Parse CommonMark and GFM
 - [x] Render semantic components
-- [ ] Add footnote and raw HTML renderers
+- [x] Render images and footnotes
+- [ ] Add a raw HTML renderer
+
+[^renderer]: Markdown.Root collects this definition and adds a return link automatically.
 
 \`\`\`ts
 const markdown = new UseMarkdown(source);

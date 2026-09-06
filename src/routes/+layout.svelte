@@ -74,6 +74,16 @@
 					<Sidebar.GroupLabel>Explore</Sidebar.GroupLabel>
 					<Sidebar.GroupContent>
 						<Sidebar.Menu>
+							<Sidebar.MenuItem>
+								<Sidebar.MenuButton isActive={currentPath === "/installation"} tooltipContent="Installation">
+									{#snippet child({ props })}<a
+											href={resolve("/installation")}
+											aria-current={currentPath === "/installation" ? "page" : undefined}
+											{...props}>Installation</a
+										>{/snippet}
+								</Sidebar.MenuButton>
+							</Sidebar.MenuItem>
+
 							{#each categories as category (category.href)}
 								<Sidebar.MenuItem>
 									<Sidebar.MenuButton

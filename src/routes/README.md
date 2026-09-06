@@ -36,6 +36,7 @@ During `bun run build`, SvelteKit calls `entries()` and emits one HTML entry for
 - `_docs/examples.ts` discovers both the compiled preview and its raw source. The Preview tab renders the component and the Code tab therefore always displays the exact same file.
 - `UnitPage.svelte` finds preview markers, parses each remaining guide section through `parseMarkdown`, and passes its mdast directly to `Markdown.Root` instead of injecting parser-generated HTML.
 - Markdown code fences use Code's lazy Shiki language registry and treat unknown languages as plain text.
+- `installation/installation.md` supplies the standalone installation guide rendered by `installation/+page.svelte` through the same Markdown pipeline.
 - The sidebar renders separate Components, Hooks, and Attachments groups from `_docs/catalog.ts`; its search filters all three groups by title and hides groups without matches.
 - `layout.css` owns the reusable global theme and may only receive collection-wide theme changes. The landing page keeps its decorative grid mask in its own scoped `<style>` block; documentation content relies on the xvelte components' local styles.
 
@@ -66,6 +67,7 @@ git diff --check
 | Route                                   | Purpose                                 |
 | --------------------------------------- | --------------------------------------- |
 | `/`                                     | Project introduction                    |
+| `/installation`                         | Complete installation and update guide  |
 | `/components`, `/hooks`, `/attachments` | Small category indexes                  |
 | `/components/<slug>`                    | One generated component reference page  |
 | `/hooks/<slug>`                         | One generated hook reference page       |

@@ -28,8 +28,8 @@
 				starting from zero.
 			</Typography.P>
 			<div class="mt-8 flex flex-wrap gap-3">
-				<a href={resolve("/components")} class={Button.rootVariants({ size: "lg" })}>Browse components</a>
-				<a href={resolve("/components/button")} class={Button.rootVariants({ variant: "outline", size: "lg" })}>Start with Button</a>
+				<a href={resolve("/installation")} class={Button.rootVariants({ size: "lg" })}>Installation</a>
+				<a href={resolve("/components")} class={Button.rootVariants({ variant: "outline", size: "lg" })}>Browse components</a>
 			</div>
 		</div>
 	</section>

@@ -110,46 +110,9 @@ Use the `package.json` and lockfile from the selected release as the source of t
 
 ## Installation
 
-Install reusable code from a tagged release so its source, dependencies, documentation, and migration notes belong to the same snapshot. Avoid treating `main` as a stable release.
+Follow the complete [xvelte installation guide](https://xvelte.xurxomf.xyz/installation). It covers tagged releases, selective and complete source copying, package-manager commands, `layout.css`, `$lib/utils`, semantic icons, components, hooks, attachments, Paraglide localization, root-layout providers, agent integration, validation, and updates.
 
-1. Open the [releases page](https://github.com/XurxoMF/xvelte/releases) and select a version.
-2. Download and extract its generated **Source code (`zip`)** or **Source code (`tar.gz`)** archive. The direct URL formats are:
-
-```txt
-https://github.com/XurxoMF/xvelte/archive/refs/tags/<version>.zip
-https://github.com/XurxoMF/xvelte/archive/refs/tags/<version>.tar.gz
-```
-
-3. Copy all of `src/lib`, or only the components, attachments, hooks, utilities, and icon mappings required by the project.
-4. Copy `src/routes/layout.css` to the appropriate global stylesheet in the consuming application.
-5. When copied code uses localized messages, copy the required entries from `messages/en.json` and configure Paraglide in the consuming project.
-6. Copy `.agents/skills/xvelte` when coding agents should discover and use the collection according to its public conventions without adding instructions to the consuming project's README or `AGENTS.md`.
-7. Install the required dependencies using the release's `package.json` and lockfile as references.
-8. Import the global stylesheet from the root layout:
-
-```svelte
-<script lang="ts">
-	import "./layout.css";
-</script>
-
-{@render children()}
-```
-
-If app-wide tooltips should share the same delay and provider settings, wrap the root layout:
-
-```svelte
-<script lang="ts">
-	import * as Tooltip from "$lib/components/ui/tooltip";
-
-	import "./layout.css";
-
-	let { children } = $props();
-</script>
-
-<Tooltip.Provider delayDuration={500}>
-	{@render children()}
-</Tooltip.Provider>
-```
+Install from a tagged release so its source, dependency versions, unit guides, and migration notes belong to the same snapshot. Avoid treating `main` as a stable release.
 
 ## Usage conventions
 

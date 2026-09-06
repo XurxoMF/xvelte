@@ -8,12 +8,16 @@
 
 A reusable document rendered with **xvelte components**.
 
+![xvelte icon][xvelte-icon]
+
+[xvelte-icon]: /favicon.png "xvelte"
+
 > [!TIP]
 > Wrap Markdown.Root in Typography.Prose for automatic document rhythm.
 
 - [x] Parse CommonMark and GFM
 - [x] Render semantic components
-- [ ] Add the remaining dedicated renderers
+- [ ] Add footnote and raw HTML renderers
 
 \`\`\`ts
 const markdown = new UseMarkdown(source);

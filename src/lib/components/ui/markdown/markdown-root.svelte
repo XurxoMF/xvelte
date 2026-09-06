@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	import type { Definition, PhrasingContent, RootContent } from "mdast";
+	import type { Definition, Image, ImageReference, PhrasingContent, RootContent } from "mdast";
 	import type { MarkdownAlertKind, MarkdownAst } from "$lib/hooks/use-markdown.svelte";
 
 	/** Props for the headless mdast-to-xvelte renderer. */
@@ -66,6 +66,28 @@
 		return url;
 	}
 
+	/** Allows relative, HTTP, and HTTPS image sources while rejecting executable and local-file schemes. */
+	function safeImageUrl(url: string | null | undefined) {
+		if (!url) return undefined;
+		const protocol = url
+			.trim()
+			.match(/^([a-z][a-z\d+.-]*):/i)?.[1]
+			?.toLowerCase();
+		if (protocol && !["http", "https"].includes(protocol)) return undefined;
+		return url;
+	}
+
+	/** Resolves direct and reference images to the native image attributes used by the renderer. */
+	function resolveImage(node: Image | ImageReference) {
+		const definition = node.type === "imageReference" ? definitions.get(node.identifier) : undefined;
+
+		return {
+			src: safeImageUrl(node.type === "image" ? node.url : definition?.url),
+			alt: node.alt ?? "",
+			title: (node.type === "image" ? node.title : definition?.title) ?? undefined
+		};
+	}
+
 	/** Detects the introductory paragraph convention used by xvelte documentation. */
 	function isIntroduction(nodes: RootContent[], index: number) {
 		return leadingIntroduction && index === 1 && nodes[0]?.type === "heading" && nodes[0].depth === 1;
@@ -74,15 +96,24 @@
 	let definitions = $derived(collectDefinitions(ast));
 </script>
 
-{#snippet Todo(kind: "image" | "footnote" | "html", inline = false)}
+{#snippet Todo(kind: "footnote" | "html", inline = false)}
 	{#if inline}
 		<span data-slot="markdown-todo" class="text-muted-foreground">
-			{kind === "image" ? m.gentle_raven_wait() : kind === "footnote" ? m.lunar_badger_pause() : m.amber_willow_hold()}
+			{kind === "footnote" ? m.lunar_badger_pause() : m.amber_willow_hold()}
 		</span>
 	{:else}
 		<Typography.P data-slot="markdown-todo" class="text-muted-foreground">
-			{kind === "image" ? m.gentle_raven_wait() : kind === "footnote" ? m.lunar_badger_pause() : m.amber_willow_hold()}
+			{kind === "footnote" ? m.lunar_badger_pause() : m.amber_willow_hold()}
 		</Typography.P>
+	{/if}
+{/snippet}
+
+{#snippet renderImage(node: Image | ImageReference)}
+	{@const image = resolveImage(node)}
+	{#if image.src}
+		<img data-slot="markdown-image" class="h-auto max-w-full rounded-lg" src={image.src} alt={image.alt} title={image.title} />
+	{:else if image.alt}
+		<span data-slot="markdown-image-fallback" class="text-muted-foreground">{image.alt}</span>
 	{/if}
 {/snippet}
 
@@ -116,7 +147,7 @@
 				<span data-slot="markdown-unresolved-link">{@render renderInline(node.children)}</span>
 			{/if}
 		{:else if node.type === "image" || node.type === "imageReference"}
-			{@render Todo("image", true)}
+			{@render renderImage(node)}
 		{:else if node.type === "footnoteReference"}
 			{@render Todo("footnote", true)}
 		{:else if node.type === "html"}
@@ -240,7 +271,7 @@
 		{:else if node.type === "thematicBreak"}
 			<Separator.Root decorative={false} />
 		{:else if node.type === "image" || node.type === "imageReference"}
-			{@render Todo("image")}
+			{@render renderImage(node)}
 		{:else if node.type === "footnoteDefinition" || node.type === "footnoteReference"}
 			{@render Todo("footnote")}
 		{:else if node.type === "html"}

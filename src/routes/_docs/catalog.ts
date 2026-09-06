@@ -65,7 +65,7 @@ function metadata(markdown: string, path: string) {
 }
 
 /**
- * Classifies a guide by its scope and folder while retaining the existing page URLs.
+ * Classifies a guide by its scope and folder and builds its category-based page URL.
  * @param path - Absolute Vite source path.
  * @param markdown - Complete guide text.
  * @returns The catalog entry; unsupported folders fail rather than silently disappearing.
@@ -86,7 +86,7 @@ function unitFromGuide(path: string, markdown: string): DocUnit {
 	}
 
 	const { title, description } = metadata(markdown, path);
-	const href = scope === "tauri" ? `/tauri/${slug}` : `/${category.directory}/${slug}`;
+	const href = scope === "tauri" ? `/tauri/${category.directory}/${slug}` : `/${category.directory}/${slug}`;
 	return { scope, kind: category.kind, slug, title, description, href, markdown };
 }
 
@@ -94,7 +94,7 @@ export const units = Object.entries(unitGuides)
 	.map(([path, markdown]) => unitFromGuide(path, markdown))
 	.sort((a, b) => a.title.localeCompare(b.title));
 
-// Existing URLs require unique slugs within Tauri and within each shared category.
+// Category-based URLs require every guide to resolve to a unique destination.
 if (new Set(units.map((unit) => unit.href)).size !== units.length) {
 	throw new Error("Documentation guides must have unique destinations.");
 }

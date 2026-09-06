@@ -60,9 +60,12 @@
 		if (unit) revealUnit(unit);
 		else if (page.url.pathname === "/tauri") selectedScope = "tauri";
 		else {
-			const category = navigation[0]?.categories.find((category) => page.url.pathname === `/${category.directory}`);
-			if (category) {
-				selectedScope = "shared";
+			const scope = navigation.find((scope) =>
+				scope.categories.some((category) => page.url.pathname === `${scope.value === "tauri" ? "/tauri" : ""}/${category.directory}`)
+			);
+			const category = scope?.categories.find((category) => page.url.pathname === `${scope.value === "tauri" ? "/tauri" : ""}/${category.directory}`);
+			if (scope && category) {
+				selectedScope = scope.value;
 				expandedCategories[category.id] = true;
 			}
 		}

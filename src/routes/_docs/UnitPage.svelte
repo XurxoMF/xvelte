@@ -68,10 +68,10 @@
 				<Breadcrumb.Separator />
 
 				<Breadcrumb.Item>
-					{#if unit.scope === "shared" && category}
-						<Breadcrumb.Link href={resolve(`/${category.directory}` as Pathname)}>{category.label}</Breadcrumb.Link>
-					{:else}
-						<span>{category?.label}</span>
+					{#if category}
+						<Breadcrumb.Link href={resolve(`${unit.scope === "tauri" ? "/tauri" : ""}/${category.directory}` as Pathname)}>
+							{category.label}
+						</Breadcrumb.Link>
 					{/if}
 				</Breadcrumb.Item>
 

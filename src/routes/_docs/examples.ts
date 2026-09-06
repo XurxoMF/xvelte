@@ -31,11 +31,12 @@ function titleFromName(name: string) {
 }
 
 export const examples: DocExample[] = Object.entries(exampleComponents).flatMap(([path, loadComponent]) => {
-	const match = path.match(/\/_examples\/(components|hooks|attachments|tauri)\/([^/]+)\/([^/]+)\.svelte$/);
+	const match = path.match(/\/_examples\/(?:(components|hooks|attachments)\/([^/]+)|tauri\/([^/]+)\/([^/]+))\/([^/]+)\.svelte$/);
 	if (!match) return [];
 
-	const [, category, slug, name] = match;
-	const href = `/${category}/${slug}`;
+	const [, sharedCategory, sharedSlug, tauriCategory, tauriSlug, name] = match;
+	const slug = sharedSlug ?? tauriSlug;
+	const href = sharedCategory ? `/${sharedCategory}/${slug}` : `/tauri/${tauriCategory}/${slug}`;
 
 	return [
 		{

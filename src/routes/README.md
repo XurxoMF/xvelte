@@ -31,7 +31,7 @@ During `bun run build`, SvelteKit calls `entries()` and emits one HTML entry for
 ## Sources of truth
 
 - Each public unit's `<slug>.md` guide supplies the reference text, API tables, installation notes, and code examples shown on the website. Editing that guide updates the corresponding web page.
-- `_examples/components/<slug>/*.svelte`, `_examples/hooks/<slug>/*.svelte`, `_examples/attachments/<slug>/*.svelte`, and `_examples/tauri/<slug>/*.svelte` are real, independently compiled previews.
+- `_examples/components/<slug>/*.svelte`, `_examples/hooks/<slug>/*.svelte`, `_examples/attachments/<slug>/*.svelte`, and `_examples/tauri/<category>/<slug>/*.svelte` are real, independently compiled previews.
 - An invisible `<!-- xvelte-example: overview -->` guide comment places the matching `overview.svelte` preview at that exact position on the website.
 - `_docs/examples.ts` discovers both the compiled preview and its raw source. The Preview tab renders the component and the Code tab therefore always displays the exact same file.
 - `UnitPage.svelte` finds preview markers, parses each remaining guide section through `parseMarkdown`, and passes its mdast directly to `Markdown.Root` instead of injecting parser-generated HTML.
@@ -52,7 +52,7 @@ For a new component:
 3. Add at least one focused preview under `_examples/components/<slug>`.
 4. Place `<!-- xvelte-example: <filename-without-extension> -->` at the desired position in the component guide.
 
-For a new hook, attachment, or Tauri helper, add its source file and a sibling `<slug>.md` guide, such as `use-viewport.svelte.ts` plus `use-viewport.md`. Use the exported public name in the guide's level-one heading and put its catalog description in the first paragraph. The catalog uses the filename as the slug, so navigation, the category index, and the static route entry discover it automatically. Create the matching `_examples/<category>/<slug>` file and place the same invisible comment in the unit guide when it has an interactive preview.
+For a new hook, attachment, or Tauri helper, add its source file and a sibling `<slug>.md` guide, such as `use-viewport.svelte.ts` plus `use-viewport.md`. Use the exported public name in the guide's level-one heading and put its catalog description in the first paragraph. The catalog uses the filename as the slug, so navigation, the category index, and the static route entry discover it automatically. Put shared previews in `_examples/<category>/<slug>` and Tauri previews in `_examples/tauri/<category>/<slug>`, then place the same invisible comment in the unit guide when it has an interactive preview.
 
 After route changes, run:
 
@@ -73,12 +73,13 @@ git diff --check
 | `/components/<slug>`                              | One generated component reference page  |
 | `/hooks/<slug>`                                   | One generated hook reference page       |
 | `/attachments/<slug>`                             | One generated attachment reference page |
-| `/tauri/<slug>`                                   | One generated Tauri reference page      |
+| `/tauri/<category>`                               | One generated Tauri category index      |
+| `/tauri/<category>/<slug>`                        | One generated Tauri reference page      |
 
 ## Scopes and categories
 
 The catalog records `scope` (`shared` or `tauri`) independently from `kind` (`component`, `hook`, `attachment`, `class`, `type`, or `utility`). Source folders supply categories: `components`, `hooks`, `attachments`, `classes`, `types`, and `utils`; `interfaces` also belongs to Types. Standalone root modules belong to Utilities. Tauri guides are discovered recursively under `src/lib/tauri`, and its component guides must match their component folder names.
 
-Navigation and search use the same scope/category groups and omit empty categories. These groups do not change existing URLs: Tauri pages remain `/tauri/<slug>`, so their guide slugs must be unique across Tauri categories. Shared pages retain `/<category>/<slug>`. A duplicate destination fails catalog construction. When introducing a new shared category, add its category and detail routes using the existing route patterns.
+Navigation and search use the same scope/category groups and omit empty categories. Tauri pages use `/tauri/<category>/<slug>` and shared pages use `/<category>/<slug>`. A duplicate destination fails catalog construction. When introducing a new shared category, add its category and detail routes using the existing route patterns.
 
-Documentation breadcrumbs display scope, category, and page title. Examples are matched by destination URL, independently of sidebar grouping.
+Documentation breadcrumbs display scope, linked category, and page title. Examples are matched by destination URL, independently of sidebar grouping.

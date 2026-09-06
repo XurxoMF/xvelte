@@ -450,12 +450,12 @@ An existing static website can keep all of its prerendered pages. The fallback a
 
 ### Install Tauri helpers
 
-Frontend helpers live in `src/lib/tauri` and follow the same source-plus-guide convention as hooks and attachments. Start with the runtime helper when web and native previews need different behavior:
+Frontend helpers live in `src/lib/tauri` and follow the same source-plus-guide convention as hooks and attachments. Start with the `isTauri()` hook when web and native previews need different behavior:
 
 ```sh
-mkdir -p src/lib/tauri
-cp .xvelte-source/src/lib/tauri/runtime.ts src/lib/tauri/runtime.ts
-cp .xvelte-source/src/lib/tauri/runtime.md src/lib/tauri/runtime.md
+mkdir -p src/lib/tauri/hooks
+cp .xvelte-source/src/lib/tauri/hooks/is-tauri.ts src/lib/tauri/hooks/is-tauri.ts
+cp .xvelte-source/src/lib/tauri/hooks/is-tauri.md src/lib/tauri/hooks/is-tauri.md
 ```
 
 Read the same-named guide before copying another Tauri unit. Its Dependencies section must identify all of the following when applicable:

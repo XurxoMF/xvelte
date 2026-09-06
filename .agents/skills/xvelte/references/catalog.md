@@ -111,7 +111,7 @@ Paths are relative to `src/lib/hooks`.
 
 Paths are relative to `src/lib/tauri`.
 
-- `runtime.ts` — SSR-safe detection of a normal browser or Tauri webview for shared SvelteKit code
+- `hooks/is-tauri.ts` — SSR-safe `isTauri()` detection returning `"tauri"` or `"web"` for names and explicit equality checks
 
 ## Shared entry points
 

@@ -10,7 +10,14 @@ export type DocUnit = {
 };
 
 const unitGuides = import.meta.glob(
-	["/src/lib/components/ui/*/*.md", "/src/lib/hooks/*.md", "/src/lib/attachments/*.md", "/src/lib/tauri/*.md", "!/src/lib/**/README.md"],
+	[
+		"/src/lib/components/ui/*/*.md",
+		"/src/lib/hooks/*.md",
+		"/src/lib/attachments/*.md",
+		"/src/lib/tauri/*.md",
+		"/src/lib/tauri/hooks/*.md",
+		"!/src/lib/**/README.md"
+	],
 	{
 		eager: true,
 		import: "default",
@@ -45,7 +52,7 @@ function unitFromGuide(path: string, markdown: string): DocUnit {
 		return { kind: "component", slug, title, description, href: `/components/${slug}`, markdown };
 	}
 
-	const standaloneMatch = path.match(/^\/src\/lib\/(hooks|attachments|tauri)\/([^/]+)\.md$/);
+	const standaloneMatch = path.match(/^\/src\/lib\/(hooks|attachments|tauri)\/(?:hooks\/)?([^/]+)\.md$/);
 	if (!standaloneMatch) throw new Error(`Unsupported unit guide path: ${path}`);
 
 	const directory = standaloneMatch[1] as "hooks" | "attachments" | "tauri";

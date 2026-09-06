@@ -1,6 +1,6 @@
 # IsTauri
 
-`isTauri()` identifies whether shared SvelteKit code is executing in a Tauri webview or on the web. Use the returned `"tauri"` or `"web"` string as a runtime name or compare it explicitly to select behavior. Do not use runtime detection as a security boundary.
+`IsTauri` identifies whether shared SvelteKit code is executing in a Tauri webview or on the web. Read its `current` value as a runtime name or compare it explicitly to select behavior. Do not use runtime detection as a security boundary.
 
 <!-- xvelte-example: overview -->
 
@@ -44,10 +44,10 @@ This helper can remain in a project whose frontend also runs as a normal website
 ## Import
 
 ```ts
-import { isTauri } from "$lib/tauri/hooks/is-tauri";
+import { IsTauri } from "$lib/tauri/hooks/is-tauri";
 ```
 
-The hook exports only `isTauri()`.
+The hook exports only the `IsTauri` class.
 
 ---
 
@@ -55,15 +55,15 @@ The hook exports only `isTauri()`.
 
 ```svelte
 <script lang="ts">
-	import { isTauri } from "$lib/tauri/hooks/is-tauri";
+	import { IsTauri } from "$lib/tauri/hooks/is-tauri";
 
-	const runtime = isTauri();
+	const runtime = new IsTauri();
 </script>
 
-<p>Running in {runtime}.</p>
+<p>Running in {runtime.current}.</p>
 ```
 
-`isTauri()` returns `"tauri"` inside the desktop application and `"web"` in a normal browser. During server rendering or prerendering it returns `"web"` because no Tauri webview exists.
+`runtime.current` is `"tauri"` inside the desktop application and `"web"` in a normal browser. During server rendering or prerendering it is `"web"` because no Tauri webview exists.
 
 ---
 
@@ -73,14 +73,14 @@ The hook exports only `isTauri()`.
 
 ```svelte
 <script lang="ts">
-	import { isTauri } from "$lib/tauri/hooks/is-tauri";
+	import { IsTauri } from "$lib/tauri/hooks/is-tauri";
 
-	const runtime = isTauri();
+	const runtime = new IsTauri();
 </script>
 
-{#if runtime === "tauri"}
+{#if runtime.current === "tauri"}
 	<p>Running in the desktop application.</p>
-{:else if runtime === "web"}
+{:else if runtime.current === "web"}
 	<p>Running on the web.</p>
 {/if}
 ```
@@ -96,10 +96,18 @@ Prefer a real web implementation when one exists. For example, a native file hel
 ## Public API
 
 ```ts
-function isTauri(): "tauri" | "web";
+class IsTauri {
+	constructor();
+	readonly current: "tauri" | "web";
+}
 ```
 
-`isTauri(): "tauri" | "web"` accepts no parameters and returns `"tauri"` only in a browser context managed by Tauri; otherwise it returns `"web"`. It mutates no state and can be called from ordinary module or component code. `is-tauri.ts` and its exported declaration are the source of truth for this API.
+| Member          | Type                        | Behavior                                                                    |
+| --------------- | --------------------------- | --------------------------------------------------------------------------- |
+| `new IsTauri()` | `IsTauri`                   | Creates an SSR-safe snapshot of the runtime.                                |
+| `current`       | `readonly "tauri" \| "web"` | Is `"tauri"` only in a browser context managed by Tauri; otherwise `"web"`. |
+
+The constructor accepts no parameters. `is-tauri.ts` and its exported declaration are the source of truth for this API.
 
 ---
 
@@ -107,7 +115,7 @@ function isTauri(): "tauri" | "web";
 
 The helper combines SvelteKit's `browser` environment flag with Tauri's official `isTauri()` check. This makes module evaluation safe while SvelteKit prerenders the website and while an application performs server-side rendering.
 
-The result is stable for the lifetime of a loaded page: a page does not move between a browser and a Tauri webview without a new execution context. The helper therefore exposes an ordinary function rather than reactive state.
+Each instance stores a non-reactive snapshot. The result is stable for the lifetime of a loaded page because a page does not move between a browser and a Tauri webview without a new execution context.
 
 Runtime detection controls presentation and API selection only. Tauri capabilities and command validation remain responsible for security; frontend code can be inspected or modified by an end user.
 
@@ -136,7 +144,7 @@ pnpm add @tauri-apps/api
 
 Copy `src/lib/tauri/hooks/is-tauri.ts` and `src/lib/tauri/hooks/is-tauri.md`. No other xvelte source files are required.
 
-The helper imports `browser` from the consuming SvelteKit application and `isTauri` from `@tauri-apps/api/core`. It requires no Rust crate, Tauri plugin or initialization call, capability permission, CSS, icon, `$lib/utils` export, component, hook, attachment, or localization setup.
+The class imports `browser` from the consuming SvelteKit application and `isTauri` from `@tauri-apps/api/core`. It requires no Rust crate, Tauri plugin or initialization call, capability permission, CSS, icon, `$lib/utils` export, component, hook, attachment, or localization setup.
 
 See the official [Tauri JavaScript API](https://v2.tauri.app/reference/javascript/api/namespacecore/#istauri) and [SvelteKit frontend configuration](https://v2.tauri.app/start/frontend/sveltekit/) for the underlying behavior and native shell requirements.
 
@@ -146,7 +154,7 @@ See the official [Tauri JavaScript API](https://v2.tauri.app/reference/javascrip
 
 | File          | Responsibility                                                    |
 | ------------- | ----------------------------------------------------------------- |
-| `is-tauri.ts` | SSR-safe runtime detection function.                              |
+| `is-tauri.ts` | SSR-safe runtime detection class.                                 |
 | `is-tauri.md` | Installation, usage, behavior, API, and dependency documentation. |
 
 `is-tauri.ts` and its exported declaration are the source of truth for the public API.

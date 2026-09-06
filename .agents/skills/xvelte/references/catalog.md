@@ -111,7 +111,7 @@ Paths are relative to `src/lib/hooks`.
 
 Paths are relative to `src/lib/tauri`.
 
-- `hooks/is-tauri.ts` — SSR-safe `isTauri()` detection returning `"tauri"` or `"web"` for names and explicit equality checks
+- `hooks/is-tauri.ts` — SSR-safe `IsTauri` runtime snapshot exposing `"tauri"` or `"web"` through `current`
 
 ## Shared entry points
 

@@ -450,7 +450,7 @@ An existing static website can keep all of its prerendered pages. The fallback a
 
 ### Install Tauri helpers
 
-Frontend helpers live in `src/lib/tauri` and follow the same source-plus-guide convention as hooks and attachments. Start with the `isTauri()` hook when web and native previews need different behavior:
+Frontend helpers live in `src/lib/tauri` and follow the same source-plus-guide convention as hooks and attachments. Start with the `IsTauri` hook when web and native previews need different behavior:
 
 ```sh
 mkdir -p src/lib/tauri/hooks

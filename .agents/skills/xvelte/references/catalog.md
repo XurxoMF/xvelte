@@ -39,6 +39,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `field`
 - `file-drop-zone`
 - `floating-menu`
+- `footnote` — semantic footnote references, ordered definitions, and accessible return links with repeated-reference support
 - `horizontal-scroll`
 - `hover-card`
 - `input`

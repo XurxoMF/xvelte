@@ -61,6 +61,10 @@
 	"misty_yak_glow": "Important",
 	"rapid_fern_bloom": "Warning",
 	"silent_coral_drift": "Caution",
+	"hollow_cedar_dance": "Footnotes",
+	"ivory_badger_drift": "Footnote {number}",
+	"kind_marten_glow": "Back to reference {number}",
+	"lucid_willow_rest": "Back to reference {number}, occurrence {occurrence}",
 	"lunar_badger_pause": "TODO: Footnotes component",
 	"amber_willow_hold": "TODO: Raw HTML renderer"
 }

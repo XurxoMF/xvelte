@@ -25,7 +25,7 @@
 	let { kind, slug }: { kind: DocKind; slug: string } = $props();
 	let unit = $derived(getUnit(kind, slug));
 
-	/** Splits one README around preview markers and parses each Markdown section once. */
+	/** Splits one unit guide around preview markers and parses each Markdown section once. */
 	function createDocumentSegments(source: string): DocumentSegment[] {
 		const segments: DocumentSegment[] = [];
 		const matcher = /<!--\s*xvelte-example:\s*([a-z0-9-]+)\s*-->/gi;

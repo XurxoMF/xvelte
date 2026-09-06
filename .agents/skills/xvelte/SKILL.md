@@ -11,7 +11,7 @@ Use the existing xvelte public API to build application code while protecting re
 
 1. Read [references/catalog.md](references/catalog.md) to identify likely reusable units.
 2. Verify that each selected path exists in the consuming project; copied installations may contain only a subset of xvelte.
-3. Read the `README.md` beside every selected unit before using or changing it.
+3. Read the selected unit's `<slug>.md` guide before using or changing it. Component guides live at `src/lib/components/ui/<slug>/<slug>.md`; standalone guides such as hooks, attachments, and Tauri utilities live beside their source.
 4. Confirm the public surface in the unit's `index.ts` and exported types. Treat public barrels, types, and source as authoritative if documentation differs.
 5. Inspect implementation files only when the guide does not answer the question, exact composition or reactive behavior is unclear, diagnosing a defect, or changing the reusable unit is unavoidable.
 
@@ -36,6 +36,7 @@ Treat authored code in these locations as shared public infrastructure:
 - `src/lib/components`
 - `src/lib/attachments`
 - `src/lib/hooks`
+- `src/lib/tauri`
 - `src/lib/icons.ts`
 - `src/lib/utils.ts`
 - Equivalent public-library locations added by the project
@@ -50,7 +51,7 @@ When creating, editing, moving, renaming, or deleting a public unit:
 
 1. Read the complete local guide, public barrel, exported types, and relevant implementation before editing.
 2. Preserve established naming, imports, accessibility, localization, styling, and compatibility unless the task explicitly changes them.
-3. Update or create the colocated `README.md` in the same change. Cover any affected API, usage, examples, organization, dependencies, accessibility, localization, credits, behavior, or limitations.
+3. Update or create the unit's `<slug>.md` guide in the same change. The filename is the stable slug, the first level-one heading is the visible name, and the first paragraph is the catalog description. Cover any affected API, usage, examples, organization, dependencies, accessibility, localization, credits, behavior, or limitations.
 4. Update [references/catalog.md](references/catalog.md) when availability, path, category, exports, or noteworthy capabilities change.
 5. Update this `SKILL.md` when general xvelte usage or maintenance rules change.
 6. Run the repository-prescribed formatter, type checks, lint checks, build checks, and diff checks appropriate to the change.

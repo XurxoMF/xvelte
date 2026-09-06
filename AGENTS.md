@@ -7,6 +7,7 @@
 - Parts of the collection are inspired by or adapted from projects such as shadcn-svelte, more-shadcn-svelte, and shadcn-svelte-extras, but local behavior, conventions, and use cases define the project rather than compatibility with any upstream collection.
 - Reusable code lives in `src/lib`; the preview app lives in `src/routes`.
 - UI primitives live in `src/lib/components/ui/<component>` and hooks in `src/lib/hooks`.
+- Tauri-specific reusable classes and utilities live in `src/lib/tauri` and are imported through `$lib/tauri/*`.
 - Global tokens, Tailwind configuration, fonts, light/dark values, and app layout rules live in `src/routes/layout.css`.
 - `src/lib/icons.ts` is the only icon-library facade. Components must use semantic icon names from it.
 - Keep reusable code independent from route or application components such as `App.svelte`.
@@ -60,18 +61,19 @@
 
 ## Documentation and readability
 
-- Treat authored reusable code under `src/lib/components`, `src/lib/attachments`, `src/lib/hooks`, `src/lib/icons.ts`, `src/lib/utils.ts`, and future equivalent public-library locations as public units. Generated outputs such as `src/lib/paraglide` are not public units for documentation purposes.
-- Every public unit directory must include a `README.md` that serves as its focused guide for both people and LLMs/agents. Until standalone public files are moved into dedicated unit directories, document them in the closest relevant `README.md`.
+- Treat authored reusable code under `src/lib/components`, `src/lib/attachments`, `src/lib/hooks`, `src/lib/tauri`, `src/lib/icons.ts`, `src/lib/utils.ts`, and future equivalent public-library locations as public units. Generated outputs such as `src/lib/paraglide` are not public units for documentation purposes.
+- Every public unit must include one focused Markdown guide for both people and LLMs/agents. Name it after the unit's canonical kebab-case slug: a component uses `src/lib/components/ui/<slug>/<slug>.md`, while a standalone module uses `<slug>.md` beside its source, such as `src/lib/hooks/is-mobile.md`, `src/lib/attachments/shortcut.md`, or `src/lib/tauri/file.md`.
+- A unit guide's first level-one heading is its visible name and its first paragraph is its catalog description. The filename supplies the stable slug; do not derive the slug from the visible heading. Reserve `README.md` for project-level or directory-level overviews, never for an individual public unit.
 - Creating, editing, moving, renaming, or deleting a public unit requires updating its guide in the same change. Re-check the guide even when a code change appears internal, and update it whenever API, behavior, structure, dependencies, accessibility, localization, examples, credits, or limitations are affected.
 - Keep `.agents/skills/xvelte/references/catalog.md` synchronized when public units or their paths, categories, exports, or noteworthy capabilities change. Update the `xvelte` skill itself only when consumer-facing discovery or usage guidance changes; keep repository development and maintenance rules in `AGENTS.md`.
 - Do not consider a public-library change complete until its local documentation and the relevant `xvelte` skill material are accurate.
 - Document every function, method, class, and public type or interface with useful TSDoc, including each parameter and non-obvious return value; preserve or improve existing accurate comments.
 - Add short intent-focused comments around algorithms, browser APIs, non-obvious ordering/filtering, or complex markup, but do not merely restate the code.
 
-### Public component README format
+### Public component guide format
 
-- Use `src/lib/components/ui/accordion/README.md` as the reference implementation for tone, detail, Markdown formatting, tables, and example style.
-- Write for people installing and using the component, not for repository maintainers. Prefer plain terms such as “component”, “component folder”, “the component's `index.ts`”, “documented API”, “your app/project”, and “installation requirements”. Avoid internal or abstract wording such as “unit”, “public unit”, “public surface”, “consumer-owned”, “consuming project”, “portability”, or “barrel” when a clearer phrase works. Explain any unavoidable technical term the first time it appears, and use direct instructions such as “Copy the Separator component and follow its README to install it.”
+- Use `src/lib/components/ui/accordion/accordion.md` as the reference implementation for tone, detail, Markdown formatting, tables, and example style.
+- Write for people installing and using the component, not for repository maintainers. Prefer plain terms such as “component”, “component folder”, “the component's `index.ts`”, “documented API”, “your app/project”, and “installation requirements”. Avoid internal or abstract wording such as “unit”, “public unit”, “public surface”, “consumer-owned”, “consuming project”, “portability”, or “barrel” when a clearer phrase works. Explain any unavoidable technical term the first time it appears, and use direct instructions such as “Copy the Separator component and follow its `separator.md` guide to install it.”
 - Write guides in English and describe the local xvelte component rather than presenting it as upstream-compatible. Make local behavior, defaults, constraints, forwarding rules, and unsupported composition explicit; never infer an API that is not present in the component's `index.ts`, exported types, source, or installed stable dependency.
 - Begin with one `# <Public name>` heading followed by a concise description of the component's purpose, main capabilities, appropriate uses, and important cases where it should not be used.
 - Place a `## Contents` index immediately after the introduction. Link every subsequent `##` section in document order and keep the index synchronized when sections change.
@@ -102,7 +104,7 @@
   - Required exports from `$lib/utils`, including their package dependencies.
   - Required xvelte components, hooks, attachments, context modules, localization messages, shared styles, or other files that must be copied or configured.
   - An explicit statement when a dependency category does not apply, so a reader or agent does not need to infer whether it was overlooked.
-- Whenever `Dependencies` instructs the reader to add exports, configuration, helpers, or other code to a shared or source file, include the exact copyable code block immediately in that section; never name required code without showing it. Localization message keys and values need not be duplicated when they are already listed completely in `Localization`. For a required standalone internal file, include its complete contents. For a required UI component, list its exact folder and source files, then tell readers to follow that component's README instead of duplicating it.
+- Whenever `Dependencies` instructs the reader to add exports, configuration, helpers, or other code to a shared or source file, include the exact copyable code block immediately in that section; never name required code without showing it. Localization message keys and values need not be duplicated when they are already listed completely in `Localization`. For a required standalone internal file, include its complete contents. For a required UI component, list its exact folder and source files, including its `<slug>.md` guide, then tell readers to follow that guide instead of duplicating it.
 - Never combine `Dependencies` and `Credits`. `Credits` is only for code or design adapted from external projects such as shadcn-svelte or more-shadcn-svelte, and must name and link each actual source. Runtime primitives and packages belong under `Dependencies`, not `Credits`. Omit `Credits` for original xvelte work; if provenance is unknown, ask the repository owner instead of guessing.
 - `File organization` must use a compact table mapping every file in the component folder to its responsibility and end by identifying `index.ts` and the exported types as the source of truth for the public API.
 - Keep code examples narrowly relevant, formatted with Prettier, and free of deprecated APIs. Verify external links against official project documentation or repositories before adding them.

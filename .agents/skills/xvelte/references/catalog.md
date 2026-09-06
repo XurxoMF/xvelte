@@ -1,6 +1,6 @@
 # Xvelte public-unit catalog
 
-Use this catalog for discovery only. Verify installed paths, then read the selected unit's local `README.md`, public barrel, and exported types before using it. A consuming project may include only a subset of these units.
+Use this catalog for discovery only. Verify installed paths, then read the selected unit's local `<slug>.md` guide, public entry point, and exported types before using it. Component guides live at `src/lib/components/ui/<slug>/<slug>.md`; standalone guides live beside their source. A consuming project may include only a subset of these units.
 
 ## Components
 

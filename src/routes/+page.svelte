@@ -58,8 +58,8 @@
 			</div>
 			<div class="space-y-5 text-base leading-7 text-muted-foreground">
 				<Typography.P>
-					Every reference page is sourced from the README beside its implementation. That keeps installation notes, public API, accessibility details,
-					and examples in one place.
+					Every reference page is sourced from the unit-named Markdown guide beside its implementation. That keeps installation notes, public API,
+					accessibility details, and examples in one place.
 				</Typography.P>
 				<Typography.P
 					>The site itself is built with xvelte: its sidebar, cards, buttons, tabs, and code blocks double as a practical showcase.</Typography.P

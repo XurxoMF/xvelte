@@ -87,7 +87,7 @@ The preview website under `src/routes` intentionally keeps its own copy hardcode
 
 ## Per-unit documentation
 
-Each reusable component, attachment, hook, utility group, or equivalent unit is intended to have its own `README.md` beside the source. These focused guides document:
+Each reusable component, attachment, hook, utility group, or equivalent unit is intended to have its own `<slug>.md` guide. Component guides live at `src/lib/components/ui/<slug>/<slug>.md`; standalone guides live beside their source. These focused guides document:
 
 - What the unit does and when to use it
 - Its public API, props, types, and exported parts
@@ -96,7 +96,7 @@ Each reusable component, attachment, hook, utility group, or equivalent unit is 
 - Required dependencies and related reusable units
 - Accessibility behavior and relevant implementation notes
 
-These per-unit guides are the canonical usage documentation for individual parts of the collection. They are being introduced progressively and are not yet present in every directory.
+The filename is the unit's stable slug, while the first level-one heading and first paragraph provide its visible name and catalog description. These per-unit guides are the canonical usage documentation for individual parts of the collection. They are being introduced progressively and are not yet present for every unit. `README.md` is reserved for project-level or directory-level overviews.
 
 ## Requirements
 

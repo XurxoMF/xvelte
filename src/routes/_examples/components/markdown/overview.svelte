@@ -18,7 +18,9 @@ A reusable document rendered with **xvelte components**.[^renderer]
 - [x] Parse CommonMark and GFM
 - [x] Render semantic components
 - [x] Render images and footnotes
-- [ ] Add a raw HTML renderer
+- [x] Sanitize raw HTML by default
+
+<details open><summary>Raw HTML</summary><p onclick="alert('removed')">Safe elements remain; unsafe attributes are removed.</p></details>
 
 [^renderer]: Markdown.Root collects this definition and adds a return link automatically.
 

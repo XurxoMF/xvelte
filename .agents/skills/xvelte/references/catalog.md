@@ -53,7 +53,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `knob` — compact rotary range control with page-safe touch dragging, stepped wheel input, keyboard navigation, and double-click reset
 - `label`
 - `list` — semantic ordered and unordered lists with configurable spacing and reusable exported class variants
-- `markdown` — headless mdast renderer for CommonMark, GFM, images, footnotes with repeated-reference backlinks, GitHub alerts, xvelte components, safe URLs, and lazy Shiki languages
+- `markdown` — headless mdast renderer for CommonMark, GFM, images, footnotes, GitHub alerts, sanitized or explicitly trusted raw HTML, safe URLs, and lazy Shiki languages
 - `menubar`
 - `navigation-menu`
 - `pagination`

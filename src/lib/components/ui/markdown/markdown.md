@@ -1,8 +1,8 @@
 # Markdown
 
-A headless renderer that turns a parsed `mdast` document into xvelte Typography, Code, List, Table, Alert, Checkbox, Separator, and Footnote components plus native images. It supports CommonMark, GitHub Flavored Markdown, GitHub blockquote alerts, stable GitHub-style heading IDs, safe URL protocols, and lazy syntax highlighting for every language bundled by Shiki.
+A headless renderer that turns a parsed `mdast` document into xvelte Typography, Code, List, Table, Alert, Checkbox, Separator, and Footnote components plus native images and raw HTML. It supports CommonMark, GitHub Flavored Markdown, GitHub blockquote alerts, stable GitHub-style heading IDs, safe URL protocols, sanitized or trusted HTML, and lazy syntax highlighting for every language bundled by Shiki.
 
-Use Markdown for documentation, component guides, release notes, and other trusted or untrusted Markdown strings that should use the application's xvelte components. Wrap it in `Typography.Prose` when the document needs automatic vertical rhythm. Images render as native responsive elements, and footnotes become linked definitions at the end of the document. Raw HTML deliberately renders a TODO placeholder until a dedicated renderer is added.
+Use Markdown for documentation, component guides, release notes, and other trusted or untrusted Markdown strings that should use the application's xvelte components. Wrap it in `Typography.Prose` when the document needs automatic vertical rhythm. Images render as native responsive elements, footnotes become linked definitions at the end of the document, and raw HTML is sanitized by default.
 
 <!-- xvelte-example: overview -->
 
@@ -30,7 +30,7 @@ Use Markdown for documentation, component guides, release notes, and other trust
 </script>
 ```
 
-The component's `index.ts` exports `Root` and `RootProps`. The hook file separately exports `UseMarkdown`, `parseMarkdown`, `MarkdownAst`, and `MarkdownAlertKind`.
+The component's `index.ts` exports `Root`, `RootProps`, and `HtmlMode`. The hook file separately exports `UseMarkdown`, `parseMarkdown`, `MarkdownAst`, and `MarkdownAlertKind`.
 
 ---
 
@@ -137,6 +137,26 @@ The renderer numbers notes by their first reference.[^source] The same note may 
 
 Definitions do not render where they occur in the source. Root collects referenced definitions, orders them by first use, and appends one semantic Footnote section. Every repeated reference receives its own return link. IDs are unique to each Markdown.Root instance, including during server rendering and hydration.
 
+### Raw HTML
+
+Complete HTML fragments render in place and are cleaned with the default GitHub-style `hast-util-sanitize` schema:
+
+```md
+<details open>
+<summary>Compatibility</summary>
+<p onclick="alert('removed')">This paragraph remains, but its event handler is removed.</p>
+<script>alert("removed")</script>
+</details>
+```
+
+The default `html="sanitize"` mode parses each mdast HTML node as a fragment, removes dangerous elements, attributes, and protocols, and serializes the safe tree. Use trusted mode only for HTML controlled completely by the app:
+
+```svelte
+<Markdown.Root {ast} html="trusted" />
+```
+
+Trusted mode inserts each raw node unchanged and can execute dangerous attributes or URLs in the reader's browser. Neither mode joins separate mdast HTML nodes: a complete fragment or void element works, but an opening tag in one node cannot wrap Markdown or another node before its closing tag. This keeps the xvelte component renderer intact instead of converting the complete document to HTML.
+
 ### Manual AST rendering
 
 The parser returns standard mdast rather than renderer-specific HTML. An app may inspect or render it itself:
@@ -181,11 +201,12 @@ Bind the optional Prose container to `UseToc`. Markdown headings already receive
 
 ### `Markdown.Root`
 
-| Prop                  | Type          | Default  | Behavior                                                                                        |
-| --------------------- | ------------- | -------- | ----------------------------------------------------------------------------------------------- |
-| `ast`                 | `MarkdownAst` | Required | Standard mdast root produced by `parseMarkdown`, `UseMarkdown`, or compatible application code. |
-| `showCopyButton`      | `boolean`     | `true`   | Adds a keyboard-accessible `Code.CopyButton` to every fenced block.                             |
-| `leadingIntroduction` | `boolean`     | `true`   | Uses `Typography.Leading` for the paragraph immediately following a top-level H1.               |
+| Prop                  | Type                      | Default      | Behavior                                                                                        |
+| --------------------- | ------------------------- | ------------ | ----------------------------------------------------------------------------------------------- |
+| `ast`                 | `MarkdownAst`             | Required     | Standard mdast root produced by `parseMarkdown`, `UseMarkdown`, or compatible application code. |
+| `showCopyButton`      | `boolean`                 | `true`       | Adds a keyboard-accessible `Code.CopyButton` to every fenced block.                             |
+| `leadingIntroduction` | `boolean`                 | `true`       | Uses `Typography.Leading` for the paragraph immediately following a top-level H1.               |
+| `html`                | `"sanitize" \| "trusted"` | `"sanitize"` | Cleans every raw HTML node or inserts it unchanged.                                             |
 
 Root has no `children`, `class`, or `ref` prop because it renders no element of its own. Wrap it when a layout element, styling scope, DOM reference, article semantic, or TOC observation target is required.
 
@@ -209,7 +230,7 @@ Parsing follows CommonMark with the official GFM extensions supplied by `microma
 | Autolinks, reference links, and definitions  | Safe links for relative URLs plus `http`, `https`, `mailto`, and `tel`; definitions do not render.       |
 | Images and image references                  | Responsive native `img`; references resolve through definitions and unsafe sources retain alt text.      |
 | Footnote references and definitions          | Numbered Footnote links, definitions ordered by first use, repeated-reference backlinks, and unique IDs. |
-| Raw inline or block HTML                     | Localized `TODO: Raw HTML renderer` placeholder; source HTML is never executed.                          |
+| Raw inline or block HTML                     | Parsed and cleaned with the default GitHub-style schema, or inserted unchanged in explicit trusted mode. |
 
 GFM parsing also preserves source positions. Root does not render YAML frontmatter, math, Mermaid diagrams, GitHub mentions, issue references, emoji shortcodes, or repository-specific URL expansion because those are separate extensions or post-processing features rather than the configured CommonMark/GFM parser.
 
@@ -237,9 +258,8 @@ Root is headless and therefore has no root slot. Rendered xvelte parts retain th
 | `markdown-unresolved-footnote`      | Literal marker retained for an unresolved reference in a compatible external AST. |
 | `markdown-footnote-content`         | Block-content wrapper inside one Footnote item.                                   |
 | `markdown-footnote-back-references` | Return-link group for every occurrence of one note.                               |
-| `markdown-todo`                     | Inline or block placeholder for raw HTML.                                         |
 
-Root adds structural spacing inside blockquotes, multi-block list items, and footnote definitions. The composed Footnote parts retain their documented `footnote*` slots and semantic token classes. Surrounding document rhythm belongs to `Typography.Prose` or another app wrapper.
+Root adds structural spacing inside blockquotes, multi-block list items, and footnote definitions. The composed Footnote parts retain their documented `footnote*` slots and semantic token classes. Raw HTML is inserted without an xvelte wrapper or stable slot; its own surviving elements and attributes define its styling contract. Surrounding document rhythm belongs to `Typography.Prose` or another app wrapper.
 
 ---
 
@@ -253,7 +273,9 @@ Image alternative text is forwarded unchanged to the native `alt` attribute. Aut
 
 Footnote markers and definitions use real anchor navigation. Each definition has a return link for every inline occurrence, with localized accessible names that distinguish repeated citations. Authors should keep essential information in the main flow rather than relying on a footnote being discovered.
 
-Unsafe link protocols are rendered as non-link text. Raw HTML is never passed to `{@html}`. Its TODO placeholder makes unsupported content visible instead of silently dropping it, but it is not a final raw-HTML renderer.
+Unsafe Markdown link protocols are rendered as non-link text. Sanitized raw HTML uses an allow-list and removes unsafe elements, attributes, and URL protocols before insertion. Sanitization happens immediately before serialization; do not mutate the resulting HTML afterward.
+
+`html="trusted"` bypasses every HTML safety check and must never receive user-authored, remotely loaded, or otherwise untrusted content. The renderer uses Svelte's `{@html}` insertion in both modes, so accessibility semantics inside raw HTML remain the author's responsibility.
 
 ---
 
@@ -272,9 +294,8 @@ Markdown includes the following reusable copy:
 | `ivory_badger_drift` | `Footnote {number}`                                   | Inline footnote reference's accessible name. |
 | `kind_marten_glow`   | `Back to reference {number}`                          | First backlink's accessible name.            |
 | `lucid_willow_rest`  | `Back to reference {number}, occurrence {occurrence}` | Repeated backlink's accessible name.         |
-| `amber_willow_hold`  | `TODO: Raw HTML renderer`                             | Raw HTML placeholder.                        |
 
-Document text, code, link titles, image alternatives, and task labels come from the AST and are not translated by Root. The required Code, Checkbox, and other components retain their own localization contracts.
+Document text, code, link titles, image alternatives, task labels, and raw HTML come from the AST and are not translated by Root. The required Code, Checkbox, and other components retain their own localization contracts. HTML mode names and sanitizer configuration are implementation values rather than human-readable copy.
 
 ---
 
@@ -284,15 +305,15 @@ Document text, code, link titles, image alternatives, and task labels come from 
 
 ```sh
 # Bun
-bun add github-slugger mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm shiki @shikijs/langs @shikijs/themes bits-ui tailwind-variants @tabler/icons-svelte clsx tailwind-merge
+bun add github-slugger hast-util-from-html hast-util-sanitize hast-util-to-html mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm shiki @shikijs/langs @shikijs/themes bits-ui tailwind-variants @tabler/icons-svelte clsx tailwind-merge
 bun add -D tailwindcss @inlang/paraglide-js
 
 # npm
-npm install github-slugger mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm shiki @shikijs/langs @shikijs/themes bits-ui tailwind-variants @tabler/icons-svelte clsx tailwind-merge
+npm install github-slugger hast-util-from-html hast-util-sanitize hast-util-to-html mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm shiki @shikijs/langs @shikijs/themes bits-ui tailwind-variants @tabler/icons-svelte clsx tailwind-merge
 npm install -D tailwindcss @inlang/paraglide-js
 
 # pnpm
-pnpm add github-slugger mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm shiki @shikijs/langs @shikijs/themes bits-ui tailwind-variants @tabler/icons-svelte clsx tailwind-merge
+pnpm add github-slugger hast-util-from-html hast-util-sanitize hast-util-to-html mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm shiki @shikijs/langs @shikijs/themes bits-ui tailwind-variants @tabler/icons-svelte clsx tailwind-merge
 pnpm add -D tailwindcss @inlang/paraglide-js
 ```
 
@@ -326,10 +347,10 @@ Markdown itself requires no `$lib/utils` export, context, attachment, image asse
 
 ## File organization
 
-| File                   | Responsibility                                                                                                                      |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `markdown-root.svelte` | Headless recursive mdast renderer, safe links and images, code composition, alerts, footnote collection, and raw-HTML placeholders. |
-| `index.ts`             | Public component and props type exports.                                                                                            |
-| `markdown.md`          | Supported syntax, composition, API, contracts, dependencies, and current limitations.                                               |
+| File                   | Responsibility                                                                                                  |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `markdown-root.svelte` | Headless recursive mdast renderer, safe links and images, code composition, alerts, footnotes, and HTML policy. |
+| `index.ts`             | Public component, props, and HTML-mode type exports.                                                            |
+| `markdown.md`          | Supported syntax, composition, API, contracts, dependencies, and current limitations.                           |
 
 The component's `index.ts`, exported types, mdast types, and `UseMarkdown` parser are the source of truth for the public API.

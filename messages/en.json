@@ -64,6 +64,5 @@
 	"hollow_cedar_dance": "Footnotes",
 	"ivory_badger_drift": "Footnote {number}",
 	"kind_marten_glow": "Back to reference {number}",
-	"lucid_willow_rest": "Back to reference {number}, occurrence {occurrence}",
-	"amber_willow_hold": "TODO: Raw HTML renderer"
+	"lucid_willow_rest": "Back to reference {number}, occurrence {occurrence}"
 }

@@ -2,6 +2,9 @@
 	import type { Definition, FootnoteDefinition, FootnoteReference, Image, ImageReference, PhrasingContent, RootContent } from "mdast";
 	import type { MarkdownAlertKind, MarkdownAst } from "$lib/hooks/use-markdown.svelte";
 
+	/** HTML handling policy used for raw mdast HTML nodes. */
+	export type HtmlMode = "sanitize" | "trusted";
+
 	/** Props for the headless mdast-to-xvelte renderer. */
 	export type RootProps = {
 		/** Parsed mdast root, normally produced by parseMarkdown or UseMarkdown. */
@@ -10,11 +13,16 @@
 		showCopyButton?: boolean | undefined;
 		/** Whether the paragraph immediately after a top-level H1 uses Typography.Leading. */
 		leadingIntroduction?: boolean | undefined;
+		/** Whether raw HTML is sanitized before rendering or inserted unchanged. */
+		html?: HtmlMode | undefined;
 	};
 </script>
 
 <script lang="ts">
 	import { SvelteMap } from "svelte/reactivity";
+	import { fromHtml } from "hast-util-from-html";
+	import { sanitize } from "hast-util-sanitize";
+	import { toHtml } from "hast-util-to-html";
 
 	import type { Node, Parent } from "unist";
 
@@ -31,7 +39,7 @@
 	import * as Table from "$lib/components/ui/table";
 	import * as Typography from "$lib/components/ui/typography";
 
-	let { ast, showCopyButton = true, leadingIntroduction = true }: RootProps = $props();
+	let { ast, showCopyButton = true, leadingIntroduction = true, html = "sanitize" }: RootProps = $props();
 	const rootId = $props.id();
 	const footnotePrefix = `${rootId}-footnote`;
 
@@ -174,6 +182,17 @@
 		return url;
 	}
 
+	/**
+	 * Produces the HTML inserted for one raw mdast node according to the active policy.
+	 *
+	 * @param value Raw HTML source stored by mdast.
+	 * @returns Unchanged trusted HTML or HTML parsed and cleaned with the default GitHub-style schema.
+	 */
+	function renderHtml(value: string): string {
+		if (html === "trusted") return value;
+		return toHtml(sanitize(fromHtml(value, { fragment: true })));
+	}
+
 	/** Resolves direct and reference images to the native image attributes used by the renderer. */
 	function resolveImage(node: Image | ImageReference) {
 		const definition = node.type === "imageReference" ? definitions.get(node.identifier) : undefined;
@@ -214,18 +233,6 @@
 	let definitions = $derived(collectDefinitions(ast));
 	let footnotes = $derived(collectFootnotes(ast));
 </script>
-
-{#snippet Todo(inline = false)}
-	{#if inline}
-		<span data-slot="markdown-todo" class="text-muted-foreground">
-			{m.amber_willow_hold()}
-		</span>
-	{:else}
-		<Typography.P data-slot="markdown-todo" class="text-muted-foreground">
-			{m.amber_willow_hold()}
-		</Typography.P>
-	{/if}
-{/snippet}
 
 {#snippet renderImage(node: Image | ImageReference)}
 	{@const image = resolveImage(node)}
@@ -279,7 +286,8 @@
 				<span data-slot="markdown-unresolved-footnote">[^{node.label ?? node.identifier}]</span>
 			{/if}
 		{:else if node.type === "html"}
-			{@render Todo(true)}
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+			{@html renderHtml(node.value)}
 		{/if}
 	{/each}
 {/snippet}
@@ -403,7 +411,8 @@
 		{:else if node.type === "footnoteReference"}
 			<Typography.P>{@render renderInline([node])}</Typography.P>
 		{:else if node.type === "html"}
-			{@render Todo()}
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+			{@html renderHtml(node.value)}
 		{:else if node.type !== "definition" && node.type !== "footnoteDefinition" && node.type !== "yaml" && node.type !== "listItem" && node.type !== "tableRow" && node.type !== "tableCell"}
 			<Typography.P>{@render renderInline([node])}</Typography.P>
 		{/if}

@@ -1,8 +1,8 @@
 import type { Component } from "svelte";
-import type { DocKind } from "./catalog";
 
+/** A compiled preview and its source, associated with one documentation destination. */
 export type DocExample = {
-	kind: DocKind;
+	href: string;
 	slug: string;
 	name: string;
 	title: string;
@@ -18,6 +18,11 @@ const exampleSources = import.meta.glob("/src/routes/_examples/{components,hooks
 	query: "?raw"
 }) as Record<string, () => Promise<string>>;
 
+/**
+ * Formats an example filename for its visible title.
+ * @param name - Kebab-case example name without an extension.
+ * @returns A title with each word capitalized.
+ */
 function titleFromName(name: string) {
 	return name
 		.split("-")
@@ -30,11 +35,11 @@ export const examples: DocExample[] = Object.entries(exampleComponents).flatMap(
 	if (!match) return [];
 
 	const [, category, slug, name] = match;
-	const kind: DocKind = category === "components" ? "component" : category === "hooks" ? "hook" : category === "attachments" ? "attachment" : "tauri";
+	const href = `/${category}/${slug}`;
 
 	return [
 		{
-			kind,
+			href,
 			slug: slug ?? "",
 			name: name ?? "example",
 			title: titleFromName(name ?? "example"),
@@ -46,6 +51,12 @@ export const examples: DocExample[] = Object.entries(exampleComponents).flatMap(
 	];
 });
 
-export function getExample(kind: DocKind, slug: string, name: string) {
-	return examples.find((example) => example.kind === kind && example.slug === slug && example.name === name);
+/**
+ * Finds the preview requested by a documentation marker.
+ * @param href - Canonical documentation destination.
+ * @param name - Example name from the guide marker.
+ * @returns The matching preview, or undefined when no example is registered.
+ */
+export function getExample(href: string, name: string) {
+	return examples.find((example) => example.href === href && example.name === name);
 }

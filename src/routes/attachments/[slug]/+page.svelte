@@ -3,4 +3,4 @@
 	let { data }: { data: { slug: string } } = $props();
 </script>
 
-<UnitPage kind="attachment" slug={data.slug} />
+<UnitPage href={`/attachments/${data.slug}`} />

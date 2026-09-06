@@ -37,7 +37,8 @@ During `bun run build`, SvelteKit calls `entries()` and emits one HTML entry for
 - `UnitPage.svelte` finds preview markers, parses each remaining guide section through `parseMarkdown`, and passes its mdast directly to `Markdown.Root` instead of injecting parser-generated HTML.
 - Markdown code fences use Code's lazy Shiki language registry and treat unknown languages as plain text.
 - `installation/installation.md` supplies the standalone installation guide rendered by `installation/+page.svelte` through the same Markdown pipeline.
-- The sidebar renders separate Components, Hooks, Attachments, and Tauri groups from `_docs/catalog.ts`; its search filters every group by title and hides groups without matches.
+- The sidebar's Shared/Tauri ToggleGroup filters its collapsible resource categories. It keeps one scope selected, including when the active toggle is clicked or activated with Enter or Space; arrow keys retain ToggleGroup's focus navigation. Empty categories are hidden; expanded categories are remembered during client navigation and scope changes. Opening a documentation page selects its scope and expands its category.
+- The footer Search button opens a global Dialog containing Command. Results always include both scopes, grouped as `Shared - Components`, `Tauri - Hooks`, and so on, plus Installation under Getting started. Search matches titles, slugs, scopes, categories, and descriptions. Selecting a result closes the dialog and reveals it in the sidebar.
 - `layout.css` owns the reusable global theme and may only receive collection-wide theme changes. The landing page keeps its decorative grid mask in its own scoped `<style>` block; documentation content relies on the xvelte components' local styles.
 
 The interactive demo source is intentionally route-local. When a demo is based on a unit-guide example, keep both versions equivalent when changing it.
@@ -73,3 +74,11 @@ git diff --check
 | `/hooks/<slug>`                                   | One generated hook reference page       |
 | `/attachments/<slug>`                             | One generated attachment reference page |
 | `/tauri/<slug>`                                   | One generated Tauri reference page      |
+
+## Scopes and categories
+
+The catalog records `scope` (`shared` or `tauri`) independently from `kind` (`component`, `hook`, `attachment`, `class`, `type`, or `utility`). Source folders supply categories: `components`, `hooks`, `attachments`, `classes`, `types`, and `utils`; `interfaces` also belongs to Types. Standalone root modules belong to Utilities. Tauri guides are discovered recursively under `src/lib/tauri`, and its component guides must match their component folder names.
+
+Navigation and search use the same scope/category groups and omit empty categories. These groups do not change existing URLs: Tauri pages remain `/tauri/<slug>`, so their guide slugs must be unique across Tauri categories. Shared pages retain `/<category>/<slug>`. A duplicate destination fails catalog construction. When introducing a new shared category, add its category and detail routes using the existing route patterns.
+
+Documentation breadcrumbs display scope, category, and page title. Examples are matched by destination URL, independently of sidebar grouping.

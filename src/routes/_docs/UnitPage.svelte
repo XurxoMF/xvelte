@@ -2,11 +2,10 @@
 	import { resolve } from "$app/paths";
 
 	import type { Pathname } from "$app/types";
-	import type { DocKind } from "./catalog";
 	import type { DocExample } from "./examples";
 	import type { MarkdownAst } from "$lib/hooks/use-markdown.svelte";
 
-	import { getUnit } from "./catalog";
+	import { categories, getUnit, scopes } from "./catalog";
 	import { getExample } from "./examples";
 
 	import { parseMarkdown } from "$lib/hooks/use-markdown.svelte";
@@ -22,8 +21,8 @@
 		example?: DocExample | undefined;
 	};
 
-	let { kind, slug }: { kind: DocKind; slug: string } = $props();
-	let unit = $derived(getUnit(kind, slug));
+	let { href }: { href: string } = $props();
+	let unit = $derived(getUnit(href));
 
 	/** Splits one unit guide around preview markers and parses each Markdown section once. */
 	function createDocumentSegments(source: string): DocumentSegment[] {
@@ -33,7 +32,7 @@
 		let match: RegExpExecArray | null;
 
 		const addSegment = (markdown: string, exampleName?: string | undefined) => {
-			const example = exampleName ? getExample(kind, slug, exampleName) : undefined;
+			const example = exampleName ? getExample(href, exampleName) : undefined;
 			if (!markdown.trim() && !example) return;
 
 			segments.push({ ast: parseMarkdown(markdown), example });
@@ -49,15 +48,8 @@
 	}
 
 	let segments = $derived(createDocumentSegments(unit?.markdown ?? ""));
-	let category = $derived(
-		kind === "component"
-			? { href: "/components", label: "Components" }
-			: kind === "hook"
-				? { href: "/hooks", label: "Hooks" }
-				: kind === "attachment"
-					? { href: "/attachments", label: "Attachments" }
-					: { href: "/tauri", label: "Tauri" }
-	);
+	let category = $derived(categories.find((category) => category.kind === unit?.kind));
+	let scope = $derived(scopes.find((scope) => scope.value === unit?.scope));
 </script>
 
 <svelte:head>
@@ -70,7 +62,17 @@
 		<Breadcrumb.Root class="mb-8">
 			<Breadcrumb.List>
 				<Breadcrumb.Item>
-					<Breadcrumb.Link href={resolve(category.href as Pathname)}>{category.label}</Breadcrumb.Link>
+					<Breadcrumb.Link href={resolve(unit.scope === "tauri" ? "/tauri" : "/")}>{scope?.label}</Breadcrumb.Link>
+				</Breadcrumb.Item>
+
+				<Breadcrumb.Separator />
+
+				<Breadcrumb.Item>
+					{#if unit.scope === "shared" && category}
+						<Breadcrumb.Link href={resolve(`/${category.directory}` as Pathname)}>{category.label}</Breadcrumb.Link>
+					{:else}
+						<span>{category?.label}</span>
+					{/if}
 				</Breadcrumb.Item>
 
 				<Breadcrumb.Separator />
@@ -91,7 +93,7 @@
 					<div class="my-10 flex min-h-56 items-center justify-center rounded-xl border text-sm text-muted-foreground">Loading preview…</div>
 				{:then loaded}
 					{@const Preview = loaded.component}
-					{@const exampleId = `${kind}-${slug}-${segment.example.name}-example`}
+					{@const exampleId = `${unit.scope}-${unit.kind}-${unit.slug}-${segment.example.name}-example`}
 
 					<section class="my-10 scroll-mt-20" aria-labelledby={exampleId}>
 						<div class="mb-4">

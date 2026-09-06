@@ -3,4 +3,4 @@
 	let { data }: { data: { slug: string } } = $props();
 </script>
 
-<UnitPage kind="hook" slug={data.slug} />
+<UnitPage href={`/hooks/${data.slug}`} />

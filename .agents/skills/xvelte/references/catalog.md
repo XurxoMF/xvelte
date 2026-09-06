@@ -107,6 +107,12 @@ Paths are relative to `src/lib/hooks`.
 - `use-ramp.svelte.ts`
 - `use-toc.svelte.ts`
 
+## Tauri
+
+Paths are relative to `src/lib/tauri`.
+
+- `runtime.ts` — SSR-safe detection of a normal browser or Tauri webview for shared SvelteKit code
+
 ## Shared entry points
 
 - `src/lib/icons.ts` — semantic icon facade

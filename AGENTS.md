@@ -141,6 +141,14 @@
 - Prefer the public API of dependencies. If a package lacks a public type, derive it from the exported component instead of importing private internals.
 - Do not add install scripts or an `install` runtime dependency.
 
+## Tauri
+
+- Keep reusable TypeScript classes and helpers in `src/lib/tauri`; keep application-shell code, Rust commands, capabilities, and native configuration in `src-tauri`.
+- Prefer official Tauri 2 plugins. Each frontend unit guide must list its JavaScript package, Cargo crate, initialization call, capability permissions, and platform limitations together so selective installation is complete.
+- Put reusable custom commands in focused Rust modules under `src-tauri/src`, validate every frontend-supplied path and argument in Rust, and register commands explicitly with `tauri::generate_handler!`.
+- Treat runtime detection as presentation and API selection, never as authorization. Capabilities, scopes, and backend validation enforce the native security boundary.
+- Preserve the shared static frontend: `bun run dev` and `bun run build` must continue to work without a running Tauri process, while `bun tauri dev` and native builds use the same SvelteKit source.
+
 ## Updating components
 
 - Treat local behavior and naming as intentional; this repository is not a line-for-line shadcn-svelte mirror.

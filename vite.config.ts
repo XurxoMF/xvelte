@@ -12,7 +12,7 @@ export default defineConfig({
 				// Force runes mode for the project, except for libraries. Can be removed in svelte 6.
 				runes: ({ filename }) => (filename.split(/[/\\]/).includes("node_modules") ? undefined : true)
 			},
-			adapter: adapter()
+			adapter: adapter({ fallback: "index.html" })
 		}),
 
 		paraglideVitePlugin({
@@ -22,6 +22,13 @@ export default defineConfig({
 			strategy: ["localStorage", "preferredLanguage", "baseLocale"]
 		})
 	],
+	server: {
+		port: 5173,
+		strictPort: true,
+		watch: {
+			ignored: ["**/src-tauri/**"]
+		}
+	},
 	preview: {
 		allowedHosts: ["xvelte.xurxomf.xyz"]
 	}

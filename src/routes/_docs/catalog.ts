@@ -1,4 +1,4 @@
-export type DocKind = "component" | "hook" | "attachment";
+export type DocKind = "component" | "hook" | "attachment" | "tauri";
 
 export type DocUnit = {
 	kind: DocKind;
@@ -9,11 +9,14 @@ export type DocUnit = {
 	markdown: string;
 };
 
-const unitGuides = import.meta.glob(["/src/lib/components/ui/*/*.md", "/src/lib/hooks/*.md", "/src/lib/attachments/*.md", "!/src/lib/**/README.md"], {
-	eager: true,
-	import: "default",
-	query: "?raw"
-}) as Record<string, string>;
+const unitGuides = import.meta.glob(
+	["/src/lib/components/ui/*/*.md", "/src/lib/hooks/*.md", "/src/lib/attachments/*.md", "/src/lib/tauri/*.md", "!/src/lib/**/README.md"],
+	{
+		eager: true,
+		import: "default",
+		query: "?raw"
+	}
+) as Record<string, string>;
 
 function metadata(markdown: string, path: string) {
 	const title = markdown.match(/^#\s+(.+)$/m)?.[1]?.trim();
@@ -42,11 +45,11 @@ function unitFromGuide(path: string, markdown: string): DocUnit {
 		return { kind: "component", slug, title, description, href: `/components/${slug}`, markdown };
 	}
 
-	const standaloneMatch = path.match(/^\/src\/lib\/(hooks|attachments)\/([^/]+)\.md$/);
+	const standaloneMatch = path.match(/^\/src\/lib\/(hooks|attachments|tauri)\/([^/]+)\.md$/);
 	if (!standaloneMatch) throw new Error(`Unsupported unit guide path: ${path}`);
 
-	const directory = standaloneMatch[1] as "hooks" | "attachments";
-	const kind = directory === "hooks" ? "hook" : "attachment";
+	const directory = standaloneMatch[1] as "hooks" | "attachments" | "tauri";
+	const kind = directory === "hooks" ? "hook" : directory === "attachments" ? "attachment" : "tauri";
 	const { title, description } = metadata(markdown, path);
 
 	return { kind, slug, title, description, href: `/${directory}/${slug}`, markdown };
@@ -59,6 +62,7 @@ export const units = Object.entries(unitGuides)
 export const components = units.filter((unit) => unit.kind === "component");
 export const hooks = units.filter((unit) => unit.kind === "hook");
 export const attachments = units.filter((unit) => unit.kind === "attachment");
+export const tauri = units.filter((unit) => unit.kind === "tauri");
 
 export function getUnit(kind: DocKind, slug: string) {
 	return units.find((unit) => unit.kind === kind && unit.slug === slug);

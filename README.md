@@ -58,30 +58,38 @@ The preview app uses native document scrolling so SvelteKit navigation, URL frag
 ## Organization
 
 ```txt
-.agents
-└── skills/xvelte
-src
-├── lib
-│   ├── attachments
-│   ├── components/ui
-│   ├── hooks
-│   ├── icons.ts
-│   └── utils.ts
-└── routes
-    ├── +layout.svelte
-    ├── +page.svelte
-    └── layout.css
+.
+├── .agents
+│   └── skills/xvelte
+├── src
+│   ├── lib
+│   │   ├── attachments
+│   │   ├── components/ui
+│   │   ├── hooks
+│   │   ├── icons.ts
+│   │   ├── tauri
+│   │   └── utils.ts
+│   └── routes
+│       ├── +layout.svelte
+│       ├── +page.svelte
+│       └── layout.css
+└── src-tauri
+    ├── capabilities
+    ├── icons
+    └── src
 ```
 
 - `.agents/skills/xvelte` contains the portable instructions and public-unit catalog used by compatible coding agents.
 - `src/lib/components/ui` contains reusable components and compound primitives.
 - `src/lib/attachments` contains reusable Svelte attachments.
 - `src/lib/hooks` contains hooks and reusable state helpers.
+- `src/lib/tauri` contains frontend runtime helpers and integrations for SvelteKit applications embedded in Tauri.
 - `src/lib/utils.ts` contains shared utilities.
 - `src/lib/icons.ts` is the semantic facade for the configured icon library.
 - `src/routes` contains the development and preview application.
 - `src/routes/layout.css` contains global styles, Tailwind configuration, design tokens, and theme variables intended to be copied into consuming projects.
 - `messages/en.json` contains the English source messages used by reusable code through Paraglide.
+- `src-tauri` is the complete Tauri 2 development shell used to run and validate the same preview app natively.
 
 The preview website under `src/routes` intentionally keeps its own copy hardcoded in English. Localization applies to reusable code so applications can translate it without editing component internals.
 
@@ -105,6 +113,7 @@ The filename is the unit's stable slug, while the first level-one heading and fi
 - The `$lib` alias pointing to `src/lib`
 - The dependencies used by the specific reusable parts being copied
 - Paraglide when using reusable parts that import localized messages
+- Rust and Tauri's platform prerequisites when building or testing native integrations
 
 Use the `package.json` and lockfile from the selected release as the source of truth for compatible dependency versions. If only part of the collection is copied, install only the dependencies that part requires.
 
@@ -143,6 +152,14 @@ bun install
 bun run dev
 ```
 
+The same frontend runs in the Tauri development shell:
+
+```sh
+bun tauri dev
+```
+
+`bun run dev` remains the ordinary browser workflow. The native command starts that Vite server automatically and opens it inside the Tauri webview.
+
 Available validation and formatting commands include:
 
 ```sh
@@ -150,6 +167,7 @@ bun run check
 bun run lint
 bun run format
 bun run build
+cargo check --manifest-path src-tauri/Cargo.toml
 ```
 
 ## Design and customization

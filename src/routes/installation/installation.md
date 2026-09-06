@@ -15,6 +15,7 @@ This guide covers a complete installation and a smaller per-component installati
 - [Install every runtime package](#install-every-runtime-package)
 - [Configure localization](#configure-localization)
 - [Configure the root layout](#configure-the-root-layout)
+- [Add Tauri support](#add-tauri-support)
 - [Install the agent skill](#install-the-agent-skill)
 - [Verify the installation](#verify-the-installation)
 - [Update xvelte](#update-xvelte)
@@ -78,7 +79,7 @@ Keep `.xvelte-source/package.json`, `bun.lock`, and the copied unit guides avail
 Create the reusable-code directories:
 
 ```sh
-mkdir -p src/lib/components/ui src/lib/hooks src/lib/attachments
+mkdir -p src/lib/components/ui src/lib/hooks src/lib/attachments src/lib/tauri
 ```
 
 ### Utilities
@@ -218,7 +219,7 @@ cp -R .xvelte-source/src/lib/hooks/. src/lib/hooks/
 cp -R .xvelte-source/src/lib/attachments/. src/lib/attachments/
 ```
 
-Future reusable groups such as Tauri helpers follow the same convention: copy the implementation and its same-named Markdown guide, preserve its `$lib` location, and follow the guide's Dependencies section.
+Tauri helpers follow the same convention under `src/lib/tauri`. Their native shell, plugin, capability, and Rust requirements are covered separately under [Add Tauri support](#add-tauri-support).
 
 ---
 
@@ -228,15 +229,15 @@ Skip this section for a selective installation: the local guides provide smaller
 
 ```sh
 # Bun
-bun add @floating-ui/dom @internationalized/date @shikijs/langs @shikijs/themes @tabler/icons-svelte @tanstack/svelte-table bits-ui clsx country-flag-icons embla-carousel-svelte github-slugger gridstack hast-util-from-html hast-util-sanitize hast-util-to-html layerchart libphonenumber-js mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm mode-watcher paneforge qrcode-generator runed shiki svelte-dnd-action svelte-sonner tailwind-merge tailwind-variants vaul-svelte
+bun add @floating-ui/dom @internationalized/date @shikijs/langs @shikijs/themes @tabler/icons-svelte @tanstack/svelte-table @tauri-apps/api bits-ui clsx country-flag-icons embla-carousel-svelte github-slugger gridstack hast-util-from-html hast-util-sanitize hast-util-to-html layerchart libphonenumber-js mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm mode-watcher paneforge qrcode-generator runed shiki svelte-dnd-action svelte-sonner tailwind-merge tailwind-variants vaul-svelte
 bun add -D @fontsource-variable/inter @inlang/paraglide-js @tailwindcss/vite tailwindcss tw-animate-css
 
 # npm
-npm install @floating-ui/dom @internationalized/date @shikijs/langs @shikijs/themes @tabler/icons-svelte @tanstack/svelte-table bits-ui clsx country-flag-icons embla-carousel-svelte github-slugger gridstack hast-util-from-html hast-util-sanitize hast-util-to-html layerchart libphonenumber-js mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm mode-watcher paneforge qrcode-generator runed shiki svelte-dnd-action svelte-sonner tailwind-merge tailwind-variants vaul-svelte
+npm install @floating-ui/dom @internationalized/date @shikijs/langs @shikijs/themes @tabler/icons-svelte @tanstack/svelte-table @tauri-apps/api bits-ui clsx country-flag-icons embla-carousel-svelte github-slugger gridstack hast-util-from-html hast-util-sanitize hast-util-to-html layerchart libphonenumber-js mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm mode-watcher paneforge qrcode-generator runed shiki svelte-dnd-action svelte-sonner tailwind-merge tailwind-variants vaul-svelte
 npm install -D @fontsource-variable/inter @inlang/paraglide-js @tailwindcss/vite tailwindcss tw-animate-css
 
 # pnpm
-pnpm add @floating-ui/dom @internationalized/date @shikijs/langs @shikijs/themes @tabler/icons-svelte @tanstack/svelte-table bits-ui clsx country-flag-icons embla-carousel-svelte github-slugger gridstack hast-util-from-html hast-util-sanitize hast-util-to-html layerchart libphonenumber-js mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm mode-watcher paneforge qrcode-generator runed shiki svelte-dnd-action svelte-sonner tailwind-merge tailwind-variants vaul-svelte
+pnpm add @floating-ui/dom @internationalized/date @shikijs/langs @shikijs/themes @tabler/icons-svelte @tanstack/svelte-table @tauri-apps/api bits-ui clsx country-flag-icons embla-carousel-svelte github-slugger gridstack hast-util-from-html hast-util-sanitize hast-util-to-html layerchart libphonenumber-js mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm mode-watcher paneforge qrcode-generator runed shiki svelte-dnd-action svelte-sonner tailwind-merge tailwind-variants vaul-svelte
 pnpm add -D @fontsource-variable/inter @inlang/paraglide-js @tailwindcss/vite tailwindcss tw-animate-css
 ```
 
@@ -342,6 +343,155 @@ Some compound components require an app-wide provider. For example, configure To
 ```
 
 Follow each component guide for any additional provider, portal, stylesheet, browser API, or root-level requirement.
+
+---
+
+## Add Tauri support
+
+Tauri is optional and separate from the browser installation. The same SvelteKit source can serve the website and the native application: `bun run dev` opens the normal web development server, while `bun tauri dev` starts that server and loads it in a Tauri webview.
+
+### Install the native toolchain
+
+Install Rust and the operating-system packages listed in Tauri's official [prerequisites guide](https://v2.tauri.app/start/prerequisites/). Then add the official JavaScript API and CLI:
+
+```sh
+# Bun
+bun add @tauri-apps/api
+bun add -D @tauri-apps/cli
+
+# npm
+npm install @tauri-apps/api
+npm install -D @tauri-apps/cli
+
+# pnpm
+pnpm add @tauri-apps/api
+pnpm add -D @tauri-apps/cli
+```
+
+Add the package script if the project does not already define it:
+
+```json
+{
+	"scripts": {
+		"tauri": "tauri"
+	}
+}
+```
+
+### Copy or initialize the Rust application
+
+For an application based directly on xvelte, copy the tested shell from the same release:
+
+```sh
+cp -R .xvelte-source/src-tauri ./src-tauri
+```
+
+Do not overwrite an existing `src-tauri`. If the application already uses Tauri, retain its Rust crate, capabilities, icons, application identifier, windows, plugins, and commands, then copy only the xvelte frontend helpers it needs.
+
+For a fresh shell that should not inherit xvelte's product metadata and icons, initialize it interactively instead:
+
+```sh
+# Bun
+bun tauri init
+
+# npm
+npm run tauri init
+
+# pnpm
+pnpm tauri init
+```
+
+Use these values when prompted:
+
+| Prompt               | Value                   |
+| -------------------- | ----------------------- |
+| Web assets location  | `../build`              |
+| Development URL      | `http://localhost:5173` |
+| Before dev command   | `bun dev`               |
+| Before build command | `bun run build`         |
+
+Replace the Bun commands with the project's npm or pnpm equivalents when necessary. Set a unique reverse-domain `identifier` in `src-tauri/tauri.conf.json`, customize the product name and icons, and review every capability before distributing the application.
+
+### Configure the shared SvelteKit frontend
+
+Tauri does not provide the Node.js server required by SvelteKit SSR. Prerender the documentation routes, disable SSR for the shared shell, and keep a fallback for client-side navigation:
+
+```ts
+// src/routes/+layout.ts
+export const prerender = true;
+export const ssr = false;
+```
+
+Configure the static adapter and a fixed Vite development port. Ignoring Rust files prevents native rebuild output from causing unnecessary frontend reloads:
+
+```ts
+// vite.config.ts
+import adapter from "@sveltejs/adapter-static";
+import { sveltekit } from "@sveltejs/kit/vite";
+import { defineConfig } from "vite";
+
+export default defineConfig({
+	plugins: [
+		sveltekit({
+			adapter: adapter({ fallback: "index.html" })
+		})
+	],
+	server: {
+		port: 5173,
+		strictPort: true,
+		watch: {
+			ignored: ["**/src-tauri/**"]
+		}
+	}
+});
+```
+
+An existing static website can keep all of its prerendered pages. The fallback adds an SPA entry for navigation that reaches a path not emitted as a standalone HTML file; it does not require replacing the website with a native-only frontend.
+
+### Install Tauri helpers
+
+Frontend helpers live in `src/lib/tauri` and follow the same source-plus-guide convention as hooks and attachments. Start with the runtime helper when web and native previews need different behavior:
+
+```sh
+mkdir -p src/lib/tauri
+cp .xvelte-source/src/lib/tauri/runtime.ts src/lib/tauri/runtime.ts
+cp .xvelte-source/src/lib/tauri/runtime.md src/lib/tauri/runtime.md
+```
+
+Read the same-named guide before copying another Tauri unit. Its Dependencies section must identify all of the following when applicable:
+
+- The `@tauri-apps/*` JavaScript package.
+- The matching Cargo crate and plugin initialization call.
+- Capability permissions and filesystem or URL scopes.
+- Rust command modules and their `tauri::generate_handler!` registration.
+- Platform-specific behavior and the web preview or fallback.
+
+Official plugins can be added with Tauri's plugin command, for example `bun tauri add fs`. Do not grant a plugin's complete permission set automatically: copy the capability entries documented by the selected helper and scope access to the paths or operations it genuinely needs.
+
+Helpers backed only by official plugins normally require no custom IPC. A helper such as a future archive utility may also include a focused Rust command module; copy that module into `src-tauri/src`, add its documented crates, and register only its exported commands in the application's existing handler. The shell remains one Tauri application—there is no separate native app per helper.
+
+### Run and validate both targets
+
+Use separate commands for the two representations:
+
+```sh
+# Browser preview
+bun run dev
+
+# Native preview; starts the browser dev server automatically
+bun tauri dev
+
+# Static website build
+bun run build
+
+# Rust backend check
+cargo check --manifest-path src-tauri/Cargo.toml
+
+# Native application build
+bun tauri build
+```
+
+Run both previews for any helper that branches by runtime. A web example may use browser APIs, show a representative result, or explain that the action is native-only; the Tauri preview should exercise the real plugin or command.
 
 ---
 

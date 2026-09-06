@@ -9,11 +9,11 @@ export type DocExample = {
 	load: () => Promise<{ component: Component; source: string }>;
 };
 
-const exampleComponents = import.meta.glob("/src/routes/_examples/{components,hooks,attachments}/**/*.svelte", {
+const exampleComponents = import.meta.glob("/src/routes/_examples/{components,hooks,attachments,tauri}/**/*.svelte", {
 	import: "default"
 }) as Record<string, () => Promise<Component>>;
 
-const exampleSources = import.meta.glob("/src/routes/_examples/{components,hooks,attachments}/**/*.svelte", {
+const exampleSources = import.meta.glob("/src/routes/_examples/{components,hooks,attachments,tauri}/**/*.svelte", {
 	import: "default",
 	query: "?raw"
 }) as Record<string, () => Promise<string>>;
@@ -26,11 +26,11 @@ function titleFromName(name: string) {
 }
 
 export const examples: DocExample[] = Object.entries(exampleComponents).flatMap(([path, loadComponent]) => {
-	const match = path.match(/\/_examples\/(components|hooks|attachments)\/([^/]+)\/([^/]+)\.svelte$/);
+	const match = path.match(/\/_examples\/(components|hooks|attachments|tauri)\/([^/]+)\/([^/]+)\.svelte$/);
 	if (!match) return [];
 
 	const [, category, slug, name] = match;
-	const kind: DocKind = category === "components" ? "component" : category === "hooks" ? "hook" : "attachment";
+	const kind: DocKind = category === "components" ? "component" : category === "hooks" ? "hook" : category === "attachments" ? "attachment" : "tauri";
 
 	return [
 		{

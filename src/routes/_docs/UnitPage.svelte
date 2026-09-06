@@ -49,6 +49,15 @@
 	}
 
 	let segments = $derived(createDocumentSegments(unit?.markdown ?? ""));
+	let category = $derived(
+		kind === "component"
+			? { href: "/components", label: "Components" }
+			: kind === "hook"
+				? { href: "/hooks", label: "Hooks" }
+				: kind === "attachment"
+					? { href: "/attachments", label: "Attachments" }
+					: { href: "/tauri", label: "Tauri" }
+	);
 </script>
 
 <svelte:head>
@@ -61,9 +70,7 @@
 		<Breadcrumb.Root class="mb-8">
 			<Breadcrumb.List>
 				<Breadcrumb.Item>
-					<Breadcrumb.Link href={resolve(`/${kind === "component" ? "components" : kind === "hook" ? "hooks" : "attachments"}` as Pathname)}
-						>{kind === "component" ? "Components" : kind === "hook" ? "Hooks" : "Attachments"}</Breadcrumb.Link
-					>
+					<Breadcrumb.Link href={resolve(category.href as Pathname)}>{category.label}</Breadcrumb.Link>
 				</Breadcrumb.Item>
 
 				<Breadcrumb.Separator />

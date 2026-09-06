@@ -6,7 +6,7 @@
 	import type { Pathname } from "$app/types";
 
 	import "./layout.css";
-	import { attachments, components, hooks } from "./_docs/catalog";
+	import { attachments, components, hooks, tauri } from "./_docs/catalog";
 
 	import { SearchIcon } from "$lib/icons";
 
@@ -23,7 +23,8 @@
 	const categories = [
 		{ href: "/components", label: "Components", units: components },
 		{ href: "/hooks", label: "Hooks", units: hooks },
-		{ href: "/attachments", label: "Attachments", units: attachments }
+		{ href: "/attachments", label: "Attachments", units: attachments },
+		{ href: "/tauri", label: "Tauri", units: tauri }
 	];
 
 	let query = $state("");

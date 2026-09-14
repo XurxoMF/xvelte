@@ -1,15 +1,14 @@
 <script lang="ts">
-	import { untrack } from "svelte";
 	import { afterNavigate } from "$app/navigation";
 	import { asset, resolve } from "$app/paths";
 	import { page } from "$app/state";
 	import { ModeWatcher } from "mode-watcher";
 
 	import type { Pathname } from "$app/types";
-	import type { DocScope, DocUnit } from "./_docs/catalog";
+	import type { DocUnit } from "./_docs/catalog";
 
 	import "./layout.css";
-	import { getUnit, navigation, scopes } from "./_docs/catalog";
+	import { getUnit, navigation } from "./_docs/catalog";
 
 	import { ChevronRightIcon, SearchIcon } from "$lib/icons";
 
@@ -21,51 +20,32 @@
 	import * as Dialog from "$lib/components/ui/dialog";
 	import * as Sonner from "$lib/components/ui/sonner";
 	import * as Collapsible from "$lib/components/ui/collapsible";
-	import * as ToggleGroup from "$lib/components/ui/toggle-group";
 
 	let { children } = $props();
 
 	const appIcon = asset("/favicon.png");
 	let searchOpen = $state(false);
 	let currentPath = $derived(page.url.pathname);
-	let selectedScope = $state<DocScope>(
-		untrack(() => getUnit(page.url.pathname)?.scope ?? (page.url.pathname.startsWith("/tauri") ? "tauri" : "shared"))
-	);
 	let expandedCategories = $state<Record<string, boolean>>({});
-	let visibleCategories = $derived(navigation.find((scope) => scope.value === selectedScope)?.categories ?? []);
-
-	/**
-	 * Keeps one scope selected while leaving arrow-key navigation to ToggleGroup.
-	 * @param event - Pointer or keyboard activation of a scope toggle.
-	 * @param scope - The scope represented by the toggle.
-	 */
-	function preventScopeDeselection(event: MouseEvent | KeyboardEvent, scope: DocScope) {
-		if (selectedScope === scope && (!("key" in event) || event.key === "Enter" || event.key === " ")) {
-			event.preventDefault();
-		}
-	}
 
 	/**
 	 * Reveals the active destination and preserves other expanded categories for this session.
 	 * @param unit - The documentation entry to reveal.
 	 */
 	function revealUnit(unit: DocUnit) {
-		selectedScope = unit.scope;
 		expandedCategories[`${unit.scope}:${unit.kind}`] = true;
 	}
 
-	// Route navigation, browser history, and search selections share the same sidebar state.
+	// Route navigation, browser history, and search selections reveal the active category.
 	afterNavigate(() => {
 		const unit = getUnit(page.url.pathname);
 		if (unit) revealUnit(unit);
-		else if (page.url.pathname === "/tauri") selectedScope = "tauri";
 		else {
 			const scope = navigation.find((scope) =>
 				scope.categories.some((category) => page.url.pathname === `${scope.value === "tauri" ? "/tauri" : ""}/${category.directory}`)
 			);
 			const category = scope?.categories.find((category) => page.url.pathname === `${scope.value === "tauri" ? "/tauri" : ""}/${category.directory}`);
 			if (scope && category) {
-				selectedScope = scope.value;
 				expandedCategories[category.id] = true;
 			}
 		}
@@ -102,28 +82,6 @@
 						<span class="text-xs text-muted-foreground">Svelte 5 collection</span>
 					</span>
 				</a>
-
-				<ToggleGroup.Root
-					type="single"
-					value={selectedScope}
-					onValueChange={(value) => {
-						if (value === "shared" || value === "tauri") selectedScope = value;
-					}}
-					aria-label="Documentation scope"
-					variant="outline"
-					class="w-full"
-				>
-					{#each scopes as scope (scope.value)}
-						<ToggleGroup.Item
-							value={scope.value}
-							class="flex-1"
-							onclick={(event) => preventScopeDeselection(event, scope.value)}
-							onkeydown={(event) => preventScopeDeselection(event, scope.value)}
-						>
-							{scope.label}
-						</ToggleGroup.Item>
-					{/each}
-				</ToggleGroup.Root>
 			</Sidebar.Header>
 
 			<Sidebar.Content>
@@ -144,43 +102,45 @@
 					</Sidebar.GroupContent>
 				</Sidebar.Group>
 
-				<Sidebar.Group>
-					<Sidebar.GroupLabel>{scopes.find((scope) => scope.value === selectedScope)?.label}</Sidebar.GroupLabel>
-					<Sidebar.GroupContent>
-						{#each visibleCategories as category (category.id)}
-							<Collapsible.Root
-								open={expandedCategories[category.id] ?? category.units.some((unit) => unit.href === currentPath)}
-								onOpenChange={(open) => (expandedCategories[category.id] = open)}
-							>
-								<Collapsible.Trigger>
-									{#snippet child({ props })}
-										<Sidebar.MenuButton {...props} class="group/category">
-											<ChevronRightIcon aria-hidden="true" class="transition-transform group-aria-expanded/category:rotate-90" />
-											<span>{category.label}</span>
-											<span class="ml-auto text-xs text-muted-foreground">{category.units.length}</span>
-										</Sidebar.MenuButton>
-									{/snippet}
-								</Collapsible.Trigger>
+				{#each navigation as scope (scope.value)}
+					<Sidebar.Group>
+						<Sidebar.GroupLabel>{scope.label}</Sidebar.GroupLabel>
+						<Sidebar.GroupContent>
+							{#each scope.categories as category (category.id)}
+								<Collapsible.Root
+									open={expandedCategories[category.id] ?? category.units.some((unit) => unit.href === currentPath)}
+									onOpenChange={(open) => (expandedCategories[category.id] = open)}
+								>
+									<Collapsible.Trigger>
+										{#snippet child({ props })}
+											<Sidebar.MenuButton {...props} class="group/category">
+												<ChevronRightIcon aria-hidden="true" class="transition-transform group-aria-expanded/category:rotate-90" />
+												<span>{category.label}</span>
+												<span class="ml-auto text-xs text-muted-foreground">{category.units.length}</span>
+											</Sidebar.MenuButton>
+										{/snippet}
+									</Collapsible.Trigger>
 
-								<Collapsible.Content>
-									<Sidebar.MenuSub>
-										{#each category.units as unit (unit.href)}
-											<Sidebar.MenuSubItem>
-												<Sidebar.MenuSubButton
-													href={resolve(unit.href as Pathname)}
-													isActive={currentPath === unit.href}
-													aria-current={currentPath === unit.href ? "page" : undefined}
-												>
-													{unit.title}
-												</Sidebar.MenuSubButton>
-											</Sidebar.MenuSubItem>
-										{/each}
-									</Sidebar.MenuSub>
-								</Collapsible.Content>
-							</Collapsible.Root>
-						{/each}
-					</Sidebar.GroupContent>
-				</Sidebar.Group>
+									<Collapsible.Content>
+										<Sidebar.MenuSub>
+											{#each category.units as unit (unit.href)}
+												<Sidebar.MenuSubItem>
+													<Sidebar.MenuSubButton
+														href={resolve(unit.href as Pathname)}
+														isActive={currentPath === unit.href}
+														aria-current={currentPath === unit.href ? "page" : undefined}
+													>
+														{unit.title}
+													</Sidebar.MenuSubButton>
+												</Sidebar.MenuSubItem>
+											{/each}
+										</Sidebar.MenuSub>
+									</Collapsible.Content>
+								</Collapsible.Root>
+							{/each}
+						</Sidebar.GroupContent>
+					</Sidebar.Group>
+				{/each}
 			</Sidebar.Content>
 
 			<Sidebar.Footer id="sidebar-footer" class="border-t px-4 py-3">

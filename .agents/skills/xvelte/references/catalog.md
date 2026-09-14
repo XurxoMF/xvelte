@@ -111,6 +111,7 @@ Paths are relative to `src/lib/hooks`.
 
 Paths are relative to `src/lib/tauri`.
 
+- `classes/file-system/` — reactive-ready `File` and `Directory` models with scoped creation, inspection, text and JSON I/O, recursive directory operations, extensible file subclasses, and Unix permission updates
 - `hooks/is-tauri.ts` — SSR-safe `IsTauri` runtime snapshot exposing `"tauri"` or `"web"` through `current`
 
 ## Shared entry points

@@ -50,6 +50,7 @@
 		"@tabler/icons-svelte": "^3.46.0",
 		"@tanstack/svelte-table": "^9.1.2",
 		"@tauri-apps/api": "^2.11.1",
+		"@tauri-apps/plugin-fs": "~2",
 		"bits-ui": "^2.18.1",
 		"clsx": "^2.1.1",
 		"country-flag-icons": "1.6.15",

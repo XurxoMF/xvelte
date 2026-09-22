@@ -9,11 +9,11 @@ export type DocExample = {
 	load: () => Promise<{ component: Component; source: string }>;
 };
 
-const exampleComponents = import.meta.glob("/src/routes/_examples/{components,hooks,attachments,tauri}/**/*.svelte", {
+const exampleComponents = import.meta.glob("/src/routes/_examples/{components,hooks,attachments,styles,tauri}/**/*.svelte", {
 	import: "default"
 }) as Record<string, () => Promise<Component>>;
 
-const exampleSources = import.meta.glob("/src/routes/_examples/{components,hooks,attachments,tauri}/**/*.svelte", {
+const exampleSources = import.meta.glob("/src/routes/_examples/{components,hooks,attachments,styles,tauri}/**/*.svelte", {
 	import: "default",
 	query: "?raw"
 }) as Record<string, () => Promise<string>>;
@@ -31,7 +31,7 @@ function titleFromName(name: string) {
 }
 
 export const examples: DocExample[] = Object.entries(exampleComponents).flatMap(([path, loadComponent]) => {
-	const match = path.match(/\/_examples\/(?:(components|hooks|attachments)\/([^/]+)|tauri\/([^/]+)\/([^/]+))\/([^/]+)\.svelte$/);
+	const match = path.match(/\/_examples\/(?:(components|hooks|attachments|styles)\/([^/]+)|tauri\/([^/]+)\/([^/]+))\/([^/]+)\.svelte$/);
 	if (!match) return [];
 
 	const [, sharedCategory, sharedSlug, tauriCategory, tauriSlug, name] = match;

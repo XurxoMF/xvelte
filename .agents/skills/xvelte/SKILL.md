@@ -11,7 +11,7 @@ Use the existing xvelte public API to build application code while protecting re
 
 1. Read [references/catalog.md](references/catalog.md) to identify likely reusable units.
 2. Verify that each selected path exists in the consuming project; copied installations may contain only a subset of xvelte.
-3. Read the selected unit's `<slug>.md` guide before using or changing it. Component guides live at `src/lib/components/ui/<slug>/<slug>.md`; standalone guides such as hooks, attachments, and Tauri utilities live beside their source.
+3. Read the selected unit's `<slug>.md` guide before using or changing it. Component guides live at `src/lib/components/ui/<slug>/<slug>.md`; standalone guides such as hooks, attachments, styles, and Tauri utilities live beside their source.
 4. Confirm the public surface in the unit's `index.ts` and exported types. Treat public barrels, types, and source as authoritative if documentation differs.
 5. Inspect implementation files only when the guide does not answer the question, exact composition or reactive behavior is unclear, diagnosing a defect, or changing the reusable unit is unavoidable.
 

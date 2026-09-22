@@ -2,6 +2,9 @@
 @import "tw-animate-css";
 @import "@fontsource-variable/inter";
 
+@import "../lib/styles/scroll-fade.css";
+@import "../lib/styles/shimmer.css";
+
 @custom-variant dark (&:is(.dark *));
 
 :root {

@@ -2,7 +2,7 @@
 export type DocScope = "shared" | "tauri";
 
 /** The resource categories available within either scope. */
-export type DocKind = "component" | "hook" | "attachment" | "class" | "type" | "utility";
+export type DocKind = "component" | "hook" | "attachment" | "class" | "type" | "utility" | "style";
 
 /** A documented resource and its independent scope, category, and destination. */
 export type DocUnit = {
@@ -26,13 +26,14 @@ export const categories: { kind: DocKind; directory: string; label: string }[] =
 	{ kind: "attachment", directory: "attachments", label: "Attachments" },
 	{ kind: "class", directory: "classes", label: "Classes" },
 	{ kind: "type", directory: "types", label: "Types" },
+	{ kind: "style", directory: "styles", label: "Styles" },
 	{ kind: "utility", directory: "utils", label: "Utilities" }
 ];
 
 const unitGuides = import.meta.glob(
 	[
 		"/src/lib/components/ui/*/*.md",
-		"/src/lib/{hooks,attachments,classes,types,interfaces,utils}/*.md",
+		"/src/lib/{hooks,attachments,classes,types,interfaces,styles,utils}/*.md",
 		"/src/lib/*.md",
 		"/src/lib/tauri/**/*.md",
 		"!/src/lib/**/README.md"
@@ -102,6 +103,7 @@ if (new Set(units.map((unit) => unit.href)).size !== units.length) {
 export const components = units.filter((unit) => unit.scope === "shared" && unit.kind === "component");
 export const hooks = units.filter((unit) => unit.scope === "shared" && unit.kind === "hook");
 export const attachments = units.filter((unit) => unit.scope === "shared" && unit.kind === "attachment");
+export const styles = units.filter((unit) => unit.scope === "shared" && unit.kind === "style");
 export const tauri = units.filter((unit) => unit.scope === "tauri");
 
 export const navigation = scopes.map((scope) => ({

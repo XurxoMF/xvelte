@@ -10,10 +10,12 @@ All component paths are relative to `src/lib/components/ui`.
 - `alert` — static callouts with neutral, danger, warning, success, info, and important semantic tones
 - `alert-dialog`
 - `aspect-ratio`
+- `attachment` — composable file and image cards with metadata, upload states, sizes, orientations, independent actions, full-card triggers, and scrollable groups
 - `audio-player` — composable native audio playback with seek/time controls, Slider-based volume, semantic volume states, and one-point keyboard adjustment
 - `avatar`
 - `badge` — compact labels with neutral and semantic status variants
 - `breadcrumb`
+- `bubble` — conversational content surfaces with seven semantic variants, logical alignment, grouping, reactions, and polymorphic links or buttons
 - `button` — native actions with neutral, danger, warning, success, info, and important variants
 - `button-group`
 - `button-hold`
@@ -54,7 +56,9 @@ All component paths are relative to `src/lib/components/ui`.
 - `label`
 - `list` — semantic ordered and unordered lists with configurable spacing and reusable exported class variants
 - `markdown` — headless mdast renderer for CommonMark, GFM, images, footnotes, GitHub alerts, sanitized or explicitly trusted raw HTML, safe URLs, and lazy Shiki languages
+- `marker` — inline conversation statuses, system notes, bordered rows, labeled separators, decorative icons, and polymorphic links or buttons
 - `menubar`
+- `message` — aligned conversation rows with optional avatars, grouped messages, body columns, sender headers, statuses, timestamps, and action footers
 - `navigation-menu`
 - `pagination`
 - `point-picker` — scale-preserving two-dimensional coordinate input with range-derived aspect ratio, configurable origin and grid intervals, pointer control, and keyboard control
@@ -106,6 +110,13 @@ Paths are relative to `src/lib/hooks`.
 - `use-markdown.svelte.ts` — pure and reactive CommonMark/GFM parsing to mdast with stable heading IDs and GitHub alert metadata
 - `use-ramp.svelte.ts`
 - `use-toc.svelte.ts`
+
+## Styles
+
+Paths are relative to `src/lib/styles`.
+
+- `scroll-fade.css` — direction-aware, scroll-position-aware edge fades for overflowing content, with physical and logical directions, independent sizing, a static browser fallback, and right-to-left support
+- `shimmer.css` — a current-color text shimmer with configurable color, duration, spread, angle, repetition, direction, reduced-motion handling, and right-to-left support
 
 ## Tauri
 

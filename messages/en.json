@@ -67,5 +67,13 @@
 	"lucid_willow_rest": "Back to reference {number}, occurrence {occurrence}",
 	"brave_quail_messages": "Messages",
 	"gentle_river_scroll_end": "Scroll to end",
-	"soft_owl_scroll_start": "Scroll to start"
+	"soft_owl_scroll_start": "Scroll to start",
+	"steady_finch_questionnaire_progress": "Questionnaire progress",
+	"tender_fox_question_progress": "Question {current} of {total}",
+	"vivid_brook_choose_or_skip": "Choose an answer or skip this question.",
+	"wise_marten_choose_answer": "Choose an answer to continue.",
+	"young_willow_previous": "Previous",
+	"zesty_heron_skip": "Skip",
+	"agile_pine_next": "Next",
+	"bold_otter_submit": "Submit"
 }

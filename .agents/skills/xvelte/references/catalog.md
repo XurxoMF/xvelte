@@ -66,6 +66,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `popover`
 - `progress`
 - `qr-code`
+- `questionnaire` — multi-step native forms with single, multiple, freeform, skippable, validated, shortcut-enabled, and SSR-ready questions
 - `radio-group`
 - `resizable`
 - `scroll-area` — manually composed Root and Viewport with self-registering vertical and horizontal scrollbars plus an automatic two-axis corner

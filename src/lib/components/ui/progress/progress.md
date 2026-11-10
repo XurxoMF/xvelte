@@ -233,7 +233,7 @@ pnpm add bits-ui clsx tailwind-merge
 pnpm add -D tailwindcss
 ```
 
-Implement against the stable Bits UI version installed by your project. Progress does not need `tw-animate-css`; its transition uses Tailwind's built-in `transition-all` utility.
+Implement against the stable Bits UI version installed by your project. Progress does not need the Animations style; its transition uses Tailwind's built-in `transition-all` utility.
 
 ### Component files
 
@@ -292,7 +292,7 @@ Load Tailwind CSS and expose the two semantic colors used by the component. The 
 }
 ```
 
-Define dark values only when your app supports a dark theme. No custom variant, keyframe, `tw-animate-css` import, icon style, font, radius variable, or component-specific CSS variable is required.
+Define dark values only when your app supports a dark theme. No custom variant, keyframe, Animations style import, icon style, font, radius variable, or component-specific CSS variable is required.
 
 ## Credits
 

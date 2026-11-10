@@ -473,7 +473,7 @@ Your global stylesheet must import Tailwind, define the dark variant, and expose
 
 The app remains responsible for applying its `.dark` class, normally through root-level theme management.
 
-No `tw-animate-css` import, animation, keyframe, Paraglide message, shared component stylesheet, or additional icon is required. The generated Paraglide runtime is required for the default locale. Popover, Date Picker, Calendar Range, form fields, and date summaries shown in larger compositions have their own installation requirements; follow each component's unit guide when you use them.
+No Animations style import, animation, keyframe, Paraglide message, shared component stylesheet, or additional icon is required. The generated Paraglide runtime is required for the default locale. Popover, Date Picker, Calendar Range, form fields, and date summaries shown in larger compositions have their own installation requirements; follow each component's unit guide when you use them.
 
 ## Credits
 

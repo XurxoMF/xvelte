@@ -435,7 +435,7 @@ Pagination itself has no animation, font, or component-specific global CSS. Its 
 }
 ```
 
-Replace the color and radius values with your own theme while keeping the variable names. `tw-animate-css` is not required.
+Replace the color and radius values with your own theme while keeping the variable names. The Animations style is not required.
 
 ### Localization setup
 

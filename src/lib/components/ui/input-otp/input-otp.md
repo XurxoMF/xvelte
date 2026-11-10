@@ -371,7 +371,7 @@ Group lays Slots in a row. Each Slot is a `2rem` square with connected semantic 
 
 An active Slot receives `z-10`, a semantic ring border, and a three-pixel focus ring. Invalid Slots use danger border/ring colors. Dark mode adds an input-tinted Slot background.
 
-The local fake caret is an absolute, pointer-transparent overlay. Its inner one-pixel line uses `animate-caret-blink`, `bg-foreground`, and `duration-1000`; `tw-animate-css` supplies the animation and caret keyframes.
+The local fake caret is an absolute, pointer-transparent overlay. Its inner one-pixel line uses `animate-caret-blink`, `bg-foreground`, and `animation-duration-1000`; The shared Animations style supplies the animation and caret keyframes.
 
 Bits UI owns additional implementation details, including:
 
@@ -411,22 +411,24 @@ The browser or operating system owns one-time-code autofill prompts and virtual 
 
 ## Dependencies
 
-Input OTP expects a Svelte 5 project using Tailwind CSS 4. It requires Bits UI's Pin Input primitive, the Tabler minus icon through the shared xvelte icon facade, shared utility helpers, and `tw-animate-css` for the fake caret.
+This component requires the shared Animations style. Copy `src/lib/styles/animations.css` and `src/lib/styles/animations.md`, then follow the `animations.md` guide to import it.
+
+Input OTP expects a Svelte 5 project using Tailwind CSS 4. It requires Bits UI's Pin Input primitive, the Tabler minus icon through the shared xvelte icon facade, shared utility helpers, and the shared Animations style for the fake caret.
 
 Install every runtime dependency first and development dependencies second:
 
 ```sh
 # bun
 bun add bits-ui @tabler/icons-svelte clsx tailwind-merge
-bun add -D tailwindcss tw-animate-css
+bun add -D tailwindcss
 
 # npm
 npm install bits-ui @tabler/icons-svelte clsx tailwind-merge
-npm install -D tailwindcss tw-animate-css
+npm install -D tailwindcss
 
 # pnpm
 pnpm add bits-ui @tabler/icons-svelte clsx tailwind-merge
-pnpm add -D tailwindcss tw-animate-css
+pnpm add -D tailwindcss
 ```
 
 ### Component files
@@ -478,11 +480,11 @@ The package block includes `@tabler/icons-svelte`. Keep this semantic alias in t
 
 ### Global CSS
 
-The global stylesheet must load Tailwind and `tw-animate-css`, define the dark variant, and expose the semantic colors and radius used by Input OTP. These are xvelte's defaults; apps may replace the values while preserving their names and mappings:
+The global stylesheet must load Tailwind and the shared Animations style, define the dark variant, and expose the semantic colors and radius used by Input OTP. These are xvelte's defaults; apps may replace the values while preserving their names and mappings:
 
 ```css
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "../lib/styles/animations.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -510,7 +512,7 @@ The global stylesheet must load Tailwind and `tw-animate-css`, define the dark v
 }
 ```
 
-`tw-animate-css` provides `animate-caret-blink` and its caret keyframes; the local `duration-1000` class sets the animation duration. The app owns dark-mode activation.
+The shared Animations style provides `animate-caret-blink` and its caret keyframes; the local `animation-duration-1000` class sets the animation duration. The app owns dark-mode activation.
 
 Input OTP requires no base-layer rule, custom data-state variant, additional keyframe, localization message, or layout CSS. Bits UI injects its own required runtime styles for the transparent input as described in [Styling and DOM contract](#styling-and-dom-contract).
 

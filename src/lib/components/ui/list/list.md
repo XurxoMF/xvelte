@@ -351,7 +351,7 @@ The components use Tailwind utilities without semantic color variables, dark-mod
 @import "tailwindcss";
 ```
 
-List requires no `tw-animate-css` import, semantic CSS variable, `@theme` mapping, keyframe, icon export from `src/lib/icons.ts`, localization message, image, font, browser API, network service, or additional layout rule.
+List requires no Animations style import, semantic CSS variable, `@theme` mapping, keyframe, icon export from `src/lib/icons.ts`, localization message, image, font, browser API, network service, or additional layout rule.
 
 ## File organization
 

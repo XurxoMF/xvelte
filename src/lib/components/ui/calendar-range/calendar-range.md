@@ -551,7 +551,7 @@ Load Tailwind, configure the class-based dark variant, and expose the semantic c
 }
 ```
 
-The app owns dark-mode activation. No `tw-animate-css` import, keyframe, Paraglide message, shared component stylesheet, or component-specific global variable is required. The generated Paraglide runtime is required for the default locale.
+The app owns dark-mode activation. No Animations style import, keyframe, Paraglide message, shared component stylesheet, or component-specific global variable is required. The generated Paraglide runtime is required for the default locale.
 
 ## Credits
 

@@ -171,7 +171,7 @@
 	onOpenAutoFocus={handleOpenAutoFocus}
 	onCloseAutoFocus={handleCloseAutoFocus}
 	data-slot="walkthrough-content"
-	class="fixed top-0 left-0 z-9999 block w-max max-w-none translate-x-0 translate-y-0 gap-0 rounded-none bg-transparent p-0 text-base text-inherit ring-0 duration-200 sm:max-w-none data-open:zoom-in-100 data-closed:zoom-out-100"
+	class="fixed top-0 left-0 z-9999 block w-max max-w-none translate-x-0 translate-y-0 gap-0 rounded-none bg-transparent p-0 text-base text-inherit ring-0 animation-duration-200 sm:max-w-none data-open:zoom-in-100 data-closed:zoom-out-100"
 >
 	{#if contentSnippet}
 		<Dialog.Title class="sr-only">{ctx.currentStep?.title}</Dialog.Title>

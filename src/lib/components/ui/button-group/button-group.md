@@ -372,7 +372,7 @@ Your global stylesheet must import Tailwind and expose the semantic colors and r
 
 The base border rule supplies the default color for `Text`'s unqualified `border`; Separator's local background is overridden to `input` by Button Group.
 
-No `@custom-variant dark`, icon package/export from `$lib/icons`, `tw-animate-css` import, animation, keyframe, hook, attachment, custom context module, localization message, or shared component stylesheet is required. Button, Input, Select, dropdown, popover, or other controls placed inside the group may add their own packages, tokens, icons, and configuration; follow each component's unit guide.
+No `@custom-variant dark`, icon package/export from `$lib/icons`, Animations style import, animation, keyframe, hook, attachment, custom context module, localization message, or shared component stylesheet is required. Button, Input, Select, dropdown, popover, or other controls placed inside the group may add their own packages, tokens, icons, and configuration; follow each component's unit guide.
 
 ## Credits
 

@@ -472,20 +472,22 @@ The right-chevron, check, and minus symbols are icons rather than text. Shortcut
 
 ## Dependencies
 
-Dropdown Menu expects a Svelte 5 project using Tailwind CSS 4. It requires Bits UI, three semantic Tabler icon exports, shared utility helpers, and `tw-animate-css`. Install every package requirement with one of these command groups:
+This component requires the shared Animations style. Copy `src/lib/styles/animations.css` and `src/lib/styles/animations.md`, then follow the `animations.md` guide to import it.
+
+Dropdown Menu expects a Svelte 5 project using Tailwind CSS 4. It requires Bits UI, three semantic Tabler icon exports, shared utility helpers, and the shared Animations style. Install every package requirement with one of these command groups:
 
 ```sh
 # bun
 bun add bits-ui @tabler/icons-svelte clsx tailwind-merge
-bun add -D tailwindcss tw-animate-css
+bun add -D tailwindcss
 
 # npm
 npm install bits-ui @tabler/icons-svelte clsx tailwind-merge
-npm install -D tailwindcss tw-animate-css
+npm install -D tailwindcss
 
 # pnpm
 pnpm add bits-ui @tabler/icons-svelte clsx tailwind-merge
-pnpm add -D tailwindcss tw-animate-css
+pnpm add -D tailwindcss
 ```
 
 ### Shared utilities
@@ -529,11 +531,11 @@ The package block includes `@tabler/icons-svelte`. Keep these aliases in the sha
 
 ### Global CSS
 
-The global stylesheet must import Tailwind and `tw-animate-css`, define dark and Bits UI state variants, apply the shared border/outline defaults, and expose the semantic colors and radii used by Dropdown Menu. The values below are xvelte's defaults and may be replaced while preserving their names and mappings:
+The global stylesheet must import Tailwind and the shared Animations style, define dark and Bits UI state variants, apply the shared border/outline defaults, and expose the semantic colors and radii used by Dropdown Menu. The values below are xvelte's defaults and may be replaced while preserving their names and mappings:
 
 ```css
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "../lib/styles/animations.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -605,7 +607,7 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define dark and
 }
 ```
 
-`tw-animate-css` supplies the enter, exit, fade, zoom, and directional slide utilities. No Dropdown Menu-specific keyframe or shared component stylesheet must be copied. The app remains responsible for applying its `.dark` class when dark mode is supported.
+The shared Animations style supplies the enter, exit, fade, zoom, and directional slide utilities. No Dropdown Menu-specific keyframe or shared component stylesheet must be copied. The app remains responsible for applying its `.dark` class when dark mode is supported.
 
 ### Other requirements
 

@@ -520,7 +520,7 @@ Your global stylesheet must import Tailwind and expose the semantic and chart co
 
 The app remains responsible for applying its `.dark` class, normally through root-level theme management. LayerChart v2 ships its own default component styles; no LayerChart stylesheet import is required by the local component.
 
-Chart requires no other xvelte UI component, icon export, hook, attachment, context outside its own folder, localization message, `tw-animate-css` import, or global keyframe. The generated Paraglide runtime is required. Keep `chart-context.ts` and `chart-utils.ts` with the component because Container and Tooltip import them directly.
+Chart requires no other xvelte UI component, icon export, hook, attachment, context outside its own folder, localization message, Animations style import, or global keyframe. The generated Paraglide runtime is required. Keep `chart-context.ts` and `chart-utils.ts` with the component because Container and Tooltip import them directly.
 
 ## Credits
 

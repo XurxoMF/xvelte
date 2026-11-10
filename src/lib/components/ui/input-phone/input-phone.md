@@ -345,6 +345,8 @@ Root uses the active Paraglide locale for country names and sorting by default. 
 
 ## Dependencies
 
+This component requires the shared Animations style. Copy `src/lib/styles/animations.css` and `src/lib/styles/animations.md`, then follow the `animations.md` guide to import it.
+
 ### Packages
 
 Install runtime dependencies first and development dependencies second:
@@ -352,15 +354,15 @@ Install runtime dependencies first and development dependencies second:
 ```sh
 # Bun
 bun add libphonenumber-js country-flag-icons bits-ui @tabler/icons-svelte clsx tailwind-merge tailwind-variants
-bun add -D @inlang/paraglide-js tailwindcss tw-animate-css
+bun add -D @inlang/paraglide-js tailwindcss
 
 # npm
 npm install libphonenumber-js country-flag-icons bits-ui @tabler/icons-svelte clsx tailwind-merge tailwind-variants
-npm install -D @inlang/paraglide-js tailwindcss tw-animate-css
+npm install -D @inlang/paraglide-js tailwindcss
 
 # pnpm
 pnpm add libphonenumber-js country-flag-icons bits-ui @tabler/icons-svelte clsx tailwind-merge tailwind-variants
-pnpm add -D @inlang/paraglide-js tailwindcss tw-animate-css
+pnpm add -D @inlang/paraglide-js tailwindcss
 ```
 
 Input Phone imports the `libphonenumber-js/min` metadata build. It does not depend on `svelte-tel-input`.
@@ -421,7 +423,7 @@ The required Input and Combobox components need Tailwind, animation utilities, s
 
 ```css
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "../lib/styles/animations.css";
 
 @custom-variant dark (&:is(.dark *));
 

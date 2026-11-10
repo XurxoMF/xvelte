@@ -309,7 +309,7 @@ Your global stylesheet must import Tailwind, define the dark variant, and expose
 }
 ```
 
-No Bits UI package, `tw-animate-css` import, keyframe, custom radius variable, icon export from `$lib/icons`, other xvelte component, hook, attachment, context module, localization message, or shared component stylesheet is required. Icons are optional content supplied by your app and bring their own dependency.
+No Bits UI package, Animations style import, keyframe, custom radius variable, icon export from `$lib/icons`, other xvelte component, hook, attachment, context module, localization message, or shared component stylesheet is required. Icons are optional content supplied by your app and bring their own dependency.
 
 ## Credits
 

@@ -322,7 +322,7 @@ The application stylesheet only needs to load Tailwind:
 @import "tailwindcss";
 ```
 
-Horizontal Scroll uses no global semantic token, theme mapping, custom variant, keyframe, animation import, shared class, or additional layout rule. It also requires no `tw-animate-css`, icon export from `src/lib/icons.ts`, localization message, image, font, or network service.
+Horizontal Scroll uses no global semantic token, theme mapping, custom variant, keyframe, animation import, shared class, or additional layout rule. It also requires no Animations style, icon export from `src/lib/icons.ts`, localization message, image, font, or network service.
 
 ## Credits
 

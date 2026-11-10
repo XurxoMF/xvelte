@@ -348,7 +348,7 @@ The global stylesheet must load Tailwind and expose the semantic colors used by 
 }
 ```
 
-The app owns dark-mode activation. Knob requires no `tw-animate-css` import, keyframe, component-specific global CSS variable, `src/lib/icons.ts` export, font, network service, or additional layout rule. The component uses browser mouse, touch, and window event APIs directly and needs no additional package for them.
+The app owns dark-mode activation. Knob requires no Animations style import, keyframe, component-specific global CSS variable, `src/lib/icons.ts` export, font, network service, or additional layout rule. The component uses browser mouse, touch, and window event APIs directly and needs no additional package for them.
 
 ---
 

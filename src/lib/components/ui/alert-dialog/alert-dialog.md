@@ -349,7 +349,7 @@ Use `index.ts` and the exported props types as the source of truth for the local
 
 ## Styling and DOM contract
 
-Alert Dialog uses semantic Tailwind tokens, `tw-animate-css`, Bits UI state attributes, and parent group/data selectors. `Content` and `Overlay` fade in and out; `Content` also scales between 95% and 100%.
+Alert Dialog uses semantic Tailwind tokens, the shared Animations style, Bits UI state attributes, and parent group/data selectors. `Content` and `Overlay` fade in and out; `Content` also scales between 95% and 100%.
 
 Stable xvelte hooks:
 
@@ -391,23 +391,25 @@ The `default`, `sm`, Button variant/size names, state values, and `data-slot` id
 
 ## Dependencies
 
+This component requires the shared Animations style. Copy `src/lib/styles/animations.css` and `src/lib/styles/animations.md`, then follow the `animations.md` guide to import it.
+
 Alert Dialog expects a Svelte 5 project using Tailwind CSS 4. Install its runtime and styling packages with one of the following commands:
 
 ```sh
 # bun
 bun add bits-ui tailwind-variants clsx tailwind-merge
 bun add @tabler/icons-svelte # Optional: only for the compact icon example
-bun add -D tailwindcss tw-animate-css
+bun add -D tailwindcss
 
 # npm
 npm install bits-ui tailwind-variants clsx tailwind-merge
 npm install @tabler/icons-svelte # Optional: only for the compact icon example
-npm install -D tailwindcss tw-animate-css
+npm install -D tailwindcss
 
 # pnpm
 pnpm add bits-ui tailwind-variants clsx tailwind-merge
 pnpm add @tabler/icons-svelte # Optional: only for the compact icon example
-pnpm add -D tailwindcss tw-animate-css
+pnpm add -D tailwindcss
 ```
 
 ### Required xvelte components
@@ -423,11 +425,11 @@ The Button component is why `tailwind-variants` is required and why the full set
 
 ### Global CSS
 
-The application stylesheet, `src/routes/layout.css` in xvelte, must load Tailwind CSS and `tw-animate-css`:
+The application stylesheet, `src/routes/layout.css` in xvelte, must load Tailwind CSS and the shared Animations style:
 
 ```css
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "../lib/styles/animations.css";
 ```
 
 xvelte's `data-open:` and `data-closed:` utilities also depend on these custom variants:
@@ -490,7 +492,7 @@ Alert Dialog itself uses `popover`, `popover-foreground`, `foreground`, `muted`,
 }
 ```
 
-Define equivalent values inside the application's dark selector if it supports a dark theme. The values above are xvelte's light defaults and may be replaced while preserving the semantic variable and `@theme` names. No alert-dialog-specific keyframes or CSS variables need to be copied; `tw-animate-css` supplies the fade/zoom utilities and Bits UI supplies dialog state.
+Define equivalent values inside the application's dark selector if it supports a dark theme. The values above are xvelte's light defaults and may be replaced while preserving the semantic variable and `@theme` names. No alert-dialog-specific keyframes or CSS variables need to be copied; The shared Animations style supplies the fade/zoom utilities and Bits UI supplies dialog state.
 
 ### Icons
 

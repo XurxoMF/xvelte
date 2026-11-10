@@ -332,6 +332,8 @@ Providing Trigger or DragOverlay children replaces their built-in visible copy. 
 
 ## Dependencies
 
+This component requires the shared Animations style. Copy `src/lib/styles/animations.css` and `src/lib/styles/animations.md`, then follow the `animations.md` guide to import it.
+
 File Drop Zone expects Svelte 5, Tailwind CSS 4, and xvelte's Paraglide setup. It uses Bits UI only for Portal and snippet prop types.
 
 Install runtime dependencies first and development dependencies second within the same package-manager block:
@@ -339,15 +341,15 @@ Install runtime dependencies first and development dependencies second within th
 ```sh
 # bun
 bun add bits-ui @tabler/icons-svelte clsx tailwind-merge
-bun add -D @inlang/paraglide-js tailwindcss tw-animate-css
+bun add -D @inlang/paraglide-js tailwindcss
 
 # npm
 npm install bits-ui @tabler/icons-svelte clsx tailwind-merge
-npm install -D @inlang/paraglide-js tailwindcss tw-animate-css
+npm install -D @inlang/paraglide-js tailwindcss
 
 # pnpm
 pnpm add bits-ui @tabler/icons-svelte clsx tailwind-merge
-pnpm add -D @inlang/paraglide-js tailwindcss tw-animate-css
+pnpm add -D @inlang/paraglide-js tailwindcss
 ```
 
 ### Component files
@@ -643,11 +645,11 @@ No other message, translation attachment, or runtime localization helper is requ
 
 ### Global CSS
 
-The application stylesheet must load Tailwind and `tw-animate-css`:
+The application stylesheet must load Tailwind and the shared Animations style:
 
 ```css
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "../lib/styles/animations.css";
 ```
 
 The default interface uses `background`, `foreground`, `accent`, `muted-foreground`, `border`, and shared radius utilities. These are xvelte's defaults; apps may replace their values while preserving the names and mappings:
@@ -687,7 +689,7 @@ The default interface uses `background`, `foreground`, `accent`, `muted-foregrou
 }
 ```
 
-`tw-animate-css` supplies DragOverlay's `animate-in` and `fade-in-0` utilities. No component-specific keyframe, custom CSS variable, attachment, hook, image, font, network service, or layout rule is required. The app owns dark-mode activation.
+The shared Animations style supplies DragOverlay's `animate-in` and `fade-in-0` utilities. No component-specific keyframe, custom CSS variable, attachment, hook, image, font, network service, or layout rule is required. The app owns dark-mode activation.
 
 ## Credits
 

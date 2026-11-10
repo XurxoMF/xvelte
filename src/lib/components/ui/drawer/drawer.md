@@ -446,20 +446,22 @@ Direction names, state values, snap-point values, `data-*` attributes, CSS varia
 
 ## Dependencies
 
-Drawer requires Vaul Svelte 0.3, the shared `cn` and utility types, Tailwind CSS, and `tw-animate-css`. Vaul Svelte includes its compatible legacy Bits UI dependency internally; do not add a separate modern Bits UI package solely for Drawer. Install every package requirement with one of these command groups:
+This component requires the shared Animations style. Copy `src/lib/styles/animations.css` and `src/lib/styles/animations.md`, then follow the `animations.md` guide to import it.
+
+Drawer requires Vaul Svelte 0.3, the shared `cn` and utility types, Tailwind CSS, and the shared Animations style. Vaul Svelte includes its compatible legacy Bits UI dependency internally; do not add a separate modern Bits UI package solely for Drawer. Install every package requirement with one of these command groups:
 
 ```sh
 # bun
 bun add vaul-svelte clsx tailwind-merge
-bun add -D tailwindcss tw-animate-css
+bun add -D tailwindcss
 
 # npm
 npm install vaul-svelte clsx tailwind-merge
-npm install -D tailwindcss tw-animate-css
+npm install -D tailwindcss
 
 # pnpm
 pnpm add vaul-svelte clsx tailwind-merge
-pnpm add -D tailwindcss tw-animate-css
+pnpm add -D tailwindcss
 ```
 
 ### Shared utilities
@@ -491,11 +493,11 @@ The package block includes `clsx` and `tailwind-merge`, which `cn` imports.
 
 ### Global CSS
 
-The global stylesheet must import Tailwind and `tw-animate-css`, define the xvelte open/closed variants used by Overlay, apply the shared border default, and expose the semantic colors and radius used by Drawer. The values below are xvelte's defaults and may be replaced while preserving their names and mappings:
+The global stylesheet must import Tailwind and the shared Animations style, define the xvelte open/closed variants used by Overlay, apply the shared border default, and expose the semantic colors and radius used by Drawer. The values below are xvelte's defaults and may be replaced while preserving their names and mappings:
 
 ```css
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "../lib/styles/animations.css";
 
 :root {
 	--foreground: oklch(0.147 0.004 49.25);
@@ -547,7 +549,7 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define the xvel
 }
 ```
 
-`tw-animate-css` supplies Overlay's enter, exit, and fade utilities. Vaul Svelte ships the drawer transform, snap-point, overlay-opacity, drag, and direction styles inside its Root component, so no Vaul stylesheet or keyframe must be copied separately.
+The shared Animations style supplies Overlay's enter, exit, and fade utilities. Vaul Svelte ships the drawer transform, snap-point, overlay-opacity, drag, and direction styles inside its Root component, so no Vaul stylesheet or keyframe must be copied separately.
 
 ### Background-scaling setup
 

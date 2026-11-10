@@ -491,20 +491,22 @@ Copying the complete required Command and Dialog folders also requires their exi
 
 ## Dependencies
 
+This component requires the shared Animations style. Copy `src/lib/styles/animations.css` and `src/lib/styles/animations.md`, then follow the `animations.md` guide to import it.
+
 Combobox expects a Svelte 5 project using Tailwind CSS 4 and xvelte's Paraglide setup. Install all runtime and development packages in one of these command groups:
 
 ```sh
 # bun
 bun add bits-ui @tabler/icons-svelte clsx tailwind-merge tailwind-variants
-bun add -D @inlang/paraglide-js tailwindcss tw-animate-css
+bun add -D @inlang/paraglide-js tailwindcss
 
 # npm
 npm install bits-ui @tabler/icons-svelte clsx tailwind-merge tailwind-variants
-npm install -D @inlang/paraglide-js tailwindcss tw-animate-css
+npm install -D @inlang/paraglide-js tailwindcss
 
 # pnpm
 pnpm add bits-ui @tabler/icons-svelte clsx tailwind-merge tailwind-variants
-pnpm add -D @inlang/paraglide-js tailwindcss tw-animate-css
+pnpm add -D @inlang/paraglide-js tailwindcss
 ```
 
 ### Required UI components
@@ -570,11 +572,11 @@ Keep the message entries documented in [Localization](#localization) in each loc
 
 ### Global CSS
 
-The global stylesheet must import Tailwind and `tw-animate-css`, provide the hidden-scrollbar utility, define the dark and Bits UI state variants, set the shared border/outline defaults, and expose the semantic colors and radius scale. The values below are xvelte's defaults; apps may replace the values while preserving their names and mappings:
+The global stylesheet must import Tailwind and the shared Animations style, provide the hidden-scrollbar utility, define the dark and Bits UI state variants, set the shared border/outline defaults, and expose the semantic colors and radius scale. The values below are xvelte's defaults; apps may replace the values while preserving their names and mappings:
 
 ```css
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "../lib/styles/animations.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -689,7 +691,7 @@ The global stylesheet must import Tailwind and `tw-animate-css`, provide the hid
 }
 ```
 
-`tw-animate-css` supplies the Popover and Dialog animation utilities; no Combobox-specific keyframe must be copied. The app remains responsible for applying its `.dark` class when dark mode is supported.
+The shared Animations style supplies the Popover and Dialog animation utilities; no Combobox-specific keyframe must be copied. The app remains responsible for applying its `.dark` class when dark mode is supported.
 
 ---
 

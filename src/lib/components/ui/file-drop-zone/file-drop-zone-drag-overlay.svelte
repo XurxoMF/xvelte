@@ -61,7 +61,7 @@
 			bind:this={ref}
 			data-slot="file-drop-zone-drag-overlay"
 			class={cn(
-				"fixed inset-0 z-50 flex animate-in place-items-center justify-center bg-background/80 p-6 text-foreground duration-100 fade-in-0 supports-backdrop-filter:backdrop-blur-xs",
+				"fixed inset-0 z-50 flex animate-in place-items-center justify-center bg-background/80 p-6 text-foreground animation-duration-100 fade-in-0 supports-backdrop-filter:backdrop-blur-xs",
 				className
 			)}
 			ondragover={(event) => {

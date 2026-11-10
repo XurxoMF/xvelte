@@ -199,7 +199,7 @@ Native `div` attributes and other inherited props are applied to the outer Bits 
 
 ## Styling and DOM contract
 
-The component uses semantic Tailwind tokens and `tw-animate-css`. Opening and closing content is animated using the height exposed by Bits UI as `--bits-accordion-content-height`.
+The component uses semantic Tailwind tokens and the shared Animations style. Opening and closing content is animated using the height exposed by Bits UI as `--bits-accordion-content-height`.
 
 Stable xvelte hooks:
 
@@ -230,29 +230,31 @@ Accordion has no built-in user-facing copy. Your app supplies and translates all
 
 ## Dependencies
 
+This component requires the shared Animations style. Copy `src/lib/styles/animations.css` and `src/lib/styles/animations.md`, then follow the `animations.md` guide to import it.
+
 Accordion expects a Svelte 5 project using Tailwind CSS 4. Install its runtime and styling packages with one of the following commands:
 
 ```sh
 # bun
 bun add bits-ui @tabler/icons-svelte clsx tailwind-merge
-bun add -D tailwindcss tw-animate-css
+bun add -D tailwindcss
 
 # npm
 npm install bits-ui @tabler/icons-svelte clsx tailwind-merge
-npm install -D tailwindcss tw-animate-css
+npm install -D tailwindcss
 
 # pnpm
 pnpm add bits-ui @tabler/icons-svelte clsx tailwind-merge
-pnpm add -D tailwindcss tw-animate-css
+pnpm add -D tailwindcss
 ```
 
 ### Global CSS
 
-The application stylesheet, `src/routes/layout.css` in xvelte, must load Tailwind CSS and `tw-animate-css`:
+The application stylesheet, `src/routes/layout.css` in xvelte, must load Tailwind CSS and the shared Animations style:
 
 ```css
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "../lib/styles/animations.css";
 ```
 
 Accordion uses the `foreground`, `muted-foreground`, `border`, and `ring` semantic color utilities. Your theme must define and expose these tokens; the values below are xvelte's light defaults:
@@ -279,7 +281,7 @@ Accordion uses the `foreground`, `muted-foreground`, `border`, and `ring` semant
 }
 ```
 
-Define equivalent values inside the application's dark selector if it supports a dark theme. No accordion-specific CSS variables or keyframes need to be copied: Bits UI supplies `--bits-accordion-content-height`, and `tw-animate-css` supplies the `animate-accordion-down` and `animate-accordion-up` utilities.
+Define equivalent values inside the application's dark selector if it supports a dark theme. No accordion-specific CSS variables or keyframes need to be copied: Bits UI supplies `--bits-accordion-content-height`, and The shared Animations style supplies the `animate-accordion-down` and `animate-accordion-up` utilities.
 
 ### Icons
 

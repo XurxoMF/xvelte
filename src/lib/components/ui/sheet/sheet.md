@@ -255,19 +255,21 @@ Title, Description, panel content, action labels, and custom close text are supp
 
 ## Dependencies
 
+This component requires the shared Animations style. Copy `src/lib/styles/animations.css` and `src/lib/styles/animations.md`, then follow the `animations.md` guide to import it.
+
 ### Packages
 
 ```sh
 # Bun
-bun add bits-ui @tabler/icons-svelte clsx tailwind-merge tw-animate-css
+bun add bits-ui @tabler/icons-svelte clsx tailwind-merge
 bun add -D @inlang/paraglide-js tailwindcss
 
 # npm
-npm install bits-ui @tabler/icons-svelte clsx tailwind-merge tw-animate-css
+npm install bits-ui @tabler/icons-svelte clsx tailwind-merge
 npm install -D @inlang/paraglide-js tailwindcss
 
 # pnpm
-pnpm add bits-ui @tabler/icons-svelte clsx tailwind-merge tw-animate-css
+pnpm add bits-ui @tabler/icons-svelte clsx tailwind-merge
 pnpm add -D @inlang/paraglide-js tailwindcss
 ```
 
@@ -281,7 +283,7 @@ export { default as CloseIcon } from "@tabler/icons-svelte/icons/x";
 
 ```css
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "../lib/styles/animations.css";
 
 :root {
 	--foreground: oklch(0.147 0.004 49.25);

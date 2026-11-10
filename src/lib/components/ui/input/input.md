@@ -375,7 +375,7 @@ The global stylesheet must load Tailwind, define the dark variant, and expose th
 }
 ```
 
-The app owns dark-mode activation. Input requires the base-layer `*:focus-visible` rule shown above, but no `tw-animate-css` import, component-specific CSS variable, keyframe, icon export from `src/lib/icons.ts`, localization message, image, font, network service, or additional layout rule.
+The app owns dark-mode activation. Input requires the base-layer `*:focus-visible` rule shown above, but no Animations style import, component-specific CSS variable, keyframe, icon export from `src/lib/icons.ts`, localization message, image, font, network service, or additional layout rule.
 
 ## Credits
 

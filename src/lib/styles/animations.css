@@ -1,0 +1,835 @@
+/* Adapted from tw-animate-css 1.4.0 for xvelte. */
+:root {
+	/* Registered properties keep animation values from leaking into descendants. */
+	@property --xv-animation-delay {
+		syntax: "*";
+		inherits: false;
+		initial-value: 0s;
+	}
+
+	@property --xv-animation-direction {
+		syntax: "*";
+		inherits: false;
+	}
+
+	@property --xv-animation-duration {
+		syntax: "*";
+		inherits: false;
+	}
+
+	@property --xv-animation-ease {
+		syntax: "*";
+		inherits: false;
+	}
+
+	@property --xv-animation-fill-mode {
+		syntax: "*";
+		inherits: false;
+		initial-value: none;
+	}
+
+	@property --xv-animation-iteration-count {
+		syntax: "*";
+		inherits: false;
+	}
+
+	@property --xv-enter-blur {
+		syntax: "*";
+		inherits: false;
+		initial-value: 0;
+	}
+
+	@property --xv-enter-opacity {
+		syntax: "*";
+		inherits: false;
+		initial-value: 1;
+	}
+
+	@property --xv-enter-rotate {
+		syntax: "*";
+		inherits: false;
+		initial-value: 0;
+	}
+
+	@property --xv-enter-scale {
+		syntax: "*";
+		inherits: false;
+		initial-value: 1;
+	}
+
+	@property --xv-enter-translate-x {
+		syntax: "*";
+		inherits: false;
+		initial-value: 0;
+	}
+
+	@property --xv-enter-translate-y {
+		syntax: "*";
+		inherits: false;
+		initial-value: 0;
+	}
+
+	@property --xv-exit-blur {
+		syntax: "*";
+		inherits: false;
+		initial-value: 0;
+	}
+
+	@property --xv-exit-opacity {
+		syntax: "*";
+		inherits: false;
+		initial-value: 1;
+	}
+
+	@property --xv-exit-rotate {
+		syntax: "*";
+		inherits: false;
+		initial-value: 0;
+	}
+
+	@property --xv-exit-scale {
+		syntax: "*";
+		inherits: false;
+		initial-value: 1;
+	}
+
+	@property --xv-exit-translate-x {
+		syntax: "*";
+		inherits: false;
+		initial-value: 0;
+	}
+
+	@property --xv-exit-translate-y {
+		syntax: "*";
+		inherits: false;
+		initial-value: 0;
+	}
+
+	@property --xv-loop-blur {
+		syntax: "*";
+		inherits: false;
+		initial-value: 0;
+	}
+
+	@property --xv-loop-opacity {
+		syntax: "*";
+		inherits: false;
+		initial-value: 1;
+	}
+
+	@property --xv-loop-rotate {
+		syntax: "*";
+		inherits: false;
+		initial-value: 0;
+	}
+
+	@property --xv-loop-scale {
+		syntax: "*";
+		inherits: false;
+		initial-value: 1;
+	}
+
+	@property --xv-loop-translate-x {
+		syntax: "*";
+		inherits: false;
+		initial-value: 0;
+	}
+
+	@property --xv-loop-translate-y {
+		syntax: "*";
+		inherits: false;
+		initial-value: 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	:root {
+		--xv-reduced-animation-duration: 1ms;
+		--xv-reduced-animation-delay: 0ms;
+		--xv-reduced-animation-iteration-count: 1;
+	}
+}
+
+@theme inline {
+	--xv-animation-delay-0: 0s;
+	--xv-animation-delay-75: 75ms;
+	--xv-animation-delay-100: 0.1s;
+	--xv-animation-delay-150: 0.15s;
+	--xv-animation-delay-200: 0.2s;
+	--xv-animation-delay-300: 0.3s;
+	--xv-animation-delay-500: 0.5s;
+	--xv-animation-delay-700: 0.7s;
+	--xv-animation-delay-1000: 1s;
+
+	--xv-animation-repeat-0: 0;
+	--xv-animation-repeat-1: 1;
+	--xv-animation-repeat-infinite: infinite;
+
+	--xv-animation-direction-normal: normal;
+	--xv-animation-direction-reverse: reverse;
+	--xv-animation-direction-alternate: alternate;
+	--xv-animation-direction-alternate-reverse: alternate-reverse;
+
+	--xv-animation-fill-none: none;
+	--xv-animation-fill-forwards: forwards;
+	--xv-animation-fill-backwards: backwards;
+	--xv-animation-fill-both: both;
+
+	--xv-animation-percentage-0: 0;
+	--xv-animation-percentage-5: 0.05;
+	--xv-animation-percentage-10: 0.1;
+	--xv-animation-percentage-15: 0.15;
+	--xv-animation-percentage-20: 0.2;
+	--xv-animation-percentage-25: 0.25;
+	--xv-animation-percentage-30: 0.3;
+	--xv-animation-percentage-35: 0.35;
+	--xv-animation-percentage-40: 0.4;
+	--xv-animation-percentage-45: 0.45;
+	--xv-animation-percentage-50: 0.5;
+	--xv-animation-percentage-55: 0.55;
+	--xv-animation-percentage-60: 0.6;
+	--xv-animation-percentage-65: 0.65;
+	--xv-animation-percentage-70: 0.7;
+	--xv-animation-percentage-75: 0.75;
+	--xv-animation-percentage-80: 0.8;
+	--xv-animation-percentage-85: 0.85;
+	--xv-animation-percentage-90: 0.9;
+	--xv-animation-percentage-95: 0.95;
+	--xv-animation-percentage-100: 1;
+	--xv-animation-translate-full: 1;
+
+	--animate-in: xv-enter var(--xv-reduced-animation-duration, var(--xv-animation-duration, var(--tw-duration, 150ms)))
+		var(--xv-animation-ease, var(--tw-ease, ease)) var(--xv-reduced-animation-delay, var(--xv-animation-delay, 0s))
+		var(--xv-reduced-animation-iteration-count, var(--xv-animation-iteration-count, 1)) var(--xv-animation-direction, normal)
+		var(--xv-animation-fill-mode, none);
+	--animate-out: xv-exit var(--xv-reduced-animation-duration, var(--xv-animation-duration, var(--tw-duration, 150ms)))
+		var(--xv-animation-ease, var(--tw-ease, ease)) var(--xv-reduced-animation-delay, var(--xv-animation-delay, 0s))
+		var(--xv-reduced-animation-iteration-count, var(--xv-animation-iteration-count, 1)) var(--xv-animation-direction, normal)
+		var(--xv-animation-fill-mode, none);
+	--animate-loop: xv-loop var(--xv-reduced-animation-duration, var(--xv-animation-duration, var(--tw-duration, 1s)))
+		var(--xv-animation-ease, var(--tw-ease, ease-in-out)) var(--xv-reduced-animation-delay, var(--xv-animation-delay, 0s))
+		var(--xv-reduced-animation-iteration-count, var(--xv-animation-iteration-count, infinite)) var(--xv-animation-direction, normal)
+		var(--xv-animation-fill-mode, none);
+
+	@keyframes xv-enter {
+		from {
+			opacity: var(--xv-enter-opacity, 1);
+			transform: translate3d(var(--xv-enter-translate-x, 0), var(--xv-enter-translate-y, 0), 0)
+				scale3d(var(--xv-enter-scale, 1), var(--xv-enter-scale, 1), var(--xv-enter-scale, 1)) rotate(var(--xv-enter-rotate, 0));
+			filter: blur(var(--xv-enter-blur, 0));
+		}
+	}
+
+	@keyframes xv-exit {
+		to {
+			opacity: var(--xv-exit-opacity, 1);
+			transform: translate3d(var(--xv-exit-translate-x, 0), var(--xv-exit-translate-y, 0), 0)
+				scale3d(var(--xv-exit-scale, 1), var(--xv-exit-scale, 1), var(--xv-exit-scale, 1)) rotate(var(--xv-exit-rotate, 0));
+			filter: blur(var(--xv-exit-blur, 0));
+		}
+	}
+
+	@keyframes xv-loop {
+		50% {
+			opacity: var(--xv-loop-opacity, 1);
+			transform: translate3d(var(--xv-loop-translate-x, 0), var(--xv-loop-translate-y, 0), 0)
+				scale3d(var(--xv-loop-scale, 1), var(--xv-loop-scale, 1), var(--xv-loop-scale, 1)) rotate(var(--xv-loop-rotate, 0));
+			filter: blur(var(--xv-loop-blur, 0));
+		}
+	}
+
+	--animate-accordion-down: xv-accordion-down var(--xv-reduced-animation-duration, var(--xv-animation-duration, var(--tw-duration, 200ms)))
+		var(--xv-animation-ease, var(--tw-ease, ease-out)) var(--xv-reduced-animation-delay, var(--xv-animation-delay, 0s))
+		var(--xv-reduced-animation-iteration-count, var(--xv-animation-iteration-count, 1)) var(--xv-animation-direction, normal)
+		var(--xv-animation-fill-mode, none);
+	--animate-accordion-up: xv-accordion-up var(--xv-reduced-animation-duration, var(--xv-animation-duration, var(--tw-duration, 200ms)))
+		var(--xv-animation-ease, var(--tw-ease, ease-out)) var(--xv-reduced-animation-delay, var(--xv-animation-delay, 0s))
+		var(--xv-reduced-animation-iteration-count, var(--xv-animation-iteration-count, 1)) var(--xv-animation-direction, normal)
+		var(--xv-animation-fill-mode, none);
+	--animate-collapsible-down: xv-collapsible-down var(--xv-reduced-animation-duration, var(--xv-animation-duration, var(--tw-duration, 200ms)))
+		var(--xv-animation-ease, var(--tw-ease, ease-out)) var(--xv-reduced-animation-delay, var(--xv-animation-delay, 0s))
+		var(--xv-reduced-animation-iteration-count, var(--xv-animation-iteration-count, 1)) var(--xv-animation-direction, normal)
+		var(--xv-animation-fill-mode, none);
+	--animate-collapsible-up: xv-collapsible-up var(--xv-reduced-animation-duration, var(--xv-animation-duration, var(--tw-duration, 200ms)))
+		var(--xv-animation-ease, var(--tw-ease, ease-out)) var(--xv-reduced-animation-delay, var(--xv-animation-delay, 0s))
+		var(--xv-reduced-animation-iteration-count, var(--xv-animation-iteration-count, 1)) var(--xv-animation-direction, normal)
+		var(--xv-animation-fill-mode, none);
+
+	@keyframes xv-accordion-down {
+		from {
+			height: 0;
+		}
+		to {
+			height: var(
+				--radix-accordion-content-height,
+				var(
+					--bits-accordion-content-height,
+					var(--reka-accordion-content-height, var(--kb-accordion-content-height, var(--ngp-accordion-content-height, auto)))
+				)
+			);
+		}
+	}
+
+	@keyframes xv-accordion-up {
+		from {
+			height: var(
+				--radix-accordion-content-height,
+				var(
+					--bits-accordion-content-height,
+					var(--reka-accordion-content-height, var(--kb-accordion-content-height, var(--ngp-accordion-content-height, auto)))
+				)
+			);
+		}
+		to {
+			height: 0;
+		}
+	}
+
+	@keyframes xv-collapsible-down {
+		from {
+			height: 0;
+		}
+		to {
+			height: var(
+				--radix-collapsible-content-height,
+				var(--bits-collapsible-content-height, var(--reka-collapsible-content-height, var(--kb-collapsible-content-height, auto)))
+			);
+		}
+	}
+
+	@keyframes xv-collapsible-up {
+		from {
+			height: var(
+				--radix-collapsible-content-height,
+				var(--bits-collapsible-content-height, var(--reka-collapsible-content-height, var(--kb-collapsible-content-height, auto)))
+			);
+		}
+		to {
+			height: 0;
+		}
+	}
+
+	--animate-caret-blink: xv-caret-blink var(--xv-reduced-animation-duration, var(--xv-animation-duration, 1.25s)) var(--xv-animation-ease, ease-out)
+		var(--xv-reduced-animation-delay, var(--xv-animation-delay, 0s))
+		var(--xv-reduced-animation-iteration-count, var(--xv-animation-iteration-count, infinite)) var(--xv-animation-direction, normal)
+		var(--xv-animation-fill-mode, none);
+
+	@keyframes xv-caret-blink {
+		0%,
+		70%,
+		100% {
+			opacity: 1;
+		}
+		20%,
+		50% {
+			opacity: 0;
+		}
+	}
+}
+
+@utility animation-duration-* {
+	--xv-animation-duration: calc(--value(number) * 1ms);
+	--xv-animation-duration: --value(--animation-duration-*, [duration], "initial", [*]);
+	animation-duration: calc(--value(number) * 1ms);
+	animation-duration: --value(--animation-duration-*, [duration], "initial", [*]);
+
+	@media (prefers-reduced-motion: reduce) {
+		animation-duration: 1ms !important;
+	}
+}
+
+@utility animation-delay-* {
+	animation-delay: calc(--value(number) * 1ms);
+	animation-delay: --value(--xv-animation-delay-*, [duration], "initial", [*]);
+	--xv-animation-delay: calc(--value(number) * 1ms);
+	--xv-animation-delay: --value(--xv-animation-delay-*, [duration], "initial", [*]);
+
+	@media (prefers-reduced-motion: reduce) {
+		animation-delay: 0ms !important;
+	}
+}
+
+@utility animation-ease-* {
+	animation-timing-function: --value(--ease-*, [*]);
+	--xv-animation-ease: --value(--ease-*, [*]);
+}
+
+@utility animation-repeat-* {
+	animation-iteration-count: --value(--xv-animation-repeat-*, number, "initial", [*]);
+	--xv-animation-iteration-count: --value(--xv-animation-repeat-*, number, "initial", [*]);
+
+	@media (prefers-reduced-motion: reduce) {
+		animation-iteration-count: 1 !important;
+	}
+}
+
+@utility animation-direction-* {
+	animation-direction: --value(--xv-animation-direction-*, "initial", [*]);
+	--xv-animation-direction: --value(--xv-animation-direction-*, "initial", [*]);
+}
+
+@utility animation-fill-* {
+	animation-fill-mode: --value(--xv-animation-fill-*, "initial", [*]);
+	--xv-animation-fill-mode: --value(--xv-animation-fill-*, "initial", [*]);
+}
+
+@utility animation-running {
+	animation-play-state: running;
+}
+
+@utility animation-paused {
+	animation-play-state: paused;
+}
+
+@utility animation-play-state-* {
+	animation-play-state: --value("initial", [*]);
+}
+
+@utility animate-loop-* {
+	--xv-animation-iteration-count: --value(integer, [number]);
+	animation: var(--animate-loop);
+
+	@media (prefers-reduced-motion: reduce) {
+		animation-duration: 1ms !important;
+		animation-delay: 0ms !important;
+		animation-iteration-count: 1 !important;
+	}
+}
+
+@utility blur-in {
+	--xv-enter-blur: 20px;
+}
+
+@utility blur-in-* {
+	--xv-enter-blur: calc(--value(number) * 1px);
+	--xv-enter-blur: --value(--blur-*, [*]);
+}
+
+@utility blur-out {
+	--xv-exit-blur: 20px;
+}
+
+@utility blur-out-* {
+	--xv-exit-blur: calc(--value(number) * 1px);
+	--xv-exit-blur: --value(--blur-*, [*]);
+}
+
+@utility blur-loop {
+	--xv-loop-blur: 20px;
+}
+
+@utility blur-loop-* {
+	--xv-loop-blur: calc(--value(number) * 1px);
+	--xv-loop-blur: --value(--blur-*, [*]);
+}
+
+@utility fade-in {
+	--xv-enter-opacity: 0;
+}
+
+@utility fade-in-* {
+	--xv-enter-opacity: calc(--value(number) / 100);
+	--xv-enter-opacity: --value(--xv-animation-percentage-*, [*]);
+}
+
+@utility fade-out {
+	--xv-exit-opacity: 0;
+}
+
+@utility fade-out-* {
+	--xv-exit-opacity: calc(--value(number) / 100);
+	--xv-exit-opacity: --value(--xv-animation-percentage-*, [*]);
+}
+
+@utility fade-loop {
+	--xv-loop-opacity: 0;
+}
+
+@utility fade-loop-* {
+	--xv-loop-opacity: calc(--value(number) / 100);
+	--xv-loop-opacity: --value(--xv-animation-percentage-*, [*]);
+}
+
+@utility zoom-in {
+	--xv-enter-scale: 0;
+}
+
+@utility zoom-in-* {
+	--xv-enter-scale: calc(--value(number) * 1%);
+	--xv-enter-scale: calc(--value(ratio));
+	--xv-enter-scale: --value(--xv-animation-percentage-*, [*]);
+}
+
+@utility -zoom-in-* {
+	--xv-enter-scale: calc(--value(number) * -1%);
+	--xv-enter-scale: calc(--value(ratio) * -1);
+	--xv-enter-scale: --value(--xv-animation-percentage-*, [*]);
+}
+
+@utility zoom-out {
+	--xv-exit-scale: 0;
+}
+
+@utility zoom-out-* {
+	--xv-exit-scale: calc(--value(number) * 1%);
+	--xv-exit-scale: calc(--value(ratio));
+	--xv-exit-scale: --value(--xv-animation-percentage-*, [*]);
+}
+
+@utility -zoom-out-* {
+	--xv-exit-scale: calc(--value(number) * -1%);
+	--xv-exit-scale: calc(--value(ratio) * -1);
+	--xv-exit-scale: --value(--xv-animation-percentage-*, [*]);
+}
+
+@utility zoom-loop {
+	--xv-loop-scale: 0;
+}
+
+@utility zoom-loop-* {
+	--xv-loop-scale: calc(--value(number) * 1%);
+	--xv-loop-scale: calc(--value(ratio));
+	--xv-loop-scale: --value(--xv-animation-percentage-*, [*]);
+}
+
+@utility -zoom-loop-* {
+	--xv-loop-scale: calc(--value(number) * -1%);
+	--xv-loop-scale: calc(--value(ratio) * -1);
+	--xv-loop-scale: --value(--xv-animation-percentage-*, [*]);
+}
+
+@utility spin-in {
+	--xv-enter-rotate: 30deg;
+}
+
+@utility spin-in-* {
+	--xv-enter-rotate: calc(--value(number) * 1deg);
+	--xv-enter-rotate: calc(--value(ratio) * 360deg);
+	--xv-enter-rotate: --value(--rotate-*, [*]);
+}
+
+@utility -spin-in {
+	--xv-enter-rotate: -30deg;
+}
+
+@utility -spin-in-* {
+	--xv-enter-rotate: calc(--value(number) * -1deg);
+	--xv-enter-rotate: calc(--value(ratio) * -360deg);
+	--xv-enter-rotate: --value(--rotate-*, [*]);
+}
+
+@utility spin-out {
+	--xv-exit-rotate: 30deg;
+}
+
+@utility spin-out-* {
+	--xv-exit-rotate: calc(--value(number) * 1deg);
+	--xv-exit-rotate: calc(--value(ratio) * 360deg);
+	--xv-exit-rotate: --value(--rotate-*, [*]);
+}
+
+@utility -spin-out {
+	--xv-exit-rotate: -30deg;
+}
+
+@utility -spin-out-* {
+	--xv-exit-rotate: calc(--value(number) * -1deg);
+	--xv-exit-rotate: calc(--value(ratio) * -360deg);
+	--xv-exit-rotate: --value(--rotate-*, [*]);
+}
+
+@utility spin-loop {
+	--xv-loop-rotate: 30deg;
+}
+
+@utility spin-loop-* {
+	--xv-loop-rotate: calc(--value(number) * 1deg);
+	--xv-loop-rotate: calc(--value(ratio) * 360deg);
+	--xv-loop-rotate: --value(--rotate-*, [*]);
+}
+
+@utility -spin-loop {
+	--xv-loop-rotate: -30deg;
+}
+
+@utility -spin-loop-* {
+	--xv-loop-rotate: calc(--value(number) * -1deg);
+	--xv-loop-rotate: calc(--value(ratio) * -360deg);
+	--xv-loop-rotate: --value(--rotate-*, [*]);
+}
+
+@utility slide-in-from-top {
+	--xv-enter-translate-y: -100%;
+}
+
+@utility slide-in-from-top-* {
+	--xv-enter-translate-y: calc(--value(integer) * var(--spacing) * -1);
+	--xv-enter-translate-y: calc(--value(--xv-animation-percentage-*, --xv-animation-percentage-translate-*) * -100%);
+	--xv-enter-translate-y: calc(--value(ratio) * -100%);
+	--xv-enter-translate-y: calc(--value(--translate-*, [percentage], [length]) * -1);
+}
+
+@utility slide-in-from-bottom {
+	--xv-enter-translate-y: 100%;
+}
+
+@utility slide-in-from-bottom-* {
+	--xv-enter-translate-y: calc(--value(integer) * var(--spacing));
+	--xv-enter-translate-y: calc(--value(--xv-animation-percentage-*, --xv-animation-percentage-translate-*) * 100%);
+	--xv-enter-translate-y: calc(--value(ratio) * 100%);
+	--xv-enter-translate-y: --value(--translate-*, [percentage], [length]);
+}
+
+@utility slide-in-from-left {
+	--xv-enter-translate-x: -100%;
+}
+
+@utility slide-in-from-left-* {
+	--xv-enter-translate-x: calc(--value(integer) * var(--spacing) * -1);
+	--xv-enter-translate-x: calc(--value(--xv-animation-percentage-*, --xv-animation-percentage-translate-*) * -100%);
+	--xv-enter-translate-x: calc(--value(ratio) * -100%);
+	--xv-enter-translate-x: calc(--value(--translate-*, [percentage], [length]) * -1);
+}
+
+@utility slide-in-from-right {
+	--xv-enter-translate-x: 100%;
+}
+
+@utility slide-in-from-right-* {
+	--xv-enter-translate-x: calc(--value(integer) * var(--spacing));
+	--xv-enter-translate-x: calc(--value(--xv-animation-percentage-*, --xv-animation-percentage-translate-*) * 100%);
+	--xv-enter-translate-x: calc(--value(ratio) * 100%);
+	--xv-enter-translate-x: --value(--translate-*, [percentage], [length]);
+}
+
+@utility slide-in-from-start {
+	&:dir(ltr) {
+		--xv-enter-translate-x: -100%;
+	}
+	&:dir(rtl) {
+		--xv-enter-translate-x: 100%;
+	}
+}
+
+@utility slide-in-from-start-* {
+	&:where(:dir(ltr), [dir="ltr"], [dir="ltr"] *) {
+		--xv-enter-translate-x: calc(--value(integer) * var(--spacing) * -1);
+		--xv-enter-translate-x: calc(--value(--xv-animation-percentage-*, --xv-animation-percentage-translate-*) * -100%);
+		--xv-enter-translate-x: calc(--value(ratio) * -100%);
+		--xv-enter-translate-x: calc(--value(--translate-*, [percentage], [length]) * -1);
+	}
+	&:where(:dir(rtl), [dir="rtl"], [dir="rtl"] *) {
+		--xv-enter-translate-x: calc(--value(integer) * var(--spacing));
+		--xv-enter-translate-x: calc(--value(--xv-animation-percentage-*, --xv-animation-percentage-translate-*) * 100%);
+		--xv-enter-translate-x: calc(--value(ratio) * 100%);
+		--xv-enter-translate-x: --value(--translate-*, [percentage], [length]);
+	}
+}
+
+@utility slide-in-from-end {
+	&:dir(ltr) {
+		--xv-enter-translate-x: 100%;
+	}
+	&:dir(rtl) {
+		--xv-enter-translate-x: -100%;
+	}
+}
+
+@utility slide-in-from-end-* {
+	&:where(:dir(ltr), [dir="ltr"], [dir="ltr"] *) {
+		--xv-enter-translate-x: calc(--value(integer) * var(--spacing));
+		--xv-enter-translate-x: calc(--value(--xv-animation-percentage-*, --xv-animation-percentage-translate-*) * 100%);
+		--xv-enter-translate-x: calc(--value(ratio) * 100%);
+		--xv-enter-translate-x: --value(--translate-*, [percentage], [length]);
+	}
+	&:where(:dir(rtl), [dir="rtl"], [dir="rtl"] *) {
+		--xv-enter-translate-x: calc(--value(integer) * var(--spacing) * -1);
+		--xv-enter-translate-x: calc(--value(--xv-animation-percentage-*, --xv-animation-percentage-translate-*) * -100%);
+		--xv-enter-translate-x: calc(--value(ratio) * -100%);
+		--xv-enter-translate-x: calc(--value(--translate-*, [percentage], [length]) * -1);
+	}
+}
+
+@utility slide-out-to-top {
+	--xv-exit-translate-y: -100%;
+}
+
+@utility slide-out-to-top-* {
+	--xv-exit-translate-y: calc(--value(integer) * var(--spacing) * -1);
+	--xv-exit-translate-y: calc(--value(--xv-animation-percentage-*, --xv-animation-percentage-translate-*) * -100%);
+	--xv-exit-translate-y: calc(--value(ratio) * -100%);
+	--xv-exit-translate-y: calc(--value(--translate-*, [percentage], [length]) * -1);
+}
+
+@utility slide-out-to-bottom {
+	--xv-exit-translate-y: 100%;
+}
+
+@utility slide-out-to-bottom-* {
+	--xv-exit-translate-y: calc(--value(integer) * var(--spacing));
+	--xv-exit-translate-y: calc(--value(--xv-animation-percentage-*, --xv-animation-percentage-translate-*) * 100%);
+	--xv-exit-translate-y: calc(--value(ratio) * 100%);
+	--xv-exit-translate-y: --value(--translate-*, [percentage], [length]);
+}
+
+@utility slide-out-to-left {
+	--xv-exit-translate-x: -100%;
+}
+
+@utility slide-out-to-left-* {
+	--xv-exit-translate-x: calc(--value(integer) * var(--spacing) * -1);
+	--xv-exit-translate-x: calc(--value(--xv-animation-percentage-*, --xv-animation-percentage-translate-*) * -100%);
+	--xv-exit-translate-x: calc(--value(ratio) * -100%);
+	--xv-exit-translate-x: calc(--value(--translate-*, [percentage], [length]) * -1);
+}
+
+@utility slide-out-to-right {
+	--xv-exit-translate-x: 100%;
+}
+
+@utility slide-out-to-right-* {
+	--xv-exit-translate-x: calc(--value(integer) * var(--spacing));
+	--xv-exit-translate-x: calc(--value(--xv-animation-percentage-*, --xv-animation-percentage-translate-*) * 100%);
+	--xv-exit-translate-x: calc(--value(ratio) * 100%);
+	--xv-exit-translate-x: --value(--translate-*, [percentage], [length]);
+}
+
+@utility slide-out-to-start {
+	&:dir(ltr) {
+		--xv-exit-translate-x: -100%;
+	}
+	&:dir(rtl) {
+		--xv-exit-translate-x: 100%;
+	}
+}
+
+@utility slide-out-to-start-* {
+	&:where(:dir(ltr), [dir="ltr"], [dir="ltr"] *) {
+		--xv-exit-translate-x: calc(--value(integer) * var(--spacing) * -1);
+		--xv-exit-translate-x: calc(--value(--xv-animation-percentage-*, --xv-animation-percentage-translate-*) * -100%);
+		--xv-exit-translate-x: calc(--value(ratio) * -100%);
+		--xv-exit-translate-x: calc(--value(--translate-*, [percentage], [length]) * -1);
+	}
+	&:where(:dir(rtl), [dir="rtl"], [dir="rtl"] *) {
+		--xv-exit-translate-x: calc(--value(integer) * var(--spacing));
+		--xv-exit-translate-x: calc(--value(--xv-animation-percentage-*, --xv-animation-percentage-translate-*) * 100%);
+		--xv-exit-translate-x: calc(--value(ratio) * 100%);
+		--xv-exit-translate-x: --value(--translate-*, [percentage], [length]);
+	}
+}
+
+@utility slide-out-to-end {
+	&:dir(ltr) {
+		--xv-exit-translate-x: 100%;
+	}
+	&:dir(rtl) {
+		--xv-exit-translate-x: -100%;
+	}
+}
+
+@utility slide-out-to-end-* {
+	&:where(:dir(ltr), [dir="ltr"], [dir="ltr"] *) {
+		--xv-exit-translate-x: calc(--value(integer) * var(--spacing));
+		--xv-exit-translate-x: calc(--value(--xv-animation-percentage-*, --xv-animation-percentage-translate-*) * 100%);
+		--xv-exit-translate-x: calc(--value(ratio) * 100%);
+		--xv-exit-translate-x: --value(--translate-*, [percentage], [length]);
+	}
+	&:where(:dir(rtl), [dir="rtl"], [dir="rtl"] *) {
+		--xv-exit-translate-x: calc(--value(integer) * var(--spacing) * -1);
+		--xv-exit-translate-x: calc(--value(--xv-animation-percentage-*, --xv-animation-percentage-translate-*) * -100%);
+		--xv-exit-translate-x: calc(--value(ratio) * -100%);
+		--xv-exit-translate-x: calc(--value(--translate-*, [percentage], [length]) * -1);
+	}
+}
+
+@utility slide-loop-to-top {
+	--xv-loop-translate-y: -100%;
+}
+
+@utility slide-loop-to-top-* {
+	--xv-loop-translate-y: calc(--value(integer) * var(--spacing) * -1);
+	--xv-loop-translate-y: calc(--value(--xv-animation-percentage-*, --xv-animation-translate-full) * -100%);
+	--xv-loop-translate-y: calc(--value(ratio) * -100%);
+	--xv-loop-translate-y: calc(--value(--translate-*, [percentage], [length]) * -1);
+}
+
+@utility slide-loop-to-bottom {
+	--xv-loop-translate-y: 100%;
+}
+
+@utility slide-loop-to-bottom-* {
+	--xv-loop-translate-y: calc(--value(integer) * var(--spacing));
+	--xv-loop-translate-y: calc(--value(--xv-animation-percentage-*, --xv-animation-translate-full) * 100%);
+	--xv-loop-translate-y: calc(--value(ratio) * 100%);
+	--xv-loop-translate-y: --value(--translate-*, [percentage], [length]);
+}
+
+@utility slide-loop-to-left {
+	--xv-loop-translate-x: -100%;
+}
+
+@utility slide-loop-to-left-* {
+	--xv-loop-translate-x: calc(--value(integer) * var(--spacing) * -1);
+	--xv-loop-translate-x: calc(--value(--xv-animation-percentage-*, --xv-animation-translate-full) * -100%);
+	--xv-loop-translate-x: calc(--value(ratio) * -100%);
+	--xv-loop-translate-x: calc(--value(--translate-*, [percentage], [length]) * -1);
+}
+
+@utility slide-loop-to-right {
+	--xv-loop-translate-x: 100%;
+}
+
+@utility slide-loop-to-right-* {
+	--xv-loop-translate-x: calc(--value(integer) * var(--spacing));
+	--xv-loop-translate-x: calc(--value(--xv-animation-percentage-*, --xv-animation-translate-full) * 100%);
+	--xv-loop-translate-x: calc(--value(ratio) * 100%);
+	--xv-loop-translate-x: --value(--translate-*, [percentage], [length]);
+}
+
+@utility slide-loop-to-start {
+	&:dir(ltr) {
+		--xv-loop-translate-x: -100%;
+	}
+	&:dir(rtl) {
+		--xv-loop-translate-x: 100%;
+	}
+}
+
+@utility slide-loop-to-start-* {
+	&:where(:dir(ltr), [dir="ltr"], [dir="ltr"] *) {
+		--xv-loop-translate-x: calc(--value(integer) * var(--spacing) * -1);
+		--xv-loop-translate-x: calc(--value(--xv-animation-percentage-*, --xv-animation-translate-full) * -100%);
+		--xv-loop-translate-x: calc(--value(ratio) * -100%);
+		--xv-loop-translate-x: calc(--value(--translate-*, [percentage], [length]) * -1);
+	}
+	&:where(:dir(rtl), [dir="rtl"], [dir="rtl"] *) {
+		--xv-loop-translate-x: calc(--value(integer) * var(--spacing));
+		--xv-loop-translate-x: calc(--value(--xv-animation-percentage-*, --xv-animation-translate-full) * 100%);
+		--xv-loop-translate-x: calc(--value(ratio) * 100%);
+		--xv-loop-translate-x: --value(--translate-*, [percentage], [length]);
+	}
+}
+
+@utility slide-loop-to-end {
+	&:dir(ltr) {
+		--xv-loop-translate-x: 100%;
+	}
+	&:dir(rtl) {
+		--xv-loop-translate-x: -100%;
+	}
+}
+
+@utility slide-loop-to-end-* {
+	&:where(:dir(ltr), [dir="ltr"], [dir="ltr"] *) {
+		--xv-loop-translate-x: calc(--value(integer) * var(--spacing));
+		--xv-loop-translate-x: calc(--value(--xv-animation-percentage-*, --xv-animation-translate-full) * 100%);
+		--xv-loop-translate-x: calc(--value(ratio) * 100%);
+		--xv-loop-translate-x: --value(--translate-*, [percentage], [length]);
+	}
+	&:where(:dir(rtl), [dir="rtl"], [dir="rtl"] *) {
+		--xv-loop-translate-x: calc(--value(integer) * var(--spacing) * -1);
+		--xv-loop-translate-x: calc(--value(--xv-animation-percentage-*, --xv-animation-translate-full) * -100%);
+		--xv-loop-translate-x: calc(--value(ratio) * -100%);
+		--xv-loop-translate-x: calc(--value(--translate-*, [percentage], [length]) * -1);
+	}
+}

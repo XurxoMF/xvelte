@@ -543,7 +543,7 @@ The global stylesheet must load Tailwind, define the dark variant, and expose th
 }
 ```
 
-The app owns dark-mode activation. Input Group requires no Bits UI package, `tw-animate-css` import, base-layer rule, animation, keyframe, icon export from `src/lib/icons.ts`, localization message, hook, attachment, context file, image, font, network service, or additional shared stylesheet.
+The app owns dark-mode activation. Input Group requires no Bits UI package, Animations style import, base-layer rule, animation, keyframe, icon export from `src/lib/icons.ts`, localization message, hook, attachment, context file, image, font, network service, or additional shared stylesheet.
 
 ## Credits
 

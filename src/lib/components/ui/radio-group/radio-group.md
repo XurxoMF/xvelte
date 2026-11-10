@@ -410,7 +410,7 @@ Load Tailwind CSS, configure the class-based dark variant, expose the checked-st
 }
 ```
 
-No keyframe, `tw-animate-css` import, font, radius variable, or component-specific CSS variable is required.
+No keyframe, Animations style import, font, radius variable, or component-specific CSS variable is required.
 
 ## Credits
 

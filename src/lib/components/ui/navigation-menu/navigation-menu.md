@@ -281,7 +281,7 @@ Bits UI owns these relevant state hooks:
 
 The active Viewport publishes `--bits-navigation-menu-viewport-width` and `--bits-navigation-menu-viewport-height`. The local viewport adds `1rem` to both measured dimensions so its `p-1` content padding fits inside.
 
-The component uses `popover`, `popover-foreground`, `foreground`, `muted`, `border`, and `ring` semantic colors plus the shared radius scale. `tw-animate-css` supplies fade, zoom, and directional slide animations.
+The component uses `popover`, `popover-foreground`, `foreground`, `muted`, `border`, and `ring` semantic colors plus the shared radius scale. The shared Animations style supplies fade, zoom, and directional slide animations.
 
 Trigger and Link receive their three-pixel, 50%-opacity semantic `ring` halo from the required global `*:focus-visible` rule. Content does not cancel that treatment for nested links.
 
@@ -311,6 +311,8 @@ Use `Root.dir` for `"ltr"` or `"rtl"` behavior when direction is not inherited c
 
 ## Dependencies
 
+This component requires the shared Animations style. Copy `src/lib/styles/animations.css` and `src/lib/styles/animations.md`, then follow the `animations.md` guide to import it.
+
 ### Packages
 
 Use the commands for your package manager; runtime dependencies come first and development dependencies use `-D`:
@@ -318,15 +320,15 @@ Use the commands for your package manager; runtime dependencies come first and d
 ```sh
 # Bun
 bun add bits-ui @tabler/icons-svelte clsx tailwind-merge
-bun add -D tailwindcss tw-animate-css
+bun add -D tailwindcss
 
 # npm
 npm install bits-ui @tabler/icons-svelte clsx tailwind-merge
-npm install -D tailwindcss tw-animate-css
+npm install -D tailwindcss
 
 # pnpm
 pnpm add bits-ui @tabler/icons-svelte clsx tailwind-merge
-pnpm add -D tailwindcss tw-animate-css
+pnpm add -D tailwindcss
 ```
 
 ### Global styles and theme variables
@@ -335,7 +337,7 @@ Import Tailwind and the animation utilities, define the state variants used by t
 
 ```css
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "../lib/styles/animations.css";
 
 :root {
 	--radius: 0.45rem;

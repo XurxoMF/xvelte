@@ -240,7 +240,7 @@ Label's local styles use Tailwind utilities without semantic color variables, da
 @import "tailwindcss";
 ```
 
-Label requires no `tw-animate-css` import, semantic CSS variable, `@theme` mapping, base-layer rule, keyframe, icon export from `src/lib/icons.ts`, localization message, other xvelte component, hook, attachment, context, image, font, network service, or additional layout rule.
+Label requires no Animations style import, semantic CSS variable, `@theme` mapping, base-layer rule, keyframe, icon export from `src/lib/icons.ts`, localization message, other xvelte component, hook, attachment, context, image, font, network service, or additional layout rule.
 
 ## Credits
 

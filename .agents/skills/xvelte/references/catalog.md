@@ -119,6 +119,7 @@ Paths are relative to `src/lib/hooks`.
 
 Paths are relative to `src/lib/styles`.
 
+- `animations.css` — composable entrance, exit, loop, disclosure, and caret animations with modular effects, finite or infinite repetition, animation-specific timing controls, and automatic reduced-motion handling
 - `scroll-fade.css` — direction-aware, scroll-position-aware edge fades for overflowing content, with physical and logical directions, independent sizing, a static browser fallback, and right-to-left support
 - `shimmer.css` — a current-color text shimmer with configurable color, duration, spread, angle, repetition, direction, reduced-motion handling, and right-to-left support
 

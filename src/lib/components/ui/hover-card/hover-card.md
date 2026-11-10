@@ -305,22 +305,24 @@ Placement values, open state, delay values, CSS variables, and `data-*` attribut
 
 ## Dependencies
 
-Hover Card expects a Svelte 5 project using Tailwind CSS 4. It requires Bits UI's Link Preview primitive, shared utility helpers, and `tw-animate-css`.
+This component requires the shared Animations style. Copy `src/lib/styles/animations.css` and `src/lib/styles/animations.md`, then follow the `animations.md` guide to import it.
+
+Hover Card expects a Svelte 5 project using Tailwind CSS 4. It requires Bits UI's Link Preview primitive, shared utility helpers, and the shared Animations style.
 
 Install all runtime dependencies first and development dependencies second in the same package-manager group:
 
 ```sh
 # bun
 bun add bits-ui clsx tailwind-merge
-bun add -D tailwindcss tw-animate-css
+bun add -D tailwindcss
 
 # npm
 npm install bits-ui clsx tailwind-merge
-npm install -D tailwindcss tw-animate-css
+npm install -D tailwindcss
 
 # pnpm
 pnpm add bits-ui clsx tailwind-merge
-pnpm add -D tailwindcss tw-animate-css
+pnpm add -D tailwindcss
 ```
 
 ### Component files
@@ -366,11 +368,11 @@ The package block includes `clsx` and `tailwind-merge`, which `cn` imports.
 
 ### Global CSS
 
-The global stylesheet must import Tailwind and `tw-animate-css`, expose the semantic surface and radius values, and define the local open/closed variants. These are xvelte's defaults; apps may replace the values while preserving their names and mappings:
+The global stylesheet must import Tailwind and the shared Animations style, expose the semantic surface and radius values, and define the local open/closed variants. These are xvelte's defaults; apps may replace the values while preserving their names and mappings:
 
 ```css
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "../lib/styles/animations.css";
 
 :root {
 	--foreground: oklch(0.147 0.004 49.25);

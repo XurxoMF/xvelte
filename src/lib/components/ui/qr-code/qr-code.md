@@ -316,7 +316,7 @@ Load Tailwind CSS and expose the semantic background used behind an optional log
 }
 ```
 
-Define the dark value only when your app supports a dark theme. No custom variant, keyframe, `tw-animate-css` import, icon style, font, radius variable, or component-specific CSS variable is required.
+Define the dark value only when your app supports a dark theme. No custom variant, keyframe, Animations style import, icon style, font, radius variable, or component-specific CSS variable is required.
 
 ### Localization setup
 

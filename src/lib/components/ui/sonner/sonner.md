@@ -230,7 +230,7 @@ pnpm add svelte-sonner mode-watcher @tabler/icons-svelte
 pnpm add -D tailwindcss
 ```
 
-`clsx`, `tailwind-merge`, `tw-animate-css`, and Paraglide are not used by this wrapper.
+`clsx`, `tailwind-merge`, the shared Animations style, and Paraglide are not used by this wrapper.
 
 ### Icon facade
 

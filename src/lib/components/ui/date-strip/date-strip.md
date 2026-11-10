@@ -231,20 +231,22 @@ There is no formatter prop, explicit week-start prop, or message ID. Navigation 
 
 ## Dependencies
 
-Date Strip requires `@internationalized/date`, the shared Button component, two semantic Tabler icon exports, the shared `cn` helper, Tailwind Variants through Button, Tailwind CSS, and `tw-animate-css`. Install all package requirements with one of these command groups:
+This component requires the shared Animations style. Copy `src/lib/styles/animations.css` and `src/lib/styles/animations.md`, then follow the `animations.md` guide to import it.
+
+Date Strip requires `@internationalized/date`, the shared Button component, two semantic Tabler icon exports, the shared `cn` helper, Tailwind Variants through Button, Tailwind CSS, and the shared Animations style. Install all package requirements with one of these command groups:
 
 ```sh
 # bun
 bun add @internationalized/date @tabler/icons-svelte tailwind-variants clsx tailwind-merge
-bun add -D @inlang/paraglide-js tailwindcss tw-animate-css
+bun add -D @inlang/paraglide-js tailwindcss
 
 # npm
 npm install @internationalized/date @tabler/icons-svelte tailwind-variants clsx tailwind-merge
-npm install -D @inlang/paraglide-js tailwindcss tw-animate-css
+npm install -D @inlang/paraglide-js tailwindcss
 
 # pnpm
 pnpm add @internationalized/date @tabler/icons-svelte tailwind-variants clsx tailwind-merge
-pnpm add -D @inlang/paraglide-js tailwindcss tw-animate-css
+pnpm add -D @inlang/paraglide-js tailwindcss
 ```
 
 ### Shared utilities
@@ -330,11 +332,11 @@ This context is an internal implementation file, not an additional public import
 
 ### Global CSS
 
-The global stylesheet must import Tailwind and `tw-animate-css`, define the dark variant used by Button, and expose the semantic colors and radius values used by Date Strip and its internal Buttons. The values below are xvelte's defaults and may be replaced while preserving their names and mappings:
+The global stylesheet must import Tailwind and the shared Animations style, define the dark variant used by Button, and expose the semantic colors and radius values used by Date Strip and its internal Buttons. The values below are xvelte's defaults and may be replaced while preserving their names and mappings:
 
 ```css
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "../lib/styles/animations.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -385,7 +387,7 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define the dark
 }
 ```
 
-`tw-animate-css` supplies the enter, fade, and directional slide utilities. No Date Strip-specific keyframe or shared component stylesheet must be copied. The app remains responsible for applying its `.dark` class when dark mode is supported.
+The shared Animations style supplies the enter, fade, and directional slide utilities. No Date Strip-specific keyframe or shared component stylesheet must be copied. The app remains responsible for applying its `.dark` class when dark mode is supported.
 
 ### Other requirements
 

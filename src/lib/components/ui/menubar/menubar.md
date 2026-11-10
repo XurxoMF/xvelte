@@ -281,7 +281,7 @@ The stable xvelte selectors are:
 
 `Menu`, `Portal`, and `Sub` do not render a local `data-slot`. Bits UI owns interaction attributes such as `data-open`, `data-closed`, `data-disabled`, and positioned-content `data-side`; these are dependency behavior rather than renamed xvelte state.
 
-The component uses the `popover`, `foreground`, `accent`, `muted`, `danger`, and `border` color families plus the shared radius scale. `Content` and `SubContent` use `tw-animate-css` utilities for opening, closing, fading, zooming, and directional movement.
+The component uses the `popover`, `foreground`, `accent`, `muted`, `danger`, and `border` color families plus the shared radius scale. `Content` and `SubContent` use the shared Animations style utilities for opening, closing, fading, zooming, and directional movement.
 
 Top-level Trigger and focused items receive the standard three-pixel, 50%-opacity semantic `ring` treatment from the required global `*:focus-visible` rule. Items inside an open menu additionally retain the conventional accent-background highlight used by the roving-focus menu pattern.
 
@@ -317,6 +317,8 @@ Pass the interface direction through `Root.dir` when it is not inherited correct
 
 ## Dependencies
 
+This component requires the shared Animations style. Copy `src/lib/styles/animations.css` and `src/lib/styles/animations.md`, then follow the `animations.md` guide to import it.
+
 ### Packages
 
 Use the commands for your package manager; runtime dependencies come first and development dependencies use `-D`:
@@ -324,15 +326,15 @@ Use the commands for your package manager; runtime dependencies come first and d
 ```sh
 # Bun
 bun add bits-ui @tabler/icons-svelte clsx tailwind-merge
-bun add -D tailwindcss tw-animate-css
+bun add -D tailwindcss
 
 # npm
 npm install bits-ui @tabler/icons-svelte clsx tailwind-merge
-npm install -D tailwindcss tw-animate-css
+npm install -D tailwindcss
 
 # pnpm
 pnpm add bits-ui @tabler/icons-svelte clsx tailwind-merge
-pnpm add -D tailwindcss tw-animate-css
+pnpm add -D tailwindcss
 ```
 
 ### Global styles and theme variables
@@ -341,7 +343,7 @@ Import Tailwind and the animation utilities, then provide the semantic variables
 
 ```css
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "../lib/styles/animations.css";
 
 @custom-variant dark (&:is(.dark *));
 

@@ -275,19 +275,21 @@ The `value` strings submitted to forms are implementation values and normally re
 
 ## Dependencies
 
+This component requires the shared Animations style. Copy `src/lib/styles/animations.css` and `src/lib/styles/animations.md`, then follow the `animations.md` guide to import it.
+
 ### Packages
 
 ```sh
 # Bun
-bun add bits-ui @tabler/icons-svelte clsx tailwind-merge tw-animate-css
+bun add bits-ui @tabler/icons-svelte clsx tailwind-merge
 bun add -D tailwindcss
 
 # npm
-npm install bits-ui @tabler/icons-svelte clsx tailwind-merge tw-animate-css
+npm install bits-ui @tabler/icons-svelte clsx tailwind-merge
 npm install -D tailwindcss
 
 # pnpm
-pnpm add bits-ui @tabler/icons-svelte clsx tailwind-merge tw-animate-css
+pnpm add bits-ui @tabler/icons-svelte clsx tailwind-merge
 pnpm add -D tailwindcss
 ```
 
@@ -306,7 +308,7 @@ export { default as SelectorIcon } from "@tabler/icons-svelte/icons/selector";
 
 ```css
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "../lib/styles/animations.css";
 
 @custom-variant dark (&:is(.dark *));
 

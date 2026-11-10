@@ -456,7 +456,7 @@ Load Tailwind CSS and expose the semantic tokens used by the component. The valu
 }
 ```
 
-Define the dark values only when your app supports a dark theme. Point Picker requires no global keyframe, `tw-animate-css` import, font, or component-specific CSS variable.
+Define the dark values only when your app supports a dark theme. Point Picker requires no global keyframe, Animations style import, font, or component-specific CSS variable.
 
 ### Localization setup
 

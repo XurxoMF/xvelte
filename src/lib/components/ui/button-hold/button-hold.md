@@ -403,7 +403,7 @@ The values below are xvelte's defaults and may be replaced while preserving thei
 }
 ```
 
-The app owns dark-mode activation. Hold Button requires no `tw-animate-css` import, component-specific CSS, keyframe, icon export, localization message, hook, attachment, context file, image, font, network service, or additional layout rule.
+The app owns dark-mode activation. Hold Button requires no Animations style import, component-specific CSS, keyframe, icon export, localization message, hook, attachment, context file, image, font, network service, or additional layout rule.
 
 ## Credits
 

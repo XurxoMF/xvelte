@@ -358,6 +358,8 @@ Primitive state values, IDs, `data-*` values, side/alignment values, and CSS var
 
 ## Dependencies
 
+This component requires the shared Animations style. Copy `src/lib/styles/animations.css` and `src/lib/styles/animations.md`, then follow the `animations.md` guide to import it.
+
 ### Packages
 
 Install runtime dependencies first and development dependencies second:
@@ -365,15 +367,15 @@ Install runtime dependencies first and development dependencies second:
 ```sh
 # Bun
 bun add bits-ui clsx tailwind-merge
-bun add -D tailwindcss tw-animate-css
+bun add -D tailwindcss
 
 # npm
 npm install bits-ui clsx tailwind-merge
-npm install -D tailwindcss tw-animate-css
+npm install -D tailwindcss
 
 # pnpm
 pnpm add bits-ui clsx tailwind-merge
-pnpm add -D tailwindcss tw-animate-css
+pnpm add -D tailwindcss
 ```
 
 Implement against the stable Bits UI version installed by your project. See the [Bits UI Popover documentation](https://bits-ui.com/docs/components/popover) for the complete dependency-owned API and behavior.
@@ -425,11 +427,11 @@ Popover does not use icons and requires no export from `src/lib/icons.ts` or ico
 
 ### Global styles
 
-Load Tailwind CSS and `tw-animate-css`, then expose the semantic values used by Content and Description. The values below are xvelte's defaults and may be replaced with your own theme:
+Load Tailwind CSS and the shared Animations style, then expose the semantic values used by Content and Description. The values below are xvelte's defaults and may be replaced with your own theme:
 
 ```css
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "../lib/styles/animations.css";
 
 :root {
 	--foreground: oklch(0.147 0.004 49.25);
@@ -469,7 +471,7 @@ Load Tailwind CSS and `tw-animate-css`, then expose the semantic values used by 
 }
 ```
 
-No Popover-specific keyframe, icon style, font, or app-owned CSS variable is required. `tw-animate-css` provides the enter, exit, fade, zoom, and slide utilities used by Content.
+No Popover-specific keyframe, icon style, font, or app-owned CSS variable is required. The shared Animations style provides the enter, exit, fade, zoom, and slide utilities used by Content.
 
 ## Credits
 

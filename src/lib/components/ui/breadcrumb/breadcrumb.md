@@ -378,7 +378,7 @@ Your global stylesheet must import Tailwind and expose the two semantic colors u
 }
 ```
 
-No Bits UI package, `tw-animate-css` import, custom dark variant, animation, keyframe, radius token, other xvelte component, hook, attachment, context module, or shared component stylesheet is required. Dropdowns, disclosures, and router-specific link components shown in advanced examples are optional and only need to be installed if your app uses them.
+No Bits UI package, Animations style import, custom dark variant, animation, keyframe, radius token, other xvelte component, hook, attachment, context module, or shared component stylesheet is required. Dropdowns, disclosures, and router-specific link components shown in advanced examples are optional and only need to be installed if your app uses them.
 
 ## Credits
 

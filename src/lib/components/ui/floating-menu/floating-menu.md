@@ -317,7 +317,7 @@ Copy the complete `src/lib/components/ui/floating-menu` folder:
 - `floating-menu-group.svelte`
 - `index.ts`
 - `floating-menu.md`
-  No internal context, standalone helper file, icon export, localization message, hook, attachment, other UI component, image, font, network service, or `tw-animate-css` installation is required.
+  No internal context, standalone helper file, icon export, localization message, hook, attachment, other UI component, image, font, network service, or Animations style installation is required.
 
 ### Shared utilities
 

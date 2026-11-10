@@ -417,7 +417,7 @@ Your global stylesheet must import Tailwind, define the dark variant, and expose
 
 The application remains responsible for applying its `.dark` class, normally through root-level theme management.
 
-No Bits UI package, `tw-animate-css` import, animation, keyframe, other xvelte component, hook, attachment, context module, localization message, or shared component stylesheet is required. Button Group is an optional composition: Button merely reacts when an ancestor exposes `data-slot="button-group"`.
+No Bits UI package, Animations style import, animation, keyframe, other xvelte component, hook, attachment, context module, localization message, or shared component stylesheet is required. Button Group is an optional composition: Button merely reacts when an ancestor exposes `data-slot="button-group"`.
 
 ## Credits
 

@@ -404,7 +404,7 @@ The component's `index.ts`, exported types, and local source are the source of t
 
 ## Styling and DOM contract
 
-Dialog uses semantic Tailwind tokens, `tw-animate-css`, local `data-slot` hooks, and dependency-owned Bits UI state and nesting attributes. It exposes no xvelte-specific CSS variables.
+Dialog uses semantic Tailwind tokens, the shared Animations style, local `data-slot` hooks, and dependency-owned Bits UI state and nesting attributes. It exposes no xvelte-specific CSS variables.
 
 | Part                       | Stable xvelte hook or class                                   |
 | -------------------------- | ------------------------------------------------------------- |
@@ -455,20 +455,22 @@ Your app supplies and translates Trigger text, Title, Description, form labels, 
 
 ## Dependencies
 
-Dialog expects a Svelte 5 project using Tailwind CSS 4. It requires Bits UI, the shared Button component, the Tabler close icon, shared utility helpers, generated Paraglide messages, and `tw-animate-css`. Install every package requirement with one of these command groups:
+This component requires the shared Animations style. Copy `src/lib/styles/animations.css` and `src/lib/styles/animations.md`, then follow the `animations.md` guide to import it.
+
+Dialog expects a Svelte 5 project using Tailwind CSS 4. It requires Bits UI, the shared Button component, the Tabler close icon, shared utility helpers, generated Paraglide messages, and the shared Animations style. Install every package requirement with one of these command groups:
 
 ```sh
 # bun
 bun add bits-ui @tabler/icons-svelte tailwind-variants clsx tailwind-merge
-bun add -D tailwindcss tw-animate-css @inlang/paraglide-js
+bun add -D tailwindcss @inlang/paraglide-js
 
 # npm
 npm install bits-ui @tabler/icons-svelte tailwind-variants clsx tailwind-merge
-npm install -D tailwindcss tw-animate-css @inlang/paraglide-js
+npm install -D tailwindcss @inlang/paraglide-js
 
 # pnpm
 pnpm add bits-ui @tabler/icons-svelte tailwind-variants clsx tailwind-merge
-pnpm add -D tailwindcss tw-animate-css @inlang/paraglide-js
+pnpm add -D tailwindcss @inlang/paraglide-js
 ```
 
 ### Shared utilities
@@ -528,11 +530,11 @@ If the app uses another localization system, replace both `$lib/paraglide/messag
 
 ### Global CSS
 
-The global stylesheet must import Tailwind and `tw-animate-css`, define dark and Bits UI state variants, apply the shared border/outline defaults, and expose the semantic colors and radii used by Dialog and its required internal Buttons. The values below are xvelte's defaults and may be replaced while preserving their names and mappings:
+The global stylesheet must import Tailwind and the shared Animations style, define dark and Bits UI state variants, apply the shared border/outline defaults, and expose the semantic colors and radii used by Dialog and its required internal Buttons. The values below are xvelte's defaults and may be replaced while preserving their names and mappings:
 
 ```css
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "../lib/styles/animations.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -606,7 +608,7 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define dark and
 }
 ```
 
-`tw-animate-css` supplies the enter, exit, fade, and zoom utilities. No Dialog-specific keyframe, hook, attachment, context file, shared component stylesheet, or external asset must be copied. Bits UI owns the dialog context, focus and dismissal layers, presence state, and scroll lock.
+The shared Animations style supplies the enter, exit, fade, and zoom utilities. No Dialog-specific keyframe, hook, attachment, context file, shared component stylesheet, or external asset must be copied. Bits UI owns the dialog context, focus and dismissal layers, presence state, and scroll lock.
 
 ## Credits
 

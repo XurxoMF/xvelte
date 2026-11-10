@@ -314,7 +314,7 @@ pnpm add paneforge clsx tailwind-merge
 pnpm add -D tailwindcss
 ```
 
-PaneForge installs its own `runed` and `svelte-toolbelt` runtime dependencies transitively; this component does not import them directly. It does not require `tw-animate-css`.
+PaneForge installs its own `runed` and `svelte-toolbelt` runtime dependencies transitively; this component does not import them directly. It does not require the Animations style.
 
 ### Global styles and theme tokens
 

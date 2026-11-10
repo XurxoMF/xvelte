@@ -142,7 +142,7 @@ npm install bits-ui
 pnpm add bits-ui
 ```
 
-This component has no development-only package dependency. The examples use Tailwind utilities, but the component itself does not require Tailwind CSS, `tw-animate-css`, theme variables, `layout.css` imports, keyframes, semantic icon exports, `$lib/utils`, other xvelte components, hooks, attachments, context modules, localization messages, or shared styles.
+This component has no development-only package dependency. The examples use Tailwind utilities, but the component itself does not require Tailwind CSS, the shared Animations style, theme variables, `layout.css` imports, keyframes, semantic icon exports, `$lib/utils`, other xvelte components, hooks, attachments, context modules, localization messages, or shared styles.
 
 ## Credits
 

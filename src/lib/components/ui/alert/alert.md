@@ -328,7 +328,7 @@ export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
 };
 ```
 
-Alert does not require other xvelte components, hooks, attachments, context modules, localization messages, shared styles, or `tw-animate-css`.
+Alert does not require other xvelte components, hooks, attachments, context modules, localization messages, shared styles, or the shared Animations style.
 
 ## Credits
 

@@ -352,7 +352,7 @@ Your global stylesheet must import Tailwind and expose the semantic colors used 
 
 The `dark` custom variant enables the root border overlay's dark-mode blend utility. The application remains responsible for applying its `.dark` class, normally through root-level theme management.
 
-No `tw-animate-css` import, animation, keyframe, radius token, icon export from `$lib/icons`, other xvelte component, hook, attachment, context module, localization message, or shared component stylesheet is required. Icons placed inside `Badge` or `GroupCount` are optional content supplied by your app and bring their own dependency.
+No Animations style import, animation, keyframe, radius token, icon export from `$lib/icons`, other xvelte component, hook, attachment, context module, localization message, or shared component stylesheet is required. Icons placed inside `Badge` or `GroupCount` are optional content supplied by your app and bring their own dependency.
 
 ## Credits
 

@@ -258,20 +258,22 @@ The default content uses these Paraglide messages from `messages/en.json`:
 
 ## Dependencies
 
+This component requires the shared Animations style. Copy `src/lib/styles/animations.css` and `src/lib/styles/animations.md`, then follow the `animations.md` guide to import it.
+
 Install all runtime packages and development tooling in one package-manager group:
 
 ```sh
 # Bun
 bun add @floating-ui/dom bits-ui @tabler/icons-svelte clsx tailwind-merge tailwind-variants
-bun add -D @inlang/paraglide-js tailwindcss tw-animate-css
+bun add -D @inlang/paraglide-js tailwindcss
 
 # npm
 npm install @floating-ui/dom bits-ui @tabler/icons-svelte clsx tailwind-merge tailwind-variants
-npm install -D @inlang/paraglide-js tailwindcss tw-animate-css
+npm install -D @inlang/paraglide-js tailwindcss
 
 # pnpm
 pnpm add @floating-ui/dom bits-ui @tabler/icons-svelte clsx tailwind-merge tailwind-variants
-pnpm add -D @inlang/paraglide-js tailwindcss tw-animate-css
+pnpm add -D @inlang/paraglide-js tailwindcss
 ```
 
 `@floating-ui/dom` measures targets and positions the content. Bits UI supplies Dialog's modal semantics and focus behavior. Paraglide supplies the default navigation copy. The remaining packages support Dialog, Button, animation classes, the icon facade, and the shared class helper.

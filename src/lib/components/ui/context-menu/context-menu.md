@@ -420,20 +420,22 @@ The right-chevron is an icon rather than text, and Bits UI derives direction beh
 
 ## Dependencies
 
+This component requires the shared Animations style. Copy `src/lib/styles/animations.css` and `src/lib/styles/animations.md`, then follow the `animations.md` guide to import it.
+
 Context Menu expects a Svelte 5 project using Tailwind CSS 4. Install its runtime and development packages with one of these command groups:
 
 ```sh
 # bun
 bun add bits-ui @tabler/icons-svelte clsx tailwind-merge
-bun add -D tailwindcss tw-animate-css
+bun add -D tailwindcss
 
 # npm
 npm install bits-ui @tabler/icons-svelte clsx tailwind-merge
-npm install -D tailwindcss tw-animate-css
+npm install -D tailwindcss
 
 # pnpm
 pnpm add bits-ui @tabler/icons-svelte clsx tailwind-merge
-pnpm add -D tailwindcss tw-animate-css
+pnpm add -D tailwindcss
 ```
 
 ### Shared utilities
@@ -476,11 +478,11 @@ Keep these aliases in the shared icon facade instead of importing Tabler directl
 
 ### Global CSS
 
-The global stylesheet must import Tailwind and `tw-animate-css`, define dark and Bits UI state variants, set the shared border and outline defaults, and expose the semantic colors and radii used by Context Menu. The values below are xvelte's defaults and may be replaced while preserving their names and mappings:
+The global stylesheet must import Tailwind and the shared Animations style, define dark and Bits UI state variants, set the shared border and outline defaults, and expose the semantic colors and radii used by Context Menu. The values below are xvelte's defaults and may be replaced while preserving their names and mappings:
 
 ```css
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "../lib/styles/animations.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -551,7 +553,7 @@ The global stylesheet must import Tailwind and `tw-animate-css`, define dark and
 }
 ```
 
-`tw-animate-css` supplies the enter, exit, fade, zoom, and directional slide utilities. No Context Menu-specific keyframe or shared component stylesheet must be copied. The app remains responsible for applying its `.dark` class when dark mode is supported.
+The shared Animations style supplies the enter, exit, fade, zoom, and directional slide utilities. No Context Menu-specific keyframe or shared component stylesheet must be copied. The app remains responsible for applying its `.dark` class when dark mode is supported.
 
 ### Other requirements
 

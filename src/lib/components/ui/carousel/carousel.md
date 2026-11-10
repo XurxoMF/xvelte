@@ -547,7 +547,7 @@ Your global stylesheet must import Tailwind, define the dark variant, and expose
 
 The app remains responsible for applying its `.dark` class, normally through root-level theme management.
 
-No `tw-animate-css` import, global keyframe, shared component stylesheet, or additional icon is required. Optional Embla plugins are separate packages; add only those used by the app and follow their official documentation.
+No Animations style import, global keyframe, shared component stylesheet, or additional icon is required. Optional Embla plugins are separate packages; add only those used by the app and follow their official documentation.
 
 ---
 

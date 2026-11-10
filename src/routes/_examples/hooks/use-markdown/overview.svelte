@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { UseMarkdown } from "$lib/hooks/use-markdown.svelte";
+	import { useHighlightedCode } from "$lib/hooks/use-highlighted-code.svelte";
 
-	import * as Code from "$lib/components/ui/code";
+	import * as CodeBlock from "$lib/components/ui/code-block";
 	import * as Textarea from "$lib/components/ui/textarea";
 
 	let source = $state(`# Release notes
@@ -25,6 +26,11 @@
 			2
 		)
 	);
+
+	const highlightedSummary = useHighlightedCode(
+		() => summary,
+		() => "json"
+	);
 </script>
 
 <div class="grid gap-6 md:grid-cols-2">
@@ -35,6 +41,12 @@
 
 	<div class="grid content-start gap-2">
 		<span class="text-sm font-medium">Reactive AST summary</span>
-		<Code.Root code={summary} lang="json" />
+		<CodeBlock.Root>
+			<CodeBlock.Content>
+				{#each highlightedSummary.current as line, index (index)}
+					<CodeBlock.Line code={line} />
+				{/each}
+			</CodeBlock.Content>
+		</CodeBlock.Root>
 	</div>
 </div>

@@ -7,10 +7,10 @@
 
 	import { categories, getUnit, scopes } from "./catalog";
 	import { getExample } from "./examples";
+	import SourceCode from "./SourceCode.svelte";
 
 	import { parseMarkdown } from "$lib/hooks/use-markdown.svelte";
 
-	import * as Code from "$lib/components/ui/code";
 	import * as Markdown from "$lib/components/ui/markdown";
 	import * as Tabs from "$lib/components/ui/tabs";
 	import * as Typography from "$lib/components/ui/typography";
@@ -112,9 +112,7 @@
 							</Tabs.Content>
 
 							<Tabs.Content value="code" class="w-full">
-								<Code.Root code={loaded.source} lang="svelte" class="max-h-136 border-none">
-									<Code.CopyButton tabindex={0} />
-								</Code.Root>
+								<SourceCode code={loaded.source} language="svelte" class="max-h-136 border-none" />
 							</Tabs.Content>
 						</Tabs.Root>
 					</section>

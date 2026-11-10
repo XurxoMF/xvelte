@@ -26,13 +26,14 @@
 
 	import type { Node, Parent } from "unist";
 
+	import MarkdownCodeBlock from "./markdown-code-block.svelte";
+
 	import { AlertErrorIcon, AlertInfoIcon, AlertSuccessIcon, AlertWarningIcon } from "$lib/icons";
 
 	import * as m from "$lib/paraglide/messages.js";
 
 	import * as Alert from "$lib/components/ui/alert";
 	import * as Checkbox from "$lib/components/ui/checkbox";
-	import * as Code from "$lib/components/ui/code";
 	import * as Footnote from "$lib/components/ui/footnote";
 	import * as List from "$lib/components/ui/list";
 	import * as Separator from "$lib/components/ui/separator";
@@ -334,9 +335,7 @@
 				<Typography.P>{@render renderInline(node.children)}</Typography.P>
 			{/if}
 		{:else if node.type === "code"}
-			<Code.Root code={node.value} lang={node.lang ?? "text"}>
-				{#if showCopyButton}<Code.CopyButton tabindex={0} />{/if}
-			</Code.Root>
+			<MarkdownCodeBlock code={node.value} language={node.lang ?? "text"} {showCopyButton} />
 		{:else if node.type === "list"}
 			<List.Root variant={node.ordered ? "ordered" : "unordered"} start={node.start ?? undefined}>
 				{#each node.children as item, itemIndex (itemIndex)}

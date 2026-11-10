@@ -2,7 +2,7 @@
 
 A custom collection of styled native text elements for consistent headings, paragraphs, leading copy, links, block quotations, and inline code, plus a simple Prose container for document rhythm. Every part preserves its native semantics, accepts native attributes, merges classes, and exposes a bindable element reference.
 
-Use Typography to apply the xvelte text scale to authored content without repeating utility classes. Keep heading levels in document order, use Link only for real navigation, and use Code for full syntax-highlighted blocks rather than InlineCode.
+Use Typography to apply the xvelte text scale to authored content without repeating utility classes. Keep heading levels in document order, use Link only for real navigation, and use Code Block for full syntax-highlighted blocks rather than InlineCode.
 
 <!-- xvelte-example: overview -->
 
@@ -124,7 +124,7 @@ All native attributes and handlers are forwarded. Classes merge through `cn()` a
 
 Every part adds a stable slot matching its exported role: `typography-prose`, `typography-h1` through `typography-h6`, `typography-p`, `typography-leading`, `typography-link`, `typography-blockquote`, and `typography-inline-code`. Typography adds no state attributes or stable custom classes; the slot and rendered native tag are the public styling boundaries.
 
-Prose uses `flex flex-col gap-4` as its general rhythm. A direct heading child whose slot starts with `typography-h` receives `mt-4` unless it is the first child; no other child type has a special spacing rule. This also spaces non-Typography blocks such as Code, List, Table, and Separator without coupling Prose to them. Typography parts used outside Prose add no surrounding vertical rhythm.
+Prose uses `flex flex-col gap-4` as its general rhythm. A direct heading child whose slot starts with `typography-h` receives `mt-4` unless it is the first child; no other child type has a special spacing rule. This also spaces non-Typography blocks such as Code Block, List, Table, and Separator without coupling Prose to them. Typography parts used outside Prose add no surrounding vertical rhythm.
 
 Semantic tokens are `primary`, `muted`, `muted-foreground`, and `border`. Class merging lets callers replace type size, weight, color, spacing, or decoration.
 
@@ -132,7 +132,7 @@ Semantic tokens are `primary`, `muted`, `muted-foreground`, and `border`. Class 
 
 Native semantics are preserved. Keep exactly one appropriate page-level H1 in ordinary documents, do not skip heading levels solely for appearance, use P and Leading for paragraphs, and use Blockquote only for quoted material.
 
-Link must have an `href` and descriptive content. InlineCode is for short code fragments; wrap longer code in a semantic `<pre>` or the xvelte Code component. Color and typography do not replace semantic structure.
+Link must have an `href` and descriptive content. InlineCode is for short code fragments; wrap longer code in a semantic `<pre>` or the xvelte Code Block component. Color and typography do not replace semantic structure.
 
 ## Localization
 

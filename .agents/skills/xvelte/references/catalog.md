@@ -26,7 +26,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `carousel` — horizontal or vertical Embla carousel with responsive inside-edge navigation, touch and mouse dragging, plugins, and programmatic controls
 - `chart`
 - `checkbox`
-- `code` — Shiki code blocks with lazy-loaded languages, custom Scroll Area controls on both axes, fixed copy actions, and expandable overflow
+- `code-block` — composable code, terminal, log, and diff output with headers, actions, copying, wrapping, numbering, row states, streaming-friendly rendering, and optional lazy Shiki highlighting
 - `collapsible`
 - `color-picker`
 - `combobox` — searchable single or multiple selection with controlled open state, configurable filtering and positioning, disabled options, separators, and loading content
@@ -107,6 +107,7 @@ Paths are relative to `src/lib/hooks`.
 
 - `is-mobile.svelte.ts`
 - `use-frecency.svelte.ts`
+- `use-highlighted-code.svelte.ts` — reactive streaming syntax highlighting with lazy access to every bundled Shiki language and alias plus ANSI and plain-text fallbacks
 - `use-markdown.svelte.ts` — pure and reactive CommonMark/GFM parsing to mdast with stable heading IDs and GitHub alert metadata
 - `use-ramp.svelte.ts`
 - `use-toc.svelte.ts`

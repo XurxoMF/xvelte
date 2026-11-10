@@ -59,6 +59,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `marker` — inline conversation statuses, system notes, bordered rows, labeled separators, decorative icons, and polymorphic links or buttons
 - `menubar`
 - `message` — aligned conversation rows with optional avatars, grouped messages, body columns, sender headers, statuses, timestamps, and action footers
+- `message-scroller` — anchored streaming-chat scrolling with history preservation, opening positions, visibility tracking, and programmatic message jumps
 - `navigation-menu`
 - `pagination`
 - `point-picker` — scale-preserving two-dimensional coordinate input with range-derived aspect ratio, configurable origin and grid intervals, pointer control, and keyboard control

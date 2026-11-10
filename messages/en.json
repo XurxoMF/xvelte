@@ -64,5 +64,8 @@
 	"hollow_cedar_dance": "Footnotes",
 	"ivory_badger_drift": "Footnote {number}",
 	"kind_marten_glow": "Back to reference {number}",
-	"lucid_willow_rest": "Back to reference {number}, occurrence {occurrence}"
+	"lucid_willow_rest": "Back to reference {number}, occurrence {occurrence}",
+	"brave_quail_messages": "Messages",
+	"gentle_river_scroll_end": "Scroll to end",
+	"soft_owl_scroll_start": "Scroll to start"
 }

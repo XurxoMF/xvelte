@@ -40,6 +40,7 @@
         "@eslint/js": "^10.0.1",
         "@fontsource-variable/inter": "^5.3.0",
         "@inlang/paraglide-js": "^2.18.2",
+        "@shadcn-svelte/primitives": "^0.0.1",
         "@sveltejs/adapter-static": "^3.0.10",
         "@sveltejs/kit": "^2.63.0",
         "@sveltejs/vite-plugin-svelte": "^7.1.2",
@@ -169,6 +170,8 @@
 
     "@rolldown/pluginutils": ["@rolldown/pluginutils@1.0.1", "", {}, "sha512-2j9bGt5Jh8hj+vPtgzPtl72j0yRxHAyumoo6TNfAjsLB04UtpSvPbPcDcBMxz7n+9CYB0c1GxQFxYRg2jimqGw=="],
 
+    "@shadcn-svelte/primitives": ["@shadcn-svelte/primitives@0.0.1", "", { "dependencies": { "@tanstack/virtual-core": "^3.17.10", "esm-env": "^1.1.2", "runed": "^0.37.1", "svelte-toolbelt": "^0.10.6" }, "peerDependencies": { "svelte": "^5.33.0" } }, "sha512-H5tu//yIA2icetFzS5gWGV91QzAsW1bTVjxKUHO+tZVFeFbTlVjESkfwYcfkPf6u0nuPJjAqC8kByiAVM2a8eA=="],
+
     "@shikijs/core": ["@shikijs/core@4.0.2", "", { "dependencies": { "@shikijs/primitive": "4.0.2", "@shikijs/types": "4.0.2", "@shikijs/vscode-textmate": "^10.0.2", "@types/hast": "^3.0.4", "hast-util-to-html": "^9.0.5" } }, "sha512-hxT0YF4ExEqB8G/qFdtJvpmHXBYJ2lWW7qTHDarVkIudPFE6iCIrqdgWxGn5s+ppkGXI0aEGlibI0PAyzP3zlw=="],
 
     "@shikijs/engine-javascript": ["@shikijs/engine-javascript@4.0.2", "", { "dependencies": { "@shikijs/types": "4.0.2", "@shikijs/vscode-textmate": "^10.0.2", "oniguruma-to-es": "^4.3.4" } }, "sha512-7PW0Nm49DcoUIQEXlJhNNBHyoGMjalRETTCcjMqEaMoJRLljy1Bi/EGV3/qLBgLKQejdspiiYuHGQW6dX94Nag=="],
@@ -244,6 +247,8 @@
     "@tanstack/svelte-table": ["@tanstack/svelte-table@9.1.2", "", { "dependencies": { "@tanstack/svelte-store": "^0.12.0", "@tanstack/table-core": "9.1.2" }, "peerDependencies": { "svelte": "^5.0.0" } }, "sha512-0tDbl4PAu7Z4+VKaGnJlsfrMTVrnbgsxEQwpVRxnot30psP1GcqbVGOTwA5tf45hX3NYbW3e/9KZerKBrlHO0A=="],
 
     "@tanstack/table-core": ["@tanstack/table-core@9.1.2", "", { "dependencies": { "@tanstack/store": "^0.11.0" } }, "sha512-ONpWQeass1sfg80CWF1NSwQ8r3GiqxA2lT/EdqIcrDEPZ0Z+0mM94eQoFYLPN0Kztzj8TQVb2+PrSZSItqA61g=="],
+
+    "@tanstack/virtual-core": ["@tanstack/virtual-core@3.19.11", "", {}, "sha512-/5iHb0RHBvj8Di59FDs4ESNm45jls33aZAi4zccVXZjc/6ZvwQP6nzEYeT6weXjTf9E6/vrp2JhYWRyO+ZP13A=="],
 
     "@tauri-apps/api": ["@tauri-apps/api@2.11.1", "", {}, "sha512-M2FPuYND2m+wh5hfW9ZpSdxMPdEJovPBWwoHJmwUpysTYNHaOkVFN419m/K0LIgjb/7KU2vBgsUepJWugQCvAA=="],
 

@@ -89,6 +89,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `toggle`
 - `toggle-group`
 - `tooltip`
+- `trace` — composable status rows and expandable details for agent activity, tool calls, tasks, and sources
 - `tree-view`
 - `typography` — semantic text primitives plus a simple Prose container for consistent document rhythm
 - `video-player` — self-contained captioned video playback with focus-aware controls, Slider-based volume, semantic volume states, and one-point keyboard adjustment

@@ -10,7 +10,12 @@
 	let { title, description, units }: { title: string; description: string; units: DocUnit[] } = $props();
 </script>
 
-<svelte:head><title>{title} — xvelte</title></svelte:head>
+<svelte:head>
+	<title>{title} — xvelte</title>
+	<meta name="description" content={description} />
+	<meta property="og:title" content={`${title} — xvelte`} />
+	<meta property="og:description" content={description} />
+</svelte:head>
 
 <div class="mx-auto w-full max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
 	<Typography.P class="text-primary">Library</Typography.P>

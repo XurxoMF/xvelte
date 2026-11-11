@@ -20,14 +20,49 @@ export const scopes: { value: DocScope; label: string }[] = [
 	{ value: "tauri", label: "Tauri" }
 ];
 
-export const categories: { kind: DocKind; directory: string; label: string }[] = [
-	{ kind: "component", directory: "components", label: "Components" },
-	{ kind: "hook", directory: "hooks", label: "Hooks" },
-	{ kind: "attachment", directory: "attachments", label: "Attachments" },
-	{ kind: "class", directory: "classes", label: "Classes" },
-	{ kind: "type", directory: "types", label: "Types" },
-	{ kind: "style", directory: "styles", label: "Styles" },
-	{ kind: "utility", directory: "utils", label: "Utilities" }
+export const categories: { kind: DocKind; directory: string; label: string; description: string }[] = [
+	{
+		kind: "component",
+		directory: "components",
+		label: "Components",
+		description: "Accessible primitives and larger interface patterns with documented composition and behavior."
+	},
+	{
+		kind: "hook",
+		directory: "hooks",
+		label: "Hooks",
+		description: "Reactive state and derived behavior packaged for reuse across Svelte applications."
+	},
+	{
+		kind: "attachment",
+		directory: "attachments",
+		label: "Attachments",
+		description: "Focused DOM behavior that composes directly with ordinary Svelte markup."
+	},
+	{
+		kind: "class",
+		directory: "classes",
+		label: "Classes",
+		description: "Reusable TypeScript classes that encapsulate stateful workflows and platform integrations."
+	},
+	{
+		kind: "type",
+		directory: "types",
+		label: "Types",
+		description: "Shared TypeScript contracts for consistent application and library APIs."
+	},
+	{
+		kind: "style",
+		directory: "styles",
+		label: "Styles",
+		description: "Reusable Tailwind CSS foundations for animation, overflow, shimmer, and other visual behavior."
+	},
+	{
+		kind: "utility",
+		directory: "utils",
+		label: "Utilities",
+		description: "Standalone helpers for common transformations, composition, and application tasks."
+	}
 ];
 
 const unitGuides = import.meta.glob(

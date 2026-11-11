@@ -408,19 +408,34 @@ Use these values when prompted:
 | Web assets location  | `../build`              |
 | Development URL      | `http://localhost:5173` |
 | Before dev command   | `bun dev`               |
-| Before build command | `bun run build`         |
+| Before build command | `bun run build:tauri`   |
 
 Replace the Bun commands with the project's npm or pnpm equivalents when necessary. Set a unique reverse-domain `identifier` in `src-tauri/tauri.conf.json`, customize the product name and icons, and review every capability before distributing the application.
 
 ### Configure the shared SvelteKit frontend
 
-Tauri does not provide the Node.js server required by SvelteKit SSR. Prerender the documentation routes, disable SSR for the shared shell, and keep a fallback for client-side navigation:
+Tauri does not provide the Node.js server required by SvelteKit SSR. Give the native build its own Vite mode so the public website can keep prerendered HTML while Tauri always receives a client-rendered shell:
+
+```json
+{
+	"scripts": {
+		"build": "vite build",
+		"build:tauri": "vite build --mode tauri"
+	}
+}
+```
 
 ```ts
 // src/routes/+layout.ts
+import { dev } from "$app/environment";
+
+const isTauriBuild = import.meta.env.MODE === "tauri";
+
 export const prerender = true;
-export const ssr = false;
+export const ssr = !dev && !isTauriBuild;
 ```
+
+Set `build.beforeBuildCommand` in `src-tauri/tauri.conf.json` to `bun run build:tauri`. A Tauri-only application that has no public, indexable website can instead keep `export const ssr = false` unconditionally.
 
 Configure the static adapter and a fixed Vite development port. Ignoring Rust files prevents native rebuild output from causing unnecessary frontend reloads:
 
@@ -433,7 +448,7 @@ import { defineConfig } from "vite";
 export default defineConfig({
 	plugins: [
 		sveltekit({
-			adapter: adapter({ fallback: "index.html" })
+			adapter: adapter({ fallback: "200.html" })
 		})
 	],
 	server: {
@@ -446,7 +461,7 @@ export default defineConfig({
 });
 ```
 
-An existing static website can keep all of its prerendered pages. The fallback adds an SPA entry for navigation that reaches a path not emitted as a standalone HTML file; it does not require replacing the website with a native-only frontend.
+An existing static website can keep all of its prerendered pages. The separate fallback adds an SPA entry for navigation that reaches a path not emitted as a standalone HTML file without replacing the prerendered `index.html` home page.
 
 ### Install Tauri helpers
 
@@ -483,6 +498,9 @@ bun tauri dev
 
 # Static website build
 bun run build
+
+# Client-rendered frontend build used by Tauri
+bun run build:tauri
 
 # Rust backend check
 cargo check --manifest-path src-tauri/Cargo.toml

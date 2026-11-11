@@ -23,9 +23,11 @@
 
 	let { children } = $props();
 
+	const siteOrigin = "https://xvelte.xurxomf.xyz";
 	const appIcon = asset("/favicon.png");
 	let searchOpen = $state(false);
 	let currentPath = $derived(page.url.pathname);
+	let canonicalUrl = $derived(new URL(page.url.pathname, siteOrigin).href);
 	let expandedCategories = $state<Record<string, boolean>>({});
 
 	/**
@@ -61,6 +63,14 @@
 	}
 </script>
 
+<svelte:head>
+	<link rel="canonical" href={canonicalUrl} />
+	<meta property="og:site_name" content="xvelte" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content={canonicalUrl} />
+	<meta name="twitter:card" content="summary" />
+</svelte:head>
+
 <ModeWatcher />
 
 <Sonner.Root closeButton position="top-right" richColors />
@@ -79,7 +89,7 @@
 					/>
 					<span>
 						<strong class="block leading-none tracking-tight">xvelte</strong>
-						<span class="text-xs text-muted-foreground">Svelte 5 collection</span>
+						<span class="text-xs text-muted-foreground">Svelte, Tailwind &amp; Tauri</span>
 					</span>
 				</a>
 			</Sidebar.Header>

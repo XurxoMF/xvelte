@@ -229,16 +229,16 @@ Skip this section for a selective installation: the local guides provide smaller
 
 ```sh
 # Bun
-bun add @floating-ui/dom @internationalized/date @tabler/icons-svelte @tanstack/svelte-table @tauri-apps/api bits-ui clsx country-flag-icons embla-carousel-svelte github-slugger gridstack hast-util-from-html hast-util-sanitize hast-util-to-html layerchart libphonenumber-js mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm mode-watcher paneforge qrcode-generator runed shiki svelte-dnd-action svelte-sonner tailwind-merge tailwind-variants vaul-svelte
-bun add -D @fontsource-variable/inter @inlang/paraglide-js @tailwindcss/vite tailwindcss tw-animate-css
+bun add @floating-ui/dom @internationalized/date @tabler/icons-svelte @tanstack/svelte-table @tauri-apps/api bits-ui clsx country-flag-icons embla-carousel-svelte github-slugger gridstack gsap hast-util-from-html hast-util-sanitize hast-util-to-html layerchart libphonenumber-js mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm mode-watcher paneforge qrcode-generator runed shiki svelte-dnd-action svelte-sonner tailwind-merge tailwind-variants vaul-svelte
+bun add -D @fontsource-variable/inter @inlang/paraglide-js @tailwindcss/vite tailwindcss
 
 # npm
-npm install @floating-ui/dom @internationalized/date @tabler/icons-svelte @tanstack/svelte-table @tauri-apps/api bits-ui clsx country-flag-icons embla-carousel-svelte github-slugger gridstack hast-util-from-html hast-util-sanitize hast-util-to-html layerchart libphonenumber-js mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm mode-watcher paneforge qrcode-generator runed shiki svelte-dnd-action svelte-sonner tailwind-merge tailwind-variants vaul-svelte
-npm install -D @fontsource-variable/inter @inlang/paraglide-js @tailwindcss/vite tailwindcss tw-animate-css
+npm install @floating-ui/dom @internationalized/date @tabler/icons-svelte @tanstack/svelte-table @tauri-apps/api bits-ui clsx country-flag-icons embla-carousel-svelte github-slugger gridstack gsap hast-util-from-html hast-util-sanitize hast-util-to-html layerchart libphonenumber-js mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm mode-watcher paneforge qrcode-generator runed shiki svelte-dnd-action svelte-sonner tailwind-merge tailwind-variants vaul-svelte
+npm install -D @fontsource-variable/inter @inlang/paraglide-js @tailwindcss/vite tailwindcss
 
 # pnpm
-pnpm add @floating-ui/dom @internationalized/date @tabler/icons-svelte @tanstack/svelte-table @tauri-apps/api bits-ui clsx country-flag-icons embla-carousel-svelte github-slugger gridstack hast-util-from-html hast-util-sanitize hast-util-to-html layerchart libphonenumber-js mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm mode-watcher paneforge qrcode-generator runed shiki svelte-dnd-action svelte-sonner tailwind-merge tailwind-variants vaul-svelte
-pnpm add -D @fontsource-variable/inter @inlang/paraglide-js @tailwindcss/vite tailwindcss tw-animate-css
+pnpm add @floating-ui/dom @internationalized/date @tabler/icons-svelte @tanstack/svelte-table @tauri-apps/api bits-ui clsx country-flag-icons embla-carousel-svelte github-slugger gridstack gsap hast-util-from-html hast-util-sanitize hast-util-to-html layerchart libphonenumber-js mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm mode-watcher paneforge qrcode-generator runed shiki svelte-dnd-action svelte-sonner tailwind-merge tailwind-variants vaul-svelte
+pnpm add -D @fontsource-variable/inter @inlang/paraglide-js @tailwindcss/vite tailwindcss
 ```
 
 Use the version constraints in the selected release's `package.json`; do not silently substitute prerelease APIs or dependency major versions. An existing SvelteKit project already owns packages such as Svelte, SvelteKit, TypeScript, and its adapter.

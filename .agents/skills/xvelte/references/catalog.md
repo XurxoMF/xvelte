@@ -102,6 +102,8 @@ All component paths are relative to `src/lib/components/ui`.
 
 Paths are relative to `src/lib/attachments`.
 
+- `animateInView` (`animate-in-view.ts`) — GSAP ScrollTrigger tweens and fully custom timelines with scoped targets,
+  scrub, pin, snap, reduced-motion policies, and automatic cleanup
 - `shortcut.ts`
 
 ## Hooks

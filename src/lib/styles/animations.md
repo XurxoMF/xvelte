@@ -42,6 +42,8 @@ Combine one base animation with any number of matching effect utilities:
 
 `animate-in` runs from the configured entrance values to the element's ordinary styles. `animate-out` runs from the ordinary styles to the configured exit values. Effects remain independent, so opacity, blur, scale, rotation, and translation can be combined on one element.
 
+Use `animateInView` from `$lib/attachments/animate-in-view` when animation must follow viewport position, scroll progress, direction, velocity, pinning, snapping, or a custom GSAP timeline. Keep ordinary entrance, exit, loop, disclosure, and caret effects in this stylesheet so basic state animation does not require JavaScript.
+
 ---
 
 ## Examples

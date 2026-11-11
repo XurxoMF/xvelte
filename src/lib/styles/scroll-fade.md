@@ -2,6 +2,8 @@
 
 Direction-aware, scroll-position-aware edge fades for overflowing content, with physical and logical directions, independent sizing, a static browser fallback, and right-to-left support. Use them to hint that a compact list or strip can scroll; do not use a fade as the only indication that essential content is available.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)
@@ -31,8 +33,6 @@ The import registers Tailwind utilities; it does not add a JavaScript export.
 ---
 
 ## Basic usage
-
-<!-- xvelte-example: overview -->
 
 Apply the fade and overflow to the same scroll container:
 

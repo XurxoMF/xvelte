@@ -2,6 +2,8 @@
 
 Composable Tailwind CSS utilities for entrance, exit, loop, disclosure, and caret animations, with configurable opacity, blur, scale, rotation, translation, timing, repetition, direction, and fill behavior. Every animation reduces to one `1ms` iteration for people who prefer reduced motion. Use the utilities when component state already controls when an animation starts; they do not observe viewport visibility or delay DOM removal by themselves.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)
@@ -31,8 +33,6 @@ The import registers Tailwind theme values, keyframes, and utilities; it does no
 ---
 
 ## Basic usage
-
-<!-- xvelte-example: overview -->
 
 Combine one base animation with any number of matching effect utilities:
 

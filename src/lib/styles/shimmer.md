@@ -2,6 +2,8 @@
 
 A current-color text shimmer with configurable color, duration, spread, angle, repetition, direction, reduced-motion handling, and right-to-left support. Use it for short-lived processing or generation feedback; do not use perpetual motion as decoration or as the only status announcement.
 
+<!-- xvelte-example: overview -->
+
 ## Contents
 
 - [Import](#import)
@@ -31,8 +33,6 @@ The import registers Tailwind utilities; it does not add a JavaScript export.
 ---
 
 ## Basic usage
-
-<!-- xvelte-example: overview -->
 
 ```svelte
 <p class="shimmer font-medium">Generating preview</p>

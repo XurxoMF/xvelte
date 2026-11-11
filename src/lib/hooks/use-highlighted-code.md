@@ -1,8 +1,10 @@
-# useHighlightedCode
+# UseHighlightedCode
 
 `useHighlightedCode` reactively converts source into plain or syntax-highlighted lines for xvelte Code Block. It resolves every language and alias bundled with the installed Shiki version, loads only the requested grammar, supports ANSI output, preserves readable plain text for unknown names, and reuses complete line tokens while source streams.
 
 Use it when Code Block needs client-side syntax color or incrementally arriving highlighted output. Do not use it when plain Code Block content is sufficient or when highlighted HTML must be generated entirely on the server.
+
+<!-- xvelte-example: overview -->
 
 ## Contents
 

@@ -11,12 +11,12 @@
 	);
 </script>
 
-<CodeBlock.Root class={className}>
+<CodeBlock.Root class="border-none">
 	<CodeBlock.Actions>
 		<CodeBlock.CopyButton value={code} />
 	</CodeBlock.Actions>
 
-	<CodeBlock.Content>
+	<CodeBlock.Content class={className}>
 		{#each lines.current as line, index (index)}
 			<CodeBlock.Line code={line} />
 		{/each}

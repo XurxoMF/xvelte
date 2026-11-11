@@ -112,7 +112,7 @@
 							</Tabs.Content>
 
 							<Tabs.Content value="code" class="w-full">
-								<SourceCode code={loaded.source} language="svelte" class="max-h-136 border-none" />
+								<SourceCode code={loaded.source} language="svelte" class="max-h-136" />
 							</Tabs.Content>
 						</Tabs.Root>
 					</section>

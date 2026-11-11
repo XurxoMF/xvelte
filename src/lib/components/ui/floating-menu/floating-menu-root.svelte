@@ -30,7 +30,7 @@
 	data-orientation={orientation}
 	bind:this={ref}
 	class={cn(
-		"group/floating-menu-root fixed z-20 m-3 flex flex-wrap items-center gap-1",
+		"group/floating-menu-root absolute z-20 m-3 flex flex-wrap items-center gap-1",
 		"data-top-left:top-0 data-top-left:left-0 data-top-left:justify-start",
 		"data-top:top-0 data-top:left-1/2 data-top:-translate-x-1/2 data-top:justify-center",
 		"data-top-right:top-0 data-top-right:right-0 data-top-right:justify-end",

@@ -74,7 +74,7 @@
 	data-code-block-content=""
 	data-wrap={wrap || undefined}
 	data-numbered={lineNumbers || undefined}
-	class={cn("min-h-0 min-w-0 overflow-hidden", className)}
+	class={cn("min-h-0 min-w-0", className)}
 	{...restProps}
 >
 	<ScrollArea.Viewport

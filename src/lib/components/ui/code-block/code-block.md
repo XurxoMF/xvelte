@@ -1,6 +1,6 @@
 # Code Block
 
-A composable block for source code, terminal output, logs, and diffs. It supports optional headers and footers, floating actions, clean copy controls, wrapping, line numbers, custom starting lines, highlighted or diff rows, compact sizing, destructive output, streaming-friendly plain text, and optional syntax highlighting through `useHighlightedCode`.
+A composable block for source code, terminal output, logs, and diffs. It supports optional headers and footers, floating actions, clean copy controls, custom two-axis scrolling, wrapping, line numbers, custom starting lines, highlighted or diff rows, compact sizing, destructive output, streaming-friendly plain text, and optional syntax highlighting through `useHighlightedCode`.
 
 Use Code Block when whitespace, line structure, copying, scrolling, or syntax color matters. Use `Typography.InlineCode` for a short fragment inside prose. Code Block does not execute code, download files, choose a language, or sanitize application-provided snippets.
 
@@ -54,7 +54,7 @@ CodeBlock.Root
 └── CodeBlock.Footer
 ```
 
-`Content` accepts one plain `code` string or child `Line` parts. Use the string form for inexpensive streaming or simple output. Use `Line` when individual rows need syntax tokens, highlighting, added/removed states, or custom content.
+`Content` accepts one plain `code` string or child `Line` parts. It composes Scroll Area around a neutral `pre > code` structure, so constrained content uses the same custom scrollbars as the rest of xvelte. Use the string form for inexpensive streaming or simple output. Use `Line` when individual rows need syntax tokens, highlighting, added/removed states, or custom content.
 
 ---
 
@@ -164,7 +164,7 @@ When `lineNumbers` is true, a plain string is split into `Line` parts so CSS cou
 </CodeBlock.Root>
 ```
 
-Long lines scroll horizontally by default. `wrap` allows the content to wrap and enables vertical scroll fades when a maximum height creates overflow.
+Long lines use the horizontal Scroll Area scrollbar by default. `wrap` allows the content to wrap. Apply `h-*` or `max-h-*` classes to `Content`; its viewport inherits that constraint and shows the vertical scrollbar when needed.
 
 ### Reactive and streaming source
 
@@ -228,21 +228,25 @@ Successful copying sets `data-copied` for two seconds, changes CopyIcon to Check
 
 ### `CodeBlock.Content`
 
-Type: `ContentProps`, based on native `pre` attributes.
+Type: `ContentProps`, based on `ScrollArea.RootProps` without its `children` prop.
 
-| Prop          | Type                     | Default     | Behavior                                                                                   |
-| ------------- | ------------------------ | ----------- | ------------------------------------------------------------------------------------------ |
-| `code`        | `string`                 | `undefined` | Renders plain text and ignores `children`; splits it into lines when numbering is enabled. |
-| `children`    | `Snippet`                | `undefined` | Normally renders `Line` parts when `code` is absent.                                       |
-| `wrap`        | `boolean`                | `false`     | Wraps long content instead of requiring horizontal scrolling.                              |
-| `lineNumbers` | `boolean`                | `false`     | Adds CSS counters without changing copied source.                                          |
-| `startLine`   | `number`                 | `1`         | Initial counter value when line numbers are enabled.                                       |
-| `tabindex`    | `number`                 | `0`         | Keeps overflow keyboard scrollable; may be overridden.                                     |
-| `style`       | Native style value       | `undefined` | Appended after the internal counter reset declaration.                                     |
-| `ref`         | `HTMLPreElement \| null` | `null`      | Bindable scrolling `pre` element.                                                          |
-| `class`       | `string`                 | `undefined` | Merged after spacing, scrolling, wrapping, and typography classes.                         |
+| Prop                       | Type                                        | Default     | Behavior                                                                                   |
+| -------------------------- | ------------------------------------------- | ----------- | ------------------------------------------------------------------------------------------ |
+| `code`                     | `string`                                    | `undefined` | Renders plain text and ignores `children`; splits it into lines when numbering is enabled. |
+| `children`                 | `Snippet`                                   | `undefined` | Normally renders `Line` parts when `code` is absent.                                       |
+| `wrap`                     | `boolean`                                   | `false`     | Wraps long content instead of requiring horizontal scrolling.                              |
+| `lineNumbers`              | `boolean`                                   | `false`     | Adds CSS counters without changing copied source.                                          |
+| `startLine`                | `number`                                    | `1`         | Initial counter value when line numbers are enabled.                                       |
+| `ref`                      | `HTMLDivElement \| null`                    | `null`      | Bindable Scroll Area root.                                                                 |
+| `class`                    | `string`                                    | `undefined` | Merged on the Scroll Area root; use it for `h-*` or `max-h-*` constraints.                 |
+| `viewportRef`              | `HTMLDivElement \| null`                    | `null`      | Bindable scrolling viewport.                                                               |
+| `preRef`                   | `HTMLPreElement \| null`                    | `null`      | Bindable semantic `pre` element.                                                           |
+| `viewportProps`            | `ScrollArea.ViewportProps` without children | `undefined` | Customizes the viewport; its `tabindex` defaults to `0` and its class is merged.           |
+| `horizontalScrollbarProps` | `ScrollArea.ScrollbarHorizontalProps`       | `undefined` | Customizes the horizontal scrollbar.                                                       |
+| `verticalScrollbarProps`   | `ScrollArea.ScrollbarVerticalProps`         | `undefined` | Customizes the vertical scrollbar.                                                         |
+| Scroll Area root props     | Varies                                      | —           | `type`, `scrollHideDelay`, native div attributes, styles, and events are forwarded.        |
 
-Content always sets `dir="ltr"`; remaining native `pre` attributes and events are forwarded.
+Content always renders both custom scrollbars. The viewport owns keyboard focus and scrolling; the neutral `pre > code` structure remains left-to-right and contains only semantic, sizing, wrapping, numbering, and token-color behavior.
 
 ### `CodeBlock.Line`
 
@@ -262,28 +266,30 @@ An empty string or empty token list renders an internal newline so selected text
 
 ## Styling and DOM contract
 
-| Part        | Stable hook or state                                                        |
-| ----------- | --------------------------------------------------------------------------- |
-| Root        | `data-slot="code-block"`, `data-variant`, `data-size`                       |
-| Header      | `data-slot="code-block-header"`                                             |
-| Title       | `data-slot="code-block-title"`                                              |
-| Actions     | `data-slot="code-block-actions"`                                            |
-| Copy button | `data-slot="code-block-copy-button"`, `data-copied`                         |
-| Content     | `data-slot="code-block-content"`, `data-wrap`, `data-numbered`, `dir="ltr"` |
-| Inner code  | `data-slot="code-block-code"`                                               |
-| Line        | `data-slot="code-block-line"`, `data-variant`                               |
-| Line text   | `data-slot="code-block-line-content"`                                       |
-| Footer      | `data-slot="code-block-footer"`                                             |
+| Part         | Stable hook or state                                                               |
+| ------------ | ---------------------------------------------------------------------------------- |
+| Root         | `data-slot="code-block"`, `data-variant`, `data-size`                              |
+| Header       | `data-slot="code-block-header"`                                                    |
+| Title        | `data-slot="code-block-title"`                                                     |
+| Actions      | `data-slot="code-block-actions"`                                                   |
+| Copy button  | `data-slot="code-block-copy-button"`, `data-copied`                                |
+| Content root | `data-code-block-content`, `data-wrap`, `data-numbered`, `data-slot="scroll-area"` |
+| Viewport     | `data-code-block-viewport`, `data-slot="scroll-area-viewport"`                     |
+| Semantic pre | `data-slot="code-block-content"`, `dir="ltr"`                                      |
+| Inner code   | `data-slot="code-block-code"`                                                      |
+| Line         | `data-slot="code-block-line"`, `data-variant`                                      |
+| Line text    | `data-slot="code-block-line-content"`                                              |
+| Footer       | `data-slot="code-block-footer"`                                                    |
 
-Root uses semantic `input`, `foreground`, `ring`, `danger`, `muted`, `background`, and muted-foreground styling. Supplied classes are merged with `cn()` on every part. The root owns focus-within border and ring treatment because Content suppresses its native outline.
+Root uses semantic `input`, `foreground`, `ring`, `danger`, `muted`, `background`, and muted-foreground styling. Supplied classes are merged with `cn()` on every part. The root owns the focus border and ring treatment while the Scroll Area viewport suppresses its native outline.
 
-Content uses xvelte's shared `scroll-fade-x` utility and adds `scroll-fade-y` while wrapping. Syntax-token colors are inline Shiki variables switched by the app's `.dark` ancestor. The highlighting hook does not emit HTML or use `{@html}`.
+Content places spacing, typography, sizing constraints, focus behavior, and scrolling on its Scroll Area root and viewport. The `pre` and `code` add no border, background, padding, overflow, scrollbar, or focus styles. Syntax-token colors are inline Shiki variables switched by the app's `.dark` ancestor. The highlighting hook does not emit HTML or use `{@html}`.
 
 ---
 
 ## Accessibility
 
-- Content is semantic `pre > code`, left-to-right, selectable, and keyboard scrollable by default.
+- Content remains semantic `pre > code`, left-to-right, and selectable. Its Scroll Area viewport has `tabindex="0"` by default for keyboard scrolling; override `viewportProps.tabindex` only when another reachable control provides equivalent access.
 - Give Header titles enough context to identify the source, command, file, or output. `Title` is a visual `div`, not a heading.
 - CopyButton has localized state-dependent names and a polite success announcement. Keep it reachable and visible on focus.
 - Line numbers and diff markers are generated outside the selectable line content. They are presentational; add text when line or diff state carries essential meaning.
@@ -308,25 +314,25 @@ Content uses xvelte's shared `scroll-fade-x` utility and adds `scroll-fade-y` wh
 
 ### Packages
 
-Code Block itself uses Button, Tailwind Variants, Tabler icons, and the shared helpers. The optional syntax hook adds Shiki.
+Code Block itself uses Scroll Area, Button, Bits UI, Tailwind Variants, Tabler icons, and the shared helpers. The optional syntax hook adds Shiki.
 
 ```sh
 # Bun
-bun add shiki tailwind-variants @tabler/icons-svelte clsx tailwind-merge
+bun add bits-ui shiki tailwind-variants @tabler/icons-svelte clsx tailwind-merge
 bun add -D tailwindcss @inlang/paraglide-js
 
 # npm
-npm install shiki tailwind-variants @tabler/icons-svelte clsx tailwind-merge
+npm install bits-ui shiki tailwind-variants @tabler/icons-svelte clsx tailwind-merge
 npm install -D tailwindcss @inlang/paraglide-js
 
 # pnpm
-pnpm add shiki tailwind-variants @tabler/icons-svelte clsx tailwind-merge
+pnpm add bits-ui shiki tailwind-variants @tabler/icons-svelte clsx tailwind-merge
 pnpm add -D tailwindcss @inlang/paraglide-js
 ```
 
 Omit `shiki` when the app renders only plain `Content.code` or application-owned `Line` values and does not copy `use-highlighted-code.svelte.ts`.
 
-### Required xvelte component and shared style
+### Required xvelte components
 
 Copy the complete Button folder and follow its `button.md` guide:
 
@@ -337,10 +343,17 @@ button/
 └── index.ts
 ```
 
-Copy `src/lib/styles/scroll-fade.css` and `scroll-fade.md`, follow that guide, and import the style from the global application stylesheet:
+Copy the complete Scroll Area folder and follow its `scroll-area.md` guide:
 
-```css
-@import "../lib/styles/scroll-fade.css";
+```text
+scroll-area/
+├── index.ts
+├── scroll-area-context.svelte.ts
+├── scroll-area-root.svelte
+├── scroll-area-scrollbar-horizontal.svelte
+├── scroll-area-scrollbar-vertical.svelte
+├── scroll-area-viewport.svelte
+└── scroll-area.md
 ```
 
 For syntax highlighting, also copy `src/lib/hooks/use-highlighted-code.svelte.ts` and `use-highlighted-code.md` and follow the hook guide. Code Block needs no attachment, context module, image, font, or network service.
@@ -409,23 +422,23 @@ Add the two localization messages listed above to `messages/en.json` and compile
 
 ## Credits
 
-Code Block is adapted from [shadcn-svelte Code Block](https://www.shadcn-svelte.com/docs/components/code-block). The local implementation adds xvelte namespaces, named props types, semantic danger tokens, Tabler icon aliases, Paraglide copy feedback, the shared Scroll Fade utility, and dynamic access to every bundled Shiki language and alias.
+Code Block is adapted from [shadcn-svelte Code Block](https://www.shadcn-svelte.com/docs/components/code-block). The local implementation adds xvelte namespaces, named props types, semantic danger tokens, Tabler icon aliases, Paraglide copy feedback, custom two-axis scrolling through Scroll Area, and dynamic access to every bundled Shiki language and alias.
 
 ---
 
 ## File organization
 
-| File                            | Responsibility                                                                     |
-| ------------------------------- | ---------------------------------------------------------------------------------- |
-| `code-block-root.svelte`        | Root variants, size and variant state, focus treatment, and composition container. |
-| `code-block-header.svelte`      | Optional metadata and action row.                                                  |
-| `code-block-title.svelte`       | Truncated title and icon treatment.                                                |
-| `code-block-actions.svelte`     | Inline or floating action layout.                                                  |
-| `code-block-copy-button.svelte` | Clipboard action, localized state, icons, and live announcement.                   |
-| `code-block-content.svelte`     | Semantic pre/code structure, scrolling, wrapping, numbering, and string rendering. |
-| `code-block-line.svelte`        | Plain or tokenized lines, blank-line preservation, diff states, and line variants. |
-| `code-block-footer.svelte`      | Optional trailing metadata row.                                                    |
-| `index.ts`                      | Every public part, props type, option type, and variant helper.                    |
-| `code-block.md`                 | Usage, API, contracts, dependencies, accessibility, and installation guide.        |
+| File                            | Responsibility                                                                                  |
+| ------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `code-block-root.svelte`        | Root variants, size and variant state, focus treatment, and composition container.              |
+| `code-block-header.svelte`      | Optional metadata and action row.                                                               |
+| `code-block-title.svelte`       | Truncated title and icon treatment.                                                             |
+| `code-block-actions.svelte`     | Inline or floating action layout.                                                               |
+| `code-block-copy-button.svelte` | Clipboard action, localized state, icons, and live announcement.                                |
+| `code-block-content.svelte`     | Scroll Area composition, neutral pre/code structure, wrapping, numbering, and string rendering. |
+| `code-block-line.svelte`        | Plain or tokenized lines, blank-line preservation, diff states, and line variants.              |
+| `code-block-footer.svelte`      | Optional trailing metadata row.                                                                 |
+| `index.ts`                      | Every public part, props type, option type, and variant helper.                                 |
+| `code-block.md`                 | Usage, API, contracts, dependencies, accessibility, and installation guide.                     |
 
 The component's `index.ts` and exported types are the source of truth for the public API.

@@ -26,7 +26,7 @@ All component paths are relative to `src/lib/components/ui`.
 - `carousel` — horizontal or vertical Embla carousel with responsive inside-edge navigation, touch and mouse dragging, plugins, and programmatic controls
 - `chart`
 - `checkbox`
-- `code-block` — composable code, terminal, log, and diff output with headers, actions, copying, wrapping, numbering, row states, streaming-friendly rendering, and optional lazy Shiki highlighting
+- `code-block` — composable code, terminal, log, and diff output with headers, actions, copying, custom two-axis scrolling, wrapping, numbering, row states, streaming-friendly rendering, and optional lazy Shiki highlighting
 - `collapsible`
 - `color-picker`
 - `combobox` — searchable single or multiple selection with controlled open state, configurable filtering and positioning, disabled options, separators, and loading content

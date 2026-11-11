@@ -7,10 +7,10 @@
 	import type { WithElementRef } from "$lib/utils";
 
 	export const rootVariants = tv({
-		base: "group/code-block relative flex w-full min-w-0 flex-col overflow-hidden rounded-lg text-sm data-[size=sm]:text-xs has-[>[data-slot=code-block-content]:focus-visible]:ring-3 has-[>[data-slot=code-block-content]:focus-visible]:ring-ring/50",
+		base: "group/code-block relative flex w-full min-w-0 flex-col overflow-hidden rounded-lg text-sm data-[size=sm]:text-xs has-[[data-code-block-viewport]:focus-visible]:ring-3 has-[[data-code-block-viewport]:focus-visible]:ring-ring/50",
 		variants: {
 			variant: {
-				default: "border border-input text-foreground dark:bg-input/30 has-[>[data-slot=code-block-content]:focus-visible]:border-ring",
+				default: "border border-input text-foreground dark:bg-input/30 has-[[data-code-block-viewport]:focus-visible]:border-ring",
 				destructive: "border border-danger/30 text-danger dark:border-danger/40"
 			}
 		},

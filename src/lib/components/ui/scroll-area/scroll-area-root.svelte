@@ -17,7 +17,7 @@
 	const context = setScrollAreaContext();
 </script>
 
-<ScrollAreaPrimitive.Root bind:ref data-slot="scroll-area" class={cn("relative", className)} {...restProps}>
+<ScrollAreaPrimitive.Root bind:ref data-slot="scroll-area" class={cn("relative overflow-hidden", className)} {...restProps}>
 	{@render children?.()}
 
 	{#if context.hasCorner}

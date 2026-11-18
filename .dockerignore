@@ -10,6 +10,7 @@ README.md
 .graphqlrc
 .editorconfig
 .svelte-kit
+src-tauri/target
 .vscode
 node_modules
 build

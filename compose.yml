@@ -1,0 +1,9 @@
+services:
+  web:
+    image: xvelte:local
+    pull_policy: build
+    build:
+      context: https://github.com/XurxoMF/xvelte.git#main
+    ports:
+      - "${PORT:-3000}:3000"
+    restart: unless-stopped

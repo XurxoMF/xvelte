@@ -40,8 +40,8 @@
 			installTauriRuntime: "bun add @tauri-apps/api @tauri-apps/plugin-fs",
 			installTauriDevelopment: "bun add -D @tauri-apps/cli",
 			runTauri: "bun tauri dev",
-			tauriDevCommand: "bun dev",
-			tauriBuildCommand: "bun run build"
+			tauriDevCommand: "bun run dev:tauri",
+			tauriBuildCommand: "bun run build:tauri"
 		},
 		npm: {
 			create: "npx sv create xvelte-app",
@@ -52,8 +52,8 @@
 			installTauriRuntime: "npm install @tauri-apps/api @tauri-apps/plugin-fs",
 			installTauriDevelopment: "npm install -D @tauri-apps/cli",
 			runTauri: "npm run tauri dev",
-			tauriDevCommand: "npm run dev",
-			tauriBuildCommand: "npm run build"
+			tauriDevCommand: "npm run dev:tauri",
+			tauriBuildCommand: "npm run build:tauri"
 		},
 		pnpm: {
 			create: "pnpm dlx sv create xvelte-app",
@@ -64,8 +64,8 @@
 			installTauriRuntime: "pnpm add @tauri-apps/api @tauri-apps/plugin-fs",
 			installTauriDevelopment: "pnpm add -D @tauri-apps/cli",
 			runTauri: "pnpm tauri dev",
-			tauriDevCommand: "pnpm dev",
-			tauriBuildCommand: "pnpm build"
+			tauriDevCommand: "pnpm dev:tauri",
+			tauriBuildCommand: "pnpm build:tauri"
 		}
 	} satisfies Record<PackageManager, PackageManagerCommands>;
 
@@ -85,9 +85,13 @@
 
 	const packageScripts = `{
 	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
+		"dev": "bun run dev:web",
+		"dev:web": "vite dev --mode web",
+		"dev:tauri": "vite dev --mode tauri",
+		"build": "bun run build:web",
+		"build:web": "vite build --mode web",
+		"build:tauri": "vite build --mode tauri",
+		"preview": "vite preview --mode web",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -105,23 +109,40 @@ import adapter from "@sveltejs/adapter-static";
 import { sveltekit } from "@sveltejs/kit/vite";
 import { defineConfig } from "vite";
 
-export default defineConfig({
-	plugins: [
-		tailwindcss(),
-		sveltekit({
-			adapter: adapter({ fallback: "index.html" })
-		}),
-		paraglideVitePlugin({
-			project: "./project.inlang",
-			outdir: "./src/lib/paraglide",
-			emitTsDeclarations: true,
-			strategy: ["localStorage", "preferredLanguage", "baseLocale"]
-		})
-	]
+export default defineConfig(({ mode }) => {
+	const isTauriBuild = mode === "tauri";
+	const outputDirectory = isTauriBuild ? "build/tauri" : "build/web";
+
+	return {
+		plugins: [
+			tailwindcss(),
+			sveltekit({
+				paths: { relative: isTauriBuild },
+				adapter: adapter({
+					pages: outputDirectory,
+					assets: outputDirectory,
+					...(isTauriBuild ? { fallback: "index.html" } : {})
+				})
+			}),
+			paraglideVitePlugin({
+				project: "./project.inlang",
+				outdir: "./src/lib/paraglide",
+				emitTsDeclarations: true,
+				strategy: ["localStorage", "preferredLanguage", "baseLocale"]
+			})
+		],
+		server: {
+			port: 5173,
+			strictPort: true,
+			watch: { ignored: ["**/src-tauri/**"] }
+		}
+	};
 });`;
 
-	const layoutOptions = `export const prerender = true;
-export const ssr = false;`;
+	const layoutOptions = `const isTauriBuild = import.meta.env.MODE === "tauri";
+
+export const prerender = !isTauriBuild;
+export const ssr = !isTauriBuild;`;
 
 	const rootLayout = `<script lang="ts">
 	import { ModeWatcher } from "mode-watcher";
@@ -134,17 +155,6 @@ export const ssr = false;`;
 <ModeWatcher />
 
 {@render children()}`;
-
-	const tauriViteServer = `export default defineConfig({
-	// Keep the existing plugins.
-	server: {
-		port: 5173,
-		strictPort: true,
-		watch: {
-			ignored: ["**/src-tauri/**"]
-		}
-	}
-});`;
 
 	const packageScriptLines = useHighlightedCode(
 		() => packageScripts,
@@ -162,11 +172,6 @@ export const ssr = false;`;
 		() => rootLayout,
 		() => "svelte"
 	);
-	const tauriViteServerLines = useHighlightedCode(
-		() => tauriViteServer,
-		() => "typescript"
-	);
-
 	let packageManager: PackageManager = $state("bun");
 
 	/** Keeps the package-manager selector from entering Toggle Group's empty single-selection state. */
@@ -330,16 +335,17 @@ export const ssr = false;`;
 				<div class="space-y-4">
 					<Typography.H3>3. Configure the Tauri build</Typography.H3>
 					<Typography.P class="text-muted-foreground">
-						Add <Typography.InlineCode>server</Typography.InlineCode> beside <Typography.InlineCode>plugins</Typography.InlineCode> in
-						<Typography.InlineCode>vite.config.ts</Typography.InlineCode>.
+						The shared Vite configuration already switches to SPA mode for <Typography.InlineCode>--mode tauri</Typography.InlineCode>, writes the
+						native frontend to <Typography.InlineCode>build/tauri</Typography.InlineCode>, and keeps the public website prerendered in
+						<Typography.InlineCode>build/web</Typography.InlineCode>.
 					</Typography.P>
-					{@render SourceBlock("vite.config.ts", tauriViteServer, tauriViteServerLines)}
 				</div>
 
 				<div class="space-y-4">
 					<Typography.H3>4. Check src-tauri/tauri.conf.json</Typography.H3>
 					<Typography.P class="text-muted-foreground">
-						Set <Typography.InlineCode>beforeDevCommand</Typography.InlineCode> to
+						Set <Typography.InlineCode>frontendDist</Typography.InlineCode> to <Typography.InlineCode>../build/tauri</Typography.InlineCode>,
+						<Typography.InlineCode>beforeDevCommand</Typography.InlineCode> to
 						<Typography.InlineCode>{commands[packageManager].tauriDevCommand}</Typography.InlineCode> and
 						<Typography.InlineCode>beforeBuildCommand</Typography.InlineCode> to
 						<Typography.InlineCode>{commands[packageManager].tauriBuildCommand}</Typography.InlineCode>.

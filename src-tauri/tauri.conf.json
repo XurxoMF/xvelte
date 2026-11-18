@@ -4,10 +4,10 @@
 	"version": "../package.json",
 	"identifier": "xyz.xurxomf.xvelte",
 	"build": {
-		"frontendDist": "../build",
+		"frontendDist": "../build/tauri",
 		"devUrl": "http://localhost:5173",
-		"beforeDevCommand": "bun dev",
-		"beforeBuildCommand": "bun run build"
+		"beforeDevCommand": "bun run dev:tauri",
+		"beforeBuildCommand": "bun run build:tauri"
 	},
 	"app": {
 		"windows": [

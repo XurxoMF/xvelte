@@ -41,7 +41,7 @@
 			installTauriDevelopment: "bun add -D @tauri-apps/cli",
 			runTauri: "bun tauri dev",
 			tauriDevCommand: "bun dev",
-			tauriBuildCommand: "bun run build:tauri"
+			tauriBuildCommand: "bun run build"
 		},
 		npm: {
 			create: "npx sv create xvelte-app",
@@ -53,7 +53,7 @@
 			installTauriDevelopment: "npm install -D @tauri-apps/cli",
 			runTauri: "npm run tauri dev",
 			tauriDevCommand: "npm run dev",
-			tauriBuildCommand: "npm run build:tauri"
+			tauriBuildCommand: "npm run build"
 		},
 		pnpm: {
 			create: "pnpm dlx sv create xvelte-app",
@@ -65,7 +65,7 @@
 			installTauriDevelopment: "pnpm add -D @tauri-apps/cli",
 			runTauri: "pnpm tauri dev",
 			tauriDevCommand: "pnpm dev",
-			tauriBuildCommand: "pnpm build:tauri"
+			tauriBuildCommand: "pnpm build"
 		}
 	} satisfies Record<PackageManager, PackageManagerCommands>;
 
@@ -87,7 +87,6 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
-		"build:tauri": "vite build --mode tauri",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -110,7 +109,7 @@ export default defineConfig({
 	plugins: [
 		tailwindcss(),
 		sveltekit({
-			adapter: adapter({ fallback: "200.html" })
+			adapter: adapter({ fallback: "index.html" })
 		}),
 		paraglideVitePlugin({
 			project: "./project.inlang",
@@ -121,10 +120,8 @@ export default defineConfig({
 	]
 });`;
 
-	const webLayoutOptions = `import { dev } from "$app/environment";
-
-export const prerender = true;
-export const ssr = !dev;`;
+	const layoutOptions = `export const prerender = true;
+export const ssr = false;`;
 
 	const rootLayout = `<script lang="ts">
 	import { ModeWatcher } from "mode-watcher";
@@ -137,13 +134,6 @@ export const ssr = !dev;`;
 <ModeWatcher />
 
 {@render children()}`;
-
-	const tauriLayoutOptions = `import { dev } from "$app/environment";
-
-const isTauriBuild = import.meta.env.MODE === "tauri";
-
-export const prerender = true;
-export const ssr = !dev && !isTauriBuild;`;
 
 	const tauriViteServer = `export default defineConfig({
 	// Keep the existing plugins.
@@ -164,17 +154,13 @@ export const ssr = !dev && !isTauriBuild;`;
 		() => viteConfig,
 		() => "typescript"
 	);
-	const webLayoutOptionsLines = useHighlightedCode(
-		() => webLayoutOptions,
+	const layoutOptionsLines = useHighlightedCode(
+		() => layoutOptions,
 		() => "typescript"
 	);
 	const rootLayoutLines = useHighlightedCode(
 		() => rootLayout,
 		() => "svelte"
-	);
-	const tauriLayoutOptionsLines = useHighlightedCode(
-		() => tauriLayoutOptions,
-		() => "typescript"
 	);
 	const tauriViteServerLines = useHighlightedCode(
 		() => tauriViteServer,
@@ -293,7 +279,7 @@ export const ssr = !dev && !isTauriBuild;`;
 				<div class="space-y-4">
 					<Typography.H3>6. Configure the application</Typography.H3>
 					{@render SourceBlock("vite.config.ts", viteConfig, viteConfigLines)}
-					{@render SourceBlock("src/routes/+layout.ts", webLayoutOptions, webLayoutOptionsLines)}
+					{@render SourceBlock("src/routes/+layout.ts", layoutOptions, layoutOptionsLines)}
 					{@render SourceBlock("src/routes/+layout.svelte", rootLayout, rootLayoutLines)}
 				</div>
 
@@ -343,7 +329,6 @@ export const ssr = !dev && !isTauriBuild;`;
 
 				<div class="space-y-4">
 					<Typography.H3>3. Configure the Tauri build</Typography.H3>
-					{@render SourceBlock("src/routes/+layout.ts", tauriLayoutOptions, tauriLayoutOptionsLines)}
 					<Typography.P class="text-muted-foreground">
 						Add <Typography.InlineCode>server</Typography.InlineCode> beside <Typography.InlineCode>plugins</Typography.InlineCode> in
 						<Typography.InlineCode>vite.config.ts</Typography.InlineCode>.

@@ -1,5 +1,4 @@
 import { createContext } from "svelte";
-import { SvelteSet } from "svelte/reactivity";
 
 import type {
 	WidgetGridAdapterInteraction,
@@ -131,8 +130,8 @@ export class WidgetGridItemContext implements WidgetGridAdapterItem {
 	moving = $state(false);
 	resizing = $state(false);
 	keyboardInteraction = $state<WidgetGridKeyboardInteraction>();
-	dragHandles = new SvelteSet<HTMLElement>();
-	resizeHandle = $state<HTMLElement | null>(null);
+	resizeHandle: HTMLElement | null = null;
+	#dragHandles: HTMLElement[] = [];
 	#unregisterItem: (() => void) | undefined;
 	#keyboardInitialState: WidgetGridItemState | undefined;
 
@@ -152,7 +151,7 @@ export class WidgetGridItemContext implements WidgetGridAdapterItem {
 
 	/** @returns Number of mounted explicit DragHandle descendants. */
 	get dragHandleCount() {
-		return this.dragHandles.size;
+		return this.#dragHandles.length;
 	}
 
 	/** @returns Whether the single explicit ResizeHandle is mounted. */
@@ -225,10 +224,11 @@ export class WidgetGridItemContext implements WidgetGridAdapterItem {
 	 * @returns Cleanup that removes the handle.
 	 */
 	registerDragHandle(element: HTMLElement) {
-		this.dragHandles.add(element);
+		if (!this.#dragHandles.includes(element)) this.#dragHandles.push(element);
 		this.grid.adapter.dragHandlesChanged(this);
 		return () => {
-			this.dragHandles.delete(element);
+			const index = this.#dragHandles.indexOf(element);
+			if (index !== -1) this.#dragHandles.splice(index, 1);
 			this.grid.adapter.dragHandlesChanged(this);
 		};
 	}

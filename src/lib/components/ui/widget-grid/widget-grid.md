@@ -240,7 +240,7 @@ Root receives the directly affected state plus a current snapshot of every regis
 </WidgetGrid.Root>
 ```
 
-The engine is the temporary source of truth during a direct pointer or keyboard interaction. External prop changes update a mounted Item without remounting, while unchanged app props do not overwrite an active move or resize. Keyboard interaction invokes the same start, progress, and end callbacks as pointer interaction; Escape reports the restored state through the progress and end callbacks.
+The engine is the temporary source of truth during a direct pointer or keyboard interaction. External prop changes update a mounted Item once without remounting or creating reactive feedback through engine-owned state, while unchanged app props do not overwrite an active move or resize. Keyboard interaction invokes the same start, progress, and end callbacks as pointer interaction; Escape reports the restored state through the progress and end callbacks.
 
 ### Dynamic items
 

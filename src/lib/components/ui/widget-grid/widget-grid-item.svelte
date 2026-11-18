@@ -31,7 +31,7 @@
 </script>
 
 <script lang="ts">
-	import { onMount } from "svelte";
+	import { onMount, untrack } from "svelte";
 	import { createAttachmentKey } from "svelte/attachments";
 
 	import { setWidgetGridItemContext } from "./widget-grid-context.svelte";
@@ -105,7 +105,10 @@
 
 	onMount(() => item.mount());
 
-	$effect(() => item.sync(state));
+	$effect(() => {
+		const nextState = state;
+		untrack(() => item.sync(nextState));
+	});
 
 	/**
 	 * Registers the hidden engine wrapper as a direct Root child.

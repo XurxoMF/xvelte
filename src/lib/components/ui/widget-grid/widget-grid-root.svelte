@@ -36,6 +36,7 @@
 </script>
 
 <script lang="ts">
+	import { untrack } from "svelte";
 	import { createAttachmentKey } from "svelte/attachments";
 	import "gridstack/dist/gridstack.css";
 
@@ -109,7 +110,7 @@
 		void disabled;
 		void draggable;
 		void resizable;
-		grid.sync();
+		untrack(() => grid.sync());
 	});
 
 	/**

@@ -34,7 +34,7 @@
 
 	<div class="mt-10 grid gap-4 sm:grid-cols-2">
 		{#each sections as section (section.id)}
-			<a href={resolve(`/tauri/${section.directory}` as Path)} class="group block">
+			<a href={resolve(`tauri/${section.directory}` as Path)} class="group block">
 				<Card.Root
 					class="h-full transition-all group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-lg group-hover:shadow-primary/5"
 				>

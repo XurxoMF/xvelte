@@ -24,7 +24,7 @@
 
 	<div class="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
 		{#each units as unit (unit.href)}
-			<a href={resolve(unit.href as Path)} class="group block">
+			<a href={resolve(unit.href.slice(1) as Path)} class="group block">
 				<Card.Root size="sm" class="h-full transition-all group-hover:-translate-y-0.5 group-hover:border-primary/40 group-hover:shadow-md">
 					<Card.Header>
 						<Card.Title>{unit.title}</Card.Title>

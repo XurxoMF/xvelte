@@ -66,8 +66,9 @@ The controlling component must keep the element mounted long enough for an exit 
 ### Timing, repetition, and arbitrary values
 
 ```svelte
-<span class="animate-in animation-delay-150 animation-duration-[450ms] animation-ease-out animation-fill-both fade-in-0 blur-in-[6px]">Connected</span
->
+<span class="animate-in animation-delay-150 animation-duration-[450ms] animation-ease-out animation-fill-both fade-in-0 blur-in-[6px]">
+	Connected
+</span>
 
 <span class="animate-in animation-duration-1000 animation-repeat-infinite animation-direction-alternate spin-in-1/2">Working</span>
 ```

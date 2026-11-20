@@ -274,9 +274,9 @@ export const ssr = !isTauriBuild;`;
 				<div class="space-y-4">
 					<Typography.H3>5. Add the project scripts</Typography.H3>
 					<Typography.P class="text-muted-foreground">
-						Merge this complete <Typography.InlineCode>scripts</Typography.InlineCode> object into <Typography.InlineCode
-							>package.json</Typography.InlineCode
-						>.
+						Merge this complete <Typography.InlineCode>scripts</Typography.InlineCode> object into <Typography.InlineCode>
+							package.json
+						</Typography.InlineCode>.
 					</Typography.P>
 					{@render SourceBlock("package.json", packageScripts, packageScriptLines)}
 				</div>

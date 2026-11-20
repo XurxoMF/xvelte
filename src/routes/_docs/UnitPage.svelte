@@ -69,9 +69,9 @@
 
 				<Breadcrumb.Item>
 					{#if category}
-						<Breadcrumb.Link href={resolve(`${unit.scope === "tauri" ? "/tauri" : ""}/${category.directory}` as Path)}
-							>{category.label}</Breadcrumb.Link
-						>
+						<Breadcrumb.Link href={resolve(`${unit.scope === "tauri" ? "tauri/" : ""}${category.directory}` as Path)}>
+							{category.label}
+						</Breadcrumb.Link>
 					{/if}
 				</Breadcrumb.Item>
 

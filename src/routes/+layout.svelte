@@ -104,8 +104,9 @@
 							<Sidebar.MenuItem>
 								<Sidebar.MenuButton isActive={currentPath === "/installation"} tooltipContent="Installation">
 									{#snippet child({ props })}
-										<a href={resolve("installation")} aria-current={currentPath === "/installation" ? "page" : undefined} {...props}>Installation</a
-										>{/snippet}
+										<a href={resolve("installation")} aria-current={currentPath === "/installation" ? "page" : undefined} {...props}>
+											Installation
+										</a>{/snippet}
 								</Sidebar.MenuButton>
 							</Sidebar.MenuItem>
 						</Sidebar.Menu>
@@ -136,7 +137,7 @@
 											{#each category.units as unit (unit.href)}
 												<Sidebar.MenuSubItem>
 													<Sidebar.MenuSubButton
-														href={resolve(unit.href as Path)}
+														href={resolve(unit.href.slice(1) as Path)}
 														isActive={currentPath === unit.href}
 														aria-current={currentPath === unit.href ? "page" : undefined}
 													>
@@ -177,9 +178,9 @@
 								<Command.Empty>No documentation found.</Command.Empty>
 
 								<Command.Group heading="Getting started">
-									<Command.LinkItem value="installation" href={resolve("installation")} onSelect={() => (searchOpen = false)}
-										>Installation</Command.LinkItem
-									>
+									<Command.LinkItem value="installation" href={resolve("installation")} onSelect={() => (searchOpen = false)}>
+										Installation
+									</Command.LinkItem>
 								</Command.Group>
 
 								{#each navigation as scope (scope.value)}
@@ -189,7 +190,7 @@
 												<Command.LinkItem
 													value={unit.href}
 													keywords={[unit.title, unit.slug, scope.label, category.label, unit.description]}
-													href={resolve(unit.href as Path)}
+													href={resolve(unit.href.slice(1) as Path)}
 													onSelect={() => selectResult(unit)}
 												>
 													{unit.title}
@@ -222,6 +223,6 @@
 
 <div style="display:none">
 	{#each locales as locale (locale)}
-		<a href={resolve(localizeHref(page.url.pathname, { locale }) as Path)}>{locale}</a>
+		<a href={resolve(localizeHref(page.url.pathname, { locale }).replace(/^\//, "") as Path)}>{locale}</a>
 	{/each}
 </div>

@@ -57,7 +57,7 @@
 
 			<div class="mt-8 grid gap-4 sm:grid-cols-2">
 				{#each sharedSections as section (section.id)}
-					<a href={resolve(`/${section.directory}` as Path)} class="group block">
+					<a href={resolve(section.directory as Path)} class="group block">
 						<Card.Root
 							class="h-full transition-all group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-lg group-hover:shadow-primary/5"
 						>
@@ -82,7 +82,7 @@
 
 			<div class="mt-8 grid gap-4 sm:grid-cols-2">
 				{#each tauriSections as section (section.id)}
-					<a href={resolve(`/tauri/${section.directory}` as Path)} class="group block">
+					<a href={resolve(`tauri/${section.directory}` as Path)} class="group block">
 						<Card.Root
 							class="h-full transition-all group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-lg group-hover:shadow-primary/5"
 						>
@@ -107,9 +107,9 @@
 					Every reference page is sourced from the unit-named Markdown guide beside its implementation. That keeps installation notes, public API,
 					accessibility details, and examples in one place.
 				</Typography.P>
-				<Typography.P
-					>The site itself is built with xvelte: its sidebar, cards, buttons, tabs, and code blocks double as a practical showcase.</Typography.P
-				>
+				<Typography.P>
+					The site itself is built with xvelte: its sidebar, cards, buttons, tabs, and code blocks double as a practical showcase.
+				</Typography.P>
 			</div>
 		</div>
 

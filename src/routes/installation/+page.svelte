@@ -1,4 +1,6 @@
 <script lang="ts">
+	import viteConfig from "./vite.config.example.txt?raw";
+
 	import { AlertInfoIcon, AlertWarningIcon } from "#lib/icons.ts";
 
 	import { useHighlightedCode } from "#lib/hooks/use-highlighted-code.svelte.ts";
@@ -102,42 +104,6 @@
 		"paraglide:translate": "inlang machine translate --project ./project.inlang"
 	}
 }`;
-
-	const viteConfig = `import { paraglideVitePlugin } from "@inlang/paraglide-js";
-import tailwindcss from "@tailwindcss/vite";
-import adapter from "@sveltejs/adapter-static";
-import { sveltekit } from "@sveltejs/kit/vite";
-import { defineConfig } from "vite";
-
-export default defineConfig(({ mode }) => {
-	const isTauriBuild = mode === "tauri";
-	const outputDirectory = isTauriBuild ? "build/tauri" : "build/web";
-
-	return {
-		plugins: [
-			tailwindcss(),
-			sveltekit({
-				paths: { relative: isTauriBuild },
-				adapter: adapter({
-					pages: outputDirectory,
-					assets: outputDirectory,
-					...(isTauriBuild ? { fallback: "index.html" } : {})
-				})
-			}),
-			paraglideVitePlugin({
-				project: "./project.inlang",
-				outdir: "./src/lib/paraglide",
-				emitTsDeclarations: true,
-				strategy: ["localStorage", "preferredLanguage", "baseLocale"]
-			})
-		],
-		server: {
-			port: 5173,
-			strictPort: true,
-			watch: { ignored: ["**/src-tauri/**"] }
-		}
-	};
-});`;
 
 	const layoutOptions = `const isTauriBuild = import.meta.env.MODE === "tauri";
 

@@ -10,7 +10,7 @@
 		columns?: number | Partial<Record<WidgetGridBreakpoint, number>> | undefined;
 		/** Uniform horizontal and vertical gap in pixels. */
 		gap?: number | undefined;
-		/** Compacted dashboard or position-preserving layout behavior. */
+		/** Gravity, position-preserving, ordered-list, or gap-filling layout behavior. */
 		mode?: WidgetGridMode | undefined;
 		/** Disables all direct move and resize interaction. */
 		disabled?: boolean | undefined;
@@ -49,7 +49,7 @@
 		class: className,
 		columns = 12,
 		gap = 16,
-		mode = "stack",
+		mode = "top",
 		disabled = false,
 		draggable = true,
 		resizable = true,

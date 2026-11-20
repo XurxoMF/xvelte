@@ -1,4 +1,4 @@
-import type { GridItemHTMLElement, GridStack, GridStackWidget } from "gridstack";
+import type { ColumnOptions, GridItemHTMLElement, GridStack, GridStackWidget } from "gridstack";
 import type { WidgetGridItemState, WidgetGridMode } from "./widget-grid-types";
 
 const BREAKPOINT_WIDTHS = {
@@ -81,7 +81,7 @@ export class WidgetGridAdapter {
 				cellHeight: "auto",
 				column: this.#resolveColumns(root.clientWidth),
 				draggable: { handle: '[data-slot="widget-grid-drag-handle"]' },
-				float: this.options.mode === "free",
+				mode: this.options.mode,
 				margin: Math.max(0, this.options.gap),
 				resizable: { handles: "se", element: '[data-slot="widget-grid-resize-handle"]' }
 			},
@@ -148,7 +148,7 @@ export class WidgetGridAdapter {
 		const grid = this.#grid;
 		if (!grid) return;
 		grid.margin(Math.max(0, this.options.gap));
-		grid.float(this.options.mode === "free");
+		grid.mode(this.options.mode);
 		this.#syncColumns();
 		for (const item of this.#items) this.#syncItemInteraction(item);
 	}
@@ -377,6 +377,19 @@ export class WidgetGridAdapter {
 	#syncColumns() {
 		if (!this.#grid || !this.#root) return;
 		const columns = this.#resolveColumns(this.#root.clientWidth);
-		if (this.#grid.getColumn() !== columns) this.#grid.column(columns, this.options.mode === "stack" ? "compact" : "move");
+		if (this.#grid.getColumn() !== columns) this.#grid.column(columns, this.#columnLayout());
+	}
+
+	/** @returns The responsive relayout strategy matching the active GridStack 14 layout mode. */
+	#columnLayout(): ColumnOptions {
+		switch (this.options.mode) {
+			case "float":
+				return "move";
+			case "list":
+				return "list";
+			case "top":
+			case "compact":
+				return "compact";
+		}
 	}
 }

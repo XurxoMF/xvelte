@@ -2,7 +2,7 @@
 export type WidgetGridBreakpoint = "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
 
 /** Collision and compaction behavior used while arranging widgets. */
-export type WidgetGridMode = "stack" | "free";
+export type WidgetGridMode = "top" | "float" | "list" | "compact";
 
 /** Persistable position, dimensions, constraints, and interaction settings for one widget. */
 export type WidgetGridItemState = {

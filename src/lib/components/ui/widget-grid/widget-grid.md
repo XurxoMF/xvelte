@@ -1,6 +1,6 @@
 # WidgetGrid
 
-WidgetGrid is a dynamic dashboard layout for arbitrary Svelte content. It registers declarative items, positions them on a responsive cell grid, resolves collisions, supports pointer and keyboard movement through an explicit DragHandle, supports pointer and keyboard resizing through one ResizeHandle per item, and reports complete layout snapshots for persistence. Use it for dashboards and customizable workspaces; do not use it when ordinary document flow or a simple sortable list communicates the content more clearly.
+WidgetGrid is a dynamic dashboard layout for arbitrary Svelte content. It registers declarative items, positions them on a responsive cell grid with four layout modes, resolves collisions, supports pointer and keyboard movement through an explicit DragHandle, supports pointer and keyboard resizing through one ResizeHandle per item, and reports complete layout snapshots for persistence. Use it for dashboards and customizable workspaces; do not use it when ordinary document flow or a simple sortable list communicates the content more clearly.
 
 <!-- xvelte-example: overview -->
 
@@ -174,14 +174,18 @@ Responsive keys are minimum widths measured from Root, not the viewport. They al
 
 Missing keys are valid. The most recent configured minimum-width value remains active; widths below the first configured key use one column. Gap is a non-negative number applied equally in both axes. Cell height is internal and always automatic, so a row follows the current cell width.
 
-### Stack and free modes
+### Layout modes
 
 ```svelte
-<WidgetGrid.Root mode="stack"><!-- compact dashboard --></WidgetGrid.Root>
-<WidgetGrid.Root mode="free"><!-- preserve open positions --></WidgetGrid.Root>
+<WidgetGrid.Root mode="top"><!-- top-gravity dashboard --></WidgetGrid.Root>
+<WidgetGrid.Root mode="float"><!-- preserve open positions --></WidgetGrid.Root>
+<WidgetGrid.Root mode="list"><!-- stable sequential reflow --></WidgetGrid.Root>
+<WidgetGrid.Root mode="compact"><!-- gap-filling sequential reflow --></WidgetGrid.Root>
 ```
 
-`stack` is the default and compacts widgets toward the top with native collision packing. `free` enables the engine's closest robust position-preserving behavior and avoids deliberate compaction. GridStack can still move a non-static widget to resolve an actual collision; `free` is not an overlapping absolute-position canvas.
+`top` is the default and applies top gravity, moving widgets upward to fill vertical space. `float` preserves explicit positions and moves widgets only to resolve collisions; it is not an overlapping absolute-position canvas. `list` continuously reflows widgets in stable row-major order, so moving, resizing, adding, or removing an item repositions the following items. `compact` also reflows continuously but lets smaller widgets fill earlier gaps, so relative order can change.
+
+When responsive columns change, `top` and `compact` use compact relayout, `float` preserves positions with move-only relayout, and `list` preserves sequential order.
 
 ### Static items and dimension constraints
 
@@ -275,23 +279,23 @@ WidgetGrid uses GridStack internally, but no GridStack type, option name, class,
 
 ### `WidgetGrid.Root`
 
-| Prop            | Type                                                      | Default   | Behavior                                                                                           |
-| --------------- | --------------------------------------------------------- | --------- | -------------------------------------------------------------------------------------------------- |
-| `columns`       | `number \| Partial<Record<WidgetGridBreakpoint, number>>` | `12`      | Fixed or Root-width-responsive column count.                                                       |
-| `gap`           | `number`                                                  | `16`      | Uniform horizontal and vertical pixel gap.                                                         |
-| `mode`          | `"stack" \| "free"`                                       | `"stack"` | Compacts holes or preserves positions as robustly as the collision engine allows.                  |
-| `disabled`      | `boolean`                                                 | `false`   | Disables all pointer and keyboard movement and resizing.                                           |
-| `draggable`     | `boolean`                                                 | `true`    | Global drag default; an Item override and an explicit DragHandle are still respected.              |
-| `resizable`     | `boolean`                                                 | `true`    | Global resize default; an Item override and exactly one explicit ResizeHandle are still respected. |
-| `onMoveStart`   | `(state, states) => void`                                 | —         | Reports the affected state and complete snapshot when movement starts.                             |
-| `onMoving`      | `(state, states) => void`                                 | —         | Reports active movement.                                                                           |
-| `onMoveEnd`     | `(state, states) => void`                                 | —         | Reports committed movement; suitable for persistence.                                              |
-| `onResizeStart` | `(state, states) => void`                                 | —         | Reports the affected state and complete snapshot when resizing starts.                             |
-| `onResizing`    | `(state, states) => void`                                 | —         | Reports active resizing.                                                                           |
-| `onResizeEnd`   | `(state, states) => void`                                 | —         | Reports committed resizing; suitable for persistence.                                              |
-| `children`      | `Snippet`                                                 | —         | Declarative Item content.                                                                          |
-| `ref`           | `HTMLDivElement \| null`                                  | `null`    | Bindable Root element.                                                                             |
-| `class`         | `string`                                                  | —         | Merged with the required structural engine class; Root adds no visual surface styles.              |
+| Prop            | Type                                                      | Default | Behavior                                                                                           |
+| --------------- | --------------------------------------------------------- | ------- | -------------------------------------------------------------------------------------------------- |
+| `columns`       | `number \| Partial<Record<WidgetGridBreakpoint, number>>` | `12`    | Fixed or Root-width-responsive column count.                                                       |
+| `gap`           | `number`                                                  | `16`    | Uniform horizontal and vertical pixel gap.                                                         |
+| `mode`          | `"top" \| "float" \| "list" \| "compact"`                 | `"top"` | Selects top gravity, position preservation, stable sequential reflow, or gap-filling reflow.       |
+| `disabled`      | `boolean`                                                 | `false` | Disables all pointer and keyboard movement and resizing.                                           |
+| `draggable`     | `boolean`                                                 | `true`  | Global drag default; an Item override and an explicit DragHandle are still respected.              |
+| `resizable`     | `boolean`                                                 | `true`  | Global resize default; an Item override and exactly one explicit ResizeHandle are still respected. |
+| `onMoveStart`   | `(state, states) => void`                                 | —       | Reports the affected state and complete snapshot when movement starts.                             |
+| `onMoving`      | `(state, states) => void`                                 | —       | Reports active movement.                                                                           |
+| `onMoveEnd`     | `(state, states) => void`                                 | —       | Reports committed movement; suitable for persistence.                                              |
+| `onResizeStart` | `(state, states) => void`                                 | —       | Reports the affected state and complete snapshot when resizing starts.                             |
+| `onResizing`    | `(state, states) => void`                                 | —       | Reports active resizing.                                                                           |
+| `onResizeEnd`   | `(state, states) => void`                                 | —       | Reports committed resizing; suitable for persistence.                                              |
+| `children`      | `Snippet`                                                 | —       | Declarative Item content.                                                                          |
+| `ref`           | `HTMLDivElement \| null`                                  | `null`  | Bindable Root element.                                                                             |
+| `class`         | `string`                                                  | —       | Merged with the required structural engine class; Root adds no visual surface styles.              |
 
 Root forwards remaining native `div` attributes. It observes its own width, never the viewport. `cellHeight` and an `items` array are intentionally not public props.
 
@@ -358,7 +362,7 @@ type WidgetGridItemState = {
 };
 
 type WidgetGridBreakpoint = "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
-type WidgetGridMode = "stack" | "free";
+type WidgetGridMode = "top" | "float" | "list" | "compact";
 ```
 
 Lifecycle snapshots always contain resolved `x`, `y`, `width`, and `height`, even when the corresponding input coordinates were omitted for automatic placement.
@@ -439,7 +443,7 @@ pnpm add gridstack @tabler/icons-svelte clsx tailwind-merge tailwind-variants
 pnpm add -D @inlang/paraglide-js tailwindcss
 ```
 
-The local component targets `gridstack@13.2.0`. Root imports `gridstack/dist/gridstack.css` itself and initializes the engine only in the browser. Consult the [official GridStack options](https://gridstackjs.com/doc/html/interfaces/GridStackOptions.html) when maintaining dependency-owned behavior.
+The local component targets `gridstack@14.1.1` and uses its `mode` API directly. Root imports `gridstack/dist/gridstack.css` itself and initializes the engine only in the browser. Consult the [official GridStack options](https://gridstackjs.com/doc/html/interfaces/GridStackOptions.html) when maintaining dependency-owned behavior.
 
 ### Component files
 

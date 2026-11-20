@@ -43,7 +43,7 @@ pnpm add -D svelte
 
 ```svelte
 <script lang="ts">
-	import { UseFrecency, type FrecencyItem, type FrecencyMap, type UseFrecencyOptions } from "$lib/hooks/use-frecency.svelte";
+	import { UseFrecency, type FrecencyItem, type FrecencyMap, type UseFrecencyOptions } from "#lib/hooks/use-frecency.svelte.ts";
 </script>
 ```
 
@@ -55,7 +55,7 @@ The file exports `UseFrecency` and the `FrecencyItem`, `FrecencyMap`, and `UseFr
 
 ```svelte
 <script lang="ts">
-	import { UseFrecency } from "$lib/hooks/use-frecency.svelte";
+	import { UseFrecency } from "#lib/hooks/use-frecency.svelte.ts";
 
 	const recentProjects = new UseFrecency("recent-projects", {}, { maxItems: 5 });
 	const projects = [
@@ -90,7 +90,7 @@ Persist stable IDs rather than translated labels. The `use` method is bound in t
 
 ```svelte
 <script lang="ts">
-	import { UseFrecency, type FrecencyMap } from "$lib/hooks/use-frecency.svelte";
+	import { UseFrecency, type FrecencyMap } from "#lib/hooks/use-frecency.svelte.ts";
 
 	const initialItems: FrecencyMap = {
 		dashboard: { uses: 4, lastUsage: Date.now() - 60_000 },
@@ -199,7 +199,7 @@ Do not place sensitive user content in storage keys. Treat persisted preferences
 
 ## Dependencies
 
-Copy `use-frecency.svelte.ts` and install `runed` plus Svelte using the commands under Installation. No CSS, icons, `$lib/utils` exports, xvelte components, hooks, attachments, or localization setup are required. Storage behavior comes from Runed's `PersistedState`; no separate storage file must be copied.
+Copy `use-frecency.svelte.ts` and install `runed` plus Svelte using the commands under Installation. No CSS, icons, `#lib/utils` exports, xvelte components, hooks, attachments, or localization setup are required. Storage behavior comes from Runed's `PersistedState`; no separate storage file must be copied.
 
 ---
 

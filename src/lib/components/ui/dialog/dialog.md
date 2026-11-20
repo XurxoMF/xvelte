@@ -26,7 +26,7 @@ Import all parts from the component's public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Dialog from "$lib/components/ui/dialog";
+	import * as Dialog from "#lib/components/ui/dialog/index.ts";
 </script>
 ```
 
@@ -64,8 +64,8 @@ Header and Footer are native layout containers. Title, Description, Trigger, Clo
 
 ```svelte
 <script lang="ts">
-	import { rootVariants as buttonVariants } from "$lib/components/ui/button";
-	import * as Dialog from "$lib/components/ui/dialog";
+	import { rootVariants as buttonVariants } from "#lib/components/ui/button/index.ts";
+	import * as Dialog from "#lib/components/ui/dialog/index.ts";
 
 	let open = $state(false);
 	let displayName = $state("Ada Lovelace");
@@ -108,8 +108,8 @@ Keep the dialog open while work is pending or after an error, then close it expl
 
 ```svelte
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
-	import * as Dialog from "$lib/components/ui/dialog";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as Dialog from "#lib/components/ui/dialog/index.ts";
 
 	let open = $state(false);
 	let saving = $state(false);
@@ -230,8 +230,8 @@ Trigger renders a button by default. Its `child` snippet can delegate behavior t
 
 ```svelte
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
-	import * as Dialog from "$lib/components/ui/dialog";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as Dialog from "#lib/components/ui/dialog/index.ts";
 </script>
 
 <Dialog.Root>
@@ -475,7 +475,7 @@ pnpm add -D tailwindcss @inlang/paraglide-js
 
 ### Shared utilities
 
-Dialog imports `cn`, `WithoutChildrenOrChild`, and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+Dialog imports `cn`, `WithoutChildrenOrChild`, and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -502,7 +502,7 @@ The package block includes `clsx` and `tailwind-merge`, which `cn` imports.
 
 ### Icon
 
-Dialog imports the semantic CloseIcon name from `$lib/icons`. Add this exact export to `src/lib/icons.ts`:
+Dialog imports the semantic CloseIcon name from `#lib/icons`. Add this exact export to `src/lib/icons.ts`:
 
 ```ts
 export { default as CloseIcon } from "@tabler/icons-svelte/icons/x";
@@ -512,7 +512,7 @@ The package block includes `@tabler/icons-svelte`. Keep the semantic alias in th
 
 ### Button component
 
-Copy the complete `$lib/components/ui/button` component with Dialog. The required source files are:
+Copy the complete `#lib/components/ui/button/index.ts` component with Dialog. The required source files are:
 
 ```text
 src/lib/components/ui/button/
@@ -524,9 +524,9 @@ Follow the Button component's colocated unit guide to install and understand its
 
 ### Localization setup
 
-Copy the `amber_fox_glide` key and its English value from [Localization](#localization) into `messages/en.json`, add the equivalent key to every supported locale, and compile the messages so `$lib/paraglide/messages.js` exports `amber_fox_glide()`.
+Copy the `amber_fox_glide` key and its English value from [Localization](#localization) into `messages/en.json`, add the equivalent key to every supported locale, and compile the messages so `#lib/paraglide/messages.js` exports `amber_fox_glide()`.
 
-If the app uses another localization system, replace both `$lib/paraglide/messages.js` imports and calls while preserving localized close labels. No other message is required by Dialog itself.
+If the app uses another localization system, replace both `#lib/paraglide/messages.js` imports and calls while preserving localized close labels. No other message is required by Dialog itself.
 
 ### Global CSS
 

@@ -3,7 +3,7 @@
 
 	import type { HTMLAttributes } from "svelte/elements";
 	import type { VariantProps } from "tailwind-variants";
-	import type { WithElementRef } from "$lib/utils";
+	import type { WithElementRef } from "#lib/utils.ts";
 
 	/** Generates the placement classes for Bubble reactions. */
 	export const reactionsVariants = tv({
@@ -36,7 +36,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, side = "bottom", align = "end", children, ...restProps }: ReactionsProps = $props();
 </script>

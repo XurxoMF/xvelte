@@ -8,7 +8,7 @@
 	import { Toaster as Sonner } from "svelte-sonner";
 	import { mode } from "mode-watcher";
 
-	import { AlertErrorIcon, AlertInfoIcon, AlertSuccessIcon, AlertWarningIcon, LoaderIcon } from "$lib/icons";
+	import { AlertErrorIcon, AlertInfoIcon, AlertSuccessIcon, AlertWarningIcon, LoaderIcon } from "#lib/icons.ts";
 
 	let { toastOptions, ...restProps }: RootProps = $props();
 </script>

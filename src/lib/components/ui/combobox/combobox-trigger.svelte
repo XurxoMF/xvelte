@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
 
-	import * as Popover from "$lib/components/ui/popover";
+	import * as Popover from "#lib/components/ui/popover/index.ts";
 
 	/** Props for the delegated button that opens the Combobox popup. */
 	export type TriggerProps = Popover.TriggerProps & {
@@ -17,11 +17,11 @@
 <script lang="ts">
 	import { getComboboxContext } from "./combobox-context.svelte";
 
-	import { SelectorIcon } from "$lib/icons";
+	import { SelectorIcon } from "#lib/icons.ts";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 
 	let { ref = $bindable(null), class: className, children, size = "default", disabled = false, ...restProps }: TriggerProps = $props();
 

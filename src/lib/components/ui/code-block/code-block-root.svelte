@@ -4,7 +4,7 @@
 	import type { HTMLAttributes } from "svelte/elements";
 	import type { VariantProps } from "tailwind-variants";
 
-	import type { WithElementRef } from "$lib/utils";
+	import type { WithElementRef } from "#lib/utils.ts";
 
 	export const rootVariants = tv({
 		base: "group/code-block relative flex w-full min-w-0 flex-col overflow-hidden rounded-lg text-sm data-[size=sm]:text-xs has-[[data-code-block-viewport]:focus-visible]:ring-3 has-[[data-code-block-viewport]:focus-visible]:ring-ring/50",
@@ -33,7 +33,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, variant = "default", size = "default", children, ...restProps }: RootProps = $props();
 </script>

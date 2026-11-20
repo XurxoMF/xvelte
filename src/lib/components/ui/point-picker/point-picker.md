@@ -26,7 +26,7 @@ Import the component through its public `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as PointPicker from "$lib/components/ui/point-picker";
+	import * as PointPicker from "#lib/components/ui/point-picker/index.ts";
 </script>
 ```
 
@@ -53,9 +53,9 @@ Root places `children` below its grid, crosshair, cursor, and value indicators. 
 
 ```svelte
 <script lang="ts">
-	import type { Point } from "$lib/components/ui/point-picker";
+	import type { Point } from "#lib/components/ui/point-picker/index.ts";
 
-	import * as PointPicker from "$lib/components/ui/point-picker";
+	import * as PointPicker from "#lib/components/ui/point-picker/index.ts";
 
 	let value = $state<Point>({ x: 50, y: 50 });
 </script>
@@ -79,9 +79,9 @@ Use independent geographic bounds and format the visible value with application-
 
 ```svelte
 <script lang="ts">
-	import type { Point } from "$lib/components/ui/point-picker";
+	import type { Point } from "#lib/components/ui/point-picker/index.ts";
 
-	import * as PointPicker from "$lib/components/ui/point-picker";
+	import * as PointPicker from "#lib/components/ui/point-picker/index.ts";
 
 	let coordinates = $state<Point>({ x: -8.54, y: 42.88 });
 	let savedCoordinates = $state<Point | null>(null);
@@ -144,9 +144,9 @@ The axes do not need to share a range or step:
 
 ```svelte
 <script lang="ts">
-	import type { Point } from "$lib/components/ui/point-picker";
+	import type { Point } from "#lib/components/ui/point-picker/index.ts";
 
-	import * as PointPicker from "$lib/components/ui/point-picker";
+	import * as PointPicker from "#lib/components/ui/point-picker/index.ts";
 
 	let mix = $state<Point>({ x: 0, y: -12 });
 </script>
@@ -190,9 +190,9 @@ The `cursor` snippet receives the current effective `Point`. Point Picker positi
 
 ```svelte
 <script lang="ts">
-	import type { Point } from "$lib/components/ui/point-picker";
+	import type { Point } from "#lib/components/ui/point-picker/index.ts";
 
-	import * as PointPicker from "$lib/components/ui/point-picker";
+	import * as PointPicker from "#lib/components/ui/point-picker/index.ts";
 </script>
 
 {#snippet cursor(point: Point)}
@@ -389,7 +389,7 @@ Copy the complete `src/lib/components/ui/point-picker` component folder:
 
 ### Shared utilities
 
-Point Picker imports `cn` and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+Point Picker imports `cn` and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -460,7 +460,7 @@ Define the dark values only when your app supports a dark theme. Point Picker re
 
 ### Localization setup
 
-Configure Paraglide so `$lib/paraglide/messages.js` is generated and add the message listed in [Localization](#localization) to `messages/en.json`. Its exact key and value are already shown there and are not duplicated here.
+Configure Paraglide so `#lib/paraglide/messages.js` is generated and add the message listed in [Localization](#localization) to `messages/en.json`. Its exact key and value are already shown there and are not duplicated here.
 
 ## Credits
 

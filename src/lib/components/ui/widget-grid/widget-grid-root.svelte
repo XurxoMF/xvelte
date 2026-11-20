@@ -2,7 +2,7 @@
 	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
 	import type { WidgetGridBreakpoint, WidgetGridItemState, WidgetGridMode } from "./widget-grid-types";
-	import type { WithElementRef, WithoutChildren } from "$lib/utils";
+	import type { WithElementRef, WithoutChildren } from "#lib/utils.ts";
 
 	/** Props for the responsive WidgetGrid layout root. */
 	export type RootProps = WithoutChildren<WithElementRef<HTMLAttributes<HTMLDivElement>>> & {
@@ -42,7 +42,7 @@
 
 	import { setWidgetGridContext } from "./widget-grid-context.svelte";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let {
 		ref = $bindable(null),

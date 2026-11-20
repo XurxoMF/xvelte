@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-	import type { WithElementRef } from "$lib/utils";
+	import type { WithElementRef } from "#lib/utils.ts";
 
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
 		sensitivity?: number | undefined;
@@ -11,7 +11,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, sensitivity = 1.5, damping = 0.1, children, ...restProps }: RootProps = $props();
 

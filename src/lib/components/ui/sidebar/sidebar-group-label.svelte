@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
-	import type { WithElementRef } from "$lib/utils";
+	import type { WithElementRef } from "#lib/utils.ts";
 
 	export type GroupLabelProps = WithElementRef<HTMLAttributes<HTMLElement>> & {
 		child?: Snippet<[{ props: Record<string, unknown> }]> | undefined;
@@ -9,7 +9,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), children, child, class: className, ...restProps }: GroupLabelProps = $props();
 

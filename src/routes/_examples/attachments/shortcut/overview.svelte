@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { shortcut } from "$lib/attachments/shortcut";
+	import { shortcut } from "#lib/attachments/shortcut.ts";
 
 	let searchOpen = $state(false);
 </script>

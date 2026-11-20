@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-	import type { WithElementRef } from "$lib/utils";
+	import type { WithElementRef } from "#lib/utils.ts";
 
 	export type ItemProps = WithElementRef<HTMLAttributes<HTMLDivElement>>;
 </script>
@@ -8,9 +8,9 @@
 <script lang="ts">
 	import * as Carousel from ".";
 
-	import * as m from "$lib/paraglide/messages.js";
+	import * as m from "#lib/paraglide/messages.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: ItemProps = $props();
 

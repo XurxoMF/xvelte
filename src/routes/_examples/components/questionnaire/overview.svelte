@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Questionnaire from "$lib/components/ui/questionnaire";
+	import * as Questionnaire from "#lib/components/ui/questionnaire/index.ts";
 
 	const items = [
 		{

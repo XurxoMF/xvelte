@@ -24,7 +24,7 @@ Use Toggle Group for compact related options such as text alignment or formattin
 
 ```svelte
 <script lang="ts">
-	import * as ToggleGroup from "$lib/components/ui/toggle-group";
+	import * as ToggleGroup from "#lib/components/ui/toggle-group/index.ts";
 </script>
 ```
 
@@ -46,7 +46,7 @@ Root is required: it supplies Bits UI selection/focus state and the local varian
 
 ```svelte
 <script lang="ts">
-	import * as ToggleGroup from "$lib/components/ui/toggle-group";
+	import * as ToggleGroup from "#lib/components/ui/toggle-group/index.ts";
 
 	let alignment = $state("left");
 </script>

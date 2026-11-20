@@ -24,7 +24,7 @@ Use Switch for settings that take effect immediately. Use Checkbox for independe
 
 ```svelte
 <script lang="ts">
-	import * as Switch from "$lib/components/ui/switch";
+	import * as Switch from "#lib/components/ui/switch/index.ts";
 </script>
 ```
 
@@ -44,7 +44,7 @@ The local wrapper removes Bits UI's `children` and `child` snippets, so the inte
 
 ```svelte
 <script lang="ts">
-	import * as Switch from "$lib/components/ui/switch";
+	import * as Switch from "#lib/components/ui/switch/index.ts";
 
 	let enabled = $state(false);
 </script>
@@ -63,7 +63,7 @@ The surrounding label gives the button an accessible name and a larger pointer t
 
 ```svelte
 <script lang="ts">
-	import * as Switch from "$lib/components/ui/switch";
+	import * as Switch from "#lib/components/ui/switch/index.ts";
 
 	let compactMode = $state(true);
 </script>

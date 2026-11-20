@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Badge from "$lib/components/ui/badge";
+	import * as Badge from "#lib/components/ui/badge/index.ts";
 </script>
 
 <div class="flex flex-wrap items-center justify-center gap-2">

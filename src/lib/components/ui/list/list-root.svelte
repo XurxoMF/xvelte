@@ -3,7 +3,7 @@
 
 	import type { HTMLAttributes, HTMLOlAttributes } from "svelte/elements";
 	import type { VariantProps } from "tailwind-variants";
-	import type { WithElementRef } from "$lib/utils";
+	import type { WithElementRef } from "#lib/utils.ts";
 
 	/** Builds the Root indentation, marker, spacing, and caller-supplied classes. */
 	export const rootVariants = tv({
@@ -42,7 +42,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let {
 		ref = $bindable(null),

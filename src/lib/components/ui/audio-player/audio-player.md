@@ -26,7 +26,7 @@ Import the component from its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as AudioPlayer from "$lib/components/ui/audio-player";
+	import * as AudioPlayer from "#lib/components/ui/audio-player/index.ts";
 </script>
 ```
 
@@ -52,7 +52,7 @@ Compose the controls as descendants of `Root` so they can read its audio-player 
 
 ```svelte
 <script lang="ts">
-	import * as AudioPlayer from "$lib/components/ui/audio-player";
+	import * as AudioPlayer from "#lib/components/ui/audio-player/index.ts";
 </script>
 
 <AudioPlayer.Root src="/audio/field-recording.mp3" role="group" aria-label="Audio player: Evening field recording" class="w-full max-w-xl p-4">
@@ -79,7 +79,7 @@ Any content may be composed around the public controls:
 
 ```svelte
 <script lang="ts">
-	import * as AudioPlayer from "$lib/components/ui/audio-player";
+	import * as AudioPlayer from "#lib/components/ui/audio-player/index.ts";
 </script>
 
 <AudioPlayer.Root src="/audio/northern-lights.mp3" role="group" aria-labelledby="track-title" class="max-w-lg p-4">
@@ -278,8 +278,8 @@ The player uses the browser's native `HTMLAudioElement` and media events; no sep
 
 Copy these complete UI components with Audio Player:
 
-- `$lib/components/ui/button`, used by `PlayButton` and `Volume`: copy `src/lib/components/ui/button/button-root.svelte` and `src/lib/components/ui/button/index.ts`.
-- `$lib/components/ui/slider`, used by `Volume`: copy `src/lib/components/ui/slider/slider-root.svelte` and `src/lib/components/ui/slider/index.ts`.
+- `#lib/components/ui/button`, used by `PlayButton` and `Volume`: copy `src/lib/components/ui/button/button-root.svelte` and `src/lib/components/ui/button/index.ts`.
+- `#lib/components/ui/slider`, used by `Volume`: copy `src/lib/components/ui/slider/slider-root.svelte` and `src/lib/components/ui/slider/index.ts`.
 
 Copy those component files unchanged. Their `index.ts` exports and types are the source of truth; follow each component's unit guide to install any additional dependencies. Slider is backed by a Bits UI primitive.
 
@@ -469,7 +469,7 @@ Define equivalent values inside `.dark` if the application supports a dark theme
 
 ### Icons
 
-The player imports five semantic names from `$lib/icons`. The icon facade must contain these exports:
+The player imports five semantic names from `#lib/icons.ts`. The icon facade must contain these exports:
 
 ```ts
 export { default as PauseIcon } from "@tabler/icons-svelte/icons/player-pause";
@@ -483,7 +483,7 @@ Keep these aliases in the shared facade instead of importing Tabler directly fro
 
 ### Shared utilities
 
-The player, Button, and Slider components import `cn`, `WithElementRef`, and `WithoutChildrenOrChild` from `$lib/utils`. `PlayButton` and `Volume` additionally use Bits UI's `WithoutChildren` helper. Add these exact local definitions to `src/lib/utils.ts` when they are not already present:
+The player, Button, and Slider components import `cn`, `WithElementRef`, and `WithoutChildrenOrChild` from `#lib/utils`. `PlayButton` and `Volume` additionally use Bits UI's `WithoutChildren` helper. Add these exact local definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

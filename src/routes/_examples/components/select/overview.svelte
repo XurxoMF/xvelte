@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Field from "$lib/components/ui/field";
-	import * as Select from "$lib/components/ui/select";
+	import * as Field from "#lib/components/ui/field/index.ts";
+	import * as Select from "#lib/components/ui/select/index.ts";
 
 	const themes = [
 		{ value: "light", label: "Light" },

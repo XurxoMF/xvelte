@@ -26,7 +26,7 @@ Import all public parts through the component's `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as HoverCard from "$lib/components/ui/hover-card";
+	import * as HoverCard from "#lib/components/ui/hover-card/index.ts";
 </script>
 ```
 
@@ -55,7 +55,7 @@ Keep the complete destination and all essential information available without op
 
 ```svelte
 <script lang="ts">
-	import * as HoverCard from "$lib/components/ui/hover-card";
+	import * as HoverCard from "#lib/components/ui/hover-card/index.ts";
 </script>
 
 <p>
@@ -83,7 +83,7 @@ Bind `open` when the app needs to observe or control visibility:
 
 ```svelte
 <script lang="ts">
-	import * as HoverCard from "$lib/components/ui/hover-card";
+	import * as HoverCard from "#lib/components/ui/hover-card/index.ts";
 
 	let open = $state(false);
 </script>
@@ -153,7 +153,7 @@ Trigger accepts Bits UI's `child` snippet when an anchor is not appropriate. Spr
 
 ```svelte
 <script lang="ts">
-	import * as HoverCard from "$lib/components/ui/hover-card";
+	import * as HoverCard from "#lib/components/ui/hover-card/index.ts";
 </script>
 
 <HoverCard.Root>
@@ -339,7 +339,7 @@ Copy the complete `src/lib/components/ui/hover-card` component folder:
 
 ### Shared utilities
 
-Content imports `cn` and `WithoutChildrenOrChild` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when absent:
+Content imports `cn` and `WithoutChildrenOrChild` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when absent:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

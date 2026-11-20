@@ -44,7 +44,7 @@ This helper can remain in a project whose frontend also runs as a normal website
 ## Import
 
 ```ts
-import { IsTauri } from "$lib/tauri/hooks/is-tauri";
+import { IsTauri } from "#lib/tauri/hooks/is-tauri.ts";
 ```
 
 The hook exports only the `IsTauri` class.
@@ -55,7 +55,7 @@ The hook exports only the `IsTauri` class.
 
 ```svelte
 <script lang="ts">
-	import { IsTauri } from "$lib/tauri/hooks/is-tauri";
+	import { IsTauri } from "#lib/tauri/hooks/is-tauri.ts";
 
 	const runtime = new IsTauri();
 </script>
@@ -73,7 +73,7 @@ The hook exports only the `IsTauri` class.
 
 ```svelte
 <script lang="ts">
-	import { IsTauri } from "$lib/tauri/hooks/is-tauri";
+	import { IsTauri } from "#lib/tauri/hooks/is-tauri.ts";
 
 	const runtime = new IsTauri();
 </script>
@@ -144,7 +144,7 @@ pnpm add @tauri-apps/api
 
 Copy `src/lib/tauri/hooks/is-tauri.ts` and `src/lib/tauri/hooks/is-tauri.md`. No other xvelte source files are required.
 
-The class imports `browser` from the consuming SvelteKit application and `isTauri` from `@tauri-apps/api/core`. It requires no Rust crate, Tauri plugin or initialization call, capability permission, CSS, icon, `$lib/utils` export, component, hook, attachment, or localization setup.
+The class imports `browser` from the consuming SvelteKit application and `isTauri` from `@tauri-apps/api/core`. It requires no Rust crate, Tauri plugin or initialization call, capability permission, CSS, icon, `#lib/utils.ts` export, component, hook, attachment, or localization setup.
 
 See the official [Tauri JavaScript API](https://v2.tauri.app/reference/javascript/api/namespacecore/#istauri) and [SvelteKit frontend configuration](https://v2.tauri.app/start/frontend/sveltekit/) for the underlying behavior and native shell requirements.
 

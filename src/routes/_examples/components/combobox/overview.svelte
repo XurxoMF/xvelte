@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Combobox from "$lib/components/ui/combobox";
-	import * as Field from "$lib/components/ui/field";
+	import * as Combobox from "#lib/components/ui/combobox/index.ts";
+	import * as Field from "#lib/components/ui/field/index.ts";
 
 	const frameworks = [
 		{ value: "sveltekit", label: "SvelteKit" },

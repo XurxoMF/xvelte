@@ -1,14 +1,14 @@
 <script lang="ts" module>
-	import type { WithoutChild } from "$lib/utils";
+	import type { WithoutChild } from "#lib/utils.ts";
 
-	import * as Collapsible from "$lib/components/ui/collapsible";
+	import * as Collapsible from "#lib/components/ui/collapsible/index.ts";
 
 	/** Props accepted by the expandable Trace detail panel. */
 	export type CollapsibleContentProps = WithoutChild<Collapsible.ContentProps>;
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: CollapsibleContentProps = $props();
 </script>

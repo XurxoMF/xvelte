@@ -23,9 +23,9 @@ Use Sortable for one ordered collection whose visual design and application data
 
 ```svelte
 <script lang="ts">
-	import type { SortableItemId, SortableItemState, SortableOrder } from "$lib/components/ui/sortable";
+	import type { SortableItemId, SortableItemState, SortableOrder } from "#lib/components/ui/sortable/index.ts";
 
-	import * as Sortable from "$lib/components/ui/sortable";
+	import * as Sortable from "#lib/components/ui/sortable/index.ts";
 </script>
 ```
 
@@ -52,7 +52,7 @@ Initialize `order` from persisted IDs, bind it to Root, and use `orderItems` to 
 
 ```svelte
 <script lang="ts">
-	import * as Sortable from "$lib/components/ui/sortable";
+	import * as Sortable from "#lib/components/ui/sortable/index.ts";
 
 	type Task = { id: number; label: string };
 
@@ -282,7 +282,7 @@ Sortable also requires `src/lib/components/ui/button`: copy `button-root.svelte`
 
 ### Shared utilities
 
-Sortable imports `cn`, `WithElementRef`, and `WithoutChildren` from `$lib/utils`. Copy their existing documented definitions from xvelte; Button's unit guide covers the `cn` packages and setup.
+Sortable imports `cn`, `WithElementRef`, and `WithoutChildren` from `#lib/utils`. Copy their existing documented definitions from xvelte; Button's unit guide covers the `cn` packages and setup.
 
 ### Icons
 
@@ -296,7 +296,7 @@ The package block includes `@tabler/icons-svelte`.
 
 ### Localization setup
 
-Configure Paraglide so `$lib/paraglide/messages.js` is generated and add the message listed in [Localization](#localization) to `messages/en.json`.
+Configure Paraglide so `#lib/paraglide/messages.js` is generated and add the message listed in [Localization](#localization) to `messages/en.json`.
 
 ### Global styles
 

@@ -25,7 +25,7 @@ Use Footnote for manually composed notes, citations, or as the rendering layer f
 
 ```svelte
 <script lang="ts">
-	import * as Footnote from "$lib/components/ui/footnote";
+	import * as Footnote from "#lib/components/ui/footnote/index.ts";
 </script>
 ```
 
@@ -60,7 +60,7 @@ Root does not collect Reference parts through context because inline references 
 
 ```svelte
 <script lang="ts">
-	import * as Footnote from "$lib/components/ui/footnote";
+	import * as Footnote from "#lib/components/ui/footnote/index.ts";
 </script>
 
 <article>
@@ -299,7 +299,7 @@ The color values may be replaced by the app's theme. No keyframe, custom variant
 
 ### Shared utilities
 
-Copy these exports from `$lib/utils`:
+Copy these exports from `#lib/utils.ts`:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -319,7 +319,7 @@ export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
 
 ### Localization setup
 
-Add the four keys listed in Localization to every locale and compile Paraglide to `src/lib/paraglide`. Root, Reference, and BackReference import the generated messages from `$lib/paraglide/messages.js`. Native `href`, `id`, `data-slot`, and numeric values are implementation details and are not translated.
+Add the four keys listed in Localization to every locale and compile Paraglide to `src/lib/paraglide`. Root, Reference, and BackReference import the generated messages from `#lib/paraglide/messages.js`. Native `href`, `id`, `data-slot`, and numeric values are implementation details and are not translated.
 
 ### Component files and other integration
 

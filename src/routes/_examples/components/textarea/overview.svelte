@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Field from "$lib/components/ui/field";
-	import * as Textarea from "$lib/components/ui/textarea";
+	import * as Field from "#lib/components/ui/field/index.ts";
+	import * as Textarea from "#lib/components/ui/textarea/index.ts";
 
 	let message = $state("");
 </script>

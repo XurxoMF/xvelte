@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
 	import type { HTMLAnchorAttributes } from "svelte/elements";
-	import type { WithElementRef, WithoutChildren } from "$lib/utils";
+	import type { WithElementRef, WithoutChildren } from "#lib/utils.ts";
 
 	/** Props for a link from one footnote definition back to a reference in document content. */
 	export type BackReferenceProps = WithoutChildren<WithElementRef<HTMLAnchorAttributes>> & {
@@ -17,9 +17,9 @@
 </script>
 
 <script lang="ts">
-	import * as m from "$lib/paraglide/messages.js";
+	import * as m from "#lib/paraglide/messages.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let {
 		ref = $bindable(null),

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as HorizontalScroll from "$lib/components/ui/horizontal-scroll";
-	import * as Card from "$lib/components/ui/card";
+	import * as HorizontalScroll from "#lib/components/ui/horizontal-scroll/index.ts";
+	import * as Card from "#lib/components/ui/card/index.ts";
 
 	const projects = [
 		{ name: "Storefront", status: "Ready for review" },

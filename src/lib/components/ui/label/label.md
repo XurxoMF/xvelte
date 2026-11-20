@@ -26,7 +26,7 @@ Import the component through its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Label from "$lib/components/ui/label";
+	import * as Label from "#lib/components/ui/label/index.ts";
 </script>
 ```
 
@@ -47,7 +47,7 @@ The component renders a native `label` unless the inherited `child` snippet repl
 
 ```svelte
 <script lang="ts">
-	import * as Label from "$lib/components/ui/label";
+	import * as Label from "#lib/components/ui/label/index.ts";
 </script>
 
 <div class="grid gap-2">
@@ -213,7 +213,7 @@ Copy the complete `src/lib/components/ui/label` component folder:
 
 ### Shared utilities
 
-Root imports only `cn` from `$lib/utils`. Add this exact definition to `src/lib/utils.ts` when absent:
+Root imports only `cn` from `#lib/utils`. Add this exact definition to `src/lib/utils.ts` when absent:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

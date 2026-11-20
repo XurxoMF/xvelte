@@ -44,7 +44,7 @@ pnpm add -D svelte
 
 ```svelte
 <script lang="ts">
-	import { UseMarkdown, parseMarkdown, type MarkdownAlertKind, type MarkdownAst } from "$lib/hooks/use-markdown.svelte";
+	import { UseMarkdown, parseMarkdown, type MarkdownAlertKind, type MarkdownAst } from "#lib/hooks/use-markdown.svelte.ts";
 </script>
 ```
 
@@ -56,7 +56,7 @@ The file exports `UseMarkdown`, `parseMarkdown`, `MarkdownAst`, and `MarkdownAle
 
 ```svelte
 <script lang="ts">
-	import { UseMarkdown } from "$lib/hooks/use-markdown.svelte";
+	import { UseMarkdown } from "#lib/hooks/use-markdown.svelte.ts";
 
 	let source = $state("# Overview");
 	const markdown = new UseMarkdown();
@@ -85,8 +85,8 @@ const ast = parseMarkdown(readmeSource);
 
 ```svelte
 <script lang="ts">
-	import * as Markdown from "$lib/components/ui/markdown";
-	import * as Typography from "$lib/components/ui/typography";
+	import * as Markdown from "#lib/components/ui/markdown/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 </script>
 
 <Typography.Prose>
@@ -186,7 +186,7 @@ GitHub alert keywords and generated IDs are technical syntax and are not transla
 
 Copy `use-markdown.svelte.ts` and install `github-slugger`, `mdast-util-from-markdown`, `mdast-util-gfm`, and `micromark-extension-gfm` using the commands under Installation. `mdast-util-from-markdown` supplies the typed mdast root; the two GFM packages add GitHub extensions; `github-slugger` generates compatible unique heading IDs.
 
-The hook requires Svelte 5 only for the optional `UseMarkdown` class. The pure `parseMarkdown` function has no browser dependency. No Runed package, CSS, icons, `$lib/utils` exports, components, other hooks, attachments, localization setup, or generated files are required.
+The hook requires Svelte 5 only for the optional `UseMarkdown` class. The pure `parseMarkdown` function has no browser dependency. No Runed package, CSS, icons, `#lib/utils.ts` exports, components, other hooks, attachments, localization setup, or generated files are required.
 
 ---
 

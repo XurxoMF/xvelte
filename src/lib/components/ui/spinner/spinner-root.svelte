@@ -5,11 +5,11 @@
 </script>
 
 <script lang="ts">
-	import { LoaderIcon } from "$lib/icons";
+	import { LoaderIcon } from "#lib/icons.ts";
 
-	import * as m from "$lib/paraglide/messages.js";
+	import * as m from "#lib/paraglide/messages.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let {
 		class: className,

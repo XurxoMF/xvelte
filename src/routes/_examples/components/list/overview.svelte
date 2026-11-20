@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as List from "$lib/components/ui/list";
+	import * as List from "#lib/components/ui/list/index.ts";
 </script>
 
 <div class="flex flex-wrap items-center justify-center gap-4">

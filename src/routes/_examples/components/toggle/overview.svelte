@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Toggle from "$lib/components/ui/toggle";
+	import * as Toggle from "#lib/components/ui/toggle/index.ts";
 </script>
 
 <div class="flex flex-wrap items-center justify-center gap-2">

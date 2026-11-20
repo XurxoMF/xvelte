@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as ContextMenu from "$lib/components/ui/context-menu";
+	import * as ContextMenu from "#lib/components/ui/context-menu/index.ts";
 
 	function renameFile() {
 		console.info("Rename file");

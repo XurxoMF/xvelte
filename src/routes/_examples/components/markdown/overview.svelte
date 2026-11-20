@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { UseMarkdown } from "$lib/hooks/use-markdown.svelte";
+	import { UseMarkdown } from "#lib/hooks/use-markdown.svelte.ts";
 
-	import * as Markdown from "$lib/components/ui/markdown";
-	import * as Typography from "$lib/components/ui/typography";
+	import * as Markdown from "#lib/components/ui/markdown/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 
 	const markdown = new UseMarkdown(`# Release notes
 

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { useHighlightedCode } from "$lib/hooks/use-highlighted-code.svelte";
+	import { useHighlightedCode } from "#lib/hooks/use-highlighted-code.svelte.ts";
 
-	import * as CodeBlock from "$lib/components/ui/code-block";
-	import * as Select from "$lib/components/ui/select";
+	import * as CodeBlock from "#lib/components/ui/code-block/index.ts";
+	import * as Select from "#lib/components/ui/select/index.ts";
 
 	type Language = "typescript" | "svelte" | "python";
 

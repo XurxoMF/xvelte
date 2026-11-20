@@ -26,7 +26,7 @@ Import the component through its public `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as QrCode from "$lib/components/ui/qr-code";
+	import * as QrCode from "#lib/components/ui/qr-code/index.ts";
 </script>
 ```
 
@@ -48,7 +48,7 @@ The logo is not embedded into the SVG. Copying or exporting only the generated `
 
 ```svelte
 <script lang="ts">
-	import * as QrCode from "$lib/components/ui/qr-code";
+	import * as QrCode from "#lib/components/ui/qr-code/index.ts";
 
 	const destination = "https://example.com/account/setup";
 </script>
@@ -69,7 +69,7 @@ Changing `value` regenerates the matrix automatically:
 
 ```svelte
 <script lang="ts">
-	import * as QrCode from "$lib/components/ui/qr-code";
+	import * as QrCode from "#lib/components/ui/qr-code/index.ts";
 
 	let value = $state("Order 1042");
 </script>
@@ -100,7 +100,7 @@ Use a snippet for text, an icon, or custom markup:
 
 ```svelte
 <script lang="ts">
-	import * as QrCode from "$lib/components/ui/qr-code";
+	import * as QrCode from "#lib/components/ui/qr-code/index.ts";
 </script>
 
 {#snippet logo()}
@@ -124,9 +124,9 @@ The snippet receives no parameters. It owns its internal markup and styles but r
 
 ```svelte
 <script lang="ts">
-	import type { ErrorCorrection } from "$lib/components/ui/qr-code";
+	import type { ErrorCorrection } from "#lib/components/ui/qr-code/index.ts";
 
-	import * as QrCode from "$lib/components/ui/qr-code";
+	import * as QrCode from "#lib/components/ui/qr-code/index.ts";
 
 	let errorCorrection = $state<ErrorCorrection>("M");
 </script>
@@ -281,7 +281,7 @@ Copy the complete `src/lib/components/ui/qr-code` component folder:
 
 ### Shared utilities
 
-QR Code imports `cn` from `$lib/utils`. Add this exact definition to `src/lib/utils.ts` when it is not already present:
+QR Code imports `cn` from `#lib/utils`. Add this exact definition to `src/lib/utils.ts` when it is not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -320,7 +320,7 @@ Define the dark value only when your app supports a dark theme. No custom varian
 
 ### Localization setup
 
-Configure Paraglide so `$lib/paraglide/messages.js` is generated and add the message listed in [Localization](#localization) to `messages/en.json`. Its exact key and value are already shown there and are not duplicated here.
+Configure Paraglide so `#lib/paraglide/messages.js` is generated and add the message listed in [Localization](#localization) to `messages/en.json`. Its exact key and value are already shown there and are not duplicated here.
 
 ## Credits
 

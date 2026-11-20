@@ -7,7 +7,7 @@
 <script lang="ts">
 	import { getCompareContext } from "./compare-slider-context";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { target = "first", class: className, children }: ItemProps = $props();
 

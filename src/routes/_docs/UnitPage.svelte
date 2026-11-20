@@ -1,20 +1,20 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
 
-	import type { Pathname } from "$app/types";
+	import type { Path } from "$app/types";
 	import type { DocExample } from "./examples";
-	import type { MarkdownAst } from "$lib/hooks/use-markdown.svelte";
+	import type { MarkdownAst } from "#lib/hooks/use-markdown.svelte.ts";
 
 	import { categories, getUnit, scopes } from "./catalog";
 	import { getExample } from "./examples";
 	import SourceCode from "./SourceCode.svelte";
 
-	import { parseMarkdown } from "$lib/hooks/use-markdown.svelte";
+	import { parseMarkdown } from "#lib/hooks/use-markdown.svelte.ts";
 
-	import * as Markdown from "$lib/components/ui/markdown";
-	import * as Tabs from "$lib/components/ui/tabs";
-	import * as Typography from "$lib/components/ui/typography";
-	import * as Breadcrumb from "$lib/components/ui/breadcrumb";
+	import * as Markdown from "#lib/components/ui/markdown/index.ts";
+	import * as Tabs from "#lib/components/ui/tabs/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
+	import * as Breadcrumb from "#lib/components/ui/breadcrumb/index.ts";
 
 	type DocumentSegment = {
 		ast: MarkdownAst;
@@ -69,9 +69,9 @@
 
 				<Breadcrumb.Item>
 					{#if category}
-						<Breadcrumb.Link href={resolve(`${unit.scope === "tauri" ? "/tauri" : ""}/${category.directory}` as Pathname)}>
-							{category.label}
-						</Breadcrumb.Link>
+						<Breadcrumb.Link href={resolve(`${unit.scope === "tauri" ? "/tauri" : ""}/${category.directory}` as Path)}
+							>{category.label}</Breadcrumb.Link
+						>
 					{/if}
 				</Breadcrumb.Item>
 

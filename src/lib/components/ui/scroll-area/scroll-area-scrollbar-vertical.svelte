@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import { ScrollArea as ScrollAreaPrimitive } from "bits-ui";
 
-	import type { WithoutChildrenOrChild } from "$lib/utils";
+	import type { WithoutChildrenOrChild } from "#lib/utils.ts";
 
 	/** Props forwarded to the built-in vertical scrollbar thumb. */
 	export type VerticalThumbProps = Omit<WithoutChildrenOrChild<ScrollAreaPrimitive.ThumbProps>, "ref">;
@@ -20,7 +20,7 @@
 
 	import { getScrollAreaContext } from "./scroll-area-context.svelte";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), thumbRef = $bindable(null), class: className, thumbProps = {}, ...restProps }: ScrollbarVerticalProps = $props();
 

@@ -28,7 +28,7 @@ Import the component through its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Knob from "$lib/components/ui/knob";
+	import * as Knob from "#lib/components/ui/knob/index.ts";
 </script>
 ```
 
@@ -52,7 +52,7 @@ It renders an outer layout `div`, an optional visible label, an inner focusable 
 
 ```svelte
 <script lang="ts">
-	import * as Knob from "$lib/components/ui/knob";
+	import * as Knob from "#lib/components/ui/knob/index.ts";
 
 	let volume = $state(40);
 </script>
@@ -72,7 +72,7 @@ Drag upward to increase the value and downward to decrease it. Touch dragging st
 
 ```svelte
 <script lang="ts">
-	import * as Knob from "$lib/components/ui/knob";
+	import * as Knob from "#lib/components/ui/knob/index.ts";
 
 	let gain = $state(0);
 </script>
@@ -88,7 +88,7 @@ Use finite bounds with `min < max` and a positive finite `step`. Step snapping i
 
 ```svelte
 <script lang="ts">
-	import * as Knob from "$lib/components/ui/knob";
+	import * as Knob from "#lib/components/ui/knob/index.ts";
 
 	let pan = $state(0);
 </script>
@@ -112,7 +112,7 @@ Use finite bounds with `min < max` and a positive finite `step`. Step snapping i
 
 ```svelte
 <script lang="ts">
-	import * as Knob from "$lib/components/ui/knob";
+	import * as Knob from "#lib/components/ui/knob/index.ts";
 
 	let frequency = $state(440);
 	let lastUserValue = $state(440);
@@ -271,7 +271,7 @@ Copy the complete `src/lib/components/ui/knob` component folder:
 
 ### Shared utilities
 
-Root imports `cn` and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when absent:
+Root imports `cn` and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when absent:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -296,7 +296,7 @@ The package installation block includes `clsx` and `tailwind-merge`.
 
 ### Localization setup
 
-Add the `navy_lynx_knob` message listed completely in [Localization](#localization) to every locale, then compile Paraglide into `src/lib/paraglide`. The component imports the generated function from `$lib/paraglide/messages.js`; do not copy or edit generated output manually.
+Add the `navy_lynx_knob` message listed completely in [Localization](#localization) to every locale, then compile Paraglide into `src/lib/paraglide`. The component imports the generated function from `#lib/paraglide/messages.js`; do not copy or edit generated output manually.
 
 If the app uses another localization system, replace that import and fallback call while preserving a localized accessible name. No other message or localization helper is required.
 

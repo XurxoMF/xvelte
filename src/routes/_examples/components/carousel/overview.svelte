@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Carousel from "$lib/components/ui/carousel";
+	import * as Carousel from "#lib/components/ui/carousel/index.ts";
 </script>
 
 <Carousel.Root aria-label="Featured projects" class="mx-auto w-full max-w-sm">

@@ -7,7 +7,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), loadingStatus = $bindable("loading"), size = "default", class: className, ...restProps }: RootProps = $props();
 </script>

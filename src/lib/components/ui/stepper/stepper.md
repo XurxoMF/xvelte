@@ -24,7 +24,7 @@ Use Stepper to show progress and navigate a short ordered workflow such as setup
 
 ```svelte
 <script lang="ts">
-	import * as Stepper from "$lib/components/ui/stepper";
+	import * as Stepper from "#lib/components/ui/stepper/index.ts";
 </script>
 ```
 
@@ -58,7 +58,7 @@ Root provides state but renders no element. Nav lays out registered Items. Trigg
 
 ```svelte
 <script lang="ts">
-	import * as Stepper from "$lib/components/ui/stepper";
+	import * as Stepper from "#lib/components/ui/stepper/index.ts";
 
 	const steps = [
 		{ title: "Account", description: "Your details" },

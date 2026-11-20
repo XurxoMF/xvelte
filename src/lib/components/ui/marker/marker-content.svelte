@@ -1,13 +1,13 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-	import type { WithElementRef } from "$lib/utils";
+	import type { WithElementRef } from "#lib/utils.ts";
 
 	/** Props for Marker text or inline content. */
 	export type ContentProps = WithElementRef<HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>;
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: ContentProps = $props();
 </script>

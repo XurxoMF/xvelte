@@ -22,7 +22,7 @@ Menubar provides a persistent row of application menus, with keyboard navigation
 
 ```svelte
 <script lang="ts">
-	import * as Menubar from "$lib/components/ui/menubar";
+	import * as Menubar from "#lib/components/ui/menubar/index.ts";
 </script>
 ```
 
@@ -69,7 +69,7 @@ Each top-level menu needs its own stable `value`. `Content` creates its portal a
 
 ```svelte
 <script lang="ts">
-	import * as Menubar from "$lib/components/ui/menubar";
+	import * as Menubar from "#lib/components/ui/menubar/index.ts";
 
 	function createDocument() {
 		// Create the document.
@@ -107,7 +107,7 @@ Bind `Root.value` when another part of the interface needs to observe or change 
 
 ```svelte
 <script lang="ts">
-	import * as Menubar from "$lib/components/ui/menubar";
+	import * as Menubar from "#lib/components/ui/menubar/index.ts";
 
 	let activeMenu = $state("");
 </script>
@@ -137,7 +137,7 @@ Bind `Root.value` when another part of the interface needs to observe or change 
 
 ```svelte
 <script lang="ts">
-	import * as Menubar from "$lib/components/ui/menubar";
+	import * as Menubar from "#lib/components/ui/menubar/index.ts";
 
 	let showToolbar = $state(true);
 	let density = $state("comfortable");
@@ -167,7 +167,7 @@ The `CheckboxItem` child snippet does not receive state arguments. `RadioItem` c
 
 ```svelte
 <script lang="ts">
-	import * as Menubar from "$lib/components/ui/menubar";
+	import * as Menubar from "#lib/components/ui/menubar/index.ts";
 
 	let shareOpen = $state(false);
 </script>
@@ -405,7 +405,7 @@ No additional Menubar-specific keyframes or shared stylesheet files are required
 
 ### Icons
 
-Add the semantic icon exports used by the selection indicators and submenu trigger to `$lib/icons.ts`:
+Add the semantic icon exports used by the selection indicators and submenu trigger to `#lib/icons.ts`:
 
 ```ts
 export { default as CheckIcon } from "@tabler/icons-svelte/icons/check";
@@ -417,7 +417,7 @@ The backing package is `@tabler/icons-svelte`, included in the installation comm
 
 ### Utilities
 
-Menubar imports `cn`, `WithElementRef`, `WithoutChild`, `WithoutChildren`, and `WithoutChildrenOrChild` from `$lib/utils`. Copy these definitions:
+Menubar imports `cn`, `WithElementRef`, `WithoutChild`, `WithoutChildren`, and `WithoutChildrenOrChild` from `#lib/utils.ts`. Copy these definitions:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

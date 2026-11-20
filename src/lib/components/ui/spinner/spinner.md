@@ -24,7 +24,7 @@ Use Spinner for short indeterminate waits near the control or region being updat
 
 ```svelte
 <script lang="ts">
-	import * as Spinner from "$lib/components/ui/spinner";
+	import * as Spinner from "#lib/components/ui/spinner/index.ts";
 </script>
 ```
 
@@ -38,13 +38,13 @@ Spinner is a single semantic icon:
 <Spinner.Root />
 ```
 
-It renders `LoaderIcon` from `$lib/icons` rather than importing an icon library directly.
+It renders `LoaderIcon` from `#lib/icons.ts` rather than importing an icon library directly.
 
 ## Basic usage
 
 ```svelte
 <script lang="ts">
-	import * as Spinner from "$lib/components/ui/spinner";
+	import * as Spinner from "#lib/components/ui/spinner/index.ts";
 </script>
 
 <div class="flex items-center gap-2">
@@ -142,7 +142,7 @@ No animation package is required; `animate-spin` is provided by Tailwind CSS.
 
 ### Icon facade
 
-Add the exact semantic export to `$lib/icons.ts`:
+Add the exact semantic export to `#lib/icons.ts`:
 
 ```ts
 export { default as LoaderIcon } from "@tabler/icons-svelte/icons/loader";
@@ -161,7 +161,7 @@ export function cn(...inputs: ClassValue[]) {
 
 ### Localization setup
 
-Configure Paraglide so `$lib/paraglide/messages.js` is generated and add the message listed in [Localization](#localization) to `messages/en.json`. The complete key and value are already shown there.
+Configure Paraglide so `#lib/paraglide/messages.js` is generated and add the message listed in [Localization](#localization) to `messages/en.json`. The complete key and value are already shown there.
 
 ### Global styles and component files
 

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import * as Avatar from "$lib/components/ui/avatar";
-	import * as Bubble from "$lib/components/ui/bubble";
-	import * as Marker from "$lib/components/ui/marker";
-	import * as Message from "$lib/components/ui/message";
+	import * as Avatar from "#lib/components/ui/avatar/index.ts";
+	import * as Bubble from "#lib/components/ui/bubble/index.ts";
+	import * as Marker from "#lib/components/ui/marker/index.ts";
+	import * as Message from "#lib/components/ui/message/index.ts";
 </script>
 
 <div class="mx-auto flex w-full max-w-sm flex-col gap-6">

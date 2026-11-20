@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import { Select as SelectPrimitive } from "bits-ui";
 
-	import type { WithoutChild, WithoutChildrenOrChild } from "$lib/utils";
+	import type { WithoutChild, WithoutChildrenOrChild } from "#lib/utils.ts";
 
 	import * as Select from ".";
 
@@ -11,7 +11,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, sideOffset = 4, portalProps, children, preventScroll = true, ...restProps }: ContentProps = $props();
 </script>

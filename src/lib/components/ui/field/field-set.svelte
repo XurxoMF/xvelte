@@ -1,12 +1,12 @@
 <script lang="ts" module>
 	import type { HTMLFieldsetAttributes } from "svelte/elements";
-	import type { WithElementRef } from "$lib/utils";
+	import type { WithElementRef } from "#lib/utils.ts";
 
 	export type FieldSetProps = WithElementRef<HTMLFieldsetAttributes>;
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: FieldSetProps = $props();
 </script>

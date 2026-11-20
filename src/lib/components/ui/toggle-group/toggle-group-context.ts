@@ -1,6 +1,6 @@
 import { createContext } from "svelte";
 
-import * as Toggle from "$lib/components/ui/toggle";
+import * as Toggle from "#lib/components/ui/toggle/index.ts";
 
 export type ToggleGroupContext = {
 	variant?: Toggle.RootVariants | undefined;

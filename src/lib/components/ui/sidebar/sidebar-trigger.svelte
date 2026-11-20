@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 
 	export type TriggerProps = Button.RootProps & {
 		onclick?: ((e: MouseEvent) => void) | undefined;
@@ -9,11 +9,11 @@
 <script lang="ts">
 	import * as Sidebar from ".";
 
-	import { SidebarIcon } from "$lib/icons";
+	import { SidebarIcon } from "#lib/icons.ts";
 
-	import * as m from "$lib/paraglide/messages.js";
+	import * as m from "#lib/paraglide/messages.js";
 
-	import * as Tooltip from "$lib/components/ui/tooltip";
+	import * as Tooltip from "#lib/components/ui/tooltip/index.ts";
 
 	let { ref = $bindable(null), class: className, onclick, ...restProps }: TriggerProps = $props();
 

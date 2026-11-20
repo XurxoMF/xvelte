@@ -24,7 +24,7 @@ Conversational content surfaces with seven semantic variants, logical alignment,
 
 ```svelte
 <script lang="ts">
-	import * as Bubble from "$lib/components/ui/bubble";
+	import * as Bubble from "#lib/components/ui/bubble/index.ts";
 </script>
 ```
 
@@ -202,7 +202,7 @@ pnpm add clsx tailwind-merge tailwind-variants
 pnpm add -D tailwindcss
 ```
 
-Bubble requires `cn` and `WithElementRef` from `$lib/utils`:
+Bubble requires `cn` and `WithElementRef` from `#lib/utils.ts`:
 
 ```ts
 import { clsx } from "clsx";

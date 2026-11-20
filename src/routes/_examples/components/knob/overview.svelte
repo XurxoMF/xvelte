@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Field from "$lib/components/ui/field";
-	import * as Knob from "$lib/components/ui/knob";
+	import * as Field from "#lib/components/ui/field/index.ts";
+	import * as Knob from "#lib/components/ui/knob/index.ts";
 
 	let volume = $state(40);
 </script>

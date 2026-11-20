@@ -2,7 +2,7 @@
 	import { Dialog as SheetPrimitive } from "bits-ui";
 
 	import type { Snippet } from "svelte";
-	import type { WithoutChildrenOrChild } from "$lib/utils";
+	import type { WithoutChildrenOrChild } from "#lib/utils.ts";
 
 	import * as Sheet from ".";
 
@@ -17,13 +17,13 @@
 </script>
 
 <script lang="ts">
-	import { CloseIcon } from "$lib/icons";
+	import { CloseIcon } from "#lib/icons.ts";
 
-	import * as m from "$lib/paraglide/messages.js";
+	import * as m from "#lib/paraglide/messages.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 
 	let {
 		ref = $bindable(null),

@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { EllipsisIcon, FileIcon, FolderIcon, FolderOpenIcon, PlusIcon, PreferencesIcon, SearchIcon, StarIcon } from "$lib/icons";
+	import { EllipsisIcon, FileIcon, FolderIcon, FolderOpenIcon, PlusIcon, PreferencesIcon, SearchIcon, StarIcon } from "#lib/icons.ts";
 
-	import * as Sidebar from "$lib/components/ui/sidebar";
-	import * as Tooltip from "$lib/components/ui/tooltip";
-	import * as Typography from "$lib/components/ui/typography";
+	import * as Sidebar from "#lib/components/ui/sidebar/index.ts";
+	import * as Tooltip from "#lib/components/ui/tooltip/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 
 	const links = [
 		{ href: "/dashboard", label: "Overview", icon: FileIcon, active: true },

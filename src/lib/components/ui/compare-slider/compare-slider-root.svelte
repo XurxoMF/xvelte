@@ -8,7 +8,7 @@
 <script lang="ts">
 	import { setCompareContext } from "./compare-slider-context";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { value = $bindable(50), orientation = "horizontal", class: className, children }: RootProps = $props();
 

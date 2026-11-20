@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	import * as Command from "$lib/components/ui/command";
+	import * as Command from "#lib/components/ui/command/index.ts";
 
 	/** Props for a visual separator between Combobox results. */
 	export type SeparatorProps = Command.SeparatorProps;

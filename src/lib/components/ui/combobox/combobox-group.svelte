@@ -1,7 +1,7 @@
 <script lang="ts" module>
-	import type { WithoutChild } from "$lib/utils";
+	import type { WithoutChild } from "#lib/utils.ts";
 
-	import * as Command from "$lib/components/ui/command";
+	import * as Command from "#lib/components/ui/command/index.ts";
 
 	/** Props for a grouped set of Combobox items. */
 	export type GroupProps = WithoutChild<Command.GroupProps> & {
@@ -11,7 +11,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), heading, class: className, children, ...restProps }: GroupProps = $props();
 </script>

@@ -26,7 +26,7 @@ Import every part through the component's public `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as Attachment from "$lib/components/ui/attachment";
+	import * as Attachment from "#lib/components/ui/attachment/index.ts";
 </script>
 ```
 
@@ -70,9 +70,9 @@ Only `Root` is required. `Media`, `Description`, `Actions`, and `Trigger` are op
 
 ```svelte
 <script lang="ts">
-	import { CloseIcon, FileIcon } from "$lib/icons";
+	import { CloseIcon, FileIcon } from "#lib/icons.ts";
 
-	import * as Attachment from "$lib/components/ui/attachment";
+	import * as Attachment from "#lib/components/ui/attachment/index.ts";
 
 	function removeFile() {
 		// Remove the file from application state.
@@ -134,10 +134,10 @@ Use `state` to expose the current lifecycle and provide visible status text in `
 
 ```svelte
 <script lang="ts">
-	import { FileIcon } from "$lib/icons";
+	import { FileIcon } from "#lib/icons.ts";
 
-	import * as Attachment from "$lib/components/ui/attachment";
-	import * as Spinner from "$lib/components/ui/spinner";
+	import * as Attachment from "#lib/components/ui/attachment/index.ts";
+	import * as Spinner from "#lib/components/ui/spinner/index.ts";
 </script>
 
 <Attachment.Root state="uploading" class="w-full">
@@ -413,7 +413,7 @@ The repository's global focus rule supplies the Trigger's visible keyboard focus
 
 ### Shared utilities
 
-Every part imports `cn` or `WithElementRef` from `$lib/utils`. Add these definitions to `src/lib/utils.ts` if they are not already present:
+Every part imports `cn` or `WithElementRef` from `#lib/utils`. Add these definitions to `src/lib/utils.ts` if they are not already present:
 
 ```ts
 import { clsx } from "clsx";

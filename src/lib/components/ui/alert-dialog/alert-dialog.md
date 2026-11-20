@@ -26,7 +26,7 @@ Import the component from its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as AlertDialog from "$lib/components/ui/alert-dialog";
+	import * as AlertDialog from "#lib/components/ui/alert-dialog/index.ts";
 </script>
 ```
 
@@ -61,8 +61,8 @@ Unlike the underlying Bits UI anatomy, xvelte's `Content` automatically renders 
 
 ```svelte
 <script lang="ts">
-	import { rootVariants as buttonVariants } from "$lib/components/ui/button";
-	import * as AlertDialog from "$lib/components/ui/alert-dialog";
+	import { rootVariants as buttonVariants } from "#lib/components/ui/button/index.ts";
+	import * as AlertDialog from "#lib/components/ui/alert-dialog/index.ts";
 </script>
 
 <AlertDialog.Root>
@@ -92,8 +92,8 @@ Bind `open` when application code must open or close the dialog or wait for asyn
 
 ```svelte
 <script lang="ts">
-	import { rootVariants as buttonVariants } from "$lib/components/ui/button";
-	import * as AlertDialog from "$lib/components/ui/alert-dialog";
+	import { rootVariants as buttonVariants } from "#lib/components/ui/button/index.ts";
+	import * as AlertDialog from "#lib/components/ui/alert-dialog/index.ts";
 
 	let open = $state(false);
 	let deleting = $state(false);
@@ -137,8 +137,8 @@ Bind `open` when application code must open or close the dialog or wait for asyn
 
 ```svelte
 <script lang="ts">
-	import { AlertWarningIcon } from "$lib/icons";
-	import * as AlertDialog from "$lib/components/ui/alert-dialog";
+	import { AlertWarningIcon } from "#lib/icons.ts";
+	import * as AlertDialog from "#lib/components/ui/alert-dialog/index.ts";
 </script>
 
 <AlertDialog.Root>
@@ -414,7 +414,7 @@ pnpm add -D tailwindcss
 
 ### Required xvelte components
 
-Copy the complete Button UI component from `$lib/components/ui/button`. `Action` and `Cancel` import it through `index.ts` and use `Button.rootVariants`, `Button.RootVariants`, and `Button.RootSizes`; copying only Alert Dialog will not compile. Copy these Button files:
+Copy the complete Button UI component from `#lib/components/ui/button`. `Action` and `Cancel` import it through `index.ts` and use `Button.rootVariants`, `Button.RootVariants`, and `Button.RootSizes`; copying only Alert Dialog will not compile. Copy these Button files:
 
 - `src/lib/components/ui/button/button-root.svelte`
 - `src/lib/components/ui/button/index.ts`
@@ -498,7 +498,7 @@ Define equivalent values inside the application's dark selector if it supports a
 
 Alert Dialog does not import or require an icon. Your app provides any icon placed in `Media`.
 
-The compact example uses xvelte's semantic icon facade. Copying that example requires `@tabler/icons-svelte` and this export in `$lib/icons`:
+The compact example uses xvelte's semantic icon facade. Copying that example requires `@tabler/icons-svelte` and this export in `#lib/icons.ts`:
 
 ```ts
 export { default as AlertWarningIcon } from "@tabler/icons-svelte/icons/alert-triangle";
@@ -508,7 +508,7 @@ The optional package commands are included in the single installation block abov
 
 ### Shared utilities
 
-The wrappers import `cn`, `WithoutChild`, `WithoutChildrenOrChild`, and `WithElementRef` from `$lib/utils`. The Button dependency also imports `cn` and `WithElementRef`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+The wrappers import `cn`, `WithoutChild`, `WithoutChildrenOrChild`, and `WithElementRef` from `#lib/utils`. The Button dependency also imports `cn` and `WithElementRef`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

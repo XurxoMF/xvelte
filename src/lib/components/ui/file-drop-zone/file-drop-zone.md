@@ -26,7 +26,7 @@ Import every public part from the component's `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as FileDropZone from "$lib/components/ui/file-drop-zone";
+	import * as FileDropZone from "#lib/components/ui/file-drop-zone/index.ts";
 </script>
 ```
 
@@ -53,7 +53,7 @@ Keep `fileCount` synchronized with files already accepted by the app when using 
 
 ```svelte
 <script lang="ts">
-	import * as FileDropZone from "$lib/components/ui/file-drop-zone";
+	import * as FileDropZone from "#lib/components/ui/file-drop-zone/index.ts";
 
 	let files = $state<File[]>([]);
 	let inputRef = $state<HTMLInputElement | null>(null);
@@ -172,7 +172,7 @@ Set `portalProps={{ disabled: true }}` to render the overlay at its declaration 
 
 ```svelte
 <script lang="ts">
-	import * as FileDropZone from "$lib/components/ui/file-drop-zone";
+	import * as FileDropZone from "#lib/components/ui/file-drop-zone/index.ts";
 
 	let rejections = $state<string[]>([]);
 </script>
@@ -367,7 +367,7 @@ Copy the complete `src/lib/components/ui/file-drop-zone` folder:
 
 ### Shared utilities
 
-The Svelte files import `cn` and `WithoutChildrenOrChild` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when absent:
+The Svelte files import `cn` and `WithoutChildrenOrChild` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when absent:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -396,7 +396,7 @@ The package block includes `clsx` and `tailwind-merge`.
 
 ### Icons
 
-The default Trigger and DragOverlay import one semantic icon through `$lib/icons`. Add this exact export to `src/lib/icons.ts`:
+The default Trigger and DragOverlay import one semantic icon through `#lib/icons`. Add this exact export to `src/lib/icons.ts`:
 
 ```ts
 export { default as UploadIcon } from "@tabler/icons-svelte/icons/upload";
@@ -639,7 +639,7 @@ export function displaySize(bytes: number): string {
 
 ### Localization setup
 
-Add every message listed in [Localization](#localization) to each locale and compile Paraglide into `src/lib/paraglide`. The component imports generated functions from `$lib/paraglide/messages.js`; do not copy or edit generated files manually.
+Add every message listed in [Localization](#localization) to each locale and compile Paraglide into `src/lib/paraglide`. The component imports generated functions from `#lib/paraglide/messages.js`; do not copy or edit generated files manually.
 
 No other message, translation attachment, or runtime localization helper is required.
 

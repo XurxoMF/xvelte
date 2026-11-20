@@ -26,8 +26,8 @@ Import the component from its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Walkthrough from "$lib/components/ui/walkthrough";
-	import type { Step, WalkthroughContext } from "$lib/components/ui/walkthrough";
+	import * as Walkthrough from "#lib/components/ui/walkthrough/index.ts";
+	import type { Step, WalkthroughContext } from "#lib/components/ui/walkthrough/index.ts";
 </script>
 ```
 
@@ -57,8 +57,8 @@ The internal content, modal overlay, and spotlight components are implementation
 
 ```svelte
 <script lang="ts">
-	import * as Walkthrough from "$lib/components/ui/walkthrough";
-	import type { Step } from "$lib/components/ui/walkthrough";
+	import * as Walkthrough from "#lib/components/ui/walkthrough/index.ts";
+	import type { Step } from "#lib/components/ui/walkthrough/index.ts";
 
 	let open = $state(false);
 
@@ -307,7 +307,7 @@ Add the Tailwind import, dark-mode variant, semantic values, and mappings used d
 }
 ```
 
-Copy the Button component from `$lib/components/ui/button`:
+Copy the Button component from `#lib/components/ui/button/index.ts`:
 
 ```text
 src/lib/components/ui/button/
@@ -317,7 +317,7 @@ src/lib/components/ui/button/
 
 Follow the Button component's unit guide to install its complete API, theme tokens, and helper requirements.
 
-Copy the Dialog component from `$lib/components/ui/dialog`:
+Copy the Dialog component from `#lib/components/ui/dialog/index.ts`:
 
 ```text
 src/lib/components/ui/dialog/
@@ -336,15 +336,15 @@ src/lib/components/ui/dialog/
 
 Follow the Dialog component's unit guide to install its complete API, Bits UI dependency, animation styles, theme tokens, localization, and helper requirements. Walkthrough requires the `Dialog.Content.showOverlay` option documented there.
 
-Add this semantic icon export to `$lib/icons.ts`:
+Add this semantic icon export to `#lib/icons.ts`:
 
 ```ts
 export { default as CloseIcon } from "@tabler/icons-svelte/icons/x";
 ```
 
-Add the five message IDs listed under Localization to `messages/en.json`, then generate Paraglide's `$lib/paraglide/messages.js` output through your existing Paraglide setup. The message table is the complete required localization copy, so it is not duplicated here.
+Add the five message IDs listed under Localization to `messages/en.json`, then generate Paraglide's `#lib/paraglide/messages.js` output through your existing Paraglide setup. The message table is the complete required localization copy, so it is not duplicated here.
 
-Walkthrough does not directly import `$lib/utils`; the required Dialog and Button components do. Follow their unit guides for the exact `cn` helper and full theme requirements. Dialog and Bits UI provide focus trapping, restoration, Escape handling, and ARIA relationships; the Walkthrough blocker prevents pointer interaction with the page and optionally provides the specialized dimming layer. No hook or attachment is required. Copy every source file listed under File organization; `walkthrough-context.ts` is required internal code even though its helpers are not public exports.
+Walkthrough does not directly import `#lib/utils`; the required Dialog and Button components do. Follow their unit guides for the exact `cn` helper and full theme requirements. Dialog and Bits UI provide focus trapping, restoration, Escape handling, and ARIA relationships; the Walkthrough blocker prevents pointer interaction with the page and optionally provides the specialized dimming layer. No hook or attachment is required. Copy every source file listed under File organization; `walkthrough-context.ts` is required internal code even though its helpers are not public exports.
 
 ---
 

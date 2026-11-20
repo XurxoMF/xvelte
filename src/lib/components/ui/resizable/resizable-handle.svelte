@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import * as ResizablePrimitive from "paneforge";
 
-	import type { WithoutChildrenOrChild } from "$lib/utils";
+	import type { WithoutChildrenOrChild } from "#lib/utils.ts";
 
 	export type HandleProps = WithoutChildrenOrChild<ResizablePrimitive.PaneResizerProps> & {
 		withHandle?: boolean | undefined;
@@ -9,7 +9,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, withHandle = false, ...restProps }: HandleProps = $props();
 </script>

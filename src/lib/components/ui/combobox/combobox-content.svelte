@@ -1,10 +1,10 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
 
-	import type { WithoutChildrenOrChild } from "$lib/utils";
+	import type { WithoutChildrenOrChild } from "#lib/utils.ts";
 
-	import * as Popover from "$lib/components/ui/popover";
-	import * as Command from "$lib/components/ui/command";
+	import * as Popover from "#lib/components/ui/popover/index.ts";
+	import * as Command from "#lib/components/ui/command/index.ts";
 
 	/** Props for the positioned Combobox content and its internal Command root. */
 	export type ContentProps = WithoutChildrenOrChild<Popover.ContentProps> & {
@@ -18,7 +18,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, commandProps, children, ...restProps }: ContentProps = $props();
 </script>

@@ -5,9 +5,9 @@
 </script>
 
 <script lang="ts">
-	import { ChevronDownIcon } from "$lib/icons";
+	import { ChevronDownIcon } from "#lib/icons.ts";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: TriggerProps = $props();
 </script>

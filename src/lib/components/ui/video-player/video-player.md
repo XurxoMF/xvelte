@@ -24,7 +24,7 @@ Import the component from its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as VideoPlayer from "$lib/components/ui/video-player";
+	import * as VideoPlayer from "#lib/components/ui/video-player/index.ts";
 </script>
 ```
 
@@ -44,7 +44,7 @@ Video Player has one public part:
 
 ```svelte
 <script lang="ts">
-	import * as VideoPlayer from "$lib/components/ui/video-player";
+	import * as VideoPlayer from "#lib/components/ui/video-player/index.ts";
 </script>
 
 <VideoPlayer.Root src="/videos/product-tour.mp4" poster="/images/product-tour-poster.webp" captions="/captions/product-tour.en.vtt" />
@@ -182,7 +182,7 @@ The component requires Tailwind CSS to process its utility classes. Add the styl
 }
 ```
 
-Add these semantic icon exports to `$lib/icons.ts`:
+Add these semantic icon exports to `#lib/icons.ts`:
 
 ```ts
 export { default as ExitFullscreenIcon } from "@tabler/icons-svelte/icons/minimize";
@@ -195,7 +195,7 @@ export { default as VolumeLowIcon } from "@tabler/icons-svelte/icons/volume-2";
 export { default as VolumeMutedIcon } from "@tabler/icons-svelte/icons/volume-off";
 ```
 
-Video Player requires the `cn` helper from `$lib/utils`:
+Video Player requires the `cn` helper from `#lib/utils.ts`:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -206,7 +206,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 ```
 
-Copy the complete `$lib/components/ui/slider` folder and follow its unit guide to install its Bits UI primitive, global variants, and shared utility types. Video Player requires no other xvelte component, hook, attachment, context, shared style, animation package, or localization runtime. Copy both Video Player source files listed under File organization and provide the media, poster when used, and captions assets from your app.
+Copy the complete `#lib/components/ui/slider/index.ts` folder and follow its unit guide to install its Bits UI primitive, global variants, and shared utility types. Video Player requires no other xvelte component, hook, attachment, context, shared style, animation package, or localization runtime. Copy both Video Player source files listed under File organization and provide the media, poster when used, and captions assets from your app.
 
 ## Credits
 

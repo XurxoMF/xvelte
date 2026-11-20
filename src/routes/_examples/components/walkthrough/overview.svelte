@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
-	import * as Walkthrough from "$lib/components/ui/walkthrough";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as Walkthrough from "#lib/components/ui/walkthrough/index.ts";
 
 	let open = $state(false);
 

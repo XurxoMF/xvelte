@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Field from "$lib/components/ui/field";
-	import * as InputOTP from "$lib/components/ui/input-otp";
+	import * as Field from "#lib/components/ui/field/index.ts";
+	import * as InputOTP from "#lib/components/ui/input-otp/index.ts";
 
 	let code = $state("");
 </script>

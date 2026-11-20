@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { BarChart } from "layerchart";
 
-	import * as Chart from "$lib/components/ui/chart";
-	import * as Typography from "$lib/components/ui/typography";
+	import * as Chart from "#lib/components/ui/chart/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 
 	const chartData = [
 		{ month: "January", desktop: 186, mobile: 80 },

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
-	import * as ButtonGroup from "$lib/components/ui/button-group";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as ButtonGroup from "#lib/components/ui/button-group/index.ts";
 </script>
 
 <div class="flex items-center justify-center">

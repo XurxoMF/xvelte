@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { AlertInfoIcon, AlertWarningIcon } from "$lib/icons";
+	import { AlertInfoIcon, AlertWarningIcon } from "#lib/icons.ts";
 
-	import { useHighlightedCode } from "$lib/hooks/use-highlighted-code.svelte";
+	import { useHighlightedCode } from "#lib/hooks/use-highlighted-code.svelte.ts";
 
-	import * as Alert from "$lib/components/ui/alert";
-	import * as CodeBlock from "$lib/components/ui/code-block";
-	import * as FloatingMenu from "$lib/components/ui/floating-menu";
-	import * as ToggleGroup from "$lib/components/ui/toggle-group";
-	import * as Typography from "$lib/components/ui/typography";
+	import * as Alert from "#lib/components/ui/alert/index.ts";
+	import * as CodeBlock from "#lib/components/ui/code-block/index.ts";
+	import * as FloatingMenu from "#lib/components/ui/floating-menu/index.ts";
+	import * as ToggleGroup from "#lib/components/ui/toggle-group/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 
 	type PackageManager = "bun" | "npm" | "pnpm";
 	type HighlightedCode = ReturnType<typeof useHighlightedCode>;

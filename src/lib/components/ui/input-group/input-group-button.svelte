@@ -3,9 +3,9 @@
 
 	import type { VariantProps } from "tailwind-variants";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 
 	export const buttonVariants = tv({
 		base: "gap-2 text-sm flex items-center shadow-none",

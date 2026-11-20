@@ -26,7 +26,7 @@ Import the component through its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Kbd from "$lib/components/ui/kbd";
+	import * as Kbd from "#lib/components/ui/kbd/index.ts";
 </script>
 ```
 
@@ -56,7 +56,7 @@ Both parts render semantic `kbd` elements. A Group containing Keys represents a 
 
 ```svelte
 <script lang="ts">
-	import * as Kbd from "$lib/components/ui/kbd";
+	import * as Kbd from "#lib/components/ui/kbd/index.ts";
 </script>
 
 <p>
@@ -114,7 +114,7 @@ The button's visible text already communicates the action, so the decorative sho
 
 ```svelte
 <script lang="ts">
-	import * as Kbd from "$lib/components/ui/kbd";
+	import * as Kbd from "#lib/components/ui/kbd/index.ts";
 
 	let macOS = $state(false);
 </script>
@@ -219,7 +219,7 @@ Copy the complete `src/lib/components/ui/kbd` component folder:
 
 ### Shared utilities
 
-Both parts import `cn` and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when absent:
+Both parts import `cn` and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when absent:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

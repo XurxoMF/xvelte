@@ -21,11 +21,11 @@
 <script lang="ts">
 	import { onMount, untrack } from "svelte";
 
-	import { ExitFullscreenIcon, FullscreenIcon, LoaderIcon, PauseIcon, PlayIcon, VolumeIcon, VolumeLowIcon, VolumeMutedIcon } from "$lib/icons";
+	import { ExitFullscreenIcon, FullscreenIcon, LoaderIcon, PauseIcon, PlayIcon, VolumeIcon, VolumeLowIcon, VolumeMutedIcon } from "#lib/icons.ts";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
-	import * as Slider from "$lib/components/ui/slider";
+	import * as Slider from "#lib/components/ui/slider/index.ts";
 
 	let { src, poster, class: className, autoplay = false, loop = false, muted = false, captions }: RootProps = $props();
 

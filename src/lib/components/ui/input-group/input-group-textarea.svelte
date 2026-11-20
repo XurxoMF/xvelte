@@ -1,11 +1,11 @@
 <script lang="ts" module>
-	import * as Textarea from "$lib/components/ui/textarea";
+	import * as Textarea from "#lib/components/ui/textarea/index.ts";
 
 	export type TextareaProps = Textarea.RootProps;
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), value = $bindable(), class: className, ...restProps }: TextareaProps = $props();
 </script>

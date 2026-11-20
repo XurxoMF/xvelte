@@ -2,7 +2,7 @@
 	import { Drawer as DrawerPrimitive } from "vaul-svelte";
 
 	import type { Snippet } from "svelte";
-	import type { WithoutChildrenOrChild } from "$lib/utils";
+	import type { WithoutChildrenOrChild } from "#lib/utils.ts";
 
 	import * as Drawer from ".";
 
@@ -14,7 +14,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(undefined), class: className, portalProps, children, ...restProps }: ContentProps = $props();
 </script>

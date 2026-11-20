@@ -26,7 +26,7 @@ Import the component from its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Calendar from "$lib/components/ui/calendar";
+	import * as Calendar from "#lib/components/ui/calendar/index.ts";
 </script>
 ```
 
@@ -64,7 +64,7 @@ Unlike the underlying Bits UI root, the local `Root` does not accept `children` 
 <script lang="ts">
 	import { getLocalTimeZone, today, type DateValue } from "@internationalized/date";
 
-	import * as Calendar from "$lib/components/ui/calendar";
+	import * as Calendar from "#lib/components/ui/calendar/index.ts";
 
 	let value = $state<DateValue | undefined>(today(getLocalTimeZone()));
 </script>
@@ -84,7 +84,7 @@ Calendar values are `DateValue` objects from `@internationalized/date`, not Java
 <script lang="ts">
 	import { CalendarDate, type DateValue } from "@internationalized/date";
 
-	import * as Calendar from "$lib/components/ui/calendar";
+	import * as Calendar from "#lib/components/ui/calendar/index.ts";
 
 	let value = $state<DateValue | undefined>(new CalendarDate(2026, 8, 13));
 </script>
@@ -106,7 +106,7 @@ Calendar values are `DateValue` objects from `@internationalized/date`, not Java
 <script lang="ts">
 	import { getLocalTimeZone, today, type DateValue } from "@internationalized/date";
 
-	import * as Calendar from "$lib/components/ui/calendar";
+	import * as Calendar from "#lib/components/ui/calendar/index.ts";
 
 	const firstAllowedDate = today(getLocalTimeZone());
 	let values = $state<DateValue[]>([]);
@@ -354,7 +354,7 @@ Follow the Button component's unit guide to install it and understand its API. C
 
 ### Shared utilities
 
-Calendar imports `cn`, `WithElementRef`, and `WithoutChildrenOrChild` from `$lib/utils`; Button uses `cn` and `WithElementRef`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+Calendar imports `cn`, `WithElementRef`, and `WithoutChildrenOrChild` from `#lib/utils`; Button uses `cn` and `WithElementRef`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -381,7 +381,7 @@ The package block above includes `clsx` and `tailwind-merge`, which this code im
 
 ### Paraglide locale
 
-Configure and compile Paraglide so `$lib/paraglide/runtime.js` exports `getLocale`. Calendar has no message keys, but Root reads that generated runtime when its `locale` prop is omitted. Passing `locale` keeps the documented per-calendar override.
+Configure and compile Paraglide so `#lib/paraglide/runtime.js` exports `getLocale`. Calendar has no message keys, but Root reads that generated runtime when its `locale` prop is omitted. Passing `locale` keeps the documented per-calendar override.
 
 ### Icons
 

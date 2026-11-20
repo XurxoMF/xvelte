@@ -24,7 +24,7 @@ Use Skeleton when the final layout is known and a temporary shape reduces percei
 
 ```svelte
 <script lang="ts">
-	import * as Skeleton from "$lib/components/ui/skeleton";
+	import * as Skeleton from "#lib/components/ui/skeleton/index.ts";
 </script>
 ```
 
@@ -42,7 +42,7 @@ Skeleton renders one empty `<div>` and does not accept children:
 
 ```svelte
 <script lang="ts">
-	import * as Skeleton from "$lib/components/ui/skeleton";
+	import * as Skeleton from "#lib/components/ui/skeleton/index.ts";
 </script>
 
 <div class="flex items-center gap-3" aria-hidden="true">

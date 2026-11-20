@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 
 	/** Props accepted by the Code Block copy action. */
 	export type CopyButtonProps = Omit<Button.RootProps, "onclick"> & {
@@ -11,11 +11,11 @@
 <script lang="ts">
 	import { onDestroy } from "svelte";
 
-	import { CheckIcon, CopyIcon } from "$lib/icons";
+	import { CheckIcon, CopyIcon } from "#lib/icons.ts";
 
-	import * as m from "$lib/paraglide/messages.js";
+	import * as m from "#lib/paraglide/messages.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let {
 		ref = $bindable(null),

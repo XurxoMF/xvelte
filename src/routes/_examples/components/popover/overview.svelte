@@ -1,8 +1,8 @@
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
-	import * as Input from "$lib/components/ui/input";
-	import * as Label from "$lib/components/ui/label";
-	import * as Popover from "$lib/components/ui/popover";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as Input from "#lib/components/ui/input/index.ts";
+	import * as Label from "#lib/components/ui/label/index.ts";
+	import * as Popover from "#lib/components/ui/popover/index.ts";
 </script>
 
 <div class="flex items-center justify-center">

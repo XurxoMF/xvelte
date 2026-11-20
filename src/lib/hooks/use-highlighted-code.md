@@ -44,7 +44,7 @@ pnpm add -D svelte
 ## Import
 
 ```ts
-import { useHighlightedCode, type HighlightedLine, type HighlightedToken } from "$lib/hooks/use-highlighted-code.svelte";
+import { useHighlightedCode, type HighlightedLine, type HighlightedToken } from "#lib/hooks/use-highlighted-code.svelte.ts";
 ```
 
 ---
@@ -53,9 +53,9 @@ import { useHighlightedCode, type HighlightedLine, type HighlightedToken } from 
 
 ```svelte
 <script lang="ts">
-	import { useHighlightedCode } from "$lib/hooks/use-highlighted-code.svelte";
+	import { useHighlightedCode } from "#lib/hooks/use-highlighted-code.svelte.ts";
 
-	import * as CodeBlock from "$lib/components/ui/code-block";
+	import * as CodeBlock from "#lib/components/ui/code-block/index.ts";
 
 	const source = `const answer: number = 42;`;
 	const lines = useHighlightedCode(
@@ -186,7 +186,7 @@ Do not use token color alone to communicate errors, additions, deletions, or req
 
 The hook requires Svelte 5 runes and `shiki`. Shiki supplies its core, JavaScript engine, bundled language loaders and aliases, and the `github-light` and `github-dark` themes through public subpath exports.
 
-No `$lib/utils` export, icon, component, attachment, context module, localization setup, CSS variable, global stylesheet, font, image, WASM file, or network service is required. Code Block is an optional renderer; another component may consume the exported line shape.
+No `#lib/utils.ts` export, icon, component, attachment, context module, localization setup, CSS variable, global stylesheet, font, image, WASM file, or network service is required. Code Block is an optional renderer; another component may consume the exported line shape.
 
 ---
 

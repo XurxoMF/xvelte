@@ -26,7 +26,7 @@ Import all parts and types through the component's public `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as Questionnaire from "$lib/components/ui/questionnaire";
+	import * as Questionnaire from "#lib/components/ui/questionnaire/index.ts";
 </script>
 ```
 
@@ -72,7 +72,7 @@ Define the item collection once and pass it to Root. This makes the active step,
 
 ```svelte
 <script lang="ts">
-	import * as Questionnaire from "$lib/components/ui/questionnaire";
+	import * as Questionnaire from "#lib/components/ui/questionnaire/index.ts";
 
 	const items = [
 		{
@@ -487,7 +487,7 @@ export { default as CheckIcon } from "@tabler/icons-svelte/icons/check";
 
 ### Utilities
 
-Questionnaire imports `cn` and `WithElementRef` from `$lib/utils`:
+Questionnaire imports `cn` and `WithElementRef` from `#lib/utils.ts`:
 
 ```ts
 import { clsx } from "clsx";
@@ -548,7 +548,7 @@ The global stylesheet must import Tailwind, define the dark variant and shared f
 
 Button's guide lists the additional semantic variants and radius variables needed by every selectable action variant.
 
-Add the eight exact messages from [Localization](#localization) to `messages/en.json`, configure Paraglide, and compile it so `$lib/paraglide/messages.js` exports each function. Generated Paraglide output must be built by the app rather than copied manually.
+Add the eight exact messages from [Localization](#localization) to `messages/en.json`, configure Paraglide, and compile it so `#lib/paraglide/messages.js` exports each function. Generated Paraglide output must be built by the app rather than copied manually.
 
 Questionnaire requires no xvelte hook, attachment, authored context file, shared stylesheet, asset, font, network service, or Tauri integration. Card, Dialog, Drawer, Field, and toast components are optional host compositions and should be copied with their own guides only when used.
 

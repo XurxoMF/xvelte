@@ -32,7 +32,7 @@ Import the local presentation components from their public `index.ts` entry poin
 <script lang="ts">
 	import { BarChart } from "layerchart";
 
-	import * as Chart from "$lib/components/ui/chart";
+	import * as Chart from "#lib/components/ui/chart/index.ts";
 </script>
 ```
 
@@ -61,7 +61,7 @@ Choose a simplified LayerChart component such as `BarChart`, `LineChart`, `AreaC
 <script lang="ts">
 	import { BarChart } from "layerchart";
 
-	import * as Chart from "$lib/components/ui/chart";
+	import * as Chart from "#lib/components/ui/chart/index.ts";
 
 	const chartData = [
 		{ month: "January", desktop: 186, mobile: 80 },
@@ -115,7 +115,7 @@ Use `theme` instead of `color` when a series needs different values in each mode
 
 ```svelte
 <script lang="ts">
-	import * as Chart from "$lib/components/ui/chart";
+	import * as Chart from "#lib/components/ui/chart/index.ts";
 
 	const chartConfig = {
 		revenue: {
@@ -141,8 +141,8 @@ Container generates `--color-revenue` under both the normal and `.dark` selector
 <script lang="ts">
 	import { LineChart } from "layerchart";
 
-	import { getLocale } from "$lib/paraglide/runtime";
-	import * as Chart from "$lib/components/ui/chart";
+	import { getLocale } from "#lib/paraglide/runtime.js";
+	import * as Chart from "#lib/components/ui/chart/index.ts";
 
 	const chartConfig = {
 		requests: {
@@ -229,7 +229,7 @@ Container also works with LayerChart's base `Chart`, layers, axes, and marks:
 <script lang="ts">
 	import { Axis, Chart as LayerChart, Layer, Spline } from "layerchart";
 
-	import * as Chart from "$lib/components/ui/chart";
+	import * as Chart from "#lib/components/ui/chart/index.ts";
 </script>
 
 <Chart.Container config={chartConfig} class="min-h-64 w-full">
@@ -448,7 +448,7 @@ LayerChart already declares its required D3 and LayerStack packages as dependenc
 
 ### Shared utilities
 
-Chart imports `cn`, `WithElementRef`, and `WithoutChildren` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+Chart imports `cn`, `WithElementRef`, and `WithoutChildren` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -470,7 +470,7 @@ The package block above includes `clsx` and `tailwind-merge`, which this code im
 
 ### Paraglide locale
 
-Configure and compile Paraglide so `$lib/paraglide/runtime.js` exports `getLocale`. Chart has no message keys, but Tooltip reads the active locale from that generated runtime for its default heading and value formatting.
+Configure and compile Paraglide so `#lib/paraglide/runtime.js` exports `getLocale`. Chart has no message keys, but Tooltip reads the active locale from that generated runtime for its default heading and value formatting.
 
 ### Global CSS
 

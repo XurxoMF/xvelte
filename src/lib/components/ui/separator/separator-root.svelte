@@ -5,7 +5,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, "data-slot": dataSlot = "separator", ...restProps }: RootProps = $props();
 </script>

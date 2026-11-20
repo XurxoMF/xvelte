@@ -2,7 +2,7 @@
 	import type { Snippet } from "svelte";
 	import type { WithoutChildren } from "bits-ui";
 
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 
 	/** Edge from which the progress fill expands. */
 	export type HoldDirection = "top" | "bottom" | "left" | "right";
@@ -23,7 +23,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let {
 		duration = 1000,

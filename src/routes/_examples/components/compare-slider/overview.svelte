@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as CompareSlider from "$lib/components/ui/compare-slider";
+	import * as CompareSlider from "#lib/components/ui/compare-slider/index.ts";
 </script>
 
 <CompareSlider.Root class="mx-auto aspect-video w-full max-w-2xl rounded-lg">

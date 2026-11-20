@@ -26,7 +26,7 @@ Import every public part through the component's `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as InputGroup from "$lib/components/ui/input-group";
+	import * as InputGroup from "#lib/components/ui/input-group/index.ts";
 </script>
 ```
 
@@ -72,7 +72,7 @@ This example binds the field value while presenting a non-editable URL scheme:
 
 ```svelte
 <script lang="ts">
-	import * as InputGroup from "$lib/components/ui/input-group";
+	import * as InputGroup from "#lib/components/ui/input-group/index.ts";
 
 	let domain = $state("");
 </script>
@@ -100,7 +100,7 @@ Input Group Button defaults to `type="button"`. Set `type="submit"` explicitly w
 
 ```svelte
 <script lang="ts">
-	import * as InputGroup from "$lib/components/ui/input-group";
+	import * as InputGroup from "#lib/components/ui/input-group/index.ts";
 
 	let query = $state("");
 
@@ -130,7 +130,7 @@ Use `block-start` or `block-end` when supporting content should span the contain
 
 ```svelte
 <script lang="ts">
-	import * as InputGroup from "$lib/components/ui/input-group";
+	import * as InputGroup from "#lib/components/ui/input-group/index.ts";
 
 	const limit = 500;
 	let message = $state("");
@@ -162,7 +162,7 @@ Place `aria-invalid` on the actual control. Root detects it and moves the danger
 
 ```svelte
 <script lang="ts">
-	import * as InputGroup from "$lib/components/ui/input-group";
+	import * as InputGroup from "#lib/components/ui/input-group/index.ts";
 
 	let amount = $state<number | undefined>();
 	let invalid = $derived(amount !== undefined && amount < 0);
@@ -453,7 +453,7 @@ Button, Input, and Textarea are source dependencies even when a particular app u
 
 ### Shared utilities
 
-Input Group and its required components import `cn`, `WithElementRef`, and `WithoutChildren` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when absent:
+Input Group and its required components import `cn`, `WithElementRef`, and `WithoutChildren` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when absent:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

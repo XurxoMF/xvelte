@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as AudioPlayer from "$lib/components/ui/audio-player";
+	import * as AudioPlayer from "#lib/components/ui/audio-player/index.ts";
 </script>
 
 <div class="flex items-center justify-center">

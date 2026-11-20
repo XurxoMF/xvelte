@@ -40,7 +40,7 @@ pnpm add -D svelte
 
 ```svelte
 <script lang="ts">
-	import { INDEX_ATTRIBUTE, TOC_IGNORE_ATTRIBUTE, UseToc, type Heading, type HeadingKind } from "$lib/hooks/use-toc.svelte";
+	import { INDEX_ATTRIBUTE, TOC_IGNORE_ATTRIBUTE, UseToc, type Heading, type HeadingKind } from "#lib/hooks/use-toc.svelte.ts";
 </script>
 ```
 
@@ -52,8 +52,8 @@ The file exports `UseToc`, `Heading`, `HeadingKind`, `INDEX_ATTRIBUTE`, and `TOC
 
 ```svelte
 <script lang="ts">
-	import * as TableOfContents from "$lib/components/ui/table-of-contents";
-	import { UseToc } from "$lib/hooks/use-toc.svelte";
+	import * as TableOfContents from "#lib/components/ui/table-of-contents/index.ts";
+	import { UseToc } from "#lib/hooks/use-toc.svelte.ts";
 
 	const headings = new UseToc();
 	let article = $state<HTMLElement>();
@@ -205,7 +205,7 @@ Active state does not move focus, update the URL, announce changes, or scroll th
 
 Copy `use-toc.svelte.ts` and install Svelte using the shared command under Installation. It uses Svelte's reactive `SvelteMap` plus the browser's `MutationObserver` and `IntersectionObserver`; no polyfill is included.
 
-No Runed package, CSS, theme variables, icons, `$lib/utils` exports, attachments, contexts, or localization setup are required. To use the optional visual renderer, copy `$lib/components/ui/table-of-contents` and follow that component's unit guide for its own installation and API.
+No Runed package, CSS, theme variables, icons, `#lib/utils` exports, attachments, contexts, or localization setup are required. To use the optional visual renderer, copy `$lib/components/ui/table-of-contents` and follow that component's unit guide for its own installation and API.
 
 ---
 

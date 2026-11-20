@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { IsTauri } from "$lib/tauri/hooks/is-tauri";
+	import { IsTauri } from "#lib/tauri/hooks/is-tauri.ts";
 
 	const runtime = new IsTauri();
 </script>

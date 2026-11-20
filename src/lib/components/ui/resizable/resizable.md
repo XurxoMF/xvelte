@@ -26,7 +26,7 @@ Import the component from its public `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as Resizable from "$lib/components/ui/resizable";
+	import * as Resizable from "#lib/components/ui/resizable/index.ts";
 </script>
 ```
 
@@ -52,7 +52,7 @@ Place one `Handle` between every pair of adjacent panes:
 
 ```svelte
 <script lang="ts">
-	import * as Resizable from "$lib/components/ui/resizable";
+	import * as Resizable from "#lib/components/ui/resizable/index.ts";
 </script>
 
 <div class="h-72">
@@ -100,7 +100,7 @@ Set the direction on the group. The local handle and optional visual grip rotate
 
 ```svelte
 <script lang="ts">
-	import * as Resizable from "$lib/components/ui/resizable";
+	import * as Resizable from "#lib/components/ui/resizable/index.ts";
 
 	let status = $state("Sidebar expanded");
 </script>
@@ -153,8 +153,8 @@ Bind the group instance when application controls need to read or replace the co
 
 ```svelte
 <script lang="ts">
-	import * as Resizable from "$lib/components/ui/resizable";
-	import type { PaneGroupProps } from "$lib/components/ui/resizable";
+	import * as Resizable from "#lib/components/ui/resizable/index.ts";
+	import type { PaneGroupProps } from "#lib/components/ui/resizable/index.ts";
 
 	let group = $state<PaneGroupProps["this"]>();
 </script>
@@ -351,7 +351,7 @@ No global keyframes, animation classes, layout rules, font imports, or other sty
 
 ### Shared utilities
 
-Copy these exports from `$lib/utils`. `cn()` depends on the installed `clsx` and `tailwind-merge` packages; the types remove unsupported snippets from `HandleProps`:
+Copy these exports from `#lib/utils`. `cn()` depends on the installed `clsx` and `tailwind-merge` packages; the types remove unsupported snippets from `HandleProps`:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -372,7 +372,7 @@ export type WithoutChildrenOrChild<T> = WithoutChildren<WithoutChild<T>>;
 
 ### Icons, other components, and app integration
 
-Resizable uses no icons from `$lib/icons` and no icon package. It does not require another xvelte component, hook, attachment, context module, localization message, shared style, image, font, network request, or app-level integration.
+Resizable uses no icons from `#lib/icons.ts` and no icon package. It does not require another xvelte component, hook, attachment, context module, localization message, shared style, image, font, network request, or app-level integration.
 
 Copy the complete `src/lib/components/ui/resizable` component folder. The required source files are:
 

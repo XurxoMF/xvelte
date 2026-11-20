@@ -26,7 +26,7 @@ Import the component through its public `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as Pagination from "$lib/components/ui/pagination";
+	import * as Pagination from "#lib/components/ui/pagination/index.ts";
 </script>
 ```
 
@@ -73,7 +73,7 @@ The component exports:
 
 ```svelte
 <script lang="ts">
-	import * as Pagination from "$lib/components/ui/pagination";
+	import * as Pagination from "#lib/components/ui/pagination/index.ts";
 
 	const count = 95;
 	const perPage = 10;
@@ -121,7 +121,7 @@ Use `onPageChange` for side effects and keep `page` bound when the rest of the i
 
 ```svelte
 <script lang="ts">
-	import * as Pagination from "$lib/components/ui/pagination";
+	import * as Pagination from "#lib/components/ui/pagination/index.ts";
 
 	let page = $state(1);
 
@@ -357,7 +357,7 @@ Pagination reuses the Button component styles. Copy the complete `src/lib/compon
 - `pagination.md`
   Follow the Button component unit guide to install its dependencies and preserve the `rootVariants` export used by Pagination.
 
-### `$lib/utils`
+### `#lib/utils.ts`
 
 Add these exports to `src/lib/utils.ts`:
 
@@ -439,7 +439,7 @@ Replace the color and radius values with your own theme while keeping the variab
 
 ### Localization setup
 
-Configure Paraglide so `$lib/paraglide/messages.js` is generated and add the six messages listed in [Localization](#localization) to `messages/en.json`. Their keys and complete English values are already shown there, so they are not duplicated in this section.
+Configure Paraglide so `#lib/paraglide/messages.js` is generated and add the six messages listed in [Localization](#localization) to `messages/en.json`. Their keys and complete English values are already shown there, so they are not duplicated in this section.
 
 No shared attachment, hook, context file, font, keyframe, or additional xvelte component is required.
 

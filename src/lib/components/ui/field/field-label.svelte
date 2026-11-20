@@ -1,11 +1,11 @@
 <script lang="ts" module>
-	import * as Label from "$lib/components/ui/label";
+	import * as Label from "#lib/components/ui/label/index.ts";
 
 	export type LabelProps = Label.RootProps;
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: LabelProps = $props();
 </script>

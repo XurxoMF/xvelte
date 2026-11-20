@@ -1,7 +1,7 @@
 <script lang="ts">
-	import * as Field from "$lib/components/ui/field";
-	import * as Input from "$lib/components/ui/input";
-	import * as Label from "$lib/components/ui/label";
+	import * as Field from "#lib/components/ui/field/index.ts";
+	import * as Input from "#lib/components/ui/input/index.ts";
+	import * as Label from "#lib/components/ui/label/index.ts";
 </script>
 
 <Field.Field>

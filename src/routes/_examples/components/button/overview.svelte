@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { PlusIcon } from "$lib/icons";
+	import { PlusIcon } from "#lib/icons.ts";
 
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 </script>
 
 <div class="flex flex-col items-center justify-center gap-6">

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as ScrollArea from "$lib/components/ui/scroll-area";
-	import * as Typography from "$lib/components/ui/typography";
+	import * as ScrollArea from "#lib/components/ui/scroll-area/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 
 	const releases = Array.from({ length: 30 }, (_, index) => `Version 2.${29 - index}`);
 </script>

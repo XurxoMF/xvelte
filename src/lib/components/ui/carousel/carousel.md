@@ -29,7 +29,7 @@ Import the component from its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Carousel from "$lib/components/ui/carousel";
+	import * as Carousel from "#lib/components/ui/carousel/index.ts";
 </script>
 ```
 
@@ -75,7 +75,7 @@ Keep `Item` components as direct children of `Content`. Previous and Next belong
 
 ```svelte
 <script lang="ts">
-	import * as Carousel from "$lib/components/ui/carousel";
+	import * as Carousel from "#lib/components/ui/carousel/index.ts";
 </script>
 
 <Carousel.Root aria-label="Featured projects" class="mx-auto w-full max-w-sm">
@@ -195,8 +195,8 @@ Use `setApi` when the surrounding component needs the selected snap, event liste
 
 ```svelte
 <script lang="ts">
-	import * as Carousel from "$lib/components/ui/carousel";
-	import type { CarouselAPI } from "$lib/components/ui/carousel";
+	import * as Carousel from "#lib/components/ui/carousel/index.ts";
+	import type { CarouselAPI } from "#lib/components/ui/carousel/index.ts";
 
 	let api = $state<CarouselAPI | undefined>();
 	let current = $state(0);
@@ -239,7 +239,7 @@ A descendant component can use the public context to build dots, a counter, or a
 ```svelte
 <!-- CarouselDots.svelte -->
 <script lang="ts">
-	import { getEmblaContext } from "$lib/components/ui/carousel";
+	import { getEmblaContext } from "#lib/components/ui/carousel/index.ts";
 
 	const carousel = getEmblaContext("CarouselDots");
 </script>
@@ -267,7 +267,7 @@ Pass initialized Embla plugins through `plugins`:
 <script lang="ts">
 	import Autoplay from "embla-carousel-autoplay";
 
-	import * as Carousel from "$lib/components/ui/carousel";
+	import * as Carousel from "#lib/components/ui/carousel/index.ts";
 
 	const autoplay = Autoplay({ delay: 4000, stopOnInteraction: true });
 </script>
@@ -459,7 +459,7 @@ Follow the Button component's unit guide to install it and understand its API. C
 
 ### Shared utilities
 
-Carousel imports `cn` and `WithElementRef` from `$lib/utils`; Button uses the same helpers. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+Carousel imports `cn` and `WithElementRef` from `#lib/utils`; Button uses the same helpers. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

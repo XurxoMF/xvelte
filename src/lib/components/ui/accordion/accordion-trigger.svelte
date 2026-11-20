@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import { Accordion as AccordionPrimitive } from "bits-ui";
 
-	import type { WithoutChild } from "$lib/utils";
+	import type { WithoutChild } from "#lib/utils.ts";
 
 	export type TriggerProps = WithoutChild<AccordionPrimitive.TriggerProps> & {
 		level?: AccordionPrimitive.HeaderProps["level"] | undefined;
@@ -9,9 +9,9 @@
 </script>
 
 <script lang="ts">
-	import { ChevronDownIcon, ChevronUpIcon } from "$lib/icons";
+	import { ChevronDownIcon, ChevronUpIcon } from "#lib/icons.ts";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, level = 3, children, ...restProps }: TriggerProps = $props();
 </script>

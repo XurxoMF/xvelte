@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { AlertErrorIcon, CheckIcon, CircleIcon, LoaderIcon, SearchIcon } from "$lib/icons";
+	import { AlertErrorIcon, CheckIcon, CircleIcon, LoaderIcon, SearchIcon } from "#lib/icons.ts";
 
-	import * as Trace from "$lib/components/ui/trace";
+	import * as Trace from "#lib/components/ui/trace/index.ts";
 </script>
 
 <Trace.Root class="mx-auto max-w-sm">

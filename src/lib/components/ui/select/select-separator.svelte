@@ -5,9 +5,9 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
-	import * as Separator from "$lib/components/ui/separator";
+	import * as Separator from "#lib/components/ui/separator/index.ts";
 
 	let { ref = $bindable(null), class: className, ...restProps }: SeparatorProps = $props();
 </script>

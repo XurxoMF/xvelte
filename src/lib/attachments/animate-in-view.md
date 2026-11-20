@@ -48,7 +48,7 @@ Import the attachment directly from its file:
 
 ```svelte
 <script lang="ts">
-	import { animateInView } from "$lib/attachments/animate-in-view";
+	import { animateInView } from "#lib/attachments/animate-in-view.ts";
 </script>
 ```
 
@@ -66,7 +66,7 @@ import type {
 	AnimateInViewTimelineOptions,
 	AnimateInViewTweenOptions,
 	AnimateInViewTweenVars
-} from "$lib/attachments/animate-in-view";
+} from "#lib/attachments/animate-in-view.ts";
 ```
 
 There is no attachment `index.ts`; `animate-in-view.ts` and its exported declarations are the source of truth.
@@ -79,7 +79,7 @@ Use `from` and `to` for one tween. The attached element is both the ScrollTrigge
 
 ```svelte
 <script lang="ts">
-	import { animateInView } from "$lib/attachments/animate-in-view";
+	import { animateInView } from "#lib/attachments/animate-in-view.ts";
 </script>
 
 <section
@@ -159,7 +159,7 @@ Pass the bound container through ScrollTrigger's native `scroller` option:
 
 ```svelte
 <script lang="ts">
-	import { animateInView } from "$lib/attachments/animate-in-view";
+	import { animateInView } from "#lib/attachments/animate-in-view.ts";
 
 	let scroller = $state<HTMLElement>();
 </script>
@@ -372,7 +372,7 @@ Install the packages shown in [Installation](#installation). `gsap` is a runtime
 
 GSAP includes ScrollTrigger in the package, but ScrollTrigger is imported and registered separately by `animate-in-view.ts`. GSAP 3.15.1 is distributed under the [GSAP Standard License](https://gsap.com/standard-license/); review that dependency license for the app's distribution and usage rather than assuming it inherits xvelte's MIT license.
 
-No Tailwind CSS setup, global stylesheet, semantic token, keyframe, icon export, `$lib/utils` helper, UI component, hook, other attachment, context module, localization message, image, font, or network service is required. The examples use Tailwind classes only for presentation.
+No Tailwind CSS setup, global stylesheet, semantic token, keyframe, icon export, `#lib/utils.ts` helper, UI component, hook, other attachment, context module, localization message, image, font, or network service is required. The examples use Tailwind classes only for presentation.
 
 Additional GSAP plugins are optional. Install or import them from the GSAP package according to their official documentation, register them with `gsap.registerPlugin(...)`, and then use their tween properties inside `from`, `to`, or `timeline`. The attachment registers only ScrollTrigger.
 

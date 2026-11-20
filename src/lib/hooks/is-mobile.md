@@ -40,7 +40,7 @@ pnpm add -D svelte
 
 ```svelte
 <script lang="ts">
-	import { IsMobile } from "$lib/hooks/is-mobile.svelte";
+	import { IsMobile } from "#lib/hooks/is-mobile.svelte.ts";
 </script>
 ```
 
@@ -52,7 +52,7 @@ The file exports the `IsMobile` class. It does not export the internal default-b
 
 ```svelte
 <script lang="ts">
-	import { IsMobile } from "$lib/hooks/is-mobile.svelte";
+	import { IsMobile } from "#lib/hooks/is-mobile.svelte.ts";
 
 	const mobile = new IsMobile();
 </script>
@@ -74,7 +74,7 @@ The default breakpoint is `768`, producing the media query `max-width: 767px`. `
 
 ```svelte
 <script lang="ts">
-	import { IsMobile } from "$lib/hooks/is-mobile.svelte";
+	import { IsMobile } from "#lib/hooks/is-mobile.svelte.ts";
 
 	const compact = new IsMobile(1024);
 </script>
@@ -88,7 +88,7 @@ The constructor subtracts one pixel, so `new IsMobile(1024)` matches through `10
 
 ```svelte
 <script lang="ts">
-	import { IsMobile } from "$lib/hooks/is-mobile.svelte";
+	import { IsMobile } from "#lib/hooks/is-mobile.svelte.ts";
 
 	const mobile = new IsMobile();
 	const navigationMode = $derived(mobile.current ? "sheet" : "sidebar");

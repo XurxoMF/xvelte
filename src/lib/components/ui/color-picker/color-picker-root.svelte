@@ -12,17 +12,17 @@
 <script lang="ts">
 	import { untrack } from "svelte";
 
-	import { ChevronDownIcon } from "$lib/icons";
+	import { ChevronDownIcon } from "#lib/icons.ts";
 
-	import * as m from "$lib/paraglide/messages.js";
+	import * as m from "#lib/paraglide/messages.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
-	import * as Button from "$lib/components/ui/button";
-	import * as Popover from "$lib/components/ui/popover";
-	import * as Command from "$lib/components/ui/command";
-	import * as ButtonGroup from "$lib/components/ui/button-group";
-	import * as Input from "$lib/components/ui/input";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as Popover from "#lib/components/ui/popover/index.ts";
+	import * as Command from "#lib/components/ui/command/index.ts";
+	import * as ButtonGroup from "#lib/components/ui/button-group/index.ts";
+	import * as Input from "#lib/components/ui/input/index.ts";
 
 	let {
 		value = $bindable("#000000"),

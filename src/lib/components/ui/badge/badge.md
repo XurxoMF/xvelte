@@ -26,7 +26,7 @@ Import the component from its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Badge from "$lib/components/ui/badge";
+	import * as Badge from "#lib/components/ui/badge/index.ts";
 </script>
 ```
 
@@ -52,7 +52,7 @@ The exported `rootVariants` function makes the same visual variants available wh
 
 ```svelte
 <script lang="ts">
-	import * as Badge from "$lib/components/ui/badge";
+	import * as Badge from "#lib/components/ui/badge/index.ts";
 </script>
 
 <div class="flex flex-wrap gap-2">
@@ -111,7 +111,7 @@ Use `rootVariants` when semantic markup other than Badge's `span` or anchor must
 
 ```svelte
 <script lang="ts">
-	import { rootVariants } from "$lib/components/ui/badge";
+	import { rootVariants } from "#lib/components/ui/badge/index.ts";
 </script>
 
 <button type="button" class={rootVariants({ variant: "outline" })} onclick={clearFilter}>
@@ -227,7 +227,7 @@ pnpm add -D tailwindcss
 
 ### Shared utilities
 
-The component imports `cn` and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+The component imports `cn` and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -309,7 +309,7 @@ Your global stylesheet must import Tailwind, define the dark variant, and expose
 }
 ```
 
-No Bits UI package, Animations style import, keyframe, custom radius variable, icon export from `$lib/icons`, other xvelte component, hook, attachment, context module, localization message, or shared component stylesheet is required. Icons are optional content supplied by your app and bring their own dependency.
+No Bits UI package, Animations style import, keyframe, custom radius variable, icon export from `#lib/icons.ts`, other xvelte component, hook, attachment, context module, localization message, or shared component stylesheet is required. Icons are optional content supplied by your app and bring their own dependency.
 
 ## Credits
 

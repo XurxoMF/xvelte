@@ -26,7 +26,7 @@ Import the component from its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Avatar from "$lib/components/ui/avatar";
+	import * as Avatar from "#lib/components/ui/avatar/index.ts";
 </script>
 ```
 
@@ -60,7 +60,7 @@ Compose several roots and an optional count inside a group:
 
 ```svelte
 <script lang="ts">
-	import * as Avatar from "$lib/components/ui/avatar";
+	import * as Avatar from "#lib/components/ui/avatar/index.ts";
 </script>
 
 <div class="flex items-center gap-3">
@@ -134,7 +134,7 @@ Bind `loadingStatus` when application behavior needs to react to loading or fail
 
 ```svelte
 <script lang="ts">
-	import * as Avatar from "$lib/components/ui/avatar";
+	import * as Avatar from "#lib/components/ui/avatar/index.ts";
 
 	let loadingStatus = $state<"loading" | "loaded" | "error">("loading");
 </script>
@@ -298,7 +298,7 @@ pnpm add -D tailwindcss
 
 ### Shared utilities
 
-The component imports `cn` and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+The component imports `cn` and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -352,7 +352,7 @@ Your global stylesheet must import Tailwind and expose the semantic colors used 
 
 The `dark` custom variant enables the root border overlay's dark-mode blend utility. The application remains responsible for applying its `.dark` class, normally through root-level theme management.
 
-No Animations style import, animation, keyframe, radius token, icon export from `$lib/icons`, other xvelte component, hook, attachment, context module, localization message, or shared component stylesheet is required. Icons placed inside `Badge` or `GroupCount` are optional content supplied by your app and bring their own dependency.
+No Animations style import, animation, keyframe, radius token, icon export from `#lib/icons`, other xvelte component, hook, attachment, context module, localization message, or shared component stylesheet is required. Icons placed inside `Badge` or `GroupCount` are optional content supplied by your app and bring their own dependency.
 
 ## Credits
 

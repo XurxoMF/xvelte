@@ -2,7 +2,7 @@
 	import type { Snippet } from "svelte";
 	import type { HTMLButtonAttributes } from "svelte/elements";
 	import type { WithChildren, WithoutChildren } from "bits-ui";
-	import type { WithElementRef } from "$lib/utils";
+	import type { WithElementRef } from "#lib/utils.ts";
 
 	export type FileProps = WithElementRef<WithoutChildren<HTMLButtonAttributes>, HTMLButtonElement> &
 		WithChildren<{
@@ -12,9 +12,9 @@
 </script>
 
 <script lang="ts">
-	import { FileIcon } from "$lib/icons";
+	import { FileIcon } from "#lib/icons.ts";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), name, icon, type = "button", class: className, ...restProps }: FileProps = $props();
 </script>

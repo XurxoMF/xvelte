@@ -26,7 +26,7 @@ Import the component from its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Accordion from "$lib/components/ui/accordion";
+	import * as Accordion from "#lib/components/ui/accordion/index.ts";
 </script>
 ```
 
@@ -51,7 +51,7 @@ Compose the public parts in this order:
 
 ```svelte
 <script lang="ts">
-	import * as Accordion from "$lib/components/ui/accordion";
+	import * as Accordion from "#lib/components/ui/accordion/index.ts";
 </script>
 
 <Accordion.Root type="single">
@@ -81,7 +81,7 @@ For a single accordion, `value` is a string. Bind it when application code needs
 
 ```svelte
 <script lang="ts">
-	import * as Accordion from "$lib/components/ui/accordion";
+	import * as Accordion from "#lib/components/ui/accordion/index.ts";
 
 	let value = $state("profile");
 </script>
@@ -107,7 +107,7 @@ For a multiple accordion, `value` is a string array. Disable an individual item 
 
 ```svelte
 <script lang="ts">
-	import * as Accordion from "$lib/components/ui/accordion";
+	import * as Accordion from "#lib/components/ui/accordion/index.ts";
 
 	let value = $state<string[]>(["notifications"]);
 </script>
@@ -285,7 +285,7 @@ Define equivalent values inside the application's dark selector if it supports a
 
 ### Icons
 
-`accordion-trigger.svelte` imports semantic names from `$lib/icons`. The icon facade must contain these exports:
+`accordion-trigger.svelte` imports semantic names from `#lib/icons.ts`. The icon facade must contain these exports:
 
 ```ts
 export { default as ChevronDownIcon } from "@tabler/icons-svelte/icons/chevron-down";
@@ -296,7 +296,7 @@ Keep these aliases in the shared facade instead of importing Tabler directly fro
 
 ### Shared utilities
 
-The wrappers import `cn` and `WithoutChild` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+The wrappers import `cn` and `WithoutChild` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

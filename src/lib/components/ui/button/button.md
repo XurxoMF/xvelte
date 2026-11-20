@@ -26,7 +26,7 @@ Import the component from its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 </script>
 ```
 
@@ -56,7 +56,7 @@ Use the exported `rootVariants` function when another semantic element, such as 
 
 ```svelte
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 
 	let saved = $state(false);
 </script>
@@ -95,8 +95,8 @@ The local API includes four text sizes and four square icon sizes:
 
 ```svelte
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
-	import { PlusIcon } from "$lib/icons";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import { PlusIcon } from "#lib/icons.ts";
 </script>
 
 <div class="flex flex-wrap items-center gap-2">
@@ -128,8 +128,8 @@ Add `data-icon` to the icon wrapper or icon itself to activate the local edge-pa
 
 ```svelte
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
-	import { PlusIcon } from "$lib/icons";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import { PlusIcon } from "#lib/icons.ts";
 </script>
 
 <Button.Root variant="outline">
@@ -174,7 +174,7 @@ The local component has no `href` prop and never changes its native element. App
 
 ```svelte
 <script lang="ts">
-	import { rootVariants } from "$lib/components/ui/button";
+	import { rootVariants } from "#lib/components/ui/button/index.ts";
 </script>
 
 <a href="/documentation" class={rootVariants({ variant: "outline", size: "sm" })}>Read documentation</a>
@@ -321,7 +321,7 @@ pnpm add -D tailwindcss
 
 ### Shared utilities
 
-The component imports `cn` and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+The component imports `cn` and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -338,7 +338,7 @@ export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
 
 The package block above includes the `clsx` and `tailwind-merge` imports used by this code.
 
-Button itself imports no icon. The examples use the semantic `PlusIcon` export from `$lib/icons`; copying them requires this optional facade entry:
+Button itself imports no icon. The examples use the semantic `PlusIcon` export from `#lib/icons.ts`; copying them requires this optional facade entry:
 
 ```ts
 export { default as PlusIcon } from "@tabler/icons-svelte/icons/plus";

@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import { Select as SelectPrimitive } from "bits-ui";
 
-	import type { WithoutChild } from "$lib/utils";
+	import type { WithoutChild } from "#lib/utils.ts";
 
 	export type TriggerProps = WithoutChild<SelectPrimitive.TriggerProps> & {
 		size?: "sm" | "default" | undefined;
@@ -9,9 +9,9 @@
 </script>
 
 <script lang="ts">
-	import { SelectorIcon } from "$lib/icons";
+	import { SelectorIcon } from "#lib/icons.ts";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, children, size = "default", ...restProps }: TriggerProps = $props();
 </script>

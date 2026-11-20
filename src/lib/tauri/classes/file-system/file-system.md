@@ -18,9 +18,9 @@ Reactive-ready `File` and `Directory` models for creating, inspecting, reading, 
 ## Import
 
 ```ts
-import type { DirectoryContents, DirectoryOptions, FileOptions } from "$lib/tauri/classes/file-system";
+import type { DirectoryContents, DirectoryOptions, FileOptions } from "#lib/tauri/classes/file-system/index.ts";
 
-import { Directory, File } from "$lib/tauri/classes/file-system";
+import { Directory, File } from "#lib/tauri/classes/file-system/index.ts";
 ```
 
 `index.ts` exports the `File` and `Directory` classes and their public option and result types. Importing from the folder keeps the implementation filenames private and avoids ambiguity with the browser's global `File` constructor.
@@ -34,7 +34,7 @@ Resolve application paths with Tauri's path API, then create models for them. Th
 ```ts
 import { appDataDir, join } from "@tauri-apps/api/path";
 
-import { Directory, File } from "$lib/tauri/classes/file-system";
+import { Directory, File } from "#lib/tauri/classes/file-system/index.ts";
 
 const dataDirectory = await Directory.create(await join(await appDataDir(), "documents"));
 await dataDirectory.ensureExists();
@@ -54,7 +54,7 @@ All filesystem calls are asynchronous. Operations outside the configured Tauri f
 `File.create()` uses the constructor on which it was called, so a subclass with a compatible constructor retains its concrete result type:
 
 ```ts
-import { File } from "$lib/tauri/classes/file-system";
+import { File } from "#lib/tauri/classes/file-system/index.ts";
 
 export class ImageFile extends File {
 	width = $state(0);
@@ -230,7 +230,7 @@ pub fn run() {
 }
 ```
 
-No CSS, semantic tokens, icons, `$lib/utils` exports, xvelte components, hooks, attachments, fonts, images, localization setup, or network services are required. Copy the complete `src/lib/tauri/classes/file-system` folder together with the Rust command and configuration above.
+No CSS, semantic tokens, icons, `#lib/utils` exports, xvelte components, hooks, attachments, fonts, images, localization setup, or network services are required. Copy the complete `src/lib/tauri/classes/file-system` folder together with the Rust command and configuration above.
 
 The underlying filesystem behavior and capability model are documented by the official [Tauri filesystem plugin](https://v2.tauri.app/plugin/file-system/) and its [JavaScript API reference](https://v2.tauri.app/reference/javascript/fs/).
 

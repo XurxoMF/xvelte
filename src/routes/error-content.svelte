@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
 
-	import * as Button from "$lib/components/ui/button";
-	import * as Typography from "$lib/components/ui/typography";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 
 	let { status }: { status: number } = $props();
 

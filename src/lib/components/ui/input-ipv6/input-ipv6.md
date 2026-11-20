@@ -21,7 +21,7 @@ A responsive segmented IPv6 address input with eight equal-width hexadecimal hex
 
 ```svelte
 <script lang="ts">
-	import * as InputIPv6 from "$lib/components/ui/input-ipv6";
+	import * as InputIPv6 from "#lib/components/ui/input-ipv6/index.ts";
 </script>
 ```
 
@@ -41,7 +41,7 @@ The component's `index.ts` exports `Root`, the `RootProps` and `IPv6Segments` ty
 
 ```svelte
 <script lang="ts">
-	import * as InputIPv6 from "$lib/components/ui/input-ipv6";
+	import * as InputIPv6 from "#lib/components/ui/input-ipv6/index.ts";
 
 	let address = $state<string | null>(null);
 	let valid = $state(false);
@@ -67,7 +67,7 @@ Pasting a valid compressed address expands it to eight hextets. A valid dotted I
 
 ```svelte
 <script lang="ts">
-	import { isValidIPv6, safeParseIPv6 } from "$lib/components/ui/input-ipv6";
+	import { isValidIPv6, safeParseIPv6 } from "#lib/components/ui/input-ipv6/index.ts";
 
 	const segments = safeParseIPv6("2001:db8::1");
 	const valid = isValidIPv6("2001:db8::1");

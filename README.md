@@ -110,7 +110,7 @@ The filename is the unit's stable slug, while the first level-one heading and fi
 
 - Svelte and SvelteKit
 - Tailwind CSS configured for Svelte
-- The `$lib` alias pointing to `src/lib`
+- The `#lib` alias pointing to `src/lib`
 - The dependencies used by the specific reusable parts being copied
 - Paraglide when using reusable parts that import localized messages
 - Rust and Tauri's platform prerequisites when building or testing native integrations
@@ -119,7 +119,7 @@ Use the `package.json` and lockfile from the selected release as the source of t
 
 ## Installation
 
-Follow the complete [xvelte installation guide](https://xvelte.xurxomf.xyz/installation). It covers tagged releases, selective and complete source copying, package-manager commands, `layout.css`, `$lib/utils`, semantic icons, components, hooks, attachments, Paraglide localization, root-layout providers, agent integration, validation, and updates.
+Follow the complete [xvelte installation guide](https://xvelte.xurxomf.xyz/installation). It covers tagged releases, selective and complete source copying, package-manager commands, `layout.css`, `#lib/utils.ts`, semantic icons, components, hooks, attachments, Paraglide localization, root-layout providers, agent integration, validation, and updates.
 
 Install from a tagged release so its source, dependency versions, unit guides, and migration notes belong to the same snapshot. Avoid treating `main` as a stable release.
 
@@ -129,7 +129,7 @@ Import compound components through their directory barrel and use each exported 
 
 ```svelte
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 </script>
 
 <Button.Root>Save</Button.Root>

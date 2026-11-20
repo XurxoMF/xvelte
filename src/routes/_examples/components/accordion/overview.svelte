@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Accordion from "$lib/components/ui/accordion";
-	import * as Typography from "$lib/components/ui/typography";
+	import * as Accordion from "#lib/components/ui/accordion/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 </script>
 
 <Accordion.Root type="single">

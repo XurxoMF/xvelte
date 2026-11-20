@@ -2,7 +2,7 @@
 	import { Menubar as MenubarPrimitive } from "bits-ui";
 
 	import type { Snippet } from "svelte";
-	import type { WithoutChildrenOrChild } from "$lib/utils";
+	import type { WithoutChildrenOrChild } from "#lib/utils.ts";
 
 	export type CheckboxItemProps = WithoutChildrenOrChild<MenubarPrimitive.CheckboxItemProps> & {
 		inset?: boolean | undefined;
@@ -11,9 +11,9 @@
 </script>
 
 <script lang="ts">
-	import { CheckIcon, MinusIcon } from "$lib/icons";
+	import { CheckIcon, MinusIcon } from "#lib/icons.ts";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let {
 		ref = $bindable(null),

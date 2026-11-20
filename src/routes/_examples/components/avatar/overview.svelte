@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Avatar from "$lib/components/ui/avatar";
-	import * as Typography from "$lib/components/ui/typography";
+	import * as Avatar from "#lib/components/ui/avatar/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 </script>
 
 <div class="flex items-center justify-center">

@@ -24,7 +24,7 @@ Use Timeline for chronological histories, activity feeds, release notes, or proc
 
 ```svelte
 <script lang="ts">
-	import * as Timeline from "$lib/components/ui/timeline";
+	import * as Timeline from "#lib/components/ui/timeline/index.ts";
 </script>
 ```
 
@@ -51,7 +51,7 @@ Root draws the continuous line. Separator sits over it and renders a small prima
 
 ```svelte
 <script lang="ts">
-	import * as Timeline from "$lib/components/ui/timeline";
+	import * as Timeline from "#lib/components/ui/timeline/index.ts";
 
 	const events = [
 		{ date: "12 August 2026", title: "Order placed", description: "We received your order." },

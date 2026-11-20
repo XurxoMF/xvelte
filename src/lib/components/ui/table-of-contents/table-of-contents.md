@@ -26,8 +26,8 @@ Import the renderer and hook separately from their public locations:
 
 ```svelte
 <script lang="ts">
-	import * as TableOfContents from "$lib/components/ui/table-of-contents";
-	import { UseToc } from "$lib/hooks/use-toc.svelte";
+	import * as TableOfContents from "#lib/components/ui/table-of-contents/index.ts";
+	import { UseToc } from "#lib/hooks/use-toc.svelte.ts";
 </script>
 ```
 
@@ -50,8 +50,8 @@ Root recursively renders itself for `Heading.children`. `isChild` controls inden
 
 ```svelte
 <script lang="ts">
-	import * as TableOfContents from "$lib/components/ui/table-of-contents";
-	import { UseToc } from "$lib/hooks/use-toc.svelte";
+	import * as TableOfContents from "#lib/components/ui/table-of-contents/index.ts";
+	import { UseToc } from "#lib/hooks/use-toc.svelte.ts";
 
 	const headings = new UseToc();
 	let article = $state<HTMLElement>();
@@ -115,7 +115,7 @@ The root class merges onto each recursive Root only when passed there; internall
 
 ```svelte
 <script lang="ts">
-	import type { Heading } from "$lib/hooks/use-toc.svelte";
+	import type { Heading } from "#lib/hooks/use-toc.svelte.ts";
 
 	const toc: Heading[] = [
 		{
@@ -423,7 +423,7 @@ The component and hook design are adapted from [shadcn-svelte-extras Table of Co
 | ------------------------------- | ----------------------------------------------------------------------------------------- |
 | `table-of-contents-root.svelte` | Recursive list/link rendering, indentation, active color, native props, and ref.          |
 | `index.ts`                      | Public component and props type.                                                          |
-| `$lib/hooks/use-toc.svelte.ts`  | Public heading discovery, hierarchy, DOM observation, active state, constants, and types. |
+| `#lib/hooks/use-toc.svelte.ts`  | Public heading discovery, hierarchy, DOM observation, active state, constants, and types. |
 | `table-of-contents.md`          | Hook setup, composition, examples, API, limitations, styling, and installation guide.     |
 
 The component's `index.ts`, `RootProps`, and public hook exports are the source of truth.

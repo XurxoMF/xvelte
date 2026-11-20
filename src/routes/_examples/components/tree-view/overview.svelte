@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as TreeView from "$lib/components/ui/tree-view";
-	import * as Typography from "$lib/components/ui/typography";
+	import * as TreeView from "#lib/components/ui/tree-view/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 
 	let selectedFile = $state("No file selected");
 

@@ -9,7 +9,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { api = $bindable(null), ref = $bindable(null), value = $bindable(""), class: className, ...restProps }: RootProps = $props();
 </script>

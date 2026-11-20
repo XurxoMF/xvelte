@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	import * as Input from "$lib/components/ui/input";
+	import * as Input from "#lib/components/ui/input/index.ts";
 
 	/** Props for the context-controlled telephone input. */
 	export type InputProps = Omit<
@@ -14,7 +14,7 @@
 <script lang="ts">
 	import { getInputPhoneContext } from "./input-phone-context.svelte";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, autocomplete = "tel", inputmode = "tel", oninput, onblur, ...restProps }: InputProps = $props();
 

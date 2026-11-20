@@ -10,7 +10,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(undefined), class: className, children, ...restProps }: TitleProps = $props();
 </script>

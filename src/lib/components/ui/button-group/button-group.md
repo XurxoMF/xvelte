@@ -26,8 +26,8 @@ Import Button Group and the controls composed inside it from their public barrel
 
 ```svelte
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
-	import * as ButtonGroup from "$lib/components/ui/button-group";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as ButtonGroup from "#lib/components/ui/button-group/index.ts";
 </script>
 ```
 
@@ -61,8 +61,8 @@ Direct children need a `data-slot` attribute for the root's edge, border, and ra
 
 ```svelte
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
-	import * as ButtonGroup from "$lib/components/ui/button-group";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as ButtonGroup from "#lib/components/ui/button-group/index.ts";
 </script>
 
 <ButtonGroup.Root aria-label="Document actions">
@@ -94,8 +94,8 @@ Orientation changes flex direction and which borders/radii are collapsed. It doe
 
 ```svelte
 <script lang="ts">
-	import * as ButtonGroup from "$lib/components/ui/button-group";
-	import * as Input from "$lib/components/ui/input";
+	import * as ButtonGroup from "#lib/components/ui/button-group/index.ts";
+	import * as Input from "#lib/components/ui/input/index.ts";
 
 	let domain = $state("");
 </script>
@@ -310,7 +310,7 @@ pnpm add bits-ui tailwind-variants clsx tailwind-merge
 pnpm add -D tailwindcss
 ```
 
-Copy the complete Separator UI component from `$lib/components/ui/separator` with Button Group. `ButtonGroup.Separator` imports it through `index.ts` and supports its Bits UI options. Copy these files:
+Copy the complete Separator UI component from `#lib/components/ui/separator` with Button Group. `ButtonGroup.Separator` imports it through `index.ts` and supports its Bits UI options. Copy these files:
 
 - `src/lib/components/ui/separator/separator-root.svelte`
 - `src/lib/components/ui/separator/index.ts`
@@ -321,7 +321,7 @@ The examples also use the Button and Input components. Copy only the components 
 
 ### Shared utilities
 
-`Root` and `Text` import `cn` and `WithElementRef` from `$lib/utils`; `Separator` and its local dependency also import `cn`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+`Root` and `Text` import `cn` and `WithElementRef` from `#lib/utils`; `Separator` and its local dependency also import `cn`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -372,7 +372,7 @@ Your global stylesheet must import Tailwind and expose the semantic colors and r
 
 The base border rule supplies the default color for `Text`'s unqualified `border`; Separator's local background is overridden to `input` by Button Group.
 
-No `@custom-variant dark`, icon package/export from `$lib/icons`, Animations style import, animation, keyframe, hook, attachment, custom context module, localization message, or shared component stylesheet is required. Button, Input, Select, dropdown, popover, or other controls placed inside the group may add their own packages, tokens, icons, and configuration; follow each component's unit guide.
+No `@custom-variant dark`, icon package/export from `#lib/icons`, Animations style import, animation, keyframe, hook, attachment, custom context module, localization message, or shared component stylesheet is required. Button, Input, Select, dropdown, popover, or other controls placed inside the group may add their own packages, tokens, icons, and configuration; follow each component's unit guide.
 
 ## Credits
 

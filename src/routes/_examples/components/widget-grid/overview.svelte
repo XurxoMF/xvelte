@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 
-	import * as WidgetGrid from "$lib/components/ui/widget-grid";
-	import * as Card from "$lib/components/ui/card";
+	import * as WidgetGrid from "#lib/components/ui/widget-grid/index.ts";
+	import * as Card from "#lib/components/ui/card/index.ts";
 
 	const storageKey = "widget-grid-overview-layout";
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
-	import * as Item from "$lib/components/ui/item";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as Item from "#lib/components/ui/item/index.ts";
 </script>
 
 <Item.Root variant="outline">

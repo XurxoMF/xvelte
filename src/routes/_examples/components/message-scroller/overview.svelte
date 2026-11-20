@@ -1,7 +1,7 @@
 <script lang="ts">
-	import * as Bubble from "$lib/components/ui/bubble";
-	import * as Message from "$lib/components/ui/message";
-	import * as MessageScroller from "$lib/components/ui/message-scroller";
+	import * as Bubble from "#lib/components/ui/bubble/index.ts";
+	import * as Message from "#lib/components/ui/message/index.ts";
+	import * as MessageScroller from "#lib/components/ui/message-scroller/index.ts";
 </script>
 
 <div class="mx-auto h-80 w-full max-w-sm overflow-hidden rounded-xl border bg-background">

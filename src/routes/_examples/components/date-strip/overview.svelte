@@ -3,8 +3,8 @@
 
 	import type { DateValue } from "@internationalized/date";
 
-	import * as DateStrip from "$lib/components/ui/date-strip";
-	import * as Field from "$lib/components/ui/field";
+	import * as DateStrip from "#lib/components/ui/date-strip/index.ts";
+	import * as Field from "#lib/components/ui/field/index.ts";
 
 	let selectedDate = $state<DateValue>(today(getLocalTimeZone()));
 </script>

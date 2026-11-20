@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import type { WithoutChildren } from "bits-ui";
 
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 
 	/** Props for the previous-slide navigation button. */
 	export type PreviousProps = WithoutChildren<Button.RootProps>;
@@ -10,11 +10,11 @@
 <script lang="ts">
 	import * as Carousel from ".";
 
-	import { ChevronLeftIcon } from "$lib/icons";
+	import { ChevronLeftIcon } from "#lib/icons.ts";
 
-	import * as m from "$lib/paraglide/messages.js";
+	import * as m from "#lib/paraglide/messages.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, variant = "outline", size = "icon-sm", ...restProps }: PreviousProps = $props();
 

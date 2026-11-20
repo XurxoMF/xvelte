@@ -24,7 +24,7 @@ Aligned conversation rows with optional avatars, grouped messages, body columns,
 
 ```svelte
 <script lang="ts">
-	import * as Message from "$lib/components/ui/message";
+	import * as Message from "#lib/components/ui/message/index.ts";
 </script>
 ```
 
@@ -55,8 +55,8 @@ All parts except Root are optional. Content is the normal wrapper for a surface 
 
 ```svelte
 <script lang="ts">
-	import * as Bubble from "$lib/components/ui/bubble";
-	import * as Message from "$lib/components/ui/message";
+	import * as Bubble from "#lib/components/ui/bubble/index.ts";
+	import * as Message from "#lib/components/ui/message/index.ts";
 </script>
 
 <Message.Root>
@@ -92,8 +92,8 @@ Root reverses its row for `align="end"`; Content aligns each direct slotted chil
 
 ```svelte
 <script lang="ts">
-	import * as Avatar from "$lib/components/ui/avatar";
-	import * as Message from "$lib/components/ui/message";
+	import * as Avatar from "#lib/components/ui/avatar/index.ts";
+	import * as Message from "#lib/components/ui/message/index.ts";
 </script>
 
 <Message.Root>
@@ -210,7 +210,7 @@ pnpm add clsx tailwind-merge
 pnpm add -D tailwindcss
 ```
 
-Message requires `cn` and `WithElementRef` from `$lib/utils`:
+Message requires `cn` and `WithElementRef` from `#lib/utils.ts`:
 
 ```ts
 import { clsx } from "clsx";

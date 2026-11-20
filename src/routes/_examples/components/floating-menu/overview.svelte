@@ -1,7 +1,7 @@
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
-	import * as ButtonGroup from "$lib/components/ui/button-group";
-	import * as FloatingMenu from "$lib/components/ui/floating-menu";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as ButtonGroup from "#lib/components/ui/button-group/index.ts";
+	import * as FloatingMenu from "#lib/components/ui/floating-menu/index.ts";
 
 	let zoom = $state(100);
 </script>

@@ -26,7 +26,7 @@ Import the component from its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Alert from "$lib/components/ui/alert";
+	import * as Alert from "#lib/components/ui/alert/index.ts";
 </script>
 ```
 
@@ -51,7 +51,7 @@ Compose the public parts inside `Root`:
 
 ```svelte
 <script lang="ts">
-	import * as Alert from "$lib/components/ui/alert";
+	import * as Alert from "#lib/components/ui/alert/index.ts";
 </script>
 
 <Alert.Root>
@@ -70,8 +70,8 @@ Use `variant="danger"` for errors or dangerous outcomes. You provide any icons, 
 
 ```svelte
 <script lang="ts">
-	import { AlertErrorIcon } from "$lib/icons";
-	import * as Alert from "$lib/components/ui/alert";
+	import { AlertErrorIcon } from "#lib/icons.ts";
+	import * as Alert from "#lib/components/ui/alert/index.ts";
 </script>
 
 <Alert.Root variant="danger">
@@ -102,7 +102,7 @@ Use `warning`, `success`, `info`, and `important` when the message's meaning is 
 
 ```svelte
 <script lang="ts">
-	import * as Alert from "$lib/components/ui/alert";
+	import * as Alert from "#lib/components/ui/alert/index.ts";
 
 	let visible = $state(true);
 </script>
@@ -303,7 +303,7 @@ The values may be replaced by the app's theme while preserving the variable name
 
 Alert does not import or require an icon. Any icon component you place directly inside it can use the built-in SVG layout.
 
-The danger example above uses xvelte's semantic icon facade. Copying that example requires `@tabler/icons-svelte` and this export in `$lib/icons`:
+The danger example above uses xvelte's semantic icon facade. Copying that example requires `@tabler/icons-svelte` and this export in `#lib/icons.ts`:
 
 ```ts
 export { default as AlertErrorIcon } from "@tabler/icons-svelte/icons/alert-octagon";
@@ -313,7 +313,7 @@ The optional package commands are included in the single installation block abov
 
 ### Shared utilities
 
-Every part imports `cn` and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+Every part imports `cn` and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

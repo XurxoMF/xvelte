@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as VideoPlayer from "$lib/components/ui/video-player";
+	import * as VideoPlayer from "#lib/components/ui/video-player/index.ts";
 </script>
 
 <VideoPlayer.Root

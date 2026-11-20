@@ -26,7 +26,7 @@ Import the component and toast runtime from the local entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Sonner from "$lib/components/ui/sonner";
+	import * as Sonner from "#lib/components/ui/sonner/index.ts";
 </script>
 ```
 
@@ -50,7 +50,7 @@ In the root layout:
 <script lang="ts">
 	import { ModeWatcher } from "mode-watcher";
 
-	import * as Sonner from "$lib/components/ui/sonner";
+	import * as Sonner from "#lib/components/ui/sonner/index.ts";
 
 	let { children } = $props();
 </script>
@@ -65,7 +65,7 @@ From a page or component:
 
 ```svelte
 <script lang="ts">
-	import { toast } from "$lib/components/ui/sonner";
+	import { toast } from "#lib/components/ui/sonner/index.ts";
 </script>
 
 <button type="button" onclick={() => toast.success("Profile saved")}>Save profile</button>
@@ -123,7 +123,7 @@ The local loading icon spins automatically. Promise copy should describe the ope
 
 ```svelte
 <script lang="ts">
-	import { toast } from "$lib/components/ui/sonner";
+	import { toast } from "#lib/components/ui/sonner/index.ts";
 
 	function runExport() {
 		const id = toast.loading("Preparing export…");
@@ -184,7 +184,7 @@ The exported `toast` callable forwards directly to the installed `svelte-sonner`
 | `toast.dismiss(id?)`       | Dismisses one toast or all toasts.                            |
 | `toast.getActiveToasts()`  | Returns the active toast records from the underlying runtime. |
 
-Arguments, return values, generic component support, options, and helper behavior remain those of the installed package. Import this wrapper from `$lib/components/ui/sonner` instead of importing `svelte-sonner` in application code.
+Arguments, return values, generic component support, options, and helper behavior remain those of the installed package. Import this wrapper from `#lib/components/ui/sonner` instead of importing `svelte-sonner` in application code.
 
 ## Styling and DOM contract
 
@@ -234,7 +234,7 @@ pnpm add -D tailwindcss
 
 ### Icon facade
 
-Add these exact exports to `$lib/icons.ts`:
+Add these exact exports to `#lib/icons.ts`:
 
 ```ts
 export { default as AlertErrorIcon } from "@tabler/icons-svelte/icons/alert-octagon";
@@ -290,7 +290,7 @@ Mount `ModeWatcher` once above Sonner so `mode.current` tracks the app theme:
 <script lang="ts">
 	import { ModeWatcher } from "mode-watcher";
 
-	import * as Sonner from "$lib/components/ui/sonner";
+	import * as Sonner from "#lib/components/ui/sonner/index.ts";
 </script>
 
 <ModeWatcher />

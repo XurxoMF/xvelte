@@ -25,9 +25,9 @@ Import every public part through the component's `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import type { WidgetGridItemState, WidgetGridMode } from "$lib/components/ui/widget-grid";
+	import type { WidgetGridItemState, WidgetGridMode } from "#lib/components/ui/widget-grid/index.ts";
 
-	import * as WidgetGrid from "$lib/components/ui/widget-grid";
+	import * as WidgetGrid from "#lib/components/ui/widget-grid/index.ts";
 </script>
 ```
 
@@ -59,7 +59,7 @@ Item is headless: its default `div` has no visual or layout classes. Add the sur
 
 ```svelte
 <script lang="ts">
-	import * as WidgetGrid from "$lib/components/ui/widget-grid";
+	import * as WidgetGrid from "#lib/components/ui/widget-grid/index.ts";
 </script>
 
 <WidgetGrid.Root columns={6} gap={12}>
@@ -84,8 +84,8 @@ The `child` snippet replaces Item's default `div`. Spread every supplied prop so
 
 ```svelte
 <script lang="ts">
-	import * as Card from "$lib/components/ui/card";
-	import * as WidgetGrid from "$lib/components/ui/widget-grid";
+	import * as Card from "#lib/components/ui/card/index.ts";
+	import * as WidgetGrid from "#lib/components/ui/widget-grid/index.ts";
 </script>
 
 <WidgetGrid.Root columns={12}>
@@ -207,9 +207,9 @@ Root receives the directly affected state plus a current snapshot of every regis
 
 ```svelte
 <script lang="ts">
-	import type { WidgetGridItemState } from "$lib/components/ui/widget-grid";
+	import type { WidgetGridItemState } from "#lib/components/ui/widget-grid/index.ts";
 
-	import * as WidgetGrid from "$lib/components/ui/widget-grid";
+	import * as WidgetGrid from "#lib/components/ui/widget-grid/index.ts";
 
 	function saveLayout(states: WidgetGridItemState[]) {
 		localStorage.setItem("dashboard-layout", JSON.stringify(states));
@@ -246,7 +246,7 @@ The engine is the temporary source of truth during a direct pointer or keyboard 
 
 ```svelte
 <script lang="ts">
-	import * as WidgetGrid from "$lib/components/ui/widget-grid";
+	import * as WidgetGrid from "#lib/components/ui/widget-grid/index.ts";
 
 	let widgets = $state([
 		{ id: "sales", title: "Sales", x: 0, y: 0 },
@@ -451,7 +451,7 @@ Card is used only by one optional example and is not a WidgetGrid dependency. Wi
 
 ### Shared utilities
 
-WidgetGrid imports `cn` and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when absent:
+WidgetGrid imports `cn` and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when absent:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -467,7 +467,7 @@ export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
 };
 ```
 
-The package block includes both packages imported by this code. `WithoutChildren` is also imported by Root from the local `$lib/utils` entry point; copy its existing generic from xvelte together with the definitions above:
+The package block includes both packages imported by this code. `WithoutChildren` is also imported by Root from the local `#lib/utils.ts` entry point; copy its existing generic from xvelte together with the definitions above:
 
 ```ts
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -487,7 +487,7 @@ The package block includes `@tabler/icons-svelte`.
 
 ### Localization setup
 
-Configure Paraglide so `$lib/paraglide/messages.js` is generated, and add every key listed in [Localization](#localization) to `messages/en.json`. Their complete keys and values are already shown there and are not duplicated here.
+Configure Paraglide so `#lib/paraglide/messages.js` is generated, and add every key listed in [Localization](#localization) to `messages/en.json`. Their complete keys and values are already shown there and are not duplicated here.
 
 ### Global styles
 

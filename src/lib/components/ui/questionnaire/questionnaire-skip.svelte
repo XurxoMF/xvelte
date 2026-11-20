@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import { Questionnaire as QuestionnairePrimitive } from "@shadcn-svelte/primitives/questionnaire";
 
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 
 	/** Props accepted by the Questionnaire explicit-skip button. */
 	export type SkipProps = QuestionnairePrimitive.SkipProps & {
@@ -11,9 +11,9 @@
 </script>
 
 <script lang="ts">
-	import * as m from "$lib/paraglide/messages.js";
+	import * as m from "#lib/paraglide/messages.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, size = "default", variant = "outline", children, ...restProps }: SkipProps = $props();
 </script>

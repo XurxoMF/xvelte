@@ -26,7 +26,7 @@ Import all parts from the component's public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Command from "$lib/components/ui/command";
+	import * as Command from "#lib/components/ui/command/index.ts";
 </script>
 ```
 
@@ -64,7 +64,7 @@ The local wrapper intentionally does not export the lower-level Bits UI `Viewpor
 
 ```svelte
 <script lang="ts">
-	import * as Command from "$lib/components/ui/command";
+	import * as Command from "#lib/components/ui/command/index.ts";
 
 	function runCommand(command: string) {
 		console.info("Run command", command);
@@ -96,7 +96,7 @@ Give every item a stable, unique `value`. That value drives filtering, ranking, 
 
 ```svelte
 <script lang="ts">
-	import * as Command from "$lib/components/ui/command";
+	import * as Command from "#lib/components/ui/command/index.ts";
 
 	let open = $state(false);
 
@@ -134,7 +134,7 @@ The Root binding and Input binding represent different state:
 
 ```svelte
 <script lang="ts">
-	import * as Command from "$lib/components/ui/command";
+	import * as Command from "#lib/components/ui/command/index.ts";
 
 	let selectedValue = $state("");
 	let search = $state("");
@@ -223,7 +223,7 @@ Bind the local `api` prop when custom navigation needs the installed Bits UI met
 
 ```svelte
 <script lang="ts">
-	import * as Command from "$lib/components/ui/command";
+	import * as Command from "#lib/components/ui/command/index.ts";
 
 	let api = $state<Command.RootApi | null>(null);
 
@@ -480,7 +480,7 @@ Command requires no xvelte hook, attachment, context file, shared component styl
 
 ### Shared utilities
 
-Command and its required UI components import `cn`, `WithoutChild`, `WithoutChildren`, `WithoutChildrenOrChild`, and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+Command and its required UI components import `cn`, `WithoutChild`, `WithoutChildren`, `WithoutChildrenOrChild`, and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -507,7 +507,7 @@ The package block includes `clsx` and `tailwind-merge`, which `cn` imports.
 
 ### Icons
 
-Command and its required Dialog component import these semantic names from `$lib/icons`. Add the exact exports to `src/lib/icons.ts`:
+Command and its required Dialog component import these semantic names from `#lib/icons`. Add the exact exports to `src/lib/icons.ts`:
 
 ```ts
 export { default as CheckIcon } from "@tabler/icons-svelte/icons/check";
@@ -519,7 +519,7 @@ Keep these aliases in the shared icon facade instead of importing Tabler directl
 
 ### Localization setup
 
-Keep the message entries documented in [Localization](#localization) in each locale and compile the Paraglide output to `src/lib/paraglide`. Command and Dialog import generated functions from `$lib/paraglide/messages.js`; no generated localization file belongs inside either component folder.
+Keep the message entries documented in [Localization](#localization) in each locale and compile the Paraglide output to `src/lib/paraglide`. Command and Dialog import generated functions from `#lib/paraglide/messages.js`; no generated localization file belongs inside either component folder.
 
 ### Global CSS
 

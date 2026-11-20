@@ -26,7 +26,7 @@ Import all parts from the component's public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Drawer from "$lib/components/ui/drawer";
+	import * as Drawer from "#lib/components/ui/drawer/index.ts";
 </script>
 ```
 
@@ -63,7 +63,7 @@ Header and Footer are native layout containers. Root and NestedRoot own state an
 
 ```svelte
 <script lang="ts">
-	import * as Drawer from "$lib/components/ui/drawer";
+	import * as Drawer from "#lib/components/ui/drawer/index.ts";
 
 	let open = $state(false);
 	let displayName = $state("Ada Lovelace");
@@ -100,7 +100,7 @@ Root supports every viewport edge. Content applies direction-specific position, 
 
 ```svelte
 <script lang="ts">
-	import * as Drawer from "$lib/components/ui/drawer";
+	import * as Drawer from "#lib/components/ui/drawer/index.ts";
 </script>
 
 <Drawer.Root direction="right" shouldScaleBackground={false}>
@@ -126,7 +126,7 @@ Use viewport fractions or pixel strings ordered from least to most visible:
 
 ```svelte
 <script lang="ts">
-	import * as Drawer from "$lib/components/ui/drawer";
+	import * as Drawer from "#lib/components/ui/drawer/index.ts";
 
 	const snapPoints = [0.25, 0.55, 0.9];
 	let activeSnapPoint = $state<number | string | null>(snapPoints[1]);
@@ -466,7 +466,7 @@ pnpm add -D tailwindcss
 
 ### Shared utilities
 
-Drawer imports `cn`, `WithoutChildrenOrChild`, and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+Drawer imports `cn`, `WithoutChildrenOrChild`, and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

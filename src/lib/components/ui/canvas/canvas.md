@@ -28,7 +28,7 @@ Import the component from its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Canvas from "$lib/components/ui/canvas";
+	import * as Canvas from "#lib/components/ui/canvas/index.ts";
 </script>
 ```
 
@@ -69,7 +69,7 @@ Give Canvas a real height through its parent or its own `class`; `Root` uses `si
 
 ```svelte
 <script lang="ts">
-	import * as Canvas from "$lib/components/ui/canvas";
+	import * as Canvas from "#lib/components/ui/canvas/index.ts";
 </script>
 
 <div class="h-96 overflow-hidden rounded-lg border">
@@ -94,7 +94,7 @@ The default canvas starts at `{ x: 0, y: 0, zoom: 1 }`, supports background and 
 
 ```svelte
 <script lang="ts">
-	import * as Canvas from "$lib/components/ui/canvas";
+	import * as Canvas from "#lib/components/ui/canvas/index.ts";
 
 	let viewportX = $state(0);
 	let viewportY = $state(0);
@@ -168,7 +168,7 @@ Create a small descendant component when custom tools need access to the canvas 
 ```svelte
 <!-- CanvasToolbar.svelte -->
 <script lang="ts">
-	import { getCanvasContext } from "$lib/components/ui/canvas";
+	import { getCanvasContext } from "#lib/components/ui/canvas/index.ts";
 
 	const canvas = getCanvasContext("CanvasToolbar");
 </script>
@@ -408,7 +408,7 @@ Follow the Button component's unit guide to install it and understand its API. C
 
 ### Shared utilities
 
-Canvas imports `cn`, `WithElementRef`, and `WithoutChildren` from `$lib/utils`; Button also uses `cn` and `WithElementRef`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+Canvas imports `cn`, `WithElementRef`, and `WithoutChildren` from `#lib/utils`; Button also uses `cn` and `WithElementRef`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

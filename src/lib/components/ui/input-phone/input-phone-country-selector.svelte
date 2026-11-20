@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import type { CountryCode } from "libphonenumber-js/min";
 
-	import * as Combobox from "$lib/components/ui/combobox";
+	import * as Combobox from "#lib/components/ui/combobox/index.ts";
 
 	/** Props for the context-controlled searchable country selector. */
 	export type CountrySelectorProps = Omit<Combobox.TriggerProps, "children" | "disabled"> & {
@@ -19,9 +19,9 @@
 <script lang="ts">
 	import { getInputPhoneContext } from "./input-phone-context.svelte";
 
-	import * as m from "$lib/paraglide/messages.js";
+	import * as m from "#lib/paraglide/messages.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let {
 		class: className,

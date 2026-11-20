@@ -26,7 +26,7 @@ Import both parts from the component's public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as DateStrip from "$lib/components/ui/date-strip";
+	import * as DateStrip from "#lib/components/ui/date-strip/index.ts";
 </script>
 ```
 
@@ -52,7 +52,7 @@ Root renders a previous-page button, the date row, and a next-page button. Item 
 <script lang="ts">
 	import { getLocalTimeZone, today, type DateValue } from "@internationalized/date";
 
-	import * as DateStrip from "$lib/components/ui/date-strip";
+	import * as DateStrip from "#lib/components/ui/date-strip/index.ts";
 
 	let selectedDate = $state<DateValue>(today(getLocalTimeZone()));
 </script>
@@ -76,7 +76,7 @@ The selected value is bindable. Selecting an enabled Item updates the binding; n
 <script lang="ts">
 	import type { DateValue } from "@internationalized/date";
 
-	import * as DateStrip from "$lib/components/ui/date-strip";
+	import * as DateStrip from "#lib/components/ui/date-strip/index.ts";
 
 	function handleDateChange(date: DateValue) {
 		console.info("Selected date", date.toString());
@@ -98,7 +98,7 @@ The selected value is bindable. Selecting an enabled Item updates the binding; n
 <script lang="ts">
 	import { getLocalTimeZone, type DateValue } from "@internationalized/date";
 
-	import * as DateStrip from "$lib/components/ui/date-strip";
+	import * as DateStrip from "#lib/components/ui/date-strip/index.ts";
 
 	const timeZone = getLocalTimeZone();
 
@@ -123,7 +123,7 @@ Disabled Items use the native button `disabled` attribute, cannot update the val
 <script lang="ts">
 	import { CalendarDate, type DateValue } from "@internationalized/date";
 
-	import * as DateStrip from "$lib/components/ui/date-strip";
+	import * as DateStrip from "#lib/components/ui/date-strip/index.ts";
 
 	let selectedDate = $state<DateValue>(new CalendarDate(2030, 6, 18));
 </script>
@@ -251,7 +251,7 @@ pnpm add -D @inlang/paraglide-js tailwindcss
 
 ### Shared utilities
 
-Root and Item import `cn` from `$lib/utils`. The required Button component additionally imports `WithElementRef`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+Root and Item import `cn` from `#lib/utils`. The required Button component additionally imports `WithElementRef`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -270,11 +270,11 @@ The package block includes `clsx` and `tailwind-merge`, which `cn` imports.
 
 ### Paraglide locale
 
-Configure and compile Paraglide so `$lib/paraglide/runtime.js` exports `getLocale`. Date Strip has no message keys, but its default locale depends on that generated runtime. A passed `locale` prop overrides Paraglide for that Root.
+Configure and compile Paraglide so `#lib/paraglide/runtime.js` exports `getLocale`. Date Strip has no message keys, but its default locale depends on that generated runtime. A passed `locale` prop overrides Paraglide for that Root.
 
 ### Icons
 
-Date Strip imports two semantic names from `$lib/icons`. Add these exact exports to `src/lib/icons.ts`:
+Date Strip imports two semantic names from `#lib/icons`. Add these exact exports to `src/lib/icons.ts`:
 
 ```ts
 export { default as ChevronLeftIcon } from "@tabler/icons-svelte/icons/chevron-left";
@@ -285,7 +285,7 @@ The package block includes `@tabler/icons-svelte`. Keep these aliases in the sha
 
 ### Button component
 
-Copy the complete `$lib/components/ui/button` component with Date Strip. The required component files are:
+Copy the complete `#lib/components/ui/button/index.ts` component with Date Strip. The required component files are:
 
 ```text
 src/lib/components/ui/button/

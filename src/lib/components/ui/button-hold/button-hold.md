@@ -26,7 +26,7 @@ Import the component from its public `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as ButtonHold from "$lib/components/ui/button-hold";
+	import * as ButtonHold from "#lib/components/ui/button-hold/index.ts";
 </script>
 ```
 
@@ -53,7 +53,7 @@ The app supplies the label and performs the guarded action in `onComplete`. Do n
 
 ```svelte
 <script lang="ts">
-	import * as ButtonHold from "$lib/components/ui/button-hold";
+	import * as ButtonHold from "#lib/components/ui/button-hold/index.ts";
 
 	let confirmed = $state(false);
 </script>
@@ -110,7 +110,7 @@ Choose a fill with enough contrast against both the selected Button variant and 
 
 ```svelte
 <script lang="ts">
-	import * as ButtonHold from "$lib/components/ui/button-hold";
+	import * as ButtonHold from "#lib/components/ui/button-hold/index.ts";
 
 	let deleting = $state(false);
 	let error = $state("");
@@ -153,7 +153,7 @@ The inherited Button default is `type="button"`. Keep it when submission must ha
 
 ```svelte
 <script lang="ts">
-	import * as ButtonHold from "$lib/components/ui/button-hold";
+	import * as ButtonHold from "#lib/components/ui/button-hold/index.ts";
 
 	let formRef = $state<HTMLFormElement | null>(null);
 

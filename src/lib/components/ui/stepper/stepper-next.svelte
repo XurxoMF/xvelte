@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
 
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 
 	export type NextProps = Omit<Button.RootProps, "children"> & {
 		child?: Snippet<[{ props: Record<string, unknown> }]> | undefined;

@@ -9,7 +9,7 @@
 <script lang="ts">
 	import { useId } from "bits-ui";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, children, heading, value, ...restProps }: GroupProps = $props();
 </script>

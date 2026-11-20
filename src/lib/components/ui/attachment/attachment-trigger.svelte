@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
 	import type { HTMLButtonAttributes } from "svelte/elements";
-	import type { WithElementRef } from "$lib/utils";
+	import type { WithElementRef } from "#lib/utils.ts";
 
 	/** Props for the native or delegated full-card Attachment trigger. */
 	export type TriggerProps = WithElementRef<HTMLButtonAttributes, HTMLButtonElement> & {
@@ -10,7 +10,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, type = "button", child, ...restProps }: TriggerProps = $props();
 

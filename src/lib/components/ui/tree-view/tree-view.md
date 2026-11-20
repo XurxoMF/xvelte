@@ -24,7 +24,7 @@ Use Tree View for compact file or hierarchical resource browsing. Do not treat i
 
 ```svelte
 <script lang="ts">
-	import * as TreeView from "$lib/components/ui/tree-view";
+	import * as TreeView from "#lib/components/ui/tree-view/index.ts";
 </script>
 ```
 
@@ -46,7 +46,7 @@ Folder may contain Files or nested Folders. Root and folders do not accept a dat
 
 ```svelte
 <script lang="ts">
-	import * as TreeView from "$lib/components/ui/tree-view";
+	import * as TreeView from "#lib/components/ui/tree-view/index.ts";
 </script>
 
 <TreeView.Root aria-label="Project files">

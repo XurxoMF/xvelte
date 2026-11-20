@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
 	import type { PortalProps, WithChildren } from "bits-ui";
-	import type { WithoutChildrenOrChild } from "$lib/utils";
+	import type { WithoutChildrenOrChild } from "#lib/utils.ts";
 
 	/** Props for the page-level file drag overlay. */
 	export type DragOverlayProps = WithChildren<{
@@ -20,11 +20,11 @@
 
 	import { FileDropZoneDragOverlayState, getFileDropZoneContext } from "./file-drop-zone-context.svelte.js";
 
-	import { UploadIcon } from "$lib/icons";
+	import { UploadIcon } from "#lib/icons.ts";
 
-	import * as m from "$lib/paraglide/messages.js";
+	import * as m from "#lib/paraglide/messages.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let {
 		ref = $bindable(null),

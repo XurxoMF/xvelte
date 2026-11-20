@@ -24,7 +24,7 @@ Use Textarea for free-form text that may span multiple lines. Use Input for shor
 
 ```svelte
 <script lang="ts">
-	import * as Textarea from "$lib/components/ui/textarea";
+	import * as Textarea from "#lib/components/ui/textarea/index.ts";
 </script>
 ```
 
@@ -44,7 +44,7 @@ Use `value` or `bind:value` for content; text placed between component tags is u
 
 ```svelte
 <script lang="ts">
-	import * as Textarea from "$lib/components/ui/textarea";
+	import * as Textarea from "#lib/components/ui/textarea/index.ts";
 
 	let message = $state("");
 </script>

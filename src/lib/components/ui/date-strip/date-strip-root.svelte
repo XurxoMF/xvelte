@@ -19,13 +19,13 @@
 
 	import { setDateStripContext } from "./date-strip-context";
 
-	import { ChevronLeftIcon, ChevronRightIcon } from "$lib/icons";
+	import { ChevronLeftIcon, ChevronRightIcon } from "#lib/icons.ts";
 
-	import { getLocale } from "$lib/paraglide/runtime";
+	import { getLocale } from "#lib/paraglide/runtime.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 
 	let {
 		value = $bindable(),

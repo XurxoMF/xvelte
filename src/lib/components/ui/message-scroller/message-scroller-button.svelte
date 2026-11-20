@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import { MessageScroller as MessageScrollerPrimitive } from "@shadcn-svelte/primitives/message-scroller";
 
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 
 	/** Props accepted by the Message Scroller edge-navigation control. */
 	export type ButtonProps = MessageScrollerPrimitive.ButtonProps & {
@@ -11,11 +11,11 @@
 </script>
 
 <script lang="ts">
-	import { ChevronDownIcon } from "$lib/icons";
+	import { ChevronDownIcon } from "#lib/icons.ts";
 
-	import * as m from "$lib/paraglide/messages.js";
+	import * as m from "#lib/paraglide/messages.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let {
 		ref = $bindable(null),

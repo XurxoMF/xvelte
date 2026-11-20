@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import { Switch as SwitchPrimitive } from "bits-ui";
 
-	import type { WithoutChildrenOrChild } from "$lib/utils";
+	import type { WithoutChildrenOrChild } from "#lib/utils.ts";
 
 	export type RootProps = WithoutChildrenOrChild<SwitchPrimitive.RootProps> & {
 		size?: "sm" | "default" | undefined;
@@ -9,7 +9,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, checked = $bindable(false), size = "default", ...restProps }: RootProps = $props();
 </script>

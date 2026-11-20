@@ -1,16 +1,16 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-	import type { WithElementRef, WithoutChildren } from "$lib/utils";
+	import type { WithElementRef, WithoutChildren } from "#lib/utils.ts";
 
 	export type EllipsisProps = WithoutChildren<WithElementRef<HTMLAttributes<HTMLSpanElement>>>;
 </script>
 
 <script lang="ts">
-	import { EllipsisIcon } from "$lib/icons";
+	import { EllipsisIcon } from "#lib/icons.ts";
 
-	import * as m from "$lib/paraglide/messages.js";
+	import * as m from "#lib/paraglide/messages.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, ...restProps }: EllipsisProps = $props();
 </script>

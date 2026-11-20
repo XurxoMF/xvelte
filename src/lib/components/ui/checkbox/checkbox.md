@@ -26,7 +26,7 @@ Import the component from its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Checkbox from "$lib/components/ui/checkbox";
+	import * as Checkbox from "#lib/components/ui/checkbox/index.ts";
 </script>
 ```
 
@@ -48,7 +48,7 @@ Associate every checkbox with visible label text, either by matching `id` and `f
 
 ```svelte
 <script lang="ts">
-	import * as Checkbox from "$lib/components/ui/checkbox";
+	import * as Checkbox from "#lib/components/ui/checkbox/index.ts";
 
 	let accepted = $state(false);
 </script>
@@ -73,7 +73,7 @@ xvelte does not expose Bits UI's optional `Checkbox.Group` or `Checkbox.GroupLab
 
 ```svelte
 <script lang="ts">
-	import * as Checkbox from "$lib/components/ui/checkbox";
+	import * as Checkbox from "#lib/components/ui/checkbox/index.ts";
 
 	const channels = [
 		{ value: "email", label: "Email" },
@@ -116,7 +116,7 @@ Wrap the complete card in a native label when its full area should toggle the ch
 
 ```svelte
 <script lang="ts">
-	import * as Checkbox from "$lib/components/ui/checkbox";
+	import * as Checkbox from "#lib/components/ui/checkbox/index.ts";
 
 	let notificationsEnabled = $state(true);
 </script>
@@ -142,7 +142,7 @@ Use `indeterminate` for a mixed collection, such as a “select all” checkbox 
 
 ```svelte
 <script lang="ts">
-	import * as Checkbox from "$lib/components/ui/checkbox";
+	import * as Checkbox from "#lib/components/ui/checkbox/index.ts";
 
 	let checked = $state(false);
 	let indeterminate = $state(true);
@@ -286,7 +286,7 @@ Checkbox requires no global keyframes, animation stylesheet, font, or shared com
 
 ### Icons
 
-Add the semantic icon exports used by the built-in indicator to `$lib/icons.ts`:
+Add the semantic icon exports used by the built-in indicator to `#lib/icons.ts`:
 
 ```ts
 export { default as CheckIcon } from "@tabler/icons-svelte/icons/check";
@@ -297,7 +297,7 @@ Both exports are backed by the installed `@tabler/icons-svelte` package. No othe
 
 ### Utilities
 
-Add the following exports to `$lib/utils.ts`. `cn()` depends on `clsx` and `tailwind-merge`; the helper types remove the primitive render props that the local component replaces with its fixed indicator.
+Add the following exports to `#lib/utils.ts`. `cn()` depends on `clsx` and `tailwind-merge`; the helper types remove the primitive render props that the local component replaces with its fixed indicator.
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

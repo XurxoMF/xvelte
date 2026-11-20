@@ -5,9 +5,9 @@
 </script>
 
 <script lang="ts">
-	import { CheckIcon } from "$lib/icons";
+	import { CheckIcon } from "#lib/icons.ts";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: ItemProps = $props();
 </script>

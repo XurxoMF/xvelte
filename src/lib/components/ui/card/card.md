@@ -27,7 +27,7 @@ Import the component from its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Card from "$lib/components/ui/card";
+	import * as Card from "#lib/components/ui/card/index.ts";
 </script>
 ```
 
@@ -68,7 +68,7 @@ The parts do not require a Svelte context and can technically render independent
 
 ```svelte
 <script lang="ts">
-	import * as Card from "$lib/components/ui/card";
+	import * as Card from "#lib/components/ui/card/index.ts";
 </script>
 
 <Card.Root class="w-full max-w-md">
@@ -93,8 +93,8 @@ Card does not set its own width. Use `class` to place it in the surrounding layo
 
 ```svelte
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
-	import * as Card from "$lib/components/ui/card";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as Card from "#lib/components/ui/card/index.ts";
 </script>
 
 <Card.Root class="w-full max-w-md">
@@ -137,8 +137,8 @@ Small cards reduce the root gap and vertical padding, section insets, header bor
 
 ```svelte
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
-	import * as Card from "$lib/components/ui/card";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as Card from "#lib/components/ui/card/index.ts";
 </script>
 
 <Card.Root class="w-full max-w-md">
@@ -298,7 +298,7 @@ pnpm add -D tailwindcss
 
 ### Shared utilities
 
-Card imports `cn` and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+Card imports `cn` and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

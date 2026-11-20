@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as StatusDot from "$lib/components/ui/status-dot";
+	import * as StatusDot from "#lib/components/ui/status-dot/index.ts";
 </script>
 
 <span class="flex items-center justify-center gap-4">

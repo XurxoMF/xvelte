@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as HoverCard from "$lib/components/ui/hover-card";
-	import * as Typography from "$lib/components/ui/typography";
+	import * as HoverCard from "#lib/components/ui/hover-card/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 </script>
 
 <Typography.P class="text-center">

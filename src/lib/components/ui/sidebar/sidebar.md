@@ -24,8 +24,8 @@ Use Sidebar for persistent application navigation or tools that share the availa
 
 ```svelte
 <script lang="ts">
-	import * as Sidebar from "$lib/components/ui/sidebar";
-	import * as Tooltip from "$lib/components/ui/tooltip";
+	import * as Sidebar from "#lib/components/ui/sidebar/index.ts";
+	import * as Tooltip from "#lib/components/ui/tooltip/index.ts";
 </script>
 ```
 
@@ -56,7 +56,7 @@ On viewports below 768 pixels, Root renders its contents inside Sheet. On deskto
 
 ```svelte
 <script lang="ts">
-	import * as Sidebar from "$lib/components/ui/sidebar";
+	import * as Sidebar from "#lib/components/ui/sidebar/index.ts";
 
 	const links = [
 		{ href: "/dashboard", label: "Dashboard", icon: "D" },
@@ -118,7 +118,7 @@ Tooltip.Provider is required because Trigger and tooltip-enabled MenuButton use 
 
 ```svelte
 <script lang="ts">
-	import * as Sidebar from "$lib/components/ui/sidebar";
+	import * as Sidebar from "#lib/components/ui/sidebar/index.ts";
 
 	let open = $state(true);
 </script>
@@ -231,7 +231,7 @@ Sidebar.Input reuses the xvelte Input API and styles. Sidebar.Separator reuses x
 
 ```svelte
 <script lang="ts">
-	import { getSidebarContext } from "$lib/components/ui/sidebar";
+	import { getSidebarContext } from "#lib/components/ui/sidebar/index.ts";
 
 	const sidebar = getSidebarContext();
 </script>
@@ -596,7 +596,7 @@ Tooltip currently has no colocated guide; keep its complete folder together and 
 
 ```svelte
 <script lang="ts">
-	import * as Tooltip from "$lib/components/ui/tooltip";
+	import * as Tooltip from "#lib/components/ui/tooltip/index.ts";
 </script>
 
 <Tooltip.Provider delayDuration={500}>
@@ -606,7 +606,7 @@ Tooltip currently has no colocated guide; keep its complete folder together and 
 
 ### Localization setup
 
-Configure Paraglide so `$lib/paraglide/messages.js` is generated and add the three keys listed in [Localization](#localization) to `messages/en.json`. Their complete keys and values are already shown there.
+Configure Paraglide so `#lib/paraglide/messages.js` is generated and add the three keys listed in [Localization](#localization) to `messages/en.json`. Their complete keys and values are already shown there.
 
 ### Component files and other integration
 

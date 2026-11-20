@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Bubble from "$lib/components/ui/bubble";
+	import * as Bubble from "#lib/components/ui/bubble/index.ts";
 </script>
 
 <div class="mx-auto flex w-full max-w-sm flex-col gap-8">

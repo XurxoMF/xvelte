@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Tabs from "$lib/components/ui/tabs";
+	import * as Tabs from "#lib/components/ui/tabs/index.ts";
 
 	let value = $state("overview");
 </script>

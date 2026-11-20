@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import { ContextMenu as ContextMenuPrimitive } from "bits-ui";
 
-	import type { WithoutChild } from "$lib/utils";
+	import type { WithoutChild } from "#lib/utils.ts";
 
 	export type SubTriggerProps = WithoutChild<ContextMenuPrimitive.SubTriggerProps> & {
 		inset?: boolean | undefined;
@@ -9,9 +9,9 @@
 </script>
 
 <script lang="ts">
-	import { ChevronRightIcon } from "$lib/icons";
+	import { ChevronRightIcon } from "#lib/icons.ts";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, inset, children, ...restProps }: SubTriggerProps = $props();
 </script>

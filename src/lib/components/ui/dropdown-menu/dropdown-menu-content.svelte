@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
 
-	import type { WithoutChildrenOrChild } from "$lib/utils";
+	import type { WithoutChildrenOrChild } from "#lib/utils.ts";
 
 	import * as Dropdown from ".";
 
@@ -11,7 +11,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), sideOffset = 4, align = "start", portalProps, class: className, ...restProps }: ContentProps = $props();
 </script>

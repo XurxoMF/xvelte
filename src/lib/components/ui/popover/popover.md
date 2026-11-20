@@ -26,7 +26,7 @@ Import all public parts through the component's `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as Popover from "$lib/components/ui/popover";
+	import * as Popover from "#lib/components/ui/popover/index.ts";
 </script>
 ```
 
@@ -62,7 +62,7 @@ Trigger and Close render buttons by default. Header, Title, and Description are 
 
 ```svelte
 <script lang="ts">
-	import * as Popover from "$lib/components/ui/popover";
+	import * as Popover from "#lib/components/ui/popover/index.ts";
 </script>
 
 <Popover.Root>
@@ -99,7 +99,7 @@ Bind `open` when app code needs to inspect or change visibility:
 
 ```svelte
 <script lang="ts">
-	import * as Popover from "$lib/components/ui/popover";
+	import * as Popover from "#lib/components/ui/popover/index.ts";
 
 	let open = $state(false);
 </script>
@@ -199,7 +199,7 @@ Content normally uses Trigger as its anchor. Supply an element or selector throu
 
 ```svelte
 <script lang="ts">
-	import * as Popover from "$lib/components/ui/popover";
+	import * as Popover from "#lib/components/ui/popover/index.ts";
 
 	let anchor = $state<HTMLElement | null>(null);
 </script>
@@ -398,7 +398,7 @@ Copy the complete `src/lib/components/ui/popover` component folder:
 
 ### Shared utilities
 
-Popover imports `cn`, `WithElementRef`, and `WithoutChildrenOrChild` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+Popover imports `cn`, `WithElementRef`, and `WithoutChildrenOrChild` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

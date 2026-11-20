@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Kbd from "$lib/components/ui/kbd";
-	import * as Typography from "$lib/components/ui/typography";
+	import * as Kbd from "#lib/components/ui/kbd/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 </script>
 
 <Typography.P class="text-center">

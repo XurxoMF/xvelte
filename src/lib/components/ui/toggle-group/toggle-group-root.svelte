@@ -9,7 +9,7 @@
 <script lang="ts">
 	import { setToggleGroupContext } from "./toggle-group-context";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let {
 		ref = $bindable(null),

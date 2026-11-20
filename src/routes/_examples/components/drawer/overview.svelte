@@ -1,8 +1,8 @@
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
-	import * as Drawer from "$lib/components/ui/drawer";
-	import * as Input from "$lib/components/ui/input";
-	import * as Label from "$lib/components/ui/label";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as Drawer from "#lib/components/ui/drawer/index.ts";
+	import * as Input from "#lib/components/ui/input/index.ts";
+	import * as Label from "#lib/components/ui/label/index.ts";
 
 	let open = $state(false);
 	let displayName = $state("Ada Lovelace");

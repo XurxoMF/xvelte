@@ -5,11 +5,11 @@
 </script>
 
 <script lang="ts">
-	import { SearchIcon } from "$lib/icons";
+	import { SearchIcon } from "#lib/icons.ts";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
-	import * as InputGroup from "$lib/components/ui/input-group";
+	import * as InputGroup from "#lib/components/ui/input-group/index.ts";
 
 	let { ref = $bindable(null), class: className, value = $bindable(""), ...restProps }: InputProps = $props();
 </script>

@@ -3,8 +3,8 @@
 
 	import type { DateRange } from "bits-ui";
 
-	import * as Field from "$lib/components/ui/field";
-	import * as CalendarRange from "$lib/components/ui/calendar-range";
+	import * as Field from "#lib/components/ui/field/index.ts";
+	import * as CalendarRange from "#lib/components/ui/calendar-range/index.ts";
 
 	const start = today(getLocalTimeZone());
 	let value = $state<DateRange>({

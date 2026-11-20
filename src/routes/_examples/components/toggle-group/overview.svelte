@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Field from "$lib/components/ui/field";
-	import * as ToggleGroup from "$lib/components/ui/toggle-group";
+	import * as Field from "#lib/components/ui/field/index.ts";
+	import * as ToggleGroup from "#lib/components/ui/toggle-group/index.ts";
 
 	let alignment = $state("left");
 </script>

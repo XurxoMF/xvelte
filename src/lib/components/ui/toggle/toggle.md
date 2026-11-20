@@ -24,7 +24,7 @@ Use Toggle for an independent on/off action such as pinning, muting, or showing 
 
 ```svelte
 <script lang="ts">
-	import * as Toggle from "$lib/components/ui/toggle";
+	import * as Toggle from "#lib/components/ui/toggle/index.ts";
 </script>
 ```
 
@@ -38,13 +38,13 @@ Toggle is a single Bits UI button:
 <Toggle.Root>Pin</Toggle.Root>
 ```
 
-Its children may be text, a semantic icon from `$lib/icons`, or both.
+Its children may be text, a semantic icon from `#lib/icons.ts`, or both.
 
 ## Basic usage
 
 ```svelte
 <script lang="ts">
-	import * as Toggle from "$lib/components/ui/toggle";
+	import * as Toggle from "#lib/components/ui/toggle/index.ts";
 
 	let pinned = $state(false);
 </script>
@@ -74,7 +74,7 @@ Bits UI manages `aria-pressed`; visible text explains the action without a separ
 </Toggle.Root>
 ```
 
-Icon-only controls require an accessible name. The icon must be imported through `$lib/icons`; Toggle itself has no icon dependency.
+Icon-only controls require an accessible name. The icon must be imported through `#lib/icons.ts`; Toggle itself has no icon dependency.
 
 ### Change callback and disabled state
 
@@ -86,7 +86,7 @@ Icon-only controls require an accessible name. The icon must be imported through
 
 ```svelte
 <script lang="ts">
-	import { rootVariants } from "$lib/components/ui/toggle";
+	import { rootVariants } from "#lib/components/ui/toggle/index.ts";
 </script>
 
 <a href="/preview" class={rootVariants({ variant: "outline", size: "sm" })}>Preview</a>

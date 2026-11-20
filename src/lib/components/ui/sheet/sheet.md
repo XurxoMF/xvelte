@@ -24,7 +24,7 @@ Use Sheet for secondary tasks or navigation that should remain connected to the 
 
 ```svelte
 <script lang="ts">
-	import * as Sheet from "$lib/components/ui/sheet";
+	import * as Sheet from "#lib/components/ui/sheet/index.ts";
 </script>
 ```
 
@@ -54,7 +54,7 @@ Content automatically renders Portal and Overlay, then creates its required pane
 
 ```svelte
 <script lang="ts">
-	import * as Sheet from "$lib/components/ui/sheet";
+	import * as Sheet from "#lib/components/ui/sheet/index.ts";
 </script>
 
 <Sheet.Root>
@@ -105,7 +105,7 @@ The default side is right. `Header` and `Footer` provide spacing but do not subm
 
 ```svelte
 <script lang="ts">
-	import * as Sheet from "$lib/components/ui/sheet";
+	import * as Sheet from "#lib/components/ui/sheet/index.ts";
 
 	let open = $state(false);
 </script>
@@ -361,7 +361,7 @@ button/
 
 ### Localization setup
 
-Configure Paraglide so `$lib/paraglide/messages.js` is generated and add the key listed in [Localization](#localization) to `messages/en.json`. Its complete key and value are already shown there.
+Configure Paraglide so `#lib/paraglide/messages.js` is generated and add the key listed in [Localization](#localization) to `messages/en.json`. Its complete key and value are already shown there.
 
 ### Component files and other integration
 

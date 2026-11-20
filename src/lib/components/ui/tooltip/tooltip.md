@@ -24,7 +24,7 @@ Use Tooltip to explain unfamiliar icon controls or provide short optional contex
 
 ```svelte
 <script lang="ts">
-	import * as Tooltip from "$lib/components/ui/tooltip";
+	import * as Tooltip from "#lib/components/ui/tooltip/index.ts";
 </script>
 ```
 
@@ -51,7 +51,7 @@ In the root layout:
 
 ```svelte
 <script lang="ts">
-	import * as Tooltip from "$lib/components/ui/tooltip";
+	import * as Tooltip from "#lib/components/ui/tooltip/index.ts";
 
 	let { children } = $props();
 </script>

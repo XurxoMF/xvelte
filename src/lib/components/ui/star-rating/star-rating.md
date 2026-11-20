@@ -24,7 +24,7 @@ Use Star Rating when people assign or review a bounded preference score. Use Sli
 
 ```svelte
 <script lang="ts">
-	import * as StarRating from "$lib/components/ui/star-rating";
+	import * as StarRating from "#lib/components/ui/star-rating/index.ts";
 </script>
 ```
 
@@ -50,7 +50,7 @@ Root provides an `items` array to its child snippet. Render one Star for each it
 
 ```svelte
 <script lang="ts">
-	import * as StarRating from "$lib/components/ui/star-rating";
+	import * as StarRating from "#lib/components/ui/star-rating/index.ts";
 
 	let rating = $state(3);
 </script>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { animateInView } from "$lib/attachments/animate-in-view";
+	import { animateInView } from "#lib/attachments/animate-in-view.ts";
 
 	let scroller = $state<HTMLElement>();
 </script>

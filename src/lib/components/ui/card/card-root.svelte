@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-	import type { WithElementRef } from "$lib/utils";
+	import type { WithElementRef } from "#lib/utils.ts";
 
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
 		size?: "default" | "sm" | undefined;
@@ -8,7 +8,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, children, size = "default", ...restProps }: RootProps = $props();
 </script>

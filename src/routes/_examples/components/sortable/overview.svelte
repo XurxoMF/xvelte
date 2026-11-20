@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 
-	import * as Sortable from "$lib/components/ui/sortable";
+	import * as Sortable from "#lib/components/ui/sortable/index.ts";
 
 	const storageKey = "sortable-overview-order";
 

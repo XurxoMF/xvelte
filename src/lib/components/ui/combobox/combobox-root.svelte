@@ -34,7 +34,7 @@
 
 	import { setComboboxContext } from "./combobox-context.svelte";
 
-	import * as Popover from "$lib/components/ui/popover";
+	import * as Popover from "#lib/components/ui/popover/index.ts";
 
 	let {
 		type = "single" as T,

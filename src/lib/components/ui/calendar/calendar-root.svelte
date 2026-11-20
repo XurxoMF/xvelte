@@ -3,9 +3,9 @@
 
 	import type { Snippet } from "svelte";
 	import type { DateValue } from "@internationalized/date";
-	import type { WithoutChildrenOrChild } from "$lib/utils";
+	import type { WithoutChildrenOrChild } from "#lib/utils.ts";
 
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 
 	export type RootProps = WithoutChildrenOrChild<CalendarPrimitive.RootProps> & {
 		buttonVariant?: Button.RootVariants | undefined;
@@ -23,9 +23,9 @@
 
 	import * as Calendar from ".";
 
-	import { getLocale } from "$lib/paraglide/runtime";
+	import { getLocale } from "#lib/paraglide/runtime.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let {
 		ref = $bindable(null),

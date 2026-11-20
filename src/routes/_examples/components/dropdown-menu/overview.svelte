@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as DropdownMenu from "#lib/components/ui/dropdown-menu/index.ts";
 
 	function renameFile() {
 		console.info("Rename file");

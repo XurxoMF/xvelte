@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import { ScrollArea as ScrollAreaPrimitive } from "bits-ui";
 
-	import type { WithoutChild } from "$lib/utils";
+	import type { WithoutChild } from "#lib/utils.ts";
 
 	/** Props for the Scroll Area state and outer container. */
 	export type RootProps = WithoutChild<ScrollAreaPrimitive.RootProps>;
@@ -10,7 +10,7 @@
 <script lang="ts">
 	import { setScrollAreaContext } from "./scroll-area-context.svelte";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: RootProps = $props();
 

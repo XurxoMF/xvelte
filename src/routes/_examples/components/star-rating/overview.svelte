@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Field from "$lib/components/ui/field";
-	import * as StarRating from "$lib/components/ui/star-rating";
+	import * as Field from "#lib/components/ui/field/index.ts";
+	import * as StarRating from "#lib/components/ui/star-rating/index.ts";
 
 	let rating = $state(3);
 </script>

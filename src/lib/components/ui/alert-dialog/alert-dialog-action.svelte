@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import { AlertDialog as AlertDialogPrimitive } from "bits-ui";
 
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 
 	export type ActionProps = AlertDialogPrimitive.ActionProps & {
 		variant?: Button.RootVariants | undefined;
@@ -10,7 +10,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, variant = "default", size = "default", ...restProps }: ActionProps = $props();
 </script>

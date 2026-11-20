@@ -1,15 +1,15 @@
 <script lang="ts" module>
 	import { Calendar as CalendarPrimitive } from "bits-ui";
 
-	import type { WithoutChildrenOrChild } from "$lib/utils";
+	import type { WithoutChildrenOrChild } from "#lib/utils.ts";
 
 	export type YearSelectProps = WithoutChildrenOrChild<CalendarPrimitive.YearSelectProps>;
 </script>
 
 <script lang="ts">
-	import { ChevronDownIcon } from "$lib/icons";
+	import { ChevronDownIcon } from "#lib/icons.ts";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, value, ...restProps }: YearSelectProps = $props();
 </script>

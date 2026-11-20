@@ -26,7 +26,7 @@ Import the component through its public `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as Input from "$lib/components/ui/input";
+	import * as Input from "#lib/components/ui/input/index.ts";
 </script>
 ```
 
@@ -54,7 +54,7 @@ Use a visible label, an appropriate input type, and browser autocomplete metadat
 
 ```svelte
 <script lang="ts">
-	import * as Input from "$lib/components/ui/input";
+	import * as Input from "#lib/components/ui/input/index.ts";
 
 	let email = $state("");
 </script>
@@ -77,7 +77,7 @@ When `type` is omitted, the native browser default is `text`. `bind:value` synch
 
 ```svelte
 <script lang="ts">
-	import * as Input from "$lib/components/ui/input";
+	import * as Input from "#lib/components/ui/input/index.ts";
 
 	let username = $state("");
 	let touched = $state(false);
@@ -111,7 +111,7 @@ Use `bind:files`, not the file input's string `value`, to access selected files:
 
 ```svelte
 <script lang="ts">
-	import * as Input from "$lib/components/ui/input";
+	import * as Input from "#lib/components/ui/input/index.ts";
 
 	let files = $state<FileList | undefined>();
 </script>
@@ -134,7 +134,7 @@ Svelte's native binding coerces number and range input values to numbers:
 
 ```svelte
 <script lang="ts">
-	import * as Input from "$lib/components/ui/input";
+	import * as Input from "#lib/components/ui/input/index.ts";
 
 	let quantity = $state(1);
 </script>
@@ -171,7 +171,7 @@ Bind `ref` for native focus, selection, validity, or measurement APIs:
 
 ```svelte
 <script lang="ts">
-	import * as Input from "$lib/components/ui/input";
+	import * as Input from "#lib/components/ui/input/index.ts";
 
 	let inputRef = $state<HTMLElement | null>(null);
 </script>
@@ -310,7 +310,7 @@ Copy the complete `src/lib/components/ui/input` component folder:
 
 ### Shared utilities
 
-Root imports `cn` and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when absent:
+Root imports `cn` and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when absent:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

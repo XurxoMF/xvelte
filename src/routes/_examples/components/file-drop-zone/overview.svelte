@@ -1,7 +1,7 @@
 <script lang="ts">
-	import * as Field from "$lib/components/ui/field";
-	import * as FileDropZone from "$lib/components/ui/file-drop-zone";
-	import * as List from "$lib/components/ui/list";
+	import * as Field from "#lib/components/ui/field/index.ts";
+	import * as FileDropZone from "#lib/components/ui/file-drop-zone/index.ts";
+	import * as List from "#lib/components/ui/list/index.ts";
 
 	let files = $state<File[]>([]);
 	let inputRef = $state<HTMLInputElement | null>(null);

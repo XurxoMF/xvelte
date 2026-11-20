@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Resizable from "$lib/components/ui/resizable";
+	import * as Resizable from "#lib/components/ui/resizable/index.ts";
 </script>
 
 <div class="aspect-video rounded-lg border">

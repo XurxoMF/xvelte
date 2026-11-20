@@ -26,7 +26,7 @@ Import all parts from the component's public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
+	import * as DropdownMenu from "#lib/components/ui/dropdown-menu/index.ts";
 </script>
 ```
 
@@ -62,7 +62,7 @@ Use GroupHeading inside Group when a heading should label that group semanticall
 
 ```svelte
 <script lang="ts">
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
+	import * as DropdownMenu from "#lib/components/ui/dropdown-menu/index.ts";
 
 	function renameFile() {
 		console.info("Rename file");
@@ -99,7 +99,7 @@ CheckboxGroup manages an array of selected CheckboxItem values:
 
 ```svelte
 <script lang="ts">
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
+	import * as DropdownMenu from "#lib/components/ui/dropdown-menu/index.ts";
 
 	let visiblePanels = $state(["activity", "files"]);
 </script>
@@ -125,7 +125,7 @@ CheckboxItem can also own bindable state without CheckboxGroup:
 
 ```svelte
 <script lang="ts">
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
+	import * as DropdownMenu from "#lib/components/ui/dropdown-menu/index.ts";
 
 	let notifications = $state(true);
 	let mixedChannels = $state(true);
@@ -147,7 +147,7 @@ The local indicator shows CheckIcon for checked state and MinusIcon for indeterm
 
 ```svelte
 <script lang="ts">
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
+	import * as DropdownMenu from "#lib/components/ui/dropdown-menu/index.ts";
 
 	let sortOrder = $state("name");
 </script>
@@ -174,7 +174,7 @@ RadioGroup's local default is `undefined`. Supply an initial value when one opti
 
 ```svelte
 <script lang="ts">
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
+	import * as DropdownMenu from "#lib/components/ui/dropdown-menu/index.ts";
 
 	function moveTo(folder: string) {
 		console.info("Move to", folder);
@@ -203,7 +203,7 @@ SubTrigger appends ChevronRightIcon during normal rendering. Pointer intent, ope
 
 ```svelte
 <script lang="ts">
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
+	import * as DropdownMenu from "#lib/components/ui/dropdown-menu/index.ts";
 
 	let open = $state(false);
 </script>
@@ -224,8 +224,8 @@ Trigger renders a native button by default. Delegate it when another accessible 
 
 ```svelte
 <script lang="ts">
-	import * as Button from "$lib/components/ui/button";
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as DropdownMenu from "#lib/components/ui/dropdown-menu/index.ts";
 </script>
 
 <DropdownMenu.Root>
@@ -492,7 +492,7 @@ pnpm add -D tailwindcss
 
 ### Shared utilities
 
-The wrappers import `cn`, `WithoutChild`, `WithoutChildrenOrChild`, and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+The wrappers import `cn`, `WithoutChild`, `WithoutChildrenOrChild`, and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -519,7 +519,7 @@ The package block includes `clsx` and `tailwind-merge`, which `cn` imports.
 
 ### Icons
 
-Dropdown Menu imports three semantic names from `$lib/icons`. Add these exact exports to `src/lib/icons.ts`:
+Dropdown Menu imports three semantic names from `#lib/icons`. Add these exact exports to `src/lib/icons.ts`:
 
 ```ts
 export { default as CheckIcon } from "@tabler/icons-svelte/icons/check";

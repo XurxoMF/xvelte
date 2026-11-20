@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
 
-	import type { Pathname } from "$app/types";
+	import type { Path } from "$app/types";
 
 	import { navigation } from "./_docs/catalog";
 
-	import * as Button from "$lib/components/ui/button";
-	import * as Card from "$lib/components/ui/card";
-	import * as Typography from "$lib/components/ui/typography";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as Card from "#lib/components/ui/card/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 
 	const sharedSections = navigation.find((scope) => scope.value === "shared")?.categories ?? [];
 	const tauriSections = navigation.find((scope) => scope.value === "tauri")?.categories ?? [];
@@ -19,7 +19,9 @@
 		name="description"
 		content="A practical SvelteKit toolkit with accessible components, hooks, attachments, Tailwind CSS styles, and Tauri utilities."
 	/>
+
 	<meta property="og:title" content="xvelte — Svelte, Tailwind CSS and Tauri toolkit" />
+
 	<meta
 		property="og:description"
 		content="Accessible components, hooks, attachments, Tailwind CSS styles, and Tauri utilities for real SvelteKit projects."
@@ -37,8 +39,9 @@
 				SvelteKit applications without starting from zero.
 			</Typography.P>
 			<div class="mt-8 flex flex-wrap gap-3">
-				<a href={resolve("/installation")} class={Button.rootVariants({ size: "lg" })}>Installation</a>
-				<a href={resolve("/components")} class={Button.rootVariants({ variant: "outline", size: "lg" })}>Browse components</a>
+				<a href={resolve("installation")} class={Button.rootVariants({ size: "lg" })}>Installation</a>
+
+				<a href={resolve("components")} class={Button.rootVariants({ variant: "outline", size: "lg" })}>Browse components</a>
 			</div>
 		</div>
 	</section>
@@ -54,7 +57,7 @@
 
 			<div class="mt-8 grid gap-4 sm:grid-cols-2">
 				{#each sharedSections as section (section.id)}
-					<a href={resolve(`/${section.directory}` as Pathname)} class="group block">
+					<a href={resolve(`/${section.directory}` as Path)} class="group block">
 						<Card.Root
 							class="h-full transition-all group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-lg group-hover:shadow-primary/5"
 						>
@@ -79,7 +82,7 @@
 
 			<div class="mt-8 grid gap-4 sm:grid-cols-2">
 				{#each tauriSections as section (section.id)}
-					<a href={resolve(`/tauri/${section.directory}` as Pathname)} class="group block">
+					<a href={resolve(`/tauri/${section.directory}` as Path)} class="group block">
 						<Card.Root
 							class="h-full transition-all group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-lg group-hover:shadow-primary/5"
 						>

@@ -25,7 +25,7 @@ Import both public parts from the component's `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as FloatingMenu from "$lib/components/ui/floating-menu";
+	import * as FloatingMenu from "#lib/components/ui/floating-menu/index.ts";
 </script>
 ```
 
@@ -57,7 +57,7 @@ This example creates a labeled action group in the bottom-right corner of a prev
 
 ```svelte
 <script lang="ts">
-	import * as FloatingMenu from "$lib/components/ui/floating-menu";
+	import * as FloatingMenu from "#lib/components/ui/floating-menu/index.ts";
 
 	let zoom = $state(100);
 </script>
@@ -133,7 +133,7 @@ Use the exported position type when app state chooses the active edge:
 
 ```svelte
 <script lang="ts">
-	import * as FloatingMenu from "$lib/components/ui/floating-menu";
+	import * as FloatingMenu from "#lib/components/ui/floating-menu/index.ts";
 
 	let position = $state<FloatingMenu.RootPositions>("bottom-left");
 </script>
@@ -321,7 +321,7 @@ Copy the complete `src/lib/components/ui/floating-menu` folder:
 
 ### Shared utilities
 
-Root and Group import `cn` and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when absent:
+Root and Group import `cn` and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when absent:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

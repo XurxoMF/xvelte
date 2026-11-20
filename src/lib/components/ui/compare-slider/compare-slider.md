@@ -26,7 +26,7 @@ Import all parts from the component's public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as CompareSlider from "$lib/components/ui/compare-slider";
+	import * as CompareSlider from "#lib/components/ui/compare-slider/index.ts";
 </script>
 ```
 
@@ -52,7 +52,7 @@ Root has no built-in dimensions. Give it a width and height or an aspect ratio, 
 
 ```svelte
 <script lang="ts">
-	import * as CompareSlider from "$lib/components/ui/compare-slider";
+	import * as CompareSlider from "#lib/components/ui/compare-slider/index.ts";
 </script>
 
 <CompareSlider.Root class="aspect-video w-full max-w-2xl rounded-lg">
@@ -76,7 +76,7 @@ The visuals must use the same dimensions, crop, and subject alignment for the co
 
 ```svelte
 <script lang="ts">
-	import * as CompareSlider from "$lib/components/ui/compare-slider";
+	import * as CompareSlider from "#lib/components/ui/compare-slider/index.ts";
 
 	let reveal = $state(35);
 </script>
@@ -305,7 +305,7 @@ This context is internal and is not exported from the component's `index.ts`. Co
 
 ### Shared utilities
 
-All three parts import `cn` from `$lib/utils`. Add this exact code to `src/lib/utils.ts` when it is not already present:
+All three parts import `cn` from `#lib/utils`. Add this exact code to `src/lib/utils.ts` when it is not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -320,7 +320,7 @@ The package block includes `clsx` and `tailwind-merge`, which this helper import
 
 ### Icons
 
-Handle imports two semantic names from `$lib/icons`. Add these exact exports to `src/lib/icons.ts`:
+Handle imports two semantic names from `#lib/icons`. Add these exact exports to `src/lib/icons.ts`:
 
 ```ts
 export { default as DragHandleIcon } from "@tabler/icons-svelte/icons/grip-vertical";

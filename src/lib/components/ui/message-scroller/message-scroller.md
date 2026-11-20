@@ -26,7 +26,7 @@ Import the component and its hooks through the public `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as MessageScroller from "$lib/components/ui/message-scroller";
+	import * as MessageScroller from "#lib/components/ui/message-scroller/index.ts";
 </script>
 ```
 
@@ -60,8 +60,8 @@ Message Scroller fills its parent. Give an ancestor a definite or flex-constrain
 
 ```svelte
 <script lang="ts">
-	import * as Message from "$lib/components/ui/message";
-	import * as MessageScroller from "$lib/components/ui/message-scroller";
+	import * as Message from "#lib/components/ui/message/index.ts";
+	import * as MessageScroller from "#lib/components/ui/message-scroller/index.ts";
 </script>
 
 <div class="h-96 min-h-0">
@@ -127,7 +127,7 @@ Hooks may be used anywhere below the same Provider, including controls outside R
 
 ```svelte
 <script lang="ts">
-	import * as MessageScroller from "$lib/components/ui/message-scroller";
+	import * as MessageScroller from "#lib/components/ui/message-scroller/index.ts";
 
 	const { scrollToMessage, scrollToStart, scrollToEnd } = MessageScroller.useMessageScroller();
 </script>
@@ -143,7 +143,7 @@ Every command returns `boolean`. A successful result means the jump ran or was q
 
 ```svelte
 <script lang="ts">
-	import * as MessageScroller from "$lib/components/ui/message-scroller";
+	import * as MessageScroller from "#lib/components/ui/message-scroller/index.ts";
 
 	const scrollable = MessageScroller.useMessageScrollerScrollable();
 	const visibility = MessageScroller.useMessageScrollerVisibility();
@@ -384,7 +384,7 @@ export { default as ChevronDownIcon } from "@tabler/icons-svelte/icons/chevron-d
 
 ### Utilities
 
-Message Scroller requires `cn` from `$lib/utils`:
+Message Scroller requires `cn` from `#lib/utils.ts`:
 
 ```ts
 import { clsx } from "clsx";
@@ -417,7 +417,7 @@ The global stylesheet must map the semantic colors used by Root and Button. Repl
 }
 ```
 
-Add the three keys listed in [Localization](#localization) to `messages/en.json`, configure Paraglide, and import its generated `$lib/paraglide/messages.js` module. The generated `src/lib/paraglide` output must be produced by the consuming app's Paraglide compile step rather than copied manually.
+Add the three keys listed in [Localization](#localization) to `messages/en.json`, configure Paraglide, and import its generated `#lib/paraglide/messages.js` module. The generated `src/lib/paraglide` output must be produced by the consuming app's Paraglide compile step rather than copied manually.
 
 Message Scroller requires no xvelte hook, attachment, authored context module, asset, font, network service, or Tauri integration. The installed primitive owns its internal state and browser observers.
 

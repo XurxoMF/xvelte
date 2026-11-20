@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as ButtonHold from "$lib/components/ui/button-hold";
-	import * as Typography from "$lib/components/ui/typography";
+	import * as ButtonHold from "#lib/components/ui/button-hold/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 
 	let confirmed = $state(false);
 </script>

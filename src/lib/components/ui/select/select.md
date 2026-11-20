@@ -24,7 +24,7 @@ Use Select when the option list needs custom styling or richer composition. Use 
 
 ```svelte
 <script lang="ts">
-	import * as Select from "$lib/components/ui/select";
+	import * as Select from "#lib/components/ui/select/index.ts";
 </script>
 ```
 
@@ -52,7 +52,7 @@ Content creates Portal, the positioned primitive content, both scroll buttons, a
 
 ```svelte
 <script lang="ts">
-	import * as Select from "$lib/components/ui/select";
+	import * as Select from "#lib/components/ui/select/index.ts";
 
 	const themes = [
 		{ value: "light", label: "Light" },
@@ -107,7 +107,7 @@ Long content scrolls inside the internal Viewport; the up and down controls appe
 
 ```svelte
 <script lang="ts">
-	import * as Select from "$lib/components/ui/select";
+	import * as Select from "#lib/components/ui/select/index.ts";
 
 	let permissions = $state<string[]>([]);
 	const summary = $derived(permissions.length ? `${permissions.length} selected` : "Select permissions");
@@ -295,7 +295,7 @@ pnpm add -D tailwindcss
 
 ### Icons
 
-Add these exact exports to `$lib/icons.ts`:
+Add these exact exports to `#lib/icons.ts`:
 
 ```ts
 export { default as CheckIcon } from "@tabler/icons-svelte/icons/check";

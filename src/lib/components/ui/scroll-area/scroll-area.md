@@ -26,7 +26,7 @@ Use Scroll Area for bounded panels whose custom scrollbar must match the interfa
 
 ```svelte
 <script lang="ts">
-	import * as ScrollArea from "$lib/components/ui/scroll-area";
+	import * as ScrollArea from "#lib/components/ui/scroll-area/index.ts";
 </script>
 ```
 
@@ -67,7 +67,7 @@ Root and Viewport do not generate omitted scrollbars. Each scrollbar registers i
 
 ```svelte
 <script lang="ts">
-	import * as ScrollArea from "$lib/components/ui/scroll-area";
+	import * as ScrollArea from "#lib/components/ui/scroll-area/index.ts";
 
 	const releases = Array.from({ length: 30 }, (_, index) => `Version 2.${29 - index}`);
 </script>

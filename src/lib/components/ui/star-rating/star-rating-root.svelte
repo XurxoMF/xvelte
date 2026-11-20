@@ -7,7 +7,7 @@
 <script lang="ts">
 	import { RatingGroup } from "bits-ui";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { value = $bindable(0), max = 5, orientation = "horizontal", class: className, ...restProps }: RootProps = $props();
 </script>

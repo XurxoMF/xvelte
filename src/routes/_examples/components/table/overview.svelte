@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Table from "$lib/components/ui/table";
+	import * as Table from "#lib/components/ui/table/index.ts";
 
 	const invoices = [
 		{ id: "INV-001", status: "Paid", total: "€240.00" },

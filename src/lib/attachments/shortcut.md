@@ -37,7 +37,7 @@ npm install -D svelte
 pnpm add -D svelte
 ```
 
-The attachment uses Svelte's `Attachment` type and the `{@attach ...}` syntax. It requires no global CSS, theme variables, icons, `$lib/utils` helpers, xvelte components, hooks, localization messages, or additional files.
+The attachment uses Svelte's `Attachment` type and the `{@attach ...}` syntax. It requires no global CSS, theme variables, icons, `#lib/utils.ts` helpers, xvelte components, hooks, localization messages, or additional files.
 
 ---
 
@@ -47,7 +47,7 @@ Import the function and optional types directly from the attachment file:
 
 ```svelte
 <script lang="ts">
-	import { shortcut, type Shortcut, type ShortcutEvent } from "$lib/attachments/shortcut";
+	import { shortcut, type Shortcut, type ShortcutEvent } from "#lib/attachments/shortcut.ts";
 </script>
 ```
 
@@ -59,7 +59,7 @@ There is no attachment `index.ts`; `shortcut.ts` is the source of truth for its 
 
 ```svelte
 <script lang="ts">
-	import { shortcut } from "$lib/attachments/shortcut";
+	import { shortcut } from "#lib/attachments/shortcut.ts";
 
 	let searchOpen = $state(false);
 </script>
@@ -87,7 +87,7 @@ The example matches Command-K only. Because modifier matching is exact, Command-
 
 ```svelte
 <script lang="ts">
-	import { shortcut, type Shortcut } from "$lib/attachments/shortcut";
+	import { shortcut, type Shortcut } from "#lib/attachments/shortcut.ts";
 
 	let commandOpen = $state(false);
 	let saved = $state(false);
@@ -135,7 +135,7 @@ Use `when` to keep global commands out of inputs and to reject repeated `keydown
 
 ```svelte
 <script lang="ts">
-	import { shortcut } from "$lib/attachments/shortcut";
+	import { shortcut } from "#lib/attachments/shortcut.ts";
 
 	function isOutsideEditableControl(event: KeyboardEvent) {
 		const target = event.target;
@@ -239,7 +239,7 @@ The attachment does not announce that an action ran, move focus, or manage the a
 
 ## Dependencies
 
-The Svelte package and copy command are covered under Installation. No runtime package beyond Svelte, global CSS, theme variables, icons, `$lib/utils` exports, UI components, hooks, contexts, attachments, or localization setup are required.
+The Svelte package and copy command are covered under Installation. No runtime package beyond Svelte, global CSS, theme variables, icons, `#lib/utils.ts` exports, UI components, hooks, contexts, attachments, or localization setup are required.
 
 ---
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as QrCode from "$lib/components/ui/qr-code";
+	import * as QrCode from "#lib/components/ui/qr-code/index.ts";
 
 	const destination = "https://example.com/account/setup";
 </script>

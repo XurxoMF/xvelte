@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Menubar from "$lib/components/ui/menubar";
+	import * as Menubar from "#lib/components/ui/menubar/index.ts";
 
 	function createDocument() {
 		// Create the document.

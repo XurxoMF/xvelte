@@ -1,7 +1,7 @@
 <script lang="ts">
-	import * as ButtonGroup from "$lib/components/ui/button-group";
-	import * as Field from "$lib/components/ui/field";
-	import * as InputPhone from "$lib/components/ui/input-phone";
+	import * as ButtonGroup from "#lib/components/ui/button-group/index.ts";
+	import * as Field from "#lib/components/ui/field/index.ts";
+	import * as InputPhone from "#lib/components/ui/input-phone/index.ts";
 
 	let value = $state("");
 	let valid = $state(true);

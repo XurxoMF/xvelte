@@ -4,27 +4,27 @@
 	import { page } from "$app/state";
 	import { ModeWatcher } from "mode-watcher";
 
-	import type { Pathname } from "$app/types";
+	import type { Path } from "$app/types";
 	import type { DocUnit } from "./_docs/catalog";
 
 	import "./layout.css";
 	import { getUnit, navigation } from "./_docs/catalog";
 
-	import { ChevronRightIcon, SearchIcon } from "$lib/icons";
+	import { ChevronRightIcon, SearchIcon } from "#lib/icons.ts";
 
-	import { locales, localizeHref } from "$lib/paraglide/runtime";
+	import { locales, localizeHref } from "#lib/paraglide/runtime.js";
 
-	import * as Sidebar from "$lib/components/ui/sidebar";
-	import * as Tooltip from "$lib/components/ui/tooltip";
-	import * as Command from "$lib/components/ui/command";
-	import * as Dialog from "$lib/components/ui/dialog";
-	import * as Sonner from "$lib/components/ui/sonner";
-	import * as Collapsible from "$lib/components/ui/collapsible";
+	import * as Sidebar from "#lib/components/ui/sidebar/index.ts";
+	import * as Tooltip from "#lib/components/ui/tooltip/index.ts";
+	import * as Command from "#lib/components/ui/command/index.ts";
+	import * as Dialog from "#lib/components/ui/dialog/index.ts";
+	import * as Sonner from "#lib/components/ui/sonner/index.ts";
+	import * as Collapsible from "#lib/components/ui/collapsible/index.ts";
 
 	let { children } = $props();
 
 	const siteOrigin = "https://xvelte.xurxomf.xyz";
-	const appIcon = asset("/favicon.png");
+	const appIcon = asset("favicon.png");
 	let searchOpen = $state(false);
 	let currentPath = $derived(page.url.pathname);
 	let canonicalUrl = $derived(new URL(page.url.pathname, siteOrigin).href);
@@ -39,7 +39,9 @@
 	}
 
 	// Route navigation, browser history, and search selections reveal the active category.
-	afterNavigate(() => {
+	afterNavigate(({ shallow, type }) => {
+		if (shallow && type === "goto") return;
+
 		const unit = getUnit(page.url.pathname);
 		if (unit) revealUnit(unit);
 		else {
@@ -89,7 +91,7 @@
 					/>
 					<span>
 						<strong class="block leading-none tracking-tight">xvelte</strong>
-						<span class="text-xs text-muted-foreground">Svelte, Tailwind &amp; Tauri</span>
+						<span class="text-xs text-muted-foreground">Svelte, Tailwind & Tauri</span>
 					</span>
 				</a>
 			</Sidebar.Header>
@@ -101,10 +103,8 @@
 						<Sidebar.Menu>
 							<Sidebar.MenuItem>
 								<Sidebar.MenuButton isActive={currentPath === "/installation"} tooltipContent="Installation">
-									{#snippet child({ props })}<a
-											href={resolve("/installation")}
-											aria-current={currentPath === "/installation" ? "page" : undefined}
-											{...props}>Installation</a
+									{#snippet child({ props })}
+										<a href={resolve("installation")} aria-current={currentPath === "/installation" ? "page" : undefined} {...props}>Installation</a
 										>{/snippet}
 								</Sidebar.MenuButton>
 							</Sidebar.MenuItem>
@@ -136,7 +136,7 @@
 											{#each category.units as unit (unit.href)}
 												<Sidebar.MenuSubItem>
 													<Sidebar.MenuSubButton
-														href={resolve(unit.href as Pathname)}
+														href={resolve(unit.href as Path)}
 														isActive={currentPath === unit.href}
 														aria-current={currentPath === unit.href ? "page" : undefined}
 													>
@@ -177,9 +177,9 @@
 								<Command.Empty>No documentation found.</Command.Empty>
 
 								<Command.Group heading="Getting started">
-									<Command.LinkItem value="installation" href={resolve("/installation")} onSelect={() => (searchOpen = false)}>
-										Installation
-									</Command.LinkItem>
+									<Command.LinkItem value="installation" href={resolve("installation")} onSelect={() => (searchOpen = false)}
+										>Installation</Command.LinkItem
+									>
 								</Command.Group>
 
 								{#each navigation as scope (scope.value)}
@@ -189,7 +189,7 @@
 												<Command.LinkItem
 													value={unit.href}
 													keywords={[unit.title, unit.slug, scope.label, category.label, unit.description]}
-													href={resolve(unit.href as Pathname)}
+													href={resolve(unit.href as Path)}
 													onSelect={() => selectResult(unit)}
 												>
 													{unit.title}
@@ -222,6 +222,6 @@
 
 <div style="display:none">
 	{#each locales as locale (locale)}
-		<a href={resolve(localizeHref(page.url.pathname, { locale }) as Pathname)}>{locale}</a>
+		<a href={resolve(localizeHref(page.url.pathname, { locale }) as Path)}>{locale}</a>
 	{/each}
 </div>

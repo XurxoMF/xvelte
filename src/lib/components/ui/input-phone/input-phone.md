@@ -26,7 +26,7 @@ Import all public parts through the component `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as InputPhone from "$lib/components/ui/input-phone";
+	import * as InputPhone from "#lib/components/ui/input-phone/index.ts";
 </script>
 ```
 
@@ -66,8 +66,8 @@ The standard joined composition places both controls inside Button Group:
 
 ```svelte
 <script lang="ts">
-	import * as ButtonGroup from "$lib/components/ui/button-group";
-	import * as InputPhone from "$lib/components/ui/input-phone";
+	import * as ButtonGroup from "#lib/components/ui/button-group/index.ts";
+	import * as InputPhone from "#lib/components/ui/input-phone/index.ts";
 
 	let value = $state("");
 	let valid = $state(true);
@@ -99,9 +99,9 @@ The standard joined composition places both controls inside Button Group:
 
 ```svelte
 <script lang="ts">
-	import type { CountryCode, InputPhoneDetails } from "$lib/components/ui/input-phone";
+	import type { CountryCode, InputPhoneDetails } from "#lib/components/ui/input-phone/index.ts";
 
-	import * as InputPhone from "$lib/components/ui/input-phone";
+	import * as InputPhone from "#lib/components/ui/input-phone/index.ts";
 
 	let country = $state<CountryCode | null>("PT");
 	let details = $state<InputPhoneDetails | null>(null);
@@ -138,9 +138,9 @@ Country metadata is localized before `order` runs:
 
 ```svelte
 <script lang="ts">
-	import type { InputPhoneCountry } from "$lib/components/ui/input-phone";
+	import type { InputPhoneCountry } from "#lib/components/ui/input-phone/index.ts";
 
-	import * as InputPhone from "$lib/components/ui/input-phone";
+	import * as InputPhone from "#lib/components/ui/input-phone/index.ts";
 
 	const priority = new Map([
 		["ES", 0],
@@ -183,7 +183,7 @@ Input keeps native event handlers even though its value is managed by Root:
 
 ```svelte
 <script lang="ts">
-	import * as InputPhone from "$lib/components/ui/input-phone";
+	import * as InputPhone from "#lib/components/ui/input-phone/index.ts";
 
 	let value = $state("");
 </script>
@@ -381,7 +381,7 @@ No xvelte hook, attachment, additional context file outside this component folde
 
 ### Shared utilities
 
-Input Phone and its required components use these `$lib/utils` exports:
+Input Phone and its required components use these `#lib/utils.ts` exports:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -536,7 +536,7 @@ No `svelte-tel-input` stylesheet, Input Phone keyframe, or component-specific CS
 
 ### Localization setup
 
-Configure Paraglide so `$lib/paraglide/messages.js` and `$lib/paraglide/runtime.js` are generated, and add the four entries listed in [Localization](#localization) to `messages/en.json`. Root imports `getLocale()` from the runtime for its default country-name locale. The exact message keys and values are already shown above and are not duplicated here.
+Configure Paraglide so `#lib/paraglide/messages.js` and `$lib/paraglide/runtime.js` are generated, and add the four entries listed in [Localization](#localization) to `messages/en.json`. Root imports `getLocale()` from the runtime for its default country-name locale. The exact message keys and values are already shown above and are not duplicated here.
 
 ## Credits
 

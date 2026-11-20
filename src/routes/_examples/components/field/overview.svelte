@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Field from "$lib/components/ui/field";
-	import * as Input from "$lib/components/ui/input";
+	import * as Field from "#lib/components/ui/field/index.ts";
+	import * as Input from "#lib/components/ui/input/index.ts";
 
 	let username = $state("");
 </script>

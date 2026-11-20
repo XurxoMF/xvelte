@@ -2,7 +2,7 @@
 	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
 	import type { CanvasPoint } from "./canvas-context.svelte.js";
-	import type { WithElementRef, WithoutChildren } from "$lib/utils";
+	import type { WithElementRef, WithoutChildren } from "#lib/utils.ts";
 
 	/** Background pattern rendered by the canvas viewport. */
 	export type CanvasGrid = "dots" | "lines" | "none";
@@ -34,9 +34,9 @@
 
 	import { clamp, nodeBounds, setCanvasContext } from "./canvas-context.svelte.js";
 
-	import * as m from "$lib/paraglide/messages.js";
+	import * as m from "#lib/paraglide/messages.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let {
 		ref = $bindable(null),

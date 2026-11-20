@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Separator from "$lib/components/ui/separator";
-	import * as Typography from "$lib/components/ui/typography";
+	import * as Separator from "#lib/components/ui/separator/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 </script>
 
 <div class="space-y-3">

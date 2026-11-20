@@ -26,7 +26,7 @@ Import the component through its public `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as Progress from "$lib/components/ui/progress";
+	import * as Progress from "#lib/components/ui/progress/index.ts";
 </script>
 ```
 
@@ -48,7 +48,7 @@ Place visible labels, percentages, status details, and actions beside Root rathe
 
 ```svelte
 <script lang="ts">
-	import * as Progress from "$lib/components/ui/progress";
+	import * as Progress from "#lib/components/ui/progress/index.ts";
 
 	let value = $state(68);
 </script>
@@ -75,7 +75,7 @@ The internal indicator uses `transition-all`, so changing `value` animates its t
 <script lang="ts">
 	import { onMount } from "svelte";
 
-	import * as Progress from "$lib/components/ui/progress";
+	import * as Progress from "#lib/components/ui/progress/index.ts";
 
 	let value = $state(15);
 
@@ -96,7 +96,7 @@ Keep the minimum at `0` and use `max` for totals expressed in files, bytes, reco
 
 ```svelte
 <script lang="ts">
-	import * as Progress from "$lib/components/ui/progress";
+	import * as Progress from "#lib/components/ui/progress/index.ts";
 
 	let completed = $state(18);
 	const total = 24;
@@ -246,7 +246,7 @@ Copy the complete `src/lib/components/ui/progress` component folder:
 
 ### Shared utilities
 
-Progress imports `cn` and `WithoutChildrenOrChild` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+Progress imports `cn` and `WithoutChildrenOrChild` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

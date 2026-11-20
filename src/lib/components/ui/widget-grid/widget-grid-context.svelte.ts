@@ -10,7 +10,7 @@ import type { WidgetGridItemState } from "./widget-grid-types";
 
 import { WidgetGridAdapter } from "./widget-grid-adapter";
 
-import * as m from "$lib/paraglide/messages.js";
+import * as m from "#lib/paraglide/messages.js";
 
 type ItemLifecycleCallbacks = {
 	readonly onMoveStart: ((state: WidgetGridItemState) => void) | undefined;

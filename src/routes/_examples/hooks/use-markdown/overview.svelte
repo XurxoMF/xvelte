@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { UseMarkdown } from "$lib/hooks/use-markdown.svelte";
-	import { useHighlightedCode } from "$lib/hooks/use-highlighted-code.svelte";
+	import { UseMarkdown } from "#lib/hooks/use-markdown.svelte.ts";
+	import { useHighlightedCode } from "#lib/hooks/use-highlighted-code.svelte.ts";
 
-	import * as CodeBlock from "$lib/components/ui/code-block";
-	import * as Textarea from "$lib/components/ui/textarea";
+	import * as CodeBlock from "#lib/components/ui/code-block/index.ts";
+	import * as Textarea from "#lib/components/ui/textarea/index.ts";
 
 	let source = $state(`# Release notes
 

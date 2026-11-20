@@ -26,7 +26,7 @@ Import all parts from the component's public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Empty from "$lib/components/ui/empty";
+	import * as Empty from "#lib/components/ui/empty/index.ts";
 </script>
 ```
 
@@ -61,7 +61,7 @@ Every part renders a native `div`. The component does not enforce this compositi
 
 ```svelte
 <script lang="ts">
-	import * as Empty from "$lib/components/ui/empty";
+	import * as Empty from "#lib/components/ui/empty/index.ts";
 
 	function createProject() {
 		console.info("Create project");
@@ -94,7 +94,7 @@ Use the same structure for a filtered result set, but explain what was searched 
 
 ```svelte
 <script lang="ts">
-	import * as Empty from "$lib/components/ui/empty";
+	import * as Empty from "#lib/components/ui/empty/index.ts";
 
 	let query = $state("archived invoices");
 </script>
@@ -166,7 +166,7 @@ Use the exported `mediaVariants` function when app-owned markup needs the same p
 
 ```svelte
 <script lang="ts">
-	import { mediaVariants } from "$lib/components/ui/empty";
+	import { mediaVariants } from "#lib/components/ui/empty/index.ts";
 </script>
 
 <aside class={mediaVariants({ variant: "icon", class: "size-10" })} aria-label="Empty inbox">
@@ -314,7 +314,7 @@ pnpm add -D tailwindcss
 
 ### Shared utilities
 
-Every part imports `cn` and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+Every part imports `cn` and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -376,7 +376,7 @@ No dark custom variant, animation package, keyframe, shared component stylesheet
 
 ### Icons
 
-Empty imports no icon and does not require an icon package or `$lib/icons` export. Media renders whatever content the app provides, and the examples use Unicode symbols so no icon code needs to be copied.
+Empty imports no icon and does not require an icon package or `#lib/icons.ts` export. Media renders whatever content the app provides, and the examples use Unicode symbols so no icon code needs to be copied.
 
 ### Other requirements
 

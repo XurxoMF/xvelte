@@ -26,7 +26,7 @@ Use Code Block when whitespace, line structure, copying, scrolling, or syntax co
 
 ```svelte
 <script lang="ts">
-	import * as CodeBlock from "$lib/components/ui/code-block";
+	import * as CodeBlock from "#lib/components/ui/code-block/index.ts";
 </script>
 ```
 
@@ -35,7 +35,7 @@ The component's `index.ts` exports `Root`, `Header`, `Title`, `Actions`, `CopyBu
 Syntax highlighting is optional and lives in its own public hook:
 
 ```ts
-import { useHighlightedCode } from "$lib/hooks/use-highlighted-code.svelte";
+import { useHighlightedCode } from "#lib/hooks/use-highlighted-code.svelte.ts";
 ```
 
 ---
@@ -62,7 +62,7 @@ CodeBlock.Root
 
 ```svelte
 <script lang="ts">
-	import * as CodeBlock from "$lib/components/ui/code-block";
+	import * as CodeBlock from "#lib/components/ui/code-block/index.ts";
 
 	const output = `$ bun run check
 Checked 142 files
@@ -93,9 +93,9 @@ No errors found`;
 
 ```svelte
 <script lang="ts">
-	import { useHighlightedCode } from "$lib/hooks/use-highlighted-code.svelte";
+	import { useHighlightedCode } from "#lib/hooks/use-highlighted-code.svelte.ts";
 
-	import * as CodeBlock from "$lib/components/ui/code-block";
+	import * as CodeBlock from "#lib/components/ui/code-block/index.ts";
 
 	const source = `function greet(name: string) {
 	return \`Hello, \${name}!\`;
@@ -360,7 +360,7 @@ For syntax highlighting, also copy `src/lib/hooks/use-highlighted-code.svelte.ts
 
 ### Icons
 
-Add these semantic exports to `$lib/icons.ts`:
+Add these semantic exports to `#lib/icons.ts`:
 
 ```ts
 export { default as CheckIcon } from "@tabler/icons-svelte/icons/check";
@@ -369,7 +369,7 @@ export { default as CopyIcon } from "@tabler/icons-svelte/icons/copy";
 
 ### Shared utilities
 
-Add these exports to `$lib/utils`:
+Add these exports to `#lib/utils.ts`:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

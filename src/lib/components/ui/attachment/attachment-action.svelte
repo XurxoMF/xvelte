@@ -1,12 +1,12 @@
 <script lang="ts" module>
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 
 	/** Props for an Attachment action button. */
 	export type ActionProps = Button.RootProps;
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, variant = "ghost", size = "icon-xs", ...restProps }: ActionProps = $props();
 </script>

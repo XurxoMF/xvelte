@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { useHighlightedCode } from "$lib/hooks/use-highlighted-code.svelte";
+	import { useHighlightedCode } from "#lib/hooks/use-highlighted-code.svelte.ts";
 
-	import * as CodeBlock from "$lib/components/ui/code-block";
+	import * as CodeBlock from "#lib/components/ui/code-block/index.ts";
 
 	let { code, language = "text", class: className }: { code: string; language?: string | undefined; class?: string | undefined } = $props();
 

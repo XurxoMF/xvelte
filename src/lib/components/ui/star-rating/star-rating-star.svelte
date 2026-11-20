@@ -10,9 +10,9 @@
 <script lang="ts">
 	import { RatingGroup } from "bits-ui";
 
-	import { StarIcon } from "$lib/icons";
+	import { StarIcon } from "#lib/icons.ts";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { index, state, class: className, ...restProps }: StarProps = $props();
 </script>

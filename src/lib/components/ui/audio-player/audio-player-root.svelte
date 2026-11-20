@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-	import type { WithElementRef } from "$lib/utils";
+	import type { WithElementRef } from "#lib/utils.ts";
 
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & { src: string };
 </script>
@@ -8,7 +8,7 @@
 <script lang="ts">
 	import { AudioPlayerState, setAudioPlayerContext } from "./audio-player-context.svelte";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), src, class: className, children, ...restProps }: RootProps = $props();
 

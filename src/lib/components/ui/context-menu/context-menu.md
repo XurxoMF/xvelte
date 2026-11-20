@@ -26,7 +26,7 @@ Import all parts from the component's public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as ContextMenu from "$lib/components/ui/context-menu";
+	import * as ContextMenu from "#lib/components/ui/context-menu/index.ts";
 </script>
 ```
 
@@ -62,7 +62,7 @@ Use `GroupHeading` within `Group` when a heading should label that group semanti
 
 ```svelte
 <script lang="ts">
-	import * as ContextMenu from "$lib/components/ui/context-menu";
+	import * as ContextMenu from "#lib/components/ui/context-menu/index.ts";
 
 	function renameFile() {
 		console.info("Rename file");
@@ -99,7 +99,7 @@ Use `GroupHeading` within `Group` when a heading should label that group semanti
 
 ```svelte
 <script lang="ts">
-	import * as ContextMenu from "$lib/components/ui/context-menu";
+	import * as ContextMenu from "#lib/components/ui/context-menu/index.ts";
 
 	let showHiddenFiles = $state(false);
 	let sortOrder = $state("name");
@@ -131,7 +131,7 @@ Checkbox and radio items close the menu after selection by default. Set `closeOn
 
 ```svelte
 <script lang="ts">
-	import * as ContextMenu from "$lib/components/ui/context-menu";
+	import * as ContextMenu from "#lib/components/ui/context-menu/index.ts";
 
 	function moveTo(folder: string) {
 		console.info("Move to", folder);
@@ -160,7 +160,7 @@ Checkbox and radio items close the menu after selection by default. Set `closeOn
 
 ```svelte
 <script lang="ts">
-	import * as ContextMenu from "$lib/components/ui/context-menu";
+	import * as ContextMenu from "#lib/components/ui/context-menu/index.ts";
 
 	let open = $state(false);
 </script>
@@ -440,7 +440,7 @@ pnpm add -D tailwindcss
 
 ### Shared utilities
 
-The wrappers import `cn`, `WithoutChild`, `WithoutChildren`, `WithoutChildrenOrChild`, and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+The wrappers import `cn`, `WithoutChild`, `WithoutChildren`, `WithoutChildrenOrChild`, and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -467,7 +467,7 @@ The package block includes `clsx` and `tailwind-merge`, which `cn` imports.
 
 ### Icons
 
-Context Menu imports these semantic names from `$lib/icons`. Add the exact exports to `src/lib/icons.ts`:
+Context Menu imports these semantic names from `#lib/icons`. Add the exact exports to `src/lib/icons.ts`:
 
 ```ts
 export { default as CheckIcon } from "@tabler/icons-svelte/icons/check";

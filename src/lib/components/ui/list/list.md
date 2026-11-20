@@ -25,7 +25,7 @@ Import the components through the public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as List from "$lib/components/ui/list";
+	import * as List from "#lib/components/ui/list/index.ts";
 </script>
 ```
 
@@ -48,7 +48,7 @@ Root renders `ul` for `variant="unordered"` and `ol` for `variant="ordered"`. It
 
 ```svelte
 <script lang="ts">
-	import * as List from "$lib/components/ui/list";
+	import * as List from "#lib/components/ui/list/index.ts";
 </script>
 
 <List.Root>
@@ -102,7 +102,7 @@ Use a normal string value when application state chooses the semantic list type:
 
 ```svelte
 <script lang="ts">
-	import * as List from "$lib/components/ui/list";
+	import * as List from "#lib/components/ui/list/index.ts";
 
 	let variant = $state<List.RootVariants>("unordered");
 </script>
@@ -142,7 +142,7 @@ Use `rootVariants` when app-owned native list markup needs the same indentation,
 
 ```svelte
 <script lang="ts">
-	import { rootVariants } from "$lib/components/ui/list";
+	import { rootVariants } from "#lib/components/ui/list/index.ts";
 </script>
 
 <ol class={rootVariants({ variant: "ordered", spacing: "compact", class: "text-muted-foreground" })}>
@@ -184,7 +184,7 @@ Do not place a nested `ol` or `ul` directly beside an Item; it belongs inside th
 
 ```svelte
 <script lang="ts">
-	import * as List from "$lib/components/ui/list";
+	import * as List from "#lib/components/ui/list/index.ts";
 
 	const requirements = ["A verified email address", "An active workspace", "Administrator access"];
 </script>

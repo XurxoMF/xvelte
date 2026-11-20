@@ -3,7 +3,7 @@
 
 	import type { VariantProps } from "tailwind-variants";
 
-	import * as Toggle from "$lib/components/ui/toggle";
+	import * as Toggle from "#lib/components/ui/toggle/index.ts";
 
 	export type ToggleVariants = VariantProps<typeof Toggle.rootVariants>["variant"];
 	export type ToggleSizes = VariantProps<typeof Toggle.rootVariants>["size"];
@@ -17,7 +17,7 @@
 <script lang="ts">
 	import * as ToggleGroup from ".";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), value = $bindable(), class: className, size, variant, ...restProps }: ItemProps = $props();
 

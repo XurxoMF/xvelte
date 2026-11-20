@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Field from "$lib/components/ui/field";
-	import * as Slider from "$lib/components/ui/slider";
+	import * as Field from "#lib/components/ui/field/index.ts";
+	import * as Slider from "#lib/components/ui/slider/index.ts";
 
 	let volume = $state(40);
 </script>

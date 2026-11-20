@@ -24,7 +24,7 @@ Use Tabs when several peer panels share one context and only one should be visib
 
 ```svelte
 <script lang="ts">
-	import * as Tabs from "$lib/components/ui/tabs";
+	import * as Tabs from "#lib/components/ui/tabs/index.ts";
 </script>
 ```
 
@@ -49,7 +49,7 @@ Every Trigger value must match one Content value. List contains only tab trigger
 
 ```svelte
 <script lang="ts">
-	import * as Tabs from "$lib/components/ui/tabs";
+	import * as Tabs from "#lib/components/ui/tabs/index.ts";
 
 	let value = $state("overview");
 </script>

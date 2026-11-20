@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Checkbox from "$lib/components/ui/checkbox";
-	import * as Field from "$lib/components/ui/field";
+	import * as Checkbox from "#lib/components/ui/checkbox/index.ts";
+	import * as Field from "#lib/components/ui/field/index.ts";
 
 	let accepted = $state(false);
 </script>

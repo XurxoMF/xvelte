@@ -7,9 +7,9 @@
 <script lang="ts">
 	import { getCompareContext } from "./compare-slider-context";
 
-	import { DragHandleIcon, DragHorizontalIcon } from "$lib/icons";
+	import { DragHandleIcon, DragHorizontalIcon } from "#lib/icons.ts";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { class: className, children }: HandleProps = $props();
 

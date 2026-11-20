@@ -24,7 +24,7 @@ Use Status Dot beside text that explains availability, health, severity, or conn
 
 ```svelte
 <script lang="ts">
-	import * as StatusDot from "$lib/components/ui/status-dot";
+	import * as StatusDot from "#lib/components/ui/status-dot/index.ts";
 </script>
 ```
 
@@ -44,7 +44,7 @@ The component accepts no dedicated text prop; place explanatory text beside it.
 
 ```svelte
 <script lang="ts">
-	import * as StatusDot from "$lib/components/ui/status-dot";
+	import * as StatusDot from "#lib/components/ui/status-dot/index.ts";
 </script>
 
 <span class="inline-flex items-center gap-2">
@@ -85,7 +85,7 @@ Prefer visible labels in real interfaces; the accessible labels above only demon
 
 ```svelte
 <script lang="ts">
-	import { rootVariants } from "$lib/components/ui/status-dot";
+	import { rootVariants } from "#lib/components/ui/status-dot/index.ts";
 </script>
 
 <span class={rootVariants({ variant: "warning", size: "sm" })}></span>

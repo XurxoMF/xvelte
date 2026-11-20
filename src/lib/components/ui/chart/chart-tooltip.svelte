@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
-	import type { WithElementRef, WithoutChildren } from "$lib/utils";
+	import type { WithElementRef, WithoutChildren } from "#lib/utils.ts";
 
 	import * as Chart from ".";
 
@@ -34,9 +34,9 @@
 <script lang="ts">
 	import { getChartContext, Tooltip as TooltipPrimitive } from "layerchart";
 
-	import { getLocale } from "$lib/paraglide/runtime";
+	import { getLocale } from "#lib/paraglide/runtime.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	/** @param value - Tooltip value converted to display text by default. */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

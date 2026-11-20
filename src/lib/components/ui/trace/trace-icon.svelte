@@ -1,14 +1,14 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
 
-	import type { WithElementRef } from "$lib/utils";
+	import type { WithElementRef } from "#lib/utils.ts";
 
 	/** Props accepted by a decorative Trace icon wrapper. */
 	export type IconProps = WithElementRef<HTMLAttributes<HTMLSpanElement>>;
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: IconProps = $props();
 </script>

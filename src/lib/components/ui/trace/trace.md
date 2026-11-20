@@ -26,7 +26,7 @@ Import every part through the component's public `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as Trace from "$lib/components/ui/trace";
+	import * as Trace from "#lib/components/ui/trace/index.ts";
 </script>
 ```
 
@@ -70,9 +70,9 @@ Use the collapsible parts when a row owns supporting output:
 
 ```svelte
 <script lang="ts">
-	import { CheckIcon, LoaderIcon } from "$lib/icons";
+	import { CheckIcon, LoaderIcon } from "#lib/icons.ts";
 
-	import * as Trace from "$lib/components/ui/trace";
+	import * as Trace from "#lib/components/ui/trace/index.ts";
 </script>
 
 <Trace.Root>
@@ -99,9 +99,9 @@ Use the collapsible parts when a row owns supporting output:
 
 ```svelte
 <script lang="ts">
-	import { AlertErrorIcon, CircleIcon, LoaderIcon } from "$lib/icons";
+	import { AlertErrorIcon, CircleIcon, LoaderIcon } from "#lib/icons.ts";
 
-	import * as Trace from "$lib/components/ui/trace";
+	import * as Trace from "#lib/components/ui/trace/index.ts";
 </script>
 
 <Trace.Root>
@@ -126,9 +126,9 @@ Use the collapsible parts when a row owns supporting output:
 
 ```svelte
 <script lang="ts">
-	import { SearchIcon } from "$lib/icons";
+	import { SearchIcon } from "#lib/icons.ts";
 
-	import * as Trace from "$lib/components/ui/trace";
+	import * as Trace from "#lib/components/ui/trace/index.ts";
 </script>
 
 <Trace.Root>
@@ -154,7 +154,7 @@ The detail panel accepts arbitrary content, including lists and Code Block. Keep
 
 ```svelte
 <script lang="ts">
-	import * as Trace from "$lib/components/ui/trace";
+	import * as Trace from "#lib/components/ui/trace/index.ts";
 
 	let open = $state(true);
 </script>
@@ -366,7 +366,7 @@ Icons shown in examples are application choices and are not required by Trace it
 
 ### Utilities
 
-Trace imports `cn`, `WithoutChild`, and `WithElementRef` from `$lib/utils`. Ensure that module includes these exports and their imports:
+Trace imports `cn`, `WithoutChild`, and `WithElementRef` from `#lib/utils.ts`. Ensure that module includes these exports and their imports:
 
 ```ts
 import { type ClassValue, clsx } from "clsx";

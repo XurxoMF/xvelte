@@ -26,7 +26,7 @@ Import the complete component through its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Item from "$lib/components/ui/item";
+	import * as Item from "#lib/components/ui/item/index.ts";
 </script>
 ```
 
@@ -58,7 +58,7 @@ Compose only the parts needed by the content. A complete item can use this struc
 
 ```svelte
 <script lang="ts">
-	import * as Item from "$lib/components/ui/item";
+	import * as Item from "#lib/components/ui/item/index.ts";
 </script>
 
 <Item.Root variant="outline">

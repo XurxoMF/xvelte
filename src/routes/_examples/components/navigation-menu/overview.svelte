@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as NavigationMenu from "$lib/components/ui/navigation-menu";
+	import * as NavigationMenu from "#lib/components/ui/navigation-menu/index.ts";
 </script>
 
 <NavigationMenu.Root aria-label="Primary">

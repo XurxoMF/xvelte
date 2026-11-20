@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Skeleton from "$lib/components/ui/skeleton";
+	import * as Skeleton from "#lib/components/ui/skeleton/index.ts";
 </script>
 
 <div class="flex items-center justify-center gap-3" aria-hidden="true">

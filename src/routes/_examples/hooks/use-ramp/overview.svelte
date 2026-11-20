@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onDestroy } from "svelte";
 
-	import { useRamp } from "$lib/hooks/use-ramp.svelte";
+	import { useRamp } from "#lib/hooks/use-ramp.svelte.ts";
 
 	let value = $state(0);
 	const maximum = 100;

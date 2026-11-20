@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
-	import * as Button from "$lib/components/ui/button";
-	import * as AlertDialog from "$lib/components/ui/alert-dialog";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as AlertDialog from "#lib/components/ui/alert-dialog/index.ts";
 </script>
 
 <div class="flex items-center justify-center">

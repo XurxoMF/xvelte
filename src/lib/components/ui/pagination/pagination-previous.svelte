@@ -5,13 +5,13 @@
 </script>
 
 <script lang="ts">
-	import { ChevronLeftIcon } from "$lib/icons";
+	import { ChevronLeftIcon } from "#lib/icons.ts";
 
-	import * as m from "$lib/paraglide/messages.js";
+	import * as m from "#lib/paraglide/messages.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 
 	let { ref = $bindable(null), class: className, ...restProps }: PreviousProps = $props();
 </script>

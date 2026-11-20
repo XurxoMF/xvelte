@@ -8,12 +8,12 @@
 
 	import { getWalkthroughContext } from "./walkthrough-context";
 
-	import { CloseIcon } from "$lib/icons";
+	import { CloseIcon } from "#lib/icons.ts";
 
-	import * as m from "$lib/paraglide/messages.js";
+	import * as m from "#lib/paraglide/messages.js";
 
-	import * as Button from "$lib/components/ui/button";
-	import * as Dialog from "$lib/components/ui/dialog";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as Dialog from "#lib/components/ui/dialog/index.ts";
 
 	let {
 		targetId,

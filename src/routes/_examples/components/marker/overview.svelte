@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { SearchIcon } from "$lib/icons";
+	import { SearchIcon } from "#lib/icons.ts";
 
-	import * as Marker from "$lib/components/ui/marker";
-	import * as Spinner from "$lib/components/ui/spinner";
+	import * as Marker from "#lib/components/ui/marker/index.ts";
+	import * as Spinner from "#lib/components/ui/spinner/index.ts";
 </script>
 
 <div class="mx-auto flex w-full max-w-sm flex-col gap-6">

@@ -25,8 +25,8 @@ Use Markdown for documentation, component guides, release notes, and other trust
 
 ```svelte
 <script lang="ts">
-	import { UseMarkdown, parseMarkdown } from "$lib/hooks/use-markdown.svelte";
-	import * as Markdown from "$lib/components/ui/markdown";
+	import { UseMarkdown, parseMarkdown } from "#lib/hooks/use-markdown.svelte.ts";
+	import * as Markdown from "#lib/components/ui/markdown/index.ts";
 </script>
 ```
 
@@ -52,9 +52,9 @@ Parse the source first, then pass the standard mdast root to the headless render
 
 ```svelte
 <script lang="ts">
-	import { UseMarkdown } from "$lib/hooks/use-markdown.svelte";
-	import * as Markdown from "$lib/components/ui/markdown";
-	import * as Typography from "$lib/components/ui/typography";
+	import { UseMarkdown } from "#lib/hooks/use-markdown.svelte.ts";
+	import * as Markdown from "#lib/components/ui/markdown/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 
 	let source = $state(`# Installation
 
@@ -179,7 +179,7 @@ Bind the optional Prose container to `UseToc`. Markdown headings already receive
 
 ```svelte
 <script lang="ts">
-	import { UseToc } from "$lib/hooks/use-toc.svelte";
+	import { UseToc } from "#lib/hooks/use-toc.svelte.ts";
 
 	const toc = new UseToc();
 	let content = $state<HTMLDivElement>();
@@ -332,7 +332,7 @@ Copy `src/lib/hooks/use-markdown.svelte.ts`, `src/lib/hooks/use-highlighted-code
 
 Table also requires its documented Scroll Area component. Code Block, Checkbox, and Footnote require the localization setup documented in their guides. Code Block requires the shared Scroll Fade stylesheet documented in its guide.
 
-Markdown imports `AlertErrorIcon`, `AlertInfoIcon`, `AlertSuccessIcon`, and `AlertWarningIcon` from `$lib/icons`:
+Markdown imports `AlertErrorIcon`, `AlertInfoIcon`, `AlertSuccessIcon`, and `AlertWarningIcon` from `#lib/icons.ts`:
 
 ```ts
 export { default as AlertErrorIcon } from "@tabler/icons-svelte/icons/alert-octagon";
@@ -341,7 +341,7 @@ export { default as AlertSuccessIcon } from "@tabler/icons-svelte/icons/circle-c
 export { default as AlertWarningIcon } from "@tabler/icons-svelte/icons/alert-triangle";
 ```
 
-Markdown itself requires no `$lib/utils` export, context, attachment, image asset, font, CSS variable, keyframe, or additional global stylesheet rule. Its required components have their own documented utility and theme requirements.
+Markdown itself requires no `#lib/utils.ts` export, context, attachment, image asset, font, CSS variable, keyframe, or additional global stylesheet rule. Its required components have their own documented utility and theme requirements.
 
 ---
 

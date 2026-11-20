@@ -26,7 +26,7 @@ Import the component from its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Breadcrumb from "$lib/components/ui/breadcrumb";
+	import * as Breadcrumb from "#lib/components/ui/breadcrumb/index.ts";
 </script>
 ```
 
@@ -58,7 +58,7 @@ A complete breadcrumb follows this hierarchy:
 
 ```svelte
 <script lang="ts">
-	import * as Breadcrumb from "$lib/components/ui/breadcrumb";
+	import * as Breadcrumb from "#lib/components/ui/breadcrumb/index.ts";
 </script>
 
 <Breadcrumb.Root>
@@ -138,8 +138,8 @@ The ellipsis has no built-in expansion behavior. Compose a separately accessible
 
 ```svelte
 <script lang="ts">
-	import * as Breadcrumb from "$lib/components/ui/breadcrumb";
-	import AppLink from "$lib/components/app-link.svelte";
+	import * as Breadcrumb from "#lib/components/ui/breadcrumb/index.ts";
+	import AppLink from "#lib/components/app-link.svelte";
 </script>
 
 <Breadcrumb.Link href="/account">
@@ -328,7 +328,7 @@ pnpm add -D tailwindcss @inlang/paraglide-js
 
 ### Shared utilities
 
-The component imports `cn`, `WithElementRef`, and `WithoutChildren` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+The component imports `cn`, `WithElementRef`, and `WithoutChildren` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -348,14 +348,14 @@ export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
 
 The package block above includes the `clsx` and `tailwind-merge` imports used by this code.
 
-The following semantic exports must exist in `$lib/icons`:
+The following semantic exports must exist in `#lib/icons.ts`:
 
 ```ts
 export { default as ChevronRightIcon } from "@tabler/icons-svelte/icons/chevron-right";
 export { default as EllipsisIcon } from "@tabler/icons-svelte/icons/dots";
 ```
 
-Copy the two exact message IDs and English values listed in [Localization](#localization) into your Paraglide message file and compile them so `$lib/paraglide/messages.js` exports both functions. They are not duplicated here. If your project uses another localization system, adapt the two imports and calls while preserving localized defaults.
+Copy the two exact message IDs and English values listed in [Localization](#localization) into your Paraglide message file and compile them so `#lib/paraglide/messages.js` exports both functions. They are not duplicated here. If your project uses another localization system, adapt the two imports and calls while preserving localized defaults.
 
 Your global stylesheet must import Tailwind and expose the two semantic colors used by Breadcrumb:
 

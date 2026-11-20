@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Field from "$lib/components/ui/field";
-	import * as InputGroup from "$lib/components/ui/input-group";
+	import * as Field from "#lib/components/ui/field/index.ts";
+	import * as InputGroup from "#lib/components/ui/input-group/index.ts";
 
 	let domain = $state("");
 </script>

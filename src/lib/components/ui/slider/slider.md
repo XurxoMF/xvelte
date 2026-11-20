@@ -24,7 +24,7 @@ Use Slider when people benefit from adjusting a value spatially, such as volume,
 
 ```svelte
 <script lang="ts">
-	import * as Slider from "$lib/components/ui/slider";
+	import * as Slider from "#lib/components/ui/slider/index.ts";
 </script>
 ```
 
@@ -48,7 +48,7 @@ The local wrapper removes Bits UI's `children` and `child` snippets, so callers 
 
 ```svelte
 <script lang="ts">
-	import * as Slider from "$lib/components/ui/slider";
+	import * as Slider from "#lib/components/ui/slider/index.ts";
 
 	let volume = $state(40);
 </script>
@@ -65,7 +65,7 @@ The local wrapper removes Bits UI's `children` and `child` snippets, so callers 
 
 ```svelte
 <script lang="ts">
-	import * as Slider from "$lib/components/ui/slider";
+	import * as Slider from "#lib/components/ui/slider/index.ts";
 
 	let priceRange = $state([20, 80]);
 </script>
@@ -80,7 +80,7 @@ Bits UI renders one thumb for every array entry and sorts values by default when
 
 ```svelte
 <script lang="ts">
-	import * as Slider from "$lib/components/ui/slider";
+	import * as Slider from "#lib/components/ui/slider/index.ts";
 
 	let position = $state(32);
 	let buffered = $state(68);

@@ -3,8 +3,8 @@
 
 	import type { DateValue } from "@internationalized/date";
 
-	import * as Calendar from "$lib/components/ui/calendar";
-	import * as Field from "$lib/components/ui/field";
+	import * as Calendar from "#lib/components/ui/calendar/index.ts";
+	import * as Field from "#lib/components/ui/field/index.ts";
 
 	let value = $state<DateValue | undefined>(today(getLocalTimeZone()));
 </script>

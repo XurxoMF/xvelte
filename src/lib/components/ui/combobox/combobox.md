@@ -27,7 +27,7 @@ Import all component parts from the component's public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Combobox from "$lib/components/ui/combobox";
+	import * as Combobox from "#lib/components/ui/combobox/index.ts";
 </script>
 ```
 
@@ -68,7 +68,7 @@ Keep every state-aware part under the same `Root`. `Trigger`, `Input`, and `Item
 
 ```svelte
 <script lang="ts">
-	import * as Combobox from "$lib/components/ui/combobox";
+	import * as Combobox from "#lib/components/ui/combobox/index.ts";
 
 	const frameworks = [
 		{ value: "sveltekit", label: "SvelteKit" },
@@ -111,7 +111,7 @@ Set `type="multiple"` and bind an initialized string array. Selecting an item to
 
 ```svelte
 <script lang="ts">
-	import * as Combobox from "$lib/components/ui/combobox";
+	import * as Combobox from "#lib/components/ui/combobox/index.ts";
 
 	const permissions = [
 		{ value: "read", label: "Read" },
@@ -528,7 +528,7 @@ Keep `combobox-context.svelte.ts` in the Combobox folder; its complete contents 
 
 ### Shared utilities
 
-Combobox and its required UI components import `cn`, `WithoutChild`, `WithoutChildren`, `WithoutChildrenOrChild`, and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+Combobox and its required UI components import `cn`, `WithoutChild`, `WithoutChildren`, `WithoutChildrenOrChild`, and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -555,7 +555,7 @@ The package block includes `clsx` and `tailwind-merge`, which `cn` imports.
 
 ### Icons
 
-Combobox and the complete Command and Dialog component folders import these semantic names from `$lib/icons`. Add the exact exports to `src/lib/icons.ts`:
+Combobox and the complete Command and Dialog component folders import these semantic names from `#lib/icons`. Add the exact exports to `src/lib/icons.ts`:
 
 ```ts
 export { default as CheckIcon } from "@tabler/icons-svelte/icons/check";
@@ -568,7 +568,7 @@ Keep these aliases in the shared icon facade instead of importing Tabler directl
 
 ### Localization setup
 
-Keep the message entries documented in [Localization](#localization) in each locale and compile the Paraglide output to `src/lib/paraglide`. Combobox and its required components import generated functions from `$lib/paraglide/messages.js`; no generated localization file belongs inside the component folders.
+Keep the message entries documented in [Localization](#localization) in each locale and compile the Paraglide output to `src/lib/paraglide`. Combobox and its required components import generated functions from `#lib/paraglide/messages.js`; no generated localization file belongs inside the component folders.
 
 ### Global CSS
 

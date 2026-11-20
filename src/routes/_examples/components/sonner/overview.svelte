@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { AlertErrorIcon, AlertInfoIcon, AlertSuccessIcon, AlertWarningIcon, CircleIcon, LoaderIcon } from "$lib/icons";
+	import { AlertErrorIcon, AlertInfoIcon, AlertSuccessIcon, AlertWarningIcon, CircleIcon, LoaderIcon } from "#lib/icons.ts";
 
-	import * as Button from "$lib/components/ui/button";
-	import * as Sonner from "$lib/components/ui/sonner";
-	import * as Typography from "$lib/components/ui/typography";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as Sonner from "#lib/components/ui/sonner/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 </script>
 
 <div class="flex w-full flex-col gap-4">

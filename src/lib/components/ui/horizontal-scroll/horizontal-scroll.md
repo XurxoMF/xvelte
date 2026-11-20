@@ -26,7 +26,7 @@ Import the component through its public `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as HorizontalScroll from "$lib/components/ui/horizontal-scroll";
+	import * as HorizontalScroll from "#lib/components/ui/horizontal-scroll/index.ts";
 </script>
 ```
 
@@ -54,7 +54,7 @@ This complete example renders an accessible, labeled row of project cards:
 
 ```svelte
 <script lang="ts">
-	import * as HorizontalScroll from "$lib/components/ui/horizontal-scroll";
+	import * as HorizontalScroll from "#lib/components/ui/horizontal-scroll/index.ts";
 
 	const projects = [
 		{ name: "Storefront", status: "Ready for review" },
@@ -102,7 +102,7 @@ Keep controls on one line and expose their pressed state with native button sema
 
 ```svelte
 <script lang="ts">
-	import * as HorizontalScroll from "$lib/components/ui/horizontal-scroll";
+	import * as HorizontalScroll from "#lib/components/ui/horizontal-scroll/index.ts";
 
 	const categories = ["All", "Unread", "Favorites", "Archives", "Social", "Updates"];
 	let selected = $state("All");
@@ -130,7 +130,7 @@ Bind `ref` when the interface needs an explicit keyboard-accessible way to move 
 
 ```svelte
 <script lang="ts">
-	import * as HorizontalScroll from "$lib/components/ui/horizontal-scroll";
+	import * as HorizontalScroll from "#lib/components/ui/horizontal-scroll/index.ts";
 
 	let viewport = $state<HTMLDivElement | null>(null);
 
@@ -291,7 +291,7 @@ Copy the complete `src/lib/components/ui/horizontal-scroll` component folder:
 
 ### Shared utilities
 
-Root imports `cn` and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when absent:
+Root imports `cn` and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when absent:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

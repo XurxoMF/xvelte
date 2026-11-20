@@ -40,7 +40,7 @@ pnpm add -D svelte
 
 ```svelte
 <script lang="ts">
-	import { useRamp, type UseRampOptions } from "$lib/hooks/use-ramp.svelte";
+	import { useRamp, type UseRampOptions } from "#lib/hooks/use-ramp.svelte.ts";
 </script>
 ```
 
@@ -54,7 +54,7 @@ The file exports `useRamp` and `UseRampOptions`. Its returned object has an infe
 <script lang="ts">
 	import { onDestroy } from "svelte";
 
-	import { useRamp } from "$lib/hooks/use-ramp.svelte";
+	import { useRamp } from "#lib/hooks/use-ramp.svelte.ts";
 
 	let value = $state(0);
 	const maximum = 100;
@@ -181,7 +181,7 @@ Labels, values, units, validation, and feedback are supplied and translated by t
 
 ## Dependencies
 
-`useRamp` requires only Svelte 5 runes and `use-ramp.svelte.ts`. The installation command is under Installation. It requires no Runed package, CSS, icons, `$lib/utils` exports, xvelte components, other hooks, attachments, contexts, or localization setup.
+`useRamp` requires only Svelte 5 runes and `use-ramp.svelte.ts`. The installation command is under Installation. It requires no Runed package, CSS, icons, `#lib/utils.ts` exports, xvelte components, other hooks, attachments, contexts, or localization setup.
 
 ---
 

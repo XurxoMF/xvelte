@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	import type { Definition, FootnoteDefinition, FootnoteReference, Image, ImageReference, PhrasingContent, RootContent } from "mdast";
-	import type { MarkdownAlertKind, MarkdownAst } from "$lib/hooks/use-markdown.svelte";
+	import type { MarkdownAlertKind, MarkdownAst } from "#lib/hooks/use-markdown.svelte.ts";
 
 	/** HTML handling policy used for raw mdast HTML nodes. */
 	export type HtmlMode = "sanitize" | "trusted";
@@ -28,17 +28,17 @@
 
 	import MarkdownCodeBlock from "./markdown-code-block.svelte";
 
-	import { AlertErrorIcon, AlertInfoIcon, AlertSuccessIcon, AlertWarningIcon } from "$lib/icons";
+	import { AlertErrorIcon, AlertInfoIcon, AlertSuccessIcon, AlertWarningIcon } from "#lib/icons.ts";
 
-	import * as m from "$lib/paraglide/messages.js";
+	import * as m from "#lib/paraglide/messages.js";
 
-	import * as Alert from "$lib/components/ui/alert";
-	import * as Checkbox from "$lib/components/ui/checkbox";
-	import * as Footnote from "$lib/components/ui/footnote";
-	import * as List from "$lib/components/ui/list";
-	import * as Separator from "$lib/components/ui/separator";
-	import * as Table from "$lib/components/ui/table";
-	import * as Typography from "$lib/components/ui/typography";
+	import * as Alert from "#lib/components/ui/alert/index.ts";
+	import * as Checkbox from "#lib/components/ui/checkbox/index.ts";
+	import * as Footnote from "#lib/components/ui/footnote/index.ts";
+	import * as List from "#lib/components/ui/list/index.ts";
+	import * as Separator from "#lib/components/ui/separator/index.ts";
+	import * as Table from "#lib/components/ui/table/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 
 	let { ast, showCopyButton = true, leadingIntroduction = true, html = "sanitize" }: RootProps = $props();
 	const rootId = $props.id();

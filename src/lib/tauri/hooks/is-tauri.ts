@@ -1,4 +1,4 @@
-import { browser } from "$app/environment";
+import { browser } from "$app/env";
 import { isTauri as isTauriWebview } from "@tauri-apps/api/core";
 
 /** Identifies the current environment for runtime names and explicit equality checks. */

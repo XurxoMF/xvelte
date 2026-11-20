@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-	import type { WithElementRef } from "$lib/utils";
+	import type { WithElementRef } from "#lib/utils.ts";
 
 	export type SliderProps = WithElementRef<HTMLAttributes<HTMLDivElement>>;
 </script>
@@ -8,7 +8,7 @@
 <script lang="ts">
 	import { getAudioPlayerContext } from "./audio-player-context.svelte";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, ...restProps }: SliderProps = $props();
 	const ctx = getAudioPlayerContext();

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { AlertErrorIcon, CloseIcon, FileIcon } from "$lib/icons";
+	import { AlertErrorIcon, CloseIcon, FileIcon } from "#lib/icons.ts";
 
-	import * as Attachment from "$lib/components/ui/attachment";
-	import * as Spinner from "$lib/components/ui/spinner";
+	import * as Attachment from "#lib/components/ui/attachment/index.ts";
+	import * as Spinner from "#lib/components/ui/spinner/index.ts";
 
 	const files = [
 		{ name: "briefing-notes.pdf", metadata: "PDF · 1.4 MB" },

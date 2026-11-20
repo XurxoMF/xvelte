@@ -1,9 +1,9 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
 
-	import type { WithoutChild } from "$lib/utils";
+	import type { WithoutChild } from "#lib/utils.ts";
 
-	import * as Command from "$lib/components/ui/command";
+	import * as Command from "#lib/components/ui/command/index.ts";
 
 	/** Props for a selectable Combobox option. */
 	export type ItemProps = Omit<WithoutChild<Command.ItemProps>, "value" | "onSelect"> & {
@@ -19,9 +19,9 @@
 <script lang="ts">
 	import { getComboboxContext } from "./combobox-context.svelte";
 
-	import { CheckIcon } from "$lib/icons";
+	import { CheckIcon } from "#lib/icons.ts";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), value, onSelect, disabled = false, class: className, children, ...restProps }: ItemProps = $props();
 

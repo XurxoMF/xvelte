@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { IsMobile } from "$lib/hooks/is-mobile.svelte";
+	import { IsMobile } from "#lib/hooks/is-mobile.svelte.ts";
 
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 
 	const mobile = new IsMobile();
 </script>

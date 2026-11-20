@@ -26,7 +26,7 @@ Import all parts from the component's public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Field from "$lib/components/ui/field";
+	import * as Field from "#lib/components/ui/field/index.ts";
 </script>
 ```
 
@@ -55,7 +55,7 @@ Field does not render an input, select, textarea, checkbox, radio, switch, or bu
 
 ```svelte
 <script lang="ts">
-	import * as Field from "$lib/components/ui/field";
+	import * as Field from "#lib/components/ui/field/index.ts";
 
 	let username = $state("");
 </script>
@@ -84,7 +84,7 @@ Set invalid state on both the Field and the actual form control, then reference 
 
 ```svelte
 <script lang="ts">
-	import * as Field from "$lib/components/ui/field";
+	import * as Field from "#lib/components/ui/field/index.ts";
 
 	let email = $state("");
 	let submitted = $state(false);
@@ -126,7 +126,7 @@ Use Set and Legend for controls that form one semantic question or section:
 
 ```svelte
 <script lang="ts">
-	import * as Field from "$lib/components/ui/field";
+	import * as Field from "#lib/components/ui/field/index.ts";
 
 	let street = $state("");
 	let city = $state("");
@@ -158,7 +158,7 @@ Content groups explanatory text so it can sit beside a control. Responsive orien
 
 ```svelte
 <script lang="ts">
-	import * as Field from "$lib/components/ui/field";
+	import * as Field from "#lib/components/ui/field/index.ts";
 
 	let notifications = $state(true);
 </script>
@@ -183,7 +183,7 @@ Wrap a direct Field child in Label to activate the local card layout. Add the co
 
 ```svelte
 <script lang="ts">
-	import * as Field from "$lib/components/ui/field";
+	import * as Field from "#lib/components/ui/field/index.ts";
 
 	let plan = $state("monthly");
 </script>
@@ -241,7 +241,7 @@ The exported `rootVariants` function applies the same layout to app-owned markup
 
 ```svelte
 <script lang="ts">
-	import { rootVariants } from "$lib/components/ui/field";
+	import { rootVariants } from "#lib/components/ui/field/index.ts";
 </script>
 
 <section class={rootVariants({ orientation: "horizontal", class: "items-start" })}>
@@ -468,7 +468,7 @@ Field.Label imports Label through its public `index.ts`. Field.Separator imports
 
 ### Shared utilities
 
-Field and its required components import `cn` and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+Field and its required components import `cn` and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -535,7 +535,7 @@ No animation package, keyframe, icon style, shared component stylesheet, or mode
 
 ### Icons
 
-Field, Label, and Separator import no icons. No icon package or `$lib/icons` export is required.
+Field, Label, and Separator import no icons. No icon package or `#lib/icons.ts` export is required.
 
 ### Other requirements
 

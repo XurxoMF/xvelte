@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Footnote from "$lib/components/ui/footnote";
+	import * as Footnote from "#lib/components/ui/footnote/index.ts";
 </script>
 
 <p>

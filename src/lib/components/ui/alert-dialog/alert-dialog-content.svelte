@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import { AlertDialog as AlertDialogPrimitive } from "bits-ui";
 
-	import type { WithoutChild, WithoutChildrenOrChild } from "$lib/utils";
+	import type { WithoutChild, WithoutChildrenOrChild } from "#lib/utils.ts";
 
 	import * as Dialog from ".";
 
@@ -12,7 +12,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, size = "default", portalProps, ...restProps }: ContentProps = $props();
 </script>

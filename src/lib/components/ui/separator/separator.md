@@ -24,7 +24,7 @@ Use Separator to clarify groups inside menus, toolbars, cards, or layouts. Do no
 
 ```svelte
 <script lang="ts">
-	import * as Separator from "$lib/components/ui/separator";
+	import * as Separator from "#lib/components/ui/separator/index.ts";
 </script>
 ```
 
@@ -44,7 +44,7 @@ It is horizontal and decorative by default. Set `orientation="vertical"` inside 
 
 ```svelte
 <script lang="ts">
-	import * as Separator from "$lib/components/ui/separator";
+	import * as Separator from "#lib/components/ui/separator/index.ts";
 </script>
 
 <div class="space-y-3">
@@ -171,7 +171,7 @@ The color values may be replaced by the app's theme. No global keyframe, custom 
 
 ### Shared utilities
 
-Copy `cn()` from `$lib/utils`:
+Copy `cn()` from `#lib/utils.ts`:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

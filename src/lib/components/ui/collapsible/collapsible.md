@@ -26,7 +26,7 @@ Import the component from its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as Collapsible from "$lib/components/ui/collapsible";
+	import * as Collapsible from "#lib/components/ui/collapsible/index.ts";
 </script>
 ```
 
@@ -49,7 +49,7 @@ Compose the public parts beneath one root:
 
 ```svelte
 <script lang="ts">
-	import * as Collapsible from "$lib/components/ui/collapsible";
+	import * as Collapsible from "#lib/components/ui/collapsible/index.ts";
 </script>
 
 <Collapsible.Root>
@@ -71,7 +71,7 @@ Bind `open` when application code needs to read or change the current state:
 
 ```svelte
 <script lang="ts">
-	import * as Collapsible from "$lib/components/ui/collapsible";
+	import * as Collapsible from "#lib/components/ui/collapsible/index.ts";
 
 	let open = $state(false);
 </script>
@@ -123,7 +123,7 @@ The local `Content` forwards Bits UI's `forceMount` and `child` snippet API. Com
 <script lang="ts">
 	import { fade } from "svelte/transition";
 
-	import * as Collapsible from "$lib/components/ui/collapsible";
+	import * as Collapsible from "#lib/components/ui/collapsible/index.ts";
 </script>
 
 <Collapsible.Root>
@@ -258,7 +258,7 @@ npm install bits-ui
 pnpm add bits-ui
 ```
 
-No Tailwind CSS installation, global stylesheet import, semantic variable, `@theme` mapping, keyframe, animation stylesheet, font, icon package, `$lib/icons` export, `$lib/utils` helper, other xvelte component, hook, attachment, context module, localization message, or shared style file is required.
+No Tailwind CSS installation, global stylesheet import, semantic variable, `@theme` mapping, keyframe, animation stylesheet, font, icon package, `#lib/icons` export, `$lib/utils` helper, other xvelte component, hook, attachment, context module, localization message, or shared style file is required.
 
 The Svelte transition example uses the framework's built-in `svelte/transition` module and requires no additional package. If the app adds Tailwind classes, icons, or an xvelte Button to its own trigger presentation, install and configure those application choices separately by following their component guides.
 

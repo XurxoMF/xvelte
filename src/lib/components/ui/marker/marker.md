@@ -24,7 +24,7 @@ Inline conversation statuses, system notes, bordered rows, labeled separators, d
 
 ```svelte
 <script lang="ts">
-	import * as Marker from "$lib/components/ui/marker";
+	import * as Marker from "#lib/components/ui/marker/index.ts";
 </script>
 ```
 
@@ -73,9 +73,9 @@ The divider lines are decorative pseudo-elements. Do not add `role="separator"` 
 
 ```svelte
 <script lang="ts">
-	import { FileIcon } from "$lib/icons";
+	import { FileIcon } from "#lib/icons.ts";
 
-	import * as Marker from "$lib/components/ui/marker";
+	import * as Marker from "#lib/components/ui/marker/index.ts";
 </script>
 
 <Marker.Root variant="border">
@@ -185,7 +185,7 @@ pnpm add clsx tailwind-merge tailwind-variants
 pnpm add -D tailwindcss
 ```
 
-Marker requires `cn` and `WithElementRef` from `$lib/utils`:
+Marker requires `cn` and `WithElementRef` from `#lib/utils.ts`:
 
 ```ts
 import { clsx } from "clsx";

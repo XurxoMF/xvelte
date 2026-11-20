@@ -7,7 +7,7 @@
 - Parts of the collection are inspired by or adapted from projects such as shadcn-svelte, more-shadcn-svelte, and shadcn-svelte-extras, but local behavior, conventions, and use cases define the project rather than compatibility with any upstream collection.
 - Reusable code lives in `src/lib`; the preview app lives in `src/routes`.
 - UI primitives live in `src/lib/components/ui/<component>` and hooks in `src/lib/hooks`.
-- Tauri-specific reusable classes and utilities live in `src/lib/tauri` and are imported through `$lib/tauri/*`.
+- Tauri-specific reusable classes and utilities live in `src/lib/tauri` and are imported through `#lib/tauri/*`.
 - Global tokens, Tailwind configuration, fonts, light/dark values, and app layout rules live in `src/routes/layout.css`.
 - `src/lib/icons.ts` is the only icon-library facade. Components must use semantic icon names from it.
 - Keep reusable code independent from route or application components such as `App.svelte`.
@@ -25,17 +25,17 @@
 - Separate every non-empty import group with exactly one blank line and order groups as follows:
   1.  Value imports from Svelte/framework modules, Node built-ins, and installed packages such as `svelte`, `bits-ui`, or `shiki`.
   2.  Type-only imports from any source except xvelte component namespaces.
-  3.  Local files, other standalone `$lib` modules, stylesheets, fonts, and other assets.
-  4.  `$lib/icons`.
-  5.  `$lib/paraglide`.
-  6.  `$lib/utils`.
-  7.  `$lib/hooks`.
-  8.  `$lib/attachments`.
-  9.  `$lib/components`.
+  3.  Local files, other standalone `#lib` modules, stylesheets, fonts, and other assets.
+  4.  `#lib/icons.ts`.
+  5.  `#lib/paraglide`.
+  6.  `#lib/utils.ts`.
+  7.  `#lib/hooks`.
+  8.  `#lib/attachments`.
+  9.  `#lib/components`.
 - Preserve the existing order inside each group unless dependencies between side-effect imports require a specific order.
-- Always import shared utilities through `$lib/utils`; never use a relative path to `utils` or add `.js` to that alias.
-- Import icons only from `$lib/icons`, using library-neutral names such as `SidebarIcon`, not vendor names such as `LayoutSidebar`.
-- Import every public xvelte component through its directory `index.ts` as a namespace, including type-only or helper-only usage: `import * as Dialog from "$lib/components/ui/dialog"`. Refer to every export through that namespace, such as `Dialog.Root`, `Dialog.RootProps`, or `Dialog.rootVariants`; do not destructure component imports or use direct component aliases.
+- Always import shared utilities through `#lib/utils`; never use a relative path to `utils` or add `.js` to that alias.
+- Import icons only from `#lib/icons`, using library-neutral names such as `SidebarIcon`, not vendor names such as `LayoutSidebar`.
+- Import every public xvelte component through its directory `index.ts` as a namespace, including type-only or helper-only usage: `import * as Dialog from "#lib/components/ui/dialog"`. Refer to every export through that namespace, such as `Dialog.Root`, `Dialog.RootProps`, or `Dialog.rootVariants`; do not destructure component imports or use direct component aliases.
 - When one compound component renders another public part from the same directory, prefer its `.` namespace over a direct relative component import.
 - Split mixed value/type declarations so non-component `import type` declarations remain in their own group. Component namespaces remain normal namespace imports even when only their types are referenced.
 
@@ -90,7 +90,7 @@
   9. `Dependencies`
   10. `Credits`, when required
   11. `File organization`
-- `Import` must show the public `$lib` barrel import and list exported public types, variants, helpers, or other relevant symbols. Never teach imports from private implementation files.
+- `Import` must show the public `#lib` barrel import and list exported public types, variants, helpers, or other relevant symbols. Never teach imports from private implementation files.
 - `Anatomy` must show the required component composition or, for a simple component, briefly explain its rendered structure and relationship to related components.
 - `Basic usage` must be a minimal, complete, copyable Svelte 5 example. `Examples` must add only focused scenarios needed for correct real-world use, such as controlled state, multiple modes, disabled behavior, composition, localization, or important edge cases. Use realistic accessible copy and current project conventions.
 - `Public API` must document every xvelte-owned component part, prop, type, variant, default, binding, snippet, callback, behavioral adaptation, and non-obvious prop or attribute forwarding rule. Use compact tables where they improve scanning. When the component wraps an external primitive, summarize only the important inherited options and link to the exact upstream component/API reference instead of duplicating its complete API. State that the component's `index.ts` and exported types are the source of truth.
@@ -101,7 +101,7 @@
   - Package names and copyable installation commands for Bun, npm, and pnpm. Put every package-installation command in one `sh` code block, grouped by package manager; within each group, list runtime dependencies first and development dependencies second. Always use the short `-D` flag for development dependencies, never `--dev` or `--save-dev`.
   - Required global stylesheet imports, semantic variables, `@theme` mappings, keyframes, or other code from `src/routes/layout.css`. Include only the minimal tokens and code the component actually uses, and explain which values users may replace with their own theme.
   - Every required semantic export from `src/lib/icons.ts` and its backing icon package.
-  - Required exports from `$lib/utils`, including their package dependencies.
+  - Required exports from `#lib/utils.ts`, including their package dependencies.
   - Required xvelte components, hooks, attachments, context modules, localization messages, shared styles, or other files that must be copied or configured.
   - An explicit statement when a dependency category does not apply, so a reader or agent does not need to infer whether it was overlooked.
 - Whenever `Dependencies` instructs the reader to add exports, configuration, helpers, or other code to a shared or source file, include the exact copyable code block immediately in that section; never name required code without showing it. Localization message keys and values need not be duplicated when they are already listed completely in `Localization`. For a required standalone internal file, include its complete contents. For a required UI component, list its exact folder and source files, including its `<slug>.md` guide, then tell readers to follow that guide instead of duplicating it.

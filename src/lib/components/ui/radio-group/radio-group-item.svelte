@@ -1,15 +1,15 @@
 <script lang="ts" module>
 	import { RadioGroup as RadioGroupPrimitive } from "bits-ui";
 
-	import type { WithoutChildrenOrChild } from "$lib/utils";
+	import type { WithoutChildrenOrChild } from "#lib/utils.ts";
 
 	export type ItemProps = WithoutChildrenOrChild<RadioGroupPrimitive.ItemProps>;
 </script>
 
 <script lang="ts">
-	import { CircleIcon } from "$lib/icons";
+	import { CircleIcon } from "#lib/icons.ts";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, ...restProps }: ItemProps = $props();
 </script>

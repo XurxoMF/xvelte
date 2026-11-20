@@ -1,7 +1,7 @@
 <script lang="ts" module>
-	import type { WithoutChild } from "$lib/utils";
+	import type { WithoutChild } from "#lib/utils.ts";
 
-	import * as Command from "$lib/components/ui/command";
+	import * as Command from "#lib/components/ui/command/index.ts";
 
 	/** Props for the Combobox search input. */
 	export type InputProps = WithoutChild<Command.InputProps>;
@@ -10,9 +10,9 @@
 <script lang="ts">
 	import { getComboboxContext } from "./combobox-context.svelte";
 
-	import * as m from "$lib/paraglide/messages.js";
+	import * as m from "#lib/paraglide/messages.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let {
 		ref = $bindable(null),

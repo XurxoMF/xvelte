@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Canvas from "$lib/components/ui/canvas";
-	import * as Typography from "$lib/components/ui/typography";
+	import * as Canvas from "#lib/components/ui/canvas/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 </script>
 
 <div class="h-96 overflow-hidden rounded-lg border">

@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	import type { WithElementRef } from "$lib/utils";
+	import type { WithElementRef } from "#lib/utils.ts";
 
 	import * as Carousel from ".";
 
@@ -9,9 +9,9 @@
 <script lang="ts">
 	import { untrack } from "svelte";
 
-	import * as m from "$lib/paraglide/messages.js";
+	import * as m from "#lib/paraglide/messages.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let {
 		ref = $bindable(null),

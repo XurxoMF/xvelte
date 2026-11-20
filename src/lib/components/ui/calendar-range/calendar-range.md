@@ -26,7 +26,7 @@ Import the component from its public `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as CalendarRange from "$lib/components/ui/calendar-range";
+	import * as CalendarRange from "#lib/components/ui/calendar-range/index.ts";
 </script>
 ```
 
@@ -67,7 +67,7 @@ Unlike the underlying Bits UI Root, the local Root does not accept `children` or
 	import { getLocalTimeZone, today } from "@internationalized/date";
 	import type { DateRange } from "bits-ui";
 
-	import * as CalendarRange from "$lib/components/ui/calendar-range";
+	import * as CalendarRange from "#lib/components/ui/calendar-range/index.ts";
 
 	const start = today(getLocalTimeZone());
 	let value = $state<DateRange>({
@@ -95,7 +95,7 @@ Both fields start undefined when no value is supplied. `onStartValueChange` and 
 <script lang="ts">
 	import type { DateRange } from "bits-ui";
 
-	import * as CalendarRange from "$lib/components/ui/calendar-range";
+	import * as CalendarRange from "#lib/components/ui/calendar-range/index.ts";
 
 	let value = $state<DateRange>({ start: undefined, end: undefined });
 	let instruction = $state("Choose a start date.");
@@ -135,8 +135,8 @@ Use `excludeDisabled` when a completed range must not cross a disabled date:
 <script lang="ts">
 	import { isWeekend } from "@internationalized/date";
 
-	import { getLocale } from "$lib/paraglide/runtime";
-	import * as CalendarRange from "$lib/components/ui/calendar-range";
+	import { getLocale } from "#lib/paraglide/runtime.js";
+	import * as CalendarRange from "#lib/components/ui/calendar-range/index.ts";
 </script>
 
 <CalendarRange.Root calendarLabel="Working-day range" isDateDisabled={(date) => isWeekend(date, getLocale())} excludeDisabled />
@@ -427,7 +427,7 @@ Copy the complete `src/lib/components/ui/button` component:
 
 ### Shared utilities
 
-Calendar Range imports `cn`, `WithElementRef`, and `WithoutChildrenOrChild` from `$lib/utils`; Button uses `cn` and `WithElementRef`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+Calendar Range imports `cn`, `WithElementRef`, and `WithoutChildrenOrChild` from `#lib/utils`; Button uses `cn` and `WithElementRef`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -454,7 +454,7 @@ The package block includes `clsx` and `tailwind-merge`, which these helpers impo
 
 ### Paraglide locale
 
-Configure and compile Paraglide so `$lib/paraglide/runtime.js` exports `getLocale`. Calendar Range has no message keys, but Root reads that generated runtime when `locale` is omitted. Passing `locale` remains the per-calendar override.
+Configure and compile Paraglide so `#lib/paraglide/runtime.js` exports `getLocale`. Calendar Range has no message keys, but Root reads that generated runtime when `locale` is omitted. Passing `locale` remains the per-calendar override.
 
 ### Icons
 

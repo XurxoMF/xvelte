@@ -22,7 +22,7 @@ Navigation Menu provides an accessible collection of links for a website's prima
 
 ```svelte
 <script lang="ts">
-	import * as NavigationMenu from "$lib/components/ui/navigation-menu";
+	import * as NavigationMenu from "#lib/components/ui/navigation-menu/index.ts";
 </script>
 ```
 
@@ -64,7 +64,7 @@ The installed Bits UI primitive supports nested `Sub` menus, but xvelte does not
 
 ```svelte
 <script lang="ts">
-	import * as NavigationMenu from "$lib/components/ui/navigation-menu";
+	import * as NavigationMenu from "#lib/components/ui/navigation-menu/index.ts";
 </script>
 
 <NavigationMenu.Root aria-label="Primary">
@@ -108,7 +108,7 @@ Set `active` on the current link. Bits UI adds `aria-current="page"` and xvelte 
 
 ```svelte
 <script lang="ts">
-	import * as NavigationMenu from "$lib/components/ui/navigation-menu";
+	import * as NavigationMenu from "#lib/components/ui/navigation-menu/index.ts";
 
 	let pathname = $state("/docs");
 </script>
@@ -133,7 +133,7 @@ The local `Root.value` prop is not bindable through the wrapper. Control it with
 
 ```svelte
 <script lang="ts">
-	import * as NavigationMenu from "$lib/components/ui/navigation-menu";
+	import * as NavigationMenu from "#lib/components/ui/navigation-menu/index.ts";
 
 	let openItem = $state("");
 </script>
@@ -401,7 +401,7 @@ No additional Navigation Menu keyframes or shared stylesheet files are required.
 
 ### Icons
 
-Add the semantic trigger icon export to `$lib/icons.ts`:
+Add the semantic trigger icon export to `#lib/icons.ts`:
 
 ```ts
 export { default as ChevronDownIcon } from "@tabler/icons-svelte/icons/chevron-down";
@@ -411,7 +411,7 @@ The backing package is `@tabler/icons-svelte`, included in the installation comm
 
 ### Utilities
 
-Navigation Menu imports `cn` from `$lib/utils`. Copy this definition:
+Navigation Menu imports `cn` from `#lib/utils.ts`. Copy this definition:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

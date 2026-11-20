@@ -17,7 +17,7 @@
 	import { setWalkthroughContext } from "./walkthrough-context";
 	import WalkthroughSpotlight from "./walkthrough-spotlight.svelte";
 
-	import * as Dialog from "$lib/components/ui/dialog";
+	import * as Dialog from "#lib/components/ui/dialog/index.ts";
 
 	let { steps = [], open = $bindable(false), onComplete, children, padding, showOverlay = true }: RootProps = $props();
 

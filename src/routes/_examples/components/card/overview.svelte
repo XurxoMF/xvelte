@@ -1,7 +1,7 @@
 <script lang="ts">
-	import * as Card from "$lib/components/ui/card";
-	import * as Typography from "$lib/components/ui/typography";
-	import * as Button from "$lib/components/ui/button";
+	import * as Card from "#lib/components/ui/card/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
+	import * as Button from "#lib/components/ui/button/index.ts";
 </script>
 
 <div class="flex items-center justify-center">

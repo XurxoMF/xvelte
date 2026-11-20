@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import { Menubar as MenubarPrimitive } from "bits-ui";
 
-	import type { WithoutChild } from "$lib/utils";
+	import type { WithoutChild } from "#lib/utils.ts";
 
 	export type RadioItemProps = WithoutChild<MenubarPrimitive.RadioItemProps> & {
 		inset?: boolean | undefined;
@@ -9,9 +9,9 @@
 </script>
 
 <script lang="ts">
-	import { CheckIcon } from "$lib/icons";
+	import { CheckIcon } from "#lib/icons.ts";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, inset, children: childrenProp, ...restProps }: RadioItemProps = $props();
 </script>

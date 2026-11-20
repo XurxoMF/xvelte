@@ -26,7 +26,7 @@ Import all public parts through the component's `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as InputOTP from "$lib/components/ui/input-otp";
+	import * as InputOTP from "#lib/components/ui/input-otp/index.ts";
 </script>
 ```
 
@@ -87,7 +87,7 @@ Give the real input an ID through `inputId`, associate a visible label with it, 
 
 ```svelte
 <script lang="ts">
-	import * as InputOTP from "$lib/components/ui/input-otp";
+	import * as InputOTP from "#lib/components/ui/input-otp/index.ts";
 
 	let code = $state("");
 </script>
@@ -173,7 +173,7 @@ The transformer receives clipboard text and must return the complete sanitized s
 
 ```svelte
 <script lang="ts">
-	import * as InputOTP from "$lib/components/ui/input-otp";
+	import * as InputOTP from "#lib/components/ui/input-otp/index.ts";
 
 	let code = $state("");
 	let verifying = $state(false);
@@ -445,7 +445,7 @@ Copy the complete `src/lib/components/ui/input-otp` component folder:
 
 ### Shared utilities
 
-Input OTP imports `cn` and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when absent:
+Input OTP imports `cn` and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when absent:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -470,7 +470,7 @@ The package block includes `clsx` and `tailwind-merge`, which `cn` imports.
 
 ### Icon
 
-Separator imports the semantic `MinusIcon` name from `$lib/icons`. Add this exact export to `src/lib/icons.ts`:
+Separator imports the semantic `MinusIcon` name from `#lib/icons`. Add this exact export to `src/lib/icons.ts`:
 
 ```ts
 export { default as MinusIcon } from "@tabler/icons-svelte/icons/minus";

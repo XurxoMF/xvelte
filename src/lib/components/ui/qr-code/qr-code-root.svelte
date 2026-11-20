@@ -18,9 +18,9 @@
 <script lang="ts">
 	import qrcode from "qrcode-generator";
 
-	import * as m from "$lib/paraglide/messages.js";
+	import * as m from "#lib/paraglide/messages.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let {
 		value,

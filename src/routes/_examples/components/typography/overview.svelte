@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Typography from "$lib/components/ui/typography";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 </script>
 
 <Typography.Prose>

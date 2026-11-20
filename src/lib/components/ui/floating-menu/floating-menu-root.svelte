@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-	import type { WithElementRef } from "$lib/utils";
+	import type { WithElementRef } from "#lib/utils.ts";
 
 	export type RootPositions = "bottom-right" | "top-left" | "top" | "top-right" | "right" | "bottom" | "bottom-left" | "left";
 	export type RootOrientations = "horizontal" | "vertical";
@@ -12,7 +12,7 @@
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let {
 		ref = $bindable(null),

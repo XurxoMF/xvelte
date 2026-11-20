@@ -23,7 +23,7 @@ Use Typography to apply the xvelte text scale to authored content without repeat
 
 ```svelte
 <script lang="ts">
-	import * as Typography from "$lib/components/ui/typography";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 </script>
 ```
 
@@ -47,7 +47,7 @@ Prose is optional and renders a neutral `div`; choose every text part for its HT
 
 ```svelte
 <script lang="ts">
-	import * as Typography from "$lib/components/ui/typography";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 </script>
 
 <Typography.Prose>

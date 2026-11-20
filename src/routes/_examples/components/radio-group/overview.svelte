@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Field from "$lib/components/ui/field";
-	import * as RadioGroup from "$lib/components/ui/radio-group";
+	import * as Field from "#lib/components/ui/field/index.ts";
+	import * as RadioGroup from "#lib/components/ui/radio-group/index.ts";
 
 	let density = $state("comfortable");
 </script>

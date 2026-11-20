@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Field from "$lib/components/ui/field";
-	import * as InputIPv4 from "$lib/components/ui/input-ipv4";
+	import * as Field from "#lib/components/ui/field/index.ts";
+	import * as InputIPv4 from "#lib/components/ui/input-ipv4/index.ts";
 
 	let address = $state<string | null>(null);
 	let valid = $state(false);

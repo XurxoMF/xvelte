@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import { Calendar as CalendarPrimitive } from "bits-ui";
 
-	import * as Button from "$lib/components/ui/button";
+	import * as Button from "#lib/components/ui/button/index.ts";
 
 	export type NextButtonProps = CalendarPrimitive.NextButtonProps & {
 		variant?: Button.RootVariants | undefined;
@@ -9,9 +9,9 @@
 </script>
 
 <script lang="ts">
-	import { ChevronRightIcon } from "$lib/icons";
+	import { ChevronRightIcon } from "#lib/icons.ts";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, children, variant = "ghost", ...restProps }: NextButtonProps = $props();
 </script>

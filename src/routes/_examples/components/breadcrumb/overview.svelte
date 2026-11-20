@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Breadcrumb from "$lib/components/ui/breadcrumb";
+	import * as Breadcrumb from "#lib/components/ui/breadcrumb/index.ts";
 </script>
 
 <Breadcrumb.Root class="flex items-center justify-center">

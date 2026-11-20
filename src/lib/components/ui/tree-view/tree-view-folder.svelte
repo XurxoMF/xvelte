@@ -11,11 +11,11 @@
 </script>
 
 <script lang="ts">
-	import { FolderIcon, FolderOpenIcon } from "$lib/icons";
+	import { FolderIcon, FolderOpenIcon } from "#lib/icons.ts";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
-	import * as Collapsible from "$lib/components/ui/collapsible";
+	import * as Collapsible from "#lib/components/ui/collapsible/index.ts";
 
 	let { name, open = $bindable(true), class: className, icon, children }: FolderProps = $props();
 </script>

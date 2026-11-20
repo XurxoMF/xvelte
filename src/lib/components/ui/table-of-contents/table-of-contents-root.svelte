@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import type { HTMLAttributes } from "svelte/elements";
-	import type { WithElementRef } from "$lib/utils";
-	import type { Heading } from "$lib/hooks/use-toc.svelte";
+	import type { WithElementRef } from "#lib/utils.ts";
+	import type { Heading } from "#lib/hooks/use-toc.svelte.ts";
 
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLUListElement>, HTMLUListElement> & {
 		toc: Heading[];
@@ -12,7 +12,7 @@
 <script lang="ts">
 	import Self from "./table-of-contents-root.svelte";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), toc, isChild = false, class: className, ...restProps }: RootProps = $props();
 </script>

@@ -1,7 +1,7 @@
 <script lang="ts" module>
-	import type { WithoutChild } from "$lib/utils";
+	import type { WithoutChild } from "#lib/utils.ts";
 
-	import * as Collapsible from "$lib/components/ui/collapsible";
+	import * as Collapsible from "#lib/components/ui/collapsible/index.ts";
 
 	/** Props accepted by an expandable Trace row trigger. */
 	export type CollapsibleTriggerProps = WithoutChild<Collapsible.TriggerProps>;
@@ -10,9 +10,9 @@
 <script lang="ts">
 	import * as Trace from ".";
 
-	import { ChevronRightIcon } from "$lib/icons";
+	import { ChevronRightIcon } from "#lib/icons.ts";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	let { ref = $bindable(null), class: className, children, ...restProps }: CollapsibleTriggerProps = $props();
 </script>

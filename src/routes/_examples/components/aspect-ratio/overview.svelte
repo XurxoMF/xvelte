@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as AspectRatio from "$lib/components/ui/aspect-ratio";
+	import * as AspectRatio from "#lib/components/ui/aspect-ratio/index.ts";
 </script>
 
 <div class="mx-auto w-full max-w-xl">

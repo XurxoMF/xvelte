@@ -26,7 +26,7 @@ Import all public parts through the component's `index.ts`:
 
 ```svelte
 <script lang="ts">
-	import * as RadioGroup from "$lib/components/ui/radio-group";
+	import * as RadioGroup from "#lib/components/ui/radio-group/index.ts";
 </script>
 ```
 
@@ -56,7 +56,7 @@ Root owns the selected string value and the roving keyboard focus. Item renders 
 
 ```svelte
 <script lang="ts">
-	import * as RadioGroup from "$lib/components/ui/radio-group";
+	import * as RadioGroup from "#lib/components/ui/radio-group/index.ts";
 
 	let density = $state("comfortable");
 </script>
@@ -334,7 +334,7 @@ Copy the complete `src/lib/components/ui/radio-group` component folder:
 
 ### Shared utilities
 
-Radio Group imports `cn` and `WithoutChildrenOrChild` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+Radio Group imports `cn` and `WithoutChildrenOrChild` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";

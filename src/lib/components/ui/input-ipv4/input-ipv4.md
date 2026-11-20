@@ -22,7 +22,7 @@ A responsive segmented IPv4 address input with four equal-width numeric octets, 
 
 ```svelte
 <script lang="ts">
-	import * as InputIPv4 from "$lib/components/ui/input-ipv4";
+	import * as InputIPv4 from "#lib/components/ui/input-ipv4/index.ts";
 </script>
 ```
 
@@ -42,7 +42,7 @@ The component's `index.ts` exports `Root`, the `RootProps` and `IPv4Segments` ty
 
 ```svelte
 <script lang="ts">
-	import * as InputIPv4 from "$lib/components/ui/input-ipv4";
+	import * as InputIPv4 from "#lib/components/ui/input-ipv4/index.ts";
 
 	let address = $state<string | null>(null);
 	let valid = $state(false);
@@ -68,7 +68,7 @@ The visible and bound value uses the selected separator. Parsing also accepts do
 
 ```svelte
 <script lang="ts">
-	import { isValidIPv4, safeParseIPv4 } from "$lib/components/ui/input-ipv4";
+	import { isValidIPv4, safeParseIPv4 } from "#lib/components/ui/input-ipv4/index.ts";
 
 	const segments = safeParseIPv4("10.0.0.25");
 	const valid = isValidIPv4("10.0.0.25");

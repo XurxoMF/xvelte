@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Field from "$lib/components/ui/field";
-	import * as Switch from "$lib/components/ui/switch";
+	import * as Field from "#lib/components/ui/field/index.ts";
+	import * as Switch from "#lib/components/ui/switch/index.ts";
 
 	let enabled = $state(false);
 </script>

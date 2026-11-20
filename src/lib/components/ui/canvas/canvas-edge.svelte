@@ -2,7 +2,7 @@
 	import type { Snippet } from "svelte";
 	import type { SVGAttributes } from "svelte/elements";
 	import type { CanvasPoint, EdgePathType } from "./canvas-context.svelte.js";
-	import type { WithoutChildren } from "$lib/utils";
+	import type { WithoutChildren } from "#lib/utils.ts";
 
 	/** Props for a connector between points or registered canvas nodes. */
 	export type EdgeProps = WithoutChildren<SVGAttributes<SVGSVGElement>> & {
@@ -23,7 +23,7 @@
 <script lang="ts">
 	import { edgePath, getCanvasContext } from "./canvas-context.svelte.js";
 
-	import { cn } from "$lib/utils";
+	import { cn } from "#lib/utils.ts";
 
 	const uid = $props.id();
 	const markerId = `canvas-edge-arrow-${uid}`;

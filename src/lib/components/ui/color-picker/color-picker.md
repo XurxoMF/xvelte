@@ -26,7 +26,7 @@ Import the component from its public `index.ts` entry point:
 
 ```svelte
 <script lang="ts">
-	import * as ColorPicker from "$lib/components/ui/color-picker";
+	import * as ColorPicker from "#lib/components/ui/color-picker/index.ts";
 </script>
 ```
 
@@ -52,7 +52,7 @@ The format selector opens a Popover containing a Command list when more than one
 
 ```svelte
 <script lang="ts">
-	import * as ColorPicker from "$lib/components/ui/color-picker";
+	import * as ColorPicker from "#lib/components/ui/color-picker/index.ts";
 
 	let color = $state("#7C3AED");
 </script>
@@ -73,7 +73,7 @@ Enable the alpha track and percentage field with `allowOpacity`:
 
 ```svelte
 <script lang="ts">
-	import * as ColorPicker from "$lib/components/ui/color-picker";
+	import * as ColorPicker from "#lib/components/ui/color-picker/index.ts";
 
 	let color = $state("#7C3AED80");
 </script>
@@ -89,7 +89,7 @@ Supply a value in a supported syntax. The picker recognizes its prefix and keeps
 
 ```svelte
 <script lang="ts">
-	import * as ColorPicker from "$lib/components/ui/color-picker";
+	import * as ColorPicker from "#lib/components/ui/color-picker/index.ts";
 
 	let color = $state("oklch(62% 0.2 265)");
 </script>
@@ -105,7 +105,7 @@ The accepted input is intentionally narrower than the complete CSS Color specifi
 
 ```svelte
 <script lang="ts">
-	import * as ColorPicker from "$lib/components/ui/color-picker";
+	import * as ColorPicker from "#lib/components/ui/color-picker/index.ts";
 
 	let brandColor = $state("#2563EB");
 </script>
@@ -251,7 +251,7 @@ Color Picker requires no xvelte hook, attachment, context module, shared compone
 
 ### Shared utilities
 
-Color Picker and its required UI components import `cn`, `WithoutChild`, `WithoutChildren`, `WithoutChildrenOrChild`, and `WithElementRef` from `$lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
+Color Picker and its required UI components import `cn`, `WithoutChild`, `WithoutChildren`, `WithoutChildrenOrChild`, and `WithElementRef` from `#lib/utils`. Add these exact definitions to `src/lib/utils.ts` when they are not already present:
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -278,7 +278,7 @@ The package block includes `clsx` and `tailwind-merge`, which `cn` imports.
 
 ### Icons
 
-Color Picker and the complete Command and Dialog component folders import these semantic names from `$lib/icons`. Add the exact exports to `src/lib/icons.ts`:
+Color Picker and the complete Command and Dialog component folders import these semantic names from `#lib/icons`. Add the exact exports to `src/lib/icons.ts`:
 
 ```ts
 export { default as CheckIcon } from "@tabler/icons-svelte/icons/check";
@@ -291,7 +291,7 @@ Keep the semantic aliases in the shared icon facade instead of importing Tabler 
 
 ### Localization setup
 
-Keep the `pearl_bison_color` entry documented in [Localization](#localization) in every locale and compile the Paraglide output to `src/lib/paraglide`. The component imports generated messages from `$lib/paraglide/messages.js`; no localization file is stored inside the component folder. The required Command and Dialog folders contain additional messages documented in their own unit guide guides.
+Keep the `pearl_bison_color` entry documented in [Localization](#localization) in every locale and compile the Paraglide output to `src/lib/paraglide`. The component imports generated messages from `#lib/paraglide/messages.js`; no localization file is stored inside the component folder. The required Command and Dialog folders contain additional messages documented in their own unit guide guides.
 
 ### Global CSS
 

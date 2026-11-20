@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Pagination from "$lib/components/ui/pagination";
-	import * as Typography from "$lib/components/ui/typography";
+	import * as Pagination from "#lib/components/ui/pagination/index.ts";
+	import * as Typography from "#lib/components/ui/typography/index.ts";
 
 	const count = 95;
 	const perPage = 10;

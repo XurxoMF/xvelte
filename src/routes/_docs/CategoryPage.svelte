@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
 
-	import type { Path } from "$app/types";
 	import type { DocUnit } from "./catalog";
 
 	import * as Card from "#lib/components/ui/card/index.ts";
@@ -24,7 +23,18 @@
 
 	<div class="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
 		{#each units as unit (unit.href)}
-			<a href={resolve(unit.href.slice(1) as Path)} class="group block">
+			<a
+				href={unit.scope === "tauri"
+					? resolve("/tauri/[category]/[slug]", { category: unit.directory, slug: unit.slug })
+					: unit.kind === "component"
+						? resolve("/components/[slug]", { slug: unit.slug })
+						: unit.kind === "hook"
+							? resolve("/hooks/[slug]", { slug: unit.slug })
+							: unit.kind === "attachment"
+								? resolve("/attachments/[slug]", { slug: unit.slug })
+								: resolve("/styles/[slug]", { slug: unit.slug })}
+				class="group block"
+			>
 				<Card.Root size="sm" class="h-full transition-all group-hover:-translate-y-0.5 group-hover:border-primary/40 group-hover:shadow-md">
 					<Card.Header>
 						<Card.Title>{unit.title}</Card.Title>

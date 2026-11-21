@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
 
-	import type { Path } from "$app/types";
-
 	import { navigation } from "../_docs/catalog";
 
 	import * as Card from "#lib/components/ui/card/index.ts";
@@ -34,7 +32,7 @@
 
 	<div class="mt-10 grid gap-4 sm:grid-cols-2">
 		{#each sections as section (section.id)}
-			<a href={resolve(`tauri/${section.directory}` as Path)} class="group block">
+			<a href={resolve("/tauri/[category]", { category: section.directory })} class="group block">
 				<Card.Root
 					class="h-full transition-all group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-lg group-hover:shadow-primary/5"
 				>

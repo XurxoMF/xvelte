@@ -1,0 +1,19 @@
+{
+	"scripts": {
+		"dev": "vite dev --mode web",
+		"dev:web": "vite dev --mode web",
+		"dev:tauri": "vite dev --mode tauri",
+		"build": "vite build --mode web",
+		"build:web": "vite build --mode web",
+		"build:tauri": "vite build --mode tauri",
+		"preview": "vite preview --mode web",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write .",
+		"tauri": "tauri",
+		"paraglide:compile": "paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide",
+		"paraglide:translate": "inlang machine translate --project project.inlang"
+	}
+}

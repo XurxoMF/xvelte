@@ -12,11 +12,14 @@ export default defineConfig(({ mode }) => {
 		plugins: [
 			tailwindcss(),
 			sveltekit({
+				compilerOptions: {
+					runes: ({ filename }) => (filename.split(/[/\\]/).includes("node_modules") ? undefined : true)
+				},
 				paths: { relative: isTauriBuild },
 				adapter: adapter({
 					pages: outputDirectory,
 					assets: outputDirectory,
-					...(isTauriBuild ? { fallback: "index.html" } : {})
+					fallback: isTauriBuild ? "index.html" : "200.html"
 				})
 			}),
 			paraglideVitePlugin({
@@ -25,11 +28,6 @@ export default defineConfig(({ mode }) => {
 				emitTsDeclarations: true,
 				strategy: ["localStorage", "preferredLanguage", "baseLocale"]
 			})
-		],
-		server: {
-			port: 5173,
-			strictPort: true,
-			watch: { ignored: ["**/src-tauri/**"] }
-		}
+		]
 	};
 });

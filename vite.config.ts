@@ -23,7 +23,7 @@ export default defineConfig(({ mode }) => {
 				adapter: adapter({
 					pages: outputDirectory,
 					assets: outputDirectory,
-					...(isTauriBuild ? { fallback: "index.html" } : {})
+					fallback: isTauriBuild ? "index.html" : "200.html"
 				})
 			}),
 

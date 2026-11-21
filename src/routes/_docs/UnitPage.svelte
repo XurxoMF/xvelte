@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
 
-	import type { Path } from "$app/types";
 	import type { DocExample } from "./examples";
 	import type { MarkdownAst } from "#lib/hooks/use-markdown.svelte.ts";
 
@@ -69,7 +68,17 @@
 
 				<Breadcrumb.Item>
 					{#if category}
-						<Breadcrumb.Link href={resolve(`${unit.scope === "tauri" ? "tauri/" : ""}${category.directory}` as Path)}>
+						<Breadcrumb.Link
+							href={unit.scope === "tauri"
+								? resolve("/tauri/[category]", { category: category.directory })
+								: unit.kind === "component"
+									? resolve("/components")
+									: unit.kind === "hook"
+										? resolve("/hooks")
+										: unit.kind === "attachment"
+											? resolve("/attachments")
+											: resolve("/styles")}
+						>
 							{category.label}
 						</Breadcrumb.Link>
 					{/if}

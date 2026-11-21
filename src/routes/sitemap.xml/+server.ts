@@ -7,7 +7,15 @@ const siteOrigin = "https://xvelte.xurxomf.xyz";
 const categoryPaths = navigation.flatMap((scope) =>
 	scope.categories.map((category) => `${scope.value === "tauri" ? "/tauri" : ""}/${category.directory}`)
 );
-const paths = ["/", "/installation", "/tauri", ...categoryPaths, ...units.map((unit) => unit.href)];
+const installationPaths = [
+	"/installation",
+	"/installation/web-ssr",
+	"/installation/web-ssg",
+	"/installation/web-spa",
+	"/installation/web-tauri",
+	"/installation/add-tauri"
+];
+const paths = ["/", ...installationPaths, "/tauri", ...categoryPaths, ...units.map((unit) => unit.href)];
 
 export const prerender = true;
 

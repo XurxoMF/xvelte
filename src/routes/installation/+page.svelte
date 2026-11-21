@@ -1,378 +1,75 @@
 <script lang="ts">
-	import viteConfig from "./vite.config.example.txt?raw";
+	import { resolve } from "$app/paths";
 
-	import { AlertInfoIcon, AlertWarningIcon } from "#lib/icons.ts";
+	import { installationGuides } from "./_data";
 
-	import { useHighlightedCode } from "#lib/hooks/use-highlighted-code.svelte.ts";
+	import { ChevronRightIcon } from "#lib/icons.ts";
 
-	import * as Alert from "#lib/components/ui/alert/index.ts";
-	import * as CodeBlock from "#lib/components/ui/code-block/index.ts";
-	import * as FloatingMenu from "#lib/components/ui/floating-menu/index.ts";
-	import * as ToggleGroup from "#lib/components/ui/toggle-group/index.ts";
+	import * as Button from "#lib/components/ui/button/index.ts";
+	import * as Card from "#lib/components/ui/card/index.ts";
 	import * as Typography from "#lib/components/ui/typography/index.ts";
-
-	type PackageManager = "bun" | "npm" | "pnpm";
-	type HighlightedCode = ReturnType<typeof useHighlightedCode>;
-
-	type PackageManagerCommands = {
-		create: string;
-		enterProject: string;
-		installRuntime: string;
-		installDevelopment: string;
-		runWeb: string;
-		installTauriRuntime: string;
-		installTauriDevelopment: string;
-		runTauri: string;
-		tauriDevCommand: string;
-		tauriBuildCommand: string;
-	};
-
-	const webPackages =
-		"@floating-ui/dom @internationalized/date @tabler/icons-svelte @tanstack/svelte-table bits-ui clsx country-flag-icons embla-carousel-svelte github-slugger gridstack gsap hast-util-from-html hast-util-sanitize hast-util-to-html layerchart libphonenumber-js mdast-util-from-markdown mdast-util-gfm micromark-extension-gfm mode-watcher paneforge qrcode-generator runed shiki svelte-dnd-action svelte-sonner tailwind-merge tailwind-variants vaul-svelte";
-	const webDevelopmentPackages =
-		"@eslint/js @fontsource-variable/inter @inlang/cli @inlang/paraglide-js @shadcn-svelte/primitives @sveltejs/adapter-static @tailwindcss/vite @types/node eslint eslint-config-prettier eslint-plugin-svelte globals prettier prettier-plugin-svelte prettier-plugin-tailwindcss svelte-check tailwindcss typescript typescript-eslint";
-
-	const commands = {
-		bun: {
-			create: "bunx sv create xvelte-app",
-			enterProject: "cd xvelte-app",
-			installRuntime: `bun add ${webPackages}`,
-			installDevelopment: `bun add -D ${webDevelopmentPackages}`,
-			runWeb: "bun run dev",
-			installTauriRuntime: "bun add @tauri-apps/api @tauri-apps/plugin-fs",
-			installTauriDevelopment: "bun add -D @tauri-apps/cli",
-			runTauri: "bun tauri dev",
-			tauriDevCommand: "bun run dev:tauri",
-			tauriBuildCommand: "bun run build:tauri"
-		},
-		npm: {
-			create: "npx sv create xvelte-app",
-			enterProject: "cd xvelte-app",
-			installRuntime: `npm install ${webPackages}`,
-			installDevelopment: `npm install -D ${webDevelopmentPackages}`,
-			runWeb: "npm run dev",
-			installTauriRuntime: "npm install @tauri-apps/api @tauri-apps/plugin-fs",
-			installTauriDevelopment: "npm install -D @tauri-apps/cli",
-			runTauri: "npm run tauri dev",
-			tauriDevCommand: "npm run dev:tauri",
-			tauriBuildCommand: "npm run build:tauri"
-		},
-		pnpm: {
-			create: "pnpm dlx sv create xvelte-app",
-			enterProject: "cd xvelte-app",
-			installRuntime: `pnpm add ${webPackages}`,
-			installDevelopment: `pnpm add -D ${webDevelopmentPackages}`,
-			runWeb: "pnpm dev",
-			installTauriRuntime: "pnpm add @tauri-apps/api @tauri-apps/plugin-fs",
-			installTauriDevelopment: "pnpm add -D @tauri-apps/cli",
-			runTauri: "pnpm tauri dev",
-			tauriDevCommand: "pnpm dev:tauri",
-			tauriBuildCommand: "pnpm build:tauri"
-		}
-	} satisfies Record<PackageManager, PackageManagerCommands>;
-
-	const findLatestRelease =
-		"XVELTE_RELEASE=$(curl -fsSL https://api.github.com/repos/XurxoMF/xvelte/releases/latest | grep '\"tag_name\"' | cut -d '\"' -f 4)";
-	const cloneRelease = 'git clone --depth 1 --branch "$XVELTE_RELEASE" https://github.com/XurxoMF/xvelte.git .xvelte-source';
-	const copyLibrary = "cp -R .xvelte-source/src/lib/. src/lib/ && rm -rf src/lib/tauri";
-	const copyStyles = "cp .xvelte-source/src/routes/layout.css src/routes/layout.css";
-	const copyMessages = "cp -R .xvelte-source/messages ./messages";
-	const copyInlangProject = "cp -R .xvelte-source/project.inlang ./project.inlang";
-	const copyTooling = "cp .xvelte-source/.prettierrc .xvelte-source/.prettierignore .xvelte-source/eslint.config.js ./";
-	const createSkillDirectory = "mkdir -p .agents/skills/xvelte";
-	const copySkill = "cp -R .xvelte-source/.agents/skills/xvelte/. .agents/skills/xvelte/";
-	const copyTauriLibrary = "cp -R .xvelte-source/src/lib/tauri src/lib/tauri";
-	const copyTauriApplication = "cp -R .xvelte-source/src-tauri ./src-tauri";
-	const removeSource = "rm -rf .xvelte-source";
-
-	const packageScripts = `{
-	"scripts": {
-		"dev": "bun run dev:web",
-		"dev:web": "vite dev --mode web",
-		"dev:tauri": "vite dev --mode tauri",
-		"build": "bun run build:web",
-		"build:web": "vite build --mode web",
-		"build:tauri": "vite build --mode tauri",
-		"preview": "vite preview --mode web",
-		"prepare": "svelte-kit sync || echo ''",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write .",
-		"tauri": "tauri",
-		"paraglide:compile": "paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide",
-		"paraglide:translate": "inlang machine translate --project ./project.inlang"
-	}
-}`;
-
-	const layoutOptions = `const isTauriBuild = import.meta.env.MODE === "tauri";
-
-export const prerender = !isTauriBuild;
-export const ssr = !isTauriBuild;`;
-
-	const rootLayout = `<script lang="ts">
-	import { ModeWatcher } from "mode-watcher";
-
-	import "./layout.css";
-
-	let { children } = $props();
-</scr${"ipt"}>
-
-<ModeWatcher />
-
-{@render children()}`;
-
-	const packageScriptLines = useHighlightedCode(
-		() => packageScripts,
-		() => "json"
-	);
-	const viteConfigLines = useHighlightedCode(
-		() => viteConfig,
-		() => "typescript"
-	);
-	const layoutOptionsLines = useHighlightedCode(
-		() => layoutOptions,
-		() => "typescript"
-	);
-	const rootLayoutLines = useHighlightedCode(
-		() => rootLayout,
-		() => "svelte"
-	);
-	let packageManager: PackageManager = $state("bun");
-
-	/** Keeps the package-manager selector from entering Toggle Group's empty single-selection state. */
-	function selectPackageManager(value: string) {
-		if (value === "bun" || value === "npm" || value === "pnpm") packageManager = value;
-	}
 </script>
-
-{#snippet CommandBlock(title: string, code: string)}
-	<CodeBlock.Root>
-		<CodeBlock.Header>
-			<CodeBlock.Title>{title}</CodeBlock.Title>
-			<CodeBlock.Actions>
-				<CodeBlock.CopyButton value={code} />
-			</CodeBlock.Actions>
-		</CodeBlock.Header>
-		<CodeBlock.Content {code} />
-	</CodeBlock.Root>
-{/snippet}
-
-{#snippet SourceBlock(title: string, code: string, lines: HighlightedCode)}
-	<CodeBlock.Root>
-		<CodeBlock.Header>
-			<CodeBlock.Title>{title}</CodeBlock.Title>
-			<CodeBlock.Actions>
-				<CodeBlock.CopyButton value={code} />
-			</CodeBlock.Actions>
-		</CodeBlock.Header>
-		<CodeBlock.Content lineNumbers>
-			{#each lines.current as line, index (index)}
-				<CodeBlock.Line code={line} />
-			{/each}
-		</CodeBlock.Content>
-	</CodeBlock.Root>
-{/snippet}
 
 <svelte:head>
 	<title>Installation - xvelte</title>
-	<meta
-		name="description"
-		content="Install the complete xvelte web collection in a new SvelteKit project, then optionally add its Tauri application shell."
-	/>
+	<meta name="description" content="Choose an SSR, SSG, browser SPA, or combined web and Tauri SPA installation for xvelte." />
 </svelte:head>
 
-<main class="mx-auto w-full max-w-5xl px-5 pt-10 pb-28 sm:px-8 sm:pt-14">
+<main class="mx-auto w-full max-w-6xl px-5 pt-10 pb-28 sm:px-8 sm:pt-14">
 	<header class="max-w-3xl">
-		<Typography.P class="font-medium text-primary">SvelteKit first, Tauri when you need it</Typography.P>
+		<Typography.P class="font-medium text-primary">Choose the rendering model first</Typography.P>
 		<Typography.H1>Install xvelte</Typography.H1>
-		<Typography.Leading>Start with the complete web collection. The native application is a separate second step.</Typography.Leading>
+		<Typography.Leading>
+			Start with the guide that matches how the application will render and deploy. Each path contains only the packages, files, and commands it
+			needs.
+		</Typography.Leading>
 	</header>
 
-	<Alert.Root variant="info" role="status" class="mt-8">
-		<AlertInfoIcon aria-hidden="true" />
-		<Alert.Title>Installing only some components?</Alert.Title>
-		<Alert.Description>
-			Skip this page. Open each component's guide and copy only the files, packages, styles, icons, and messages listed there.
-		</Alert.Description>
-	</Alert.Root>
+	<div class="mt-12 grid gap-5 md:grid-cols-2">
+		{#each installationGuides as guide (guide.slug)}
+			<Card.Root class="h-full">
+				<Card.Header>
+					<div class="mb-2 w-fit rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">{guide.badge}</div>
+					<Card.Title>{guide.title}</Card.Title>
+					<Card.Description>{guide.description}</Card.Description>
+				</Card.Header>
 
-	<div class="mt-14 space-y-20">
-		<section aria-labelledby="web-installation">
-			<div class="max-w-3xl">
-				<Typography.P class="font-medium text-primary">Part one</Typography.P>
-				<Typography.H2 id="web-installation">Web installation</Typography.H2>
-				<Typography.P class="mt-3 text-muted-foreground">The commands use a POSIX-compatible shell.</Typography.P>
-			</div>
+				<Card.Content class="grid grid-cols-2 gap-3 text-sm">
+					<div class="rounded-lg bg-muted/60 p-3">
+						<span class="block text-xs text-muted-foreground">Production server</span>
+						<strong>{guide.server}</strong>
+					</div>
+					<div class="rounded-lg bg-muted/60 p-3">
+						<span class="block text-xs text-muted-foreground">Initial HTML</span>
+						<strong>{guide.html}</strong>
+					</div>
+				</Card.Content>
 
-			<div class="mt-10 space-y-12">
-				<div class="space-y-4">
-					<Typography.H3>1. Create the project</Typography.H3>
-					<Typography.P class="text-muted-foreground">Choose the minimal SvelteKit template with TypeScript and no add-ons.</Typography.P>
-					{@render CommandBlock("Create the SvelteKit project", commands[packageManager].create)}
-					{@render CommandBlock("Enter the project", commands[packageManager].enterProject)}
-				</div>
-
-				<div class="space-y-4">
-					<Typography.H3>2. Install every web package</Typography.H3>
-					{@render CommandBlock("Runtime packages", commands[packageManager].installRuntime)}
-					{@render CommandBlock("Development packages", commands[packageManager].installDevelopment)}
-				</div>
-
-				<div class="space-y-4">
-					<Typography.H3>3. Download the latest xvelte release</Typography.H3>
-					{@render CommandBlock("Find the latest release", findLatestRelease)}
-					{@render CommandBlock("Clone that release", cloneRelease)}
-				</div>
-
-				<div class="space-y-4">
-					<Typography.H3>4. Copy xvelte</Typography.H3>
-					<Typography.P class="text-muted-foreground">
-						The first command copies all of <Typography.InlineCode>src/lib</Typography.InlineCode> and immediately removes its optional Tauri folder.
-					</Typography.P>
-					{@render CommandBlock("Library", copyLibrary)}
-					{@render CommandBlock("Global styles", copyStyles)}
-					{@render CommandBlock("English messages", copyMessages)}
-					{@render CommandBlock("Paraglide project", copyInlangProject)}
-					{@render CommandBlock("Lint and formatting configuration", copyTooling)}
-				</div>
-
-				<div class="space-y-4">
-					<Typography.H3>5. Add the project scripts</Typography.H3>
-					<Typography.P class="text-muted-foreground">
-						Merge this complete <Typography.InlineCode>scripts</Typography.InlineCode> object into <Typography.InlineCode>
-							package.json
-						</Typography.InlineCode>.
-					</Typography.P>
-					{@render SourceBlock("package.json", packageScripts, packageScriptLines)}
-				</div>
-
-				<div class="space-y-4">
-					<Typography.H3>6. Configure the application</Typography.H3>
-					{@render SourceBlock("vite.config.ts", viteConfig, viteConfigLines)}
-					{@render SourceBlock("src/routes/+layout.ts", layoutOptions, layoutOptionsLines)}
-					{@render SourceBlock("src/routes/+layout.svelte", rootLayout, rootLayoutLines)}
-				</div>
-
-				<div class="space-y-4">
-					<Typography.H3>7. Optionally install the xvelte agent skill</Typography.H3>
-					<Typography.P class="text-muted-foreground">
-						Copy it when coding agents should discover the installed collection and follow its composition rules.
-					</Typography.P>
-					{@render CommandBlock("Create the skill directory", createSkillDirectory)}
-					{@render CommandBlock("Copy the skill", copySkill)}
-				</div>
-
-				<div class="space-y-4">
-					<Typography.H3>8. Run the website</Typography.H3>
-					{@render CommandBlock("Start the development server", commands[packageManager].runWeb)}
-				</div>
-			</div>
-		</section>
-
-		<section aria-labelledby="tauri-installation" class="border-t pt-16">
-			<div class="max-w-3xl">
-				<Typography.P class="font-medium text-primary">Part two · optional</Typography.P>
-				<Typography.H2 id="tauri-installation">Add Tauri</Typography.H2>
-				<Typography.P class="mt-3 text-muted-foreground">Keep the same SvelteKit source and add the native shell around it.</Typography.P>
-			</div>
-
-			<Alert.Root variant="warning" role="status" class="mt-8">
-				<AlertWarningIcon aria-hidden="true" />
-				<Alert.Title>Install the native prerequisites first</Alert.Title>
-				<Alert.Description>
-					Follow Tauri's <a href="https://v2.tauri.app/start/prerequisites/">official prerequisites guide</a> for Rust and your operating system.
-				</Alert.Description>
-			</Alert.Root>
-
-			<div class="mt-10 space-y-12">
-				<div class="space-y-4">
-					<Typography.H3>1. Install Tauri packages</Typography.H3>
-					{@render CommandBlock("Tauri runtime packages", commands[packageManager].installTauriRuntime)}
-					{@render CommandBlock("Tauri CLI", commands[packageManager].installTauriDevelopment)}
-				</div>
-
-				<div class="space-y-4">
-					<Typography.H3>2. Copy the native files</Typography.H3>
-					{@render CommandBlock("Frontend helpers", copyTauriLibrary)}
-					{@render CommandBlock("Tauri application", copyTauriApplication)}
-				</div>
-
-				<div class="space-y-4">
-					<Typography.H3>3. Configure the Tauri build</Typography.H3>
-					<Typography.P class="text-muted-foreground">
-						The shared Vite configuration already switches to SPA mode for <Typography.InlineCode>--mode tauri</Typography.InlineCode>, writes the
-						native frontend to <Typography.InlineCode>build/tauri</Typography.InlineCode>, and keeps the public website prerendered in
-						<Typography.InlineCode>build/web</Typography.InlineCode>.
-					</Typography.P>
-				</div>
-
-				<div class="space-y-4">
-					<Typography.H3>4. Check src-tauri/tauri.conf.json</Typography.H3>
-					<Typography.P class="text-muted-foreground">
-						Set <Typography.InlineCode>frontendDist</Typography.InlineCode> to <Typography.InlineCode>../build/tauri</Typography.InlineCode>,
-						<Typography.InlineCode>beforeDevCommand</Typography.InlineCode> to
-						<Typography.InlineCode>{commands[packageManager].tauriDevCommand}</Typography.InlineCode> and
-						<Typography.InlineCode>beforeBuildCommand</Typography.InlineCode> to
-						<Typography.InlineCode>{commands[packageManager].tauriBuildCommand}</Typography.InlineCode>.
-					</Typography.P>
-				</div>
-
-				<div class="space-y-4">
-					<Typography.H3>5. Run the native application</Typography.H3>
-					{@render CommandBlock("Start Tauri", commands[packageManager].runTauri)}
-				</div>
-			</div>
-		</section>
-
-		<section aria-labelledby="finish-installation" class="rounded-2xl border bg-muted/30 p-5 sm:p-8">
-			<div class="max-w-3xl">
-				<Typography.P class="font-medium text-primary">Finish up</Typography.P>
-				<Typography.H2 id="finish-installation">Notes before you ship</Typography.H2>
-			</div>
-
-			<div class="mt-8 grid gap-4 lg:grid-cols-2">
-				<Alert.Root variant="warning" role="status">
-					<AlertWarningIcon aria-hidden="true" />
-					<Alert.Title>Replace the xvelte branding</Alert.Title>
-					<Alert.Description>
-						The favicon and Tauri icons included with xvelte belong to xvelte. Replace the project favicon and every file in
-						<Typography.InlineCode>src-tauri/icons</Typography.InlineCode> with the final application's artwork.
-					</Alert.Description>
-				</Alert.Root>
-
-				<Alert.Root variant="info" role="status">
-					<AlertInfoIcon aria-hidden="true" />
-					<Alert.Title>The copied code is now yours</Alert.Title>
-					<Alert.Description>Commit it with the application and review later xvelte releases before merging their changes.</Alert.Description>
-				</Alert.Root>
-			</div>
-
-			<div class="mt-8 space-y-4">
-				<Typography.H3>Remove the temporary clone</Typography.H3>
-				<Typography.P class="text-muted-foreground">Run this only after copying the optional skill and any Tauri files you need.</Typography.P>
-				{@render CommandBlock("Clean up", removeSource)}
-			</div>
-		</section>
+				<Card.Footer class="mt-auto">
+					<a
+						href={guide.slug === "web-ssr"
+							? resolve("/installation/web-ssr")
+							: guide.slug === "web-ssg"
+								? resolve("/installation/web-ssg")
+								: guide.slug === "web-spa"
+									? resolve("/installation/web-spa")
+									: resolve("/installation/web-tauri")}
+						class={Button.rootVariants({ variant: "outline" })}
+					>
+						Open guide
+						<ChevronRightIcon data-icon="inline-end" aria-hidden="true" />
+					</a>
+				</Card.Footer>
+			</Card.Root>
+		{/each}
 	</div>
 
-	<FloatingMenu.Root position="bottom-right" class="fixed">
-		<FloatingMenu.Group role="group" aria-label="Installation package manager">
-			<span class="px-2 text-xs font-medium text-muted-foreground">Package manager</span>
-
-			<ToggleGroup.Root
-				type="single"
-				value={packageManager}
-				onValueChange={selectPackageManager}
-				variant="outline"
-				size="sm"
-				spacing={0}
-				aria-label="Choose a package manager"
-			>
-				<ToggleGroup.Item value="bun">Bun</ToggleGroup.Item>
-				<ToggleGroup.Item value="npm">npm</ToggleGroup.Item>
-				<ToggleGroup.Item value="pnpm">pnpm</ToggleGroup.Item>
-			</ToggleGroup.Root>
-		</FloatingMenu.Group>
-	</FloatingMenu.Root>
+	<section class="mt-12 rounded-2xl border bg-muted/30 p-6 sm:p-8" aria-labelledby="add-tauri-title">
+		<Typography.P class="font-medium text-primary">Already installed?</Typography.P>
+		<Typography.H2 id="add-tauri-title">Move an existing web project to Web SPA + Tauri SPA</Typography.H2>
+		<Typography.P class="mt-3 max-w-3xl text-muted-foreground">
+			Review what changes when leaving SSR, SSG, or a web-only SPA, audit server-only code, and replace the required configuration files.
+		</Typography.P>
+		<a href={resolve("/installation/add-tauri")} class={Button.rootVariants({ class: "mt-6" })}>Open the migration guide</a>
+	</section>
 </main>

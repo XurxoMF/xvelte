@@ -4,7 +4,6 @@
 	import { page } from "$app/state";
 	import { ModeWatcher } from "mode-watcher";
 
-	import type { Path } from "$app/types";
 	import type { DocUnit } from "./_docs/catalog";
 
 	import "./layout.css";
@@ -12,7 +11,7 @@
 
 	import { ChevronRightIcon, SearchIcon } from "#lib/icons.ts";
 
-	import { locales, localizeHref } from "#lib/paraglide/runtime.js";
+	import { locales } from "#lib/paraglide/runtime.js";
 
 	import * as Sidebar from "#lib/components/ui/sidebar/index.ts";
 	import * as Tooltip from "#lib/components/ui/tooltip/index.ts";
@@ -25,6 +24,14 @@
 
 	const siteOrigin = "https://xvelte.xurxomf.xyz";
 	const appIcon = asset("favicon.png");
+	const installationPages = [
+		{ href: "/installation", label: "Installation options", keywords: ["setup", "rendering"] },
+		{ href: "/installation/web-ssr", label: "Web SSR", keywords: ["Bun", "Node", "SEO", "server"] },
+		{ href: "/installation/web-ssg", label: "Web SSG", keywords: ["static", "prerender", "SEO"] },
+		{ href: "/installation/web-spa", label: "Web SPA", keywords: ["browser", "static", "fallback"] },
+		{ href: "/installation/web-tauri", label: "Web SPA + Tauri SPA", keywords: ["desktop", "native", "Tauri"] },
+		{ href: "/installation/add-tauri", label: "Add Tauri to Web", keywords: ["migration", "desktop", "native"] }
+	];
 	let searchOpen = $state(false);
 	let currentPath = $derived(page.url.pathname);
 	let canonicalUrl = $derived(new URL(page.url.pathname, siteOrigin).href);
@@ -102,7 +109,7 @@
 					<Sidebar.GroupContent>
 						<Sidebar.Menu>
 							<Sidebar.MenuItem>
-								<Sidebar.MenuButton isActive={currentPath === "/installation"} tooltipContent="Installation">
+								<Sidebar.MenuButton isActive={currentPath.startsWith("/installation")} tooltipContent="Installation">
 									{#snippet child({ props })}
 										<a href={resolve("installation")} aria-current={currentPath === "/installation" ? "page" : undefined} {...props}>
 											Installation
@@ -137,7 +144,15 @@
 											{#each category.units as unit (unit.href)}
 												<Sidebar.MenuSubItem>
 													<Sidebar.MenuSubButton
-														href={resolve(unit.href.slice(1) as Path)}
+														href={unit.scope === "tauri"
+															? resolve("/tauri/[category]/[slug]", { category: unit.directory, slug: unit.slug })
+															: unit.kind === "component"
+																? resolve("/components/[slug]", { slug: unit.slug })
+																: unit.kind === "hook"
+																	? resolve("/hooks/[slug]", { slug: unit.slug })
+																	: unit.kind === "attachment"
+																		? resolve("/attachments/[slug]", { slug: unit.slug })
+																		: resolve("/styles/[slug]", { slug: unit.slug })}
 														isActive={currentPath === unit.href}
 														aria-current={currentPath === unit.href ? "page" : undefined}
 													>
@@ -178,9 +193,16 @@
 								<Command.Empty>No documentation found.</Command.Empty>
 
 								<Command.Group heading="Getting started">
-									<Command.LinkItem value="installation" href={resolve("installation")} onSelect={() => (searchOpen = false)}>
-										Installation
-									</Command.LinkItem>
+									{#each installationPages as installationPage (installationPage.href)}
+										<Command.LinkItem
+											value={installationPage.href}
+											keywords={installationPage.keywords}
+											href={installationPage.href}
+											onSelect={() => (searchOpen = false)}
+										>
+											{installationPage.label}
+										</Command.LinkItem>
+									{/each}
 								</Command.Group>
 
 								{#each navigation as scope (scope.value)}
@@ -190,7 +212,15 @@
 												<Command.LinkItem
 													value={unit.href}
 													keywords={[unit.title, unit.slug, scope.label, category.label, unit.description]}
-													href={resolve(unit.href.slice(1) as Path)}
+													href={unit.scope === "tauri"
+														? resolve("/tauri/[category]/[slug]", { category: unit.directory, slug: unit.slug })
+														: unit.kind === "component"
+															? resolve("/components/[slug]", { slug: unit.slug })
+															: unit.kind === "hook"
+																? resolve("/hooks/[slug]", { slug: unit.slug })
+																: unit.kind === "attachment"
+																	? resolve("/attachments/[slug]", { slug: unit.slug })
+																	: resolve("/styles/[slug]", { slug: unit.slug })}
 													onSelect={() => selectResult(unit)}
 												>
 													{unit.title}
@@ -223,6 +253,6 @@
 
 <div style="display:none">
 	{#each locales as locale (locale)}
-		<a href={resolve(localizeHref(page.url.pathname, { locale }).replace(/^\//, "") as Path)}>{locale}</a>
+		<a href={resolve("/")}>{locale}</a>
 	{/each}
 </div>

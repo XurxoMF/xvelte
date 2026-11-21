@@ -8,6 +8,7 @@ export type DocKind = "component" | "hook" | "attachment" | "class" | "type" | "
 export type DocUnit = {
 	scope: DocScope;
 	kind: DocKind;
+	directory: string;
 	slug: string;
 	title: string;
 	description: string;
@@ -123,7 +124,7 @@ function unitFromGuide(path: string, markdown: string): DocUnit {
 
 	const { title, description } = metadata(markdown, path);
 	const href = scope === "tauri" ? `/tauri/${category.directory}/${slug}` : `/${category.directory}/${slug}`;
-	return { scope, kind: category.kind, slug, title, description, href, markdown };
+	return { scope, kind: category.kind, directory: category.directory, slug, title, description, href, markdown };
 }
 
 export const units = Object.entries(unitGuides)

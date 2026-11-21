@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
 
-	import type { Path } from "$app/types";
-
 	import { navigation } from "./_docs/catalog";
 
 	import * as Button from "#lib/components/ui/button/index.ts";
@@ -57,7 +55,16 @@
 
 			<div class="mt-8 grid gap-4 sm:grid-cols-2">
 				{#each sharedSections as section (section.id)}
-					<a href={resolve(section.directory as Path)} class="group block">
+					<a
+						href={section.kind === "component"
+							? resolve("/components")
+							: section.kind === "hook"
+								? resolve("/hooks")
+								: section.kind === "attachment"
+									? resolve("/attachments")
+									: resolve("/styles")}
+						class="group block"
+					>
 						<Card.Root
 							class="h-full transition-all group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-lg group-hover:shadow-primary/5"
 						>
@@ -82,7 +89,7 @@
 
 			<div class="mt-8 grid gap-4 sm:grid-cols-2">
 				{#each tauriSections as section (section.id)}
-					<a href={resolve(`tauri/${section.directory}` as Path)} class="group block">
+					<a href={resolve("/tauri/[category]", { category: section.directory })} class="group block">
 						<Card.Root
 							class="h-full transition-all group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-lg group-hover:shadow-primary/5"
 						>

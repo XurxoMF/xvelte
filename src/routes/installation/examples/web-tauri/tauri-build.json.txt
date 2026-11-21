@@ -1,0 +1,8 @@
+{
+	"build": {
+		"frontendDist": "../build/tauri",
+		"devUrl": "http://localhost:5173",
+		"beforeDevCommand": "bun run dev:tauri",
+		"beforeBuildCommand": "bun run build:tauri"
+	}
+}
